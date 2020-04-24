@@ -69,6 +69,8 @@ import TextField from '@material-ui/core/TextField';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import SearchIcon from '@material-ui/icons/Search';
+import Grid from '@material-ui/core/Grid';
+
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -77,10 +79,12 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexWrap: 'wrap',
       justifyContent: 'center',
+      padding: 0,
       
     },
     margin: {
       margin: theme.spacing(1),
+      marginTop: theme.spacing(6),
     },
     // withoutLabel: {
     //   marginTop: theme.spacing(3),
@@ -110,7 +114,8 @@ export default function InputAdornments() {
   return (
     <div className={classes.root}>
       {/* <div className="centre"> */}
-     
+      <Grid container spacing={1} style={{ justifyContent: 'center'}}>
+      <Grid item xs={11} >
         <FormControl fullWidth className={classes.margin} variant="filled">
         
           <InputLabel htmlFor="filled-adornment-amount"></InputLabel>
@@ -127,8 +132,11 @@ export default function InputAdornments() {
             </InputAdornment>}
           />
         
-        </FormControl> 
+        </FormControl>
+        </Grid>
+        </Grid> 
       </div>
+
     //   </div>
   );
 }

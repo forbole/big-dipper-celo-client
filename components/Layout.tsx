@@ -21,9 +21,10 @@ import SearchBar from '../components/SearchBar';
 import ChartData from '../components/ChartData';
 import LatestBlocks from '../components/LatestBlocks';
 import Container from '@material-ui/core/Container';
-
-
-
+import NetworkDropdown from '../components/NetworkDropdown';
+import Grid from '@material-ui/core/Grid';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import LatestTransactions from '../components/LatestTransactions'
 
 
 
@@ -113,8 +114,9 @@ const Layout = (props: { children: React.ReactNode; }) => {
         >
           <Toolbar>
             <Typography variant="h6" noWrap className={classes.title}>
-              Celo
+            <img src="/images/celo_logo.svg" className="img-fluid logo"/>
             </Typography>
+            <div><NetworkDropdown /></div>
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -126,6 +128,8 @@ const Layout = (props: { children: React.ReactNode; }) => {
             </IconButton>
           </Toolbar>
         </AppBar>
+        <Grid container spacing={1} style={{ justifyContent: 'center'}}>
+      <Grid item xs={11} >
         <main
           className={clsx(classes.content, {
             [classes.contentShift]: open,
@@ -135,8 +139,11 @@ const Layout = (props: { children: React.ReactNode; }) => {
            <div>  <SearchBar /> </div>
           <div> <ChartData /> </div>
         <div>  <LatestBlocks /> </div>
+        <div><LatestTransactions /></div>
           
         </main>
+        </Grid>
+        </Grid>
         <Drawer
           className={classes.drawer}
           variant="persistent"
@@ -161,12 +168,12 @@ const Layout = (props: { children: React.ReactNode; }) => {
           </List>
           <Divider />
           <List>
-            {['Sign In With Ledger'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
+          <ListItem button >
+              <ListItemIcon >
+                <VpnKeyIcon />
+                </ListItemIcon>
+              <ListItemText primary={'Sign In With Ledger'} />
+            </ListItem>
           </List>
         </Drawer>
       </div>

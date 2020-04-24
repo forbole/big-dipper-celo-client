@@ -6,6 +6,8 @@ import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
 import Slider from '@material-ui/core/Slider';
 import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+
 
 
 const useStyles = makeStyles(({ spacing, palette }) => {
@@ -16,12 +18,19 @@ const useStyles = makeStyles(({ spacing, palette }) => {
         display: 'flex',
       },
     card: {
-    display: 'inline-block',
+    display: 'block-inline',
     justifyContent: 'center',
       //padding: 10,
-      minWidth: 88,
-      height: 60,
-      width: 173,
+      //  minWidth: 170,
+      //  maxWidth: 200,
+       margin: '2%',
+      //  paddingLeft: '2%',
+      //  backr: '#fff',
+      borderLeft: 'thick solid #FBCC5C',
+     
+
+      // height: 60,
+      // width: 173,
       borderRadius: 5,
       boxShadow: '0 2px 4px 0 rgba(138, 148, 159, 0.2)',
       '& > *:nth-child(1)': {
@@ -30,9 +39,9 @@ const useStyles = makeStyles(({ spacing, palette }) => {
       '& > *:nth-child(2)': {
         flex: 'auto',
       },
-      background: '#43484C'
+      background: '#43484C',
+      alignItems: 'center',
     },
-    avatar: {},
     heading: {
       fontFamily: family,
       fontSize: 25,
@@ -48,81 +57,72 @@ const useStyles = makeStyles(({ spacing, palette }) => {
       marginTop: 2,
       marginLeft: '15px',
     },
-    value: {
-      marginLeft: 8,
-      fontSize: 14,
-      color: palette.grey[500],
-    },
+    
   };
 });
 
-const useSliderStyles = makeStyles(() => ({
-  root: {
-    height: 4,
-    justifyContent: 'center',
-
-  },
-//   rail: {
-//     borderRadius: 10,
-//     height: 4,
-//     backgroundColor: 'rgb(202,211,216)',
-//   },
-//   track: {
-//     borderRadius: 10,
-//     height: 4,
-//     backgroundColor: 'rgb(117,156,250)',
-//   },
-  thumb: {
-    display: 'none',
-  },
-}));
 
 const KanbanCard = () => {
   const styles = useStyles();
-  const sliderStyles = useSliderStyles();
+
   return (
-    <Container style={{ marginTop: 10 }} >
-      <div className="chart-card mb-r"  >
-    <Card className={cx(styles.card)} elevation={0}  style={{ justifyContent: 'center' }}>
+    <div className="chart-card mb-r "  >
+    <Grid container spacing={1} style={{ marginTop: 10, marginBottom: 10}} >
+    <Grid item xs={6} sm={6} md={3} lg={2} xl={2}>
+    <Card className={cx(styles.card)} elevation={0}>
       <Box >
       <div className={styles.subheader}>cGLD Price</div>
         <div className={styles.heading}>$2.8</div>
       </Box>
     </Card>
-    <Card className={cx(styles.card)} elevation={0}  style={{ justifyContent: 'center' }}>
+    </Grid>
+    <Grid item xs={6} md={3} lg={2} >
+    <Card className={cx(styles.card)} elevation={0} >
       <Box>
-      <div className={styles.subheader}>cGLD Price</div>
-        <div className={styles.heading}>$2.8</div>
+      <div className={styles.subheader}>Market Cap</div>
+        <div className={styles.heading}>$10,413,896</div>
       </Box>
     </Card>
-    <Card className={cx(styles.card)} elevation={0}  style={{ justifyContent: 'center' }}>
+    </Grid>
+    <Grid item xs={6}  md={3} lg={2}  >
+    <Card className={cx(styles.card)} elevation={0}>
       <Box>
-      <div className={styles.subheader}>cGLD Price</div>
-        <div className={styles.heading}>$2.8</div>
+      <div className={styles.subheader}>Average block time</div>
+        <div className={styles.heading}>5.6 seconds</div>
       </Box>
     </Card>
-    <Card className={cx(styles.card)} elevation={0}  style={{ justifyContent: 'center' }}>
-      <Box>
-      <div className={styles.subheader}>cGLD Price</div>
-        <div className={styles.heading}>$2.8</div>
+    </Grid>
+    <Grid item xs={6} md={3} lg={2}  >
+    <Card className={cx(styles.card)} elevation={0}>
+      <Box >
+      <div className={styles.subheader}>Total transactions</div>
+        <div className={styles.heading}>15,545</div>
       </Box>
     </Card>
-    <Card className={cx(styles.card)} elevation={0}  style={{ justifyContent: 'center' }}>
+    </Grid>
+    
+    <Grid item xs={6} md={3} lg={2} >
+    <Card className={cx(styles.card)} elevation={0}  >
       <Box>
-      <div className={styles.subheader}>cGLD Price</div>
-        <div className={styles.heading}>$2.8</div>
+      <div className={styles.subheader}>Total blocks</div>
+        <div className={styles.heading}>1,074,922</div>
       </Box>
     </Card>
-    <Card className={cx(styles.card)} elevation={0}  style={{ justifyContent: 'center' }}>
+    </Grid>
+
+    <Grid item xs={6} md={3} lg={2} >
+    <Card className={cx(styles.card)} elevation={0} >
       <Box>
-      <div className={styles.subheader}>cGLD Price</div>
-        <div className={styles.heading}>$2.8</div>
+      <div className={styles.subheader}>Wallet addresses</div>
+        <div className={styles.heading}>2,737</div>
         {/* <Box display={'flex'} alignItems={'center'}>
         </Box> */}
       </Box>
     </Card>
+    </Grid>
+
+    </Grid>
     </div>
-</Container>
   );
 };
 

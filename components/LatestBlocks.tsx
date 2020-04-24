@@ -10,8 +10,9 @@ import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
-
-
+import Grid from '@material-ui/core/Grid';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { Divider } from '@material-ui/core';
 
 
 const useStyles = makeStyles({
@@ -21,10 +22,6 @@ const useStyles = makeStyles({
         justifyContent: 'center',
         padding: 0
       },
-  table: {
-    minWidth: 100,
-    
-  },
   container: {
     padding: 0
   },
@@ -32,9 +29,14 @@ const useStyles = makeStyles({
     fontSize: 18,
     letterSpacing: '1px',
     padding: 10,
-    display: 'inline-block',
+    display: 'block',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
+  },
+  link:{
+    float: 'right',
+    textAlign: 'right',
+
   }
 });
 
@@ -54,13 +56,15 @@ export default function DenseTable() {
   const classes = useStyles();
   const preventDefault = (event: React.SyntheticEvent) => event.preventDefault();
   return (
-      <Container style={{ marginTop: 10 }}>
+    <Grid container spacing={1} style={{ marginTop: 10, marginBottom: 10}} >
+    <Grid item xs={12} md={12} lg={12} >
     <TableContainer component={Paper}>
-        <Box className={classes.box}>Latest Blocks  <Link href="#" onClick={preventDefault} color="secondary"  style={{ textAlign: 'right' }}>
+        <Box className={classes.box}>Latest Blocks  <Link className={classes.link} href="#" onClick={preventDefault} color="secondary">
     {'view more'}
   </Link>
         </Box>
-      <Table className={classes.table} size="small" aria-label="a dense table">
+        <Divider variant='middle' />
+      <Table  size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
             <TableCell>Height</TableCell>
@@ -73,9 +77,15 @@ export default function DenseTable() {
           {rows.map((row) => (
             <TableRow key={row.height}>
               <TableCell component="th" scope="row">
+              <Link href="#" onClick={preventDefault} color="secondary"  align="right" >
                 {row.height}
+                </Link>
               </TableCell>
-              <TableCell align="right">{row.miner}</TableCell>
+              <TableCell align="right">
+              <Link href="#" onClick={preventDefault} color="secondary"  align="right" >
+                {row.miner}
+                </Link>
+                </TableCell>
               <TableCell align="right">{row.txs}</TableCell>
               <TableCell align="right">{row.time}</TableCell>
             </TableRow>
@@ -83,6 +93,7 @@ export default function DenseTable() {
         </TableBody>
       </Table>
     </TableContainer>
-    </Container>
+    </Grid>
+    </Grid>
   );
 }
