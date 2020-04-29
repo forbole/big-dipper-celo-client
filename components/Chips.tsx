@@ -8,11 +8,11 @@ import DoneIcon from '@material-ui/icons/Done';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: 'flex',
       justifyContent: 'center',
       flexWrap: 'wrap',
       '& > *': {
         margin: theme.spacing(0.5),
+        marginLeft: '1rem'
       },
     },
   }),
@@ -27,7 +27,7 @@ export default function Chips(props: String) {
       <Chip size="small" label="Token Transfer" style={{backgroundColor: 'rgba(217, 131, 28, 1)',}}/>
     </div>
     case 'Contract Call':
-      return <div className={classes.root} >
+      return <div className={classes.root}>
       <Chip size="small" label="Contract Call" style={{backgroundColor: 'rgba(31, 217, 110, 1)'}}/>
     </div>
     default:

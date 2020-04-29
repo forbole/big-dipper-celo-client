@@ -19,11 +19,11 @@ const useStyles = makeStyles({
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'center',
-        padding: '0rem'
+        padding: '0rem',
       },
     container: {
         padding: '0rem',
-        margin: '2rem 0 1rem 0',
+        margin: '1rem 0 1rem 0',
 
     },
     box:{
@@ -70,27 +70,27 @@ export default function DenseTable() {
       <Table  size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell align="right">Height</TableCell>
-            <TableCell align="right">Miner</TableCell>
-            <TableCell align="right">Txs</TableCell>
-            <TableCell align="right">Time</TableCell>
+            <TableCell align="left">Height</TableCell>
+            <TableCell align="left">Miner</TableCell>
+            <TableCell align="left">Txs</TableCell>
+            <TableCell align="left">Time</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.height}>
-              <TableCell component="th" scope="row">
-              <Link href="#" onClick={preventDefault} color="secondary"  align="right" >
+              <TableCell component="th" scope="row"  align="left" >
+              <Link href="#" onClick={preventDefault} color="secondary" >
                 {row.height}
                 </Link>
               </TableCell>
-              <TableCell align="right">
-              <Link href="#" onClick={preventDefault} color="secondary"  align="right" >
+              <TableCell align="left">
+              <Link href="#" onClick={preventDefault} color="secondary" >
                 {row.miner}
                 </Link>
                 </TableCell>
-              <TableCell align="right">{row.txs}</TableCell>
-              <TableCell align="right">{row.time}</TableCell>
+              <TableCell align="left">{row.txs}</TableCell>
+              <TableCell align="left">{row.time}</TableCell>
             </TableRow>
           ))}
         </TableBody>

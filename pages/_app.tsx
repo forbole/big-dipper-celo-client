@@ -52,9 +52,7 @@ export default class TSApp extends App<AppProps, AppState>{
               <Component {...pageProps} />
             </Layout>
             {/* </Provider> */}
-            <footer>
           <Footer />
-      </footer>
         </ThemeProvider>
       </React.Fragment>
     );

@@ -1,22 +1,7 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-// import AurulentsansmonoWoff2 from './fonts/aurulentsansmono-regular.woff2';
-// import TSIcon from './fonts/icomoon.woff';
 import red from '@material-ui/core/colors/red';
 
-// const aurulentsansmono = {
-//   fontFamily: 'Aurulent Sans Mono',
-//   fontStyle: 'normal',
-//   fontDisplay: 'swap',
-//   fontWeight: 400,
-//   src: `
-//     local('Raleway'),
-//     local('Raleway-Regular'),
-//     url(${AurulentsansmonoWoff2}) format('woff')
-//   `,
-//   unicodeRange:
-//     'U+30-39',
-// };
-// Create a theme instance.
+
 
 const theme = createMuiTheme({
   palette: {
@@ -43,8 +28,6 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: [
-      'SF Pro Text',
-      'Roboto',
       '-apple-system',
       'BlinkMacSystemFont',
       '"Segoe UI"',

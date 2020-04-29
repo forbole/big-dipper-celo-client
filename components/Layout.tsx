@@ -14,32 +14,24 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import SearchBar from '../components/SearchBar';
-import ChartData from '../components/ChartData';
-import LatestBlocks from '../components/LatestBlocks';
-import Container from '@material-ui/core/Container';
 import NetworkDropdown from '../components/NetworkDropdown';
-import Grid from '@material-ui/core/Grid';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import LatestTransactions from '../components/LatestTransactions'
-import Footer from '../components/Footer';
 import Link from '../components/Link';
-import Newfile from '../components/Newfile'
 
 
 
 
 
 
-const drawerWidth = 370;
+const drawerWidth = 390;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
+      margin: '0.5rem'
     },
     appBar: {
       transition: theme.transitions.create(['margin', 'width'], {
@@ -57,6 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       flexGrow: 1,
+      margin: '1rem 0 0 1rem',
     },
     hide: {
       display: 'none',

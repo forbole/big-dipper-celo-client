@@ -6,8 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 
-
-
 const useStyles = makeStyles(({ spacing, palette }) => {
   return {
     root: {
@@ -37,7 +35,7 @@ const useStyles = makeStyles(({ spacing, palette }) => {
       margin: '1rem 0 0.5rem 1rem'
     },
     container: {
-      margin: '2rem 0 1rem 0',
+      margin: '0 0 1rem 0',
     }
     
   };
@@ -49,7 +47,7 @@ const ChartData = () => {
 
   return (
     <div >
-    <Grid container spacing={1} className={classes.container} >
+    <Grid container className={classes.container} >
     <Grid item xs={6} md={3} lg={2} >
     <Card className={cx(classes.card)} elevation={0}>
       <Typography variant="caption" className={classes.label} >

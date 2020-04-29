@@ -108,7 +108,7 @@ function createData(height: string, miner: string, txs: string, gasUsed: string,
   ];
   
 
-const useStyles = makeStyles(({ spacing, palette }) => {
+const useStyles = makeStyles(({ spacing }) => {
     return {
   root: {
     width: '100%',

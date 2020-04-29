@@ -8,6 +8,10 @@ import Divider from '@material-ui/core/Divider';
 import Chips from '../components/Chips';
 
 
+
+
+
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -27,6 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
         overflow: 'hidden',
       },
     leftInline:{
+      display: 'block',
       overflow: 'auto',
       padding: '0 0 0 1rem',
     },
@@ -48,6 +53,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     chip:{
       display: 'block',
+      // overflow: 'auto',
+      //align: 'left',
+      //padding: '0 3rem 0 0',
     }
   }),
 );
@@ -70,49 +78,43 @@ export default function LatestTransactions() {
                 <Divider variant='middle'/>
           </Grid>
           </Grid>
-
+          
           <Grid container spacing={1}>
-              <Grid item xs={8} md={2} >
+         
+          <Grid item xs={6} container direction="column" >
+              <Grid item xs={12}  >
                 <Typography  variant="body2" gutterBottom className={classes.leftInline}>
                 Tx#   <Link href="#" color="secondary" >
-                {" 0xd3b4592hfhtre8w8s5v2d"}
+                {" 0xd3b4592hfhtr"}
                </Link>
                 </Typography>
-                </Grid>
-                <Grid item xs={4} md={1}>
-                <Typography variant="body2" gutterBottom align='right' className={classes.rightInline}>
-                1 min ago
-                </Typography>
-                </Grid>
-
-                <Grid item xs={6} md={3} >
                 <Typography variant="body2"  gutterBottom className={classes.leftInline}>
                    From  <Link href="#" color="secondary" >
                  {" 0xd3b4592hrsthrt"}
                </Link>
                  </Typography>
-                 </Grid>
-                 <Grid item xs={6} md={3}>
-                <Typography variant="body2" gutterBottom align='left' className={classes.rightInline}>
-                   To   <Link href="#" color="secondary" >
-                 {" 0xd3b4592hdsw12df"}
-               </Link>
-                 </Typography>
-                 </Grid>
-                 <Grid item xs={6}  md={1}>
                  <Typography  variant="body2" gutterBottom className={classes.chip}>
                  <Chips value={'Contract Call'}/>
                 </Typography>
 
               </Grid>
+            </Grid>
 
-              
-              
-                 <Grid item xs={6}  md={2}>
+            <Grid item xs={6} container direction="column" >
+              <Grid item xs={12} >
+                <Typography variant="body2" gutterBottom align='right' className={classes.rightInline}>
+                1 min ago
+                </Typography>
+                <Typography variant="body2" gutterBottom align='left' className={classes.rightInline}>
+                   To   <Link href="#" color="secondary" >
+                 {" 0xd3b4592h"}
+               </Link>
+                 </Typography>
                 <Typography variant="body2" gutterBottom color="textSecondary" align='right' className={classes.rightInline}>
                   302.140759 cGLD
                 </Typography>
               </Grid>
+        </Grid>
         </Grid>
       </Card>
     </div>

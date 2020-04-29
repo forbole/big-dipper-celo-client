@@ -27,23 +27,22 @@ import Avatar from '@material-ui/core/Avatar';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: 'flex',
       backgroundColor: '#131619',
       opacity: 1,
-      overflow: 'hidden',
-      maxWidth: 'inherit',
+      padding: '1.5rem 1rem'
     },
     text:{
         letterSpacing: '1px',
-        padding: '1rem',
+        padding: '1rem 0',
         display: 'block',
         overflow: 'hidden',
       },
       socialMedia:{
-        margin: '1rem',
+        marginRight: '0.8em',
         display: 'inline-block',
-        overflow: 'hidden',
-
+        height: '2rem',
+        width: '2rem',
+        
       }
   }),
 );
@@ -54,17 +53,21 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Footer() {
     const classes = useStyles();
     return (
-        <Grid container className={classes.root}>
+      <footer>
+        <Grid container  className={classes.root}>
+          <Container maxWidth="lg">
         <Grid item  >
-        <img src="/images/celo_logo.svg" style={{ marginTop: '25px', marginLeft: '25px'}}/>
-          <Typography variant="body2" className={classes.text} align='center'>
+        <img src="/images/celo_logo.svg" />
+          <Typography variant="caption" className={classes.text} align='left'>
           Blockscout is a tool for inspecting and analyzing EVM based blockchains. Blockchain explorer for Ethereum Networks.
           </Typography>
           <Link href="https://discordapp.com/invite/6yWMkgM" className={classes.socialMedia}><img src="/images/discord_icon.svg" /></Link>
-          <Link href="https://github.com/celo-org" className={classes.socialMedia}><GitHubIcon fontSize="small"/></Link>
+          <Link href="https://github.com/celo-org" className={classes.socialMedia}><img src="/images/github_icon.svg" /></Link>
           <Link href="https://medium.com/celoorg" className={classes.socialMedia}><img src="/images/medium_icon.svg" /></Link>
-          <Link href="https://twitter.com/CeloOrg" className={classes.socialMedia}><TwitterIcon  fontSize="small"/></Link>
+          <Link href="https://twitter.com/CeloOrg" className={classes.socialMedia}><img src="/images/twitter_icon.svg" /></Link>
         </Grid>
+        </Container>
      </Grid>
+    </footer>
     );
   }
