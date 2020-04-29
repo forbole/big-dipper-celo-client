@@ -7,12 +7,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
+import Link from '../components/Link';
 import Grid from '@material-ui/core/Grid';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import { Divider } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+
 
 
 const useStyles = makeStyles({
@@ -20,24 +19,26 @@ const useStyles = makeStyles({
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'center',
-        padding: 0
+        padding: '0rem'
       },
-  container: {
-    padding: 0
-  },
-  box:{
-    fontSize: 18,
-    letterSpacing: '1px',
-    padding: 10,
-    display: 'block',
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-  },
-  link:{
-    float: 'right',
-    textAlign: 'right',
+    container: {
+        padding: '0rem',
+        margin: '2rem 0 1rem 0',
 
-  }
+    },
+    box:{
+        letterSpacing: '1px',
+        padding: '0.5rem',
+        display: 'block',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+    },
+    link:{
+        float: 'right',
+        textAlign: 'right',
+
+    }
+
 });
 
 function createData(height: string, miner: string, txs: string, time: string) {
@@ -56,18 +57,20 @@ export default function DenseTable() {
   const classes = useStyles();
   const preventDefault = (event: React.SyntheticEvent) => event.preventDefault();
   return (
-    <Grid container spacing={1} style={{ marginTop: 10, marginBottom: 10}} >
-    <Grid item xs={12} md={12} lg={12} >
+    <Grid container className={classes.container}  >
+    <Grid item xs={12} >
     <TableContainer component={Paper}>
-        <Box className={classes.box}>Latest Blocks  <Link className={classes.link} href="#" onClick={preventDefault} color="secondary">
+        <Typography variant="body1" className={classes.box} >
+        Latest Blocks
+       <Link href="/blocks" className={classes.link} color="secondary">
     {'view more'}
   </Link>
-        </Box>
+  </Typography> 
         <Divider variant='middle' />
       <Table  size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Height</TableCell>
+            <TableCell align="right">Height</TableCell>
             <TableCell align="right">Miner</TableCell>
             <TableCell align="right">Txs</TableCell>
             <TableCell align="right">Time</TableCell>

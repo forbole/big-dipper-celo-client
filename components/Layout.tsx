@@ -25,16 +25,21 @@ import NetworkDropdown from '../components/NetworkDropdown';
 import Grid from '@material-ui/core/Grid';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import LatestTransactions from '../components/LatestTransactions'
+import Footer from '../components/Footer';
+import Link from '../components/Link';
+import Newfile from '../components/Newfile'
 
 
 
-const drawerWidth = 320;
+
+
+
+const drawerWidth = 370;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
-     // paddingLeft: 0
     },
     appBar: {
       transition: theme.transitions.create(['margin', 'width'], {
@@ -113,13 +118,15 @@ const Layout = (props: { children: React.ReactNode; }) => {
           })}
         >
           <Toolbar>
-            <Typography variant="h6" noWrap className={classes.title}>
-            <img src="/images/celo_logo.svg" className="img-fluid logo"/>
+            <Typography  noWrap className={classes.title}>
+            <Link href="/" >
+            <img src="/images/celo_logo.svg" />
+            </Link>
             </Typography>
             <div><NetworkDropdown /></div>
             <IconButton
               color="inherit"
-              aria-label="open drawer"
+              aria-label="Open Menu"
               edge="end"
               onClick={handleDrawerOpen}
               className={clsx(open && classes.hide)}
@@ -127,23 +134,17 @@ const Layout = (props: { children: React.ReactNode; }) => {
               <MenuIcon />
             </IconButton>
           </Toolbar>
+          <SearchBar />
         </AppBar>
-        <Grid container spacing={1} style={{ justifyContent: 'center'}}>
-      <Grid item xs={11} >
         <main
           className={clsx(classes.content, {
             [classes.contentShift]: open,
-          })}  style={{ padding: 0 }}
+          })}  style={{ padding: 0, overflowY: 'auto' }}
         >
           <div className={classes.drawerHeader} />
-           <div>  <SearchBar /> </div>
-          <div> <ChartData /> </div>
-        <div>  <LatestBlocks /> </div>
-        <div><LatestTransactions /></div>
-          
+          {props.children}
         </main>
-        </Grid>
-        </Grid>
+
         <Drawer
           className={classes.drawer}
           variant="persistent"
@@ -152,6 +153,7 @@ const Layout = (props: { children: React.ReactNode; }) => {
           classes={{
             paper: classes.drawerPaper,
           }}
+          
         >
           <div className={classes.drawerHeader}>
             <IconButton onClick={handleDrawerClose}>
@@ -160,9 +162,14 @@ const Layout = (props: { children: React.ReactNode; }) => {
           </div>
           <Divider />
           <List>
-            {['Dashboard', 'Blocks', 'Transactions', 'Accounts', 'Proposals', 'Voting Power'].map((text, index) => (
+            {[<Link href="/" color="inherit" > {'Dashboard'} </Link>,
+            <Link href="/blocks" color="inherit" > {'Blocks'} </Link>,
+            <Link href="/transactions" color="inherit" > {'Transactions'} </Link>,
+            <Link href="/accounts" color="inherit" > {'Accounts'} </Link>,
+            <Link href="/proposals" color="inherit" > {'Proposals'} </Link>, 
+            <Link href="/votingPower" color="inherit" > {'Voting Power'} </Link>].map((text, index) => (
               <ListItem button key={text}>
-                <ListItemText primary={text} />
+                <ListItemText primary={text} onClick={handleDrawerClose} />
               </ListItem>
             ))}
           </List>
@@ -170,12 +177,13 @@ const Layout = (props: { children: React.ReactNode; }) => {
           <List>
           <ListItem button >
               <ListItemIcon >
-                <VpnKeyIcon />
+                <VpnKeyIcon color="secondary" />
                 </ListItemIcon>
-              <ListItemText primary={'Sign In With Ledger'} />
+              <ListItemText primary={' Sign In With Ledger'} onClick={handleDrawerClose}/>
             </ListItem>
           </List>
         </Drawer>
+
       </div>
     );
   }

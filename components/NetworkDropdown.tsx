@@ -4,23 +4,30 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
+import { Divider } from '@material-ui/core';
+
+
 
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    button: {
-      display: 'inline-block',
-      //marginTop: theme.spacing(2),
-      fontSize: 10,
+    root: {
+      display: 'flex',
+      '& > *': {
+        margin: theme.spacing(1),
+      },
     },
     formControl: {
-      //margin: theme.spacing(1),
-      minWidth: 140,
-      justifyContent: 'flex-start',
-      fontSize: 22,
-      marginBottom: 20,
+      minWidth: theme.spacing(14),
+      marginBottom: theme.spacing(2),
+    },
+    small: {
+      width: theme.spacing(2),
+      height: theme.spacing(2),
+      marginRight: theme.spacing(1),
     },
   }),
 );
@@ -47,7 +54,7 @@ export default function ControlledOpenSelect() {
     <div>
       <FormControl className={classes.formControl}>
         <InputLabel id="demo-controlled-open-select-label">
-        Select the testnet
+        <Typography align='center' variant="body2">Celo Alfajores</Typography>  
         </InputLabel>
         <Select
           labelId="demo-controlled-open-select-label"
@@ -59,16 +66,18 @@ export default function ControlledOpenSelect() {
           onChange={handleChange}
         >
           <MenuItem >
-              <img src="/images/celo_avatar.svg" className="img-responsive"/>
-              Celo Alfajores
+          <Avatar alt="Celo Alfajores" src="/images/celo_avatar.svg" className={classes.small} />
+              <Typography  variant="body2">Celo Alfajores</Typography> 
           </MenuItem>
+          <Divider variant='middle' />
           <MenuItem>
-              <img src="/images/celo_avatar.svg" className="img-responsive"/>
-              Celo Baklava
+          <Avatar alt="Celo Baklava" src="/images/celo_avatar.svg" className={classes.small} />
+          <Typography  variant="body2">Celo Baklava</Typography> 
           </MenuItem>
+          <Divider variant='middle' />
           <MenuItem>
-             <img src="/images/celo_avatar.svg" className="img-responsive"/>
-              Celo Integration
+          <Avatar alt="Celo Integration" src="/images/celo_avatar.svg" className={classes.small} />
+          <Typography  variant="body2">Celo Integration</Typography>  
           </MenuItem>
         </Select>
       </FormControl>

@@ -1,59 +1,3 @@
-// import React from 'react';
-// import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-// import TextField from '@material-ui/core/TextField';
-// import SearchIcon from '@material-ui/icons/Search';
-
-// const useStyles = makeStyles((theme: Theme) =>
-//   createStyles({
-//     root: {
-//       display: 'flex',
-//       flexWrap: 'wrap',
-//     },
-//     textField: {
-//       marginLeft: theme.spacing(1),
-//       marginRight: theme.spacing(1),
-//       width: '100ch',
-//     searchIcon: {
-//         width: '50ch',
-//         height: '100%',
-//         position: 'absolute',
-//         pointerEvents: 'none',
-//         display: 'flex',
-//         alignItems: 'center',
-//         justifyContent: 'center',
-//     },
-//     },
-//   }),
-// );
-
-// export default function LayoutTextFields() {
-//   const classes = useStyles();
-
-//   return (
-//     <div className={classes.root}>
-//        < SearchIcon />
-//       <div>
-//         <TextField
-//           id="filled-full-width centre"
-//           label="Label"
-//           style={{ margin: 8, }}
-//           placeholder="Placeholder"
-//           helperText="Full width!"
-//           fullWidth
-//           margin="normal"
-//           InputLabelProps={{
-//             shrink: true,
-//             // startAdornment: <InputAdornment position="start">Kg</InputAdornment>,
-//           }}
-//           variant="filled"
-
-//         />   
-//       </div>
-//     </div>
-//   );
-// }
-
-
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
@@ -79,29 +23,32 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexWrap: 'wrap',
       justifyContent: 'center',
-      padding: 0,
-      
+      padding:'0 0 1rem 0',
+      verticalAlign: 'middle',  
     },
-    margin: {
-      margin: theme.spacing(1),
-      marginTop: theme.spacing(6),
+    
+    inputLabel:{
+      height: '2rem',
+      verticalAlign: 'middle', 
+      padding: '0px 1rem 1rem',
+      fontSize: '12px',
     },
-    // withoutLabel: {
-    //   marginTop: theme.spacing(3),
-    // },
-
+    container:{
+      justifyContent: 'center', 
+      padding: '0rem'
+    }
   }),
 );
 
 interface State {
-  amount: string;
+  txSearch: string;
 
 }
 
-export default function InputAdornments() {
+export default function SearchBar() {
   const classes = useStyles();
   const [values, setValues] = React.useState<State>({
-    amount: '',
+    txSearch: '',
   });
 
   const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,30 +60,27 @@ export default function InputAdornments() {
 
   return (
     <div className={classes.root}>
-      {/* <div className="centre"> */}
-      <Grid container spacing={1} style={{ justifyContent: 'center'}}>
-      <Grid item xs={11} >
-        <FormControl fullWidth className={classes.margin} variant="filled">
+      <Grid container spacing={1} className={classes.container}>
+      <Grid item xs={10} md={7} >
+        <FormControl fullWidth variant="filled">
         
-          <InputLabel htmlFor="filled-adornment-amount"></InputLabel>
+          <InputLabel htmlFor="filled-adornment-amount" ></InputLabel>
          
           <FilledInput
+          className={classes.inputLabel}
             id="filled-adornment-amount"
-            value={values.amount}
-            margin="dense"
+            value={values.txSearch}
             fullWidth
-            onChange={handleChange('amount')}
+            disableUnderline={true}
+            onChange={handleChange('txSearch')}
             placeholder="Search by address / token symbol name / tx"
             startAdornment={<InputAdornment position="start">
                 <SearchIcon />
             </InputAdornment>}
           />
-        
         </FormControl>
         </Grid>
         </Grid> 
       </div>
-
-    //   </div>
   );
 }

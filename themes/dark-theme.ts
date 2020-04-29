@@ -32,10 +32,10 @@ const theme = createMuiTheme({
     },
     background: {
       paper: '#43484C',
-      default: '#2E3338'
+      default: '#2E3338',
     },
     text:{
-      primary: '#FFFFFFE6',
+      primary: 'rgba(255, 255, 255, 0.8)',
     },
     action:{
       active: '#3AD39E'
@@ -43,7 +43,7 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: [
-      'Hind Madurai',
+      'SF Pro Text',
       'Roboto',
       '-apple-system',
       'BlinkMacSystemFont',

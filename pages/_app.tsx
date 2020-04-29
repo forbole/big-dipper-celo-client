@@ -8,7 +8,7 @@ import App, { Container } from 'next/app';
 import withRedux from 'next-redux-wrapper';
 import { initStore } from '../redux/store';
 import { Provider } from 'react-redux';
-
+import Footer from '../components/Footer';
 
 interface AppProps {
 }
@@ -40,20 +40,21 @@ export default class TSApp extends App<AppProps, AppState>{
     return (
       <React.Fragment>
         <Head>
-          <title>Celo Big Dipper</title>
+          <title>Big Dipper For Celo</title>
           <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <ThemeProvider theme={DarkTheme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <Container maxWidth={false}>
           {/* <Provider store={store}> */}
             <Layout>
               <Component {...pageProps} />
             </Layout>
             {/* </Provider> */}
-          </Container>
+            <footer>
+          <Footer />
+      </footer>
         </ThemeProvider>
       </React.Fragment>
     );
