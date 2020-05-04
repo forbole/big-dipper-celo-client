@@ -20,67 +20,53 @@ import TablePagination from '@material-ui/core/TablePagination';
 
 
 interface Column {
-  id: 'height' | 'miner' | 'txs' | 'gasUsed' | 'gasLimit'| 'time';
+  id: 'rank' | 'moniker' | 'balance' | 'percentage' | 'txsCount';
   label: string;
   minWidth?: number;
 //   format?: (value: number) => string;
 }
 
 const columns: Column[] = [
-  { id: 'height', label: 'Height', },
-  { id: 'miner', label: 'Miner', },
-  {
-    id: 'txs',
-    label: 'Txs',
-  },
-  {
-    id: 'gasUsed',
-    label: 'Gas Used', 
-  },
-  {
-    id: 'gasLimit',
-    label: 'Gas Limit',
-  },
-  {
-    id: 'time',
-    label: 'Time',
-  },
+  { id: 'rank', label: 'Rank', },
+  { id: 'moniker', label: 'Moniker', },
+  { id: 'balance', label: 'Balance',},
+  { id: 'percentage', label: 'Percentage',},
+  { id: 'txsCount',label: 'Txs Count', },
 ];
 
 interface Data {
-    height: string;
-    miner: string;
-    txs: string;
-    gasUsed: string;
-    gasLimit: string;
-    time: string;
+    rank: string;
+    moniker: string;
+    balance: string;
+    percentage: string;
+    txsCount: string;
 }
 
-function createData(height: string, miner: string, txs: string, gasUsed: string, gasLimit: string, time: string) {
-    return { height, miner, txs, gasUsed, gasLimit, time};
+function createData(rank: string, moniker: string, balance: string, percentage: string, txsCount: string) {
+    return { rank, moniker, balance, percentage, txsCount};
   }
 
   const rows = [
-    createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-    createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-    createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-    createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-    createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-    createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-    createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-    createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-    createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-    createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-    createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-    createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-    createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-    createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-    createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-    createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-    createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-    createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-    createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-    createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
+    createData('1', 'Michelle Cl…', '12,859.009432 cGLD', '6%', '19' ),
+    createData('2', 'Rachel Hug…', '11,374.009573 cGLD', '5%', '24'),
+    createData('3', 'Will Chavez', '10,384.395824 cGLD', '9%', '65'),
+    createData('4', 'Will Gibson', '10,384.395824 cGLD', '6%', '444'),
+    createData('5', 'Pamela', '6,937.009423 cGLD', '12%', '22'),
+    createData('6', 'Michelle Cl…', '8,998.039425 cGLD', '10%', '114' ),
+    createData('7', 'Rachel Hug…', '6,937.009423 cGLD', '9%', '787' ),
+    createData('8', 'Will Chavez', '10,004.958632 cGLD', '2%', '78'),
+    createData('9', 'Will Gibson', '12,859.009432 cGLD', '1%', '5' ),
+    createData('10', 'Pamela',  '10,004.958631 cGLD', '6%', '22'),
+    createData('11', 'Michelle Cl…', '6,937.009423 cGLD', '7%', '35'),
+    createData('12', 'Rachel Hug…', '10,004.958632 cGLD', '8%', '67'),
+    createData('13', 'Will Chavez', '10,104.958632 cGLD', '1%', '42'),
+    createData('14', 'Will Gibson', '6,937.009423 cGLD', '4%', '12'),
+    createData('15', 'Pamela', '10,344.958632 cGLD','5%' ,'76' ),
+    createData('16', 'Michelle Cl…', '6,937.009423 cGLD', '6%', '45'),
+    createData('17', 'Rachel Hug…', '10,004.958632 cGLD', '14%', '34'),
+    createData('18', 'Will Chavez', '12,859.009431 cGLD', '11%', '37'),
+    createData('19', 'Will Gibson', '6,937.009423 cGLD', '18%', '57'),
+    createData('20', 'Pamela',  '10,004.958636 cGLD', '12%', '17'),
   ];
   
 
@@ -178,7 +164,7 @@ const classes = useStyles();
     </Hidden>
     <Paper className={classes.root}>
   <Typography variant="body1" className={classes.box} >
-              Latest Blocks </Typography>
+            Accounts </Typography>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -198,28 +184,25 @@ const classes = useStyles();
           <TableBody>
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
               return (
-                <TableRow key={row.height} >
+                <TableRow key={row.rank} >
             <TableCell component="th" scope="row" padding="checkbox" align="left" >
             <Link href="#"  color="secondary"  >
-            <Typography variant="caption" noWrap> {row.height}</Typography>
+            <Typography variant="caption" noWrap>{row.rank}</Typography>
               </Link>
             </TableCell>
             <TableCell align="left" padding="checkbox" >
             <Link href="#" color="secondary" >
-            <Typography variant="caption" noWrap>{row.miner}</Typography>
+            <Typography variant="caption" noWrap>{row.moniker}</Typography>
               </Link>
               </TableCell>
             <TableCell align="left" padding="checkbox" >
-            <Typography variant="caption" noWrap>{row.txs}</Typography>
+            <Typography variant="caption" noWrap>{row.balance}</Typography>
             </TableCell>
             <TableCell align="left" padding="checkbox" >
-            <Typography variant="caption" noWrap>{row.gasUsed}</Typography>
+            <Typography variant="caption" noWrap>{row.percentage}</Typography>
             </TableCell>
             <TableCell align="left" padding="checkbox" >
-            <Typography variant="caption" noWrap>{row.gasLimit}</Typography>
-            </TableCell>
-            <TableCell align="left" padding="checkbox">
-            <Typography variant="caption" noWrap>{row.time}</Typography>
+            <Typography variant="caption" noWrap>{row.txsCount}</Typography>
             </TableCell>
           </TableRow>
               );

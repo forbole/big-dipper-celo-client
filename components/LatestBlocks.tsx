@@ -15,10 +15,10 @@ import Typography from '@material-ui/core/Typography';
 
 
 const useStyles = makeStyles({
-    container: {
+    root: {
         padding: '0 0 1rem 0',
-        display: "inline-flex"
-
+        display: "inline-flex",
+        overflowY: 'auto'
 
     },
     box:{
@@ -32,6 +32,13 @@ const useStyles = makeStyles({
         float: 'right',
         textAlign: 'right',
 
+    },
+    divider: {
+      padding: '0 1rem'
+    },
+
+    cell:{
+      maxHeight: '1rem',
     }
 
 });
@@ -53,7 +60,7 @@ export default function DenseTable() {
   const preventDefault = (event: React.SyntheticEvent) => event.preventDefault();
   return (
     <span  >
-    <Grid container  xs={12} md={12} lg={5} className={classes.container} >
+    <Grid container  xs={12} md={12} lg={5} className={classes.root} >
     <Grid item xs={12} >
     <TableContainer component={Paper} >
         <Typography variant="body1" className={classes.box} >
@@ -62,7 +69,7 @@ export default function DenseTable() {
     {'view more'}
   </Link>
   </Typography> 
-        <Divider variant='middle' />
+        <Divider variant='middle' className={classes.divider} />
       <Table  size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
@@ -75,18 +82,22 @@ export default function DenseTable() {
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.height}>
-              <TableCell component="th" scope="row"  align="left" >
+              <TableCell component="th" scope="row"  align="left" size='small' >
               <Link href="#" onClick={preventDefault} color="secondary" >
-                {row.height}
+              <Typography variant="caption" noWrap >{row.height}</Typography>
                 </Link>
               </TableCell>
-              <TableCell align="left">
+              <TableCell align="left" size='small' >
               <Link href="#" onClick={preventDefault} color="secondary" >
-                {row.miner}
+              <Typography variant="caption" noWrap>{row.miner}</Typography>
                 </Link>
                 </TableCell>
-              <TableCell align="left">{row.txs}</TableCell>
-              <TableCell align="left">{row.time}</TableCell>
+              <TableCell align="left" size='small' >
+                <Typography variant="caption" noWrap>{row.txs}</Typography>
+              </TableCell>
+              <TableCell size='small' align="left">
+              <Typography variant="caption" noWrap>{row.time}</Typography>
+            </TableCell>
             </TableRow>
           ))}
         </TableBody>
