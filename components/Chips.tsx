@@ -1,9 +1,7 @@
 import React from 'react';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
-import FaceIcon from '@material-ui/icons/Face';
-import DoneIcon from '@material-ui/icons/Done';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -12,13 +10,12 @@ const useStyles = makeStyles((theme: Theme) =>
       flexWrap: 'wrap',
       '& > *': {
         margin: theme.spacing(0.5),
-        marginLeft: '1rem'
       },
     },
   }),
 );
 
-export default function Chips(props: String) {
+export default function Chips(props: any) {
   const classes = useStyles();
 
   switch(props.value){
@@ -29,6 +26,10 @@ export default function Chips(props: String) {
     case 'Contract Call':
       return <div className={classes.root}>
       <Chip size="small" label="Contract Call" style={{backgroundColor: 'rgba(31, 217, 110, 1)'}}/>
+    </div>
+    case 'Success':
+      return <div className={classes.root}>
+      <Chip size="small" icon={<CheckCircleIcon />} label="Success" style={{backgroundColor: 'rgba(31, 217, 110, 1)'}}/>
     </div>
     default:
       return  <div className={classes.root}>

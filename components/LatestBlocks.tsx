@@ -15,20 +15,15 @@ import Typography from '@material-ui/core/Typography';
 
 
 const useStyles = makeStyles({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        padding: '0rem',
-      },
     container: {
-        padding: '0rem',
-        margin: '1rem 0 1rem 0',
+        padding: '0 0 1rem 0',
+        display: "inline-flex"
+
 
     },
     box:{
         letterSpacing: '1px',
-        padding: '0.5rem',
+        padding: '1rem',
         display: 'block',
         overflow: 'hidden',
         whiteSpace: 'nowrap',
@@ -57,9 +52,10 @@ export default function DenseTable() {
   const classes = useStyles();
   const preventDefault = (event: React.SyntheticEvent) => event.preventDefault();
   return (
-    <Grid container className={classes.container}  >
+    <span  >
+    <Grid container  xs={12} md={12} lg={5} className={classes.container} >
     <Grid item xs={12} >
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} >
         <Typography variant="body1" className={classes.box} >
         Latest Blocks
        <Link href="/blocks" className={classes.link} color="secondary">
@@ -98,5 +94,6 @@ export default function DenseTable() {
     </TableContainer>
     </Grid>
     </Grid>
+    </span>
   );
 }

@@ -1,34 +1,10 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import MuiLink from '@material-ui/core/Link';
 import Link from '../components/Link';
-import clsx from 'clsx';
 import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import SearchBar from '../components/SearchBar';
-import ChartData from '../components/ChartData';
-import LatestBlocks from '../components/LatestBlocks';
-import NetworkDropdown from '../components/NetworkDropdown';
+import Hidden from '@material-ui/core/Hidden';
 import Grid from '@material-ui/core/Grid';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import LatestTransactions from '../components/LatestTransactions'
-import Footer from '../components/Footer'
 import cx from 'clsx';
 import Card from '@material-ui/core/Card';
 import Layout from '../components/Layout';
@@ -117,8 +93,9 @@ const useStyles = makeStyles(({ spacing }) => {
   },
   container: {
     maxHeight: 440,
-    padding: 'checkbox',
+    //padding: 'checkbox',
     borderRadius: 5,
+    width: '100%'
   },
 
   inline:{
@@ -143,10 +120,14 @@ const useStyles = makeStyles(({ spacing }) => {
     box:{
       letterSpacing: '1px',
       padding: '1rem',
-      display: 'block',
+      display: 'inline-flex',
       overflow: 'hidden',
       whiteSpace: 'nowrap',
     },
+    time:{
+      padding: '0.01em',
+      margin: '0.5em'
+    }
   }
 });
 
@@ -192,10 +173,12 @@ const classes = useStyles();
 
   return (
     <Layout>
+      <Hidden smUp>
     <DisplayCard />
+    </Hidden>
     <Paper className={classes.root}>
   <Typography variant="body1" className={classes.box} >
-              Latest Transactions </Typography>
+              Latest Blocks </Typography>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -204,7 +187,8 @@ const classes = useStyles();
                 <TableCell
                   key={column.id}
                   align="left"
-                  padding="checkbox"
+                  className={classes.inline}
+                  padding="checkbox" 
                 >
                   {column.label}
                 </TableCell>
@@ -228,7 +212,7 @@ const classes = useStyles();
             <TableCell align="left" padding="checkbox" >{row.txs}</TableCell>
             <TableCell align="left" padding="checkbox" >{row.gasUsed}</TableCell>
             <TableCell align="left" padding="checkbox" >{row.gasLimit}</TableCell>
-            <TableCell align="left" padding="checkbox" >{row.time}</TableCell>
+            <TableCell align="left" padding="checkbox">{row.time}</TableCell>
           </TableRow>
               );
             })}

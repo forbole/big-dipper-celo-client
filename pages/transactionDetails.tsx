@@ -9,6 +9,7 @@ import Layout from '../components/Layout';
 import CardContent from '@material-ui/core/CardContent';
 import FilledInput from '@material-ui/core/FilledInput';
 import FormControl from '@material-ui/core/FormControl';
+import Chips from '../components/Chips';
 
 
 
@@ -179,7 +180,7 @@ const classes = useStyles();
                         Status
                     </Typography>
                     <Typography variant="body2" component="h2">
-                        THE BADGE HERE
+                    <Chips value={'Success'}/>
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>

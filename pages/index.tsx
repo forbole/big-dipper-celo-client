@@ -60,6 +60,8 @@ import Layout from '../components/Layout';
 import ChartData from '../components/ChartData';
 import LatestBlocks from '../components/LatestBlocks';
 import LatestTransactions from '../components/LatestTransactions';
+import Grid from '@material-ui/core/Grid';
+import Transactions from '../components/Transactions'
 
 
 
@@ -67,8 +69,11 @@ export default function Index() {
   return (
     <Layout>
       <ChartData />
-      <LatestBlocks />
-      <LatestTransactions />
+<span> <LatestBlocks /></span>
+&nbsp;
+    <span> <LatestTransactions /></span> 
+     
+
       </Layout>
   );
 }

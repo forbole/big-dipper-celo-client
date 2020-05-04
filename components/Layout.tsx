@@ -19,8 +19,9 @@ import SearchBar from '../components/SearchBar';
 import NetworkDropdown from '../components/NetworkDropdown';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import Link from '../components/Link';
-
-
+import PriceCard from '../components/PriceCard';
+import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 
 
 
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
-      margin: '0.5rem'
+     // margin: '0.5rem'
     },
     appBar: {
       transition: theme.transitions.create(['margin', 'width'], {
@@ -71,7 +72,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3),
+      padding: theme.spacing(1),
       transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -116,7 +117,9 @@ const Layout = (props: { children: React.ReactNode; }) => {
             <img src="/images/celo_logo.svg" />
             </Link>
             </Typography>
+            
             <div><NetworkDropdown /></div>
+            
             <IconButton
               color="inherit"
               aria-label="Open Menu"
@@ -128,11 +131,16 @@ const Layout = (props: { children: React.ReactNode; }) => {
             </IconButton>
           </Toolbar>
           <SearchBar />
+          <Hidden smDown>
+          <div style={{display:'flex', margin: '-3rem 0rem 1rem 2.5rem'}}>
+              <PriceCard />
+            </div>
+            </Hidden>
         </AppBar>
         <main
           className={clsx(classes.content, {
             [classes.contentShift]: open,
-          })}  style={{ padding: 0, overflowY: 'auto' }}
+          })} style={{marginTop: '0.5rem'}} /*style={{ padding: 0, overflowY: 'auto' }}*/
         >
           <div className={classes.drawerHeader} />
           {props.children}

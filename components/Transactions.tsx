@@ -48,16 +48,22 @@ const useStyles = makeStyles(({ spacing }) => {
         paddingLeft: '0rem',
         },
         card: {
-        padding: '0 0.5rem',
+        padding: '0.5rem',
         justifyContent: 'center',
         //margin: '1rem',
         background: '#43484C',
         alignItems: 'center',
-        borderRadius: 5,           
+        borderRadius: 5,
+            boxShadow: '0 2px 4px 0 rgba(138, 148, 159, 0.2)',
+            '& > *:nth-child(1)': {
+            marginRight: spacing(2),
+            },
+            '& > *:nth-child(2)': {
+            flex: 'auto',
+            },
+            
         },
-        divider:{
-          margin: '0.5rem',
-      }
+
         }
 });
 
@@ -67,17 +73,17 @@ export default function LatestTransactions() {
 
   return (
     <span>
-    <Grid container className={classes.root} xs={12} md={12} lg={6} >
+    <Grid container className={classes.root} xs={12} md={5} >
       <Card className={classes.card}>
         <Grid container spacing={1} >
           <Grid item xs={12} >
           <Typography variant="body1" className={classes.box} >
               Latest Transactions
-              <Link href="/transactions" className={classes.link} color="secondary">
-    {'view more'}
-  </Link>
+       <Link href="/transactions" className={classes.link} color="secondary">
+             {'view more'}
+        </Link>
         </Typography> 
-                <Divider variant='middle' className={classes.divider} />
+                <Divider variant='middle'/>
           </Grid>
           </Grid>
 
@@ -127,7 +133,7 @@ export default function LatestTransactions() {
                 </Grid>
           </Grid>
   
-          <Divider variant='middle' className={classes.divider}/>
+          <Divider variant='middle' />
 
           <Grid container spacing={1} >
                 <Grid item xs={8} md={6} >
@@ -175,7 +181,7 @@ export default function LatestTransactions() {
                 </Grid>
           </Grid>
   
-          <Divider variant='middle' className={classes.divider} />
+          <Divider variant='middle' />
 
           <Grid container spacing={1} >
                 <Grid item xs={8} md={6} >
@@ -222,7 +228,8 @@ export default function LatestTransactions() {
                   </Typography>
                 </Grid>
           </Grid>
-
+  
+          <Divider variant='middle' />
 
       </Card>
     </Grid>

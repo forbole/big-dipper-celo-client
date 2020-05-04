@@ -49,7 +49,7 @@ export default class TSApp extends App<AppProps, AppState>{
           <CssBaseline />
           {/* <Provider store={store}> */}
             <Layout>
-              <Component {...pageProps} />
+              <Component {...pageProps} style={{display: "flex"}} />
             </Layout>
             {/* </Provider> */}
           <Footer />
