@@ -60,7 +60,7 @@ export default function DenseTable() {
   const preventDefault = (event: React.SyntheticEvent) => event.preventDefault();
   return (
     <span  >
-    <Grid container  xs={12} md={12} lg={5} className={classes.root} >
+    <Grid container  xs={12} md={12} lg={6} className={classes.root} >
     <Grid item xs={12} >
     <TableContainer component={Paper} >
         <Typography variant="body1" className={classes.box} >

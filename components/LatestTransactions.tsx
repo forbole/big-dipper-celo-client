@@ -17,7 +17,7 @@ const useStyles = makeStyles(({ spacing }) => {
         leftInline:{
         display: 'flex',
         overflow: 'auto',
-        padding: '0 0 0 0.2rem',
+        padding: '0 0 0 0.5rem',
         },
         rightInline:{
         display: 'flex',
@@ -39,7 +39,6 @@ const useStyles = makeStyles(({ spacing }) => {
         chip:{
         display: 'block',
         marginLeft: '1rem',
-    
         },
         containers: {
         display:'inline-block'
@@ -57,6 +56,10 @@ const useStyles = makeStyles(({ spacing }) => {
         },
         divider:{
           margin: '0.5rem',
+      },
+      time:{
+        paddingRight: '1rem',
+        float: 'right',
       }
         }
 });
@@ -67,7 +70,7 @@ export default function LatestTransactions() {
 
   return (
     <span>
-    <Grid container className={classes.root} xs={12} md={12} lg={6} >
+    <Grid container className={classes.root} xs={12} md={12} lg={5} >
       <Card className={classes.card}>
         <Grid container spacing={1} >
           <Grid item xs={12} >
@@ -82,30 +85,30 @@ export default function LatestTransactions() {
           </Grid>
 
           <Grid container spacing={1} >
-                <Grid item xs={8} md={6} >
+                <Grid item xs={9} md={10} >
 
-                  <Typography  variant="body2" gutterBottom className={classes.leftInline}>
+                  <Typography  variant="caption" gutterBottom className={classes.leftInline}>
                   Tx#   <Link href="#" color="secondary"  className={classes.leftInline}>
                   {" 0xd3b4592hfhtre8w8sd"}
                  </Link>
                   </Typography>
                   </Grid>
-                  <Grid item xs={4} md={6}>
-                  <Typography variant="body2" gutterBottom color="textSecondary" align='right' >
+                  <Grid item xs={3} md={2}>
+                  <Typography variant="caption" gutterBottom  className={classes.time}>
                   1 min ago
                   </Typography>
                   </Grid>
   
-                  <Grid item xs={6} md={4} >
-                  <Typography variant="body2"  gutterBottom className={classes.leftInline}>
+                  <Grid item xs={5} md={4} >
+                  <Typography variant="caption"  gutterBottom className={classes.leftInline}>
                      From  <Link href="#" color="secondary" className={classes.leftInline} >
                    {" 0xd3b4592hrsthrt"}
                  </Link>
                    </Typography>
                    </Grid>
 
-                   <Grid item xs={6} md={8}>
-                  <Typography variant="body2"  gutterBottom align='left' className={classes.rightInline}>
+                   <Grid item xs={7} md={8}>
+                  <Typography variant="caption"  gutterBottom align='left' className={classes.rightInline}>
                      To  <Link href="#" color="secondary" className={classes.leftInline} >
                      {" 0xd3b4592hdsw12dftuytuytrutr6"}
                  </Link>
@@ -114,14 +117,14 @@ export default function LatestTransactions() {
 
 
 
-                   <Grid item xs={6} md={6} >
-                   <Typography  variant="body2" gutterBottom className={classes.chip}>
+                   <Grid item xs={6} md={10} >
+                   <Typography  variant="caption" gutterBottom className={classes.chip}>
                    <Chips value={'Token Transfer'}/>
                   </Typography>
   
                 </Grid>
-                   <Grid item xs={6} md={6}>
-                  <Typography variant="body2" gutterBottom color="textSecondary" align='right' >
+                   <Grid item xs={6} md={2}>
+                  <Typography variant="caption" gutterBottom  className={classes.time} >
                     302.140759 cGLD
                   </Typography>
                 </Grid>
@@ -130,30 +133,30 @@ export default function LatestTransactions() {
           <Divider variant='middle' className={classes.divider}/>
 
           <Grid container spacing={1} >
-                <Grid item xs={8} md={6} >
+                <Grid item xs={9} md={6} >
 
-                  <Typography  variant="body2" gutterBottom className={classes.leftInline}>
+                  <Typography  variant="caption" gutterBottom className={classes.leftInline}>
                   Tx#   <Link href="#" color="secondary"  className={classes.leftInline}>
                   {" 0xd3b4592hfhtre8w8sd"}
                  </Link>
                   </Typography>
                   </Grid>
-                  <Grid item xs={4} md={6}>
-                  <Typography variant="body2" gutterBottom color="textSecondary" align='right' >
+                  <Grid item xs={3} md={6}>
+                  <Typography variant="caption" gutterBottom className={classes.time} >
                   1 min ago
                   </Typography>
                   </Grid>
   
-                  <Grid item xs={6} md={4}>
-                  <Typography variant="body2"  gutterBottom className={classes.leftInline}>
+                  <Grid item xs={5} md={4}>
+                  <Typography variant="caption"  gutterBottom className={classes.leftInline}>
                      From  <Link href="#" color="secondary" className={classes.leftInline} >
                    {" 0xd3b4592hrsthrt"}
                  </Link>
                    </Typography>
                    </Grid>
 
-                   <Grid item xs={6} md={8}>
-                  <Typography variant="body2"  gutterBottom align='left' className={classes.rightInline}>
+                   <Grid item xs={7} md={8}>
+                  <Typography variant="caption"  gutterBottom align='left' className={classes.rightInline}>
                      To  <Link href="#" color="secondary" className={classes.leftInline} >
                      {" 0xd3b4592hdsw12dftuytuytrutr6"}
                  </Link>
@@ -163,13 +166,13 @@ export default function LatestTransactions() {
 
 
                    <Grid item xs={6} md={6} >
-                   <Typography  variant="body2" gutterBottom className={classes.chip}>
+                   <Typography  variant="caption" gutterBottom className={classes.chip}>
                    <Chips value={'Token Transfer'}/>
                   </Typography>
-  
                 </Grid>
+                
                    <Grid item xs={6} md={6}>
-                  <Typography variant="body2" gutterBottom color="textSecondary" align='right'>
+                  <Typography variant="caption" gutterBottom  className={classes.time}>
                     302.140759 cGLD
                   </Typography>
                 </Grid>
@@ -178,30 +181,30 @@ export default function LatestTransactions() {
           <Divider variant='middle' className={classes.divider} />
 
           <Grid container spacing={1} >
-                <Grid item xs={8} md={6} >
+                <Grid item xs={9} md={6} >
 
-                  <Typography  variant="body2" gutterBottom className={classes.leftInline}>
+                  <Typography  variant="caption" gutterBottom className={classes.leftInline}>
                   Tx#   <Link href="#" color="secondary"  className={classes.leftInline}>
                   {" 0xd3b4592hfhtre8w8sd"}
                  </Link>
                   </Typography>
                   </Grid>
-                  <Grid item xs={4} md={6}>
-                  <Typography variant="body2" gutterBottom color="textSecondary" align='right' >
+                  <Grid item xs={3} md={6}>
+                  <Typography variant="caption" gutterBottom className={classes.time} >
                   1 min ago
                   </Typography>
                   </Grid>
   
-                  <Grid item xs={6} md={4}>
-                  <Typography variant="body2"  gutterBottom className={classes.leftInline}>
+                  <Grid item xs={5} md={4}>
+                  <Typography variant="caption"  gutterBottom className={classes.leftInline}>
                      From  <Link href="#" color="secondary" className={classes.leftInline} >
                    {" 0xd3b4592hrsthrt"}
                  </Link>
                    </Typography>
                    </Grid>
 
-                   <Grid item xs={6} md={8}>
-                  <Typography variant="body2"  gutterBottom align='left' className={classes.rightInline}>
+                   <Grid item xs={7} md={8}>
+                  <Typography variant="caption"  gutterBottom align='left' className={classes.rightInline}>
                      To  <Link href="#" color="secondary" className={classes.leftInline} >
                      {" 0xd3b4592hdsw12dftuytuytrutr6"}
                  </Link>
@@ -211,13 +214,13 @@ export default function LatestTransactions() {
 
 
                    <Grid item xs={6} md={6} >
-                   <Typography  variant="body2" gutterBottom className={classes.chip}>
+                   <Typography  variant="caption" gutterBottom className={classes.chip}>
                    <Chips value={'Token Transfer'}/>
                   </Typography>
   
                 </Grid>
                    <Grid item xs={6} md={6}>
-                  <Typography variant="body2" gutterBottom color="textSecondary" align='right' >
+                  <Typography variant="caption" gutterBottom className={classes.time} >
                     302.140759 cGLD
                   </Typography>
                 </Grid>

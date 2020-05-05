@@ -53,7 +53,7 @@ export default function SearchBar() {
   return (
     <div className={classes.root}>
       <Grid container spacing={1} className={classes.container}>
-      <Grid item xs={10} md={7} >
+      <Grid item xs={11} md={7} >
         <FormControl fullWidth variant="filled">
         
           <InputLabel htmlFor="filled-adornment-amount" ></InputLabel>

@@ -7,20 +7,22 @@ const theme = createMuiTheme({
   palette: {
     type: 'dark',
     primary: {
-      main: '#2E3338',
+      main: 'rgba(46, 51, 56, 1)',
     },
     secondary: {
-      main: '#3AD39E',
+      main: 'rgba(58, 211, 158, 1)',
     },
     error: {
       main: red.A400,
     },
     background: {
-      paper: '#43484C',
-      default: '#2E3338',
+      paper: 'rgba(67, 72, 76, 1)',
+      default: 'rgba(46, 51, 56, 1)',
     },
     text:{
       primary: 'rgba(255, 255, 255, 0.8)',
+      secondary: 'rgba(255, 255, 255, 0.6)',
+      
     },
     action:{
       active: '#3AD39E'
