@@ -140,7 +140,7 @@ const Layout = (props: { children: React.ReactNode; }) => {
         <main
           className={clsx(classes.content, {
             [classes.contentShift]: open,
-          })} style={{marginTop: '0.5rem'}} /*style={{ padding: 0, overflowY: 'auto' }}*/
+          })} style={{marginTop: '0.5rem', overflow: 'auto'}} /*style={{ padding: 0, overflowY: 'auto' }}*/
         >
           <div className={classes.drawerHeader} />
           {props.children}
