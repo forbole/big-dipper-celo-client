@@ -17,20 +17,20 @@ import Avatar from '@material-ui/core/Avatar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Button from '@material-ui/core/Button';
 import Chips from '../components/Chips';
-import AccountTransactions from '../components/accounts/AccountTransactions';
+import AccountTransactions from '../components/accounts/Transactions';
 import InternalTransactions from '../components/accounts/InternalTransactions';
 import Downtime from '../components/accounts/Downtime';
 import ValidatedBlocks from '../components/accounts/ValidatedBlocks';
+import AddressCard from '../components/accounts/AddressCard';
+import AccountDetails from '../components/accounts/AccountDetails';
 
 
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
         root: {
-            padding: '0 0 1rem 0',
-            display: 'inline-flex',
-            borderRadius: 5,
-            paddingBottom: '0',
+            display: 'block-inline',
+            justifyContent: 'center',
             },
 
         leftInline:{
@@ -40,8 +40,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
 
         bottomPadding:{
-            paddingBottom: '1rem',
-            overflow: 'auto'
+            overflow: 'auto',
+            padding: '1%'
         },
 
         
@@ -80,7 +80,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
         alignRight:{
             display: 'inline-block',
-            marginBottom: '1rem',
             float: 'right',
             paddingRight: '1rem'
         },
@@ -107,12 +106,6 @@ const useStyles = makeStyles((theme: Theme) =>
         divider:{
             margin: '0.5rem 0 0 0',
         },
-
-        card:{
-          display:'block'
-        }
-
-
         
  
 
@@ -122,41 +115,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 
-function AddressCard() {
-  const classes = useStyles();
-  return (
-    <Card >
-      <CardContent>
-            <Grid container spacing={1} className={classes.card} >
-                <Grid item xs={10} sm={10} md={10}>
-                <Typography variant="body2" gutterBottom >
-                         Address
-                    </Typography>
-                </Grid>
-                <Grid item xs={1} md={1} >
-                    <Typography variant="body2" gutterBottom align="right">
-                    <img src="/images/copy_icon.svg" />
-                    </Typography>
-                </Grid>
-                <Grid item xs={1} md={1}>
-                    <Typography variant="body2" gutterBottom align="right">
-                    <img src="/images/qr_code.svg" />
-                    </Typography>
-                </Grid>
-                <Grid item xs={12}>    
-                    <Typography variant="body2" align="left">
-                    0xB177242c85d34cc72e1cc0301eb6f08770ED8a6B
-                    </Typography>
-                </Grid>
 
-
-
-    </Grid>
-      </CardContent>
-    </Card>
-
-);
-}
 
 // function SearchBar() {
 //   const classes = useStyles();
@@ -247,7 +206,7 @@ function AccountOverview(){
 
     return(
         <span>
-    <Grid container className={classes.root} xs={12} md={12} lg={5} >
+    {/* <Grid container className={classes.root} xs={12} md={12} lg={6} > */}
       <Card className={classes.card}>
         <Grid container spacing={1} >
           <Grid item xs={12} >
@@ -259,13 +218,13 @@ function AccountOverview(){
           </Grid>
 
           <Grid container spacing={1} >
-                <Grid item xs={6} md={10} >
+                <Grid item xs={6}  >
 
                   <Typography  variant="body2" gutterBottom className={classes.alignLeft}>
                   Moniker   
                   </Typography>
                   </Grid>
-                  <Grid item xs={6} md={2}>
+                  <Grid item xs={6} >
                   <Typography variant="body2" gutterBottom  className={classes.alignRight}>
                   {"Michelle Clark"}
                   </Typography>
@@ -275,13 +234,13 @@ function AccountOverview(){
                     <Divider variant='middle'  />
                     </Grid>
 
-                  <Grid item xs={6} md={4} >
+                  <Grid item xs={6} md={9} >
                   <Typography variant="body2"  gutterBottom className={classes.alignLeft}>
                      Balance
                    </Typography>
                    </Grid>
                   
-                   <Grid item xs={6} md={2}>
+                   <Grid item xs={6} md={3}>
                   <Typography variant="body2" gutterBottom  className={classes.alignRight}>
                         {"14.9125447 cGLD"}
                   </Typography>
@@ -324,7 +283,7 @@ function AccountOverview(){
           
 
       </Card>
-    </Grid>
+    {/* </Grid> */}
     </span>
     );
 }
@@ -337,23 +296,33 @@ export default function Account() {
   return (
     <Layout >
         <Grid container className={classes.root} xs={12}  >
-            <Grid item xs={12} className={classes.bottomPadding}> 
+            <Grid item xs={12} lg={5} className={classes.bottomPadding}> 
                 <AddressCard />
             </Grid>
-            <Grid item xs={12} className={classes.bottomPadding}>
+            
+            <Grid item xs={12}  lg={5} className={classes.bottomPadding}>
                 <AccountOverview />
             </Grid>
-            <Grid item xs={12} className={classes.bottomPadding}>
+           
+
+            <Grid item xs={12} lg={5} className={classes.bottomPadding}>
                 <AccountTransactions />
             </Grid>
-            <Grid item xs={12} className={classes.bottomPadding}>
+           
+            <Grid item xs={12} lg={5} className={classes.bottomPadding}>
                 <InternalTransactions />
             </Grid>
-            <Grid item xs={12} className={classes.bottomPadding}>
-                <Downtime />
+            
+            <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+               <Downtime />
             </Grid>
-            <Grid item xs={12} className={classes.bottomPadding}>
-                <ValidatedBlocks />
+            
+            <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+               <ValidatedBlocks />
+            </Grid>
+
+            <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+               <AccountDetails />
             </Grid>
             
     </Grid>

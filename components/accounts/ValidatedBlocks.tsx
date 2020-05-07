@@ -20,8 +20,6 @@ import TablePagination from '@material-ui/core/TablePagination';
 interface Column {
   id: 'height' | 'miner' | 'txs' | 'gasUsed' | 'gasLimit'| 'time';
   label: string;
-  minWidth?: number;
-//   format?: (value: number) => string;
 }
 
 const columns: Column[] = [
@@ -117,7 +115,7 @@ const useStyles = makeStyles(({ spacing }) => {
   }
 });
 
-
+ 
 
 
 export default function ValidatedBlocks() {

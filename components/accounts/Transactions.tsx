@@ -12,6 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
 import Chips from '../Chips';
+import Divider from '@material-ui/core/Divider';
 
 
 interface Data {
@@ -84,7 +85,10 @@ const useStyles = makeStyles(({ spacing }) => {
             display: 'flex',
             overflow: 'auto',
             padding: '0 0 0 0.5rem',
-          }
+          },
+          divider:{
+            margin: '1rem 0 0 0',
+        },
 
   }
 });
@@ -92,7 +96,7 @@ const useStyles = makeStyles(({ spacing }) => {
 
 
 
-export default function Blocks() {
+export default function AccountTransactions() {
 
 const classes = useStyles();
   const [page, setPage] = React.useState(0);
@@ -110,7 +114,9 @@ const classes = useStyles();
   return (
     <Paper className={classes.root}>
   <Typography variant="body1" className={classes.box} >
-            Transactions (1000) </Typography>
+            Transactions (1000)
+            <Divider variant='middle' className={classes.divider}/>
+    </Typography>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

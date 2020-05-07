@@ -11,7 +11,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
-
+import Divider from '@material-ui/core/Divider';
 import Chips from '../Chips';
 
 
@@ -82,6 +82,9 @@ const useStyles = makeStyles(({ spacing }) => {
             paddingRight: '1rem',
             float: 'right',
         },
+        divider:{
+          margin: '1rem 0 0 0',
+      },
 
   }
 });
@@ -108,7 +111,10 @@ const classes = useStyles();
 
     <Paper className={classes.root}>
   <Typography variant="body1" className={classes.box} >
-            Internal Transactions (10) </Typography>
+            Internal Transactions (10)
+            <Divider variant='middle' className={classes.divider}/>
+   </Typography>
+            
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

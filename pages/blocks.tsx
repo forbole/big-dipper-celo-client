@@ -1,13 +1,6 @@
 import React from 'react';
-import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Link from '../components/Link';
-import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
-import Hidden from '@material-ui/core/Hidden';
-import Grid from '@material-ui/core/Grid';
-import cx from 'clsx';
-import Card from '@material-ui/core/Card';
-import Layout from '../components/Layout';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -15,15 +8,18 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import theme from '../themes/dark-theme';
 import TablePagination from '@material-ui/core/TablePagination';
-
+import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
+import Hidden from '@material-ui/core/Hidden';
+import Grid from '@material-ui/core/Grid';
+import cx from 'clsx';
+import Card from '@material-ui/core/Card';
+import Layout from '../components/Layout';
+import theme from '../themes/dark-theme';
 
 interface Column {
   id: 'height' | 'miner' | 'txs' | 'gasUsed' | 'gasLimit'| 'time';
   label: string;
-  minWidth?: number;
-//   format?: (value: number) => string;
 }
 
 const columns: Column[] = [
@@ -86,53 +82,53 @@ function createData(height: string, miner: string, txs: string, gasUsed: string,
 
 const useStyles = makeStyles(({ spacing }) => {
     return {
-  root: {
-    width: '100%',
-    padding: '0.5rem',
-    borderRadius: 5,
-  },
-  container: {
-    maxHeight: 440,
-    //padding: 'checkbox',
-    borderRadius: 5,
-    width: '100%'
-  },
-
-  inline:{
-    paddingLeft: '0rem',
-  },
-  card: {
-    padding: '1rem',
-    justifyContent: 'center',
-    marginBottom: '1rem',
-    background: '#43484C',
-    alignItems: 'center',
-    borderRadius: 5,
-      boxShadow: '0 2px 4px 0 rgba(138, 148, 159, 0.2)',
-      '& > *:nth-child(1)': {
-        marginRight: spacing(2),
-      },
-      '& > *:nth-child(2)': {
-        flex: 'auto',
-      },
-      
-    },
-    box:{
-      letterSpacing: '1px',
-      padding: '1rem',
-      display: 'inline-flex',
-      overflow: 'hidden',
-      whiteSpace: 'nowrap',
-    },
-    time:{
-      padding: '0.01em',
-      margin: '0.5em'
-    }
-  }
+          root: {
+            width: '100%',
+            padding: '0.5rem',
+            overflowY: 'auto'
+          },
+          container: {
+            borderRadius: 5,
+            width: '100%',
+            overflowY: 'auto'
+          },
+          box:{
+            letterSpacing: '1px',
+            padding: '1rem',
+            display: 'inline-flex',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+          },
+          tableCell:{
+              overflow: 'auto',
+              padding: '0.4rem'
+          },
+          table:{
+              background: '#4D5155',
+              padding: '0'
+          },
+          inline:{
+            paddingLeft: '0rem',
+          },
+          card: {
+            padding: '1rem',
+            justifyContent: 'center',
+            marginBottom: '1rem',
+            background: '#43484C',
+            alignItems: 'center',
+            borderRadius: 5,
+              boxShadow: '0 2px 4px 0 rgba(138, 148, 159, 0.2)',
+              '& > *:nth-child(1)': {
+                marginRight: spacing(2),
+              },
+              '& > *:nth-child(2)': {
+                flex: 'auto',
+              },
+              
+            },
+        }
 });
 
-
-  
 
 function DisplayCard() {
     const classes = useStyles();
@@ -172,25 +168,26 @@ const classes = useStyles();
   };
 
   return (
-    <Layout>
+<Layout>
       <Hidden smUp>
     <DisplayCard />
     </Hidden>
     <Paper className={classes.root}>
   <Typography variant="body1" className={classes.box} >
-              Latest Blocks </Typography>
+              Blocks </Typography>
       <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
+      <Paper className={classes.tableCell}>
+        <Table >
           <TableHead>
             <TableRow>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
                   align="left"
-                  className={classes.inline}
+                  className={classes.table}
                   padding="checkbox" 
                 >
-                  <Typography variant="caption" noWrap>{column.label}</Typography>
+                  <Typography variant="caption" noWrap className={classes.tableCell}>{column.label}</Typography>
                 </TableCell>
               ))}
             </TableRow>
@@ -199,23 +196,23 @@ const classes = useStyles();
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
               return (
                 <TableRow key={row.height} >
-            <TableCell component="th" scope="row" padding="checkbox" align="left" >
+            <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
             <Link href="#"  color="secondary"  >
-            <Typography variant="caption" noWrap> {row.height}</Typography>
+            <Typography variant="caption"  noWrap> {row.height}</Typography>
               </Link>
             </TableCell>
-            <TableCell align="left" padding="checkbox" >
+            <TableCell align="left" padding="checkbox" className={classes.tableCell}>
             <Link href="#" color="secondary" >
             <Typography variant="caption" noWrap>{row.miner}</Typography>
               </Link>
               </TableCell>
-            <TableCell align="left" padding="checkbox" >
+            <TableCell align="left" padding="checkbox" className={classes.tableCell}>
             <Typography variant="caption" noWrap>{row.txs}</Typography>
             </TableCell>
-            <TableCell align="left" padding="checkbox" >
+            <TableCell align="left" padding="checkbox" className={classes.tableCell}>
             <Typography variant="caption" noWrap>{row.gasUsed}</Typography>
             </TableCell>
-            <TableCell align="left" padding="checkbox" >
+            <TableCell align="left" padding="checkbox" className={classes.tableCell}>
             <Typography variant="caption" noWrap>{row.gasLimit}</Typography>
             </TableCell>
             <TableCell align="left" padding="checkbox">
@@ -226,6 +223,7 @@ const classes = useStyles();
             })}
           </TableBody>
         </Table>
+        </Paper>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
@@ -238,6 +236,5 @@ const classes = useStyles();
       />
     </Paper>
     </Layout>
-
 );
 }

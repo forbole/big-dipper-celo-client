@@ -56,6 +56,7 @@
 
 
 import React from 'react';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Layout from '../components/Layout';
 import ChartData from '../components/ChartData';
 import LatestBlocks from '../components/LatestBlocks';
@@ -64,16 +65,41 @@ import Grid from '@material-ui/core/Grid';
 import Transactions from '../components/Transactions'
 
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+        root: {
+            display: 'block-inline',
+            justifyContent: 'center',
+            },
+
+        bottomPadding:{
+            overflow: 'auto',
+            padding: '1%'
+          },
+
+          }),
+          );   
+      
+      
+      
 
 export default function Index() {
+  const classes = useStyles();
   return (
     <Layout>
-      <ChartData />
-<span> <LatestBlocks /></span>
-&nbsp;
-    <span> <LatestTransactions /></span> 
-     
-
-      </Layout>
+      <Grid container className={classes.root} xs={12}  >
+            <Grid item xs={12} className={classes.bottomPadding}> 
+                <ChartData />
+            </Grid>
+            <Grid item xs={12} lg={6} className={classes.bottomPadding}> 
+            <LatestBlocks />
+            </Grid>
+            <Grid item xs={12} lg={6} className={classes.bottomPadding}> 
+            <LatestTransactions />
+            </Grid>
+        </Grid>
+    </Layout>
   );
 }
+
+        

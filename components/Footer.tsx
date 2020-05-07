@@ -59,7 +59,7 @@ export default function Footer() {
         <Grid item  >
         <img src="/images/celo_logo.svg" />
           <Typography variant="caption" className={classes.text} align='left'>
-          Blockscout is a tool for inspecting and analyzing EVM based blockchains. Blockchain explorer for Ethereum Networks.
+          Big Dipper for Celo. Let’s make money connected.
           </Typography>
           <Link href="https://discordapp.com/invite/6yWMkgM" className={classes.socialMedia}><img src="/images/discord_icon.svg" /></Link>
           <Link href="https://github.com/celo-org" className={classes.socialMedia}><img src="/images/github_icon.svg" /></Link>

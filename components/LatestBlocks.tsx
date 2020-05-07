@@ -15,12 +15,6 @@ import Typography from '@material-ui/core/Typography';
 
 
 const useStyles = makeStyles({
-    root: {
-        padding: '0 0 1rem 0',
-        display: "inline-flex",
-        overflowY: 'auto'
-
-    },
     box:{
         letterSpacing: '1px',
         padding: '1rem',
@@ -45,7 +39,7 @@ const useStyles = makeStyles({
 
 function createData(height: string, miner: string, txs: string, time: string) {
   return { height, miner, txs, time};
-}
+} 
 
 const rows = [
   createData('1087144', 'Michelle Cl…', '7', '14 s ago'),
@@ -55,12 +49,12 @@ const rows = [
   createData('1087140', 'Pamela', '10', '2 mins ago'),
 ];
 
-export default function DenseTable() {
+export default function LatestBlocks() {
   const classes = useStyles();
   const preventDefault = (event: React.SyntheticEvent) => event.preventDefault();
   return (
     <span  >
-    <Grid container  xs={12} md={12} lg={6} className={classes.root} >
+    <Grid container >
     <Grid item xs={12} >
     <TableContainer component={Paper} >
         <Typography variant="body1" className={classes.box} >
