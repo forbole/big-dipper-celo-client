@@ -50,6 +50,7 @@ const useStyles = makeStyles(({ spacing }) => {
         float: 'left',
     },
 
+
   }
 });
 
@@ -66,6 +67,7 @@ const classes = useStyles();
                 <Grid item xs={12} >
                     <Typography  color="textSecondary" variant="subtitle1"  paragraph>
                         Account Details
+                        <Divider variant='middle' className={classes.divider}/>
                     </Typography>
                 </Grid>
                 <Divider  />

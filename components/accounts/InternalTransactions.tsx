@@ -83,7 +83,7 @@ const useStyles = makeStyles(({ spacing }) => {
             float: 'right',
         },
         divider:{
-          margin: '1rem 0 0 0',
+          margin: '0.5rem 0 0 0',
       },
 
   }

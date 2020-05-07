@@ -23,6 +23,7 @@ import Downtime from '../components/accounts/Downtime';
 import ValidatedBlocks from '../components/accounts/ValidatedBlocks';
 import AddressCard from '../components/accounts/AddressCard';
 import AccountDetails from '../components/accounts/AccountDetails';
+import Hidden from '@material-ui/core/Hidden';
 
 
 
@@ -106,6 +107,7 @@ const useStyles = makeStyles((theme: Theme) =>
         divider:{
             margin: '0.5rem 0 0 0',
         },
+
         
  
 
@@ -296,14 +298,33 @@ export default function Account() {
   return (
     <Layout >
         <Grid container className={classes.root} xs={12}  >
+          <Hidden lgUp>
             <Grid item xs={12} lg={5} className={classes.bottomPadding}> 
                 <AddressCard />
             </Grid>
-            
+            </Hidden>
+
+            <Hidden lgUp>
             <Grid item xs={12}  lg={5} className={classes.bottomPadding}>
                 <AccountOverview />
             </Grid>
-           
+            </Hidden>
+
+
+            <Hidden mdDown>
+            <Grid item xs={12} lg={5} className={classes.bottomPadding}> 
+                <AddressCard/>
+                <p></p>
+                <AccountOverview />
+            
+            </Grid>
+            </Hidden>
+
+            <Hidden mdDown>
+            <Grid item xs={12} lg={5} className={classes.bottomPadding}>  
+                <AccountDetails />
+            </Grid>
+            </Hidden>
 
             <Grid item xs={12} lg={5} className={classes.bottomPadding}>
                 <AccountTransactions />
@@ -321,10 +342,11 @@ export default function Account() {
                <ValidatedBlocks />
             </Grid>
 
+            <Hidden lgUp>
             <Grid item xs={12} lg={5} className={classes.bottomPadding}>
                <AccountDetails />
             </Grid>
-            
+            </Hidden>
     </Grid>
     </Layout>
   );
