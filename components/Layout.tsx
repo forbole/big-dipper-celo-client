@@ -1,19 +1,22 @@
 import React from 'react';
 import clsx from 'clsx';
-import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
+import { createStyles, makeStyles, useTheme, Theme  } from '@material-ui/core/styles';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import SearchBar from '../components/SearchBar';
 import NetworkDropdown from '../components/NetworkDropdown';
@@ -22,113 +25,163 @@ import Link from '../components/Link';
 import PriceCard from '../components/PriceCard';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
-
-
-
-
-const drawerWidth = 390;
+import PersonIcon from '@material-ui/icons/Person';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      display: 'flex',
-     // margin: '0.5rem'
-    },
-    appBar: {
-      transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-    },
-    appBarShift: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginRight: drawerWidth,
-    },
-    title: {
-      flexGrow: 1,
-      margin: '1rem 0 0 1rem',
-    },
-    hide: {
-      display: 'none',
-    },
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-    drawerPaper: {
-      width: drawerWidth,
-    },
-    drawerHeader: {
-      display: 'flex',
-      alignItems: 'center',
-      padding: theme.spacing(0, 1),
-      // necessary for content to be below app bar
-      ...theme.mixins.toolbar,
-      justifyContent: 'flex-start',
-    },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(1),
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      marginRight: -drawerWidth,
-    },
-    contentShift: {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginRight: 0,
-    },
-  }),
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: 'auto',
+  },
+  logo: {
+    flexGrow: 1,
+    margin: '1rem 0 0 1rem',
+    noWrap: 'true'
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(1),
+    marginTop: '4rem',
+    overflow: 'auto'
+  },
+  icon:{
+    minWidth: '1.7rem',
+  },
+
+  drawerLogo:{
+    margin: '0.5rem 1rem',
+    maxHeight: '1.5rem'
+  }
+
+}),
 );
 
+type Anchor = 'top' | 'left' | 'bottom' | 'right';
+
 const Layout = (props: { children: React.ReactNode; }) => {
-    const classes = useStyles();
-    const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
+  const anchor = 'right'
 
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+  let loggedIn = true;
 
-    return (
-      <div className={classes.root}>
+  const toggleDrawer = (anchor: Anchor, open: boolean) => (
+    event: React.KeyboardEvent | React.MouseEvent,
+  ) => {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      ((event as React.KeyboardEvent).key === 'Tab' ||
+        (event as React.KeyboardEvent).key === 'Shift')
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  const list = (anchor: Anchor) => (
+    <div
+      className={clsx(classes.list, {
+        [classes.fullList]: anchor === 'top' || anchor === 'bottom',
+      })}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <List>
+      <Link href="/" >
+            <img src="/images/celo_logo.svg" className={classes.drawerLogo}/>
+      </Link>
+        {[<Link href="/" color="inherit" > <Typography variant="body2" >
+        {'Dashboard'}
+      </Typography> </Link>,
+        <Link href="/blocks" color="inherit" > <Typography variant="body2"  >
+        {'Blocks'}
+      </Typography>  </Link>,
+        <Link href="/transactions" color="inherit" > <Typography variant="body2" >
+        {'Transactions'}
+      </Typography> </Link>,
+        <Link href="/accounts" color="inherit" > <Typography variant="body2"  >
+        {'Accounts'}
+      </Typography> </Link>,
+        <Link href="/proposals" color="inherit" ><Typography variant="body2"  >
+         {'Proposals'}
+      </Typography> </Link>,
+       <Link href="/validatorVotes" color="inherit" ><Typography variant="body2"  >
+        {'Validator Votes'}
+      </Typography> </Link>].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {[
+        <Link href="/" color="inherit" >
+           <Typography variant="body2" >
+           <ListItemIcon className={classes.icon}>
+                <PersonIcon color="inherit" fontSize="small"/>
+        </ListItemIcon>
+        {'Michelle Clark'}
+      </Typography> 
+      </Link>,
+
+        <Link href="/blocks" color="inherit" > 
+        <Typography variant="body2"  >
+        <ListItemIcon className={classes.icon}>
+                <ExitToAppIcon color="inherit"  fontSize="small" />
+        </ListItemIcon> 
+        {'Logout'}
+      </Typography>
+      </Link>,
+        <Link href="/transactions" color="inherit" >
+           <Typography variant="body2"  >
+           <ListItemIcon className={classes.icon}>
+                <VpnKeyIcon  color="inherit"  fontSize="small" />
+          </ListItemIcon>
+          {'Sign In With Ledger'}
+      </Typography> </Link>].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
+
+  return (
+    <div>
+      
+        <React.Fragment key={anchor}>
         <CssBaseline />
-        <AppBar
-          position="fixed"
-          className={clsx(classes.appBar, {
-            [classes.appBarShift]: open,
-          })}
-        >
-          <Toolbar>
-            <Typography  noWrap className={classes.title}>
-            <Link href="/" >
+        <AppBar position="fixed">
+        <Toolbar>
+            <Link href="/" className={classes.logo}>
             <img src="/images/celo_logo.svg" />
             </Link>
-            </Typography>
             
             <div><NetworkDropdown /></div>
-            
-            <IconButton
-              color="inherit"
-              aria-label="Open Menu"
-              edge="end"
-              onClick={handleDrawerOpen}
-              className={clsx(open && classes.hide)}
-            >
-              <MenuIcon />
-            </IconButton>
+          <Button onClick={toggleDrawer(anchor, true)} ><MenuIcon /></Button>
+          <SwipeableDrawer
+            anchor={anchor}
+            open={state[anchor]}
+            onClose={toggleDrawer(anchor, false)}
+            onOpen={toggleDrawer(anchor, true)}
+          >
+            {list(anchor)}
+          </SwipeableDrawer>
           </Toolbar>
           <SearchBar />
           <Hidden smDown>
@@ -137,56 +190,14 @@ const Layout = (props: { children: React.ReactNode; }) => {
             </div>
             </Hidden>
         </AppBar>
-        <main
-          className={clsx(classes.content, {
-            [classes.contentShift]: open,
-          })} style={{marginTop: '0.5rem', overflow: 'auto'}} /*style={{ padding: 0, overflowY: 'auto' }}*/
+        <main className={classes.content}
         >
-          <div className={classes.drawerHeader} />
+          
           {props.children}
         </main>
+        </React.Fragment>
 
-        <Drawer
-          className={classes.drawer}
-          variant="persistent"
-          anchor="right"
-          open={open}
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-          
-        >
-          <div className={classes.drawerHeader}>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
-            {[<Link href="/" color="inherit" > {'Dashboard'} </Link>,
-            <Link href="/blocks" color="inherit" > {'Blocks'} </Link>,
-            <Link href="/transactions" color="inherit" > {'Transactions'} </Link>,
-            <Link href="/accounts" color="inherit" > {'Accounts'} </Link>,
-            <Link href="/proposals" color="inherit" > {'Proposals'} </Link>, 
-            <Link href="/votingPower" color="inherit" > {'Voting Power'} </Link>].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemText primary={text} onClick={handleDrawerClose} />
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-          <ListItem button >
-              <ListItemIcon >
-                <VpnKeyIcon color="secondary" />
-                </ListItemIcon>
-              <ListItemText primary={' Sign In With Ledger'} onClick={handleDrawerClose}/>
-            </ListItem>
-          </List>
-        </Drawer>
-
-      </div>
-    );
-  }
-
+    </div>
+  );
+}
 export default Layout
