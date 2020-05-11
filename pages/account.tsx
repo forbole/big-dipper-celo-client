@@ -24,7 +24,9 @@ import ValidatedBlocks from '../components/accounts/ValidatedBlocks';
 import AddressCard from '../components/accounts/AddressCard';
 import AccountDetails from '../components/accounts/AccountDetails';
 import Hidden from '@material-ui/core/Hidden';
-
+import FilledInput from '@material-ui/core/FilledInput';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import SearchIcon from '@material-ui/icons/Search';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -108,7 +110,23 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: '0.5rem',
         },
 
+        searchbar: {
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          verticalAlign: 'middle',  
+        },
         
+        label:{
+          height: '2rem',
+          verticalAlign: 'middle', 
+          padding: '0 1rem 1rem 0',
+          fontSize: '12px',
+        },
+        container:{
+          justifyContent: 'center', 
+          padding: '0rem'
+        }
  
 
     }),
@@ -116,48 +134,48 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 
+    interface State {
+      tokenSearch: string;
+    
+    }
+    
 
+function TokenSearchBar() {
+  const classes = useStyles();
+  const [values, setValues] = React.useState<State>({
+    tokenSearch: '',
+  });
 
+  const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
 
-// function SearchBar() {
-//   const classes = useStyles();
-//   const [values, setValues] = React.useState<State>({
-//     txSearch: '',
-//   });
-
-//   const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setValues({ ...values, [prop]: event.target.value });
-//   };
-
-
-
-
-//   return (
-//     <div className={classes.root}>
-//       <Grid container spacing={1} className={classes.container}>
-//       <Grid item xs={11} md={7} >
-//         <FormControl fullWidth variant="filled">
+  return (
+    <div className={classes.searchbar}>
+      <Grid container spacing={1} className={classes.container}>
+      <Grid item xs={10}>
+        <FormControl fullWidth variant="filled">
         
-//           <InputLabel htmlFor="filled-adornment-amount" ></InputLabel>
+          <InputLabel htmlFor="filled-adornment-amount" ></InputLabel>
          
-//           <FilledInput
-//           className={classes.inputLabel}
-//             id="filled-adornment-amount"
-//             value={values.txSearch}
-//             fullWidth
-//             disableUnderline={true}
-//             onChange={handleChange('txSearch')}
-//             placeholder="Search by address / token symbol name / tx"
-//             startAdornment={<InputAdornment position="start">
-//                 <SearchIcon />
-//             </InputAdornment>}
-//           />
-//         </FormControl>
-//         </Grid>
-//         </Grid> 
-//       </div>
-//   );
-// }
+          <FilledInput
+          className={classes.label}
+            id="filled-adornment-amount"
+            value={values.tokenSearch}
+            fullWidth
+            disableUnderline={true}
+            onChange={handleChange('tokenSearch')}
+            placeholder="Search tokens"
+            startAdornment={<InputAdornment position="start">
+                <SearchIcon />
+            </InputAdornment>}
+          />
+        </FormControl>
+        </Grid>
+        </Grid> 
+      </div>
+  );
+}
 
 function TokenDropdown(){
   const classes = useStyles();
@@ -169,8 +187,10 @@ function TokenDropdown(){
     
     <InputLabel htmlFor="grouped-native-select" className={classes.inputLabel} >
     {celoGold}
-    </InputLabel>     
+    </InputLabel> 
+      
     <Select defaultValue="" id="grouped-select"  color="primary" className={classes.select} disableUnderline={true}>
+     <TokenSearchBar /> 
           <ListSubheader >ERC-20 (2)</ListSubheader>
           <Divider />
           <ListSubheader style={{padding: '0.5rem 0 0 1rem'}}><Typography variant="body2" gutterBottom color="textPrimary"  >
