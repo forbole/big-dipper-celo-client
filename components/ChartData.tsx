@@ -28,11 +28,11 @@ const useStyles = makeStyles(({ spacing, palette }) => {
         alignItems: 'center',
     },
     value: {
-      margin: '0rem 0 0 1rem'
+      margin: '0rem 0 0 0.3rem'
     },
     label: {
-      letterSpacing: '1px',
-      margin: '1rem 0 0.5rem 1rem'
+       margin: '1rem 0 0.5rem 0.3rem',
+       display: 'inline',
     },
     container: {
       //margin: '0 0 1rem 0',
@@ -53,7 +53,7 @@ const ChartData = () => {
       <Typography variant="caption" className={classes.label} >
         cGLD Price
       </Typography>
-      <Typography variant="h5" className={classes.value} >
+      <Typography variant="h6" className={classes.value} >
         $2.8
       </Typography>
     </Card>
@@ -64,7 +64,7 @@ const ChartData = () => {
     <Typography variant="caption" className={classes.label} >
         Market Cap
       </Typography>
-      <Typography variant="h5" className={classes.value} >
+      <Typography variant="h6" className={classes.value} >
         $10,413,896
       </Typography>
     </Card>
@@ -75,7 +75,7 @@ const ChartData = () => {
     <Typography variant="caption" className={classes.label} >
         Average block time
       </Typography>
-      <Typography variant="h5" className={classes.value} >
+      <Typography variant="h6" className={classes.value} >
         5.6 seconds
       </Typography>
     </Card>
@@ -86,7 +86,7 @@ const ChartData = () => {
     <Typography variant="caption" className={classes.label} >
         Total transactions
       </Typography>
-      <Typography variant="h5" className={classes.value} >
+      <Typography variant="h6" className={classes.value} >
         15,545
       </Typography>
     </Card>
@@ -97,7 +97,7 @@ const ChartData = () => {
       <Typography variant="caption" className={classes.label} >
           Total blocks
       </Typography>
-      <Typography variant="h5" className={classes.value} >
+      <Typography variant="h6" className={classes.value} >
           1,074,922
       </Typography>
 
@@ -109,7 +109,7 @@ const ChartData = () => {
     <Typography variant="caption" className={classes.label} >
             Wallet addresses
       </Typography>
-      <Typography variant="h5" className={classes.value} >
+      <Typography variant="h6" className={classes.value} >
             2,737
       </Typography>
     </Card>

@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
         button:{
           justifyContent: 'center',
-          minWidth: '10rem',
+          minWidth: '8rem',
           marginBottom: '1rem',
         },
 
@@ -105,7 +105,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
 
         divider:{
-            margin: '0.5rem 0 0 0',
+            margin: '0.5rem',
         },
 
         
@@ -215,7 +215,7 @@ function AccountOverview(){
           <Typography variant="body1" className={classes.box} >
               Overview
         </Typography> 
-                <Divider variant='middle' className={classes.divider} />
+                <Divider variant='middle'  />
           </Grid>
           </Grid>
 

@@ -77,6 +77,7 @@ export default function LatestTransactions() {
       <Card className={classes.card}>
         <Grid container spacing={1} >
           <Grid item xs={12} >
+            
           <Typography variant="body1" className={classes.box} >
               Latest Transactions
        <Link href="/transactions" className={classes.link} color="secondary">

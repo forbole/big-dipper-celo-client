@@ -124,7 +124,7 @@ const classes = useStyles();
                 <TableRow key={row.tx} >
             <TableCell component="th" scope="row" padding="checkbox"  >
             <Grid container spacing={1} style={{padding: '0.5rem 0'}}>
-                   <Grid item xs={9} md={10} >
+                   <Grid item xs={8}  >
   
                     <Typography  variant="caption"  className={classes.leftInline}>
                     Tx#   <Link href="#" color="secondary"  className={classes.leftInline}>
@@ -132,7 +132,7 @@ const classes = useStyles();
                     </Link>
                      </Typography>
                      </Grid>
-                     <Grid item xs={3} md={2}>
+                     <Grid item xs={4}>
                     <Typography variant="caption"   className={classes.alignRight}>
                     {row.time}
                     </Typography>
@@ -156,13 +156,13 @@ const classes = useStyles();
   
   
   
-                     <Grid item xs={6} md={10} >
+                     <Grid item xs={6}  >
                      <Typography  variant="caption"  className={classes.chip}>
                      <Chips value={row.chip}/>
                     </Typography>
     
                   </Grid>
-                     <Grid item xs={6} md={2}>
+                     <Grid item xs={6} >
                     <Typography variant="caption"   className={classes.alignRight} >
                       {row.total}
                     </Typography>

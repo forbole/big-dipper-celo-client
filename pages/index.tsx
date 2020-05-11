@@ -87,7 +87,7 @@ export default function Index() {
   const classes = useStyles();
   return (
     <Layout>
-      <Grid container className={classes.root} xs={12}  >
+      <Grid container className={classes.root}  >
             <Grid item xs={12} className={classes.bottomPadding}> 
                 <ChartData />
             </Grid>

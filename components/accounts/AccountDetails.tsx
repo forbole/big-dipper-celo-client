@@ -4,13 +4,11 @@ import Link from '../Link';
 import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import Layout from '../Layout';
-import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles(({ spacing }) => {
     return {
@@ -61,16 +59,20 @@ export default function AccountDetails() {
 const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
-      <CardContent>
+    <ExpansionPanel>
+    <ExpansionPanelSummary
+      expandIcon={<ExpandMoreIcon />}
+      aria-controls="panel1a-content"
+      id="panel1a-header"
+      >
+        <Typography variant="body1" > Account Details</Typography>
+        </ExpansionPanelSummary>
+    <ExpansionPanelDetails className={classes.root}>
+    <Grid container >              
+        <Divider variant='middle'/>
+    
             <Grid container spacing={1} justify="center" className={classes.item}>
-                <Grid item xs={12} >
-                    <Typography  color="textSecondary" variant="subtitle1"  paragraph>
-                        Account Details
-                        <Divider variant='middle' className={classes.divider}/>
-                    </Typography>
-                </Grid>
-                <Divider  />
+                
 
                 <Grid item xs={4} className={classes.item}>
                     <Typography variant="body2" className={classes.alignLeft}>
@@ -225,8 +227,9 @@ const classes = useStyles();
                 </Grid>
 
     </Grid>
-      </CardContent>
-    </Card>
 
+    </Grid>
+    </ExpansionPanelDetails>
+      </ExpansionPanel>  
 );
 }

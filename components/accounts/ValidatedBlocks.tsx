@@ -15,6 +15,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Divider from '@material-ui/core/Divider';
 
 
 interface Column {
@@ -134,9 +139,17 @@ const classes = useStyles();
 
   return (
 
-    <Paper className={classes.root}>
-  <Typography variant="body1" className={classes.box} >
-              Validated Blocks </Typography>
+    <ExpansionPanel>
+    <ExpansionPanelSummary
+      expandIcon={<ExpandMoreIcon />}
+      aria-controls="panel1a-content"
+      id="panel1a-header"
+      >
+        <Typography variant="body1" >Validated Blocks</Typography>
+        </ExpansionPanelSummary>
+    <ExpansionPanelDetails className={classes.root}>
+    <Grid container >              
+        <Divider variant='middle'/>
       <TableContainer className={classes.container}>
       <Paper className={classes.tableCell}>
         <Table >
@@ -196,6 +209,8 @@ const classes = useStyles();
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-    </Paper>
+    </Grid>
+    </ExpansionPanelDetails>
+      </ExpansionPanel>  
 );
 }

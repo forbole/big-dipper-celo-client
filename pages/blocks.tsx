@@ -16,6 +16,7 @@ import cx from 'clsx';
 import Card from '@material-ui/core/Card';
 import Layout from '../components/Layout';
 import theme from '../themes/dark-theme';
+import Divider from '@material-ui/core/Divider';
 
 interface Column {
   id: 'height' | 'miner' | 'txs' | 'gasUsed' | 'gasLimit'| 'time';
@@ -84,7 +85,7 @@ const useStyles = makeStyles(({ spacing }) => {
     return {
           root: {
             width: '100%',
-            padding: '0.5rem',
+            //padding: '0.5rem',
             overflowY: 'auto'
           },
           container: {
@@ -126,6 +127,14 @@ const useStyles = makeStyles(({ spacing }) => {
               },
               
             },
+
+            blocks:{
+              padding: '1.5%',
+            },
+
+            divider:{
+              margin: '0.5rem',
+          },
         }
 });
 
@@ -169,12 +178,15 @@ const classes = useStyles();
 
   return (
 <Layout>
+<Grid container className={classes.blocks}>
+    <Grid item xs={12} >
       <Hidden smUp>
     <DisplayCard />
     </Hidden>
     <Paper className={classes.root}>
   <Typography variant="body1" className={classes.box} >
               Blocks </Typography>
+              <Divider variant='middle' className={classes.divider}/>
       <TableContainer className={classes.container}>
       <Paper className={classes.tableCell}>
         <Table >
@@ -235,6 +247,8 @@ const classes = useStyles();
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
     </Paper>
+    </Grid>
+    </Grid>
     </Layout>
 );
 }

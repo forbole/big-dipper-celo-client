@@ -13,7 +13,10 @@ import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
 import Chips from '../Chips';
 import Divider from '@material-ui/core/Divider';
-
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 interface Data {
     tx: string;
@@ -112,11 +115,18 @@ const classes = useStyles();
   };
 
   return (
-    <Paper className={classes.root}>
-  <Typography variant="body1" className={classes.box} >
-            Transactions (1000)
-            <Divider variant='middle' className={classes.divider}/>
-    </Typography>
+    
+       <ExpansionPanel>
+        <ExpansionPanelSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+          >
+            <Typography variant="body1" > Transactions (1000)</Typography>
+            </ExpansionPanelSummary>
+        <ExpansionPanelDetails className={classes.root}>
+        <Grid container >              
+            <Divider variant='middle'/>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -127,7 +137,7 @@ const classes = useStyles();
                 <TableRow key={row.tx} >
             <TableCell component="th" scope="row" padding="checkbox"  >
             <Grid container spacing={1} style={{padding: '0.5rem 0'}}>
-                   <Grid item xs={9} md={10} >
+                   <Grid item xs={8}>
   
                     <Typography  variant="caption"  className={classes.leftInline}>
                     Tx#   <Link href="#" color="secondary"  className={classes.leftInline}>
@@ -135,7 +145,7 @@ const classes = useStyles();
                     </Link>
                      </Typography>
                      </Grid>
-                     <Grid item xs={3} md={2}>
+                     <Grid item xs={4} >
                     <Typography variant="caption"   className={classes.alignRight}>
                     {row.time}
                     </Typography>
@@ -159,13 +169,13 @@ const classes = useStyles();
   
   
   
-                     <Grid item xs={6} md={10} >
+                     <Grid item xs={6} >
                      <Typography  variant="caption"  className={classes.chip}>
                      <Chips value={row.chip}/>
                     </Typography>
     
                   </Grid>
-                     <Grid item xs={6} md={2}>
+                     <Grid item xs={6}>
                     <Typography variant="caption"   className={classes.alignRight} >
                       {row.total}
                     </Typography>
@@ -188,6 +198,9 @@ const classes = useStyles();
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-    </Paper>
+      
+    </Grid>
+    </ExpansionPanelDetails>
+      </ExpansionPanel>  
 );
 }

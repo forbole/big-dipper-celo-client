@@ -20,6 +20,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
         card:{
         display: 'inline-flex',
+        },
+
+        address:{
+            overflowWrap: 'break-word',
+
         }
  
 
@@ -39,18 +44,18 @@ export default function AddressCard() {
                       </Typography>
                   </Grid>
                   <Grid item xs={1}  >
-                      <Typography variant="body2" gutterBottom align="right">
-                      <img src="/images/copy_icon.svg" />
+                      <Typography variant="caption" gutterBottom align="center">
+                      <img src="/images/copy.svg" />
                       </Typography>
                   </Grid>
                   <Grid item xs={1} >
-                      <Typography variant="body2" gutterBottom align="center">
-                      <img src="/images/qr_code.svg" />
+                      <Typography variant="caption" gutterBottom align="center">
+                      <img src="/images/qr code.svg" />
                       </Typography>
                   </Grid>
-                  <Grid item xs={12}>    
-                      <Typography variant="body2" align="left">
-                      0xB177242c85d34cc72e1cc0301eb6f08770ED8a6B
+                  <Grid item xs={12} className={classes.address}>    
+                      <Typography variant="caption" align="left" >
+                      0xB177242c85d34cc72e1cc0301eb6f08770ED8a6Bgdggg2323r4f43
                       </Typography>
                   </Grid>
   

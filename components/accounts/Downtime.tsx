@@ -10,6 +10,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
 
 
 interface Column {
@@ -123,10 +129,17 @@ const classes = useStyles();
   };
 
   return (
-
-    <Paper className={classes.root}>
-  <Typography variant="body1" className={classes.box} >
-              Downtime </Typography>
+<ExpansionPanel>
+        <ExpansionPanelSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+          >
+            <Typography variant="body1" > Downtime</Typography>
+            </ExpansionPanelSummary>
+        <ExpansionPanelDetails className={classes.root}>
+        <Grid container >              
+            <Divider variant='middle'/>
       <TableContainer className={classes.container}>
       <Paper className={classes.tableCell}>
         <Table >
@@ -148,26 +161,26 @@ const classes = useStyles();
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
               return (
                 <TableRow key={row.height} >
-            <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
+            <TableCell component="th" scope="row"  align="left" className={classes.tableCell} >
             <Link href="#"  color="secondary"  >
             <Typography variant="caption"  noWrap> {row.height}</Typography>
               </Link>
             </TableCell>
-            <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+            <TableCell align="left"  className={classes.tableCell}>
             <Link href="#" color="secondary" >
             <Typography variant="caption" noWrap>{row.miner}</Typography>
               </Link>
               </TableCell>
-            <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+            <TableCell align="left" className={classes.tableCell}>
             <Typography variant="caption" noWrap>{row.txs}</Typography>
             </TableCell>
-            <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+            <TableCell align="left"  className={classes.tableCell}>
             <Typography variant="caption" noWrap>{row.gasUsed}</Typography>
             </TableCell>
-            <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+            <TableCell align="left" className={classes.tableCell}>
             <Typography variant="caption" noWrap>{row.gasLimit}</Typography>
             </TableCell>
-            <TableCell align="left" padding="checkbox">
+            <TableCell align="left" >
             <Typography variant="caption" noWrap>{row.time}</Typography>
             </TableCell>
           </TableRow>
@@ -186,6 +199,8 @@ const classes = useStyles();
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-    </Paper>
+     </Grid>
+    </ExpansionPanelDetails>
+      </ExpansionPanel>  
 );
 }
