@@ -8,8 +8,8 @@ import Divider from '@material-ui/core/Divider';
 import Layout from '../components/Layout';
 import Overview from '../components/tokens/Overview';
 import ProfileSummary from '../components/tokens/ProfileSummary';
-
-
+import Transactions from '../components/accounts/Transactions'
+import TokenHolders from '../components/tokens/TokenHolders'
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -120,9 +120,12 @@ export default function Tokens() {
             </Grid>
             
             <Grid item xs={12} lg={5} className={classes.bottomPadding}>
-               
+               <Transactions />
             </Grid>
 
+            <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+               <TokenHolders />
+            </Grid>
     </Grid>
     </Layout>
   );

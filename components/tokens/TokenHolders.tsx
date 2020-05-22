@@ -19,26 +19,23 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 interface Data {
-    tx: string;
-    from: string;
-    to: string;
-    time: string;
-    chip: string;
-    total: string;
+    address: string;
+    value: string;
+    percentage: string;
 }
 
-function createData(tx: string, from: string, to: string, time: string, chip: string, total: string) {
-    return { tx, from, to, time, chip, total};
+function createData(address: string, value: string, percentage: string) {
+    return { address, value, percentage};
   }
 
   const rows = [
-    createData(' 0xd3b4592hfh..', '0xd3b92hdsdf..', '0xd3bretretretert4592hdsw12df..', '2 mins ago', 'Contract Call', '3023412.22 cGLD' ),
-    createData(' 0xd3b4882hfh..', '0x98b45d12df..', '0xd3b4592hdsw12df..', '5 mins ago', 'Token Transfer', '3023412.22 cGLD' ),
-    createData(' 0xdsdb4592hfh..', '0xd6hdsw12df..', '0xd3b4592hdsw12df..', '1 mins ago', 'Contract Call', '603412.22 cGLD' ),
-    createData(' 0xd3b4592hfh..', '0xd3dsw12df..', '0xd3b4592hdsw12df..', '3 mins ago', 'Contract Call', '7023412.22 cGLD' ),
-    createData(' 0xd3b4592hfh..', '0xd3hdsw12df..', '0xd3b4592hdsw12df..', '8 mins ago', 'Contract Call', '5023412.22 cGLD' ),
-    createData(' 0xd3b4592hfh..', '0xd392hdsw12df..', '0xd3b4592hdsw12df..', '6 mins ago', 'Contract Call', '8023412.22 cGLD' ),
-    createData(' 0xd3b4592hfh..', '0xd392hdsw12df..', '0xd3b4592hdsw12df..', '2 mins ago', 'Contract Call', '24023412.22 cGLD' ),
+    createData(' 0x21a641c9745c7cb75528f3df51', '3023412.22 cUSD', '19.8760%' ),
+    createData(' 0xe4044267267071bb26b8bbd42afd911927ed6056', '3023412.22 cUSD', '2.4226%' ),
+    createData(' 0x3e84a81931335467900520c8104250f07b6e14ca20ef1', '603412.22 cUSD', '0.0121%' ),
+    createData(' 0x21a641c9745c79b2dea2c40ee037c037c69299ca718c3', '7023412.22 cUSD', '0.0157%' ),
+    createData(' 0xa7b6649b6f86a1f154c79c67fe862473b661552df4231d',  '5023412.22 cUSD', '0.0088%' ),
+    createData(' 0x3e84a81931330520c8104250f07b6e14ca20ef11', '8023412.22 cUSD', '0.514%' ),
+    createData(' 0x21a641c9745c40ee037c037c69299ca718c3', '24023412.22 cUSD', '0.1478%' ),
   ];
   
 
@@ -74,32 +71,45 @@ const useStyles = makeStyles(({ spacing }) => {
             whiteSpace: 'nowrap',
             },
 
-          chip:{
-            display: 'block',
-            marginLeft: '1rem',
-            },
 
           alignRight:{
             paddingRight: '1rem',
             float: 'right',
+            overflow: 'visible',
+            textOverflow: 'ellipsis',
+            display: 'inline-block'
+            
           },
 
-          txPadding:{
-            display: 'flex',
-            overflow: 'auto',
-            padding: '0 0 0 0.5rem',
+          address:{
+            //   width: '25%',
+            //   whiteSpace: 'nowrap',
+            //   overflow: 'hidden',
+            //   textOverflow: 'ellipsis'
+            display: 'flex'
           },
-          divider:{
-            margin: '0.5rem 0 0 0',
-        },
 
+
+          truncateAlignRight:{
+            display: 'block',
+            whiteSpace: 'nowrap',
+            //paddingRight: '1rem',
+            float: 'right',
+            overflow: 'hidden',
+           // textOverflow: 'ellipsis',
+            //width: '70%',
+            //MaxWidth: '100rem',
+            padding: '0 1rem',
+          },
+
+        
   }
 });
 
 
 
 
-export default function AccountTransactions() {
+export default function TokenHolders() {
 
 const classes = useStyles();
   const [page, setPage] = React.useState(0);
@@ -122,7 +132,7 @@ const classes = useStyles();
           aria-controls="panel1a-content"
           id="panel1a-header"
           >
-            <Typography variant="body1" > Transactions {"(1000)"}</Typography>
+            <Typography variant="body1" > Token Holders {"(6148)"}</Typography>
             </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.root}>
         <Grid container >              
@@ -134,52 +144,27 @@ const classes = useStyles();
           <TableBody>
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
               return (
-                <TableRow key={row.tx} >
+                <TableRow key={row.address} >
             <TableCell component="th" scope="row" padding="checkbox"  >
-            <Grid container spacing={1} style={{padding: '0.5rem 0'}}>
-                   <Grid item xs={8}>
-  
-                    <Typography  variant="caption"  className={classes.leftInline}>
-                    Tx#   <Link href="#" color="secondary"  className={classes.leftInline}>
-                     {row.tx}
-                    </Link>
-                     </Typography>
+            <Grid container spacing={1} style={{padding: '0.5rem 0',}}>
+                   <Grid item xs={12}>
+                   <Link href="#" color="secondary" >
+                    <Typography  variant="caption" className={classes.truncateAlignRight} >
+                     {row.address}
+                     </Typography> </Link>
                      </Grid>
-                     <Grid item xs={4} >
+                     <Grid item xs={12} >
                     <Typography variant="caption"   className={classes.alignRight}>
-                    {row.time}
+                    {row.value}
                     </Typography>
                     </Grid>
     
-                    <Grid item xs={5} md={4} >
-                    <Typography variant="caption"   className={classes.leftInline}>
-                       From  <Link href="#" color="secondary" className={classes.txPadding} >
-                     {row.from}
-                   </Link>
+                    <Grid item xs={12} >
+                    <Typography variant="caption"   className={classes.alignRight}>
+                     {row.percentage}
                      </Typography>
                      </Grid>
-  
-                     <Grid item xs={7} md={8}>
-                    <Typography variant="caption"   align='left' className={classes.rightInline}>
-                       To  <Link href="#" color="secondary" className={classes.txPadding}>
-                       {row.to}
-                   </Link>
-                     </Typography>
-                     </Grid>
-  
-  
-  
-                     <Grid item xs={6} >
-                     <Typography  variant="caption"  className={classes.chip}>
-                     <Chips value={row.chip}/>
-                    </Typography>
-    
-                  </Grid>
-                     <Grid item xs={6}>
-                    <Typography variant="caption"   className={classes.alignRight} >
-                      {row.total}
-                    </Typography>
-                  </Grid>
+
                      </Grid>
             </TableCell>
 

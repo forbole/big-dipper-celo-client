@@ -10,8 +10,12 @@ import CardContent from '@material-ui/core/CardContent';
 import FilledInput from '@material-ui/core/FilledInput';
 import FormControl from '@material-ui/core/FormControl';
 import Chips from '../components/Chips';
+import IconButton from '@material-ui/core/IconButton';
+//import CopyToClipboard from 'react-copy-to-clipboard';
 
 
+let copied = false;
+let value = "";
 
 interface Column {
   id: 'height' | 'miner' | 'txs' | 'gasUsed' | 'gasLimit'| 'time';
@@ -89,19 +93,7 @@ const useStyles = makeStyles(({ spacing, palette }) => {
   inline:{
     paddingLeft: 0,
   },
-  card: {
-    padding: '0.5rem',
-    justifyContent: 'center',
-      borderRadius: 5,
-      boxShadow: '0 2px 4px 0 rgba(138, 148, 159, 0.2)',
-      '& > *:nth-child(1)': {
-        marginRight: spacing(2),
-      },
-      '& > *:nth-child(2)': {
-        flex: 'auto',
-      },
-      background: '#43484C',
-    },
+
     
     item:{
         padding: '0 0 1rem 0.5rem',
@@ -111,155 +103,165 @@ const useStyles = makeStyles(({ spacing, palette }) => {
     },
     inputLabel:{
         wordWrap: 'break-word',
-        padding: '0rem'
+        padding: '0.5rem',
+        fontSize: '0.75rem',
+       
       },
+      alignRight:{
+        //display: 'block',
+        float: 'right',
+        paddingRight: '1rem'
+    },
+    alignLeft:{
+        display: 'flex',
+        float: 'left',
+        paddingRight: '1rem'
+    },
+
+    MuiFilledInputInput:{
+        padding: '0rem'
+    }
   }
 });
 
 
 
+const  onCopy = () => {
+    return copied = true;
+  };
 
-export default function BlockDetails() {
+
+export default function TransactionDetails() {
 const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
 
   return (
     <Layout>
     <Card className={classes.root}>
       <CardContent>
-            <Grid container spacing={1} justify="center" className={classes.item}>
+            <Grid container spacing={1}  className={classes.item}>
                 <Grid item xs={12} >
                     <Typography  color="textSecondary" variant="subtitle1"  paragraph>
                         Transaction Details
                     </Typography>
-                    <Divider variant='middle' />
+                    
                 </Grid>
-
+                <Divider />
                 <Grid item xs={12} className={classes.item} >
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                         Hash
                     </Typography>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                         E2D55BA9A99F150AE6E1D0457B6416C4C68915E1CB26320318A1421491C17032
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>
 
                 <Grid item xs={12} className={classes.item}>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                         Time
                     </Typography>
-                    <Typography variant="body2" >
+                    <Typography variant="caption" >
                         April-09-2020 11:22:08 UTC (14 seconds ago)
                     </Typography>
                    <Divider variant='middle' className={classes.divider}/>
                 </Grid>
 
                 <Grid item xs={12} className={classes.item}>
-                    <Typography variant="body1" component="h2">
+                    <Typography variant="caption" component="h2">
                         Tx Type
                     </Typography>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                     Contract Call
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>
 
                 <Grid item xs={12} className={classes.item}>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                         Status
                     </Typography>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                     <Chips value={'Success'}/>
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>
 
                 <Grid item xs={12} className={classes.item}>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                        From
                     </Typography>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                        <Link href="#"  color="secondary">0x22k0zzcx32juhqqhpn5aar0gus63lnnp</Link> 
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>
 
                 <Grid item xs={12} className={classes.item}>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                         To
                     </Typography>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                       <Link href="#"  color="secondary">0x22k0zzcx32juhqqhpn5aar0gus63lnnp</Link>  
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>
 
                 <Grid item xs={12} className={classes.item}>
-                <Typography variant="body2" component="h2">
+                <Typography variant="caption" component="h2">
                     Value
                 </Typography>
-                <Typography variant="body2" component="h2">
+                <Typography variant="caption" component="h2">
                     12,946,937 cGLD
                 </Typography>
                 <Divider variant='middle' className={classes.divider}/>
                 </Grid>
 
                 <Grid item xs={12} className={classes.item}>
-                <Typography variant="body2" component="h2">
+                <Typography variant="caption" component="h2">
                     Block Height
                 </Typography>
-                <Typography variant="body2" component="h2">
+                <Typography variant="caption" component="h2">
                 <Link href="#"  color="secondary">1087144</Link>  
                 </Typography>
                 <Divider variant='middle' className={classes.divider}/>
                 </Grid>
 
                 <Grid item xs={12} className={classes.item}>
-                <Typography variant="body2" component="h2">
+                <Typography variant="caption" component="h2">
                    Block Confirmation
                 </Typography>
-                <Typography variant="body2" component="h2">
+                <Typography variant="caption" component="h2">
                     22,733
                 </Typography>
                 <Divider variant='middle' className={classes.divider}/>
                 </Grid>
 
                 <Grid item xs={12} className={classes.item}>
-                <Typography variant="body2" component="h2">
+                <Typography variant="caption" component="h2">
                     Nonce
                 </Typography>
-                <Typography variant="body2" component="h2">
+                <Typography variant="caption" component="h2">
                     0x0000000000000000
                 </Typography>
                 <Divider variant='middle' className={classes.divider}/>
                 </Grid>
 
                 <Grid item xs={12} className={classes.item}>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                         Transaction Fee
                     </Typography>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                     0.000140945 cGLD
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>
 
                 <Grid item xs={12} className={classes.item}>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                         Fee Receipient
                     </Typography>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                     None
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
@@ -267,57 +269,79 @@ const classes = useStyles();
 
 
                 <Grid item xs={12} className={classes.item}>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                         Gate Fee
                     </Typography>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                     0
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>
 
                 <Grid item xs={12} className={classes.item}>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                         Transaction Speed
                     </Typography>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                     1.5 seconds
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>
 
 
-                <Grid item xs={12} className={classes.item}>
-                    <Typography variant="body2" component="h2">
+                <Grid item xs={3} className={classes.item}>
+                    <Typography variant="caption" component="h2">
                         Raw Input
                     </Typography>
-                    <Typography variant="body2" component="h2">
-                    <FormControl fullWidth variant="filled">
+                </Grid>
+                <Grid item xs={2} >
+                    <Chips value={'Hex'} />
+                </Grid>
+                <Grid item xs={3} >
+                    <Chips value={'UTF-8'} />
+                </Grid>
+
+                <Grid item xs={4} className={classes.alignRight}>
+                {/* <CopyToClipboard onCopy={this.onCopy} text={value}>
+                <IconButton aria-label="copy" size="small">
+                <img src="/images/copy.svg" />
+                </IconButton>
+          </CopyToClipboard>
+                 */}
+
+                <IconButton aria-label="copy" size="small" className={classes.alignRight}>
+                <img src="/images/copy.svg" />
+                </IconButton>
+                </Grid>
+                <Grid item xs={12} md={5} className={classes.alignLeft}>
+                    <FormControl fullWidth variant="filled" size="small" margin="dense">
                             <FilledInput
                             className={classes.inputLabel}
                                 value={"0xa9059cbb000000000000000000000000646eac4b00452fc4356a845922f07cbd2ced9e470000000000000000000000"}
                                 disableUnderline={true}
+                                readOnly
+                                style={{padding: '0.7rem'}}
+                                multiline
                             />
                     </FormControl>
-                    </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>
 
                 <Grid item xs={12} className={classes.item}>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                         Gas Used
                     </Typography>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                     19,186.000
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>
 
                 <Grid item xs={12} className={classes.item}>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                         Gas Limit
                     </Typography>
-                    <Typography variant="body2" component="h2">
+                    <Typography variant="caption" component="h2">
                     20,000.000
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>

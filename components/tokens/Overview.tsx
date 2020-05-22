@@ -47,7 +47,7 @@ export default function TokenOverview(){
       <Card className={classes.root}>
         <Grid container spacing={1} >
           <Grid item xs={12} >
-          <Typography variant="body2" className={classes.box} >
+          <Typography variant="body1" className={classes.box} >
               Overview
         </Typography> 
                 <Divider variant='middle'  />

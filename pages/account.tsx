@@ -62,7 +62,6 @@ const useStyles = makeStyles((theme: Theme) =>
             align: 'center',
             justifyContent: 'center',
             fontSize: '15px',
-            padding: '-20px',
             border: 'solid rgba(255, 255, 255, 0.6) ',
             borderWidth: '0.09rem',
             borderRadius: 5,
@@ -82,10 +81,17 @@ const useStyles = makeStyles((theme: Theme) =>
         },
 
         alignRight:{
-            display: 'inline-block',
+            display: 'block',
             float: 'right',
             paddingRight: '1rem'
         },
+
+        alignRightPrice:{
+          display: 'block',
+          float: 'right',
+          paddingRight: '1rem',
+          marginTop: '-0.5rem'
+      },
 
         button:{
           justifyContent: 'center',
@@ -126,6 +132,10 @@ const useStyles = makeStyles((theme: Theme) =>
         container:{
           justifyContent: 'center', 
           padding: '0rem'
+        },
+
+        rightPadding:{
+          paddingLeft: '1rem'
         }
  
 
@@ -186,33 +196,34 @@ function TokenDropdown(){
     <FormControl className={classes.formControl}  >
     
     <InputLabel htmlFor="grouped-native-select" className={classes.inputLabel} >
-    {celoGold}
+    {"Select token"}
     </InputLabel> 
       
     <Select defaultValue="" id="grouped-select"  color="primary" className={classes.select} disableUnderline={true}>
      <TokenSearchBar /> 
           <ListSubheader >ERC-20 (2)</ListSubheader>
-          <Divider />
-          <ListSubheader style={{padding: '0.5rem 0 0 1rem'}}><Typography variant="body2" gutterBottom color="textPrimary"  >
+          <Divider className={classes.divider} />
+
+          <ListSubheader  style={{padding: '0 0 0 1rem'}}>
+            <Typography variant="body2"  color="textPrimary"  >
                     Celo Dollar
             </Typography></ListSubheader>
-          <MenuItem value={1} style={{padding: '0 0 0 1rem'}}>
-            
-
-            <Typography variant="body2" gutterBottom color="textSecondary"  >
+          <MenuItem value={1} style={{margin: '-0.4rem 0', padding: '0'}}>
+            <Typography variant="body2"  color="textSecondary"  className={classes.rightPadding} >
                       {celoDollar}
             </Typography>
           </MenuItem>
 
           <Divider variant='middle' className={classes.divider} />
-          <ListSubheader style={{padding: '0 0 0 1rem'}}><Typography variant="body2" gutterBottom color="textPrimary" >
+
+
+          <ListSubheader style={{padding: '0 0 0 1rem'}}>
+            <Typography variant="body2"  color="textPrimary" >
                     Celo Gold
             </Typography></ListSubheader>
 
-          <MenuItem value={2} style={{padding: '0 0 0 1rem'}}>
-            
-
-            <Typography variant="body2" gutterBottom color="textSecondary"  >
+          <MenuItem value={2} style={{margin: '-0.4rem 0', padding: '0'}}>
+            <Typography variant="body2"  color="textSecondary"  className={classes.rightPadding}>
                       {celoGold}
             </Typography>
           </MenuItem>
@@ -266,7 +277,9 @@ function AccountOverview(){
                   <Typography variant="body2" gutterBottom  className={classes.alignRight}>
                         {"14.9125447 cGLD"}
                   </Typography>
-                  <Typography variant="caption" gutterBottom  className={classes.alignRight}>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                  <Typography variant="caption" gutterBottom  className={classes.alignRightPrice}>
                         {"$41.978089412"}
                   </Typography>    
                   </Grid>

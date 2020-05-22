@@ -10,6 +10,8 @@ import { initStore } from '../redux/store';
 import { Provider } from 'react-redux';
 import Footer from '../components/Footer';
 
+import store from "../redux/store"
+
 interface AppProps {
 }
 
@@ -36,6 +38,14 @@ export default class TSApp extends App<AppProps, AppState>{
 
   render() {
     const { Component, pageProps } = this.props;
+
+    // store.dispatch({
+    //   type: "getBlockHeight",
+    //   payload:{
+    //     description: "Block1"
+    //   }
+
+    // })
 
     return (
       <React.Fragment>

@@ -54,7 +54,7 @@ export default function AddressCard() {
                       </Typography>
                   </Grid>
                   <Grid item xs={12} className={classes.address}>    
-                      <Typography variant="caption" align="left" >
+                      <Typography variant="body2" align="left" >
                       0xB177242c85d34cc72e1cc0301eb6f08770ED8a6Bgdggg2323r4f43
                       </Typography>
                   </Grid>

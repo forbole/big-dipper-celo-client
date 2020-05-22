@@ -54,19 +54,19 @@ export default function ProfileSummary(){
       <Card className={classes.root}>
         <Grid container spacing={1} >
           <Grid item xs={12} >
-          <Typography variant="body2" className={classes.box} >
+          <Typography variant="body1" className={classes.box} >
               Profile Summary
         </Typography> 
                 <Divider variant='middle'  />
           </Grid>
 
-                <Grid item xs={3}  >
+                <Grid item xs={4}>
 
                   <Typography  variant="caption" gutterBottom className={classes.alignLeft}>
                   Contract   
                   </Typography>
                   </Grid>
-                  <Grid item xs={9}  >
+                  <Grid item xs={8}>
                   <Typography variant="caption" gutterBottom  className={classes.alignRight}>
                   <Link href="/" color="secondary" className={classes.contract} >
                   {"0xa561131a1c8ac25925fb848bca45a74af61e5a38"} </Link>
@@ -85,7 +85,7 @@ export default function ProfileSummary(){
                   
                    <Grid item xs={5} >
                   <Typography variant="caption" gutterBottom  className={classes.alignRight}>
-                        {"$2,110,316.72"}
+                        {"16"}
                   </Typography> 
                   </Grid>
 
