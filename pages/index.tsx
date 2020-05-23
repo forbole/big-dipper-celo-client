@@ -79,10 +79,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
           }),
           );   
-      
-      
-      
-
+          
 export default function Index() {
   const classes = useStyles();
   return (

@@ -18,30 +18,52 @@ import Layout from '../components/Layout';
 import theme from '../themes/dark-theme';
 import Divider from '@material-ui/core/Divider';
 
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/react-hooks';
+
+const GET_BLOCK = gql`
+  {
+    blocks(page:55) {
+      blocks{
+        number
+        miner
+        hash
+        gasUsed
+        gasUsed
+        blockTime
+      }
+    }
+  }
+`;
+
+const blocks: any[] = [];
+
+function getBlocks() {
+  const { loading, error, data } = useQuery(GET_BLOCK);
+ //const blocks: any[] = [];
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
+
+  return (
+    data.blocks.blocks.forEach(function (block: any, i: number) {
+      blocks[i] = block;
+      console.log(block)
+    }),
+  )
+};
+
 interface Column {
-  id: 'height' | 'miner' | 'txs' | 'gasUsed' | 'gasLimit'| 'time';
+  id: 'height' | 'miner' | 'txs' | 'gasUsed' |  'time';
   label: string;
 }
 
 const columns: Column[] = [
   { id: 'height', label: 'Height', },
   { id: 'miner', label: 'Miner', },
-  {
-    id: 'txs',
-    label: 'Txs',
-  },
-  {
-    id: 'gasUsed',
-    label: 'Gas Used', 
-  },
-  {
-    id: 'gasLimit',
-    label: 'Gas Limit',
-  },
-  {
-    id: 'time',
-    label: 'Time',
-  },
+  { id: 'txs', label: 'Txs',},
+  { id: 'gasUsed', label: 'Gas Used', },
+  // { id: 'gasLimit', label: 'Gas Limit',},
+  {id: 'time', label: 'Time'},
 ];
 
 interface Data {
@@ -49,36 +71,35 @@ interface Data {
     miner: string;
     txs: string;
     gasUsed: string;
-    gasLimit: string;
     time: string;
 }
 
-function createData(height: string, miner: string, txs: string, gasUsed: string, gasLimit: string, time: string) {
-    return { height, miner, txs, gasUsed, gasLimit, time};
+function createData(height: string, miner: string, txs: string, gasUsed: string,  time: string) {
+    return { height, miner, txs, gasUsed, time};
   }
 
-  const rows = [
-    createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-    createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-    createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-    createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-    createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-    createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-    createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-    createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-    createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-    createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-    createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-    createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-    createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-    createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-    createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-    createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-    createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-    createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-    createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-    createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-  ];
+  // const rows = [
+  //   createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
+  //   createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
+  //   createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
+  //   createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
+  //   createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
+  //   createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
+  //   createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
+  //   createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
+  //   createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
+  //   createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
+  //   createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
+  //   createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
+  //   createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
+  //   createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
+  //   createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
+  //   createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
+  //   createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
+  //   createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
+  //   createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
+  //   createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
+  // ];
   
 
 const useStyles = makeStyles(({ spacing }) => {
@@ -166,6 +187,8 @@ export default function Blocks() {
 const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  getBlocks();
+  
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -194,7 +217,7 @@ const classes = useStyles();
             <TableRow>
               {columns.map((column) => (
                 <TableCell
-                  key={column.id}
+                  key={column}
                   align="left"
                   className={classes.table}
                   padding="checkbox" 
@@ -205,12 +228,12 @@ const classes = useStyles();
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+            {blocks.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
               return (
-                <TableRow key={row.height} >
+                <TableRow key={row.number} >
             <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
             <Link href="#"  color="secondary"  >
-            <Typography variant="caption"  noWrap> {row.height}</Typography>
+            <Typography variant="caption"  noWrap> {row.number}</Typography>
               </Link>
             </TableCell>
             <TableCell align="left" padding="checkbox" className={classes.tableCell}>
@@ -219,17 +242,17 @@ const classes = useStyles();
               </Link>
               </TableCell>
             <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-            <Typography variant="caption" noWrap>{row.txs}</Typography>
+            <Typography variant="caption" noWrap>{row.hash}</Typography>
             </TableCell>
             <TableCell align="left" padding="checkbox" className={classes.tableCell}>
             <Typography variant="caption" noWrap>{row.gasUsed}</Typography>
             </TableCell>
             <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-            <Typography variant="caption" noWrap>{row.gasLimit}</Typography>
+            <Typography variant="caption" noWrap>{row.blockTime}</Typography>
             </TableCell>
-            <TableCell align="left" padding="checkbox">
+            {/* <TableCell align="left" padding="checkbox">
             <Typography variant="caption" noWrap>{row.time}</Typography>
-            </TableCell>
+            </TableCell> */}
           </TableRow>
               );
             })}
@@ -240,7 +263,7 @@ const classes = useStyles();
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={blocks.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}

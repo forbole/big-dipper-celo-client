@@ -5,12 +5,48 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Layout from '../components/Layout';
 import DarkTheme from '../themes/dark-theme';
 import App, { Container } from 'next/app';
-import withRedux from 'next-redux-wrapper';
-import { initStore } from '../redux/store';
-import { Provider } from 'react-redux';
+// import withRedux from 'next-redux-wrapper';
+// import { initStore } from '../redux/store';
+// import { Provider } from 'react-redux';
 import Footer from '../components/Footer';
+import { ApolloProvider } from '@apollo/react-hooks';
+import ApolloClient from 'apollo-boost';
+import { gql } from "apollo-boost";
+import { useQuery } from '@apollo/react-hooks';
 
-import store from "../redux/store"
+
+const fetch = require('node-fetch').default;
+
+const client = new ApolloClient({
+  uri: 'https://server.celo.bigdipper.live/graphql',
+  fetch: fetch
+});
+
+// client
+//   .query({
+//     query: gql`
+//         {
+//           blocks(page: 55, pageSize: 12) {
+//             cursor
+//             pageSize
+//             page
+//             blocks{
+//               _id
+//               extraData
+//               gasUsed
+//               hash
+              
+//               miner
+//               number
+//               parentHash
+//             }
+//             }
+//           }
+//     `
+// })
+//           .then(result => console.log(result));
+
+
 
 interface AppProps {
 }
@@ -49,6 +85,7 @@ export default class TSApp extends App<AppProps, AppState>{
 
     return (
       <React.Fragment>
+        <ApolloProvider client={client}>
         <Head>
           <title>Big Dipper For Celo</title>
           <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
@@ -64,9 +101,9 @@ export default class TSApp extends App<AppProps, AppState>{
             {/* </Provider> */}
           <Footer />
         </ThemeProvider>
+        </ApolloProvider>
       </React.Fragment>
     );
   }
   }
   
-
