@@ -1,277 +1,38 @@
+
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
-import Link from '../components/Link';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import TablePagination from '@material-ui/core/TablePagination';
-import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
-import Hidden from '@material-ui/core/Hidden';
-import Grid from '@material-ui/core/Grid';
-import cx from 'clsx';
-import Card from '@material-ui/core/Card';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Layout from '../components/Layout';
-import theme from '../themes/dark-theme';
-import Divider from '@material-ui/core/Divider';
+import ChartData from '../components/ChartData';
+import LatestTransactions from '../components/LatestTransactions';
+import Grid from '@material-ui/core/Grid';
+import Transactions from '../components/Transactions'
+import LatestBlocks from '../components/LatestBlocks';
 
-import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
 
-const GET_BLOCK = gql`
-  {
-    blocks(page:55) {
-      blocks{
-        number
-        miner
-        hash
-        gasUsed
-        gasUsed
-        blockTime
-      }
-    }
-  }
-`;
-
-const blocks: any[] = [];
-
-function getBlocks() {
-  const { loading, error, data } = useQuery(GET_BLOCK);
- //const blocks: any[] = [];
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
-
-  return (
-    data.blocks.blocks.forEach(function (block: any, i: number) {
-      blocks[i] = block;
-      console.log(block)
-    }),
-  )
-};
-
-interface Column {
-  id: 'height' | 'miner' | 'txs' | 'gasUsed' |  'time';
-  label: string;
-}
-
-const columns: Column[] = [
-  { id: 'height', label: 'Height', },
-  { id: 'miner', label: 'Miner', },
-  { id: 'txs', label: 'Txs',},
-  { id: 'gasUsed', label: 'Gas Used', },
-  // { id: 'gasLimit', label: 'Gas Limit',},
-  {id: 'time', label: 'Time'},
-];
-
-interface Data {
-    height: string;
-    miner: string;
-    txs: string;
-    gasUsed: string;
-    time: string;
-}
-
-function createData(height: string, miner: string, txs: string, gasUsed: string,  time: string) {
-    return { height, miner, txs, gasUsed, time};
-  }
-
-  // const rows = [
-  //   createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-  //   createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-  //   createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-  //   createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-  //   createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-  //   createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-  //   createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-  //   createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-  //   createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-  //   createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-  //   createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-  //   createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-  //   createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-  //   createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-  //   createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-  //   createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-  //   createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-  //   createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-  //   createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-  //   createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-  // ];
-  
-
-const useStyles = makeStyles(({ spacing }) => {
-    return {
-          root: {
-            width: '100%',
-            //padding: '0.5rem',
-            overflowY: 'auto'
-          },
-          container: {
-            borderRadius: 5,
-            width: '100%',
-            overflowY: 'auto'
-          },
-          box:{
-            letterSpacing: '1px',
-            padding: '1rem',
-            display: 'inline-flex',
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-          },
-          tableCell:{
-              overflow: 'auto',
-              padding: '0.4rem'
-          },
-          table:{
-              background: '#4D5155',
-              padding: '0'
-          },
-          inline:{
-            paddingLeft: '0rem',
-          },
-          card: {
-            padding: '1rem',
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+        root: {
+            display: 'block-inline',
             justifyContent: 'center',
-            marginBottom: '1rem',
-            background: '#43484C',
-            alignItems: 'center',
-            borderRadius: 5,
-              boxShadow: '0 2px 4px 0 rgba(138, 148, 159, 0.2)',
-              '& > *:nth-child(1)': {
-                marginRight: spacing(2),
-              },
-              '& > *:nth-child(2)': {
-                flex: 'auto',
-              },
-              
             },
 
-            blocks:{
-              padding: '1.5%',
-            },
-
-            divider:{
-              margin: '0.5rem',
+        bottomPadding:{
+            overflow: 'auto',
+            padding: '1.5%'
           },
-        }
-});
 
-
-function DisplayCard() {
-    const classes = useStyles();
-    return (
-    <Card className={cx(classes.card)} elevation={0}>
-    <Grid container spacing={1} justify="center" >
-    <Grid item xs={6}  >
-      <Typography align='left' variant="body1" >cGLD Price</Typography>
-      </Grid>
-      <Grid item xs={6}  >
-      <Typography align='right' variant="body1" >$2.8</Typography>
-      </Grid>
-      <Grid item xs={6}  className={classes.inline}>
-      <Typography align='left' variant="body1" >Market Cap</Typography>
-      </Grid>
-      <Grid item xs={6}  className={classes.inline}>
-      <Typography align='right' variant="body1" >$10,413,896</Typography>
-      </Grid>
-    </Grid>
-    </Card>
-    );
-}
-
-
-export default function Blocks() {
-const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  getBlocks();
-  
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
+          }),
+          );   
+          
+export default function Index() {
+  const classes = useStyles();
   return (
-<Layout>
-<Grid container className={classes.blocks}>
-    <Grid item xs={12} >
-      <Hidden smUp>
-    <DisplayCard />
-    </Hidden>
-    <Paper className={classes.root}>
-  <Typography variant="body1" className={classes.box} >
-              Blocks </Typography>
-              <Divider variant='middle' className={classes.divider}/>
-      <TableContainer className={classes.container}>
-      <Paper className={classes.tableCell}>
-        <Table >
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column}
-                  align="left"
-                  className={classes.table}
-                  padding="checkbox" 
-                >
-                  <Typography variant="caption" noWrap className={classes.tableCell}>{column.label}</Typography>
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {blocks.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-              return (
-                <TableRow key={row.number} >
-            <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
-            <Link href="#"  color="secondary"  >
-            <Typography variant="caption"  noWrap> {row.number}</Typography>
-              </Link>
-            </TableCell>
-            <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-            <Link href="#" color="secondary" >
-            <Typography variant="caption" noWrap>{row.miner}</Typography>
-              </Link>
-              </TableCell>
-            <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-            <Typography variant="caption" noWrap>{row.hash}</Typography>
-            </TableCell>
-            <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-            <Typography variant="caption" noWrap>{row.gasUsed}</Typography>
-            </TableCell>
-            <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-            <Typography variant="caption" noWrap>{row.blockTime}</Typography>
-            </TableCell>
-            {/* <TableCell align="left" padding="checkbox">
-            <Typography variant="caption" noWrap>{row.time}</Typography>
-            </TableCell> */}
-          </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-        </Paper>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={blocks.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
-    </Paper>
-    </Grid>
-    </Grid>
+    <Layout>
+      <Grid container className={classes.root}  >
+            <Grid item xs={12} className={classes.bottomPadding}> 
+            <LatestBlocks pagination={true} />
+            </Grid>
+        </Grid>
     </Layout>
-);
+  );
 }

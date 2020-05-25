@@ -4,7 +4,61 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/react-hooks';
+import TablePagination from '@material-ui/core/TablePagination';
+import * as numbro from 'numbro';
 
+
+const GET_CHAIN = gql`
+  {
+    chain{
+    _id
+    averageBlockTime
+    txCount
+    latestHeight
+    chainId
+    tokenPrice{
+      usd
+      usdMarketCap
+    }
+    walletCount
+  }
+  
+  }
+`;
+
+const chain_updated: any[] = [];
+
+function getChainInfo() {
+  const { loading, error, data } = useQuery(GET_CHAIN, {
+    pollInterval: 5000,
+  });
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
+
+  // return(
+  //   chain_updated[0] = data.chain
+  // )
+
+  // data.chain.forEach((article : any, i: number) => {
+  //   console.log(article);
+  //   chain_updated.push(article);
+  // });
+
+
+  return Object.keys(data).forEach(function (item, i) {
+    chain_updated[i] = data.chain
+  });
+  
+  // return (
+  //   data.chain.forEach(function (block: any, i: number) {
+  //     chain_updated[i] = block;
+  //     //console.log(block)
+  //   })
+  // )
+  
+};
 
 const useStyles = makeStyles(({ spacing, palette }) => {
   return {
@@ -44,79 +98,87 @@ const useStyles = makeStyles(({ spacing, palette }) => {
 
 const ChartData = () => {
   const classes = useStyles();
+  getChainInfo();
+  // console.log(" CHAIN  " , JSON.stringify(chain_updated[0].averageBlockTime))
+   console.log(chain_updated[0] ? chain_updated[0].averageBlockTime: null)
+  //console.log(chain_updated.chain)
 
   return (
     <div >
-    <Grid container className={classes.container} >
-    <Grid item xs={6} md={3} lg={2} >
-    <Card className={cx(classes.card)} elevation={0}>
-      <Typography variant="caption" className={classes.label} >
-        cGLD Price
-      </Typography>
-      <Typography variant="h6" className={classes.value} >
-        $2.8
-      </Typography>
-    </Card>
-    </Grid>
-
-    <Grid item xs={6} md={3} lg={2} >
-    <Card className={cx(classes.card)} elevation={0} >
-    <Typography variant="caption" className={classes.label} >
-        Market Cap
-      </Typography>
-      <Typography variant="h6" className={classes.value} >
-        $10,413,896
-      </Typography>
-    </Card>
-    </Grid>
-
-    <Grid item xs={6}  md={3} lg={2}  >
-    <Card className={cx(classes.card)} elevation={0}>
-    <Typography variant="caption" className={classes.label} >
-        Average block time
-      </Typography>
-      <Typography variant="h6" className={classes.value} >
-        5.6 seconds
-      </Typography>
-    </Card>
-    </Grid>
-
-    <Grid item xs={6} md={3} lg={2}  >
-    <Card className={cx(classes.card)} elevation={0}>
-    <Typography variant="caption" className={classes.label} >
-        Total transactions
-      </Typography>
-      <Typography variant="h6" className={classes.value} >
-        15,545
-      </Typography>
-    </Card>
-    </Grid>
     
-    <Grid item xs={6} md={3} lg={2} >
-    <Card className={cx(classes.card)} elevation={0}  >
-      <Typography variant="caption" className={classes.label} >
-          Total blocks
-      </Typography>
-      <Typography variant="h6" className={classes.value} >
-          1,074,922
-      </Typography>
+    <Grid container className={classes.container} >
+        <Grid item xs={6} md={3} lg={2} >
+          <Card className={cx(classes.card)} elevation={0} >
+            <Typography variant="caption" className={classes.label} >
+              cGLD Price
+            </Typography>
+            <Typography variant="h6" className={classes.value} >
+              {chain_updated[0] ? "$" + numbro(chain_updated[0].tokenPrice.usd).format("0.00"): 'Not available'} 
+            </Typography>
+          </Card>
+        </Grid>
 
-    </Card>
-    </Grid>
+        <Grid item xs={6} md={3} lg={2} >
+        <Card className={cx(classes.card)} elevation={0} >
+        <Typography variant="caption" className={classes.label} >
+            Market Cap
+          </Typography>
+          <Typography variant="h6" className={classes.value} >
+          {chain_updated[0] ? "$" +  numbro(chain_updated[0].tokenPrice.usdMarketCap).format("0.00"): 'Not available'} 
+          </Typography>
+        </Card>
+        </Grid>
 
-    <Grid item xs={6} md={3} lg={2} >
-    <Card className={cx(classes.card)} elevation={0} >
-    <Typography variant="caption" className={classes.label} >
-            Wallet addresses
-      </Typography>
-      <Typography variant="h6" className={classes.value} >
-            2,737
-      </Typography>
-    </Card>
-    </Grid>
+        <Grid item xs={6}  md={3} lg={2}  >
+        <Card className={cx(classes.card)} elevation={0}>
+        <Typography variant="caption" className={classes.label} >
+            Average block time
+          </Typography>
+          <Typography variant="h6" className={classes.value} >
+          {chain_updated[0] ? numbro(chain_updated[0].averageBlockTime).format("0.00") : 'Not available'} 
+          </Typography>
+        </Card>
+        </Grid>
+
+        <Grid item xs={6} md={3} lg={2}  >
+        <Card className={cx(classes.card)} elevation={0}>
+        <Typography variant="caption" className={classes.label} >
+            Total transactions
+          </Typography>
+          <Typography variant="h6" className={classes.value} >
+          {chain_updated[0] ?  numbro(chain_updated[0].txCount).format("000,000") : 'Not available'} 
+          </Typography>
+        </Card>
+        </Grid>
+        
+        <Grid item xs={6} md={3} lg={2} >
+        <Card className={cx(classes.card)} elevation={0}  >
+          <Typography variant="caption" className={classes.label} >
+              Total blocks
+          </Typography>
+          <Typography variant="h6" className={classes.value} >
+          {chain_updated[0] ?  numbro(chain_updated[0].latestHeight).format("000,000"): 'Not available'} 
+          </Typography>
+
+        </Card>
+        </Grid>
+
+        <Grid item xs={6} md={3} lg={2} >
+        <Card className={cx(classes.card)} elevation={0} >
+        <Typography variant="caption" className={classes.label} >
+                Wallet addresses
+          </Typography>
+          <Typography variant="h6" className={classes.value} >
+          {chain_updated[0] ? numbro(chain_updated[0].walletCount).format("000,000"): 'Not available'} 
+          </Typography>
+        </Card>
+        </Grid>
+ 
+    
     </Grid>
     </div>
-  );
+    );
+
 };
 
 export default ChartData;

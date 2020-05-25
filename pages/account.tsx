@@ -240,7 +240,7 @@ function AccountOverview(){
     return(
         <span>
     {/* <Grid container className={classes.root} xs={12} md={12} lg={6} > */}
-      <Card className={classes.card}>
+      <Card>
         <Grid container spacing={1} >
           <Grid item xs={12} >
           <Typography variant="body1" className={classes.box} >

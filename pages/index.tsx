@@ -89,10 +89,10 @@ export default function Index() {
                 <ChartData />
             </Grid>
             <Grid item xs={12} lg={6} className={classes.bottomPadding}> 
-            <LatestBlocks />
+                <LatestBlocks pagination={false} />
             </Grid>
             <Grid item xs={12} lg={6} className={classes.bottomPadding}> 
-            <LatestTransactions />
+                <LatestTransactions />
             </Grid>
         </Grid>
     </Layout>

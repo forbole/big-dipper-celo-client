@@ -13,6 +13,50 @@ import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
 import Chips from '../components/Chips';
 import Divider from '@material-ui/core/Divider';
+import { gql } from "apollo-boost";
+import { useQuery } from '@apollo/react-hooks';
+//import EllipsisText from 'react-text-overflow-middle-ellipsis';
+
+const GET_TX = gql`
+ {
+  transactions{
+    transactions{
+    from{
+          _id
+
+          address
+          balance
+    }
+    to{
+          _id
+          address
+          balance
+    }
+    value
+    blockHash
+    timestamp
+  }
+}
+}
+`;
+
+const txs: any[] = [];
+
+function getTransactions() {
+  const { loading, error, data } = useQuery(GET_TX, {
+    pollInterval: 5000,
+  });
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
+
+  return (
+    data.transactions.transactions.forEach(function (tx: any, i: number) {
+      txs[i] = tx;
+     // console.log(txs)
+    })
+  )
+};
+
 
 
 interface Data {
@@ -20,27 +64,11 @@ interface Data {
     from: string;
     to: string;
     time: string;
-    chip: string;
     total: string;
 }
 
-function createData(tx: string, from: string, to: string, time: string, chip: string, total: string) {
-    return { tx, from, to, time, chip, total};
-  }
-
-  const rows = [
-    createData(' 0xd3b4592hfh..', '0xd3b92hdsdf..', '0xd3bretretretert4592hdsw12df..', '2 mins ago', 'Contract Call', '3023412.22 cGLD' ),
-    createData(' 0xd3b4882hfh..', '0x98b45d12df..', '0xd3b4592hdsw12df..', '5 mins ago', 'Token Transfer', '3023412.22 cGLD' ),
-    createData(' 0xdsdb4592hfh..', '0xd6hdsw12df..', '0xd3b4592hdsw12df..', '1 mins ago', 'Contract Call', '603412.22 cGLD' ),
-    createData(' 0xd3b4592hfh..', '0xd3dsw12df..', '0xd3b4592hdsw12df..', '3 mins ago', 'Contract Call', '7023412.22 cGLD' ),
-    createData(' 0xd3b4592hfh..', '0xd3hdsw12df..', '0xd3b4592hdsw12df..', '8 mins ago', 'Contract Call', '5023412.22 cGLD' ),
-    createData(' 0xd3b4592hfh..', '0xd392hdsw12df..', '0xd3b4592hdsw12df..', '6 mins ago', 'Contract Call', '8023412.22 cGLD' ),
-    createData(' 0xd3b4592hfh..', '0xd392hdsw12df..', '0xd3b4592hdsw12df..', '2 mins ago', 'Contract Call', '24023412.22 cGLD' ),
-  ];
-  
-
-const useStyles = makeStyles(({ spacing }) => {
-    return {
+console.log(txs)
+const useStyles = makeStyles({
           root: {
             borderRadius: 5,
             padding: '0',
@@ -53,8 +81,9 @@ const useStyles = makeStyles(({ spacing }) => {
 
           leftInline:{
             display: 'flex',
-            overflow: 'auto',
+            overflow: 'hidden',
             padding: '0 0 0 1rem',
+
             },
           rightInline:{
             display: 'flex',
@@ -94,17 +123,34 @@ const useStyles = makeStyles(({ spacing }) => {
           //textAlign: 'right',
           },
 
-  }
+        truncateText:{
+          overflow: "hidden", 
+          textOverflow: "clip ellipsis clip 0 3ch", 
+          minWidth: '1rem', 
+          maxWidth: '40rem',
+        },
+
+  
 });
 
 
 
 
-export default function LatestTransactions() {
-
+export default function LatestTransactions(props: any) {
+getTransactions()
 const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+const [page, setPage] = React.useState(0);
+const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+
+const handleChangePage = (event: unknown, newPage: number) => {
+  setPage(newPage);
+};
+
+const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  setRowsPerPage(+event.target.value);
+  setPage(0);
+};
 
   return (
     <Paper className={classes.root}>
@@ -119,38 +165,47 @@ const classes = useStyles();
           <TableHead>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+            {txs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
               return (
-                <TableRow key={row.tx} >
+                <TableRow key={row.blockHash} >
             <TableCell component="th" scope="row" padding="checkbox"  >
             <Grid container spacing={1} style={{padding: '0.5rem 0'}}>
                    <Grid item xs={8}  >
-  
-                    <Typography  variant="caption"  className={classes.leftInline}>
+                   
+                    <Typography  variant="caption"  className={classes.leftInline} noWrap>
                     Tx#   <Link href="#" color="secondary"  className={classes.leftInline}>
-                     {row.tx}
+                    <div className={classes.truncateText}> 
+                     {row.blockHash}
+                     </div>
+
                     </Link>
                      </Typography>
                      </Grid>
                      <Grid item xs={4}>
-                    <Typography variant="caption"   className={classes.alignRight}>
-                    {row.time}
+                    <Typography variant="caption"   className={classes.alignRight} noWrap>
+                    <div className={classes.truncateText}> 
+                    {row.timestamp}
+                    </div>
                     </Typography>
                     </Grid>
     
                     <Grid item xs={5} md={4} >
-                    <Typography variant="caption"   className={classes.leftInline}>
+                    <Typography variant="caption"   className={classes.leftInline} noWrap>
                        From  <Link href="#" color="secondary" className={classes.txPadding} >
-                     {row.from}
+                       <div className={classes.truncateText}> 
+                     {row.from.address}
+                     </div>
                    </Link>
                      </Typography>
                      </Grid>
   
                      <Grid item xs={7} md={8}>
-                    <Typography variant="caption"   align='left' className={classes.rightInline}>
+                    <Typography variant="caption"   align='left' className={classes.rightInline} noWrap>
                        To  <Link href="#" color="secondary" className={classes.txPadding}>
-                       {row.to}
-                   </Link>
+                       <div className={classes.truncateText}> 
+                       {row.to.address}
+                       </div>
+                       </Link>
                      </Typography>
                      </Grid>
   
@@ -158,13 +213,16 @@ const classes = useStyles();
   
                      <Grid item xs={6}  >
                      <Typography  variant="caption"  className={classes.chip}>
-                     <Chips value={row.chip}/>
-                    </Typography>
-    
-                  </Grid>
+                      {row.value === 0 ? 
+                       <Chips value='Contract Call'/>: 
+                       <Chips value='Token Transfer'/>}
+                     </Typography>
+                   </Grid> 
                      <Grid item xs={6} >
                     <Typography variant="caption"   className={classes.alignRight} >
-                      {row.total}
+                    <div className={classes.truncateText}> 
+                      {row.timestamp}
+                    </div>
                     </Typography>
                   </Grid>
                      </Grid>
@@ -176,6 +234,17 @@ const classes = useStyles();
           </TableBody>
         </Table>
       </TableContainer>
+      {props.pagination ?   
+      <TablePagination
+          className={"pagination"}
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={txs.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          /> : null}
     </Paper>
 );
 }

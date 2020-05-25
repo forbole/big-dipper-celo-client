@@ -289,6 +289,49 @@ import Layout from '../components/Layout';
 import cx from 'clsx';
 import Card from '@material-ui/core/Card';
 
+import { gql } from "apollo-boost";
+import { useQuery } from '@apollo/react-hooks';
+
+
+const GET_TX = gql`
+ {
+  transactions{
+    transactions{
+    from{
+          _id
+          address
+          balance
+    }
+    to{
+          _id
+          address
+          balance
+    }
+    value
+    blockHash
+  }
+}
+}
+`;
+
+const txs: any[] = [];
+
+function getTransactions() {
+  const { loading, error, data } = useQuery(GET_TX, {
+    pollInterval: 5000,
+  });
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
+
+  return (
+    data.transactions.transactions.forEach(function (txs: any, i: number) {
+      txs[i] = txs;
+      console.log(txs)
+    })
+  )
+};
+
+
 
 
 interface Data {
@@ -434,16 +477,16 @@ const classes = useStyles();
           <TableHead>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+            {txs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
               return (
-                <TableRow key={row.tx} >
+                <TableRow key={row.blockHash} >
             <TableCell component="th" scope="row" padding="checkbox"  >
             <Grid container spacing={1} style={{padding: '0.5rem 0'}}>
                    <Grid item xs={8}>
   
                     <Typography  variant="caption"  className={classes.leftInline}>
                     Tx#   <Link href="#" color="secondary"  className={classes.leftInline}>
-                     {row.tx}
+                     {row.blockHash}
                     </Link>
                      </Typography>
                      </Grid>
