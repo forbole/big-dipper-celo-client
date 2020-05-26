@@ -22,6 +22,31 @@ import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import TablePagination from '@material-ui/core/TablePagination';
 import * as numbro from 'numbro';
+import MiddleEllipsis from "react-middle-ellipsis";
+// import Link from 'next/link'
+
+moment.updateLocale('en', {
+  relativeTime : {
+      past: function(input) {
+        return input === 'just now'
+          ? input
+          : input + ' ago'
+      },
+      s  : 'just now',
+      future: "in %s",
+      ss : '%d seconds',
+      m:  "a minute",
+      mm: "%d minutes",
+      h:  "an hour",
+      hh: "%d hours",
+      d:  "a day",
+      dd: "%d days",
+      M:  "a month",
+      MM: "%d months",
+      y:  "a year",
+      yy: "%d years"
+  }
+});
 
 
 const GET_BLOCK = gql`
@@ -160,6 +185,8 @@ export default function LatestBlocks(props : any) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   getBlocks();
   
+  const paginate = props.pagination ? (page * rowsPerPage) : 5;
+  const paginate_2 = props.pagination  ? page * rowsPerPage + rowsPerPage : 10;
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -218,25 +245,41 @@ export default function LatestBlocks(props : any) {
 
               </TableHead>
               <TableBody>
-                {blocks.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                { blocks.slice(paginate, paginate_2).map((row)  => {
                   return (
                     <TableRow key={row.number} >
                 <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
-                <Link href="#"  color="secondary" >
-                <Typography variant="caption"  noWrap> {row.number}</Typography>
-                  </Link>
-                </TableCell>
+                <Typography variant="caption"  noWrap> 
+               <Link href="block/[block]/" as={`block/${row.number}`} color="secondary" >{numbro(row.number).format("0,0")}</Link>
+                </Typography>
+                </TableCell>   
+
                 <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                <div className={classes.truncareText}> 
+                
                 <Link href="#" color="secondary" >
-                <Typography variant="caption" display="inline" className={classes.textContent}>{row.miner && row.miner.signer ? row.miner.signer : null}</Typography>
-                  </Link>
-                  </div>
-                  </TableCell>
-                <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                <div className={classes.truncareText}> 
-                <Typography variant="caption" noWrap>{row.hash}</Typography>
+                <Typography variant="caption" display="inline" className={classes.textContent}>
+                <div style={{ width: "35%", minWidth:"10%", maxWidth: "100%", whiteSpace: "nowrap" }}>                
+                  <MiddleEllipsis>
+                    <span>
+                    {row.miner && row.miner.signer ? row.miner.signer : null}
+                    </span>
+                  </MiddleEllipsis>
                 </div>
+                </Typography>
+                  </Link>
+                  </TableCell>
+
+
+                <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                <Typography variant="caption" noWrap>
+                <div style={{ width: "20%", minWidth:"10%", maxWidth: "100%", whiteSpace: "nowrap" }}>                
+                <MiddleEllipsis>
+                  <span>
+                    {row.hash ? row.hash : null}
+                  </span>
+                </MiddleEllipsis>
+                </div>
+                </Typography>
                 </TableCell>
                 { props.pagination ? 
                 <TableCell align="left" padding="checkbox" className={classes.tableCell}>
@@ -251,7 +294,8 @@ export default function LatestBlocks(props : any) {
                 </div>
                 </TableCell> : null}
                 <TableCell align="left" padding="checkbox">
-                <Typography variant="caption" noWrap>{moment.duration(row.timestamp/1000000).humanize()}</Typography>
+                <Typography variant="caption" noWrap>{moment.duration(row.timestamp/1000000).humanize() // a minute ago
+              }</Typography>
                 </TableCell>
               </TableRow>
                   );

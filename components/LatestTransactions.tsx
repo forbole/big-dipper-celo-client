@@ -15,7 +15,7 @@ import Chips from '../components/Chips';
 import Divider from '@material-ui/core/Divider';
 import { gql } from "apollo-boost";
 import { useQuery } from '@apollo/react-hooks';
-//import EllipsisText from 'react-text-overflow-middle-ellipsis';
+import MiddleEllipsis from "react-middle-ellipsis";
 
 const GET_TX = gql`
  {
@@ -59,13 +59,13 @@ function getTransactions() {
 
 
 
-interface Data {
-    tx: string;
-    from: string;
-    to: string;
-    time: string;
-    total: string;
-}
+// interface Data {
+//     tx: string;
+//     from: string;
+//     to: string;
+//     time: string;
+//     total: string;
+// }
 
 console.log(txs)
 const useStyles = makeStyles({
@@ -112,7 +112,7 @@ const useStyles = makeStyles({
 
           txPadding:{
             display: 'flex',
-            overflow: 'auto',
+            //overflow: 'auto',
             padding: '0 0 0 0.5rem',
           },
           divider:{
@@ -120,7 +120,6 @@ const useStyles = makeStyles({
         },
         link:{
           float: 'right',
-          //textAlign: 'right',
           },
 
         truncateText:{
@@ -155,9 +154,9 @@ const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => 
   return (
     <Paper className={classes.root}>
   <Typography variant="body1" className={classes.box} >
-            Latest Transactions  <Link href="/transactions" className={classes.link} color="secondary">
+            Latest Transactions {!props.pagination ?  <Link href="/transactions" className={classes.link} color="secondary">
     {'view more'}
-  </Link>
+  </Link> : null }
   </Typography>
   <Divider variant='middle' className={classes.divider} />
       <TableContainer className={classes.container}>
@@ -173,39 +172,50 @@ const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => 
                    <Grid item xs={8}  >
                    
                     <Typography  variant="caption"  className={classes.leftInline} noWrap>
-                    Tx#   <Link href="#" color="secondary"  className={classes.leftInline}>
-                    <div className={classes.truncateText}> 
-                     {row.blockHash}
-                     </div>
-
+                    Tx#   <Link href="transaction/[transaction]/" as={`transaction/${row.blockHash}`} color="secondary" className={classes.leftInline}>
+                    <div style={{ width: "60%", minWidth:"40%", maxWidth: "100%", whiteSpace: "nowrap" }}>                
+                      <MiddleEllipsis>
+                        <span>
+                        {row.blockHash}
+                        </span>
+                      </MiddleEllipsis>
+                    </div> 
                     </Link>
                      </Typography>
                      </Grid>
                      <Grid item xs={4}>
                     <Typography variant="caption"   className={classes.alignRight} noWrap>
-                    <div className={classes.truncateText}> 
-                    {row.timestamp}
-                    </div>
+                          {row.timestamp}
                     </Typography>
                     </Grid>
     
                     <Grid item xs={5} md={4} >
                     <Typography variant="caption"   className={classes.leftInline} noWrap>
                        From  <Link href="#" color="secondary" className={classes.txPadding} >
-                       <div className={classes.truncateText}> 
-                     {row.from.address}
-                     </div>
+                     <div style={{ width: "60%", minWidth:"20%", maxWidth: "100%", whiteSpace: "nowrap" }}>                
+                      <MiddleEllipsis>
+                        <span>
+                        {row.from && row.from.address ? row.from.address : null}
+                        </span>
+                      </MiddleEllipsis>
+                    </div> 
                    </Link>
                      </Typography>
                      </Grid>
   
                      <Grid item xs={7} md={8}>
                     <Typography variant="caption"   align='left' className={classes.rightInline} noWrap>
-                       To  <Link href="#" color="secondary" className={classes.txPadding}>
-                       <div className={classes.truncateText}> 
-                       {row.to.address}
-                       </div>
-                       </Link>
+                       To  
+                        
+                        <Link href="#" color="secondary" className={classes.txPadding}>
+                        <div style={{ width: "60%", minWidth:"20%", maxWidth: "100%", whiteSpace: "nowrap" }}>     
+                        <MiddleEllipsis>           
+                          <span>
+                            {row.to && row.to.address ? row.to.address : null}
+                          </span>
+                          </MiddleEllipsis>
+                          </div>
+                          </Link>
                      </Typography>
                      </Grid>
   
@@ -220,9 +230,7 @@ const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => 
                    </Grid> 
                      <Grid item xs={6} >
                     <Typography variant="caption"   className={classes.alignRight} >
-                    <div className={classes.truncateText}> 
                       {row.timestamp}
-                    </div>
                     </Typography>
                   </Grid>
                      </Grid>

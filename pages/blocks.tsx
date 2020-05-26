@@ -5,7 +5,6 @@ import Layout from '../components/Layout';
 import ChartData from '../components/ChartData';
 import LatestTransactions from '../components/LatestTransactions';
 import Grid from '@material-ui/core/Grid';
-import Transactions from '../components/Transactions'
 import LatestBlocks from '../components/LatestBlocks';
 
 

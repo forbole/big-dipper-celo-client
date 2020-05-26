@@ -11,75 +11,39 @@ import FilledInput from '@material-ui/core/FilledInput';
 import FormControl from '@material-ui/core/FormControl';
 import Chips from '../components/Chips';
 import IconButton from '@material-ui/core/IconButton';
-//import CopyToClipboard from 'react-copy-to-clipboard';
+// import {useRouter} from 'next/router'
+// import gql from 'graphql-tag';
+// import { useQuery } from '@apollo/react-hooks';
+
+// const GET_BLOCK_INFO = gql`
+//   query Block($number: Number) {
+//     block(number: $number) {
+//         blockTime
+//         parentHash
+//         hash
+//         timestamp
+//     }
+//   }
+// `;
+
+// function getBlock( number: Number  ) {
+//   const { loading, error, data } = useQuery(GET_BLOCK_INFO, {
+//     variables: { number },
+//   });
+
+//   if (loading) return null;
+//   if (error) return `Error! ${error}`;
 
 
-let copied = false;
-let value = "";
+//   return (
+//     console.log(data.block)
+//     // data.block.blocks.forEach(function (block: any, i: number) {
+//     //   blocks[i] = block;
+      
+//     // })
+//   );
+// }
 
-interface Column {
-  id: 'height' | 'miner' | 'txs' | 'gasUsed' | 'gasLimit'| 'time';
-  label: string;
-  minWidth?: number;
-}
-
-const columns: Column[] = [
-  { id: 'height', label: 'Height', },
-  { id: 'miner', label: 'Miner', },
-  {
-    id: 'txs',
-    label: 'Txs',
-  },
-  {
-    id: 'gasUsed',
-    label: 'Gas Used', 
-  },
-  {
-    id: 'gasLimit',
-    label: 'Gas Limit',
-  },
-  {
-    id: 'time',
-    label: 'Time',
-  },
-];
-
-interface Data {
-    height: string;
-    miner: string;
-    txs: string;
-    gasUsed: string;
-    gasLimit: string;
-    time: string;
-}
-
-function createData(height: string, miner: string, txs: string, gasUsed: string, gasLimit: string, time: string) {
-    return { height, miner, txs, gasUsed, gasLimit, time};
-  }
-
-  const rows = [
-    createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-    createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-    createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-    createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-    createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-    createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-    createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-    createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-    createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-    createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-    createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-    createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-    createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-    createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-    createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-    createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-    createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-    createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-    createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-    createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-  ];
-  
 
 const useStyles = makeStyles(({ spacing, palette }) => {
     return {
@@ -126,15 +90,16 @@ const useStyles = makeStyles(({ spacing, palette }) => {
 
 
 
-const  onCopy = () => {
-    return copied = true;
-  };
+// const  onCopy = () => {
+//     return copied = true;
+//   };
 
 
-export default function TransactionDetails() {
+export default function TransactionDetails(props : any) {
 const classes = useStyles();
 
-
+console.log(props.transaction)
+//getBlock(14254)
   return (
     <Layout>
     <Card className={classes.root}>
@@ -152,7 +117,7 @@ const classes = useStyles();
                         Hash
                     </Typography>
                     <Typography variant="caption" component="h2">
-                        E2D55BA9A99F150AE6E1D0457B6416C4C68915E1CB26320318A1421491C17032
+                        {props && props.transaction ? props.transaction : null}
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>

@@ -28,7 +28,7 @@ const GET_CHAIN = gql`
   }
 `;
 
-const chain_updated: any[] = [];
+const chainUpdated: any[] = [];
 
 function getChainInfo() {
   const { loading, error, data } = useQuery(GET_CHAIN, {
@@ -38,22 +38,22 @@ function getChainInfo() {
   if (error) return `Error! ${error.message}`;
 
   // return(
-  //   chain_updated[0] = data.chain
+  //   chainUpdated[0] = data.chain
   // )
 
   // data.chain.forEach((article : any, i: number) => {
   //   console.log(article);
-  //   chain_updated.push(article);
+  //   chainUpdated.push(article);
   // });
 
 
   return Object.keys(data).forEach(function (item, i) {
-    chain_updated[i] = data.chain
+    chainUpdated[i] = data.chain
   });
   
   // return (
   //   data.chain.forEach(function (block: any, i: number) {
-  //     chain_updated[i] = block;
+  //     chainUpdated[i] = block;
   //     //console.log(block)
   //   })
   // )
@@ -70,14 +70,14 @@ const useStyles = makeStyles(({ spacing, palette }) => {
         justifyContent: 'center',
         margin: '2%',
         borderLeft: 'thick solid #FBCC5C',
-        borderRadius: 5,
-        boxShadow: '0 2px 4px 0 rgba(138, 148, 159, 0.2)',
-        '& > *:nth-child(1)': {
-          marginRight: spacing(2),
-        },
-        '& > *:nth-child(2)': {
-          flex: 'auto',
-        },
+        borderRadius: 4,
+        // boxShadow: '0 2px 4px 0 rgba(138, 148, 159, 0.2)',
+        // '& > *:nth-child(1)': {
+        //   marginRight: spacing(2),
+        // },
+        // '& > *:nth-child(2)': {
+        //   flex: 'auto',
+        // },
         background: '#43484C',
         alignItems: 'center',
     },
@@ -99,9 +99,9 @@ const useStyles = makeStyles(({ spacing, palette }) => {
 const ChartData = () => {
   const classes = useStyles();
   getChainInfo();
-  // console.log(" CHAIN  " , JSON.stringify(chain_updated[0].averageBlockTime))
-   console.log(chain_updated[0] ? chain_updated[0].averageBlockTime: null)
-  //console.log(chain_updated.chain)
+  // console.log(" CHAIN  " , JSON.stringify(chainUpdated[0].averageBlockTime))
+   console.log(chainUpdated[0] ? chainUpdated[0].averageBlockTime: null)
+  //console.log(chainUpdated.chain)
 
   return (
     <div >
@@ -113,7 +113,7 @@ const ChartData = () => {
               cGLD Price
             </Typography>
             <Typography variant="h6" className={classes.value} >
-              {chain_updated[0] ? "$" + numbro(chain_updated[0].tokenPrice.usd).format("0.00"): 'Not available'} 
+              {chainUpdated[0] ? "$" + numbro(chainUpdated[0].tokenPrice.usd).format("0.00"): 'Not available'} 
             </Typography>
           </Card>
         </Grid>
@@ -124,7 +124,7 @@ const ChartData = () => {
             Market Cap
           </Typography>
           <Typography variant="h6" className={classes.value} >
-          {chain_updated[0] ? "$" +  numbro(chain_updated[0].tokenPrice.usdMarketCap).format("0.00"): 'Not available'} 
+          {chainUpdated[0] ? "$" +  numbro(chainUpdated[0].tokenPrice.usdMarketCap).format("0.00"): 'Not available'} 
           </Typography>
         </Card>
         </Grid>
@@ -135,7 +135,7 @@ const ChartData = () => {
             Average block time
           </Typography>
           <Typography variant="h6" className={classes.value} >
-          {chain_updated[0] ? numbro(chain_updated[0].averageBlockTime).format("0.00") : 'Not available'} 
+          {chainUpdated[0] ? numbro(chainUpdated[0].averageBlockTime).format("0.00") : 'Not available'} 
           </Typography>
         </Card>
         </Grid>
@@ -146,7 +146,7 @@ const ChartData = () => {
             Total transactions
           </Typography>
           <Typography variant="h6" className={classes.value} >
-          {chain_updated[0] ?  numbro(chain_updated[0].txCount).format("000,000") : 'Not available'} 
+          {chainUpdated[0] ?  numbro(chainUpdated[0].txCount).format("000,000") : 'Not available'} 
           </Typography>
         </Card>
         </Grid>
@@ -157,7 +157,7 @@ const ChartData = () => {
               Total blocks
           </Typography>
           <Typography variant="h6" className={classes.value} >
-          {chain_updated[0] ?  numbro(chain_updated[0].latestHeight).format("000,000"): 'Not available'} 
+          {chainUpdated[0] ?  numbro(chainUpdated[0].latestHeight).format("000,000"): 'Not available'} 
           </Typography>
 
         </Card>
@@ -169,7 +169,7 @@ const ChartData = () => {
                 Wallet addresses
           </Typography>
           <Typography variant="h6" className={classes.value} >
-          {chain_updated[0] ? numbro(chain_updated[0].walletCount).format("000,000"): 'Not available'} 
+          {chainUpdated[0] ? numbro(chainUpdated[0].walletCount).format("000,000"): 'Not available'} 
           </Typography>
         </Card>
         </Grid>
