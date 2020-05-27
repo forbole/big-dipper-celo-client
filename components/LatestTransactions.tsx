@@ -16,6 +16,7 @@ import Divider from '@material-ui/core/Divider';
 import { gql } from "apollo-boost";
 import { useQuery } from '@apollo/react-hooks';
 import MiddleEllipsis from "react-middle-ellipsis";
+import moment from 'moment'
 
 const GET_TX = gql`
  {
@@ -33,41 +34,13 @@ const GET_TX = gql`
           balance
     }
     value
-    blockHash
+    hash
     timestamp
   }
 }
 }
 `;
 
-const txs: any[] = [];
-
-function getTransactions() {
-  const { loading, error, data } = useQuery(GET_TX, {
-    pollInterval: 5000,
-  });
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
-
-  return (
-    data.transactions.transactions.forEach(function (tx: any, i: number) {
-      txs[i] = tx;
-     // console.log(txs)
-    })
-  )
-};
-
-
-
-// interface Data {
-//     tx: string;
-//     from: string;
-//     to: string;
-//     time: string;
-//     total: string;
-// }
-
-console.log(txs)
 const useStyles = makeStyles({
           root: {
             borderRadius: 5,
@@ -76,7 +49,8 @@ const useStyles = makeStyles({
           },
           container: {
             borderRadius: 5,
-            width: '100%'
+            width: '100%',
+            overflow: 'hidden'
           },
 
           leftInline:{
@@ -133,50 +107,55 @@ const useStyles = makeStyles({
 });
 
 
+export default function LatestTransactions ( props: any ) {
+  const classes = useStyles();
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const paginate = props.pagination ? (page * rowsPerPage) : 0;
+  const paginate_2 = props.pagination  ? page * rowsPerPage + rowsPerPage : 5;
 
+  const { loading, error, data } = useQuery(GET_TX, {
+    pollInterval: 5000,
+  });
 
-export default function LatestTransactions(props: any) {
-getTransactions()
-const classes = useStyles();
-const [page, setPage] = React.useState(0);
-const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
 
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+  
+  if (loading) return null;
+  if (error) return `Error! ${error}`;
 
-const handleChangePage = (event: unknown, newPage: number) => {
-  setPage(newPage);
-};
-
-const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-  setRowsPerPage(+event.target.value);
-  setPage(0);
-};
-
-  return (
+  return(
     <Paper className={classes.root}>
-  <Typography variant="body1" className={classes.box} >
+      <Typography variant="body1" className={classes.box} >
             Latest Transactions {!props.pagination ?  <Link href="/transactions" className={classes.link} color="secondary">
-    {'view more'}
-  </Link> : null }
-  </Typography>
-  <Divider variant='middle' className={classes.divider} />
+           {'view more'}
+               </Link> : null }
+      </Typography>
+      <Divider variant='middle' className={classes.divider} />
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
           </TableHead>
           <TableBody>
-            {txs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+            {data.transactions.transactions.slice(paginate, paginate_2).map((row:any) => {
               return (
-                <TableRow key={row.blockHash} >
-            <TableCell component="th" scope="row" padding="checkbox"  >
-            <Grid container spacing={1} style={{padding: '0.5rem 0'}}>
+                <TableRow key={row.hash} >
+                  <TableCell component="th" scope="row" padding="checkbox"  >
+                  <Grid container spacing={1} style={{padding: '0.5rem 0'}}>
                    <Grid item xs={8}  >
                    
                     <Typography  variant="caption"  className={classes.leftInline} noWrap>
-                    Tx#   <Link href="transaction/[transaction]/" as={`transaction/${row.blockHash}`} color="secondary" className={classes.leftInline}>
+                    Tx#   <Link href="transaction/[transaction]/" as={`transaction/${row.hash}`} color="secondary" className={classes.leftInline}>
                     <div style={{ width: "60%", minWidth:"40%", maxWidth: "100%", whiteSpace: "nowrap" }}>                
                       <MiddleEllipsis>
                         <span>
-                        {row.blockHash}
+                        {row.hash ? row.hash: ' '}
                         </span>
                       </MiddleEllipsis>
                     </div> 
@@ -185,7 +164,7 @@ const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => 
                      </Grid>
                      <Grid item xs={4}>
                     <Typography variant="caption"   className={classes.alignRight} noWrap>
-                          {row.timestamp}
+                    {row.timestamp ? moment.duration(row.timestamp/1000000).humanize() : ''}
                     </Typography>
                     </Grid>
     
@@ -195,7 +174,7 @@ const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => 
                      <div style={{ width: "60%", minWidth:"20%", maxWidth: "100%", whiteSpace: "nowrap" }}>                
                       <MiddleEllipsis>
                         <span>
-                        {row.from && row.from.address ? row.from.address : null}
+                        {row.from.address ? row.from.address : null}
                         </span>
                       </MiddleEllipsis>
                     </div> 
@@ -230,7 +209,7 @@ const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => 
                    </Grid> 
                      <Grid item xs={6} >
                     <Typography variant="caption"   className={classes.alignRight} >
-                      {row.timestamp}
+                      {row.value ? row.value + ' cGLD' : 0  + ' cGLD'}
                     </Typography>
                   </Grid>
                      </Grid>
@@ -247,7 +226,7 @@ const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => 
           className={"pagination"}
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
-            count={txs.length}
+            count={data.transactions.transactions.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}

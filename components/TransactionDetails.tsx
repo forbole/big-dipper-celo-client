@@ -11,38 +11,40 @@ import FilledInput from '@material-ui/core/FilledInput';
 import FormControl from '@material-ui/core/FormControl';
 import Chips from '../components/Chips';
 import IconButton from '@material-ui/core/IconButton';
-// import {useRouter} from 'next/router'
-// import gql from 'graphql-tag';
-// import { useQuery } from '@apollo/react-hooks';
 
-// const GET_BLOCK_INFO = gql`
-//   query Block($number: Number) {
-//     block(number: $number) {
-//         blockTime
-//         parentHash
-//         hash
-//         timestamp
-//     }
-//   }
-// `;
-
-// function getBlock( number: Number  ) {
-//   const { loading, error, data } = useQuery(GET_BLOCK_INFO, {
-//     variables: { number },
-//   });
-
-//   if (loading) return null;
-//   if (error) return `Error! ${error}`;
+import {useRouter} from 'next/router'
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/react-hooks';
+import TablePagination from '@material-ui/core/TablePagination';
+import * as numbro from 'numbro';
+//import MiddleEllipsis from "react-middle-ellipsis";
 
 
-//   return (
-//     console.log(data.block)
-//     // data.block.blocks.forEach(function (block: any, i: number) {
-//     //   blocks[i] = block;
-      
-//     // })
-//   );
-// }
+const GET_TX_DETAILS = gql`
+  query Transaction($hash: String!) {
+    transaction(hash: $hash) {
+        value
+        blockNumber
+        nonce
+        feeCurrency
+        gatewayFeeRecipient
+        gatewayFee
+        gas
+        hash
+        input
+        timestamp
+        gas
+        from{
+            address
+        }
+        to{
+            address
+        }
+    
+        
+    }
+  }
+`;
 
 
 const useStyles = makeStyles(({ spacing, palette }) => {
@@ -90,16 +92,17 @@ const useStyles = makeStyles(({ spacing, palette }) => {
 
 
 
-// const  onCopy = () => {
-//     return copied = true;
-//   };
 
-
-export default function TransactionDetails(props : any) {
-const classes = useStyles();
-
-console.log(props.transaction)
-//getBlock(14254)
+export default function TransactionDetails ( hash : String   ) {
+    hash = hash.hash;
+    const { loading, error, data, refetch } = useQuery(GET_TX_DETAILS, {
+      variables: { hash},
+      pollInterval: 5000,
+    });
+    const classes = useStyles();
+    if (loading) return null;
+    if (error) return `Error! ${error}`;
+console.log(data)
   return (
     <Layout>
     <Card className={classes.root}>
@@ -117,7 +120,7 @@ console.log(props.transaction)
                         Hash
                     </Typography>
                     <Typography variant="caption" component="h2">
-                        {props && props.transaction ? props.transaction : null}
+                       {data.transaction && data.transaction.hash ? data.transaction.hash : 0}
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>
@@ -127,7 +130,7 @@ console.log(props.transaction)
                         Time
                     </Typography>
                     <Typography variant="caption" >
-                        April-09-2020 11:22:08 UTC (14 seconds ago)
+                    {data.transaction && data.transaction.timestamp ? new Date(parseInt(data.transaction.timestamp)).toUTCString() : ' '}                 
                     </Typography>
                    <Divider variant='middle' className={classes.divider}/>
                 </Grid>
@@ -137,7 +140,8 @@ console.log(props.transaction)
                         Tx Type
                     </Typography>
                     <Typography variant="caption" component="h2">
-                    Contract Call
+                    {data.transaction.value === 0 || data.transaction.value  ? 
+                       'Contract Call' : 'Token Transfer'}
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>
@@ -147,7 +151,9 @@ console.log(props.transaction)
                         Status
                     </Typography>
                     <Typography variant="caption" component="h2">
-                    <Chips value={'Success'}/>
+                    {!data.transaction.pending ? 
+                       <Chips value='Pending'/> : 
+                       <Chips value='Success'/>}
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>
@@ -157,7 +163,9 @@ console.log(props.transaction)
                        From
                     </Typography>
                     <Typography variant="caption" component="h2">
-                       <Link href="#"  color="secondary">0x22k0zzcx32juhqqhpn5aar0gus63lnnp</Link> 
+                       <Link href="#"  color="secondary">
+                       {data.transaction && data.transaction.from ? data.transaction.from.address : ' '}
+                        </Link> 
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>
@@ -167,7 +175,9 @@ console.log(props.transaction)
                         To
                     </Typography>
                     <Typography variant="caption" component="h2">
-                      <Link href="#"  color="secondary">0x22k0zzcx32juhqqhpn5aar0gus63lnnp</Link>  
+                      <Link href="#"  color="secondary">
+                      {data.transaction && data.transaction.to ? data.transaction.to.address : ' '}      
+                    </Link>  
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>
@@ -177,7 +187,7 @@ console.log(props.transaction)
                     Value
                 </Typography>
                 <Typography variant="caption" component="h2">
-                    12,946,937 cGLD
+                {data.transaction && data.transaction.value ? data.transaction.value : 0}
                 </Typography>
                 <Divider variant='middle' className={classes.divider}/>
                 </Grid>
@@ -187,7 +197,9 @@ console.log(props.transaction)
                     Block Height
                 </Typography>
                 <Typography variant="caption" component="h2">
-                <Link href="#"  color="secondary">1087144</Link>  
+                <Link href={`/block/${data.transaction.blockNumber}`}  color="secondary" >
+                {data.transaction && data.transaction.blockNumber ? data.transaction.blockNumber : 0}
+                    </Link>  
                 </Typography>
                 <Divider variant='middle' className={classes.divider}/>
                 </Grid>
@@ -207,7 +219,7 @@ console.log(props.transaction)
                     Nonce
                 </Typography>
                 <Typography variant="caption" component="h2">
-                    0x0000000000000000
+                {data.transaction && data.transaction.nonce ? data.transaction.nonce : 0}
                 </Typography>
                 <Divider variant='middle' className={classes.divider}/>
                 </Grid>
@@ -217,7 +229,7 @@ console.log(props.transaction)
                         Transaction Fee
                     </Typography>
                     <Typography variant="caption" component="h2">
-                    0.000140945 cGLD
+                    {data.transaction && data.transaction.feeCurrency ? data.transaction.feeCurrency : 0}  cGLD
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>
@@ -227,7 +239,7 @@ console.log(props.transaction)
                         Fee Receipient
                     </Typography>
                     <Typography variant="caption" component="h2">
-                    None
+                    {data.transaction && data.transaction.gatewayFeeRecipient ? data.transaction.gatewayFeeRecipient : ' '}
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>
@@ -238,7 +250,7 @@ console.log(props.transaction)
                         Gate Fee
                     </Typography>
                     <Typography variant="caption" component="h2">
-                    0
+                    {data.transaction && data.transaction.gatewayFee ? data.transaction.gatewayFee : ' '}
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>
@@ -254,19 +266,19 @@ console.log(props.transaction)
                 </Grid>
 
 
-                <Grid item xs={3} className={classes.item}>
+                <Grid item xs={3} md={1} className={classes.item}>
                     <Typography variant="caption" component="h2">
                         Raw Input
                     </Typography>
                 </Grid>
-                <Grid item xs={2} >
+                <Grid item xs={2} md={1} className={classes.alignRight}>
                     <Chips value={'Hex'} />
                 </Grid>
-                <Grid item xs={3} >
+                <Grid item xs={3} md={1}>
                     <Chips value={'UTF-8'} />
                 </Grid>
 
-                <Grid item xs={4} className={classes.alignRight}>
+                <Grid item xs={4} md={9} className={classes.alignRight}>
                 {/* <CopyToClipboard onCopy={this.onCopy} text={value}>
                 <IconButton aria-label="copy" size="small">
                 <img src="/images/copy.svg" />
@@ -278,11 +290,11 @@ console.log(props.transaction)
                 <img src="/images/copy.svg" />
                 </IconButton>
                 </Grid>
-                <Grid item xs={12} md={5} className={classes.alignLeft}>
+                <Grid item xs={12}  className={classes.alignLeft}>
                     <FormControl fullWidth variant="filled" size="small" margin="dense">
                             <FilledInput
                             className={classes.inputLabel}
-                                value={"0xa9059cbb000000000000000000000000646eac4b00452fc4356a845922f07cbd2ced9e470000000000000000000000"}
+                                value={data.transaction && data.transaction.input ? data.transaction.input : ' '}
                                 disableUnderline={true}
                                 readOnly
                                 style={{padding: '0.7rem'}}
@@ -297,7 +309,7 @@ console.log(props.transaction)
                         Gas Used
                     </Typography>
                     <Typography variant="caption" component="h2">
-                    19,186.000
+                    {data.transaction && data.transaction.gas ? data.transaction.gas : ' '}
                     </Typography>
                     <Divider variant='middle' className={classes.divider}/>
                 </Grid>

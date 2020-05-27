@@ -30,7 +30,7 @@ export default function Block() {
     <Layout>
       <Grid container className={classes.root}  >
             <Grid item xs={12} className={classes.bottomPadding}> 
-            <TransactionDetails {...router.query} />
+            <TransactionDetails hash={(router.query.transaction)}/>
             </Grid>
         </Grid>
     </Layout>

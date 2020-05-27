@@ -55,9 +55,12 @@ const GET_BLOCK = gql`
       blocks{
         number
         miner{
+          name
           signer
         }
-        hash
+        transactions{
+            transactionIndex
+        }
         gasUsed
         gasLimit
         timestamp
@@ -135,7 +138,7 @@ const useStyles = makeStyles({
     },
     table:{
         background: '#4D5155',
-        padding: '0'
+        padding: '0.2rem'
     },
     inline:{
       paddingLeft: '0rem',
@@ -197,7 +200,6 @@ export default function LatestBlocks(props : any) {
     setPage(0);
   };
 
-  const preventDefault = (event: React.SyntheticEvent) => event.preventDefault();
   return (
     <Grid container className={classes.blocks}>
         <Grid item xs={12} >
@@ -220,7 +222,7 @@ export default function LatestBlocks(props : any) {
                 <TableRow>
                   {columns.map((column) => (
                     <TableCell
-                      key={column}
+                      key={column.id}
                       align="left"
                       className={classes.table}
                       padding="checkbox" 
@@ -233,7 +235,7 @@ export default function LatestBlocks(props : any) {
                 <TableRow>
                 {columns_homepage.map((column) => (
                   <TableCell
-                    key={column}
+                    key={column.id}
                     align="left"
                     className={classes.table}
                     padding="checkbox" 
@@ -247,10 +249,10 @@ export default function LatestBlocks(props : any) {
               <TableBody>
                 { blocks.slice(paginate, paginate_2).map((row)  => {
                   return (
-                    <TableRow key={row.number} >
+                <TableRow key={row.number} >
                 <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
                 <Typography variant="caption"  noWrap> 
-               <Link href="block/[block]/" as={`block/${row.number}`} color="secondary" >{numbro(row.number).format("0,0")}</Link>
+                <Link href="block/[block]/" as={`block/${row.number}`} color="secondary" >{row.number}</Link>
                 </Typography>
                 </TableCell>   
 
@@ -258,10 +260,10 @@ export default function LatestBlocks(props : any) {
                 
                 <Link href="#" color="secondary" >
                 <Typography variant="caption" display="inline" className={classes.textContent}>
-                <div style={{ width: "35%", minWidth:"10%", maxWidth: "100%", whiteSpace: "nowrap" }}>                
+                <div style={{ width: "40%", minWidth:"10%", maxWidth: "100%", whiteSpace: "nowrap" }}>                
                   <MiddleEllipsis>
                     <span>
-                    {row.miner && row.miner.signer ? row.miner.signer : null}
+                    {row.miner && row.miner.name ? row.miner.name : row.miner.signer}
                     </span>
                   </MiddleEllipsis>
                 </div>
@@ -272,13 +274,9 @@ export default function LatestBlocks(props : any) {
 
                 <TableCell align="left" padding="checkbox" className={classes.tableCell}>
                 <Typography variant="caption" noWrap>
-                <div style={{ width: "20%", minWidth:"10%", maxWidth: "100%", whiteSpace: "nowrap" }}>                
-                <MiddleEllipsis>
-                  <span>
-                    {row.hash ? row.hash : null}
-                  </span>
-                </MiddleEllipsis>
-                </div>
+                    <Link href="block/[block]/" as={`transaction/${row.number}`} color="secondary" >
+                    {row.transactions && row.transactions.transactionIndex ? row.transactions.transactionIndex.length() : 0}
+                    </Link>
                 </Typography>
                 </TableCell>
                 { props.pagination ? 
@@ -294,8 +292,8 @@ export default function LatestBlocks(props : any) {
                 </div>
                 </TableCell> : null}
                 <TableCell align="left" padding="checkbox">
-                <Typography variant="caption" noWrap>{moment.duration(row.timestamp/1000000).humanize() // a minute ago
-              }</Typography>
+                <Typography variant="caption" noWrap>{moment.duration(row.timestamp/1000000).humanize()}
+                </Typography>
                 </TableCell>
               </TableRow>
                   );

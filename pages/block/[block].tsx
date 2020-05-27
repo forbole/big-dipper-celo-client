@@ -25,12 +25,12 @@ export default function Block() {
   const classes = useStyles();
   const router = useRouter();
   const {Block} = router.query;
-
+  
   return (
     <Layout>
       <Grid container className={classes.root}  >
             <Grid item xs={12} className={classes.bottomPadding}> 
-            <BlockDetails {...router.query} />
+            <BlockDetails number={parseInt(router.query.block)} />
             </Grid>
         </Grid>
     </Layout>

@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       justifyContent: 'center',
       flexWrap: 'wrap',
+      padding: '0.1rem'
       },
 
       hex:{
@@ -47,6 +48,11 @@ export default function Chips(props: any) {
       return <div className={classes.root}>
       <Chip size="small" icon={<CheckCircleIcon />} label="Success" style={{backgroundColor: 'rgba(31, 217, 110, 1)', borderRadius: 5}}/>
     </div>
+    case 'Pending':
+      return <div className={classes.root}>
+      <Chip size="small" label="Pending" style={{backgroundColor: 'rgba(255, 0, 0, 0.2)', borderRadius: 5}}/>
+    </div>
+    
     case 'Delegate All':
       return <div className={classes.root}>
       <Chip size="small"  label="Delegate All" style={{backgroundColor: 'rgba(182, 83, 244, 1)', borderRadius: 5}}/>

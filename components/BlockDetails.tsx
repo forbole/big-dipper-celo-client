@@ -15,10 +15,10 @@ import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import TablePagination from '@material-ui/core/TablePagination';
 import * as numbro from 'numbro';
-import MiddleEllipsis from "react-middle-ellipsis";
+//import MiddleEllipsis from "react-middle-ellipsis";
 
 
-const GET_BLOCK_INFO = gql`
+const GET_BLOCK_DETAILS = gql`
   query Block($number: Int) {
     block(number: $number) {
         timestamp
@@ -39,9 +39,6 @@ const GET_BLOCK_INFO = gql`
     }
   }
 `;
-
-let blockInfo: {[k:string] :any};
-
 
 
 
@@ -70,173 +67,168 @@ const useStyles = makeStyles(({ spacing }) => {
           height: '1.5rem',
           width: '1.5rem'
       },
-      iconButton:{
+      iconButtonRight:{
         padding: '0',
+        float: 'right'
+      },
+      iconButtonLeft:{
+        padding: '0',
+        float: 'left'
       }
   }
 });
 
 
 
-export default function BlockDetails ( props : any   ) {
-  const { loading, error, data } = useQuery(GET_BLOCK_INFO, {
-    variables: { props.block},
+export default function BlockDetails ( number : number   ) {
+  number = number.number;
+  const prevBlock : number = number - 1;
+  const nextBlock : number = number + 1;
+  const { loading, error, data, refetch } = useQuery(GET_BLOCK_DETAILS, {
+    variables: { number},
+    pollInterval: 5000,
   });
-
-  console.log(props)
+  const classes = useStyles();
   if (loading) return null;
   if (error) return `Error! ${error}`;
+  return( 
+       <Card className={classes.root}>
+  <CardContent>
+        <Grid container spacing={1} justify="center" className={classes.item}>
+            <Grid item xs={10} >
+                <Typography  color="textSecondary" variant="subtitle1"  paragraph>
+                    Block {number}
+                </Typography>
+            </Grid>
 
-  const classes = useStyles();
-  return(
-      <p>HI </p>
-//        <Card className={classes.root}>
-//   <CardContent>
-//         <Grid container spacing={1} justify="center" className={classes.item}>
-//             <Grid item xs={10} >
-//                 <Typography  color="textSecondary" variant="subtitle1"  paragraph>
-//                     {/* Block {number} */}
-//                 </Typography>
-//             </Grid>
+            <Grid item xs={1}  >
+                <Link href={`/block/${prevBlock}`}  color="secondary" >
+                    <IconButton  aria-label="Previous Block" className={classes.iconButtonRight}  onClick={() => refetch(prevBlock)}>
+                        <ArrowBackIosIcon className={classes.arrowIcon}/>
+                    </IconButton>
+                </Link>
+            </Grid>
+{/* ${props.block+1} */}
+            <Grid item xs={1} >
+                <Link href={`/block/${nextBlock}`}  color="secondary" >
+                    <IconButton aria-label="Next Block" className={classes.iconButtonLeft} onClick={() => refetch(nextBlock)}>
+                        <ArrowForwardIosIcon className={classes.arrowIcon}/>
+                    </IconButton>
+                </Link>
+            </Grid>
 
-//             <Grid item xs={1}  >
-//                 <Link href={`/block/${parseInt(number)-1}`}  color="secondary">
-//                     <IconButton  aria-label="Previous Block" className={classes.iconButton}>
-//                         <ArrowBackIosIcon className={classes.arrowIcon}/>
-//                     </IconButton>
-//                 </Link>
-//             </Grid>
-// {/* ${props.block+1} */}
-//             <Grid item xs={1} >
-//                 <Link href={`/block/${parseInt(number)+1}`}  color="secondary">
-//                     <IconButton aria-label="Next Block" className={classes.iconButton} >
-//                         <ArrowForwardIosIcon className={classes.arrowIcon}/>
-//                     </IconButton>
-//                 </Link>
-//             </Grid>
+            <Grid item xs={12}>
+            <Divider  />
+            </Grid>
+            <Grid item xs={12} className={classes.item}>
+                <Typography variant="caption" component="h2">
+                    Time
+                </Typography>
+                <Typography variant="caption" >
+                  {data.block && data.block.timestamp ? new Date(parseInt(data.block.timestamp)).toUTCString() : ' '}                 
+                </Typography>
+               <Divider variant='middle' className={classes.divider}/>
+            </Grid>
+            <Grid item xs={12} className={classes.item}>
+                <Typography variant="caption" component="h2">
+                    Transactions
+                </Typography>
+                <Typography variant="caption" component="h2">
+                {data.block && data.block.transactions && data.block.transactions.transactionIndex ? data.block.transactions.transactionIndex.length() : ' Currently not available'}
+                </Typography>
+                <Divider variant='middle' className={classes.divider}/>
+            </Grid>
 
-//             <Grid item xs={12}>
-//             <Divider  />
-//             </Grid>
-//             <Grid item xs={12} className={classes.item}>
-//                 <Typography variant="caption" component="h2">
-//                     Time
-//                 </Typography>
-//                 <Typography variant="caption" >
-//                     April-09-2020 11:22:08 UTC (14 seconds ago)
-//                 </Typography>
-//                <Divider variant='middle' className={classes.divider}/>
-//             </Grid>
-//             <Grid item xs={12} className={classes.item}>
-//                 <Typography variant="caption" component="h2">
-//                     Transactions
-//                 </Typography>
-//                 <Typography variant="caption" component="h2">
-//                 7
-//                 </Typography>
-//                 <Divider variant='middle' className={classes.divider}/>
-//             </Grid>
-//            {(blockInfo && blockInfo.size) ? 
-//             <Grid item xs={12} className={classes.item}>
-//                 <Typography variant="caption" component="h2">
-//                     Size
-//                 </Typography>
-//                 <Typography variant="caption" component="h2">
-//                 { blockInfo.size}
-//                 </Typography>
-//                 <Divider variant='middle' className={classes.divider}/>
-//             </Grid> : null }
+            <Grid item xs={12} className={classes.item}>
+                <Typography variant="caption" component="h2">
+                    Size
+                </Typography>
+                <Typography variant="caption" component="h2">
+                {data.block && data.block.size  ? data.block.size : 'Data currently not available'}
+                </Typography>
+                <Divider variant='middle' className={classes.divider}/>
+            </Grid> 
 
-//              {(blockInfo && blockInfo.miner) ? 
-//             <Grid item xs={12} className={classes.item}>
-//                 <Typography variant="caption" component="h2">
-//                     Miner
-//                 </Typography>
-//                 <Typography variant="caption" component="h2">
-//                    <Link href="#"  color="secondary">
-//                    { blockInfo.miner.name}
-//                     </Link> 
-//                 </Typography>
-//                 <Divider variant='middle' className={classes.divider}/>
-//             </Grid> : null }        
+            <Grid item xs={12} className={classes.item}>
+                <Typography variant="caption" component="h2">
+                    Miner
+                </Typography>
+                <Typography variant="caption" component="h2">
+                {data.block && data.block.miner && data.block.miner.name ?
+                   <Link href="#"  color="secondary">
+                    {data.block.miner.name} 
+                    </Link> 
+                    : 'Data currently not available'}
+                </Typography>
+                <Divider variant='middle' className={classes.divider}/>
+            </Grid>        
 
-//             <Grid item xs={12} className={classes.item} >
-//                 <Typography variant="caption" component="h2">
-//                     Hash
-//                 </Typography>
-//                 <Typography variant="caption" component="h2">
-//                 {/* { blockInfo.hash ? blockInfo.hash : null} */}
-//                 </Typography>
-//                 <Divider variant='middle' className={classes.divider}/>
-//             </Grid>
+             <Grid item xs={12} className={classes.item} >
+                 <Typography variant="caption" component="h2">
+                     Hash
+                 </Typography>
+                 <Typography variant="caption" component="h2">
+                 {data.block && data.block.hash  ? data.block.hash : 'Data currently not available'}
+                 </Typography>
+                 <Divider variant='middle' className={classes.divider}/>
+             </Grid>
 
-//             <Grid item xs={12} className={classes.item}>
-//                 <Typography variant="caption" component="h2">
-//                     Parent Hash
-//                 </Typography>
-//                 <Typography variant="caption" component="h2">
-//                   <Link href="#"  color="secondary">
-//                   {/* {blockInfo.parentHash } */}
-//                       </Link>  
-//                 </Typography>
-//                 <Divider variant='middle' className={classes.divider}/>
-//             </Grid>
+             <Grid item xs={12} className={classes.item}>
+                 <Typography variant="caption" component="h2">
+                     Parent Hash
+                 </Typography>
+                 <Typography variant="caption" component="h2">
+                 {data.block && data.block.parentHash  ?
+                   <Link href="#"  color="secondary">
+                    {data.block.parentHash} 
+                       </Link>  
+                   : 'Data currently not available'}
+                 </Typography>
+                 <Divider variant='middle' className={classes.divider}/>
+             </Grid>
 
-//             <Grid item xs={12} className={classes.item}>
-//             <Typography variant="caption" component="h2">
-//                 Total Difficulty
-//             </Typography>
-//             <Typography variant="caption" component="h2">
-//             {blockInfo && blockInfo.totalDifficulty ? blockInfo.totalDifficulty : null}
-//             </Typography>
-//             <Divider variant='middle' className={classes.divider}/>
-//             </Grid>
+             <Grid item xs={12} className={classes.item}>
+             <Typography variant="caption" component="h2">
+                 Total Difficulty
+             </Typography>
+             <Typography variant="caption" component="h2">
+             {data.block && data.block.totalDifficulty  ? data.block.totalDifficulty : 'Data currently not available'}
+             </Typography>
+             <Divider variant='middle' className={classes.divider}/>
+             </Grid>
 
-//             <Grid item xs={12} className={classes.item}>
-//             <Typography variant="caption" component="h2">
-//                 Nonce
-//             </Typography>
-//             <Typography variant="caption" component="h2">
-//                 0x00000000000000000
-//             </Typography>
-//             <Divider variant='middle' className={classes.divider}/>
-//             </Grid>
+             <Grid item xs={12} className={classes.item}>
+             <Typography variant="caption" component="h2">
+                 Nonce
+             </Typography>
+             <Typography variant="caption" component="h2">
+             {data.block && data.block.transactions && data.block.transactions.nonce ? data.block.transactions.nonce : ' Currently not available'}
+             </Typography>
+             <Divider variant='middle' className={classes.divider}/>
+             </Grid>
 
-//             <Grid item xs={12} className={classes.item}>
-//             <Typography variant="caption" component="h2">
-//                 Gas Used
-//             </Typography>
-//             <Typography variant="caption" component="h2">
-//             {blockInfo && blockInfo.gasUsed ? blockInfo.gasUsed : null}
-//             </Typography>
-//             <Divider variant='middle' className={classes.divider}/>
-//             </Grid>
+             <Grid item xs={12} className={classes.item}>
+             <Typography variant="caption" component="h2">
+                 Gas Used
+             </Typography>
+             <Typography variant="caption" component="h2">
+             {data.block && data.block.gasUsed  ? data.block.gasUsed : 'Data currently not available'}
+             </Typography>
+             <Divider variant='middle' className={classes.divider}/>
+             </Grid>
 
-//             <Grid item xs={12} className={classes.item}>
-//                 <Typography variant="caption" component="h2">
-//                     Gas Limit
-//                 </Typography>
-//                 <Typography variant="caption" component="h2">
-//                 {blockInfo && blockInfo.gasLimit ? blockInfo.gasLimit : null}
-//                 </Typography>
-//                 <Divider variant='middle' className={classes.divider}/>
-//             </Grid>
+             <Grid item xs={12} className={classes.item}>
+                 <Typography variant="caption" component="h2">
+                     Gas Limit
+                 </Typography>
+                 <Typography variant="caption" component="h2">
+                 {data.block && data.block.gasLimit  ? data.block.gasLimit : 'Data currently not available'}
+                 </Typography>
+                 <Divider variant='middle' className={classes.divider}/>
+             </Grid>
 
-// </Grid>
-//   </CardContent>
-// </Card>
+        </Grid>
+  </CardContent>
+</Card>
   )
 }
-
-
-
-// export default function BlockDetails(props: any) {
-// const classes = useStyles();
-// //console.log(props ? props.block.block.block : null)
-// console.log(props.block ?  props.block : "NIE MA");
-// getBlock(87145);
-// // console.log(blockInfo)
-//   return (
-    
-// );
-// }

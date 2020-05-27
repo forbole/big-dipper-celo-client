@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
             },
 
         bottomPadding:{
-            overflow: 'auto',
+            //overflow: 'auto',
             padding: '1.5%'
           },
 
@@ -35,7 +35,7 @@ export default function Index() {
                 <LatestBlocks pagination={false} />
             </Grid>
             <Grid item xs={12} lg={6} className={classes.bottomPadding}> 
-                <LatestTransactions />
+                <LatestTransactions pagination={false} />
             </Grid>
         </Grid>
     </Layout>
