@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function ControlledOpenSelect() {
+export default function NetworkDropdown() {
   const classes = useStyles();
   const [age, setAge] = React.useState<string | number>('');
   const [open, setOpen] = React.useState(false);

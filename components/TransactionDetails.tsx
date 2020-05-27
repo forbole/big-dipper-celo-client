@@ -54,6 +54,7 @@ const useStyles = makeStyles(({ spacing, palette }) => {
     padding: '0.5rem',
     borderRadius: 5,
     wordWrap: 'break-word',
+    margin: 'none'
     
   },
   inline:{
@@ -93,16 +94,14 @@ const useStyles = makeStyles(({ spacing, palette }) => {
 
 
 
-export default function TransactionDetails ( hash : String   ) {
+export default function TransactionDetails ( hash : any   ) {
     hash = hash.hash;
-    const { loading, error, data, refetch } = useQuery(GET_TX_DETAILS, {
+    const { loading, error, data } = useQuery(GET_TX_DETAILS, {
       variables: { hash},
-      pollInterval: 5000,
     });
     const classes = useStyles();
     if (loading) return null;
     if (error) return `Error! ${error}`;
-console.log(data)
   return (
     <Layout>
     <Card className={classes.root}>

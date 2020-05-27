@@ -115,7 +115,6 @@ export default function LatestTransactions ( props: any ) {
   const paginate_2 = props.pagination  ? page * rowsPerPage + rowsPerPage : 5;
 
   const { loading, error, data } = useQuery(GET_TX, {
-    pollInterval: 5000,
   });
 
   const handleChangePage = (event: unknown, newPage: number) => {

@@ -302,7 +302,6 @@ export default function LatestBlocks(props : any) {
             </Table>
             </Paper>
           </TableContainer>
-          {console.log(props)}
           {props.pagination ?   
           <TablePagination
           className={"pagination"}

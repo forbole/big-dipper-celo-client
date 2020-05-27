@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
           }),
           );   
           
-export default function Index() {
+export default function Blocks() {
   const classes = useStyles();
   return (
     <Layout>

@@ -99,9 +99,6 @@ const useStyles = makeStyles(({ spacing, palette }) => {
 const ChartData = () => {
   const classes = useStyles();
   getChainInfo();
-  // console.log(" CHAIN  " , JSON.stringify(chainUpdated[0].averageBlockTime))
-   console.log(chainUpdated[0] ? chainUpdated[0].averageBlockTime: null)
-  //console.log(chainUpdated.chain)
 
   return (
     <div >

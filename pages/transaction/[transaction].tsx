@@ -21,10 +21,10 @@ const useStyles = makeStyles((theme: Theme) =>
           }),
           );   
           
-export default function Block() {
+export default function Transaction() {
   const classes = useStyles();
   const router = useRouter();
-  const {Block} = router.query;
+  const {Transaction} = router.query;
 
   return (
     <Layout>

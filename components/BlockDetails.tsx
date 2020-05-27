@@ -80,13 +80,12 @@ const useStyles = makeStyles(({ spacing }) => {
 
 
 
-export default function BlockDetails ( number : number   ) {
+export default function BlockDetails ( number : any   ) {
   number = number.number;
   const prevBlock : number = number - 1;
   const nextBlock : number = number + 1;
   const { loading, error, data, refetch } = useQuery(GET_BLOCK_DETAILS, {
     variables: { number},
-    pollInterval: 5000,
   });
   const classes = useStyles();
   if (loading) return null;

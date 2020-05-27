@@ -25,7 +25,7 @@ export default function Block() {
   const classes = useStyles();
   const router = useRouter();
   const {Block} = router.query;
-  
+
   return (
     <Layout>
       <Grid container className={classes.root}  >
