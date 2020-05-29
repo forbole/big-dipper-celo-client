@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {
             display: 'block-inline',
             justifyContent: 'center',
+            
             },
 
         bottomPadding:{
