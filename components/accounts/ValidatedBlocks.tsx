@@ -29,7 +29,7 @@ interface Column {
 
 const columns: Column[] = [
   { id: 'height', label: 'Height', },
-  { id: 'miner', label: 'Miner', },
+  { id: 'miner', label: 'Validator', },
   {
     id: 'txs',
     label: 'Txs',

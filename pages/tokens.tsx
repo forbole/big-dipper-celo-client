@@ -18,83 +18,12 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'block-inline',
             justifyContent: 'center',
             },
-
-        leftInline:{
-            display: 'flex',
-            overflow: 'auto',
-            padding: '0 0 0 1rem',
-        },
-
+            
         bottomPadding:{
             overflow: 'auto',
-            padding: '1%'
+            padding: '1.5rem'
         },
 
-        
-        formControl: {
-            minWidth: theme.spacing(26),
-            padding:'0 1rem 0 0',
-            marginBottom: theme.spacing(3),
-            float: 'right',
-            maxHeight: theme.spacing(4),
-            marginTop: theme.spacing(-1.5)
-          },
-
-
-        select:{
-            align: 'center',
-            justifyContent: 'center',
-            fontSize: '15px',
-            padding: '-20px',
-            border: 'solid rgba(255, 255, 255, 0.6) ',
-            borderWidth: '0.09rem',
-            borderRadius: 5,
-          
-          
-        },
-
-        inputLabel:{
-          fontSize: '15px',
-          paddingLeft: '1rem',
-      },
-
-        alignLeft:{
-            display: 'flex',
-            overflow: 'auto',
-            padding: '0 0 0 1rem',
-        },
-
-        alignRight:{
-            display: 'inline-block',
-            float: 'right',
-            paddingRight: '1rem'
-        },
-
-        button:{
-          justifyContent: 'center',
-          minWidth: '8rem',
-          marginBottom: '1rem',
-        },
-
- 
-        box:{
-            letterSpacing: '1px',
-            padding: '1rem',
-            display: 'block',
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            },
-            chip:{
-            display: 'block',
-            marginLeft: '1rem',
-        },
-
-        divider:{
-            margin: '0.5rem',
-        },
-
-        
- 
 
     }),
     );   

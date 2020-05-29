@@ -27,11 +27,11 @@ export default function Blocks() {
   const classes = useStyles();
   return (
     <Layout>
-      <Grid container className={classes.root}  >
-            <Grid item xs={12} className={classes.bottomPadding}> 
-            <LatestBlocks pagination={true} />
-            </Grid>
+      <Grid container className={classes.root}>
+        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+          <LatestBlocks pagination={true} />
         </Grid>
+      </Grid>
     </Layout>
   );
 }

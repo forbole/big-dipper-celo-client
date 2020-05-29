@@ -1,6 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Link from '../components/Link';
+// import Link from 'next/link'
 import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
@@ -17,6 +18,7 @@ import { gql } from "apollo-boost";
 import { useQuery } from '@apollo/react-hooks';
 import MiddleEllipsis from "react-middle-ellipsis";
 import moment from 'moment'
+import Router from 'next/router'
 
 const GET_TX = gql`
  {
@@ -115,6 +117,7 @@ export default function LatestTransactions ( props: any ) {
   const paginate_2 = props.pagination  ? page * rowsPerPage + rowsPerPage : 5;
 
   const { loading, error, data } = useQuery(GET_TX, {
+    pollInterval: 5000,
   });
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -125,6 +128,10 @@ export default function LatestTransactions ( props: any ) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  
+    moment.relativeTimeThreshold("s", 59);
+    moment.relativeTimeThreshold("ss", 3);
+
   
   if (loading) return null;
   if (error) return `Error! ${error}`;
@@ -150,12 +157,13 @@ export default function LatestTransactions ( props: any ) {
                    <Grid item xs={8}  >
                    
                     <Typography  variant="caption"  className={classes.leftInline} noWrap>
-                    Tx#   <Link href="transaction/[transaction]/" as={`transaction/${row.hash}`} color="secondary" className={classes.leftInline}>
+                    Tx#  
+                     <Link href="transaction/[transaction]/" as={`transaction/${row.hash}`} color="secondary" className={classes.leftInline}>
                     <div style={{ width: "60%", minWidth:"40%", maxWidth: "100%", whiteSpace: "nowrap" }}>                
                       <MiddleEllipsis>
-                        <span>
+                       <a>
                         {row.hash ? row.hash: ' '}
-                        </span>
+                        </a>
                       </MiddleEllipsis>
                     </div> 
                     </Link>
@@ -163,7 +171,7 @@ export default function LatestTransactions ( props: any ) {
                      </Grid>
                      <Grid item xs={4}>
                     <Typography variant="caption"   className={classes.alignRight} noWrap>
-                    {row.timestamp ? moment.duration(row.timestamp/1000000).humanize() : ''}
+                    {row.timestamp ? moment.unix(row.timestamp).fromNow() : ''}
                     </Typography>
                     </Grid>
     

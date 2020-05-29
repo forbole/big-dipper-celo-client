@@ -27,6 +27,9 @@ import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import PersonIcon from '@material-ui/icons/Person';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Ledger from './ledger/Ledger';
+import Footer from "../components/Footer";
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(1),
+    padding: 'auto',
     marginTop: '4rem',
     overflow: 'auto'
   },
@@ -146,7 +149,7 @@ const Layout = (props: { children: React.ReactNode; }) => {
         {'Logout'}
       </Typography>
       </Link>,
-        <Link href="/transactions" color="inherit" >
+        <Link href="/transactions" color="inherit" > 
            <Typography variant="body2"  >
            <ListItemIcon className={classes.icon}>
                 <VpnKeyIcon  color="inherit"  fontSize="small" />
@@ -163,40 +166,38 @@ const Layout = (props: { children: React.ReactNode; }) => {
 
   return (
     <div>
-      
-        <React.Fragment key={anchor}>
+      <React.Fragment key={anchor}>
         <CssBaseline />
         <AppBar position="fixed">
-        <Toolbar>
+          <Toolbar>
             <Link href="/" className={classes.logo}>
-            <img src="/images/celo_logo.svg" />
+              <img src="/images/celo_logo.svg" />
             </Link>
-            
-            <div><NetworkDropdown /></div>
-          <Button onClick={toggleDrawer(anchor, true)} ><MenuIcon /></Button>
-          <SwipeableDrawer
-            anchor={anchor}
-            open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
-            onOpen={toggleDrawer(anchor, true)}
-          >
-            {list(anchor)}
-          </SwipeableDrawer>
+
+            <div>
+              <NetworkDropdown />
+            </div>
+            <Button onClick={toggleDrawer(anchor, true)}>
+              <MenuIcon />
+            </Button>
+            <SwipeableDrawer
+              anchor={anchor}
+              open={state[anchor]}
+              onClose={toggleDrawer(anchor, false)}
+              onOpen={toggleDrawer(anchor, true)}
+            >
+              {list(anchor)}
+            </SwipeableDrawer>
           </Toolbar>
           <SearchBar />
           <Hidden smDown>
-          <div style={{display:'flex', margin: '-3rem 0rem 1rem 2.5rem'}}>
+            <span style={{ display: "flex", margin: "-3rem 0rem 1rem 2.5rem" }}>
               <PriceCard />
-            </div>
-            </Hidden>
+            </span>
+          </Hidden>
         </AppBar>
-        <main className={classes.content}
-        >
-          
-          {props.children}
-        </main>
-        </React.Fragment>
-
+        <main className={classes.content}>{props.children}</main>
+      </React.Fragment>
     </div>
   );
 }

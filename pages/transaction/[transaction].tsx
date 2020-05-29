@@ -8,18 +8,18 @@ import {useRouter} from 'next/router'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-        root: {
-            display: 'block-inline',
-            justifyContent: 'center',
-            },
+    root: {
+      display: "block-inline",
+      justifyContent: "center",
+      //padding: "2%",
+    },
 
-        bottomPadding:{
-            overflow: 'auto',
-            padding: '1.5%'
-          },
-
-          }),
-          );   
+    bottomPadding: {
+      overflow: "auto",
+      padding: "1.5rem",
+    },
+  })
+);   
           
 export default function Transaction() {
   const classes = useStyles();
@@ -28,11 +28,11 @@ export default function Transaction() {
 
   return (
     <Layout>
-      <Grid container className={classes.root}  >
-            <Grid item xs={12} className={classes.bottomPadding}> 
-            <TransactionDetails hash={(router.query.transaction)}/>
-            </Grid>
+      <Grid container className={classes.root}>
+        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+          <TransactionDetails hash_value={router.query.transaction} />
         </Grid>
+      </Grid>
     </Layout>
   );
 }

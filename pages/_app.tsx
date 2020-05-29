@@ -86,21 +86,22 @@ export default class TSApp extends App<AppProps, AppState>{
     return (
       <React.Fragment>
         <ApolloProvider client={client}>
-        <Head>
-          <title>Big Dipper For Celo</title>
-          <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <ThemeProvider theme={DarkTheme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          {/* <Provider store={store}> */}
+          <Head>
+            <title>Big Dipper For Celo</title>
+            <meta
+              name="viewport"
+              content="minimum-scale=1, initial-scale=1, width=device-width"
+            />
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+          <ThemeProvider theme={DarkTheme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
             <Layout>
-              <Component {...pageProps} style={{display: "flex"}} />
+              <Component {...pageProps} style={{ display: "flex" }} />
+                <Footer />
             </Layout>
-            {/* </Provider> */}
-          <Footer />
-        </ThemeProvider>
+          </ThemeProvider>
         </ApolloProvider>
       </React.Fragment>
     );
