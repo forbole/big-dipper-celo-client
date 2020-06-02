@@ -6,6 +6,7 @@ import LatestBlocks from '../components/LatestBlocks';
 import LatestTransactions from '../components/LatestTransactions';
 import Grid from '@material-ui/core/Grid';
 import Transactions from '../components/Transactions'
+import Ledger from "../components/ledger/Ledger";
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -27,17 +28,20 @@ export default function Index() {
   const classes = useStyles();
   return (
     <Layout>
-      <Grid container className={classes.root}  >
-            <Grid item xs={12} className={classes.bottomPadding}> 
-                <ChartData />
-            </Grid>
-            <Grid item xs={12} lg={6} className={classes.bottomPadding}> 
-                <LatestBlocks pagination={false} />
-            </Grid>
-            <Grid item xs={12} lg={6} className={classes.bottomPadding}> 
-                <LatestTransactions pagination={false} />
-            </Grid>
+      <Grid container className={classes.root}>
+        <Grid item xs={12} className={classes.bottomPadding}>
+          <ChartData />
         </Grid>
+        <Grid item xs={12} lg={6} className={classes.bottomPadding}>
+          <LatestBlocks pagination={false} />
+        </Grid>
+        <Grid item xs={12} lg={6} className={classes.bottomPadding}>
+          <LatestTransactions pagination={false} />
+        </Grid>
+        <Grid item xs={12} lg={6} className={classes.bottomPadding}>
+          <Ledger/>
+        </Grid>
+      </Grid>
     </Layout>
   );
 }

@@ -96,66 +96,76 @@ const Layout = (props: { children: React.ReactNode; }) => {
   const list = (anchor: Anchor) => (
     <div
       className={clsx(classes.list, {
-        [classes.fullList]: anchor === 'top' || anchor === 'bottom',
+        [classes.fullList]: anchor === "top" || anchor === "bottom",
       })}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-      <Link href="/" >
-            <img src="/images/celo_logo.svg" className={classes.drawerLogo}/>
-      </Link>
-        {[<Link href="/" color="inherit" > <Typography variant="body2" >
-        {'Dashboard'}
-      </Typography> </Link>,
-        <Link href="/blocks" color="inherit" > <Typography variant="body2"  >
-        {'Blocks'}
-      </Typography>  </Link>,
-        <Link href="/transactions" color="inherit" > <Typography variant="body2" >
-        {'Transactions'}
-      </Typography> </Link>,
-        <Link href="/accounts" color="inherit" > <Typography variant="body2"  >
-        {'Accounts'}
-      </Typography> </Link>,
-        <Link href="/proposals" color="inherit" ><Typography variant="body2"  >
-         {'Proposals'}
-      </Typography> </Link>,
-       <Link href="/validatorVotes" color="inherit" ><Typography variant="body2"  >
-        {'Validator Votes'}
-      </Typography> </Link>].map((text, index) => (
+        <Link href="/">
+          <img src="/images/celo_logo.svg" className={classes.drawerLogo} />
+        </Link>
+        {[
+          <Link href="/" color="inherit">
+            {" "}
+            <Typography variant="body2">{"Dashboard"}</Typography>{" "}
+          </Link>,
+          <Link href="/blocks" color="inherit">
+            {" "}
+            <Typography variant="body2">{"Blocks"}</Typography>{" "}
+          </Link>,
+          <Link href="/transactions" color="inherit">
+            {" "}
+            <Typography variant="body2">{"Transactions"}</Typography>{" "}
+          </Link>,
+          <Link href="/accounts" color="inherit">
+            {" "}
+            <Typography variant="body2">{"Accounts"}</Typography>{" "}
+          </Link>,
+          <Link href="/proposals" color="inherit">
+            <Typography variant="body2">{"Proposals"}</Typography>{" "}
+          </Link>,
+          <Link href="/validatorVotes" color="inherit">
+            <Typography variant="body2">{"Validator Votes"}</Typography>{" "}
+          </Link>,
+        ].map((text, index) => (
           <ListItem button key={text}>
             <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
       <Divider />
+      <br></br>
+      <Ledger />
       <List>
         {[
-        <Link href="/" color="inherit" >
-           <Typography variant="body2" >
-           <ListItemIcon className={classes.icon}>
-                <PersonIcon color="inherit" fontSize="small"/>
-        </ListItemIcon>
-        {'Michelle Clark'}
-      </Typography> 
-      </Link>,
+          <Link href="/" color="inherit">
+            <Typography variant="body2">
+              <ListItemIcon className={classes.icon}>
+                <PersonIcon color="inherit" fontSize="small" />
+              </ListItemIcon>
+              {"Michelle Clark"}
+            </Typography>
+          </Link>,
 
-        <Link href="/blocks" color="inherit" > 
-        <Typography variant="body2"  >
-        <ListItemIcon className={classes.icon}>
-                <ExitToAppIcon color="inherit"  fontSize="small" />
-        </ListItemIcon> 
-        {'Logout'}
-      </Typography>
-      </Link>,
-        <Link href="/transactions" color="inherit" > 
-           <Typography variant="body2"  >
-           <ListItemIcon className={classes.icon}>
-                <VpnKeyIcon  color="inherit"  fontSize="small" />
-          </ListItemIcon>
-          {'Sign In With Ledger'}
-      </Typography> </Link>].map((text, index) => (
+          <Link href="/blocks" color="inherit">
+            <Typography variant="body2">
+              <ListItemIcon className={classes.icon}>
+                <ExitToAppIcon color="inherit" fontSize="small" />
+              </ListItemIcon>
+              {"Logout"}
+            </Typography>
+          </Link>,
+          <Link href="/transactions" color="inherit">
+            <Typography variant="body2">
+              <ListItemIcon className={classes.icon}>
+                <VpnKeyIcon color="inherit" fontSize="small" />
+              </ListItemIcon>
+              {"Sign In With Ledger"}
+            </Typography>{" "}
+          </Link>,
+        ].map((text, index) => (
           <ListItem button key={text}>
             <ListItemText primary={text} />
           </ListItem>
