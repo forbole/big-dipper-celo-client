@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
     bottomPadding: {
       overflow: "auto",
-      padding: "1.5rem",
+      padding: "1rem",
     },
   })
 );

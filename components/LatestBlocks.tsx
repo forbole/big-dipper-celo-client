@@ -15,7 +15,7 @@ import Typography from "@material-ui/core/Typography";
 import cx from "clsx";
 import Card from "@material-ui/core/Card";
 import Layout from "../components/Layout";
-import theme from "../themes/dark-theme";
+import theme from "../themes/celo-theme";
 import moment from "moment";
 import Hidden from "@material-ui/core/Hidden";
 import PriceCard from "./PriceCard";
@@ -92,7 +92,7 @@ const useStyles = makeStyles({
   },
   box: {
     letterSpacing: "1px",
-    padding: "1rem",
+    padding: "0.6rem",
     display: "block",
     overflow: "hidden",
     whiteSpace: "nowrap",
@@ -188,9 +188,9 @@ function LatestBlocks(props: any) {
         ) : null}
         <Paper className={classes.root}>
           <Typography variant="body1" className={classes.box}>
-            Blocks{" "}
+            Latest Blocks{" "}
             {!props.pagination ? (
-              <Link href="/blocks" className={classes.link} color="secondary">
+              <Link href="/blocks" className={classes.link} color="textPrimary">
                 {"view more"}
               </Link>
             ) : null}

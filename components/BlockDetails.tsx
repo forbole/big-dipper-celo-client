@@ -1,16 +1,10 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Link from "./Link";
-import {
-  createStyles,
-  makeStyles,
-  useTheme,
-  Theme,
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
-import Layout from "./Layout";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
@@ -18,11 +12,9 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { useRouter } from "next/router";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
-import TablePagination from "@material-ui/core/TablePagination";
-import * as numbro from "numbro";
-import { NextContext } from "next";
 //import MiddleEllipsis from "react-middle-ellipsis";
-import ContentLoader, { Facebook } from "react-content-loader";
+import ContentLoader from "react-content-loader";
+import moment from "moment";
 
 const GET_BLOCK_DETAILS = gql`
   query Block($number: Int) {
@@ -46,7 +38,7 @@ const GET_BLOCK_DETAILS = gql`
   }
 `;
 
-const useStyles = makeStyles(({ spacing }) => {
+const useStyles = makeStyles(() => {
   return {
     root: {
       width: "100%",
@@ -81,11 +73,10 @@ const useStyles = makeStyles(({ spacing }) => {
   };
 });
 
-export default function BlockDetails(number_value: any) {
+export default function BlockDetails() {
   // // const BlockDetails = (number_value : any  ) => {
   // export default function Block(number_value: any) {
   const router = useRouter();
-  const { Blo } = router.query;
 
   if (!router.query.block) return <ContentLoader />;
   //console.log(router.query.block);
@@ -104,7 +95,7 @@ export default function BlockDetails(number_value: any) {
         <Grid container spacing={1} justify="center" className={classes.item}>
           <Grid item xs={10}>
             <Typography color="textSecondary" variant="subtitle1" paragraph>
-              Block {number}
+              Block #{number}
             </Typography>
           </Grid>
 
@@ -114,17 +105,14 @@ export default function BlockDetails(number_value: any) {
               as={`/block/${prevBlock}`}
               color="secondary"
             >
-              {/* <Link href={`/block/${prevBlock}`} color="secondary"> */}
               <IconButton
                 aria-label="Previous Block"
                 className={classes.iconButtonRight}
-                //onClick={() => refetch(prevBlock)}
               >
                 <ArrowBackIosIcon className={classes.arrowIcon} />
               </IconButton>
             </Link>
           </Grid>
-          {/* ${props.block+1} */}
           <Grid item xs={1}>
             <Link
               href="/block/[block]/"
@@ -135,7 +123,6 @@ export default function BlockDetails(number_value: any) {
               <IconButton
                 aria-label="Next Block"
                 className={classes.iconButtonLeft}
-                // onClick={() => refetch(nextBlock)}
               >
                 <ArrowForwardIosIcon className={classes.arrowIcon} />
               </IconButton>
@@ -149,10 +136,15 @@ export default function BlockDetails(number_value: any) {
             <Typography variant="caption" component="h2">
               Time
             </Typography>
-            <Typography variant="caption">
+            <Typography variant="caption" component="h2">
               {data.block && data.block.timestamp
-                ? new Date(parseInt(data.block.timestamp)).toUTCString()
-                : "Data currently not available"}
+                ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
+                : "Data currently not available"}{" "}
+              (
+              {data && data.block && data.block.timestamp
+                ? moment.unix(data.block.timestamp).fromNow()
+                : null}
+              )
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -171,9 +163,7 @@ export default function BlockDetails(number_value: any) {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
-              Size
-            </Typography>
+            <Typography variant="caption">Size</Typography>
             <Typography variant="caption" component="h2">
               {data.block && data.block.size
                 ? data.block.size
@@ -283,9 +273,3 @@ export default function BlockDetails(number_value: any) {
     </Card>
   );
 }
-
-// BlockDetails.getInitialProps = ({query } : NextContext) => {
-//     return {number: query.number}
-// };
-
-//export default  BlockDetails

@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Layout from '../components/Layout';
-import DarkTheme from '../themes/dark-theme';
+import DarkTheme from '../themes/celo-theme';
 import App, { Container } from 'next/app';
 // import withRedux from 'next-redux-wrapper';
 // import { initStore } from '../redux/store';

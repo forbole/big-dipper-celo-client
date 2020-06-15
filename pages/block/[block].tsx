@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
             overflow: 'auto',
             // paddingTop: '1.5%',
             // paddingBottom: '1.5%',
-            padding: '1.5rem'
+            padding: '1rem'
           },
 
           }),

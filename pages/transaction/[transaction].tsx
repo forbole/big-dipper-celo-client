@@ -1,10 +1,9 @@
-
-import React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Layout from '../../components/Layout';
-import Grid from '@material-ui/core/Grid';
-import TransactionDetails from '../../components/TransactionDetails';
-import {useRouter} from 'next/router' 
+import React from "react";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import Layout from "../../components/Layout";
+import Grid from "@material-ui/core/Grid";
+import TransactionDetails from "../../components/TransactionDetails";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -16,15 +15,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
     bottomPadding: {
       overflow: "auto",
-      padding: "1.5rem",
+      padding: "1rem",
     },
   })
-);   
-          
+);
+
 export default function Transaction() {
   const classes = useStyles();
   const router = useRouter();
-  const {Transaction} = router.query;
+  const { Transaction } = router.query;
 
   return (
     <Layout>

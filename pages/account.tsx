@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
         bottomPadding:{
             overflow: 'auto',
-            padding: '1%'
+            padding: '1rem'
         },
 
         

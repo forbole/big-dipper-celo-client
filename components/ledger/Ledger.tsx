@@ -35,6 +35,9 @@ function Dialog_1() {
 }
 
 const useStyles = makeStyles({
+  root: {
+    justifyContent: 'center'
+  },
   title: {
     // padding: "1rem",
     display: "block",
@@ -51,15 +54,7 @@ const useStyles = makeStyles({
     padding: "1%",
   },
 
-  formControl: {
-    //minWidth: '20rem',
-    //width: '100%',
-    // padding: "1rem",
-    //marginBottom: '1rem',
-    //float: "right",
-    //maxHeight: '12rem',
-    //marginTop: '-1.5rem',
-  },
+
 
   select: {
     //align: "center",
@@ -147,13 +142,8 @@ function LockGoldDialog() {
   const classes = useStyles();
 
   return (
-    <FormControl
-      className={clsx(classes.margin, classes.textField)}
-      variant="outlined"
-      fullWidth={true}
-      size="small"
-    >
-      <InputLabel htmlFor="outlined-adornment">
+    <FormControl variant="outlined" fullWidth={true} size="small">
+      <InputLabel htmlFor="lock-gold-dialog" type="number">
         <Typography
           variant="caption"
           color="textSecondary"
@@ -163,7 +153,7 @@ function LockGoldDialog() {
         </Typography>
       </InputLabel>
       <OutlinedInput
-        id="outlined-adornment"
+        id="id-lock-gold-dialog"
         endAdornment={<InputAdornment position="end">cGLD</InputAdornment>}
         labelWidth={100}
       />
@@ -176,7 +166,7 @@ function TokenDropdown() {
   let name = "Michelle Clark";
   let name_2 = "Ada Adams";
   return (
-    <FormControl className={classes.formControl} fullWidth={true} size="medium">
+    <FormControl  fullWidth={true} size="medium">
       <Select
         defaultValue=""
         id="grouped-select"
@@ -300,12 +290,12 @@ export default function Ledger() {
             </DialogContentText>
           </Grid>
         </DialogContent>
-        <DialogActions>
+        <DialogActions className={classes.root}>
           <Grid item xs={5}>
             <LedgerButtons variant="Cancel" onClick={handleClose} />
           </Grid>
           <Grid item xs={5}>
-            <LedgerButtons variant="Confirm"  />
+            <LedgerButtons variant="Confirm" />
           </Grid>
           {/* <Button onClick={handleClose} color="primary">
             Cancel

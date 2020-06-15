@@ -136,8 +136,6 @@ const Layout = (props: { children: React.ReactNode; }) => {
         ))}
       </List>
       <Divider />
-      <br></br>
-      <Ledger />
       <List>
         {[
           <Link href="/" color="inherit">

@@ -135,11 +135,15 @@ export default function TransactionDetails(hash_value: String) {
             <Typography variant="caption" component="h2">
               Time
             </Typography>
-            <Typography variant="caption">
-              {data.transaction && data.transaction.timestamp
-                ? moment.utc(data.transaction.timestamp).format()
+            <Typography variant="caption" component="h2">
+              {data && data.transaction && data.transaction.timestamp
+                ? new Date(
+                    parseInt(data.transaction.timestamp) * 1000
+                  ).toUTCString()
                 : "Data currently not available"}{" "}
-              ( {moment.unix(data.transaction.timestamp).fromNow()} )
+              ({data && data.transaction && data.transaction.timestamp
+                ? moment.unix(data.transaction.timestamp).fromNow()
+                : null})
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>

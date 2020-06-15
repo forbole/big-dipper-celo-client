@@ -76,7 +76,7 @@ const useStyles = makeStyles({
 
   box: {
     letterSpacing: "1px",
-    padding: "1rem",
+    padding: "0.6rem",
     display: "block",
     overflow: "hidden",
     whiteSpace: "nowrap",
@@ -145,7 +145,11 @@ export default function LatestTransactions(props: any) {
       <Typography variant="body1" className={classes.box}>
         Latest Transactions{" "}
         {!props.pagination ? (
-          <Link href="/transactions" className={classes.link} color="secondary">
+          <Link
+            href="/transactions"
+            className={classes.link}
+            color="textPrimary"
+          >
             {"view more"}
           </Link>
         ) : null}

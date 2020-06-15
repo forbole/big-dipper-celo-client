@@ -5,7 +5,6 @@ import ChartData from '../components/ChartData';
 import LatestBlocks from '../components/LatestBlocks';
 import LatestTransactions from '../components/LatestTransactions';
 import Grid from '@material-ui/core/Grid';
-import Transactions from '../components/Transactions'
 import Ledger from "../components/ledger/Ledger";
 
 
@@ -17,8 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
             },
 
         bottomPadding:{
-            //overflow: 'auto',
-            padding: '1.5rem'
+            padding: '0.5rem 1rem'
           },
 
           }),
