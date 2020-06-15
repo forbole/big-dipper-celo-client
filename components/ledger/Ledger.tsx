@@ -232,7 +232,7 @@ export default function Ledger() {
   return (
     <div>
       <Button variant="outlined" color="secondary" onClick={handleClickOpen}>
-        Open form dialog
+        Ledger Dialog
       </Button>
       <Dialog
         open={open}
@@ -246,43 +246,44 @@ export default function Ledger() {
         </DialogTitle>
         <DialogContent>
           <Grid container spacing={1} className={classes.item}>
-            <Grid item xs={12}>
-              <Typography
-                variant="caption"
-                noWrap
-                className={classes.alignLeft}
-                align="left"
-              >
-                Account
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <TokenDropdown />
-            </Grid>
+            <DialogContentText>
+              <Grid item xs={12}>
+                <Typography
+                  variant="caption"
+                  noWrap
+                  className={classes.alignLeft}
+                  align="left"
+                >
+                  Account
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <TokenDropdown />
+              </Grid>
 
-            <Grid item xs={12}>
-              <Typography
-                variant="caption"
-                noWrap
-                className={classes.alignLeft}
-                align="left"
-              >
-                Lock amount
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <LockGoldDialog />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography
-                variant="caption"
-                noWrap
-                className={classes.alignRight}
-              >
-                Max {"14.99217479 cGLD"}
-              </Typography>
-            </Grid>
-            {/* <Grid item xs={10}>
+              <Grid item xs={12}>
+                <Typography
+                  variant="caption"
+                  noWrap
+                  className={classes.alignLeft}
+                  align="left"
+                >
+                  Lock amount
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <LockGoldDialog />
+              </Grid>
+              <Grid item xs={12}>
+                <Typography
+                  variant="caption"
+                  noWrap
+                  className={classes.alignRight}
+                >
+                  Max {"14.99217479 cGLD"}
+                </Typography>
+              </Grid>
+              {/* <Grid item xs={10}>
           <DialogContentText>
             To subscribe to this website, please enter your email address here.
             We will send updates occasionally.
@@ -296,6 +297,7 @@ export default function Ledger() {
             type="email"
             fullWidth
   /> */}
+            </DialogContentText>
           </Grid>
         </DialogContent>
         <DialogActions>
@@ -303,7 +305,7 @@ export default function Ledger() {
             <LedgerButtons variant="Cancel" onClick={handleClose} />
           </Grid>
           <Grid item xs={5}>
-            <LedgerButtons variant="Confirm" onClick={handleClose} />
+            <LedgerButtons variant="Confirm"  />
           </Grid>
           {/* <Button onClick={handleClose} color="primary">
             Cancel

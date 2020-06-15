@@ -4,7 +4,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Layout from '../../components/Layout';
 import Grid from '@material-ui/core/Grid';
 import TransactionDetails from '../../components/TransactionDetails';
-import {useRouter} from 'next/router'
+import {useRouter} from 'next/router' 
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

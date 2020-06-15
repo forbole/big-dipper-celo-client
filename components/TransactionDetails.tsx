@@ -87,12 +87,25 @@ const useStyles = makeStyles(({ spacing, palette }) => {
 });
 
 export default function TransactionDetails(hash_value: String) {
-  //console.log(JSON.stringify(hash_value.hash.toString()))
   const hash = hash_value.hash_value ? hash_value.hash_value.toString() : 0;
   const { loading, error, data } = useQuery(GET_TX_DETAILS, {
     variables: { hash },
   });
   const classes = useStyles();
+
+  function ascii_to_hex(str: String) {
+    var arr1 = [];
+    for (var n = 0, l = str.length; n < l; n++) {
+      var hex = Number(str.charCodeAt(n)).toString(16);
+      arr1.push(hex);
+    }
+    return arr1.join("");
+  }
+
+  let inputValue =
+    data && data.transaction && data.transaction.input
+      ? data.transaction.input
+      : null;
 
   if (loading) return null;
   if (error) return `Error! ${error}`;
@@ -113,7 +126,7 @@ export default function TransactionDetails(hash_value: String) {
             <Typography variant="caption" component="h2">
               {data.transaction && data.transaction.hash
                 ? data.transaction.hash
-                : 0}
+                : "Data currently not available"}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -125,7 +138,7 @@ export default function TransactionDetails(hash_value: String) {
             <Typography variant="caption">
               {data.transaction && data.transaction.timestamp
                 ? moment.utc(data.transaction.timestamp).format()
-                : " "}{" "}
+                : "Data currently not available"}{" "}
               ( {moment.unix(data.transaction.timestamp).fromNow()} )
             </Typography>
             <Divider variant="middle" className={classes.divider} />
@@ -165,7 +178,7 @@ export default function TransactionDetails(hash_value: String) {
               <Link href="#" color="secondary">
                 {data.transaction && data.transaction.from
                   ? data.transaction.from.address
-                  : " "}
+                  : "Data currently not available"}
               </Link>
             </Typography>
             <Divider variant="middle" className={classes.divider} />
@@ -179,7 +192,7 @@ export default function TransactionDetails(hash_value: String) {
               <Link href="#" color="secondary">
                 {data.transaction && data.transaction.to
                   ? data.transaction.to.address
-                  : " "}
+                  : "Data currently not available"}
               </Link>
             </Typography>
             <Divider variant="middle" className={classes.divider} />
@@ -192,7 +205,7 @@ export default function TransactionDetails(hash_value: String) {
             <Typography variant="caption" component="h2">
               {data.transaction && data.transaction.value
                 ? data.transaction.value
-                : 0}
+                : "Data currently not available"}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -208,7 +221,7 @@ export default function TransactionDetails(hash_value: String) {
               >
                 {data.transaction && data.transaction.blockNumber
                   ? data.transaction.blockNumber
-                  : 0}
+                  : "Data currently not available"}
               </Link>
             </Typography>
             <Divider variant="middle" className={classes.divider} />
@@ -231,7 +244,7 @@ export default function TransactionDetails(hash_value: String) {
             <Typography variant="caption" component="h2">
               {data.transaction && data.transaction.nonce
                 ? data.transaction.nonce
-                : 0}
+                : "Data currently not available"}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -242,9 +255,8 @@ export default function TransactionDetails(hash_value: String) {
             </Typography>
             <Typography variant="caption" component="h2">
               {data.transaction && data.transaction.feeCurrency
-                ? data.transaction.feeCurrency
-                : 0}{" "}
-              cGLD
+                ? data.transaction.feeCurrency + "cGLD"
+                : "Data currently not available"}{" "}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -256,7 +268,7 @@ export default function TransactionDetails(hash_value: String) {
             <Typography variant="caption" component="h2">
               {data.transaction && data.transaction.gatewayFeeRecipient
                 ? data.transaction.gatewayFeeRecipient
-                : " "}
+                : "Data currently not available"}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -268,7 +280,7 @@ export default function TransactionDetails(hash_value: String) {
             <Typography variant="caption" component="h2">
               {data.transaction && data.transaction.gatewayFee
                 ? data.transaction.gatewayFee
-                : " "}
+                : "Data currently not available"}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -289,10 +301,10 @@ export default function TransactionDetails(hash_value: String) {
             </Typography>
           </Grid>
           <Grid item xs={2} md={1} className={classes.alignRight}>
-            <Chips value={"Hex"} />
+            <Chips value={"Hex"} inputValue={ascii_to_hex(inputValue)} />
           </Grid>
           <Grid item xs={3} md={1}>
-            <Chips value={"UTF-8"} />
+            <Chips value={"UTF-8"} inputValue={ascii_to_hex(inputValue)} />
           </Grid>
 
           <Grid item xs={4} md={9} className={classes.alignRight}>
@@ -316,9 +328,10 @@ export default function TransactionDetails(hash_value: String) {
               <FilledInput
                 className={classes.inputLabel}
                 value={
-                  data.transaction && data.transaction.input
-                    ? data.transaction.input
-                    : " "
+                  ascii_to_hex(inputValue)
+                  // data.transaction && data.transaction.input
+                  //   ? ascii_to_hex(data.transaction.input)
+                  //   : " "
                 }
                 disableUnderline={true}
                 readOnly
@@ -336,7 +349,7 @@ export default function TransactionDetails(hash_value: String) {
             <Typography variant="caption" component="h2">
               {data.transaction && data.transaction.gas
                 ? data.transaction.gas
-                : " "}
+                : "Data currently not available"}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>

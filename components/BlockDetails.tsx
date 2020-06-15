@@ -22,6 +22,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import * as numbro from "numbro";
 import { NextContext } from "next";
 //import MiddleEllipsis from "react-middle-ellipsis";
+import ContentLoader, { Facebook } from "react-content-loader";
 
 const GET_BLOCK_DETAILS = gql`
   query Block($number: Int) {
@@ -80,12 +81,18 @@ const useStyles = makeStyles(({ spacing }) => {
   };
 });
 
-// const BlockDetails = (number_value : any  ) => {
 export default function BlockDetails(number_value: any) {
-  const number = parseInt(number_value.number_value);
+  // // const BlockDetails = (number_value : any  ) => {
+  // export default function Block(number_value: any) {
+  const router = useRouter();
+  const { Blo } = router.query;
+
+  if (!router.query.block) return <ContentLoader />;
+  //console.log(router.query.block);
+  const number = parseInt(router.query.block);
   const prevBlock: number = number - 1;
   const nextBlock: number = number + 1;
-  const { loading, error, data, refetch } = useQuery(GET_BLOCK_DETAILS, {
+  const { loading, error, data } = useQuery(GET_BLOCK_DETAILS, {
     variables: { number },
   });
   const classes = useStyles();
@@ -102,11 +109,16 @@ export default function BlockDetails(number_value: any) {
           </Grid>
 
           <Grid item xs={1}>
-            <Link href={`/block/${prevBlock}`} color="secondary">
+            <Link
+              href="/block/[block]/"
+              as={`/block/${prevBlock}`}
+              color="secondary"
+            >
+              {/* <Link href={`/block/${prevBlock}`} color="secondary"> */}
               <IconButton
                 aria-label="Previous Block"
                 className={classes.iconButtonRight}
-                onClick={() => refetch(prevBlock)}
+                //onClick={() => refetch(prevBlock)}
               >
                 <ArrowBackIosIcon className={classes.arrowIcon} />
               </IconButton>
@@ -114,11 +126,16 @@ export default function BlockDetails(number_value: any) {
           </Grid>
           {/* ${props.block+1} */}
           <Grid item xs={1}>
-            <Link href={`/block/${nextBlock}`} color="secondary">
+            <Link
+              href="/block/[block]/"
+              as={`/block/${nextBlock}`}
+              color="secondary"
+            >
+              {" "}
               <IconButton
                 aria-label="Next Block"
                 className={classes.iconButtonLeft}
-                onClick={() => refetch(nextBlock)}
+                // onClick={() => refetch(nextBlock)}
               >
                 <ArrowForwardIosIcon className={classes.arrowIcon} />
               </IconButton>
@@ -135,7 +152,7 @@ export default function BlockDetails(number_value: any) {
             <Typography variant="caption">
               {data.block && data.block.timestamp
                 ? new Date(parseInt(data.block.timestamp)).toUTCString()
-                : " "}
+                : "Data currently not available"}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -148,7 +165,7 @@ export default function BlockDetails(number_value: any) {
               data.block.transactions &&
               data.block.transactions.transactionIndex
                 ? data.block.transactions.transactionIndex.length()
-                : " Currently not available"}
+                : "Data currently not available"}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -167,7 +184,7 @@ export default function BlockDetails(number_value: any) {
 
           <Grid item xs={12} className={classes.item}>
             <Typography variant="caption" component="h2">
-              Validator
+              Miner
             </Typography>
             <Typography variant="caption" component="h2">
               {data &&
@@ -233,7 +250,7 @@ export default function BlockDetails(number_value: any) {
               data.block.transactions &&
               data.block.transactions.nonce
                 ? data.block.transactions.nonce
-                : " Currently not available"}
+                : "Data currently not available"}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>

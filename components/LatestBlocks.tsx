@@ -26,29 +26,6 @@ import * as numbro from "numbro";
 import MiddleEllipsis from "react-middle-ellipsis";
 import { useRouter } from "next/router";
 
-// import Link from 'next/link'
-
-// moment.updateLocale("en", {
-//   relativeTime: {
-//     past: function (input) {
-//       return input === "just now" ? input : input + " ago";
-//     },
-//     s: "just now",
-//     future: "in %s",
-//     ss: "%d seconds",
-//     m: "a minute",
-//     mm: "%d minutes",
-//     h: "an hour",
-//     hh: "%d hours",
-//     d: "a day",
-//     dd: "%d days",
-//     M: "a month",
-//     MM: "%d months",
-//     y: "a year",
-//     yy: "%d years",
-//   },
-// });
-
 const GET_BLOCK = gql`
   {
     blocks(pageSize: 500, page: 10) {
@@ -106,6 +83,13 @@ const columns_homepage: Column[] = [
 ];
 
 const useStyles = makeStyles({
+  root: {
+    width: "100%",
+    padding: "1.5%",
+    borderRadius: 5,
+    wordWrap: "break-word",
+    margin: "none",
+  },
   box: {
     letterSpacing: "1px",
     padding: "1rem",
@@ -171,9 +155,6 @@ const useStyles = makeStyles({
   },
 });
 
-
-
-
 function LatestBlocks(props: any) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
@@ -194,23 +175,9 @@ function LatestBlocks(props: any) {
     setPage(0);
   };
 
-  const router = useRouter();
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    router.push(href);
-  };
-
   moment.relativeTimeThreshold("s", 59);
   moment.relativeTimeThreshold("ss", 3);
 
-  // const MyButton = React.forwardRef(({ onClick, href }, ref) => {
-  //   return (
-  //     <a href={href} onClick={handleClick} ref={ref}>
-  //       Click Me
-  //     </a>
-  //   )
-  // })
   return (
     <Grid container className={classes.blocks}>
       <Grid item xs={12}>
@@ -229,7 +196,7 @@ function LatestBlocks(props: any) {
             ) : null}
           </Typography>
           <Divider variant="middle" className={classes.divider} />
-          <TableContainer className={classes.container}>
+          <TableContainer>
             <Paper className={classes.tableCell}>
               <Table>
                 <TableHead>
