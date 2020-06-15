@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
       opacity: 1,
       //padding: "1.5rem 1rem",
       justifyContent: "center",
-      padding: '1.5%',
+      padding: '2rem',
       position: 'absolute'
     },
     text: {
@@ -41,17 +41,17 @@ export default function Footer() {
   return (
     <footer>
         <Grid container className={classes.root}>
-          <Grid item xs={11} sm={11} md={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <img src="/images/celo_logo.svg" />
           </Grid>
 
-          <Grid item xs={11} sm={11} md={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <Typography variant="caption" className={classes.text} align="left">
               Big Dipper for Celo. Let’s make money connected.
             </Typography>
           </Grid>
 
-          <Grid item xs={11} sm={11} md={8} style={{ marginBottom: "0.5rem" }}>
+          <Grid item xs={12} sm={12} md={8} style={{ marginBottom: "0.5rem" }}>
             <Link
               href="https://github.com/celo-org"
               className={classes.socialMedia}
