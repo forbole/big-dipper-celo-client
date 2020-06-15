@@ -1,70 +1,73 @@
-import React from 'react';
-import clsx from 'clsx';
-import { createStyles, makeStyles, useTheme, Theme  } from '@material-ui/core/styles';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import SearchBar from '../components/SearchBar';
-import NetworkDropdown from '../components/NetworkDropdown';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import Link from '../components/Link';
-import PriceCard from '../components/PriceCard';
-import Grid from '@material-ui/core/Grid';
-import Hidden from '@material-ui/core/Hidden';
-import PersonIcon from '@material-ui/icons/Person';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import Ledger from './ledger/Ledger';
+import React from "react";
+import clsx from "clsx";
+import {
+  createStyles,
+  makeStyles,
+  useTheme,
+  Theme,
+} from "@material-ui/core/styles";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import Button from "@material-ui/core/Button";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
+import MailIcon from "@material-ui/icons/Mail";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import SearchBar from "../components/SearchBar";
+import NetworkDropdown from "../components/NetworkDropdown";
+import VpnKeyIcon from "@material-ui/icons/VpnKey";
+import Link from "../components/Link";
+import PriceCard from "../components/PriceCard";
+import Grid from "@material-ui/core/Grid";
+import Hidden from "@material-ui/core/Hidden";
+import PersonIcon from "@material-ui/icons/Person";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import Ledger from "./ledger/Ledger";
 import Footer from "../components/Footer";
-
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
-  },
-  logo: {
-    flexGrow: 1,
-    margin: '1rem 0 0 1rem',
-    noWrap: 'true'
-  },
-  content: {
-    flexGrow: 1,
-    padding: 'auto',
-    marginTop: '4rem',
-    overflow: 'auto'
-  },
-  icon:{
-    minWidth: '1.7rem',
-  },
+    list: {
+      width: 250,
+    },
+    fullList: {
+      width: "auto",
+    },
+    logo: {
+      flexGrow: 1,
+      margin: "1rem 0 0 1rem",
+      noWrap: "true",
+    },
+    content: {
+      flexGrow: 1,
+      padding: "auto",
+      marginTop: "4rem",
+      overflow: "auto",
+    },
+    icon: {
+      minWidth: "1.7rem",
+    },
 
-  drawerLogo:{
-    margin: '0.5rem 1rem',
-    maxHeight: '1.5rem'
-  }
-
-}),
+    drawerLogo: {
+      margin: "0.5rem 1rem",
+      maxHeight: "1.5rem",
+    },
+  })
 );
 
-type Anchor = 'top' | 'left' | 'bottom' | 'right';
+type Anchor = "top" | "left" | "bottom" | "right";
 
-const Layout = (props: { children: React.ReactNode; }) => {
+const Layout = (props: { children: React.ReactNode }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [state, setState] = React.useState({
@@ -74,18 +77,18 @@ const Layout = (props: { children: React.ReactNode; }) => {
     right: false,
   });
 
-  const anchor = 'right'
+  const anchor = "right";
 
   let loggedIn = true;
 
   const toggleDrawer = (anchor: Anchor, open: boolean) => (
-    event: React.KeyboardEvent | React.MouseEvent,
+    event: React.KeyboardEvent | React.MouseEvent
   ) => {
     if (
       event &&
-      event.type === 'keydown' &&
-      ((event as React.KeyboardEvent).key === 'Tab' ||
-        (event as React.KeyboardEvent).key === 'Shift')
+      event.type === "keydown" &&
+      ((event as React.KeyboardEvent).key === "Tab" ||
+        (event as React.KeyboardEvent).key === "Shift")
     ) {
       return;
     }
@@ -208,5 +211,5 @@ const Layout = (props: { children: React.ReactNode; }) => {
       </React.Fragment>
     </div>
   );
-}
-export default Layout
+};
+export default Layout;
