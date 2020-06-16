@@ -9,7 +9,6 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
 import { Select, InputLabel } from "@material-ui/core";
-import Layout from "../components/Layout";
 import CardContent from "@material-ui/core/CardContent";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import Container from "@material-ui/core/Container";
@@ -19,6 +18,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import clsx from "clsx";
+import Link from "../Link"; 
 
 import Hidden from "@material-ui/core/Hidden";
 import SearchIcon from "@material-ui/icons/Search";
@@ -36,12 +36,13 @@ function Dialog_1() {
 
 const useStyles = makeStyles({
   root: {
-    justifyContent: 'center'
+    justifyContent: "center",
   },
   title: {
     // padding: "1rem",
     display: "block",
     textAlign: "center",
+    paddingTop: "0.3rem",
   },
   leftInline: {
     display: "flex",
@@ -53,8 +54,6 @@ const useStyles = makeStyles({
     overflow: "auto",
     padding: "1%",
   },
-
-
 
   select: {
     //align: "center",
@@ -73,12 +72,15 @@ const useStyles = makeStyles({
   alignLeft: {
     display: "flex",
     overflow: "auto",
-    //padding: "0 0 0 1rem",
+    paddingTop: "0.5rem",
+    paddingBottom: "0.5rem",
   },
 
   alignRight: {
     display: "block",
     float: "right",
+    paddingTop: "0.5rem",
+    paddingBottom: "0.5rem",
     //paddingRight: "1rem",
   },
 
@@ -108,7 +110,8 @@ const useStyles = makeStyles({
   },
 
   divider: {
-    margin: "0.5rem",
+    margin: "0.15rem 0rem",
+    backgroundColor: "rgba(62, 67, 71, 1)",
   },
 
   searchbar: {
@@ -132,6 +135,50 @@ const useStyles = makeStyles({
   rightPadding: {
     paddingLeft: "1rem",
   },
+
+  controlButton: {
+    justifyContent: "center",
+    flexWrap: "wrap",
+    padding: "0.1rem",
+    textTransform: "none",
+    borderRadius: 4,
+  },
+
+  controlButtonLabel: {
+    textTransform: "none",
+    borderRadius: 4,
+  },
+
+  item: {
+    justifyContent: "center",
+  },
+
+  iconButtonRight: {
+    padding: "0",
+    marginLeft: "0.5rem",
+  },
+  iconButtonLeft: {
+    padding: "0",
+    marginRight: "0.5rem",
+  },
+
+  lockGoldMessage: {
+    marginTop: "1rem",
+    marginBottom: "-0.8rem",
+  },
+
+  dialogRoot: {
+    marginBottom: "-1rem",
+  },
+
+  alignCenter: {
+    justifyContent: "center",
+    marginBottom: "1rem",
+  },
+
+  bottomMargin: {
+    marginBottom: "1rem",
+  },
 });
 
 interface State {
@@ -142,7 +189,7 @@ function LockGoldDialog() {
   const classes = useStyles();
 
   return (
-    <FormControl variant="outlined" fullWidth={true} size="small">
+    <FormControl variant="outlined" fullWidth size="small">
       <InputLabel htmlFor="lock-gold-dialog" type="number">
         <Typography
           variant="caption"
@@ -155,7 +202,7 @@ function LockGoldDialog() {
       <OutlinedInput
         id="id-lock-gold-dialog"
         endAdornment={<InputAdornment position="end">cGLD</InputAdornment>}
-        labelWidth={100}
+        labelWidth={295}
       />
     </FormControl>
   );
@@ -166,7 +213,7 @@ function TokenDropdown() {
   let name = "Michelle Clark";
   let name_2 = "Ada Adams";
   return (
-    <FormControl  fullWidth={true} size="medium">
+    <FormControl fullWidth={true} size="medium">
       <Select
         defaultValue=""
         id="grouped-select"
@@ -181,7 +228,7 @@ function TokenDropdown() {
         <ListSubheader></ListSubheader>
         <MenuItem value={1}>
           <Typography
-            variant="body2"
+            variant="caption"
             color="textSecondary"
             className={classes.rightPadding}
           >
@@ -195,7 +242,7 @@ function TokenDropdown() {
 
         <MenuItem value={2}>
           <Typography
-            variant="body2"
+            variant="caption"
             color="textSecondary"
             className={classes.rightPadding}
           >
@@ -219,24 +266,83 @@ export default function Ledger() {
     setOpen(false);
   };
 
+  const renderControlButtons = () => {
+    return (
+      <Grid container spacing={1}>
+        <Grid item xs={6}>
+          <div className={classes.controlButton}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              className={classes.controlButtonLabel}
+              fullWidth={true}
+              onClick={handleClose}
+            >
+              <Typography variant="caption" noWrap>
+                Cancel
+              </Typography>
+            </Button>
+          </div>
+        </Grid>
+        <Grid item xs={6}>
+          <div className={classes.controlButton}>
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.controlButtonLabel}
+              fullWidth={true}
+              onClick={handleClose}
+            >
+              <Typography variant="caption" noWrap>
+                Confirm
+              </Typography>
+            </Button>
+          </div>
+        </Grid>
+      </Grid>
+    );
+  };
+
   return (
     <div>
       <Button variant="outlined" color="secondary" onClick={handleClickOpen}>
         Ledger Dialog
-      </Button>
+      </Button>{" "}
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="form-dialog-title"
+        aria-labelledby="ledger-dialog"
+        fullWidth
+        maxWidth="md"
       >
-        <DialogTitle id="form-dialog-title">
-          <Typography variant="body2" noWrap className={classes.title}>
-            Lock Celo Gold
-          </Typography>
+        <DialogTitle id="ledger-dialog-title" className={classes.dialogRoot}>
+          <Grid container className={classes.item}>
+            <Grid item xs={1}>
+              <IconButton
+                aria-label="Return"
+                className={classes.iconButtonLeft}
+              >
+                <img src="/images/last.svg" color="textPrimary" />
+              </IconButton>
+            </Grid>
+            <Grid item xs={10}>
+              <Typography variant="body1" noWrap className={classes.title}>
+                Lock Celo Gold
+              </Typography>
+            </Grid>
+            <Grid item xs={1}>
+              <IconButton
+                aria-label="Close"
+                className={classes.iconButtonRight}
+              >
+                <img src="/images/cross.svg" color="textPrimary" />
+              </IconButton>
+            </Grid>
+          </Grid>
         </DialogTitle>
         <DialogContent>
           <Grid container spacing={1} className={classes.item}>
-            <DialogContentText>
+            {/* <DialogContentText id="1">
               <Grid item xs={12}>
                 <Typography
                   variant="caption"
@@ -273,37 +379,138 @@ export default function Ledger() {
                   Max {"14.99217479 cGLD"}
                 </Typography>
               </Grid>
-              {/* <Grid item xs={10}>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
-          </DialogContentText>
-          </Grid>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-  /> */}
+              {renderControlButtons()}
+            </DialogContentText> */}
+
+            {/* <DialogContentText id="2">
+              <Grid item xs={12}>
+                <Typography variant="caption" noWrap={false}>
+                  You are going to lock {"2"} cGLD, it that's correct, please
+                  sign in your ledger device.
+                </Typography>
+              </Grid>
+              <Divider className={classes.divider} />
+              <Grid container spacing={1} className={classes.item}>
+                <Grid item xs={6}>
+                  <Typography
+                    variant="caption"
+                    noWrap
+                    className={classes.alignLeft}
+                    align="left"
+                  >
+                    Account
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography
+                    variant="caption"
+                    noWrap
+                    className={classes.alignRight}
+                    align="right"
+                  >
+                    {"Michelle Clark"}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Divider className={classes.divider} />
+              <Grid container spacing={1} className={classes.item}>
+                <Grid item xs={6}>
+                  <Typography
+                    variant="caption"
+                    noWrap
+                    className={classes.alignLeft}
+                    align="left"
+                  >
+                    Lock Amount
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography
+                    variant="caption"
+                    noWrap
+                    className={classes.alignRight}
+                    align="right"
+                  >
+                    {"2"} cGLD
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Divider className={classes.divider} />
+              <Grid container spacing={1} className={classes.item}>
+                <Grid item xs={6}>
+                  <Typography
+                    variant="caption"
+                    noWrap
+                    className={classes.alignLeft}
+                    align="left"
+                  >
+                    Tx Fee
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography
+                    variant="caption"
+                    noWrap
+                    className={classes.alignRight}
+                    align="right"
+                  >
+                    {"0.00001"} cGLD
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Divider className={classes.divider} />
+              <Grid item xs={12} className={classes.lockGoldMessage}>
+                <Typography variant="body1" noWrap align="center">
+                  Please sign in your ledger device...
+                </Typography>
+              </Grid>
+            </DialogContentText> */}
+            <DialogContentText id="3">
+              <Grid container className={classes.item}>
+                <Grid
+                  item
+                  xs={12}
+                  align="center"
+                  className={classes.bottomMargin}
+                >
+                  <img src="/images/success_icon.svg" />
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  align="center"
+                  className={classes.bottomMargin}
+                >
+                  <Typography
+                    variant="caption"
+                    noWrap
+                    //align="center"
+                  >
+                    The cGLD has been successfully locked.
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Link href="/transactions">
+                    <div className={classes.controlButton}>
+                      <Button
+                        variant="outlined"
+                        color="secondary"
+                        className={classes.controlButtonLabel}
+                        fullWidth={true}
+                        onClick={handleClose}
+                      >
+                        <Typography variant="caption" noWrap>
+                          View Transactions
+                        </Typography>
+                      </Button>
+                    </div>
+                  </Link>
+                </Grid>
+              </Grid>
             </DialogContentText>
           </Grid>
         </DialogContent>
-        <DialogActions className={classes.root}>
-          <Grid item xs={5}>
-            <LedgerButtons variant="Cancel" onClick={handleClose} />
-          </Grid>
-          <Grid item xs={5}>
-            <LedgerButtons variant="Confirm" />
-          </Grid>
-          {/* <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button> */}
-          {/* <Button onClick={handleClose} color="primary">
-            Confirm
-          </Button> */}
-        </DialogActions>
+        <DialogActions className={classes.root}></DialogActions>
       </Dialog>
     </div>
   );

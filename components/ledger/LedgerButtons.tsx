@@ -24,7 +24,18 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function LedgerButtons(props: any) {
   const classes = useStyles();
 
-  switch (props.variant) {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    console.log("CLOSED YP");
+  };
+
+  switch (props.option) {
     case "Cancel":
       return (
         <div className={classes.root}>
@@ -33,13 +44,15 @@ export default function LedgerButtons(props: any) {
             color="secondary"
             className={classes.label}
             fullWidth={true}
+            onClick={handleClose}
           >
-            <Typography variant="caption" noWrap >
+            <Typography variant="caption" noWrap>
               Cancel
             </Typography>
           </Button>
         </div>
       );
+      break;
     case "Confirm":
       return (
         <div className={classes.root}>
@@ -49,8 +62,24 @@ export default function LedgerButtons(props: any) {
             className={classes.label}
             fullWidth={true}
           >
-            <Typography variant="caption" noWrap >
+            <Typography variant="caption" noWrap>
               Confirm
+            </Typography>
+          </Button>
+        </div>
+      );
+    case "Open Ledger":
+      return (
+        <div className={classes.root}>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.label}
+            fullWidth={true}
+            onClick={handleClickOpen}
+          >
+            <Typography variant="caption" noWrap>
+              Open Ledger
             </Typography>
           </Button>
         </div>

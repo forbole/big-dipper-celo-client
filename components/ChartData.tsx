@@ -59,7 +59,7 @@ function getChainInfo() {
 const useStyles = makeStyles({
   root: {
     display: "flex",
-    padding: '1.5%'
+    padding: "1.5%",
   },
   card: {
     display: "block",
@@ -67,26 +67,16 @@ const useStyles = makeStyles({
     margin: "2%",
     borderLeft: "4px solid #FBCC5C",
     borderRadius: 4,
-    // boxShadow: '0 2px 4px 0 rgba(138, 148, 159, 0.2)',
-    // '& > *:nth-child(1)': {
-    //   marginRight: spacing(2),
-    // },
-    // '& > *:nth-child(2)': {
-    //   flex: 'auto',
-    // },
     background: "#43484C",
     alignItems: "center",
   },
   value: {
-    //margin: '0rem 0 0 0.3rem',
     fontWeight: "300",
     padding: "0.2rem 0.75rem 0.5rem 0.75rem",
   },
   label: {
     display: "flex",
     padding: "0.4rem 0.75rem 0.1rem 0.75rem",
-    //marginTop: "1rem",
-    //overflow: 'auto',
   },
   container: {
     marginTop: "1.5%",
