@@ -1,39 +1,38 @@
-import React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Layout from '../../components/Layout';
-import Grid from '@material-ui/core/Grid';
-import BlockDetails from '../../components/BlockDetails';
-import {useRouter} from 'next/router'
+import React from "react";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import Layout from "../../components/Layout";
+import Grid from "@material-ui/core/Grid";
+import BlockDetails from "../../components/BlockDetails";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-        root: {
-            display: 'block-inline',
-            justifyContent: 'center',
-            },
+    root: {
+      display: "block-inline",
+      justifyContent: "center",
+    },
 
-        bottomPadding:{
-            overflow: 'auto',
-            // paddingTop: '1.5%',
-            // paddingBottom: '1.5%',
-            padding: '1rem'
-          },
+    bottomPadding: {
+      overflow: "auto",
+      // paddingTop: '1.5%',
+      // paddingBottom: '1.5%',
+      padding: "1rem",
+    },
+  })
+);
 
-          }),
-          );
-
-export default function  Block() {
+export default function Block() {
   const classes = useStyles();
   const router = useRouter();
-  const {Block} = router.query;
+  const { Block } = router.query;
   // const pid = parseInt(router.query.block);
   return (
     <Layout>
-      <Grid container className={classes.root}  >
-            <Grid item xs={12} sm={8}   className={classes.bottomPadding}>
-            <BlockDetails number_value={router.query.block} />
-            </Grid>
+      <Grid container className={classes.root}>
+        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+          <BlockDetails />
         </Grid>
+      </Grid>
     </Layout>
   );
 }
@@ -238,39 +237,39 @@ export default function  Block() {
 //             </Typography>
 //           </Grid>
 
-          // <Grid item xs={1}>
-          //   <Link
-          //     href="/block/[block]/"
-          //     as={`/block/${prevBlock}`}
-          //     color="secondary"
-          //   >
-          //     {/* <Link href={`/block/${prevBlock}`} color="secondary"> */}
-          //     <IconButton
-          //       aria-label="Previous Block"
-          //       className={classes.iconButtonRight}
-          //       //onClick={() => refetch(prevBlock)}
-          //     >
-          //       <ArrowBackIosIcon className={classes.arrowIcon} />
-          //     </IconButton>
-          //   </Link>
-          // </Grid>
+// <Grid item xs={1}>
+//   <Link
+//     href="/block/[block]/"
+//     as={`/block/${prevBlock}`}
+//     color="secondary"
+//   >
+//     {/* <Link href={`/block/${prevBlock}`} color="secondary"> */}
+//     <IconButton
+//       aria-label="Previous Block"
+//       className={classes.iconButtonRight}
+//       //onClick={() => refetch(prevBlock)}
+//     >
+//       <ArrowBackIosIcon className={classes.arrowIcon} />
+//     </IconButton>
+//   </Link>
+// </Grid>
 //           {/* ${props.block+1} */}
-          // <Grid item xs={1}>
-          //   <Link
-          //     href="/block/[block]/"
-          //     as={`/block/${nextBlock}`}
-          //     color="secondary"
-          //   >
-          //     {" "}
-          //     <IconButton
-          //       aria-label="Next Block"
-          //       className={classes.iconButtonLeft}
-          //       // onClick={() => refetch(nextBlock)}
-          //     >
-          //       <ArrowForwardIosIcon className={classes.arrowIcon} />
-          //     </IconButton>
-          //   </Link>
-          // </Grid>
+// <Grid item xs={1}>
+//   <Link
+//     href="/block/[block]/"
+//     as={`/block/${nextBlock}`}
+//     color="secondary"
+//   >
+//     {" "}
+//     <IconButton
+//       aria-label="Next Block"
+//       className={classes.iconButtonLeft}
+//       // onClick={() => refetch(nextBlock)}
+//     >
+//       <ArrowForwardIosIcon className={classes.arrowIcon} />
+//     </IconButton>
+//   </Link>
+// </Grid>
 
 //           <Grid item xs={12}>
 //             <Divider />

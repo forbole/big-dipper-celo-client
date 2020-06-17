@@ -18,7 +18,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import clsx from "clsx";
-import Link from "../Link"; 
+import Link from "../Link";
 
 import Hidden from "@material-ui/core/Hidden";
 import SearchIcon from "@material-ui/icons/Search";
@@ -312,7 +312,7 @@ export default function Ledger() {
         open={open}
         onClose={handleClose}
         aria-labelledby="ledger-dialog"
-        fullWidth
+        // fullWidth
         maxWidth="md"
       >
         <DialogTitle id="ledger-dialog-title" className={classes.dialogRoot}>
@@ -334,6 +334,7 @@ export default function Ledger() {
               <IconButton
                 aria-label="Close"
                 className={classes.iconButtonRight}
+                onClick={handleClose}
               >
                 <img src="/images/cross.svg" color="textPrimary" />
               </IconButton>

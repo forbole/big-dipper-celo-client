@@ -141,7 +141,7 @@ const Layout = (props: { children: React.ReactNode }) => {
       <Divider />
       <List>
         {[
-          <Link href="/" color="inherit">
+          <Link href="/account" color="inherit">
             <Typography variant="body2">
               <ListItemIcon className={classes.icon}>
                 <PersonIcon color="inherit" fontSize="small" />

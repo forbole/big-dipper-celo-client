@@ -33,7 +33,7 @@ const GET_BLOCK = gql`
         number
         miner {
           name
-          signer
+          affiliation
         }
         transactions {
           transactionIndex
@@ -283,7 +283,11 @@ function LatestBlocks(props: any) {
                           padding="checkbox"
                           className={classes.tableCell}
                         >
-                          <Link href="#" color="secondary">
+                          <Link
+                            href="/account/[account]/"
+                            as={`/account/${row.miner.affiliation}`}
+                            color="secondary"
+                          >
                             <Typography
                               variant="caption"
                               display="inline"
@@ -299,9 +303,10 @@ function LatestBlocks(props: any) {
                               >
                                 <MiddleEllipsis>
                                   <span>
-                                    {row.miner && row.miner.name
-                                      ? row.miner.name
-                                      : row.miner.signer}
+                                    {(row.miner && row.miner.name) ||
+                                    (row.miner && row.miner.affiliation)
+                                      ? row.miner.name || row.miner.affiliation
+                                      : null}
                                   </span>
                                 </MiddleEllipsis>
                               </div>

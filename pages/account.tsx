@@ -1,386 +1,442 @@
-import React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Link from '../components/Link';
-import Card from '@material-ui/core/Card';
-import Divider from '@material-ui/core/Divider';
-import Layout from '../components/Layout';
-import CardContent from '@material-ui/core/CardContent';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import Container from '@material-ui/core/Container';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Avatar from '@material-ui/core/Avatar';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import Button from '@material-ui/core/Button';
-import Chips from '../components/Chips';
-import AccountTransactions from '../components/accounts/Transactions';
-import InternalTransactions from '../components/accounts/InternalTransactions';
-import Downtime from '../components/accounts/Downtime';
-import ValidatedBlocks from '../components/accounts/ValidatedBlocks';
-import AddressCard from '../components/accounts/AddressCard';
-import AccountDetails from '../components/accounts/AccountDetails';
-import Hidden from '@material-ui/core/Hidden';
-import FilledInput from '@material-ui/core/FilledInput';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import SearchIcon from '@material-ui/icons/Search';
+// import React from "react";
+// import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+// import Grid from "@material-ui/core/Grid";
+// import Typography from "@material-ui/core/Typography";
+// import Link from "../components/Link";
+// import Card from "@material-ui/core/Card";
+// import Divider from "@material-ui/core/Divider";
+// import Layout from "../components/Layout";
+// import CardContent from "@material-ui/core/CardContent";
+// import FileCopyIcon from "@material-ui/icons/FileCopy";
+// import Container from "@material-ui/core/Container";
+// import InputLabel from "@material-ui/core/InputLabel";
+// import MenuItem from "@material-ui/core/MenuItem";
+// import FormControl from "@material-ui/core/FormControl";
+// import Select from "@material-ui/core/Select";
+// import Avatar from "@material-ui/core/Avatar";
+// import ListSubheader from "@material-ui/core/ListSubheader";
+// import Button from "@material-ui/core/Button";
+// import Chips from "../components/Chips";
+// import AccountTransactions from "../components/accounts/Transactions";
+// import InternalTransactions from "../components/accounts/InternalTransactions";
+// import Downtime from "../components/accounts/Downtime";
+// import ValidatedBlocks from "../components/accounts/ValidatedBlocks";
+// import AddressCard from "../components/accounts/AddressCard";
+// import AccountDetails from "../components/accounts/AccountDetails";
+// import Hidden from "@material-ui/core/Hidden";
+// import FilledInput from "@material-ui/core/FilledInput";
+// import InputAdornment from "@material-ui/core/InputAdornment";
+// import SearchIcon from "@material-ui/icons/Search";
 
+// const useStyles = makeStyles((theme: Theme) =>
+//   createStyles({
+//     root: {
+//       display: "block-inline",
+//       justifyContent: "center",
+//     },
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-        root: {
-            display: 'block-inline',
-            justifyContent: 'center',
-            },
+//     leftInline: {
+//       display: "flex",
+//       overflow: "auto",
+//       padding: "0 0 0 1rem",
+//     },
 
-        leftInline:{
-            display: 'flex',
-            overflow: 'auto',
-            padding: '0 0 0 1rem',
-        },
+//     bottomPadding: {
+//       overflow: "auto",
+//       padding: "0.5rem 1rem",
+//     },
 
-        bottomPadding:{
-            overflow: 'auto',
-            padding: '1rem'
-        },
+//     formControl: {
+//       minWidth: "9.75rem",
+//       padding: "0 1rem 0 0",
+//       // marginBottom: "1rem",
+//       marginTop: "-1rem",
+//       float: "right",
+//       // maxHeight: theme.spacing(4),
+//       // marginTop: theme.spacing(-1.5),
+//     },
 
-        
-        formControl: {
-            minWidth: theme.spacing(26),
-            padding:'0 1rem 0 0',
-            marginBottom: theme.spacing(3),
-            float: 'right',
-            maxHeight: theme.spacing(4),
-            marginTop: theme.spacing(-1.5)
-          },
+//     select: {
+//       // align: "center",
+//       // justifyContent: "center",
+//       fontSize: "14px",
+//       border: "solid rgba(255, 255, 255, 0.6) ",
+//       borderWidth: "0.09rem",
+//       borderRadius: 5,
+//       minWidth: "9.75rem",
+//     },
 
+//     inputLabel: {
+//       fontSize: "15px",
+//       paddingLeft: "1rem",
+//     },
 
-        select:{
-            align: 'center',
-            justifyContent: 'center',
-            fontSize: '15px',
-            border: 'solid rgba(255, 255, 255, 0.6) ',
-            borderWidth: '0.09rem',
-            borderRadius: 5,
-          
-          
-        },
+//     alignLeft: {
+//       display: "flex",
+//       overflow: "auto",
+//       padding: "0.3rem 0 0 1rem",
+//     },
 
-        inputLabel:{
-          fontSize: '15px',
-          paddingLeft: '1rem',
-      },
+//     alignRight: {
+//       display: "block",
+//       float: "right",
+//       padding: "0.3rem 1rem 0 0",
+//     },
 
-        alignLeft:{
-            display: 'flex',
-            overflow: 'auto',
-            padding: '0 0 0 1rem',
-        },
+//     alignRightPrice: {
+//       display: "block",
+//       float: "right",
+//       paddingRight: "1rem",
+//       marginTop: "-0.5rem",
+//     },
 
-        alignRight:{
-            display: 'block',
-            float: 'right',
-            paddingRight: '1rem'
-        },
+//     buttonUnlock: {
+//       justifyContent: "center",
+//       minWidth: "9.5rem",
+//       // marginBottom: "1rem",
+//       padding: "0.5rem",
+//       textTransform: "none",
+//       border: "solid thin",
+//       // marginLeft: "1rem",
+//       // marginTop: '0.3rem'
+//       margin: "0.3rem 0 1rem 1rem",
+//     },
 
-        alignRightPrice:{
-          display: 'block',
-          float: 'right',
-          paddingRight: '1rem',
-          marginTop: '-0.5rem'
-      },
+//     buttonLock: {
+//       justifyContent: "center",
+//       minWidth: "9.5rem",
+//       // marginBottom: "1rem",
+//       padding: "0.5rem",
+//       textTransform: "none",
+//       border: "solid thin",
+//       // marginRight: "1rem",
+//       margin: "0.3rem 1rem 1rem 0",
+//     },
 
-        button:{
-          justifyContent: 'center',
-          minWidth: '8rem',
-          marginBottom: '1rem',
-        },
+//     box: {
+//       letterSpacing: "1px",
+//       padding: "1rem",
+//       display: "block",
+//       overflow: "hidden",
+//       whiteSpace: "nowrap",
+//     },
+//     chip: {
+//       display: "block",
+//       marginLeft: "1rem",
+//     },
 
- 
-        box:{
-            letterSpacing: '1px',
-            padding: '1rem',
-            display: 'block',
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            },
-            chip:{
-            display: 'block',
-            marginLeft: '1rem',
-        },
+//     divider: {
+//       margin: "0.5rem",
+//       backgroundColor: "rgba(62, 67, 71, 1)",
+//     },
 
-        divider:{
-            margin: '0.5rem',
-        },
+//     searchbar: {
+//       display: "flex",
+//       flexWrap: "wrap",
+//       justifyContent: "center",
+//       verticalAlign: "middle",
+//     },
 
-        searchbar: {
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          verticalAlign: 'middle',  
-        },
-        
-        label:{
-          height: '2rem',
-          verticalAlign: 'middle', 
-          padding: '0 1rem 1rem 0',
-          fontSize: '12px',
-        },
-        container:{
-          justifyContent: 'center', 
-          padding: '0rem'
-        },
+//     label: {
+//       height: "2rem",
+//       verticalAlign: "middle",
+//       padding: "0 1rem 1rem 0",
+//       fontSize: "12px",
+//     },
+//     container: {
+//       justifyContent: "center",
+//       padding: "0rem",
+//       minWidth: "14.75rem",
+//     },
 
-        rightPadding:{
-          paddingLeft: '1rem'
-        }
- 
+//     tokenValue: {
+//       paddingLeft: "0.5rem",
+//     },
 
-    }),
-    );   
+//     dropdownSelection: {
+//       margin: "-1.3rem 0 0 0rem",
+//       paddingLeft: "0.5rem",
+//       paddingTop: "0.5rem",
+//       paddingBottom: "-0.5rem"
+//       // minHeight: "3.3rem",
+//     },
 
+//     erc20: {
+//       margin: "0rem 0rem -0.8rem 0rem",
+//     },
 
+//     listSubheader: {
+//       padding: "0 0 0 1rem",
+//     },
 
-    interface State {
-      tokenSearch: string;
-    
-    }
-    
+//   })
+// );
 
-function TokenSearchBar() {
-  const classes = useStyles();
-  const [values, setValues] = React.useState<State>({
-    tokenSearch: '',
-  });
+// interface State {
+//   tokenSearch: string;
+// }
 
-  const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
+// function TokenSearchBar() {
+//   const classes = useStyles();
+//   const [values, setValues] = React.useState<State>({
+//     tokenSearch: "",
+//   });
 
-  return (
-    <div className={classes.searchbar}>
-      <Grid container spacing={1} className={classes.container}>
-      <Grid item xs={10}>
-        <FormControl fullWidth variant="filled">
-        
-          <InputLabel htmlFor="filled-adornment-amount" ></InputLabel>
-         
-          <FilledInput
-          className={classes.label}
-            id="filled-adornment-amount"
-            value={values.tokenSearch}
-            fullWidth
-            disableUnderline={true}
-            onChange={handleChange('tokenSearch')}
-            placeholder="Search tokens"
-            startAdornment={<InputAdornment position="start">
-                <SearchIcon />
-            </InputAdornment>}
-          />
-        </FormControl>
-        </Grid>
-        </Grid> 
-      </div>
-  );
-}
+//   const handleChange = (prop: keyof State) => (
+//     event: React.ChangeEvent<HTMLInputElement>
+//   ) => {
+//     setValues({ ...values, [prop]: event.target.value });
+//   };
 
-function TokenDropdown(){
-  const classes = useStyles();
-  let celoGold = '14.221738 cGLD';
-  let celoDollar = '492,270.513 cUSD'
-  return(
-       
-    <FormControl className={classes.formControl}  >
-    
-    <InputLabel htmlFor="grouped-native-select" className={classes.inputLabel} >
-    {"Select token"}
-    </InputLabel> 
-      
-    <Select defaultValue="" id="grouped-select"  color="primary" className={classes.select} disableUnderline={true}>
-     <TokenSearchBar /> 
-          <ListSubheader >ERC-20 (2)</ListSubheader>
-          <Divider className={classes.divider} />
+//   return (
+//     <div className={classes.searchbar}>
+//       <Grid container spacing={1} className={classes.container}>
+//         <Grid item xs={10}>
+//           <FormControl fullWidth variant="filled">
+//             <InputLabel htmlFor="token-search-input"></InputLabel>
 
-          <ListSubheader  style={{padding: '0 0 0 1rem'}}>
-            <Typography variant="body2"  color="textPrimary"  >
-                    Celo Dollar
-            </Typography></ListSubheader>
-          <MenuItem value={1} style={{margin: '-0.4rem 0', padding: '0'}}>
-            <Typography variant="body2"  color="textSecondary"  className={classes.rightPadding} >
-                      {celoDollar}
-            </Typography>
-          </MenuItem>
+//             <FilledInput
+//               className={classes.label}
+//               id="token-search-input"
+//               value={values.tokenSearch}
+//               fullWidth
+//               disableUnderline={true}
+//               onChange={handleChange("tokenSearch")}
+//               placeholder="Search tokens"
+//               startAdornment={
+//                 <InputAdornment position="start">
+//                   <SearchIcon />
+//                 </InputAdornment>
+//               }
+//             />
+//           </FormControl>
+//         </Grid>
+//       </Grid>
+//     </div>
+//   );
+// }
 
-          <Divider variant='middle' className={classes.divider} />
+// function TokenDropdown() {
+//   const classes = useStyles();
+//   let celoGold = "14.221738 cGLD";
+//   let celoDollar = "492,270.513 cUSD";
+//   return (
+//     <FormControl className={classes.formControl} hiddenLabel>
+//       <InputLabel
+//         htmlFor="token-dropdown-select"
+//         className={classes.inputLabel}
+//       >
+//         {"Select a token"}
+//       </InputLabel>
 
+//       <Select
 
-          <ListSubheader style={{padding: '0 0 0 1rem'}}>
-            <Typography variant="body2"  color="textPrimary" >
-                    Celo Gold
-            </Typography></ListSubheader>
+//         id="token-dropdown-select"
+//         color="primary"
+//         className={classes.select}
+//         disableUnderline={true}
+//         // labelWidth={600}
+//         style={{padding: '0'}}
+//       >
+//         <TokenSearchBar />
+//         <ListSubheader className={classes.erc20}>ERC-20 (2)</ListSubheader>
+//         <Divider className={classes.divider} />
 
-          <MenuItem value={2} style={{margin: '-0.4rem 0', padding: '0'}}>
-            <Typography variant="body2"  color="textSecondary"  className={classes.rightPadding}>
-                      {celoGold}
-            </Typography>
-          </MenuItem>
+//         {/* <ListSubheader style={{ padding: "0 0 0 1rem" }}> */}
+//         <Typography
+//           variant="body2"
+//           color="textPrimary"
+//           className={classes.listSubheader}
+//           gutterBottom
+//         >
+//           Celo Dollar
+//         </Typography>
+//         {/* </ListSubheader> */}
+//         <MenuItem value={1} className={classes.dropdownSelection}>
+//           <Typography
+//             variant="body2"
+//             color="textSecondary"
+//             className={classes.tokenValue}
+//             gutterBottom
+//           >
+//             {celoDollar}
+//           </Typography>
+//         </MenuItem>
 
-        </Select>
-      </FormControl>
-);
-}
+//         <Divider variant="middle" className={classes.divider} />
 
+//         {/* <ListSubheader> */}
+//         <Typography
+//           variant="body2"
+//           color="textPrimary"
+//           className={classes.listSubheader}
+//           gutterBottom
+//         >
+//           Celo Gold
+//         </Typography>
+//         {/* </ListSubheader> */}
 
-function AccountOverview(){
-    const classes = useStyles();
+//         <MenuItem value={2} className={classes.dropdownSelection}>
+//           <Typography
+//             variant="body2"
+//             color="textSecondary"
+//             className={classes.tokenValue}
+//             gutterBottom
+//           >
+//             {celoGold}
+//           </Typography>
+//         </MenuItem>
+//       </Select>
+//     </FormControl>
+//   );
+// }
 
-    return(
-        <span>
-    {/* <Grid container className={classes.root} xs={12} md={12} lg={6} > */}
-      <Card>
-        <Grid container spacing={1} >
-          <Grid item xs={12} >
-          <Typography variant="body1" className={classes.box} >
-              Overview
-        </Typography> 
-                <Divider variant='middle'  />
-          </Grid>
-          </Grid>
+// function AccountOverview() {
+//   const classes = useStyles();
 
-          <Grid container spacing={1} >
-                <Grid item xs={6}  >
+//   return (
+//     <span>
+//       {/* <Grid container className={classes.root} xs={12} md={12} lg={6} > */}
+//       <Card>
+//         <Grid container spacing={1}>
+//           <Grid item xs={12}>
+//             <Typography variant="body1" className={classes.box}>
+//               Overview
+//             </Typography>
+//             <Divider variant="middle" />
+//           </Grid>
+//         </Grid>
 
-                  <Typography  variant="body2" gutterBottom className={classes.alignLeft}>
-                  Moniker   
-                  </Typography>
-                  </Grid>
-                  <Grid item xs={6} >
-                  <Typography variant="body2" gutterBottom  className={classes.alignRight}>
-                  {"Michelle Clark"}
-                  </Typography>
-                  </Grid>
+//         <Grid container spacing={1}>
+//           <Grid item xs={6}>
+//             <Typography variant="body2" className={classes.alignLeft}>
+//               Moniker
+//             </Typography>
+//           </Grid>
+//           <Grid item xs={6}>
+//             <Typography variant="body2" className={classes.alignRight}>
+//               {"Michelle Clark"}
+//             </Typography>
+//           </Grid>
 
-                    <Grid item xs={12}>
-                    <Divider variant='middle'  />
-                    </Grid>
+//           <Grid item xs={12}>
+//             <Divider variant="middle" />
+//           </Grid>
 
-                  <Grid item xs={6} md={9} >
-                  <Typography variant="body2"  gutterBottom className={classes.alignLeft}>
-                     Balance
-                   </Typography>
-                   </Grid>
-                  
-                   <Grid item xs={6} md={3}>
-                  <Typography variant="body2" gutterBottom  className={classes.alignRight}>
-                        {"14.9125447 cGLD"}
-                  </Typography>
-                  </Grid>
-                  <Grid item xs={12} md={12}>
-                  <Typography variant="caption" gutterBottom  className={classes.alignRightPrice}>
-                        {"$41.978089412"}
-                  </Typography>    
-                  </Grid>
+//           <Grid item xs={6} md={9}>
+//             <Typography variant="body2" className={classes.alignLeft}>
+//               Balance
+//             </Typography>
+//           </Grid>
 
-                    <Grid item xs={12}>
-                    <Divider variant='middle'  />
-                    </Grid>
+//           <Grid item xs={6} md={3}>
+//             <Typography variant="body2" className={classes.alignRight}>
+//               {"14.9125447 cGLD"}
+//             </Typography>
+//           </Grid>
+//           <Grid item xs={12} md={12}>
+//             <Typography variant="caption" className={classes.alignRightPrice}>
+//               {"$41.978089412"}
+//             </Typography>
+//           </Grid>
 
-                   <Grid item xs={4} md={10} >
-                   <Typography  variant="body2" gutterBottom className={classes.chip}>
-                   Tokens
-                  </Typography>
-                </Grid>
+//           <Grid item xs={12}>
+//             <Divider variant="middle" />
+//           </Grid>
 
-                   <Grid item xs={8} md={2} >
-                  <TokenDropdown />
-                </Grid>
+//           <Grid item xs={4} md={10}>
+//             <Typography variant="body2" className={classes.chip}>
+//               Tokens
+//             </Typography>
+//           </Grid>
 
-                <Grid item xs={12}>
-                    <Divider variant='middle'  />
-                </Grid>
+//           <Grid item xs={8} md={2}>
+//             <TokenDropdown />
+//           </Grid>
 
+//           <Grid item xs={12}>
+//             <Divider variant="middle" />
+//           </Grid>
 
-                <Grid item xs={6} align='center'  >
-                    <Button variant="outlined" color="secondary" className={classes.button} >
-                        Unlock cGLD
-                    </Button>
-                </Grid>
-                <Grid item xs={6} align='center' >
-                    <Button variant="outlined" color="secondary" className={classes.button}>
-                        Lock cGLD
-                    </Button>
-                </Grid>
-                
-          </Grid>
-          
+//           <Grid item xs={6} align="center">
+//             <Button
+//               variant="outlined"
+//               color="secondary"
+//               className={classes.buttonUnlock}
+//             >
+//               <Typography variant="body1">Unlock cGLD</Typography>
+//             </Button>
+//           </Grid>
+//           <Grid item xs={6} align="center">
+//             <Button
+//               variant="outlined"
+//               color="secondary"
+//               className={classes.buttonLock}
+//             >
+//               <Typography variant="body1">Lock cGLD</Typography>
+//             </Button>
+//           </Grid>
+//         </Grid>
+//       </Card>
+//       {/* </Grid> */}
+//     </span>
+//   );
+// }
 
-      </Card>
-    {/* </Grid> */}
-    </span>
-    );
-}
+// export default function Account() {
+//   const classes = useStyles();
 
+//   return (
+//     <Layout>
+//       <Grid container className={classes.root} xs={12}>
+//         <Hidden lgUp>
+//           <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+//             <AddressCard />
+//           </Grid>
+//         </Hidden>
 
+//         <Hidden lgUp>
+//           <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+//             <AccountOverview />
+//           </Grid>
+//         </Hidden>
 
-export default function Account() {
-  const classes = useStyles();
+//         <Hidden mdDown>
+//           <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+//             <AddressCard />
+//             <p></p>
+//             <AccountOverview />
+//           </Grid>
+//         </Hidden>
 
-  return (
-    <Layout >
-        <Grid container className={classes.root} xs={12}  >
-          <Hidden lgUp>
-            <Grid item xs={12} lg={5} className={classes.bottomPadding}> 
-                <AddressCard />
-            </Grid>
-            </Hidden>
+//         <Hidden mdDown>
+//           <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+//             <AccountDetails />
+//           </Grid>
+//         </Hidden>
 
-            <Hidden lgUp>
-            <Grid item xs={12}  lg={5} className={classes.bottomPadding}>
-                <AccountOverview />
-            </Grid>
-            </Hidden>
+//         <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+//           <AccountTransactions />
+//         </Grid>
 
+//         <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+//           <InternalTransactions />
+//         </Grid>
 
-            <Hidden mdDown>
-            <Grid item xs={12} lg={5} className={classes.bottomPadding}> 
-                <AddressCard/>
-                <p></p>
-                <AccountOverview />
-            
-            </Grid>
-            </Hidden>
+//         <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+//           <Downtime />
+//         </Grid>
 
-            <Hidden mdDown>
-            <Grid item xs={12} lg={5} className={classes.bottomPadding}>  
-                <AccountDetails />
-            </Grid>
-            </Hidden>
+//         <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+//           <ValidatedBlocks />
+//         </Grid>
 
-            <Grid item xs={12} lg={5} className={classes.bottomPadding}>
-                <AccountTransactions />
-            </Grid>
-           
-            <Grid item xs={12} lg={5} className={classes.bottomPadding}>
-                <InternalTransactions />
-            </Grid>
-            
-            <Grid item xs={12} lg={5} className={classes.bottomPadding}>
-               <Downtime />
-            </Grid>
-            
-            <Grid item xs={12} lg={5} className={classes.bottomPadding}>
-               <ValidatedBlocks />
-            </Grid>
-
-            <Hidden lgUp>
-            <Grid item xs={12} lg={5} className={classes.bottomPadding}>
-               <AccountDetails />
-            </Grid>
-            </Hidden>
-    </Grid>
-    </Layout>
-  );
-}
+//         <Hidden lgUp>
+//           <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+//             <AccountDetails />
+//           </Grid>
+//         </Hidden>
+//       </Grid>
+//     </Layout>
+//   );
+// }

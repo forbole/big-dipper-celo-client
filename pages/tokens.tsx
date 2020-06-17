@@ -8,7 +8,7 @@ import Divider from "@material-ui/core/Divider";
 import Layout from "../components/Layout";
 import Overview from "../components/tokens/Overview";
 import ProfileSummary from "../components/tokens/ProfileSummary";
-import Transactions from "../components/accounts/Transactions";
+import Transactions from "../components/account/Transactions";
 import TokenHolders from "../components/tokens/TokenHolders";
 
 const useStyles = makeStyles((theme: Theme) =>

@@ -1,11 +1,9 @@
 import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import Layout from "../components/Layout";
-import ChartData from "../components/ChartData";
-import LatestBlocks from "../components/LatestBlocks";
-import LatestTransactions from "../components/LatestTransactions";
+import Layout from "../../components/Layout";
 import Grid from "@material-ui/core/Grid";
-import AccountList from "../components/account/AccountList";
+import AccountPage from "../../components/account/AccountPage";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -15,18 +13,24 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     bottomPadding: {
-      padding: "1rem",
+      overflow: "auto",
+      // paddingTop: '1.5%',
+      // paddingBottom: '1.5%',
+      //   padding: "1rem",
     },
   })
 );
 
-export default function Accounts() {
+export default function Account() {
   const classes = useStyles();
+  const router = useRouter();
+  const { Account } = router.query;
+
   return (
     <Layout>
       <Grid container className={classes.root}>
-        <Grid item xs={12} className={classes.bottomPadding}>
-          <AccountList />
+        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+          <AccountPage />
         </Grid>
       </Grid>
     </Layout>
