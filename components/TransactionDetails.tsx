@@ -18,6 +18,9 @@ import { useQuery } from "@apollo/react-hooks";
 import TablePagination from "@material-ui/core/TablePagination";
 import * as numbro from "numbro";
 import moment from "moment";
+import Chip from "@material-ui/core/Chip";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 
 //import MiddleEllipsis from "react-middle-ellipsis";
 
@@ -82,16 +85,69 @@ const useStyles = makeStyles(({ spacing, palette }) => {
 
     MuiFilledInputInput: {
       padding: "0rem",
+      minHeight: "3rem",
+      maxHeight: "6rem",
+    },
+
+    hex: {
+      borderRadius: 5,
+      backgroundColor: "rgba(61, 66, 71, 1)",
+      border: "solid 0.5px rgba(255, 255, 255, 0.8)",
+      padding: "0.1rem",
+      fontSize: "0.7rem",
+      width: "3rem",
+      height: "1rem",
+    },
+
+    uft8: {
+      borderRadius: 4,
+      backgroundColor: "rgba(61, 66, 71, 1)",
+      opacity: 5,
+      border: "solid 0.5px rgba(255, 255, 255, 0.8)",
+      //borderWidth: "0.5px",
+      //padding: "0.1rem",
+      fontSize: "0.6rem",
+      width: "3.2rem",
+      height: "1rem",
+    },
+    alertMessage: {
+      background: "#3AD39E",
     },
   };
 });
 
+function Alert(props: AlertProps) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 export default function TransactionDetails(hash_value: String) {
+  const classes = useStyles();
   const hash = hash_value.hash_value ? hash_value.hash_value.toString() : 0;
   const { loading, error, data } = useQuery(GET_TX_DETAILS, {
     variables: { hash },
   });
-  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+  let inputValue =
+    data && data.transaction && data.transaction.input
+      ? data.transaction.input
+      : null;
+
+  const handleClick = () => {
+    return navigator.clipboard
+      .writeText(document.getElementById("raw-input-form").value)
+      .then(() => setOpen(true))
+      .catch((err) => {
+        console.log("Something went wrong", err);
+      });
+  };
+
+  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
 
   function ascii_to_hex(str: String) {
     var arr1 = [];
@@ -102,11 +158,15 @@ export default function TransactionDetails(hash_value: String) {
     return arr1.join("");
   }
 
-  let inputValue =
-    data && data.transaction && data.transaction.input
-      ? data.transaction.input
-      : null;
+  const handleClickHex = (props: any) => {
+    return (document.getElementById("raw-input-form").value = ascii_to_hex(
+      inputValue
+    ));
+  };
 
+  const handleClickUTF8 = (props: any) => {
+    return (document.getElementById("raw-input-form").value = inputValue);
+  };
   if (loading) return null;
   if (error) return `Error! ${error}`;
   return (
@@ -321,24 +381,28 @@ export default function TransactionDetails(hash_value: String) {
             </Typography>
           </Grid>
           <Grid item xs={2} md={1} className={classes.alignRight}>
-            <Chips value={"Hex"} inputValue={ascii_to_hex(inputValue)} />
+            <Chip
+              label="Hex"
+              size="small"
+              className={classes.hex}
+              onClick={handleClickHex}
+            />
           </Grid>
           <Grid item xs={3} md={1}>
-            <Chips value={"UTF-8"} inputValue={ascii_to_hex(inputValue)} />
+            <Chip
+              label="UTF-8"
+              size="small"
+              className={classes.uft8}
+              onClick={handleClickUTF8}
+            />
           </Grid>
 
           <Grid item xs={4} md={9} className={classes.alignRight}>
-            {/* <CopyToClipboard onCopy={this.onCopy} text={value}>
-                <IconButton aria-label="copy" size="small">
-                <img src="/images/copy.svg" />
-                </IconButton>
-          </CopyToClipboard>
-                 */}
-
             <IconButton
               aria-label="copy"
               size="small"
               className={classes.alignRight}
+              onClick={handleClick}
             >
               <img src="/images/copy.svg" />
             </IconButton>
@@ -347,11 +411,11 @@ export default function TransactionDetails(hash_value: String) {
             <FormControl fullWidth variant="filled" size="small" margin="dense">
               <FilledInput
                 className={classes.inputLabel}
+                id="raw-input-form"
                 value={
-                  ascii_to_hex(inputValue)
-                  // data.transaction && data.transaction.input
-                  //   ? ascii_to_hex(data.transaction.input)
-                  //   : " "
+                  data.transaction && data.transaction.input
+                    ? ascii_to_hex(data.transaction.input)
+                    : " "
                 }
                 disableUnderline={true}
                 readOnly
@@ -384,6 +448,16 @@ export default function TransactionDetails(hash_value: String) {
             <Divider variant="middle" className={classes.divider} />
           </Grid>
         </Grid>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            // variant="outlined"
+            className={classes.alertMessage}
+          >
+            <Typography variant="body1">Copied!</Typography>
+          </Alert>
+        </Snackbar>{" "}
       </CardContent>
     </Card>
   );

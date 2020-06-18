@@ -63,25 +63,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Chips(props: any) {
   const classes = useStyles();
 
-  const handleClick = () => {
-    console.info("You clicked the Chip.");
-    if (props.value === "UTF-8") {
-      console.log("YUP UTF8");
-    } else {
-      console.log("YUP HEX");
-      return ascii_to_hex(props.inputValue);
-    }
-  };
-
-  function ascii_to_hex(str: String) {
-    var arr1 = [];
-    for (var n = 0, l = str.length; n < l; n++) {
-      var hex = Number(str.charCodeAt(n)).toString(16);
-      arr1.push(hex);
-    }
-    return arr1.join("");
-  }
-
   switch (props.value) {
     case "Token Transfer":
       return (
@@ -147,31 +128,6 @@ export default function Chips(props: any) {
           <Chip size="small" label="Create" className={classes.create} />
         </div>
       );
-    case "Hex":
-      return (
-        <div className={classes.root}>
-          <Chip
-            size="small"
-            label="Hex"
-            clickable
-            className={classes.hex}
-            onClick={handleClick}
-          />
-        </div>
-      );
-    case "UTF-8":
-      return (
-        <div className={classes.root}>
-          <Chip
-            size="small"
-            label="UTF-8"
-            clickable
-            className={classes.uft8}
-            onClick={handleClick}
-          />
-        </div>
-      );
-
     default:
       return (
         <div className={classes.root}>
