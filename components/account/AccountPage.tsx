@@ -30,6 +30,7 @@ import { useRouter } from "next/router";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import ContentLoader from "react-content-loader";
+import numbro from "numbro";
 
 const GET_ACCOUNT_DETAILS = gql`
   query Account($address: String!) {
@@ -46,7 +47,6 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: "block-inline",
       justifyContent: "center",
-      
     },
 
     leftInline: {
@@ -71,8 +71,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     select: {
-      // align: "center",
-      // justifyContent: "center",
+
       fontSize: "14px",
       border: "solid rgba(255, 255, 255, 0.6) ",
       borderWidth: "0.09rem",
@@ -303,9 +302,8 @@ function TokenDropdown() {
   );
 }
 
-function AccountOverview() {
+function AccountOverview(props: any) {
   const classes = useStyles();
-
   return (
     <span>
       {/* <Grid container className={classes.root} xs={12} md={12} lg={6} > */}
@@ -343,7 +341,7 @@ function AccountOverview() {
 
           <Grid item xs={6} md={3}>
             <Typography variant="body2" className={classes.alignRight}>
-              {"14.9125447 cGLD"}
+              {numbro(parseFloat(props.balance)).format("0.000000")} cGLD
             </Typography>
           </Grid>
           <Grid item xs={12} md={12}>
@@ -401,7 +399,7 @@ export default function AccountPage() {
   if (!router.query.account) return <ContentLoader />;
   //console.log(router.query.block);
   const address = router.query.account.toString();
-  console.log(address)
+  console.log(address);
   const { loading, error, data } = useQuery(GET_ACCOUNT_DETAILS, {
     variables: { address },
   });
@@ -410,7 +408,7 @@ export default function AccountPage() {
   if (error) return `Error! ${error}`;
 
   return (
-    <Grid container className={classes.root} xs={12}>
+    <Grid container className={classes.root}>
       <Hidden lgUp>
         <Grid item xs={12} lg={5} className={classes.bottomPadding}>
           <AddressCard address={data.account.address} />
@@ -419,7 +417,7 @@ export default function AccountPage() {
 
       <Hidden lgUp>
         <Grid item xs={12} lg={5} className={classes.bottomPadding}>
-          <AccountOverview />
+          <AccountOverview balance={data.account.balance} />
         </Grid>
       </Hidden>
 

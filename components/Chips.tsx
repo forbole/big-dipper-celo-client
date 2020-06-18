@@ -12,50 +12,92 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     contraclCall: {
       borderRadius: 5,
-      backgroundColor: "rgba(61, 66, 71, 1)",
+      backgroundColor: "rgba(31, 217, 110, 1)",
+      padding: "0",
+      fontSize: "	0.875rem",
+      width: "6.8rem",
     },
     transfer: {
       borderRadius: 5,
       backgroundColor: "rgba(217, 131, 28, 1)",
+      padding: "0",
+      fontSize: "	0.875rem",
+      width: "6.8rem",
     },
     success: {
       borderRadius: 5,
       backgroundColor: "rgba(31, 217, 110, 1)",
+      padding: "0",
+      fontSize: "	0.875rem",
+      width: "6.8rem",
     },
     pending: {
       borderRadius: 5,
       backgroundColor: "rgba(255, 0, 0, 0.2)",
+      padding: "0",
+      fontSize: "	0.875rem",
+      width: "6.8rem",
     },
     delegateAll: {
       borderRadius: 5,
       backgroundColor: "rgba(182, 83, 244, 1)",
+      padding: "0",
+      fontSize: "	0.875rem",
+      width: "6.8rem",
     },
     staticCall: {
       borderRadius: 5,
       backgroundColor: "rgba(31, 196, 217, 1)",
+      padding: "0",
+      fontSize: "	0.875rem",
+      width: "6.8rem",
     },
 
     create: {
       borderRadius: 5,
       backgroundColor: "rgba(34, 217, 110, 1)",
+      padding: "0",
+      fontSize: "	0.875rem",
+      width: "6.8rem",
     },
 
-    hex: {
-      borderRadius: 5,
-      //backgroundColor: 'rgba(0, 0, 0, 0.3)',
-      border: "solid ",
-      borderWidth: "0.5px",
-      padding: "0.1rem",
-      fontSize: "0.7rem",
+    passed: {
+      borderRadius: 4,
+      backgroundColor: "rgba(34, 217, 110, 1)",
+      padding: "0",
+      fontSize: "	0.875rem",
+      width: "4.7rem",
+    },
+    rejected: {
+      borderRadius: 4,
+      backgroundColor: "rgba(211, 58, 58, 1)",
+      padding: "0",
+      fontSize: "	0.875rem",
+      width: "4.7rem",
+    },
+    removed: {
+      borderRadius: 4,
+      backgroundColor: "rgba(217, 131, 31, 1)",
+      padding: "0",
+      fontSize: "	0.875rem",
+      width: "4.7rem",
     },
 
-    uft8: {
+    deposit: {
       borderRadius: 5,
-      backgroundColor: "rgba(61, 66, 71, 1)",
-      border: "solid ",
-      borderWidth: "0.5px",
+      backgroundColor: "rgba(67, 72, 76, 1)",
+      border: "solid 1px rgba(255, 255, 255, 0.6)",
       padding: "0.1rem",
-      fontSize: "0.7rem",
+      fontSize: "	0.875rem",
+      width: "4.7rem",
+    },
+    vote: {
+      borderRadius: 4,
+      backgroundColor: "rgba(67, 72, 76, 1)",
+      border: "solid 1px rgba(255, 255, 255, 0.6)",
+      padding: "0",
+      fontSize: "	0.875rem",
+      width: "4.7rem",
     },
   })
 );
@@ -126,6 +168,36 @@ export default function Chips(props: any) {
       return (
         <div className={classes.root}>
           <Chip size="small" label="Create" className={classes.create} />
+        </div>
+      );
+    case "Passed":
+      return (
+        <div className={classes.root}>
+          <Chip size="small" label="Passed" className={classes.passed} />
+        </div>
+      );
+    case "Rejected":
+      return (
+        <div className={classes.root}>
+          <Chip size="small" label="Rejected" className={classes.rejected} />
+        </div>
+      );
+    case "Removed":
+      return (
+        <div className={classes.root}>
+          <Chip size="small" label="Removed" className={classes.removed} />
+        </div>
+      );
+    case "Deposit":
+      return (
+        <div className={classes.root}>
+          <Chip size="small" label="Deposit" className={classes.deposit} />
+        </div>
+      );
+    case "Vote":
+      return (
+        <div className={classes.root}>
+          <Chip size="small" label="Vote" className={classes.vote} />
         </div>
       );
     default:

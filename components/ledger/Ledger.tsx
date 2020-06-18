@@ -178,7 +178,12 @@ const useStyles = makeStyles({
 
   bottomMargin: {
     marginBottom: "1rem",
+    textAlign: "center",
   },
+
+  signInText:{
+    margin: '0.5rem',
+  }
 });
 
 interface State {
@@ -300,6 +305,51 @@ export default function Ledger() {
           </div>
         </Grid>
       </Grid>
+    );
+  };
+
+  const getSignInMessage = () => {
+    return (
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="ledger-dialog"
+        // fullWidth
+        maxWidth="md"
+      >
+        <DialogTitle id="ledger-dialog-title" className={classes.dialogRoot}>
+          <Grid container className={classes.item}>
+            <Grid item xs={12}>
+              <Typography
+                variant="body1"
+                noWrap
+                className={classes.title}
+                gutterBottom
+              >
+                Sign in with Ledger
+              </Typography>
+            </Grid>
+          </Grid>
+        </DialogTitle>
+        <DialogContent>
+          <Grid container spacing={1} className={classes.item}>
+            <DialogContentText id="signin-ledger">
+              <Grid container className={classes.item}>
+                <Grid
+                  item
+                  xs={12}
+                  className={classes.signInText}
+                >
+                  <Typography variant="body2">
+                    Please make sure your Ledger device is connected and Celo
+                    App 1.5.0 or above is opened.
+                  </Typography>
+                </Grid>
+              </Grid>
+            </DialogContentText>
+          </Grid>
+        </DialogContent>
+      </Dialog>
     );
   };
 
@@ -466,7 +516,7 @@ export default function Ledger() {
                 </Typography>
               </Grid>
             </DialogContentText> */}
-            <DialogContentText id="3">
+            {/* <DialogContentText id="3">
               <Grid container className={classes.item}>
                 <Grid
                   item
@@ -508,7 +558,8 @@ export default function Ledger() {
                   </Link>
                 </Grid>
               </Grid>
-            </DialogContentText>
+            </DialogContentText> */}
+            {getSignInMessage()}
           </Grid>
         </DialogContent>
         <DialogActions className={classes.root}></DialogActions>
