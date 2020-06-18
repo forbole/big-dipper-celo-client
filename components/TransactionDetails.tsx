@@ -141,9 +141,11 @@ export default function TransactionDetails(hash_value: String) {
                     parseInt(data.transaction.timestamp) * 1000
                   ).toUTCString()
                 : "Data currently not available"}{" "}
-              ({data && data.transaction && data.transaction.timestamp
+              (
+              {data && data.transaction && data.transaction.timestamp
                 ? moment.unix(data.transaction.timestamp).fromNow()
-                : null})
+                : null}
+              )
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -178,13 +180,21 @@ export default function TransactionDetails(hash_value: String) {
             <Typography variant="caption" component="h2">
               From
             </Typography>
+
             <Typography variant="caption" component="h2">
-              <Link href="#" color="secondary">
-                {data.transaction && data.transaction.from
-                  ? data.transaction.from.address
-                  : "Data currently not available"}
-              </Link>
+              {data.transaction && data.transaction.from ? (
+                <Link
+                  href="/account/[account]/"
+                  as={`/account/${data.transaction.from.address}`}
+                  color="secondary"
+                >
+                  {data.transaction.from.address}
+                </Link>
+              ) : (
+                "Data currently not available"
+              )}
             </Typography>
+
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
@@ -193,11 +203,17 @@ export default function TransactionDetails(hash_value: String) {
               To
             </Typography>
             <Typography variant="caption" component="h2">
-              <Link href="#" color="secondary">
-                {data.transaction && data.transaction.to
-                  ? data.transaction.to.address
-                  : "Data currently not available"}
-              </Link>
+              {data.transaction && data.transaction.to ? (
+                <Link
+                  href="/account/[account]/"
+                  as={`/account/${data.transaction.to.address}`}
+                  color="secondary"
+                >
+                  {data.transaction.to.address}
+                </Link>
+              ) : (
+                "Data currently not available"
+              )}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>

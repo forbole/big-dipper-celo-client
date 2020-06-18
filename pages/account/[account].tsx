@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: "block-inline",
       justifyContent: "center",
+      paddingTop: '2%'
     },
 
     bottomPadding: {
@@ -29,7 +30,7 @@ export default function Account() {
   return (
     <Layout>
       <Grid container className={classes.root}>
-        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+        <Grid item xs={12} sm={10} className={classes.bottomPadding}>
           <AccountPage />
         </Grid>
       </Grid>

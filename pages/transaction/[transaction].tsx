@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: "block-inline",
       justifyContent: "center",
-      //padding: "2%",
+      paddingTop: "2%",
     },
 
     bottomPadding: {
