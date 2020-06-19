@@ -10,7 +10,7 @@ import AccountList from "../components/account/AccountList";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "inline-block",
+      display: "flex",
       justifyContent: "center",
     },
 

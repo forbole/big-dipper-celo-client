@@ -302,35 +302,38 @@ function LatestBlocks(props: any) {
                           padding="checkbox"
                           className={classes.tableCell}
                         >
-                          <Link
-                            href="/account/[account]/"
-                            as={`/account/${row.miner.affiliation}`}
-                            color="secondary"
-                          >
-                            <Typography
-                              variant="body2"
-                              display="inline"
-                              className={classes.textContent}
+                          {row.miner && row.miner.affiliation ? (
+                            <Link
+                              href="/account/[account]/"
+                              as={`/account/${row.miner.affiliation}`}
+                              color="secondary"
                             >
-                              <div
-                                style={{
-                                  width: "40%",
-                                  minWidth: "10%",
-                                  maxWidth: "100%",
-                                  whiteSpace: "nowrap",
-                                }}
+                              <Typography
+                                variant="body2"
+                                display="inline"
+                                className={classes.textContent}
                               >
-                                <MiddleEllipsis>
-                                  <span>
-                                    {(row.miner && row.miner.name) ||
-                                    (row.miner && row.miner.affiliation)
-                                      ? row.miner.name || row.miner.affiliation
-                                      : null}
-                                  </span>
-                                </MiddleEllipsis>
-                              </div>
-                            </Typography>
-                          </Link>
+                                <div
+                                  style={{
+                                    width: "40%",
+                                    minWidth: "10%",
+                                    maxWidth: "100%",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
+                                  <MiddleEllipsis>
+                                    <span>
+                                      {(row.miner && row.miner.name) ||
+                                      (row.miner && row.miner.affiliation)
+                                        ? row.miner.name ||
+                                          row.miner.affiliation
+                                        : null}
+                                    </span>
+                                  </MiddleEllipsis>
+                                </div>
+                              </Typography>
+                            </Link>
+                          ) : null}
                         </TableCell>
 
                         <TableCell

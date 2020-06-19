@@ -45,7 +45,7 @@ const GET_ACCOUNT_DETAILS = gql`
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "inline-block",
+      display: "flex",
       justifyContent: "center",
     },
 

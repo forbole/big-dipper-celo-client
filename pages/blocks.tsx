@@ -1,17 +1,15 @@
-
-import React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Layout from '../components/Layout';
-import ChartData from '../components/ChartData';
-import LatestTransactions from '../components/LatestTransactions';
-import Grid from '@material-ui/core/Grid';
-import LatestBlocks from '../components/LatestBlocks';
-
+import React from "react";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import Layout from "../components/Layout";
+import ChartData from "../components/ChartData";
+import LatestTransactions from "../components/LatestTransactions";
+import Grid from "@material-ui/core/Grid";
+import LatestBlocks from "../components/LatestBlocks";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "inline-block",
+      display: "flex",
       justifyContent: "center",
     },
 
@@ -20,8 +18,8 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: "1rem",
     },
   })
-);   
-          
+);
+
 export default function Blocks() {
   const classes = useStyles();
   return (

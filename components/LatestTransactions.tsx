@@ -221,29 +221,31 @@ function LatestTransactions(props: any) {
                             noWrap
                           >
                             From
-                            <Link
-                              href="account/[account]/"
-                              as={`account/${row.hash}`}
-                              color="secondary"
-                              className={classes.leftInline}
-                            >
-                              <div
-                                style={{
-                                  width: "60%",
-                                  minWidth: "20%",
-                                  maxWidth: "100%",
-                                  whiteSpace: "nowrap",
-                                }}
+                            {row.from && row.from.address ? (
+                              <Link
+                                href="account/[account]/"
+                                as={`account/${row.from.address}`}
+                                color="secondary"
+                                className={classes.txPadding}
                               >
-                                <MiddleEllipsis>
-                                  <span>
-                                    {row.from && row.from.address
-                                      ? row.from.address
-                                      : " "}
-                                  </span>
-                                </MiddleEllipsis>
-                              </div>
-                            </Link>
+                                <div
+                                  style={{
+                                    width: "60%",
+                                    minWidth: "20%",
+                                    maxWidth: "100%",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
+                                  <MiddleEllipsis>
+                                    <span>
+                                      {row.from && row.from.address
+                                        ? row.from.address
+                                        : " "}
+                                    </span>
+                                  </MiddleEllipsis>
+                                </div>
+                              </Link>
+                            ) : null}
                           </Typography>
                         </Grid>
 
@@ -255,28 +257,31 @@ function LatestTransactions(props: any) {
                             noWrap
                           >
                             To
-                            <Link
-                              href="#"
-                              color="secondary"
-                              className={classes.txPadding}
-                            >
-                              <div
-                                style={{
-                                  width: "60%",
-                                  minWidth: "20%",
-                                  maxWidth: "100%",
-                                  whiteSpace: "nowrap",
-                                }}
+                            {row.to && row.to.address ? (
+                              <Link
+                                href="account/[account]/"
+                                as={`account/${row.to.address}`}
+                                color="secondary"
+                                className={classes.txPadding}
                               >
-                                <MiddleEllipsis>
-                                  <span>
-                                    {row.to && row.to.address
-                                      ? row.to.address
-                                      : "Data currently not available"}
-                                  </span>
-                                </MiddleEllipsis>
-                              </div>
-                            </Link>
+                                <div
+                                  style={{
+                                    width: "60%",
+                                    minWidth: "20%",
+                                    maxWidth: "100%",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
+                                  <MiddleEllipsis>
+                                    <span>
+                                      {row.to && row.to.address
+                                        ? row.to.address
+                                        : "Data currently not available"}
+                                    </span>
+                                  </MiddleEllipsis>
+                                </div>
+                              </Link>
+                            ) : null}
                           </Typography>
                         </Grid>
 
