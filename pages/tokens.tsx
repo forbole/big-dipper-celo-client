@@ -14,7 +14,7 @@ import TokenHolders from "../components/tokens/TokenHolders";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "block-inline",
+      display: "inline-block",
       justifyContent: "center",
     },
 

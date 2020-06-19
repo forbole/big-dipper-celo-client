@@ -36,16 +36,16 @@ export default function PriceCard() {
     <Card className={cx(classes.card)} elevation={0}>
     <Grid container  >
     <Grid item xs={3} md={6} >
-      <Typography align='left' variant="caption" >cGLD Price</Typography>
+      <Typography align='left' variant="body2" >cGLD Price</Typography>
       </Grid>
       <Grid item xs={1} md={4} >
-      <Typography align='right' variant="caption" style={{ marginRight: '-3rem'}} >$2.8</Typography>
+      <Typography align='right' variant="body2" style={{ marginRight: '-3rem'}} >$2.8</Typography>
       </Grid>
       <Grid item xs={3}  md={6} className={classes.inline}>
-      <Typography align='left' variant="caption" >Market Cap</Typography>
+      <Typography align='left' variant="body2" >Market Cap</Typography>
       </Grid>
       <Grid item xs={2} md={4} className={classes.inline} style={{ marginRight: '-3rem'}}>
-      <Typography align='right' variant="caption" >$10,413,896</Typography>
+      <Typography align='right' variant="body2" >$10,413,896</Typography>
       </Grid>
     </Grid>
     </Card>

@@ -160,7 +160,7 @@ return (
                 className={classes.table}
                 padding="checkbox" 
               >
-                <Typography variant="caption" noWrap className={classes.tableCell}>{column.label}</Typography>
+                <Typography variant="body2" noWrap className={classes.tableCell}>{column.label}</Typography>
               </TableCell>
             ))}
           </TableRow>
@@ -171,22 +171,22 @@ return (
               <TableRow key={row.rank} >
           <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
           <Link href="#"  color="secondary"  >
-          <Typography variant="caption"  noWrap> {row.rank}</Typography>
+          <Typography variant="body2"  noWrap> {row.rank}</Typography>
             </Link>
           </TableCell>
           <TableCell align="left" padding="checkbox" className={classes.tableCell}>
           <Link href="#" color="secondary" >
-          <Typography variant="caption" noWrap>{row.moniker}</Typography>
+          <Typography variant="body2" noWrap>{row.moniker}</Typography>
             </Link>
             </TableCell>
           <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-          <Typography variant="caption" noWrap>{row.balance}</Typography>
+          <Typography variant="body2" noWrap>{row.balance}</Typography>
           </TableCell>
           <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-          <Typography variant="caption" noWrap>{row.percentage}</Typography>
+          <Typography variant="body2" noWrap>{row.percentage}</Typography>
           </TableCell>
           <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-          <Typography variant="caption" noWrap>{row.txsCount}</Typography>
+          <Typography variant="body2" noWrap>{row.txsCount}</Typography>
           </TableCell>
         </TableRow>
             );

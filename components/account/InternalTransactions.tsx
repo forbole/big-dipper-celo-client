@@ -134,20 +134,20 @@ const classes = useStyles();
             <Grid container spacing={1} style={{padding: '0.5rem 0'}}>
                    <Grid item xs={8} >
   
-                    <Typography  variant="caption"  className={classes.leftInline}>
+                    <Typography  variant="body2"  className={classes.leftInline}>
                     Tx#   <Link href="#" color="secondary"  className={classes.leftInline}>
                      {row.tx}
                     </Link>
                      </Typography>
                      </Grid>
                      <Grid item xs={4} >
-                    <Typography variant="caption"   className={classes.alignRight}>
+                    <Typography variant="body2"   className={classes.alignRight}>
                     {row.time}
                     </Typography>
                     </Grid>
     
                     <Grid item xs={5} md={4} >
-                    <Typography variant="caption"   className={classes.leftInline}>
+                    <Typography variant="body2"   className={classes.leftInline}>
                        From  <Link href="#" color="secondary" className={classes.txPadding} >
                      {row.from}
                    </Link>
@@ -155,7 +155,7 @@ const classes = useStyles();
                      </Grid>
   
                      <Grid item xs={7} md={8}>
-                    <Typography variant="caption"   align='left' className={classes.rightInline}>
+                    <Typography variant="body2"   align='left' className={classes.rightInline}>
                        To  <Link href="#" color="secondary"  className={classes.txPadding}>
                        {row.to}
                    </Link>
@@ -163,13 +163,13 @@ const classes = useStyles();
                      </Grid>
 
                      <Grid item xs={6}  >
-                     <Typography  variant="caption"  className={classes.chip}>
+                     <Typography  variant="body2"  className={classes.chip}>
                      <Chips value={row.chip}/>
                     </Typography>
     
                   </Grid>
                      <Grid item xs={6}>
-                    <Typography variant="caption"   className={classes.alignRight} >
+                    <Typography variant="body2"   className={classes.alignRight} >
                       {row.total}
                     </Typography>
                   </Grid>

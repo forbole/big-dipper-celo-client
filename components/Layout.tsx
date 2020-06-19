@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     logo: {
       flexGrow: 1,
-      margin: "1rem 0 0 1rem",
+      margin: "0.5rem 0 0 0.5rem",
       noWrap: "true",
     },
     content: {
@@ -61,6 +61,10 @@ const useStyles = makeStyles((theme: Theme) =>
     drawerLogo: {
       margin: "0.5rem 1rem",
       maxHeight: "1.5rem",
+    },
+    menuIcon: {
+      marginRight: "-1rem",
+      marginBottom: "0.4rem",
     },
   })
 );
@@ -188,8 +192,17 @@ const Layout = (props: { children: React.ReactNode }) => {
             <div>
               <NetworkDropdown />
             </div>
-            <Button onClick={toggleDrawer(anchor, true)}>
-              <MenuIcon />
+            <Button
+              onClick={toggleDrawer(anchor, true)}
+              className={classes.menuIcon}
+            >
+              {/* <MenuIcon /> */}
+              {/* <Link
+                href="https://github.com/celo-org"
+                className={classes.socialMedia}
+              > */}
+              <img src="/images/menu.svg" />
+              {/* </Link> */}
             </Button>
             <SwipeableDrawer
               anchor={anchor}

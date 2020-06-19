@@ -45,7 +45,7 @@ const GET_ACCOUNT_DETAILS = gql`
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "block-inline",
+      display: "inline-block",
       justifyContent: "center",
     },
 
@@ -71,7 +71,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     select: {
-
       fontSize: "14px",
       border: "solid rgba(255, 255, 255, 0.6) ",
       borderWidth: "0.09rem",
@@ -345,7 +344,7 @@ function AccountOverview(props: any) {
             </Typography>
           </Grid>
           <Grid item xs={12} md={12}>
-            <Typography variant="caption" className={classes.alignRightPrice}>
+            <Typography variant="body2" className={classes.alignRightPrice}>
               {"$41.978089412"}
             </Typography>
           </Grid>

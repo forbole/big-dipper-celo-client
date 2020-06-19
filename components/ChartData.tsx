@@ -92,7 +92,7 @@ const ChartData = () => {
       <Grid container className={classes.container}>
         <Grid item xs={6} md={3} lg={2}>
           <Card className={cx(classes.card)} elevation={0}>
-            <Typography variant="caption" className={classes.label}>
+            <Typography variant="body2" className={classes.label}>
               cGLD Price
             </Typography>
             <Typography variant="h5" className={classes.value}>
@@ -105,7 +105,7 @@ const ChartData = () => {
 
         <Grid item xs={6} md={3} lg={2}>
           <Card className={cx(classes.card)} elevation={0}>
-            <Typography variant="caption" className={classes.label}>
+            <Typography variant="body2" className={classes.label}>
               Market Cap
             </Typography>
             <Typography variant="h5" className={classes.value}>
@@ -119,7 +119,7 @@ const ChartData = () => {
 
         <Grid item xs={6} md={3} lg={2}>
           <Card className={cx(classes.card)} elevation={0}>
-            <Typography variant="caption" className={classes.label}>
+            <Typography variant="body2" className={classes.label}>
               Average block time
             </Typography>
             <Typography variant="h5" className={classes.value}>
@@ -133,7 +133,7 @@ const ChartData = () => {
 
         <Grid item xs={6} md={3} lg={2}>
           <Card className={cx(classes.card)} elevation={0}>
-            <Typography variant="caption" className={classes.label}>
+            <Typography variant="body2" className={classes.label}>
               Total transactions
             </Typography>
             <Typography variant="h5" className={classes.value}>
@@ -146,7 +146,7 @@ const ChartData = () => {
 
         <Grid item xs={6} md={3} lg={2}>
           <Card className={cx(classes.card)} elevation={0}>
-            <Typography variant="caption" className={classes.label}>
+            <Typography variant="body2" className={classes.label}>
               Total blocks
             </Typography>
             <Typography variant="h5" className={classes.value}>
@@ -159,7 +159,7 @@ const ChartData = () => {
 
         <Grid item xs={6} md={3} lg={2}>
           <Card className={cx(classes.card)} elevation={0}>
-            <Typography variant="caption" className={classes.label}>
+            <Typography variant="body2" className={classes.label}>
               Wallet addresses
             </Typography>
             <Typography variant="h5" className={classes.value}>

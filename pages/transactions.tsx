@@ -7,7 +7,7 @@ import LatestTransactions from "../components/LatestTransactions";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "block-inline",
+      display: "inline-block",
       justifyContent: "center",
     },
 

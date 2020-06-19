@@ -152,7 +152,7 @@ const classes = useStyles();
                   className={classes.table}
                   padding="checkbox" 
                 >
-                  <Typography variant="caption" noWrap className={classes.tableCell}>{column.label}</Typography>
+                  <Typography variant="body2" noWrap className={classes.tableCell}>{column.label}</Typography>
                 </TableCell>
               ))}
             </TableRow>
@@ -163,25 +163,25 @@ const classes = useStyles();
                 <TableRow key={row.height} >
             <TableCell component="th" scope="row"  align="left" className={classes.tableCell} >
             <Link href="#"  color="secondary"  >
-            <Typography variant="caption"  noWrap> {row.height}</Typography>
+            <Typography variant="body2"  noWrap> {row.height}</Typography>
               </Link>
             </TableCell>
             <TableCell align="left"  className={classes.tableCell}>
             <Link href="#" color="secondary" >
-            <Typography variant="caption" noWrap>{row.miner}</Typography>
+            <Typography variant="body2" noWrap>{row.miner}</Typography>
               </Link>
               </TableCell>
             <TableCell align="left" className={classes.tableCell}>
-            <Typography variant="caption" noWrap>{row.txs}</Typography>
+            <Typography variant="body2" noWrap>{row.txs}</Typography>
             </TableCell>
             <TableCell align="left"  className={classes.tableCell}>
-            <Typography variant="caption" noWrap>{row.gasUsed}</Typography>
+            <Typography variant="body2" noWrap>{row.gasUsed}</Typography>
             </TableCell>
             <TableCell align="left" className={classes.tableCell}>
-            <Typography variant="caption" noWrap>{row.gasLimit}</Typography>
+            <Typography variant="body2" noWrap>{row.gasLimit}</Typography>
             </TableCell>
             <TableCell align="left" >
-            <Typography variant="caption" noWrap>{row.time}</Typography>
+            <Typography variant="body2" noWrap>{row.time}</Typography>
             </TableCell>
           </TableRow>
               );

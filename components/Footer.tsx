@@ -46,12 +46,12 @@ export default function Footer() {
           </Grid>
 
           <Grid item xs={12} sm={12} md={8}>
-            <Typography variant="caption" className={classes.text} align="left">
+            <Typography variant="body2" className={classes.text} align="left">
               Big Dipper for Celo. Let’s make money connected.
             </Typography>
           </Grid>
 
-          <Grid item xs={12} sm={12} md={8} style={{ marginBottom: "0.5rem" }}>
+          <Grid item xs={12} sm={12} md={8} >
             <Link
               href="https://github.com/celo-org"
               className={classes.socialMedia}

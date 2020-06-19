@@ -8,9 +8,9 @@ import { useRouter } from "next/router";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "block-inline",
+      display: "inline-block",
       justifyContent: "center",
-      paddingTop: '2%'
+      paddingTop: "2%",
     },
 
     bottomPadding: {

@@ -62,12 +62,12 @@ export default function ProfileSummary(){
 
                 <Grid item xs={4}>
 
-                  <Typography  variant="caption" gutterBottom className={classes.alignLeft}>
+                  <Typography  variant="body2" gutterBottom className={classes.alignLeft}>
                   Contract   
                   </Typography>
                   </Grid>
                   <Grid item xs={8}>
-                  <Typography variant="caption" gutterBottom  className={classes.alignRight}>
+                  <Typography variant="body2" gutterBottom  className={classes.alignRight}>
                   <Link href="/" color="secondary" className={classes.contract} >
                   {"0xa561131a1c8ac25925fb848bca45a74af61e5a38"} </Link>
                   </Typography>
@@ -78,13 +78,13 @@ export default function ProfileSummary(){
                     </Grid>
 
                   <Grid item xs={7}  >
-                  <Typography variant="caption"  gutterBottom className={classes.alignLeft}>
+                  <Typography variant="body2"  gutterBottom className={classes.alignLeft}>
                     Decimals
                    </Typography>
                    </Grid>
                   
                    <Grid item xs={5} >
-                  <Typography variant="caption" gutterBottom  className={classes.alignRight}>
+                  <Typography variant="body2" gutterBottom  className={classes.alignRight}>
                         {"16"}
                   </Typography> 
                   </Grid>

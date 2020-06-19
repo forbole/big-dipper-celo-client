@@ -180,10 +180,10 @@ export default function TransactionDetails(hash_value: String) {
           </Grid>
           <Divider />
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Hash
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.hash
                 ? data.transaction.hash
                 : "Data currently not available"}
@@ -192,10 +192,10 @@ export default function TransactionDetails(hash_value: String) {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Time
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data && data.transaction && data.transaction.timestamp
                 ? new Date(
                     parseInt(data.transaction.timestamp) * 1000
@@ -211,10 +211,10 @@ export default function TransactionDetails(hash_value: String) {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Tx Type
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data.transaction.value === 0 || data.transaction.value
                 ? "Contract Call"
                 : "Token Transfer"}
@@ -223,10 +223,10 @@ export default function TransactionDetails(hash_value: String) {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Status
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {!data.transaction.pending ? (
                 <Chips value="Pending" />
               ) : (
@@ -237,11 +237,11 @@ export default function TransactionDetails(hash_value: String) {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               From
             </Typography>
 
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.from ? (
                 <Link
                   href="/account/[account]/"
@@ -259,10 +259,10 @@ export default function TransactionDetails(hash_value: String) {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               To
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.to ? (
                 <Link
                   href="/account/[account]/"
@@ -279,10 +279,10 @@ export default function TransactionDetails(hash_value: String) {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Value
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.value
                 ? data.transaction.value
                 : "Data currently not available"}
@@ -291,10 +291,10 @@ export default function TransactionDetails(hash_value: String) {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Block Height
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               <Link
                 href={`/block/${data.transaction.blockNumber}`}
                 color="secondary"
@@ -308,20 +308,20 @@ export default function TransactionDetails(hash_value: String) {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Block Confirmation
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               22,733
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Nonce
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.nonce
                 ? data.transaction.nonce
                 : "Data currently not available"}
@@ -330,10 +330,10 @@ export default function TransactionDetails(hash_value: String) {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Transaction Fee
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.feeCurrency
                 ? data.transaction.feeCurrency + "cGLD"
                 : "Data currently not available"}{" "}
@@ -342,10 +342,10 @@ export default function TransactionDetails(hash_value: String) {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Fee Receipient
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.gatewayFeeRecipient
                 ? data.transaction.gatewayFeeRecipient
                 : "Data currently not available"}
@@ -354,10 +354,10 @@ export default function TransactionDetails(hash_value: String) {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Gate Fee
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.gatewayFee
                 ? data.transaction.gatewayFee
                 : "Data currently not available"}
@@ -366,17 +366,17 @@ export default function TransactionDetails(hash_value: String) {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Transaction Speed
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               1.5 seconds
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
           <Grid item xs={3} md={1} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Raw Input
             </Typography>
           </Grid>
@@ -427,10 +427,10 @@ export default function TransactionDetails(hash_value: String) {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Gas Used
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.gas
                 ? data.transaction.gas
                 : "Data currently not available"}
@@ -439,10 +439,10 @@ export default function TransactionDetails(hash_value: String) {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Gas Limit
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               20,000.000
             </Typography>
             <Divider variant="middle" className={classes.divider} />

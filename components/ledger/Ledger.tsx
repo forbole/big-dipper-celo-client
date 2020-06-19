@@ -197,7 +197,7 @@ function LockGoldDialog() {
     <FormControl variant="outlined" fullWidth size="small">
       <InputLabel htmlFor="lock-gold-dialog" type="number">
         <Typography
-          variant="caption"
+          variant="body2"
           color="textSecondary"
           className={classes.rightPadding}
         >
@@ -233,7 +233,7 @@ function TokenDropdown() {
         <ListSubheader></ListSubheader>
         <MenuItem value={1}>
           <Typography
-            variant="caption"
+            variant="body2"
             color="textSecondary"
             className={classes.rightPadding}
           >
@@ -247,7 +247,7 @@ function TokenDropdown() {
 
         <MenuItem value={2}>
           <Typography
-            variant="caption"
+            variant="body2"
             color="textSecondary"
             className={classes.rightPadding}
           >
@@ -283,7 +283,7 @@ export default function Ledger() {
               fullWidth={true}
               onClick={handleClose}
             >
-              <Typography variant="caption" noWrap>
+              <Typography variant="body2" noWrap>
                 Cancel
               </Typography>
             </Button>
@@ -298,7 +298,7 @@ export default function Ledger() {
               fullWidth={true}
               onClick={handleClose}
             >
-              <Typography variant="caption" noWrap>
+              <Typography variant="body2" noWrap>
                 Confirm
               </Typography>
             </Button>
@@ -396,7 +396,7 @@ export default function Ledger() {
             {/* <DialogContentText id="1">
               <Grid item xs={12}>
                 <Typography
-                  variant="caption"
+                  variant="body2"
                   noWrap
                   className={classes.alignLeft}
                   align="left"
@@ -410,7 +410,7 @@ export default function Ledger() {
 
               <Grid item xs={12}>
                 <Typography
-                  variant="caption"
+                  variant="body2"
                   noWrap
                   className={classes.alignLeft}
                   align="left"
@@ -423,7 +423,7 @@ export default function Ledger() {
               </Grid>
               <Grid item xs={12}>
                 <Typography
-                  variant="caption"
+                  variant="body2"
                   noWrap
                   className={classes.alignRight}
                 >
@@ -435,7 +435,7 @@ export default function Ledger() {
 
             {/* <DialogContentText id="2">
               <Grid item xs={12}>
-                <Typography variant="caption" noWrap={false}>
+                <Typography variant="body2" noWrap={false}>
                   You are going to lock {"2"} cGLD, it that's correct, please
                   sign in your ledger device.
                 </Typography>
@@ -444,7 +444,7 @@ export default function Ledger() {
               <Grid container spacing={1} className={classes.item}>
                 <Grid item xs={6}>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     noWrap
                     className={classes.alignLeft}
                     align="left"
@@ -454,7 +454,7 @@ export default function Ledger() {
                 </Grid>
                 <Grid item xs={6}>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     noWrap
                     className={classes.alignRight}
                     align="right"
@@ -467,7 +467,7 @@ export default function Ledger() {
               <Grid container spacing={1} className={classes.item}>
                 <Grid item xs={6}>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     noWrap
                     className={classes.alignLeft}
                     align="left"
@@ -477,7 +477,7 @@ export default function Ledger() {
                 </Grid>
                 <Grid item xs={6}>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     noWrap
                     className={classes.alignRight}
                     align="right"
@@ -490,7 +490,7 @@ export default function Ledger() {
               <Grid container spacing={1} className={classes.item}>
                 <Grid item xs={6}>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     noWrap
                     className={classes.alignLeft}
                     align="left"
@@ -500,7 +500,7 @@ export default function Ledger() {
                 </Grid>
                 <Grid item xs={6}>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     noWrap
                     className={classes.alignRight}
                     align="right"
@@ -533,7 +533,7 @@ export default function Ledger() {
                   className={classes.bottomMargin}
                 >
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     noWrap
                     //align="center"
                   >
@@ -550,7 +550,7 @@ export default function Ledger() {
                         fullWidth={true}
                         onClick={handleClose}
                       >
-                        <Typography variant="caption" noWrap>
+                        <Typography variant="body2" noWrap>
                           View Transactions
                         </Typography>
                       </Button>

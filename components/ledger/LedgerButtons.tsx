@@ -46,7 +46,7 @@ export default function LedgerButtons(props: any) {
             fullWidth={true}
             onClick={handleClose}
           >
-            <Typography variant="caption" noWrap>
+            <Typography variant="body2" noWrap>
               Cancel
             </Typography>
           </Button>
@@ -62,7 +62,7 @@ export default function LedgerButtons(props: any) {
             className={classes.label}
             fullWidth={true}
           >
-            <Typography variant="caption" noWrap>
+            <Typography variant="body2" noWrap>
               Confirm
             </Typography>
           </Button>
@@ -78,7 +78,7 @@ export default function LedgerButtons(props: any) {
             fullWidth={true}
             onClick={handleClickOpen}
           >
-            <Typography variant="caption" noWrap>
+            <Typography variant="body2" noWrap>
               Open Ledger
             </Typography>
           </Button>
@@ -93,7 +93,7 @@ export default function LedgerButtons(props: any) {
             className={classes.label}
             fullWidth={true}
           >
-            <Typography variant="caption" noWrap>
+            <Typography variant="body2" noWrap>
               {props.variant}
             </Typography>
           </Button>{" "}

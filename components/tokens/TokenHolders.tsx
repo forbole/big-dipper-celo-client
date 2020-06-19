@@ -149,18 +149,18 @@ const classes = useStyles();
             <Grid container spacing={1} style={{padding: '0.5rem 0',}}>
                    <Grid item xs={12}>
                    <Link href="#" color="secondary" >
-                    <Typography  variant="caption" className={classes.truncateAlignRight} >
+                    <Typography  variant="body2" className={classes.truncateAlignRight} >
                      {row.address}
                      </Typography> </Link>
                      </Grid>
                      <Grid item xs={12} >
-                    <Typography variant="caption"   className={classes.alignRight}>
+                    <Typography variant="body2"   className={classes.alignRight}>
                     {row.value}
                     </Typography>
                     </Grid>
     
                     <Grid item xs={12} >
-                    <Typography variant="caption"   className={classes.alignRight}>
+                    <Typography variant="body2"   className={classes.alignRight}>
                      {row.percentage}
                      </Typography>
                      </Grid>

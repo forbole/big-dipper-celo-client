@@ -1,27 +1,25 @@
-import React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Layout from '../components/Layout';
-import ChartData from '../components/ChartData';
-import LatestBlocks from '../components/LatestBlocks';
-import LatestTransactions from '../components/LatestTransactions';
-import Grid from '@material-ui/core/Grid';
+import React from "react";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import Layout from "../components/Layout";
+import ChartData from "../components/ChartData";
+import LatestBlocks from "../components/LatestBlocks";
+import LatestTransactions from "../components/LatestTransactions";
+import Grid from "@material-ui/core/Grid";
 import Ledger from "../components/ledger/Ledger";
-
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-        root: {
-            display: 'block-inline',
-            justifyContent: 'center',
-            },
+    root: {
+      display: "flex",
+      justifyContent: "center",
+    },
 
-        bottomPadding:{
-            padding: '0.5rem 1rem'
-          },
+    bottomPadding: {
+      padding: "0.5rem 1rem",
+    },
+  })
+);
 
-          }),
-          );   
-          
 export default function Index() {
   const classes = useStyles();
   return (
@@ -37,11 +35,9 @@ export default function Index() {
           <LatestTransactions pagination={false} />
         </Grid>
         <Grid item xs={12} lg={6} className={classes.bottomPadding}>
-          <Ledger/>
+          <Ledger />
         </Grid>
       </Grid>
     </Layout>
   );
 }
-
-        

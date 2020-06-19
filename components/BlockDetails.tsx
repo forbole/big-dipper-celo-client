@@ -133,10 +133,10 @@ export default function BlockDetails() {
             <Divider />
           </Grid>
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Time
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data.block && data.block.timestamp
                 ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
                 : "Data currently not available"}{" "}
@@ -149,10 +149,10 @@ export default function BlockDetails() {
             <Divider variant="middle" className={classes.divider} />
           </Grid>
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Transactions
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data.block &&
               data.block.transactions &&
               data.block.transactions.transactionIndex
@@ -163,8 +163,8 @@ export default function BlockDetails() {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption">Size</Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2">Size</Typography>
+            <Typography variant="body2" component="h2">
               {data.block && data.block.size
                 ? data.block.size
                 : "Data currently not available"}
@@ -173,10 +173,10 @@ export default function BlockDetails() {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Miner
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data &&
               data.block &&
               data.block.miner &&
@@ -192,10 +192,10 @@ export default function BlockDetails() {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Hash
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data.block && data.block.hash
                 ? data.block.hash
                 : "Data currently not available"}
@@ -204,10 +204,10 @@ export default function BlockDetails() {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Parent Hash
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data.block && data.block.parentHash ? (
                 <Link href="#" color="secondary">
                   {data.block.parentHash}
@@ -220,10 +220,10 @@ export default function BlockDetails() {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Total Difficulty
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data.block && data.block.totalDifficulty
                 ? data.block.totalDifficulty
                 : "Data currently not available"}
@@ -232,10 +232,10 @@ export default function BlockDetails() {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Nonce
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data.block &&
               data.block.transactions &&
               data.block.transactions.nonce
@@ -246,10 +246,10 @@ export default function BlockDetails() {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Gas Used
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data.block && data.block.gasUsed
                 ? data.block.gasUsed
                 : "Data currently not available"}
@@ -258,10 +258,10 @@ export default function BlockDetails() {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               Gas Limit
             </Typography>
-            <Typography variant="caption" component="h2">
+            <Typography variant="body2" component="h2">
               {data.block && data.block.gasLimit
                 ? data.block.gasLimit
                 : "Data currently not available"}

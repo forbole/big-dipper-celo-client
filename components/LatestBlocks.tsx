@@ -64,29 +64,30 @@ function getBlocks() {
 interface Column {
   id: "height" | "validator" | "txs" | "gasUsed" | "gasLimit" | "time";
   label: string;
+  align: string;
 }
 
 const columns: Column[] = [
-  { id: "height", label: "Height" },
-  { id: "validator", label: "Validator" },
-  { id: "txs", label: "Txs" },
-  { id: "gasUsed", label: "Gas Used" },
-  { id: "gasLimit", label: "Gas Limit" },
-  { id: "time", label: "Time" },
+  { id: "height", label: "Height", align: "left" },
+  { id: "validator", label: "Validator", align: "left" },
+  { id: "txs", label: "Txs", align: "left" },
+  { id: "gasUsed", label: "Gas Used", align: "left" },
+  { id: "gasLimit", label: "Gas Limit", align: "left" },
+  { id: "time", label: "Time", align: "right" },
 ];
 
 const columns_homepage: Column[] = [
-  { id: "height", label: "Height" },
-  { id: "validator", label: "Validator" },
-  { id: "txs", label: "Txs" },
-  { id: "time", label: "Time" },
+  { id: "height", label: "Height", align: "left" },
+  { id: "validator", label: "Validator", align: "left" },
+  { id: "txs", label: "Txs", align: "left" },
+  { id: "time", label: "Time", align: "right" },
 ];
 
 const useStyles = makeStyles({
   root: {
     width: "100%",
     padding: "1.5%",
-    borderRadius: 5,
+    borderRadius: 4,
     wordWrap: "break-word",
     margin: "none",
   },
@@ -126,7 +127,7 @@ const useStyles = makeStyles({
     marginBottom: "1rem",
     background: "#43484C",
     alignItems: "center",
-    borderRadius: 5,
+    borderRadius: 4,
     boxShadow: "0 2px 4px 0 rgba(138, 148, 159, 0.2)",
     "& > *:nth-child(1)": {
       marginRight: "2rem",
@@ -159,10 +160,32 @@ function LatestBlocks(props: any) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  getBlocks();
 
-  const paginate = props.pagination ? page * rowsPerPage : 5;
-  const paginate_2 = props.pagination ? page * rowsPerPage + rowsPerPage : 10;
+  // const innerWidth = window && window.innerWidth ? window.innerWidth : 0;
+  // console.log(innerWidth);
+  let largeScreen: boolean = false;
+
+  const getScreenSize = () => {
+    if (typeof window !== "undefined") {
+      if (window.innerWidth > 1400) return (largeScreen = true);
+      else return (largeScreen = false);
+    }
+  };
+  getBlocks();
+  getScreenSize();
+
+  const paginate =
+    largeScreen === false
+      ? props.pagination
+        ? page * rowsPerPage + rowsPerPage
+        : 5
+      : 14;
+  const paginate_2 =
+    largeScreen === false
+      ? props.pagination
+        ? page * rowsPerPage + rowsPerPage
+        : 10
+      : 28;
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -205,12 +228,12 @@ function LatestBlocks(props: any) {
                       {columns.map((column) => (
                         <TableCell
                           key={column.id}
-                          align="left"
+                          align={column.align}
                           className={classes.table}
                           padding="checkbox"
                         >
                           <Typography
-                            variant="caption"
+                            variant="body2"
                             noWrap
                             className={classes.tableCell}
                           >
@@ -224,12 +247,12 @@ function LatestBlocks(props: any) {
                       {columns_homepage.map((column) => (
                         <TableCell
                           key={column.id}
-                          align="left"
+                          align={column.align}
                           className={classes.table}
                           padding="checkbox"
                         >
                           <Typography
-                            variant="caption"
+                            variant="body2"
                             noWrap
                             className={classes.tableCell}
                           >
@@ -251,11 +274,7 @@ function LatestBlocks(props: any) {
                           align="left"
                           className={classes.tableCell}
                         >
-                          <Typography
-                            variant="caption"
-                            color="secondary"
-                            noWrap
-                          >
+                          <Typography variant="body2" color="secondary" noWrap>
                             {/* <a href="block/[...block]" as={`block/${row.number}`}  onClick={handleClick} >
       {row.number}
     </a> */}
@@ -289,7 +308,7 @@ function LatestBlocks(props: any) {
                             color="secondary"
                           >
                             <Typography
-                              variant="caption"
+                              variant="body2"
                               display="inline"
                               className={classes.textContent}
                             >
@@ -319,7 +338,7 @@ function LatestBlocks(props: any) {
                           padding="checkbox"
                           className={classes.tableCell}
                         >
-                          <Typography variant="caption" noWrap>
+                          <Typography variant="body2" noWrap>
                             <Link href="#" color="secondary">
                               {row.transactions &&
                               row.transactions.transactionIndex
@@ -335,7 +354,7 @@ function LatestBlocks(props: any) {
                             className={classes.tableCell}
                           >
                             <div className={classes.truncareText}>
-                              <Typography variant="caption" noWrap>
+                              <Typography variant="body2" noWrap>
                                 {numbro(row.gasUsed / 1000000000).format(
                                   "0.0000"
                                 )}{" "}
@@ -351,14 +370,14 @@ function LatestBlocks(props: any) {
                             className={classes.tableCell}
                           >
                             <div className={classes.truncareText}>
-                              <Typography variant="caption" noWrap>
+                              <Typography variant="body2" noWrap>
                                 {row.gasLimit ? row.gasLimit : "Not available"}
                               </Typography>
                             </div>
                           </TableCell>
                         ) : null}
-                        <TableCell align="left" padding="checkbox">
-                          <Typography variant="caption" noWrap>
+                        <TableCell align="right" padding="checkbox">
+                          <Typography variant="body2" noWrap>
                             {moment.unix(row.timestamp).fromNow()}
                           </Typography>
                         </TableCell>

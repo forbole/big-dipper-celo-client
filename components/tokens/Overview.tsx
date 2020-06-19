@@ -55,12 +55,12 @@ export default function TokenOverview(){
 
                 <Grid item xs={6}  >
 
-                  <Typography  variant="caption" gutterBottom className={classes.alignLeft}>
+                  <Typography  variant="body2" gutterBottom className={classes.alignLeft}>
                   Price   
                   </Typography>
                   </Grid>
                   <Grid item xs={6} >
-                  <Typography variant="caption" gutterBottom  className={classes.alignRight}>
+                  <Typography variant="body2" gutterBottom  className={classes.alignRight}>
                   {"$0.00001"}
                   </Typography>
                   </Grid>
@@ -70,13 +70,13 @@ export default function TokenOverview(){
                     </Grid>
 
                   <Grid item xs={7}  >
-                  <Typography variant="caption"  gutterBottom className={classes.alignLeft}>
+                  <Typography variant="body2"  gutterBottom className={classes.alignLeft}>
                      Fully Diluted Market Cap
                    </Typography>
                    </Grid>
                   
                    <Grid item xs={5} >
-                  <Typography variant="caption" gutterBottom  className={classes.alignRight}>
+                  <Typography variant="body2" gutterBottom  className={classes.alignRight}>
                         {"$2,110,316.72"}
                   </Typography> 
                   </Grid>
@@ -86,13 +86,13 @@ export default function TokenOverview(){
                     </Grid>
 
                    <Grid item xs={4}  >
-                   <Typography  variant="caption" gutterBottom className={classes.alignLeft}>
+                   <Typography  variant="body2" gutterBottom className={classes.alignLeft}>
                    Total Supply
                   </Typography>
                 </Grid>
 
                 <Grid item xs={8} >
-                  <Typography variant="caption" gutterBottom  className={classes.alignRight}>
+                  <Typography variant="body2" gutterBottom  className={classes.alignRight}>
                         {"$2,476,706.161 cUSD"}
                   </Typography> 
                   </Grid>
@@ -103,13 +103,13 @@ export default function TokenOverview(){
                     </Grid>
 
                    <Grid item xs={4}  >
-                   <Typography  variant="caption" gutterBottom className={classes.alignLeft}>
+                   <Typography  variant="body2" gutterBottom className={classes.alignLeft}>
                     Holders 
                   </Typography>
                 </Grid>
 
                 <Grid item xs={8} >
-                  <Typography variant="caption" gutterBottom  className={classes.alignRight}>
+                  <Typography variant="body2" gutterBottom  className={classes.alignRight}>
                         {"6,148 "} addresses
                   </Typography> 
                   </Grid>

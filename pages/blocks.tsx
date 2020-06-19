@@ -10,19 +10,17 @@ import LatestBlocks from '../components/LatestBlocks';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-        root: {
-            display: 'block-inline',
-            justifyContent: 'center',
-            
-            },
+    root: {
+      display: "inline-block",
+      justifyContent: "center",
+    },
 
-        bottomPadding:{
-            overflow: 'auto',
-            padding: '1rem'
-          },
-
-          }),
-          );   
+    bottomPadding: {
+      overflow: "auto",
+      padding: "1rem",
+    },
+  })
+);   
           
 export default function Blocks() {
   const classes = useStyles();

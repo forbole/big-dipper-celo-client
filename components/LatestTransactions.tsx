@@ -112,7 +112,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function LatestTransactions(props: any) {
+function LatestTransactions(props: any) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -172,7 +172,7 @@ export default function LatestTransactions(props: any) {
                       >
                         <Grid item xs={8}>
                           <Typography
-                            variant="caption"
+                            variant="body2"
                             className={classes.leftInline}
                             noWrap
                           >
@@ -204,7 +204,7 @@ export default function LatestTransactions(props: any) {
                         </Grid>
                         <Grid item xs={4}>
                           <Typography
-                            variant="caption"
+                            variant="body2"
                             className={classes.alignRight}
                             noWrap
                           >
@@ -216,15 +216,16 @@ export default function LatestTransactions(props: any) {
 
                         <Grid item xs={5} md={4}>
                           <Typography
-                            variant="caption"
+                            variant="body2"
                             className={classes.leftInline}
                             noWrap
                           >
                             From
                             <Link
-                              href="#"
+                              href="account/[account]/"
+                              as={`account/${row.hash}`}
                               color="secondary"
-                              className={classes.txPadding}
+                              className={classes.leftInline}
                             >
                               <div
                                 style={{
@@ -248,7 +249,7 @@ export default function LatestTransactions(props: any) {
 
                         <Grid item xs={7} md={8}>
                           <Typography
-                            variant="caption"
+                            variant="body2"
                             align="left"
                             className={classes.rightInline}
                             noWrap
@@ -280,10 +281,7 @@ export default function LatestTransactions(props: any) {
                         </Grid>
 
                         <Grid item xs={6}>
-                          <Typography
-                            variant="caption"
-                            className={classes.chip}
-                          >
+                          <Typography variant="body2" className={classes.chip}>
                             {row.value === 0 ? (
                               <Chips value="Contract Call" />
                             ) : (
@@ -293,7 +291,7 @@ export default function LatestTransactions(props: any) {
                         </Grid>
                         <Grid item xs={6}>
                           <Typography
-                            variant="caption"
+                            variant="body2"
                             className={classes.alignRight}
                           >
                             {row.value
@@ -324,3 +322,5 @@ export default function LatestTransactions(props: any) {
     </Paper>
   );
 }
+
+export default LatestTransactions;

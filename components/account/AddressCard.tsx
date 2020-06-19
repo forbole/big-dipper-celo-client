@@ -39,12 +39,12 @@ export default function AddressCard(address: String) {
             </Typography>
           </Grid>
           <Grid item xs={1}>
-            <Typography variant="caption" gutterBottom align="center">
+            <Typography variant="body2" gutterBottom align="center">
               <img src="/images/copy.svg" />
             </Typography>
           </Grid>
           <Grid item xs={1}>
-            <Typography variant="caption" gutterBottom align="center">
+            <Typography variant="body2" gutterBottom align="center">
               <img src="/images/qr code.svg" />
             </Typography>
           </Grid>
