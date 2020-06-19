@@ -32,7 +32,6 @@ export default function LedgerButtons(props: any) {
 
   const handleClose = () => {
     setOpen(false);
-    console.log("CLOSED YP");
   };
 
   switch (props.option) {
