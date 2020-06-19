@@ -66,6 +66,10 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: "-1rem",
       marginBottom: "0.4rem",
     },
+    priceCard: {
+      display: "flex",
+      margin: "-3rem 0rem 1rem 9rem",
+    },
   })
 );
 
@@ -214,8 +218,8 @@ const Layout = (props: { children: React.ReactNode }) => {
             </SwipeableDrawer>
           </Toolbar>
           <SearchBar />
-          <Hidden smDown>
-            <span style={{ display: "flex", margin: "-3rem 0rem 1rem 2.5rem" }}>
+          <Hidden lgDown>
+            <span className={classes.priceCard}>
               <PriceCard />
             </span>
           </Hidden>
