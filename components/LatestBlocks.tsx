@@ -206,7 +206,7 @@ function LatestBlocks(props: any) {
       <Grid item xs={12}>
         {props.priceCard ? (
           <Hidden smUp>
-            <PriceCard />
+            <PriceCard size="large" />
           </Hidden>
         ) : null}
         <Paper className={classes.root}>
