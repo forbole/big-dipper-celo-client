@@ -215,7 +215,10 @@ export default function TransactionDetails(hash_value: String) {
               Tx Type
             </Typography>
             <Typography variant="body2" component="h2">
-              {data.transaction.value === 0 || data.transaction.value
+              {(data.transaction &&
+                data.transaction.value && data.transaction.value === 0) ||
+              data.transaction &&
+                data.transaction.value && data.transaction.value
                 ? "Contract Call"
                 : "Token Transfer"}
             </Typography>
@@ -227,7 +230,7 @@ export default function TransactionDetails(hash_value: String) {
               Status
             </Typography>
             <Typography variant="body2" component="h2">
-              {!data.transaction.pending ? (
+              {data.transaction && !data.transaction.pending ? (
                 <Chips value="Pending" />
               ) : (
                 <Chips value="Success" />

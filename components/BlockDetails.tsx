@@ -207,9 +207,15 @@ export default function BlockDetails() {
             <Typography variant="body2" component="h2">
               Parent Hash
             </Typography>
+
             <Typography variant="body2" component="h2">
               {data.block && data.block.parentHash ? (
-                <Link href="#" color="secondary">
+                <Link
+                  href="transaction/[transaction]/"
+                  as={`transaction/${data.block.parentHash}`}
+                  color="secondary"
+                  //className={classes.leftInline}
+                >
                   {data.block.parentHash}
                 </Link>
               ) : (
