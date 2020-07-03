@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Layout from "../components/Layout";
 import ChartData from "../components/ChartData";
-import LatestTransactions from "../components/LatestTransactions";
+import LatestTransactions from "../components/transaction/LatestTransactions";
 import Grid from "@material-ui/core/Grid";
 import LatestBlocks from "../components/block/LatestBlocks";
 
