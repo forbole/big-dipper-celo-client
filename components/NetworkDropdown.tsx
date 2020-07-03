@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { Divider } from "@material-ui/core";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import Grid from "@material-ui/core/Grid";
+import Link from "./Link";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
     formControl: {
       minWidth: "4.7rem",
       marginBottom: "2rem",
-      marginRight: "-1rem",
+      //marginRight: "-1rem",
     },
     celoIcon: {
       width: "1.25rem",
@@ -50,10 +51,9 @@ const useStyles = makeStyles((theme: Theme) =>
     divider: {
       backgroundColor: "rgba(62, 67, 71, 1)",
     },
-    menuItem:{
+    menuItem: {
       marginTop: "-0.3rem",
       marginBottom: "-0.3rem",
-      
     },
   })
 );
@@ -101,32 +101,45 @@ export default function NetworkDropdown() {
               icon: classes.icon,
             }}
           >
-            <MenuItem className={classes.menuItem}>
-              <Avatar
-                alt="Celo Alfajores"
-                src="/images/celo_avatar.svg"
-                className={classes.celoIcon}
-              />
-              <Typography variant="body2">Celo Alfajores</Typography>
-            </MenuItem>
+            <Link href="#" color="textPrimary">
+              <MenuItem className={classes.menuItem}>
+                <Avatar
+                  alt="Celo Alfajores"
+                  src="/images/celo_avatar.svg"
+                  className={classes.celoIcon}
+                />
+                <Typography variant="body2">Celo Alfajores</Typography>
+              </MenuItem>
+            </Link>
             <Divider className={classes.divider} />
-            <MenuItem className={classes.menuItem}>
-              <Avatar
-                alt="Celo Baklava"
-                src="/images/celo_avatar.svg"
-                className={classes.celoIcon}
-              />
-              <Typography variant="body2">Celo Baklava</Typography>
-            </MenuItem>
+
+            <Link
+              href="https://baklava-blockscout.celo-testnet.org/"
+              color="textPrimary"
+            >
+              <MenuItem className={classes.menuItem}>
+                <Avatar
+                  alt="Celo Baklava"
+                  src="/images/celo_avatar.svg"
+                  className={classes.celoIcon}
+                />
+                <Typography variant="body2">Celo Baklava</Typography>
+              </MenuItem>
+            </Link>
             <Divider className={classes.divider} />
-            <MenuItem className={classes.menuItem}>
-              <Avatar
-                alt="Celo Integration"
-                src="/images/celo_avatar.svg"
-                className={classes.celoIcon}
-              />
-              <Typography variant="body2">Celo Integration</Typography>
-            </MenuItem>
+            <Link
+              href="https://integration-blockscout.celo-testnet.org/"
+              color="textPrimary"
+            >
+              <MenuItem className={classes.menuItem}>
+                <Avatar
+                  alt="Celo Integration"
+                  src="/images/celo_avatar.svg"
+                  className={classes.celoIcon}
+                />
+                <Typography variant="body2">Celo Integration</Typography>
+              </MenuItem>
+            </Link>
           </Select>
         </FormControl>
       </Grid>
