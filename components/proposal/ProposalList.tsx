@@ -46,6 +46,7 @@ const useStyles = makeStyles({
   },
   value: {
     padding: "0.5rem 1rem",
+    textAlign: "left",
   },
   label: {
     display: "flex",
@@ -58,15 +59,16 @@ const useStyles = makeStyles({
     padding: "0rem 0 1rem 3rem",
   },
   proposalButton: {
-    padding: "0.5rem 0 0 0",
+    padding: "0.5rem 1rem 0 0",
+    textAlign: "right",
   },
   proposalCard: {
     marginBottom: "0.5rem",
   },
-  proposalTitle:{
+  proposalTitle: {
     padding: "0 0 0.5rem 0.8rem",
-    marginTop: "-0.5rem"
-  }
+    marginTop: "-0.5rem",
+  },
 });
 
 export default function ProposalList() {
@@ -86,7 +88,7 @@ export default function ProposalList() {
                   #10
                 </Typography>
               </Grid>
-              <Grid item xs={8}>
+              <Grid item xs={8} sm={9}>
                 <Typography variant="body2" className={classes.value}>
                   Proposer{" "}
                   <Link
@@ -98,10 +100,10 @@ export default function ProposalList() {
                   </Link>
                 </Typography>
               </Grid>
-              <Grid item xs={3} className={classes.proposalButton}>
+              <Grid item xs={3} sm={2} className={classes.proposalButton}>
                 <Chips value="Vote" />
               </Grid>
-              <Grid item xs={12} className={classes.proposalDescription}>
+              <Grid item xs={11} sm={8} className={classes.proposalDescription}>
                 Don’t Burn Deposits for Rejected Governance Proposals Unless
                 Vetoed
               </Grid>

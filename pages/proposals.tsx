@@ -8,7 +8,7 @@ import MarketCard from "../components/MarketCard";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "inline-block",
+      display: "flex",
       justifyContent: "center",
     },
 
@@ -23,10 +23,10 @@ export default function Proposals() {
   return (
     <Layout>
       <Grid container className={classes.root}>
-        <Grid item xs={12} className={classes.bottomPadding}>
+        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
           <MarketCard />
         </Grid>
-        <Grid item xs={12} className={classes.bottomPadding}>
+        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
           <ProposalList />
         </Grid>
       </Grid>

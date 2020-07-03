@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Layout from "../../components/Layout";
 import Grid from "@material-ui/core/Grid";
-import BlockDetails from "../../components/BlockDetails";
+import BlockDetails from "../../components/block/BlockDetails";
 import { useRouter } from "next/router";
 
 const useStyles = makeStyles((theme: Theme) =>

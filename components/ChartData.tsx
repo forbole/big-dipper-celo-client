@@ -71,7 +71,7 @@ const useStyles = makeStyles({
     alignItems: "center",
   },
   value: {
-    fontWeight: "300",
+    fontWeight: 300,
     padding: "0.2rem 0.75rem 0.5rem 0.75rem",
   },
   label: {

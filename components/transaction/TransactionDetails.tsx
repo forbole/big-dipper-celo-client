@@ -1,15 +1,15 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
-import Link from "../components/Link";
+import Link from "../Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
-import Layout from "../components/Layout";
+import Layout from "../Layout";
 import CardContent from "@material-ui/core/CardContent";
 import FilledInput from "@material-ui/core/FilledInput";
 import FormControl from "@material-ui/core/FormControl";
-import Chips from "../components/Chips";
+import Chips from "../Chips";
 import IconButton from "@material-ui/core/IconButton";
 
 import { useRouter } from "next/router";
