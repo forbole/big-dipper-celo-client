@@ -67,6 +67,7 @@ export default function LedgerButtons(props: any) {
           </Button>
         </div>
       );
+      break;
     case "Open Ledger":
       return (
         <div className={classes.root}>
@@ -79,6 +80,39 @@ export default function LedgerButtons(props: any) {
           >
             <Typography variant="body2" noWrap>
               Open Ledger
+            </Typography>
+          </Button>
+        </div>
+      );
+      break;
+    case "Deposit":
+      return (
+        <div className={classes.root}>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.label}
+            fullWidth={true}
+            onClick={handleClickOpen}
+          >
+            <Typography variant="body2" noWrap>
+              Deposit
+            </Typography>
+          </Button>
+        </div>
+      );
+    case "Vote":
+      return (
+        <div className={classes.root}>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.label}
+            fullWidth={true}
+            onClick={handleClickOpen}
+          >
+            <Typography variant="body2" noWrap>
+              Vote
             </Typography>
           </Button>
         </div>
