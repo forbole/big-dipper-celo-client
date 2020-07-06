@@ -142,11 +142,15 @@ const useStyles = makeStyles({
     padding: "0.1rem",
     textTransform: "none",
     borderRadius: 4,
+    //minHeight: "2.5rem",
+    width: "8.4375rem",
   },
 
   controlButtonLabel: {
     textTransform: "none",
     borderRadius: 4,
+    justifyContent: "center",
+    minHeight: "2.5rem",
   },
 
   item: {
@@ -181,9 +185,9 @@ const useStyles = makeStyles({
     textAlign: "center",
   },
 
-  signInText:{
-    margin: '0.5rem',
-  }
+  signInText: {
+    margin: "0.5rem",
+  },
 });
 
 interface State {
@@ -273,8 +277,8 @@ export default function Ledger() {
 
   const renderControlButtons = () => {
     return (
-      <Grid container spacing={1}>
-        <Grid item xs={6}>
+      <Grid container spacing={1} className={classes.item}>
+        <Grid item xs={6} sm={3}>
           <div className={classes.controlButton}>
             <Button
               variant="outlined"
@@ -289,7 +293,7 @@ export default function Ledger() {
             </Button>
           </div>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={6} sm={3}>
           <div className={classes.controlButton}>
             <Button
               variant="contained"
@@ -315,7 +319,7 @@ export default function Ledger() {
         onClose={handleClose}
         aria-labelledby="ledger-dialog"
         // fullWidth
-        maxWidth="md"
+        maxWidth="xs"
       >
         <DialogTitle id="ledger-dialog-title" className={classes.dialogRoot}>
           <Grid container className={classes.item}>
@@ -335,16 +339,13 @@ export default function Ledger() {
           <Grid container spacing={1} className={classes.item}>
             <DialogContentText id="signin-ledger">
               <Grid container className={classes.item}>
-                <Grid
-                  item
-                  xs={12}
-                  className={classes.signInText}
-                >
+                <Grid item xs={12} className={classes.signInText}>
                   <Typography variant="body2">
                     Please make sure your Ledger device is connected and Celo
                     App 1.5.0 or above is opened.
                   </Typography>
                 </Grid>
+                {renderControlButtons()}
               </Grid>
             </DialogContentText>
           </Grid>
@@ -363,7 +364,7 @@ export default function Ledger() {
         onClose={handleClose}
         aria-labelledby="ledger-dialog"
         // fullWidth
-        maxWidth="md"
+        maxWidth="xs"
       >
         <DialogTitle id="ledger-dialog-title" className={classes.dialogRoot}>
           <Grid container className={classes.item}>
