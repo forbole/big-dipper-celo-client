@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import ProposalDetails from "../../components/proposal/ProposalDetails";
 import { useRouter } from "next/router";
 import MarketCard from "../../components/MarketCard";
+import DepositList from "../../components/proposal/DepositList";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,6 +36,9 @@ export default function Proposal() {
         </Grid>
         <Grid item xs={12} sm={8} className={classes.bottomPadding}>
           <ProposalDetails />
+        </Grid>
+        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+          <DepositList />
         </Grid>
       </Grid>
     </Layout>
