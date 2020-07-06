@@ -75,7 +75,7 @@ const useStyles = makeStyles(() => {
 
     centerContent: {
       display: "flex",
-      margin: "1rem 0",
+      margin: "1rem 0 -0.5rem 0",
       justifyContent: "center",
     },
 
