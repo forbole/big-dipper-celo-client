@@ -13,10 +13,11 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: "0.1rem",
       textTransform: "none",
     },
-
     label: {
       textTransform: "none",
       borderRadius: 4,
+      minHeight: "2.5rem",
+      width: "19.4375rem",
     },
   })
 );

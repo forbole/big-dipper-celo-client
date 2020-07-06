@@ -46,9 +46,10 @@ const useStyles = makeStyles(() => {
       padding: "1%",
       borderRadius: 5,
       wordWrap: "break-word",
+      //paddingBottom: "0rem"
     },
     item: {
-      padding: "0 0 1rem 0.5rem",
+      padding: "0 0 0 0.5rem",
     },
     divider: {
       margin: "0.5rem 0 0 0",
@@ -70,6 +71,16 @@ const useStyles = makeStyles(() => {
     iconButtonLeft: {
       padding: "0",
       float: "left",
+    },
+
+    centerContent: {
+      display: "flex",
+      margin: "1rem 0",
+      justifyContent: "center",
+    },
+
+    MuiCardContentRootlastChild: {
+      paddingBottom: "0rem",
     },
   };
 });
@@ -288,7 +299,7 @@ export default function ProposalDetails() {
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
-          <Grid item xs={12} sm={2} className={classes.item}>
+          <Grid item xs={12} sm={2} className={classes.centerContent}>
             <LedgerButtons option="Vote" />
           </Grid>
         </Grid>
