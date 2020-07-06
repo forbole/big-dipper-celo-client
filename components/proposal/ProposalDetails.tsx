@@ -288,7 +288,7 @@ export default function ProposalDetails() {
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
-          <Grid item xs={12} sm={6} className={classes.item}>
+          <Grid item xs={12} sm={2} className={classes.item}>
             <LedgerButtons option="Vote" />
           </Grid>
         </Grid>
