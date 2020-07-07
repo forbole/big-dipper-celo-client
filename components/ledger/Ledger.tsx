@@ -39,7 +39,6 @@ const useStyles = makeStyles({
     justifyContent: "center",
   },
   title: {
-    // padding: "1rem",
     display: "block",
     textAlign: "center",
     paddingTop: "0.3rem",
@@ -56,12 +55,37 @@ const useStyles = makeStyles({
   },
 
   select: {
-    //align: "center",
     justifyContent: "center",
-    //fontSize: "15px",
     border: "solid rgba(255, 255, 255, 0.6) ",
     borderWidth: "0.09rem",
     borderRadius: 4,
+  },
+
+  depositSelect: {
+    justifyContent: "center",
+    border: "solid rgba(255, 255, 255, 0.6) ",
+    borderWidth: "0.09rem",
+    borderRadius: 4,
+    paddingLeft: "1rem",
+    minWidth: "18.4375rem",
+  },
+
+  formControl: {
+    paddingBottom: "1rem",
+    minWidth: "18.4375rem",
+    overflow: "hidden",
+  },
+
+  dialogRoot: {
+    padding: "0.5rem",
+  },
+
+  dialogPadding: {
+    padding: "1rem",
+  },
+
+  dialogTitle: {
+    padding: "1rem 1rem 0rem 1rem",
   },
 
   inputLabel: {
@@ -81,7 +105,6 @@ const useStyles = makeStyles({
     float: "right",
     paddingTop: "0.5rem",
     paddingBottom: "0.5rem",
-    //paddingRight: "1rem",
   },
 
   alignRightPrice: {
@@ -136,25 +159,24 @@ const useStyles = makeStyles({
     paddingLeft: "1rem",
   },
 
-  controlButton: {
-    justifyContent: "center",
-    flexWrap: "wrap",
-    padding: "0.1rem",
-    textTransform: "none",
-    borderRadius: 4,
-    //minHeight: "2.5rem",
-    width: "8.4375rem",
-  },
-
   controlButtonLabel: {
+    display: "flex",
     textTransform: "none",
     borderRadius: 4,
     justifyContent: "center",
     minHeight: "2.5rem",
+    maxWidth: "8.4375rem",
+    textAlign: "center",
   },
 
   item: {
     justifyContent: "center",
+    textAlign: "-webkit-center",
+  },
+
+  menu: {
+    display: "block",
+    width: "100%",
   },
 
   iconButtonRight: {
@@ -171,10 +193,6 @@ const useStyles = makeStyles({
     marginBottom: "-0.8rem",
   },
 
-  dialogRoot: {
-    marginBottom: "-1rem",
-  },
-
   alignCenter: {
     justifyContent: "center",
     marginBottom: "1rem",
@@ -185,8 +203,12 @@ const useStyles = makeStyles({
     textAlign: "center",
   },
 
-  signInText: {
+  message: {
     margin: "0.5rem",
+  },
+
+  hideOverflow: {
+    overflowX: "hidden",
   },
 });
 
@@ -222,7 +244,7 @@ function TokenDropdown() {
   let name = "Michelle Clark";
   let name_2 = "Ada Adams";
   return (
-    <FormControl fullWidth={true} size="medium">
+    <FormControl fullWidth size="medium">
       <Select
         defaultValue=""
         id="grouped-select"
@@ -263,6 +285,78 @@ function TokenDropdown() {
   );
 }
 
+function DepositDropdown() {
+  const classes = useStyles();
+  let name = "Dan Stanley";
+  let name_2 = "Andrea Colemans";
+  return (
+    <div>
+    <div className={classes.hideOverflow}>
+      <Typography variant="body2" noWrap color="textPrimary">
+        Account
+      </Typography>
+      <FormControl
+        fullWidth={true}
+        size="medium"
+        className={classes.formControl}
+      >
+        <Select
+          defaultValue=""
+          id="deposit-dropdown"
+          color="primary"
+          className={classes.depositSelect}
+          disableUnderline
+          fullWidth={true}
+        >
+          <MenuItem value={name} className={classes.menu}>
+            <Typography variant="body2">{name}</Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              noWrap={false}
+              className={classes.dropdownItem}
+            >
+              {"0xB177242c85d34cc72e1cc0301eb6f08770ED8a6B"}
+            </Typography>
+          </MenuItem>
+
+          <Divider variant="middle" className={classes.divider} />
+
+          <MenuItem value={name_2} className={classes.menu}>
+            <Typography
+              variant="body2"
+            >
+              {name_2}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" gutterBottom>
+              {"0x456f41406B32c45D59E539e4BBA3D7898c3584dA"}
+            </Typography>
+          </MenuItem>
+        </Select>
+      </FormControl>
+      </div>
+
+      <div>
+      <Typography variant="body2" noWrap color="textPrimary">
+        Amount
+      </Typography>
+      <FormControl
+        variant="outlined"
+        fullWidth
+        size="small"
+        className={classes.formControl}
+      >
+        <OutlinedInput
+          id="id-deposit-dialog"
+          placeholder="Insert amount"
+          // endAdornment={<InputAdornment position="end">cGLD</InputAdornment>}
+        />
+      </FormControl>
+    </div>
+    </div>
+  );
+}
+
 export default function Ledger() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -278,35 +372,36 @@ export default function Ledger() {
   const renderControlButtons = () => {
     return (
       <Grid container spacing={1} className={classes.item}>
-        <Grid item xs={6} sm={3}>
-          <div className={classes.controlButton}>
-            <Button
-              variant="outlined"
-              color="secondary"
-              className={classes.controlButtonLabel}
-              fullWidth={true}
-              onClick={handleClose}
-            >
-              <Typography variant="body2" noWrap>
-                Cancel
-              </Typography>
-            </Button>
-          </div>
+        <Grid item xs={6} className={classes.item}>
+          {/* <div className={classes.controlButton}> */}
+          <Button
+            variant="outlined"
+            color="secondary"
+            className={classes.controlButtonLabel}
+            fullWidth={true}
+            onClick={handleClose}
+            // justify="center"
+          >
+            <Typography variant="body2" noWrap>
+              Cancel
+            </Typography>
+          </Button>
+          {/* </div> */}
         </Grid>
-        <Grid item xs={6} sm={3}>
-          <div className={classes.controlButton}>
-            <Button
-              variant="contained"
-              color="secondary"
-              className={classes.controlButtonLabel}
-              fullWidth={true}
-              onClick={handleClose}
-            >
-              <Typography variant="body2" noWrap>
-                Confirm
-              </Typography>
-            </Button>
-          </div>
+        <Grid item xs={6}>
+          {/* <div className={classes.controlButton}> */}
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.controlButtonLabel}
+            fullWidth={true}
+            onClick={handleClose}
+          >
+            <Typography variant="body2" noWrap>
+              Confirm
+            </Typography>
+          </Button>
+          {/* </div> */}
         </Grid>
       </Grid>
     );
@@ -317,11 +412,11 @@ export default function Ledger() {
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="ledger-dialog"
+        aria-labelledby="ledger-dialog-signInMessage"
         // fullWidth
         maxWidth="xs"
       >
-        <DialogTitle id="ledger-dialog-title" className={classes.dialogRoot}>
+        <DialogTitle id="ledger-dialog-title">
           <Grid container className={classes.item}>
             <Grid item xs={12}>
               <Typography
@@ -339,11 +434,59 @@ export default function Ledger() {
           <Grid container spacing={1} className={classes.item}>
             <DialogContentText id="signin-ledger">
               <Grid container className={classes.item}>
-                <Grid item xs={12} className={classes.signInText}>
+                <Grid item xs={12} className={classes.message}>
                   <Typography variant="body2">
                     Please make sure your Ledger device is connected and Celo
                     App 1.5.0 or above is opened.
                   </Typography>
+                </Grid>
+                {renderControlButtons()}
+              </Grid>
+            </DialogContentText>
+          </Grid>
+        </DialogContent>
+      </Dialog>
+    );
+  };
+
+  const Deposit = () => {
+    return (
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="ledger-dialog-deposit"
+        // fullWidth
+        maxWidth="xs"
+      >
+        <DialogTitle
+          id="ledger-dialog-deposit-title"
+          className={classes.dialogTitle}
+        >
+          <Grid container className={classes.item}>
+            <Grid item xs={12}>
+              <Typography
+                variant="h6"
+                noWrap
+                className={classes.title}
+                color="textPrimary"
+              >
+                Deposit
+              </Typography>
+            </Grid>
+          </Grid>
+        </DialogTitle>
+        <DialogContent className={classes.dialogPadding}>
+          <Grid container spacing={1}>
+            <DialogContentText id="deposit-ledger">
+              <Grid container>
+                <Grid item xs={12} className={classes.message}>
+                  <Typography variant="body2" color="textPrimary">
+                    Deposit amount will be returned to your account after the
+                    proposal active period is finished.
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} className={classes.message}>
+                  {DepositDropdown()}
                 </Grid>
                 {renderControlButtons()}
               </Grid>
@@ -560,7 +703,7 @@ export default function Ledger() {
                 </Grid>
               </Grid>
             </DialogContentText> */}
-            {getSignInMessage()}
+            {Deposit()}
           </Grid>
         </DialogContent>
         <DialogActions className={classes.root}></DialogActions>
