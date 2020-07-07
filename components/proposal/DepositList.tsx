@@ -1,17 +1,10 @@
 import React from "react";
-import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Link from "../Link";
 import {
-  createStyles,
   makeStyles,
-  useTheme,
-  Theme,
 } from "@material-ui/core/styles";
-import Hidden from "@material-ui/core/Hidden";
 import Grid from "@material-ui/core/Grid";
-import cx from "clsx";
-import Card from "@material-ui/core/Card";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -19,83 +12,41 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import TablePagination from "@material-ui/core/TablePagination";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Divider from "@material-ui/core/Divider";
 
 interface Column {
-  id: "depositor" | "amount" | "txs" | "gasUsed" | "gasLimit" | "time";
+  id: "depositor" | "amount" | "time";
   label: string;
+  align: string;
 }
 
 const columns: Column[] = [
-  { id: "depositor", label: "Depositor" },
-  { id: "amount", label: "Amount" },
-  {
-    id: "txs",
-    label: "Txs",
-  },
-  {
-    id: "gasUsed",
-    label: "Gas Used",
-  },
-  {
-    id: "gasLimit",
-    label: "Gas Limit",
-  },
-  {
-    id: "time",
-    label: "Time",
-  },
+  { id: "depositor", label: "Depositor", align: "left" },
+  { id: "amount", label: "Amount", align: "right" },
+  { id: "time", label: "Time", align: "right" },
 ];
 
-interface Data {
-  height: string;
-  miner: string;
-  txs: string;
-  gasUsed: string;
-  gasLimit: string;
-  time: string;
-}
 
-function createData(
-  height: string,
-  miner: string,
-  txs: string,
-  gasUsed: string,
-  gasLimit: string,
-  time: string
-) {
-  return { height, miner, txs, gasUsed, gasLimit, time };
+function createData(depositor: string, amount: string, time: string) {
+  return { depositor, amount, time };
 }
 
 const rows = [
-  createData("1087144", "Michelle Cl…", "7", "1215", "548946", "14s ago"),
-  createData("1087143", "Rachel Hug…", "0", "54889", "5484894", "2 mins ago"),
-  createData("1087142", "Will Chavez", "8", "4515868", "656888", "2 mins ago"),
-  createData("1087141", "Will Gibson", "128", "56165", "646868", "2 mins ago"),
-  createData("1087140", "Pamela", "10", "34685468", "54684", "2 mins ago"),
-  createData("1087144", "Michelle Cl…", "7", "1215", "548946", "14s ago"),
-  createData("1087143", "Rachel Hug…", "0", "54889", "5484894", "2 mins ago"),
-  createData("1087142", "Will Chavez", "8", "4515868", "656888", "2 mins ago"),
-  createData("1087141", "Will Gibson", "128", "56165", "646868", "2 mins ago"),
-  createData("1087140", "Pamela", "10", "34685468", "54684", "2 mins ago"),
-  createData("1087144", "Michelle Cl…", "7", "1215", "548946", "14s ago"),
-  createData("1087143", "Rachel Hug…", "0", "54889", "5484894", "2 mins ago"),
-  createData("1087142", "Will Chavez", "8", "4515868", "656888", "2 mins ago"),
-  createData("1087141", "Will Gibson", "128", "56165", "646868", "2 mins ago"),
-  createData("1087140", "Pamela", "10", "34685468", "54684", "2 mins ago"),
-  createData("1087144", "Michelle Cl…", "7", "1215", "548946", "14s ago"),
-  createData("1087143", "Rachel Hug…", "0", "54889", "5484894", "2 mins ago"),
-  createData("1087142", "Will Chavez", "8", "4515868", "656888", "2 mins ago"),
-  createData("1087141", "Will Gibson", "128", "56165", "646868", "2 mins ago"),
-  createData("1087140", "Pamela", "10", "34685468", "54684", "2 mins ago"),
+  createData("Michelle Clark", "59.0096541 cGLD", "April 22 2020"),
+  createData("Rachel Hugh", "22 cGLD", "April 22 2020"),
+  createData("Natasha", "565646 cGLD", "April 22 2020"),
+  createData("Rith Jackson", "24755 cGLD", "April 22 2020"),
+  createData("Kelly Mendex", "65894856 cGLD", "April 22 2020"),
+  createData("Marilym Ford", "2478 cGLD", "April 22 2020"),
+  createData("Fionna Wells", "976.14755 cGLD", "April 22 2020"),
+  createData("Sandra Jones", "18949.18115615 cGLD", "April 22 2020"),
+  createData("Beverly", "78.145521 cGLD", "April 22 2020"),
+  createData("Sonia Fone", "99.147 cGLD", "April 22 2020"),
+  createData("1087144", "472.31111 cGLD", "April 22 2020"),
+  createData("1087143", "887 cGLD", "April 22 2020"),
 ];
 
-const useStyles = makeStyles(({ spacing }) => {
+const useStyles = makeStyles(() => {
   return {
     root: {
       width: "100%",
@@ -107,6 +58,7 @@ const useStyles = makeStyles(({ spacing }) => {
       borderRadius: 5,
       width: "100%",
       overflow: "auto",
+    
     },
     box: {
       letterSpacing: "1px",
@@ -121,11 +73,18 @@ const useStyles = makeStyles(({ spacing }) => {
     },
     tableCell: {
       overflow: "auto",
-      padding: "0 0.5rem",
+      padding: "0.5rem",
     },
     table: {
       background: "#4D5155",
       padding: "0",
+    },
+    paper: {
+      padding: "1rem",
+      width: "100%",
+    },
+    headerLabel: {
+      padding: "0 0 1rem 0.5rem"
     },
   };
 });
@@ -135,31 +94,28 @@ export default function DepositList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
 
   return (
-    <Grid container>
-      <Typography variant="body1">Deposit (200 cGLD)</Typography>
+    <Grid container spacing={1} justify="center" className={classes.container}>
+      <Paper className={classes.paper}>
+        <TableContainer>
+          <Typography
+            color="textSecondary"
+            variant="subtitle1"
+            className={classes.headerLabel}
+          >
+            Deposit (200 cGLD)
+          </Typography>
 
-      <Divider variant="middle" />
-      <TableContainer className={classes.container}>
-        <Paper className={classes.tableCell}>
-          <Table>
+          <Divider variant="middle" />
+          <Table size="medium">
             <TableHead>
               <TableRow>
                 {columns.map((column) => (
                   <TableCell
                     key={column.id}
-                    align="left"
+                    align={column.align}
                     className={classes.table}
                     padding="checkbox"
                   >
@@ -179,7 +135,7 @@ export default function DepositList() {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
                   return (
-                    <TableRow key={row.height}>
+                    <TableRow key={row.depositor}>
                       <TableCell
                         component="th"
                         scope="row"
@@ -190,31 +146,29 @@ export default function DepositList() {
                         <Link href="#" color="secondary">
                           <Typography variant="body2" noWrap>
                             {" "}
-                            {row.height}
+                            {row.depositor}
                           </Typography>
                         </Link>
                       </TableCell>
                       <TableCell
-                        align="left"
-                        padding="checkbox"
-                        className={classes.tableCell}
-                      >
-                        <Link href="#" color="secondary">
-                          <Typography variant="body2" noWrap>
-                            {row.miner}
-                          </Typography>
-                        </Link>
-                      </TableCell>
-                      <TableCell
-                        align="left"
+                        align="right"
                         padding="checkbox"
                         className={classes.tableCell}
                       >
                         <Typography variant="body2" noWrap>
-                          {row.txs}
+                          {row.amount}
                         </Typography>
                       </TableCell>
                       <TableCell
+                        align="right"
+                        padding="checkbox"
+                        className={classes.tableCell}
+                      >
+                        <Typography variant="body2" noWrap>
+                          {row.time}
+                        </Typography>
+                      </TableCell>
+                      {/* <TableCell
                         align="left"
                         padding="checkbox"
                         className={classes.tableCell}
@@ -236,23 +190,23 @@ export default function DepositList() {
                         <Typography variant="body2" noWrap>
                           {row.time}
                         </Typography>
-                      </TableCell>
+                      </TableCell> */}
                     </TableRow>
                   );
                 })}
             </TableBody>
           </Table>
-        </Paper>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
+        </TableContainer>
+        {/* <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        /> */}
+      </Paper>
     </Grid>
   );
 }

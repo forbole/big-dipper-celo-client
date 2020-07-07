@@ -43,10 +43,9 @@ const useStyles = makeStyles(() => {
   return {
     root: {
       width: "100%",
-      padding: "1%",
+      // padding: "1%",
       borderRadius: 5,
       wordWrap: "break-word",
-      //paddingBottom: "0rem"
     },
     item: {
       padding: "0 0 0 0.5rem",
@@ -107,7 +106,7 @@ export default function ProposalDetails() {
       <CardContent>
         <Grid container spacing={1} justify="center" className={classes.item}>
           <Grid item xs={10}>
-            <Typography color="textSecondary" variant="subtitle1" paragraph>
+            <Typography color="textSecondary" variant="subtitle1" gutterBottom>
               Proposals Details
             </Typography>
           </Grid>
