@@ -725,7 +725,7 @@ export default function Ledger() {
               </Grid>
             </DialogContentText> */}
 
-            <DialogContentText id="3">
+            {/* <DialogContentText id="4">
               <Grid container className={classes.item}>
                 <Grid
                   item
@@ -781,6 +781,45 @@ export default function Ledger() {
                     >
                       <Typography variant="body2" noWrap>
                         View Proposal
+                      </Typography>
+                    </Button>
+                  </Link>
+                </Grid>
+              </Grid>
+            </DialogContentText> */}
+
+            <DialogContentText id="5">
+              <Grid container className={classes.item}>
+                <Grid
+                  item
+                  xs={12}
+                  // textAlign="center"
+                  className={classes.imgSuccess}
+                >
+                  <img src="/images/success_icon.svg" />
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  //textAlign="center"
+                  className={classes.alignCenter}
+                >
+                  <Typography variant="body2" noWrap color="textPrimary">
+                    Voted Successfully
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12} >
+                  <Link href="/transactions">
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      className={classes.proposalButtonLabel}
+                      fullWidth={true}
+                      onClick={handleClose}
+                    >
+                      <Typography variant="body2" noWrap>
+                        View Transactions
                       </Typography>
                     </Button>
                   </Link>
