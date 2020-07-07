@@ -169,6 +169,26 @@ const useStyles = makeStyles({
     textAlign: "center",
   },
 
+  proposalButtonLabel: {
+    display: "flex",
+    textTransform: "none",
+    borderRadius: 4,
+    justifyContent: "center",
+    minHeight: "2.5rem",
+    width: "18.44rem",
+    textAlign: "center",
+  },
+
+  controlButton: {
+    justifyContent: "center",
+    flexWrap: "wrap",
+    paddingTop: "2rem",
+    textTransform: "none",
+    borderRadius: 4,
+    //minHeight: "2.5rem",
+    width: "100%",
+  },
+
   item: {
     justifyContent: "center",
     textAlign: "-webkit-center",
@@ -195,16 +215,21 @@ const useStyles = makeStyles({
 
   alignCenter: {
     justifyContent: "center",
-    marginBottom: "1rem",
+    paddingBottom: "2.5rem",
   },
 
-  bottomMargin: {
-    marginBottom: "1rem",
-    textAlign: "center",
+  imgSuccess: {
+    justifyContent: "center",
+    paddingBottom: "1.25rem",
   },
 
   message: {
     margin: "0.5rem",
+  },
+
+  txHash: {
+    overflowWrap: "anywhere",
+    textAlign: "left",
   },
 
   hideOverflow: {
@@ -291,68 +316,64 @@ function DepositDropdown() {
   let name_2 = "Andrea Colemans";
   return (
     <div>
-    <div className={classes.hideOverflow}>
-      <Typography variant="body2" noWrap color="textPrimary">
-        Account
-      </Typography>
-      <FormControl
-        fullWidth={true}
-        size="medium"
-        className={classes.formControl}
-      >
-        <Select
-          defaultValue=""
-          id="deposit-dropdown"
-          color="primary"
-          className={classes.depositSelect}
-          disableUnderline
+      <div className={classes.hideOverflow}>
+        <Typography variant="body2" noWrap color="textPrimary">
+          Account
+        </Typography>
+        <FormControl
           fullWidth={true}
+          size="medium"
+          className={classes.formControl}
         >
-          <MenuItem value={name} className={classes.menu}>
-            <Typography variant="body2">{name}</Typography>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              noWrap={false}
-              className={classes.dropdownItem}
-            >
-              {"0xB177242c85d34cc72e1cc0301eb6f08770ED8a6B"}
-            </Typography>
-          </MenuItem>
+          <Select
+            defaultValue=""
+            id="deposit-dropdown"
+            color="primary"
+            className={classes.depositSelect}
+            disableUnderline
+            fullWidth={true}
+          >
+            <MenuItem value={name} className={classes.menu}>
+              <Typography variant="body2">{name}</Typography>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                noWrap={false}
+                className={classes.dropdownItem}
+              >
+                {"0xB177242c85d34cc72e1cc0301eb6f08770ED8a6B"}
+              </Typography>
+            </MenuItem>
 
-          <Divider variant="middle" className={classes.divider} />
+            <Divider variant="middle" className={classes.divider} />
 
-          <MenuItem value={name_2} className={classes.menu}>
-            <Typography
-              variant="body2"
-            >
-              {name_2}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" gutterBottom>
-              {"0x456f41406B32c45D59E539e4BBA3D7898c3584dA"}
-            </Typography>
-          </MenuItem>
-        </Select>
-      </FormControl>
+            <MenuItem value={name_2} className={classes.menu}>
+              <Typography variant="body2">{name_2}</Typography>
+              <Typography variant="body2" color="textSecondary" gutterBottom>
+                {"0x456f41406B32c45D59E539e4BBA3D7898c3584dA"}
+              </Typography>
+            </MenuItem>
+          </Select>
+        </FormControl>
       </div>
 
       <div>
-      <Typography variant="body2" noWrap color="textPrimary">
-        Amount
-      </Typography>
-      <FormControl
-        variant="outlined"
-        fullWidth
-        size="small"
-        className={classes.formControl}
-      >
-        <OutlinedInput
-          id="id-deposit-dialog"
-          placeholder="Insert amount"
-          // endAdornment={<InputAdornment position="end">cGLD</InputAdornment>}
-        />
-      </FormControl>
-    </div>
+        <Typography variant="body2" noWrap color="textPrimary">
+          Amount
+        </Typography>
+        <FormControl
+          variant="outlined"
+          fullWidth
+          size="small"
+          className={classes.formControl}
+        >
+          <OutlinedInput
+            id="id-deposit-dialog"
+            placeholder="Insert amount"
+            // endAdornment={<InputAdornment position="end">cGLD</InputAdornment>}
+          />
+        </FormControl>
+      </div>
     </div>
   );
 }
@@ -703,7 +724,69 @@ export default function Ledger() {
                 </Grid>
               </Grid>
             </DialogContentText> */}
-            {Deposit()}
+
+            <DialogContentText id="3">
+              <Grid container className={classes.item}>
+                <Grid
+                  item
+                  xs={12}
+                  // textAlign="center"
+                  className={classes.imgSuccess}
+                >
+                  <img src="/images/success_icon.svg" />
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  //textAlign="center"
+                  className={classes.alignCenter}
+                >
+                  <Typography variant="body2" noWrap color="textPrimary">
+                    You have successfully deposited to proposal 1
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Typography
+                    variant="body2"
+                    noWrap
+                    align="left"
+                    color="textPrimary"
+                  >
+                    TX Hash
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Link
+                    href="transaction/[transaction]/"
+                    //as={`transaction/${data.block.parentHash}`}
+                    color="secondary"
+                  >
+                    <Typography variant="body2" className={classes.txHash}>
+                      {
+                        "0xfdef0a9988f84f8914ee000407393fccc1d039130260c7d501cc4b24e5bbe4f5"
+                      }
+                    </Typography>
+                  </Link>
+                </Grid>
+
+                <Grid item xs={12} className={classes.controlButton}>
+                  <Link href="/transactions">
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      className={classes.proposalButtonLabel}
+                      fullWidth={true}
+                      onClick={handleClose}
+                    >
+                      <Typography variant="body2" noWrap>
+                        View Proposal
+                      </Typography>
+                    </Button>
+                  </Link>
+                </Grid>
+              </Grid>
+            </DialogContentText>
           </Grid>
         </DialogContent>
         <DialogActions className={classes.root}></DialogActions>
