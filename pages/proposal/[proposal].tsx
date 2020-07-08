@@ -6,6 +6,7 @@ import ProposalDetails from "../../components/proposal/ProposalDetails";
 import { useRouter } from "next/router";
 import MarketCard from "../../components/MarketCard";
 import DepositList from "../../components/proposal/DepositList";
+import ProposalVotingList from "../../components/proposal/ProposalVotingList"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,6 +37,9 @@ export default function Proposal() {
         </Grid>
         <Grid item xs={12} sm={8} className={classes.bottomPadding}>
           <ProposalDetails />
+        </Grid>
+        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+          <ProposalVotingList />
         </Grid>
         <Grid item xs={12} sm={8} className={classes.bottomPadding}>
           <DepositList />

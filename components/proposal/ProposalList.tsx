@@ -84,9 +84,15 @@ export default function ProposalList() {
           <Card className={classes.card} elevation={0}>
             <Grid container className={classes.container}>
               <Grid item xs={1}>
-                <Typography variant="body2" className={classes.value}>
-                  #10
+                <Link
+                  href="/proposal/[proposal]/"
+                  as={`/proposal/${10}`}
+                  color="textPrimary"
+                >
+                  <Typography variant="body2" className={classes.value}>
+                    #10
                 </Typography>
+                </Link>
               </Grid>
               <Grid item xs={8} sm={9}>
                 <Typography variant="body2" className={classes.value}>

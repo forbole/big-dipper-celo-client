@@ -19,12 +19,12 @@ const theme = createMuiTheme({
       paper: 'rgba(67, 72, 76, 1)',
       default: 'rgba(46, 51, 56, 1)',
     },
-    text:{
+    text: {
       primary: 'rgba(255, 255, 255, 0.8)',
       secondary: 'rgba(255, 255, 255, 0.6)',
-      
+
     },
-    action:{
+    action: {
       active: '#3AD39E'
     }
   },
