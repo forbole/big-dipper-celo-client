@@ -15,42 +15,42 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: "rgba(31, 217, 110, 1)",
       padding: "0",
       fontSize: "	0.875rem",
-      width: "6.8rem",
+      width: "7rem",
     },
     transfer: {
       borderRadius: 5,
       backgroundColor: "rgba(217, 131, 28, 1)",
       padding: "0",
       fontSize: "	0.875rem",
-      width: "6.8rem",
+      width: "7rem",
     },
     success: {
       borderRadius: 5,
       backgroundColor: "rgba(31, 217, 110, 1)",
       padding: "0",
       fontSize: "	0.875rem",
-      width: "6.8rem",
+      width: "7rem",
     },
     pending: {
       borderRadius: 5,
       backgroundColor: "rgba(255, 0, 0, 0.2)",
       padding: "0",
       fontSize: "	0.875rem",
-      width: "6.8rem",
+      width: "7rem",
     },
     delegateAll: {
       borderRadius: 5,
       backgroundColor: "rgba(182, 83, 244, 1)",
       padding: "0",
       fontSize: "	0.875rem",
-      width: "6.8rem",
+      width: "7rem",
     },
     staticCall: {
       borderRadius: 5,
       backgroundColor: "rgba(31, 196, 217, 1)",
       padding: "0",
       fontSize: "	0.875rem",
-      width: "6.8rem",
+      width: "7rem",
     },
 
     create: {
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: "rgba(34, 217, 110, 1)",
       padding: "0",
       fontSize: "	0.875rem",
-      width: "6.8rem",
+      width: "7rem",
     },
 
     passed: {
