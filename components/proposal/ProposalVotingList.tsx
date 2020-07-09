@@ -27,7 +27,7 @@ import {
 interface Column {
     id: "voter" | "answer" | "voting_power";
     label: string;
-    align: string;
+    align: any;
 }
 
 const columns: Column[] = [
@@ -76,13 +76,6 @@ const useStyles = makeStyles(() => {
         flexContainer: {
             flexWrap: "wrap",
         },
-        // box: {
-        //     letterSpacing: "1px",
-        //     padding: "1rem",
-        //     display: "inline-flex",
-        //     overflow: "hidden",
-        //     whiteSpace: "nowrap",
-        // },
         voting_power: {
             padding: "0.01em",
             margin: "0.5em",
@@ -217,7 +210,7 @@ export default function ProposalVotingList() {
                             }
                         </Pie>
                         <Tooltip />
-                        <Legend layout="vetical" verticalAlign="middle" align="right" height={36} legendType="line" />
+                        <Legend layout="vertical" verticalAlign="middle" align="right" height={36} iconType="plainline" iconSize={20}/>
                     </PieChart>
                 </Grid>
 
@@ -300,29 +293,7 @@ export default function ProposalVotingList() {
                                                     {row.voting_power}
                                                 </Typography>
                                             </TableCell>
-                                            {/* <TableCell
-                        align="left"
-                        padding="checkbox"
-                        className={classes.tableCell}
-                      >
-                        <Typography variant="body2" noWrap>
-                          {row.gasUsed}
-                        </Typography>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        padding="checkbox"
-                        className={classes.tableCell}
-                      >
-                        <Typography variant="body2" noWrap>
-                          {row.gasLimit}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="left" padding="checkbox">
-                        <Typography variant="body2" noWrap>
-                          {row.time}
-                        </Typography>
-                      </TableCell> */}
+                                           
                                         </TableRow>
                                     );
                                 })}
