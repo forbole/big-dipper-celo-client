@@ -114,8 +114,8 @@ const classes = useStyles();
 <ExpansionPanel>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
+        aria-controls="internal-transactions"
+          id="internal-transactions"
           >
             <Typography variant="body1"> Internal Transactions (10)</Typography>
             </ExpansionPanelSummary>
@@ -123,7 +123,7 @@ const classes = useStyles();
         <Grid container >              
             <Divider variant='middle'/>
       <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
+            <Table stickyHeader aria-label="internal-transactions table">
           <TableHead>
           </TableHead>
           <TableBody>

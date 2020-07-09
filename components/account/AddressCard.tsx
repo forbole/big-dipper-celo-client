@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function AddressCard(address: String) {
+export default function AddressCard(address: any) {
   const classes = useStyles();
   // console.log(address);
   return (

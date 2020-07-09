@@ -141,7 +141,7 @@ const Layout = (props: { children: React.ReactNode }) => {
             <Typography variant="body2">{"Validator Votes"}</Typography>{" "}
           </Link>,
         ].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem button key={index}>
             <ListItemText primary={text} />
           </ListItem>
         ))}
@@ -175,7 +175,7 @@ const Layout = (props: { children: React.ReactNode }) => {
             </Typography>{" "}
           </Link>,
         ].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem button key={index}>
             <ListItemText primary={text} />
           </ListItem>
         ))}

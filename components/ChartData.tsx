@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import TablePagination from "@material-ui/core/TablePagination";
-import * as numbro from "numbro";
+import numbro from "numbro";
 
 const GET_CHAIN = gql`
   {

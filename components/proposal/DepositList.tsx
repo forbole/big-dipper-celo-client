@@ -17,7 +17,7 @@ import Divider from "@material-ui/core/Divider";
 interface Column {
   id: "depositor" | "amount" | "time";
   label: string;
-  align: string;
+  align: any;
 }
 
 const columns: Column[] = [

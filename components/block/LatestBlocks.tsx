@@ -22,8 +22,8 @@ import PriceCard from "../PriceCard";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import TablePagination from "@material-ui/core/TablePagination";
-import * as numbro from "numbro";
-import MiddleEllipsis from "react-middle-ellipsis";
+import numbro from "numbro";
+import {MiddleEllipsis} from "react-middle-ellipsis";
 import { useRouter } from "next/router";
 
 const GET_BLOCK = gql`
@@ -64,7 +64,7 @@ function getBlocks() {
 interface Column {
   id: "height" | "validator" | "txs" | "gasUsed" | "gasLimit" | "time";
   label: string;
-  align: string;
+  align: any;
 }
 
 const columns: Column[] = [
