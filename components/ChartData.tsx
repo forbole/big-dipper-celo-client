@@ -26,35 +26,7 @@ const GET_CHAIN = gql`
   }
 `;
 
-const chainUpdated: any[] = [];
 
-function getChainInfo() {
-  const { loading, error, data } = useQuery(GET_CHAIN, {
-    pollInterval: 5000,
-  });
-  if (loading) return "Loading...";
-  if (error) return `Error! ${error.message}`;
-
-  // return(
-  //   chainUpdated[0] = data.chain
-  // )
-
-  // data.chain.forEach((article : any, i: number) => {
-  //   console.log(article);
-  //   chainUpdated.push(article);
-  // });
-
-  return Object.keys(data).forEach(function (item, i) {
-    chainUpdated[i] = data.chain;
-  });
-
-  // return (
-  //   data.chain.forEach(function (block: any, i: number) {
-  //     chainUpdated[i] = block;
-  //     //console.log(block)
-  //   })
-  // )
-}
 
 const useStyles = makeStyles({
   root: {
@@ -85,7 +57,14 @@ const useStyles = makeStyles({
 
 const ChartData = () => {
   const classes = useStyles();
-  getChainInfo();
+
+  const { loading, error, data } = useQuery(GET_CHAIN, {
+    pollInterval: 5000,
+  });
+
+  if (loading) return "Loading...";
+  if (error) return `Error! ${error.message}`;
+
 
   return (
     <div>
@@ -96,8 +75,8 @@ const ChartData = () => {
               cGLD Price
             </Typography>
             <Typography variant="h5" className={classes.value}>
-              {chainUpdated[0]
-                ? "$" + numbro(chainUpdated[0].tokenPrice.usd).format("0.00")
+              {data.chain
+                ? "$" + numbro(data.chain.tokenPrice.usd).format("0.00")
                 : "Data currently not available"}
             </Typography>
           </Card>
@@ -109,9 +88,9 @@ const ChartData = () => {
               Market Cap
             </Typography>
             <Typography variant="h5" className={classes.value}>
-              {chainUpdated[0]
+              {data.chain
                 ? "$" +
-                  numbro(chainUpdated[0].tokenPrice.usdMarketCap).format("0.00")
+                numbro(data.chain.tokenPrice.usdMarketCap).format("0.00")
                 : "Data currently not available"}
             </Typography>
           </Card>
@@ -123,8 +102,8 @@ const ChartData = () => {
               Average block time
             </Typography>
             <Typography variant="h5" className={classes.value}>
-              {chainUpdated[0]
-                ? numbro(chainUpdated[0].averageBlockTime).format("0.00") +
+              {data.chain
+                ? numbro(data.chain.averageBlockTime).format("0.00") +
                   " seconds"
                 : "Data currently not available"}
             </Typography>
@@ -137,8 +116,8 @@ const ChartData = () => {
               Total transactions
             </Typography>
             <Typography variant="h5" className={classes.value}>
-              {chainUpdated[0]
-                ? numbro(chainUpdated[0].txCount).format("000,000")
+              {data.chain
+                ? numbro(data.chain.txCount).format("000,000")
                 : "Data currently not available"}
             </Typography>
           </Card>
@@ -150,8 +129,8 @@ const ChartData = () => {
               Total blocks
             </Typography>
             <Typography variant="h5" className={classes.value}>
-              {chainUpdated[0]
-                ? numbro(chainUpdated[0].latestHeight).format("000,000")
+              {data.chain
+                ? numbro(data.chain.latestHeight).format("000,000")
                 : "Data currently not available"}
             </Typography>
           </Card>
@@ -163,8 +142,8 @@ const ChartData = () => {
               Wallet addresses
             </Typography>
             <Typography variant="h5" className={classes.value}>
-              {chainUpdated[0]
-                ? numbro(chainUpdated[0].walletCount).format("000,000")
+              {data.chain
+                ? numbro(data.chain.walletCount).format("000,000")
                 : "Data currently not available"}
             </Typography>
           </Card>
