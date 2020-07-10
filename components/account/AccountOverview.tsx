@@ -356,7 +356,7 @@ export default function AccountOverview(props: any) {
             <Divider variant="middle" />
           </Grid>
 
-          <Grid item xs={6} align="center">
+          <Grid item xs={6} justify="center" >
             <Button
               variant="outlined"
               color="secondary"
@@ -365,7 +365,7 @@ export default function AccountOverview(props: any) {
               <Typography variant="body1">Unlock cGLD</Typography>
             </Button>
           </Grid>
-          <Grid item xs={6} align="center">
+          <Grid item xs={6} justify="center"  >
             <Button
               variant="outlined"
               color="secondary"
