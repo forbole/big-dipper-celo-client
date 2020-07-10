@@ -23,7 +23,7 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import TablePagination from "@material-ui/core/TablePagination";
 import numbro from "numbro";
-import {MiddleEllipsis} from "react-middle-ellipsis";
+// import { MiddleEllipsis } from "react-middle-ellipsis";
 import { useRouter } from "next/router";
 
 const GET_BLOCK = gql`
@@ -46,20 +46,7 @@ const GET_BLOCK = gql`
   }
 `;
 
-const blocks: any[] = [];
 
-function getBlocks() {
-  const { loading, error, data } = useQuery(GET_BLOCK, {
-    pollInterval: 5000,
-  });
-
-  if (loading) return "Loading...";
-  if (error) return `Error! ${error.message}`;
-
-  return data.blocks.blocks.forEach(function (block: any, i: number) {
-    blocks[i] = block;
-  });
-}
 
 interface Column {
   id: "height" | "validator" | "txs" | "gasUsed" | "gasLimit" | "time";
@@ -156,7 +143,7 @@ const useStyles = makeStyles({
   },
 });
 
-function LatestBlocks(props: any) {
+export default function LatestBlocks(pagination: boolean, displayCard: boolean) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -171,18 +158,17 @@ function LatestBlocks(props: any) {
       else return (largeScreen = false);
     }
   };
-  getBlocks();
   getScreenSize();
 
-  const paginate =
+  const paginate: any =
     largeScreen === false
-      ? props.pagination
+      ? pagination === true
         ? page * rowsPerPage + rowsPerPage
         : 5
       : 14;
-  const paginate_2 =
+  const paginate_2: any =
     largeScreen === false
-      ? props.pagination
+      ? pagination === true
         ? page * rowsPerPage + rowsPerPage
         : 10
       : 28;
@@ -201,10 +187,17 @@ function LatestBlocks(props: any) {
   moment.relativeTimeThreshold("s", 59);
   moment.relativeTimeThreshold("ss", 3);
 
-  return (
+  const { loading, error, data } = useQuery(GET_BLOCK, {
+    pollInterval: 5000,
+  });
+
+  if (loading) return null;
+  if (error) return `Error! ${error}`;
+
+  return (<>
     <Grid container className={classes.blocks}>
       <Grid item xs={12}>
-        {props.priceCard ? (
+        {displayCard === true ? (
           <Hidden smUp>
             <PriceCard size="large" />
           </Hidden>
@@ -212,7 +205,7 @@ function LatestBlocks(props: any) {
         <Paper className={classes.root}>
           <Typography variant="body1" className={classes.box}>
             Latest Blocks{" "}
-            {!props.pagination ? (
+            {pagination === false ? (
               <Link href="/blocks" className={classes.link} color="textPrimary">
                 {"view more"}
               </Link>
@@ -223,7 +216,7 @@ function LatestBlocks(props: any) {
             <Paper className={classes.tableCell}>
               <Table>
                 <TableHead>
-                  {props.pagination ? (
+                  {pagination === true ? (
                     <TableRow>
                       {columns.map((column) => (
                         <TableCell
@@ -243,28 +236,28 @@ function LatestBlocks(props: any) {
                       ))}
                     </TableRow>
                   ) : (
-                    <TableRow>
-                      {columns_homepage.map((column) => (
-                        <TableCell
-                          key={column.id}
-                          align={column.align}
-                          className={classes.table}
-                          padding="checkbox"
-                        >
-                          <Typography
-                            variant="body2"
-                            noWrap
-                            className={classes.tableCell}
+                      <TableRow>
+                        {columns_homepage.map((column) => (
+                          <TableCell
+                            key={column.id}
+                            align={column.align}
+                            className={classes.table}
+                            padding="checkbox"
                           >
-                            {column.label}
-                          </Typography>
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  )}
+                            <Typography
+                              variant="body2"
+                              noWrap
+                              className={classes.tableCell}
+                            >
+                              {column.label}
+                            </Typography>
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    )}
                 </TableHead>
                 <TableBody>
-                  {blocks.slice(paginate, paginate_2).map((row) => {
+                  {data.blocks.blocks.slice(paginate, paginate_2).map((row) => {
                     return (
                       <TableRow key={row.number}>
                         <TableCell
@@ -313,7 +306,7 @@ function LatestBlocks(props: any) {
                                 display="inline"
                                 className={classes.textContent}
                               >
-                                <div
+                                {/* <div
                                   style={{
                                     width: "40%",
                                     minWidth: "10%",
@@ -321,16 +314,16 @@ function LatestBlocks(props: any) {
                                     whiteSpace: "nowrap",
                                   }}
                                 >
-                                  <MiddleEllipsis>
-                                    <span>
-                                      {(row.miner && row.miner.name) ||
-                                      (row.miner && row.miner.affiliation)
-                                        ? row.miner.name ||
-                                          row.miner.affiliation
-                                        : null}
-                                    </span>
-                                  </MiddleEllipsis>
-                                </div>
+                                  <MiddleEllipsis> */}
+                                <span>
+                                  {(row.miner && row.miner.name) ||
+                                    (row.miner && row.miner.affiliation)
+                                    ? row.miner.name ||
+                                    row.miner.affiliation
+                                    : null}
+                                </span>
+                                {/* </MiddleEllipsis> */}
+                                {/* </div> */}
                               </Typography>
                             </Link>
                           ) : null}
@@ -344,13 +337,13 @@ function LatestBlocks(props: any) {
                           <Typography variant="body2" noWrap>
                             <Link href="#" color="secondary">
                               {row.transactions &&
-                              row.transactions.transactionIndex
+                                row.transactions.transactionIndex
                                 ? row.transactions.transactionIndex.length()
                                 : 0}
                             </Link>
                           </Typography>
                         </TableCell>
-                        {props.pagination ? (
+                        {pagination === true ? (
                           <TableCell
                             align="left"
                             padding="checkbox"
@@ -366,7 +359,7 @@ function LatestBlocks(props: any) {
                             </div>
                           </TableCell>
                         ) : null}
-                        {props.pagination ? (
+                        {pagination === true ? (
                           <TableCell
                             align="left"
                             padding="checkbox"
@@ -391,12 +384,12 @@ function LatestBlocks(props: any) {
               </Table>
             </Paper>
           </TableContainer>
-          {props.pagination ? (
+          {pagination === true ? (
             <TablePagination
               className={"pagination"}
               rowsPerPageOptions={[10, 25, 100]}
               component="div"
-              count={blocks.length}
+              count={data.blocks.blocks.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={handleChangePage}
@@ -406,7 +399,8 @@ function LatestBlocks(props: any) {
         </Paper>
       </Grid>
     </Grid>
+  </>
   );
 }
 
-export default LatestBlocks;
+      // export default LatestBlocks;
