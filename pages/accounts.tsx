@@ -1,13 +1,10 @@
 import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Layout from "../components/Layout";
-import ChartData from "../components/ChartData";
-import LatestBlocks from "../components/block/LatestBlocks";
-import LatestTransactions from "../components/transaction/LatestTransactions";
 import Grid from "@material-ui/core/Grid";
 import AccountList from "../components/account/AccountList";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       display: "flex",

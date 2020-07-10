@@ -22,31 +22,6 @@ const client = new ApolloClient({
   fetch: fetch
 });
 
-// client
-//   .query({
-//     query: gql`
-//         {
-//           blocks(page: 55, pageSize: 12) {
-//             cursor
-//             pageSize
-//             page
-//             blocks{
-//               _id
-//               extraData
-//               gasUsed
-//               hash
-              
-//               miner
-//               number
-//               parentHash
-//             }
-//             }
-//           }
-//     `
-// })
-//           .then(result => console.log(result));
-
-
 
 interface AppProps {
 }
