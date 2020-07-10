@@ -32,6 +32,7 @@ import { useQuery } from "@apollo/react-hooks";
 import ContentLoader from "react-content-loader";
 import numbro from "numbro";
 import AccountOverview from "./AccountOverview";
+import CoinBalanceHistory from './CoinBalanceHistory'
 
 const GET_ACCOUNT_DETAILS = gql`
   query Account($address: String!) {
@@ -77,9 +78,9 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function AccountPage() {
   const router = useRouter();
 
-  if (!router.query.account) return <ContentLoader />;
+  //if (!router.query.account) return <ContentLoader />;
   //console.log(router.query.block);
-  const address = router.query.account.toString();
+  const address = router.query.account;
   console.log(address);
   const { loading, error, data } = useQuery(GET_ACCOUNT_DETAILS, {
     variables: { address },
@@ -88,7 +89,7 @@ export default function AccountPage() {
   if (loading) return null;
   if (error) return `Error! ${error}`;
 
-  return (
+  return (<>
     <Grid container className={classes.root}>
       <Hidden lgUp>
         <Grid item xs={12} lg={5} className={classes.bottomPadding}>
@@ -125,6 +126,10 @@ export default function AccountPage() {
       </Grid>
 
       <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+        <CoinBalanceHistory />
+      </Grid>
+      
+      <Grid item xs={12} lg={5} className={classes.bottomPadding}>
         <Downtime />
       </Grid>
 
@@ -138,5 +143,6 @@ export default function AccountPage() {
         </Grid>
       </Hidden>
     </Grid>
+    </>
   );
 }
