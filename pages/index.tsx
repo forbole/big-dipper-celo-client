@@ -26,13 +26,13 @@ export default function Index() {
     <Layout>
       <Grid container className={classes.root}>
         <Grid item xs={12} className={classes.bottomPadding}>
-          <ChartData />
+          {ChartData()}
         </Grid>
         <Grid item xs={12} lg={6} className={classes.bottomPadding}>
-          <LatestBlocks pagination={false} />
+          {LatestBlocks(false, false)}
         </Grid>
         <Grid item xs={12} lg={6} className={classes.bottomPadding}>
-          <LatestTransactions pagination={false} />
+          {LatestTransactions(false)}
         </Grid>
         <Grid item xs={12} lg={6} className={classes.bottomPadding}>
           <Ledger />

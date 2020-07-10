@@ -1,12 +1,10 @@
 import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Layout from "../components/Layout";
-import ChartData from "../components/ChartData";
-import LatestTransactions from "../components/transaction/LatestTransactions";
 import Grid from "@material-ui/core/Grid";
 import LatestBlocks from "../components/block/LatestBlocks";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       display: "flex",
@@ -26,7 +24,7 @@ export default function Blocks() {
     <Layout>
       <Grid container className={classes.root}>
         <Grid item xs={12} sm={8} className={classes.bottomPadding}>
-          <LatestBlocks pagination={true} priceCard={true}/>
+          {LatestBlocks(false, true)}
         </Grid>
       </Grid>
     </Layout>
