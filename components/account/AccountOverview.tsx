@@ -93,24 +93,19 @@ const useStyles = makeStyles((theme: Theme) =>
 
     buttonUnlock: {
       justifyContent: "center",
-      minWidth: "9.5rem",
-      // marginBottom: "1rem",
+      width: "9.5rem",
       padding: "0.5rem",
       textTransform: "none",
       border: "solid thin",
-      // marginLeft: "1rem",
-      // marginTop: '0.3rem'
       margin: "0.3rem 0 1rem 1rem",
     },
 
     buttonLock: {
       justifyContent: "center",
-      minWidth: "9.5rem",
-      // marginBottom: "1rem",
+      width: "9.5rem",
       padding: "0.5rem",
       textTransform: "none",
       border: "solid thin",
-      // marginRight: "1rem",
       margin: "0.3rem 1rem 1rem 0",
     },
 
@@ -128,7 +123,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
     divider: {
       margin: "0.5rem",
-      backgroundColor: "rgba(62, 67, 71, 1)",
+      backgroundColor: "rgba(61, 66, 71, 1)", 
     },
 
     searchbar: {
@@ -143,6 +138,7 @@ const useStyles = makeStyles((theme: Theme) =>
       verticalAlign: "middle",
       padding: "0 1rem 1rem 0",
       fontSize: "12px",
+      backgroundColor: "rgba(61, 66, 71, 1)"
     },
     container: {
       justifyContent: "center",
@@ -155,20 +151,29 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     dropdownSelection: {
-      margin: "-1.3rem 0 0 0rem",
+      margin: "-2.4rem 0 0 0rem",
       paddingLeft: "0.5rem",
-      paddingTop: "0.5rem",
+      paddingTop: "2.1rem",
       paddingBottom: "-0.5rem",
       // minHeight: "3.3rem",
     },
 
     erc20: {
       margin: "0rem 0rem -0.8rem 0rem",
+      padding: "1.25rem 0"
     },
 
     listSubheader: {
       padding: "0 0 0 1rem",
     },
+
+    searchIcon:{
+      padding:"0.25rem"
+    },
+    centerButtons:{
+      justifyContent: "center",
+    alignItems: "center",
+    }
   })
 );
 
@@ -204,7 +209,7 @@ function TokenSearchBar() {
               onChange={handleChange("tokenSearch")}
               placeholder="Search tokens"
               startAdornment={
-                <InputAdornment position="start">
+                <InputAdornment position="start" className={classes.searchIcon}>
                   <SearchIcon />
                 </InputAdornment>
               }
@@ -226,7 +231,13 @@ function TokenDropdown() {
         htmlFor="token-dropdown-select"
         className={classes.inputLabel}
       >
-        {"Select a token"}
+        <Typography
+          variant="body1"
+          color="textSecondary"
+          gutterBottom
+        >
+          Select a token
+        </Typography>
       </InputLabel>
 
       <Select
@@ -238,22 +249,27 @@ function TokenDropdown() {
         style={{ padding: "0" }}
       >
         <TokenSearchBar />
-        <ListSubheader className={classes.erc20}>ERC-20 (2)</ListSubheader>
+        <ListSubheader ><Typography
+          variant="body1"
+          color="textSecondary"
+          gutterBottom
+          className={classes.erc20}
+        >
+          ERC-20 (2)
+        </Typography></ListSubheader>
         <Divider className={classes.divider} />
 
-        {/* <ListSubheader style={{ padding: "0 0 0 1rem" }}> */}
         <Typography
-          variant="body2"
+          variant="body1"
           color="textPrimary"
           className={classes.listSubheader}
           gutterBottom
         >
           Celo Dollar
         </Typography>
-        {/* </ListSubheader> */}
         <MenuItem value={1} className={classes.dropdownSelection}>
           <Typography
-            variant="body2"
+            variant="body1"
             color="textSecondary"
             className={classes.tokenValue}
             gutterBottom
@@ -264,20 +280,18 @@ function TokenDropdown() {
 
         <Divider variant="middle" className={classes.divider} />
 
-        {/* <ListSubheader> */}
         <Typography
-          variant="body2"
+          variant="body1"
           color="textPrimary"
           className={classes.listSubheader}
           gutterBottom
         >
           Celo Gold
         </Typography>
-        {/* </ListSubheader> */}
 
         <MenuItem value={2} className={classes.dropdownSelection}>
           <Typography
-            variant="body2"
+            variant="body1"
             color="textSecondary"
             className={classes.tokenValue}
             gutterBottom
@@ -294,18 +308,15 @@ export default function AccountOverview(props: any) {
   const classes = useStyles();
   return (
     <span>
-      {/* <Grid container className={classes.root} xs={12} md={12} lg={6} > */}
       <Card>
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <Typography variant="body1" className={classes.box}>
               Overview
             </Typography>
-            <Divider variant="middle" />
+            <Divider variant="middle" className={classes.divider}/>
           </Grid>
-        </Grid>
 
-        <Grid container spacing={1}>
           <Grid item xs={6}>
             <Typography variant="body2" className={classes.alignLeft}>
               Moniker
@@ -318,7 +329,7 @@ export default function AccountOverview(props: any) {
           </Grid>
 
           <Grid item xs={12}>
-            <Divider variant="middle" />
+            <Divider variant="middle" className={classes.divider} />
           </Grid>
 
           <Grid item xs={6} md={9}>
@@ -339,7 +350,7 @@ export default function AccountOverview(props: any) {
           </Grid>
 
           <Grid item xs={12}>
-            <Divider variant="middle" />
+            <Divider variant="middle" className={classes.divider} />
           </Grid>
 
           <Grid item xs={4} md={10}>
@@ -353,9 +364,10 @@ export default function AccountOverview(props: any) {
           </Grid>
 
           <Grid item xs={12}>
-            <Divider variant="middle" />
+            <Divider variant="middle" className={classes.divider} />
           </Grid>
 
+          <Grid container direction="row" alignItems="center" justify="center" className={classes.centerButtons}>
           <Grid item xs={6} justify="center" >
             <Button
               variant="outlined"
@@ -374,9 +386,9 @@ export default function AccountOverview(props: any) {
               <Typography variant="body1">Lock cGLD</Typography>
             </Button>
           </Grid>
+          </Grid>
         </Grid>
       </Card>
-      {/* </Grid> */}
     </span>
   );
 }
