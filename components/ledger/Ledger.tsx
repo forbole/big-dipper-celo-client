@@ -19,6 +19,9 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import clsx from "clsx";
 import Link from "../Link";
+import Card from "@material-ui/core/Card";
+import Paper from '@material-ui/core/Paper';
+
 
 import Hidden from "@material-ui/core/Hidden";
 import SearchIcon from "@material-ui/icons/Search";
@@ -30,9 +33,9 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import LedgerButtons from "./LedgerButtons";
 
-function Dialog_1() {
-  return console.log("DIALOG");
-}
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import ControlButtons from './ControlButtons'
+
 
 const useStyles = makeStyles({
   root: {
@@ -66,14 +69,22 @@ const useStyles = makeStyles({
     border: "solid rgba(255, 255, 255, 0.6) ",
     borderWidth: "0.09rem",
     borderRadius: 4,
-    paddingLeft: "1rem",
-    minWidth: "18.4375rem",
+    paddingLeft: "0.5rem",
+    //minWidth: "18.4375rem",
   },
 
   formControl: {
     paddingBottom: "1rem",
-    minWidth: "18.4375rem",
+    //width: "18.4375rem" || "24rem",
     overflow: "hidden",
+    textOverflow: "clip",
+    display: "flex",
+  },
+
+  centerContent: {
+    display: "flex",
+    //margin: "1rem 0 -0.5rem 0",
+    justifyContent: "center",
   },
 
   dialogRoot: {
@@ -86,6 +97,10 @@ const useStyles = makeStyles({
 
   dialogTitle: {
     padding: "1rem 1rem 0rem 1rem",
+  },
+
+  dialogContent: {
+    display: "block",
   },
 
   inputLabel: {
@@ -159,6 +174,10 @@ const useStyles = makeStyles({
     paddingLeft: "1rem",
   },
 
+  dialog: {
+    paddingBottom: '1rem'
+  },
+
   controlButtonLabel: {
     display: "flex",
     textTransform: "none",
@@ -191,12 +210,19 @@ const useStyles = makeStyles({
 
   item: {
     justifyContent: "center",
-    textAlign: "-webkit-center",
+    // check thiss textAlign: "-webkit-center",
+  },
+
+  icon: {
+    fill: "rgba(255, 255, 255, 0.8)",
+    paddingRight: "0.5rem",
+    fontWeight: 400,
   },
 
   menu: {
     display: "block",
     width: "100%",
+    overflow: "hidden",
   },
 
   iconButtonRight: {
@@ -224,7 +250,7 @@ const useStyles = makeStyles({
   },
 
   message: {
-    margin: "0.5rem",
+    margin: "0.5rem 0.5rem 0 0.5rem",
   },
 
   txHash: {
@@ -233,8 +259,53 @@ const useStyles = makeStyles({
   },
 
   hideOverflow: {
-    overflowX: "hidden",
+    paddingBottom: "1rem"
   },
+
+  voteNoButton: {
+    backgroundColor: "rgba(240, 65, 85, 1)",
+    textTransform: "none",
+    width: '100%',
+    color: '#fff',
+    fontWeight: 400,
+  },
+  voteYesButton: {
+    backgroundColor: "rgba(58, 211, 158, 1)",
+    textTransform: "none",
+    width: '100%',
+    color: '#fff',
+    fontWeight: 400,
+  },
+
+  voteNoWithVetoButton: {
+    backgroundColor: "rgba(250, 149, 30, 1)",
+    textTransform: "none",
+    width: '100%',
+    color: '#fff',
+    fontWeight: 400,
+
+  },
+  voteAbstainButton: {
+    backgroundColor: "rgba(55, 148, 240, 1)",
+    textTransform: "none",
+    width: '100%',
+    color: '#fff',
+    fontWeight: 400,
+  },
+
+  paddingBottom: {
+    paddingBottom: '1rem'
+  },
+
+  address: {
+    overflow: 'hidden',
+
+  },
+  rootPaper: {
+    padding: '1rem'
+  }
+
+
 });
 
 interface State {
@@ -246,7 +317,7 @@ function LockGoldDialog() {
 
   return (
     <FormControl variant="outlined" fullWidth size="small">
-      <InputLabel htmlFor="lock-gold-dialog" type="number">
+      <InputLabel htmlFor="lock-gold-dialog" > {/*type="number" */}
         <Typography
           variant="body2"
           color="textSecondary"
@@ -339,7 +410,7 @@ function DepositDropdown() {
                 variant="body2"
                 color="textSecondary"
                 noWrap={false}
-                className={classes.dropdownItem}
+              //className={classes.dropdownItem}
               >
                 {"0xB177242c85d34cc72e1cc0301eb6f08770ED8a6B"}
               </Typography>
@@ -370,7 +441,7 @@ function DepositDropdown() {
           <OutlinedInput
             id="id-deposit-dialog"
             placeholder="Insert amount"
-            // endAdornment={<InputAdornment position="end">cGLD</InputAdornment>}
+          // endAdornment={<InputAdornment position="end">cGLD</InputAdornment>}
           />
         </FormControl>
       </div>
@@ -390,43 +461,6 @@ export default function Ledger() {
     setOpen(false);
   };
 
-  const renderControlButtons = () => {
-    return (
-      <Grid container spacing={1} className={classes.item}>
-        <Grid item xs={6} className={classes.item}>
-          {/* <div className={classes.controlButton}> */}
-          <Button
-            variant="outlined"
-            color="secondary"
-            className={classes.controlButtonLabel}
-            fullWidth={true}
-            onClick={handleClose}
-            // justify="center"
-          >
-            <Typography variant="body2" noWrap>
-              Cancel
-            </Typography>
-          </Button>
-          {/* </div> */}
-        </Grid>
-        <Grid item xs={6}>
-          {/* <div className={classes.controlButton}> */}
-          <Button
-            variant="contained"
-            color="secondary"
-            className={classes.controlButtonLabel}
-            fullWidth={true}
-            onClick={handleClose}
-          >
-            <Typography variant="body2" noWrap>
-              Confirm
-            </Typography>
-          </Button>
-          {/* </div> */}
-        </Grid>
-      </Grid>
-    );
-  };
 
   const getSignInMessage = () => {
     return (
@@ -461,7 +495,7 @@ export default function Ledger() {
                     App 1.5.0 or above is opened.
                   </Typography>
                 </Grid>
-                {renderControlButtons()}
+                <ControlButtons />
               </Grid>
             </DialogContentText>
           </Grid>
@@ -509,7 +543,7 @@ export default function Ledger() {
                 <Grid item xs={12} className={classes.message}>
                   {DepositDropdown()}
                 </Grid>
-                {renderControlButtons()}
+                <ControlButtons />
               </Grid>
             </DialogContentText>
           </Grid>
@@ -518,47 +552,281 @@ export default function Ledger() {
     );
   };
 
-  return (
-    <div>
-      <Button variant="outlined" color="secondary" onClick={handleClickOpen}>
-        Ledger Dialog
-      </Button>{" "}
+  const Vote = () => {
+    let name = "Dan Stanley";
+    let name_2 = "Andrea Colemans";
+
+    return (
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="ledger-dialog"
+        aria-labelledby="ledger-dialog-vote"
         // fullWidth
         maxWidth="xs"
       >
-        <DialogTitle id="ledger-dialog-title" className={classes.dialogRoot}>
+        <DialogTitle
+          id="ledger-dialog-vote-title"
+          className={classes.dialogTitle}
+        >
           <Grid container className={classes.item}>
-            <Grid item xs={1}>
-              <IconButton
-                aria-label="Return"
-                className={classes.iconButtonLeft}
+            <Grid item xs={12}>
+              <Typography
+                variant="h6"
+                noWrap
+                className={classes.title}
+                color="textPrimary"
               >
-                <img src="/images/last.svg" color="textPrimary" />
-              </IconButton>
-            </Grid>
-            <Grid item xs={10}>
-              <Typography variant="body1" noWrap className={classes.title}>
-                Lock Celo Gold
+                Vote
               </Typography>
-            </Grid>
-            <Grid item xs={1}>
-              <IconButton
-                aria-label="Close"
-                className={classes.iconButtonRight}
-                onClick={handleClose}
-              >
-                <img src="/images/cross.svg" color="textPrimary" />
-              </IconButton>
             </Grid>
           </Grid>
         </DialogTitle>
-        <DialogContent>
-          <Grid container spacing={1} className={classes.item}>
-            {/* <DialogContentText id="1">
+        <DialogContent >
+          <Grid container spacing={1}>
+            <DialogContentText id="ledger-vote" className={classes.dialog}>
+              <Grid container className={classes.dialogContent}>
+
+                {/* {DepositDropdown()}
+                </Grid> */}
+
+                <Grid item xs={12} className={classes.message}>
+                  <div >
+                    <Typography variant="body2" noWrap color="textPrimary" gutterBottom>
+                      Account
+        </Typography>
+                    <Grid item xs={12} >
+                      <FormControl
+                        //fullWidth={true}
+                        size="medium"
+                        className={classes.formControl}
+                      >
+                        <Select
+                          defaultValue=""
+                          id="deposit-dropdown"
+                          color="secondary"
+                          className={classes.depositSelect}
+                          disableUnderline
+                          fullWidth={true}
+                          IconComponent={KeyboardArrowDownIcon}
+                          classes={{
+                            icon: classes.icon,
+                          }}
+                        >
+                          <MenuItem value={name} className={classes.menu}>
+                            <Typography variant="body2">{name}</Typography>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                              //noWrap={false}
+                              //className={classes.dropdownItem}
+                              className={classes.address}
+                            >
+                              {"0xB177242c85d34cc72e1cc0301eb6f08770ED8a6B"}
+                            </Typography>
+                          </MenuItem>
+
+                          <Divider variant="middle" className={classes.divider} />
+
+                          <MenuItem value={name_2} className={classes.menu}>
+                            <Typography variant="body2">{name_2}</Typography>
+                            <Typography variant="body2" color="textSecondary" gutterBottom>
+                              {"0x456f41406B32c45D59E539e4BBA3D7898c3584dA"}
+                            </Typography>
+                          </MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  </div>
+                </Grid>
+
+                <Grid item xs={12} className={classes.message}>
+                  <Typography variant="body1" color="textPrimary" gutterBottom>
+                    You’re going to vote for
+                  </Typography>
+                  <Typography variant="body2" color="textPrimary" className={classes.paddingBottom}>
+                    Don’t Burn Deposits for Rejected Governance Proposals Unless Vetoed
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} className={classes.paddingBottom} >
+                  <Button variant="contained" className={classes.voteYesButton}>
+                    Yes
+</Button>
+                </Grid>
+                <Grid item xs={12} className={classes.paddingBottom} >
+                  <Button variant="contained" className={classes.voteNoButton}>
+                    No
+</Button>
+                </Grid>
+                <Grid item xs={12} className={classes.paddingBottom} >
+                  <Button variant="contained" className={classes.voteNoWithVetoButton}>
+                    No With Veto
+</Button>
+                </Grid>
+                <Grid item xs={12} >
+                  <Button variant="contained" className={classes.voteAbstainButton}>
+                    Abstain
+</Button>
+                </Grid>
+              </Grid>
+            </DialogContentText>
+          </Grid>
+        </DialogContent>
+      </Dialog>
+    );
+  };
+
+  const ConfirmVote = () => {
+     return (
+      <Card className={classes.rootPaper}>
+        <CardContent>
+          <Grid container spacing={1} justify="center" className={classes.item}>
+          <Grid item xs={12}>
+            <Typography color="textSecondary" variant="body2" gutterBottom align="left">
+              You’re going to vote for Yes, if that’s correct, please sign in your ledger device.
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={6} className={classes.item}>
+            <Typography variant="body2" >
+              Proposal ID
+            </Typography>
+          </Grid>
+          <Grid item xs={6} className={classes.item}>
+            <Typography variant="body2" align="right">
+              10
+                {/* {data.block && data.block.timestamp
+                ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
+                : "Data currently not available"}{" "}
+              (
+              {data && data.block && data.block.timestamp
+                ? moment.unix(data.block.timestamp).fromNow()
+                : null}
+              ) */}
+            </Typography>
+            <Divider variant="middle" className={classes.divider} />
+          </Grid>
+          <Grid item xs={6} className={classes.item}>
+            <Typography variant="body2"  >
+              Proposer
+            </Typography>
+          </Grid>
+          <Grid item xs={6} className={classes.item}>
+            <Typography variant="body2" align="right">
+              Michelle Clark
+                {/* {data.block &&
+              data.block.transactions &&
+              data.block.transactions.transactionIndex
+                ? data.block.transactions.transactionIndex.length()
+                : "Data currently not available"} */}
+            </Typography>
+            <Divider variant="middle" className={classes.divider} />
+          </Grid>
+
+          <Grid item xs={6} className={classes.item}>
+            <Typography variant="body2">Type</Typography>
+          </Grid>
+          <Grid item xs={6} className={classes.item}>
+            <Typography variant="body2" align="right">
+              Proposal
+                {/* {data.block && data.block.size
+                ? data.block.size
+                : "Data currently not available"} */}
+            </Typography>
+            <Divider variant="middle" className={classes.divider} />
+          </Grid>
+
+          <Grid item xs={12} className={classes.item}>
+            <Typography variant="body2" >
+              Title
+            </Typography>
+            <Typography variant="body2" >
+              Don’t Burn Deposits for Rejected Governance Proposals Unless Vetoed
+                {/* {data.block && data.block.hash
+                ? data.block.hash
+                : "Data currently not available"} */}
+            </Typography>
+            <Divider variant="middle" className={classes.divider} />
+          </Grid>
+
+          <Grid item xs={12} className={classes.item}>
+            <Typography variant="body2" >
+              Description
+            </Typography>
+
+            <Typography variant="body2" >
+              Governance Working Group - Q1 2020 funding Community-spend proposal submitted by Gavin Birch (https://twitter.com/Ether_Gavin) of Figment Networks (https://figment.network) -=-=- Full proposal: https://ipfs.io/ipfs/QmSMGEoY2dfxADPfgoAsJxjjC6hwpSNx1dXAqePiCEMCbY
+                {/* {data.block && data.block.parentHash ? (
+                <Link
+                  href="transaction/[transaction]/"
+                  as={`transaction/${data.block.parentHash}`}
+                  color="secondary"
+                  //className={classes.leftInline}
+                >
+                  {data.block.parentHash}
+                </Link>
+              ) : (
+                "Data currently not available"
+              )} */}
+            </Typography>
+            <Divider variant="middle" className={classes.divider} />
+          </Grid>
+
+
+          <Grid item xs={12} className={classes.centerContent}>
+            <Typography variant="h6" >
+              Please sign in your ledger device…
+              </Typography>
+          </Grid>
+          </Grid>
+          </CardContent>
+          </Card >
+    
+    );
+};
+
+return (
+  <div>
+    <Button variant="outlined" color="secondary" onClick={handleClickOpen}>
+      Ledger Dialog
+      </Button>{" "}
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="ledger-dialog"
+      // fullWidth
+      maxWidth="xs"
+    >
+      <DialogTitle id="ledger-dialog-title" className={classes.dialogRoot}>
+        <Grid container className={classes.item}>
+          <Grid item xs={1}>
+            <IconButton
+              aria-label="Return"
+              className={classes.iconButtonLeft}
+            >
+              <img src="/images/last.svg" color="textPrimary" />
+            </IconButton>
+          </Grid>
+          <Grid item xs={10}>
+            <Typography variant="body1" noWrap className={classes.title}>
+              Lock Celo Gold
+              </Typography>
+          </Grid>
+          <Grid item xs={1}>
+            <IconButton
+              aria-label="Close"
+              className={classes.iconButtonRight}
+              onClick={handleClose}
+            >
+              <img src="/images/cross.svg" color="textPrimary" />
+            </IconButton>
+          </Grid>
+        </Grid>
+      </DialogTitle>
+      <DialogContent>
+        <Grid container spacing={1} className={classes.item}>
+          {/* <DialogContentText id="1">
               <Grid item xs={12}>
                 <Typography
                   variant="body2"
@@ -598,7 +866,7 @@ export default function Ledger() {
               {renderControlButtons()}
             </DialogContentText> */}
 
-            {/* <DialogContentText id="2">
+          {/* <DialogContentText id="2">
               <Grid item xs={12}>
                 <Typography variant="body2" noWrap={false}>
                   You are going to lock {"2"} cGLD, it that's correct, please
@@ -681,7 +949,7 @@ export default function Ledger() {
                 </Typography>
               </Grid>
             </DialogContentText> */}
-            {/* <DialogContentText id="3">
+          {/* <DialogContentText id="3">
               <Grid container className={classes.item}>
                 <Grid
                   item
@@ -725,7 +993,7 @@ export default function Ledger() {
               </Grid>
             </DialogContentText> */}
 
-            {/* <DialogContentText id="4">
+          {/* <DialogContentText id="4">
               <Grid container className={classes.item}>
                 <Grid
                   item
@@ -788,7 +1056,7 @@ export default function Ledger() {
               </Grid>
             </DialogContentText> */}
 
-            <DialogContentText id="5">
+          {/* <DialogContentText id="5">
               <Grid container className={classes.item}>
                 <Grid
                   item
@@ -825,11 +1093,13 @@ export default function Ledger() {
                   </Link>
                 </Grid>
               </Grid>
-            </DialogContentText>
-          </Grid>
-        </DialogContent>
-        <DialogActions className={classes.root}></DialogActions>
-      </Dialog>
-    </div>
-  );
+            </DialogContentText> */}
+
+          {Vote()}
+        </Grid>
+      </DialogContent>
+      <DialogActions className={classes.root}></DialogActions>
+    </Dialog>
+  </div>
+);
 }
