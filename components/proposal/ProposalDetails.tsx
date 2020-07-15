@@ -145,10 +145,10 @@ export default function ProposalDetails() {
             <Divider />
           </Grid>
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2">
               Proposal ID
             </Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2" >
               {/* {data.block && data.block.timestamp
                 ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
                 : "Data currently not available"}{" "}
@@ -161,10 +161,10 @@ export default function ProposalDetails() {
             <Divider variant="middle" className={classes.divider} />
           </Grid>
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2" >
               Proposer
             </Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2" >
               {/* {data.block &&
               data.block.transactions &&
               data.block.transactions.transactionIndex
@@ -176,7 +176,7 @@ export default function ProposalDetails() {
 
           <Grid item xs={12} className={classes.item}>
             <Typography variant="body2">Size</Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2" >
               {/* {data.block && data.block.size
                 ? data.block.size
                 : "Data currently not available"} */}
@@ -185,10 +185,10 @@ export default function ProposalDetails() {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2">
               Type
             </Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2" >
               {/* {data &&
               data.block &&
               data.block.miner &&
@@ -204,10 +204,10 @@ export default function ProposalDetails() {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2"  >
               Title
             </Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2"  >
               {/* {data.block && data.block.hash
                 ? data.block.hash
                 : "Data currently not available"} */}
@@ -216,11 +216,11 @@ export default function ProposalDetails() {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2"  >
               Description
             </Typography>
 
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2"  >
               {/* {data.block && data.block.parentHash ? (
                 <Link
                   href="transaction/[transaction]/"
@@ -238,10 +238,10 @@ export default function ProposalDetails() {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2"  >
               Deposit
             </Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2"  >
               {/* {data.block && data.block.totalDifficulty
                 ? data.block.totalDifficulty
                 : "Data currently not available"} */}
@@ -250,10 +250,10 @@ export default function ProposalDetails() {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2"  >
               Submitted Time
             </Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2"  >
               {/* {data.block &&
               data.block.transactions &&
               data.block.transactions.nonce
@@ -264,10 +264,10 @@ export default function ProposalDetails() {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2"  >
               Deposit End Time
             </Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2"  >
               {/* {data.block && data.block.gasUsed
                 ? data.block.gasUsed
                 : "Data currently not available"} */}
@@ -276,10 +276,10 @@ export default function ProposalDetails() {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2"  >
               Voting Start Time
             </Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2"  >
               {/* {data.block && data.block.gasLimit
                 ? data.block.gasLimit
                 : "Data currently not available"} */}
@@ -288,10 +288,10 @@ export default function ProposalDetails() {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2"  >
               Voting End Time
             </Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2"  >
               {/* {data.block && data.block.gasLimit
                 ? data.block.gasLimit
                 : "Data currently not available"} */}
