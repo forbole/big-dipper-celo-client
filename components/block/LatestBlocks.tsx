@@ -124,15 +124,13 @@ const useStyles = makeStyles({
     },
   },
 
-  blocks: {
-    //padding: '1.5%',
-  },
+
 
   textContent: {
     textOverflow: "ellipsis",
     overflow: "hidden",
     minWidth: 0,
-    //whiteSpace: 'noWrap'
+
   },
   truncareText: {
     overflow: "hidden",
@@ -148,8 +146,7 @@ export default function LatestBlocks(pagination: boolean, displayCard: boolean) 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  // const innerWidth = window && window.innerWidth ? window.innerWidth : 0;
-  // console.log(innerWidth);
+  
   let largeScreen: boolean = false;
 
   const getScreenSize = () => {
@@ -195,7 +192,7 @@ export default function LatestBlocks(pagination: boolean, displayCard: boolean) 
   if (error) return `Error! ${error}`;
 
   return (<>
-    <Grid container className={classes.blocks}>
+    <Grid container>
       <Grid item xs={12}>
         {displayCard === true ? (
           <Hidden smUp>
@@ -257,7 +254,7 @@ export default function LatestBlocks(pagination: boolean, displayCard: boolean) 
                     )}
                 </TableHead>
                 <TableBody>
-                  {data.blocks.blocks.slice(paginate, paginate_2).map((row) => {
+                  {data.blocks.blocks.slice(paginate, paginate_2).map((row: any) => {
                     return (
                       <TableRow key={row.number}>
                         <TableCell
