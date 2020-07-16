@@ -118,6 +118,22 @@ export default function LedgerButtons(props: any) {
           </Button>
         </div>
       );
+    case "ValidatorGroupVote":
+      return (
+        <div className={classes.root}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            className={classes.label}
+            fullWidth={true}
+            onClick={handleClickOpen}
+          >
+            <Typography variant="body2" noWrap>
+              Vote
+            </Typography>
+          </Button>
+        </div>
+      );
     default:
       return (
         <div className={classes.root}>
