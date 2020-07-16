@@ -21,6 +21,7 @@ import clsx from "clsx";
 import Link from "../Link";
 import Card from "@material-ui/core/Card";
 import Paper from '@material-ui/core/Paper';
+import Vote from './Vote'
 
 
 import Hidden from "@material-ui/core/Hidden";
@@ -44,7 +45,7 @@ const useStyles = makeStyles({
   title: {
     display: "block",
     textAlign: "center",
-    paddingTop: "0.3rem",
+    paddingTop: "0.5rem",
   },
   leftInline: {
     display: "flex",
@@ -88,7 +89,7 @@ const useStyles = makeStyles({
   },
 
   dialogRoot: {
-    padding: "0.5rem",
+    padding: "1rem",
   },
 
   dialogPadding: {
@@ -230,7 +231,7 @@ const useStyles = makeStyles({
     marginLeft: "0.5rem",
   },
   iconButtonLeft: {
-    padding: "0",
+    //padding: "0",
     marginRight: "0.5rem",
   },
 
@@ -302,7 +303,12 @@ const useStyles = makeStyles({
 
   },
   rootPaper: {
-    padding: '1rem'
+    //padding: '1rem'
+  },
+
+  wrapText:{
+  wordWrap: 'break-word',
+
   }
 
 
@@ -552,133 +558,132 @@ export default function Ledger() {
     );
   };
 
-  const Vote = () => {
-    let name = "Dan Stanley";
-    let name_2 = "Andrea Colemans";
+//   const Vote = () => {
+//     let name = "Dan Stanley";
+//     let name_2 = "Andrea Colemans";
 
-    return (
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="ledger-dialog-vote"
-        // fullWidth
-        maxWidth="xs"
-      >
-        <DialogTitle
-          id="ledger-dialog-vote-title"
-          className={classes.dialogTitle}
-        >
-          <Grid container className={classes.item}>
-            <Grid item xs={12}>
-              <Typography
-                variant="h6"
-                noWrap
-                className={classes.title}
-                color="textPrimary"
-              >
-                Vote
-              </Typography>
-            </Grid>
-          </Grid>
-        </DialogTitle>
-        <DialogContent >
-          <Grid container spacing={1}>
-            <DialogContentText id="ledger-vote" className={classes.dialog}>
-              <Grid container className={classes.dialogContent}>
+//     return (
+//       <Dialog
+//         open={open}
+//         onClose={handleClose}
+//         aria-labelledby="ledger-dialog-vote"
+//         // fullWidth
+//         maxWidth="xs"
+//       >
+//         <DialogTitle
+//           id="ledger-dialog-vote-title"
+//           className={classes.dialogTitle}
+//         >
+//           <Grid container className={classes.item}>
+//             <Grid item xs={12}>
+//               <Typography
+//                 variant="h6"
+//                 noWrap
+//                 className={classes.title}
+//                 color="textPrimary"
+//               >
+//                 Vote
+//               </Typography>
+//             </Grid>
+//           </Grid>
+//         </DialogTitle>
+//         <DialogContent >
+//           <Grid container spacing={1}>
+//             <DialogContentText id="ledger-vote" className={classes.dialog}>
+//               <Grid container className={classes.dialogContent}>
 
-                {/* {DepositDropdown()}
-                </Grid> */}
+//                 {/* {DepositDropdown()}
+//                 </Grid> */}
 
-                <Grid item xs={12} className={classes.message}>
-                  <div >
-                    <Typography variant="body2" noWrap color="textPrimary" gutterBottom>
-                      Account
-        </Typography>
-                    <Grid item xs={12} >
-                      <FormControl
-                        //fullWidth={true}
-                        size="medium"
-                        className={classes.formControl}
-                      >
-                        <Select
-                          defaultValue=""
-                          id="deposit-dropdown"
-                          color="secondary"
-                          className={classes.depositSelect}
-                          disableUnderline
-                          fullWidth={true}
-                          IconComponent={KeyboardArrowDownIcon}
-                          classes={{
-                            icon: classes.icon,
-                          }}
-                        >
-                          <MenuItem value={name} className={classes.menu}>
-                            <Typography variant="body2">{name}</Typography>
-                            <Typography
-                              variant="body2"
-                              color="textSecondary"
-                              //noWrap={false}
-                              //className={classes.dropdownItem}
-                              className={classes.address}
-                            >
-                              {"0xB177242c85d34cc72e1cc0301eb6f08770ED8a6B"}
-                            </Typography>
-                          </MenuItem>
+//                 <Grid item xs={12} className={classes.message}>
+//                   <div >
+//                     <Typography variant="body2" noWrap color="textPrimary" gutterBottom>
+//                       Account
+//         </Typography>
+//                     <Grid item xs={12} >
+//                       <FormControl
+//                         //fullWidth={true}
+//                         size="medium"
+//                         className={classes.formControl}
+//                       >
+//                         <Select
+//                           defaultValue=""
+//                           id="deposit-dropdown"
+//                           color="secondary"
+//                           className={classes.depositSelect}
+//                           disableUnderline
+//                           fullWidth={true}
+//                           IconComponent={KeyboardArrowDownIcon}
+//                           classes={{
+//                             icon: classes.icon,
+//                           }}
+//                         >
+//                           <MenuItem value={name} className={classes.menu}>
+//                             <Typography variant="body2">{name}</Typography>
+//                             <Typography
+//                               variant="body2"
+//                               color="textSecondary"
+//                               //noWrap={false}
+//                               //className={classes.dropdownItem}
+//                               className={classes.address}
+//                             >
+//                               {"0xB177242c85d34cc72e1cc0301eb6f08770ED8a6B"}
+//                             </Typography>
+//                           </MenuItem>
 
-                          <Divider variant="middle" className={classes.divider} />
+//                           <Divider variant="middle" className={classes.divider} />
 
-                          <MenuItem value={name_2} className={classes.menu}>
-                            <Typography variant="body2">{name_2}</Typography>
-                            <Typography variant="body2" color="textSecondary" gutterBottom>
-                              {"0x456f41406B32c45D59E539e4BBA3D7898c3584dA"}
-                            </Typography>
-                          </MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                  </div>
-                </Grid>
+//                           <MenuItem value={name_2} className={classes.menu}>
+//                             <Typography variant="body2">{name_2}</Typography>
+//                             <Typography variant="body2" color="textSecondary" gutterBottom>
+//                               {"0x456f41406B32c45D59E539e4BBA3D7898c3584dA"}
+//                             </Typography>
+//                           </MenuItem>
+//                         </Select>
+//                       </FormControl>
+//                     </Grid>
+//                   </div>
+//                 </Grid>
 
-                <Grid item xs={12} className={classes.message}>
-                  <Typography variant="body1" color="textPrimary" gutterBottom>
-                    You’re going to vote for
-                  </Typography>
-                  <Typography variant="body2" color="textPrimary" className={classes.paddingBottom}>
-                    Don’t Burn Deposits for Rejected Governance Proposals Unless Vetoed
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} className={classes.paddingBottom} >
-                  <Button variant="contained" className={classes.voteYesButton}>
-                    Yes
-</Button>
-                </Grid>
-                <Grid item xs={12} className={classes.paddingBottom} >
-                  <Button variant="contained" className={classes.voteNoButton}>
-                    No
-</Button>
-                </Grid>
-                <Grid item xs={12} className={classes.paddingBottom} >
-                  <Button variant="contained" className={classes.voteNoWithVetoButton}>
-                    No With Veto
-</Button>
-                </Grid>
-                <Grid item xs={12} >
-                  <Button variant="contained" className={classes.voteAbstainButton}>
-                    Abstain
-</Button>
-                </Grid>
-              </Grid>
-            </DialogContentText>
-          </Grid>
-        </DialogContent>
-      </Dialog>
-    );
-  };
+//                 <Grid item xs={12} className={classes.message}>
+//                   <Typography variant="body1" color="textPrimary" gutterBottom>
+//                     You’re going to vote for
+//                   </Typography>
+//                   <Typography variant="body2" color="textPrimary" className={classes.paddingBottom}>
+//                     Don’t Burn Deposits for Rejected Governance Proposals Unless Vetoed
+//                   </Typography>
+//                 </Grid>
+//                 <Grid item xs={12} className={classes.paddingBottom} >
+//                   <Button variant="contained" className={classes.voteYesButton}>
+//                     Yes
+// </Button>
+//                 </Grid>
+//                 <Grid item xs={12} className={classes.paddingBottom} >
+//                   <Button variant="contained" className={classes.voteNoButton}>
+//                     No
+// </Button>
+//                 </Grid>
+//                 <Grid item xs={12} className={classes.paddingBottom} >
+//                   <Button variant="contained" className={classes.voteNoWithVetoButton}>
+//                     No With Veto
+// </Button>
+//                 </Grid>
+//                 <Grid item xs={12} >
+//                   <Button variant="contained" className={classes.voteAbstainButton}>
+//                     Abstain
+// </Button>
+//                 </Grid>
+//               </Grid>
+//             </DialogContentText>
+//           </Grid>
+//         </DialogContent>
+//       </Dialog>
+//     );
+//   };
 
   const ConfirmVote = () => {
      return (
-      <Card className={classes.rootPaper}>
-        <CardContent>
+      <Grid container className={classes.rootPaper}>
           <Grid container spacing={1} justify="center" className={classes.item}>
           <Grid item xs={12}>
             <Typography color="textSecondary" variant="body2" gutterBottom align="left">
@@ -686,7 +691,7 @@ export default function Ledger() {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Divider />
+             <Divider variant="middle" className={classes.divider} />
           </Grid>
           <Grid item xs={6} className={classes.item}>
             <Typography variant="body2" >
@@ -738,7 +743,7 @@ export default function Ledger() {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="body2" >
+            <Typography variant="body2" gutterBottom>
               Title
             </Typography>
             <Typography variant="body2" >
@@ -751,11 +756,11 @@ export default function Ledger() {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="body2" >
+             <Typography variant="body2" gutterBottom>
               Description
             </Typography>
 
-            <Typography variant="body2" >
+            <Typography variant="body2" noWrap={false} className={classes.wrapText}>
               Governance Working Group - Q1 2020 funding Community-spend proposal submitted by Gavin Birch (https://twitter.com/Ether_Gavin) of Figment Networks (https://figment.network) -=-=- Full proposal: https://ipfs.io/ipfs/QmSMGEoY2dfxADPfgoAsJxjjC6hwpSNx1dXAqePiCEMCbY
                 {/* {data.block && data.block.parentHash ? (
                 <Link
@@ -780,9 +785,7 @@ export default function Ledger() {
               </Typography>
           </Grid>
           </Grid>
-          </CardContent>
-          </Card >
-    
+    </Grid>
     );
 };
 
@@ -791,7 +794,8 @@ return (
     <Button variant="outlined" color="secondary" onClick={handleClickOpen}>
       Ledger Dialog
       </Button>{" "}
-    <Dialog
+      
+    {/* <Dialog
       open={open}
       onClose={handleClose}
       aria-labelledby="ledger-dialog"
@@ -825,7 +829,7 @@ return (
         </Grid>
       </DialogTitle>
       <DialogContent>
-        <Grid container spacing={1} className={classes.item}>
+        <Grid container spacing={1} className={classes.item}> */}
           {/* <DialogContentText id="1">
               <Grid item xs={12}>
                 <Typography
@@ -1094,12 +1098,12 @@ return (
                 </Grid>
               </Grid>
             </DialogContentText> */}
-
-          {Vote()}
+{/* 
+          {ConfirmVote()}
         </Grid>
       </DialogContent>
       <DialogActions className={classes.root}></DialogActions>
-    </Dialog>
+    </Dialog> */}
   </div>
 );
 }
