@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import {
-    AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, BarChart, Bar, Cell, Legend, Label
+    AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, BarChart, Bar, Cell, Legend, Label, ResponsiveContainer
 } from 'recharts';
 import { curveCardinal } from 'd3-shape';
 import Typography from "@material-ui/core/Typography";
@@ -16,43 +16,55 @@ import Divider from "@material-ui/core/Divider";
 
 const data = [
     {
-        voted: 99,
+        Voted: 99,
     },
     {
-        voted: 91,
+        Voted: 91,
     },
     {
-        voted: 94,
+        Voted: 94,
     },
     {
-        voted: 87,
+        Voted: 87,
     },
     {
-        voted: 90,
+        Voted: 90,
     },
     {
-        voted: 99,
+        Voted: 99,
     },
     {
-        voted: 96,
+        Voted: 96,
     },
     {
-        voted: 91,
+        Voted: 91,
     },
     {
-        voted: 94,
+        Voted: 94,
     },
     {
-        voted: 87,
+        Voted: 87,
     },
     {
-        voted: 90,
+        Voted: 90,
     },
     {
-        voted: 99,
+        Voted: 99,
     },
     {
-        voted: 96,
+        Voted: 96,
+    },
+    {
+        Voted: 96,
+    },
+    {
+        Voted: 96,
+    },
+    {
+        Voted: 96,
+    },
+    {
+        Voted: 96,
     },
 ];
 
@@ -66,13 +78,16 @@ const useStyles = makeStyles(() => {
         },
         container: {
             justifyContent: "center",
+            display: "flex",
         },
         divider: {
             margin: "0.15rem 0rem",
             backgroundColor: "rgba(62, 67, 71, 1)",
         },
-        legend: {
-            align: "left"
+        power: {
+            align: "left",
+            marginLeft: "-3rem"
+
         }
     };
 });
@@ -83,36 +98,45 @@ const Uptime = () => {
     return (
         <Card className={classes.root}>
             <CardContent>
-                <Grid container spacing={1} justify="center" >
-                    <Grid item xs={12}>
-                        <Typography color="textPrimary" variant="subtitle1" gutterBottom>
+                <Grid container spacing={1} className={classes.container} >
+                    <Grid item xs={6}>
+                        <Typography color="textPrimary" variant="subtitle1" align="left" gutterBottom>
                             Uptime
+            </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography color="secondary" variant="subtitle1" align="right" gutterBottom>
+                            99.8%
             </Typography>
                     </Grid>
                     <Grid item xs={12}>
                         <Divider variant="middle" className={classes.divider} />
                     </Grid>
-                    <Grid item xs={12}>
+                    <ResponsiveContainer width='95%' aspect={1.0 / 0.9}>
                         <BarChart
-                            width={350}
-                            height={250}
+                            // width={350}
+                            // height={250}
                             data={data}
                             margin={{
-                                top: 0, right: 30, left: 20, bottom: 5,
+                                top: 0, right: 0, left: -10, bottom: 5,
                             }}
                         >
-                            <CartesianGrid strokeDasharray="3 3" opacity={0.1} />
-                            <XAxis tick={{ stroke: "rgba(255, 255, 255, 0.6)", fontSize: 10, fontWeight: 150, }} dataKey="name">
-                                <Label value="Blocks" offset={0} position="insideBottom" />
-                            </XAxis>
+                            <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+                            <XAxis tick={{ stroke: "rgba(255, 255, 255, 0.6)", fontSize: 10, fontWeight: 150, }} dataKey="name"
+                                label={{ value: 'Blocks', position: 'insideBottomLeft', fill: "rgba(255, 255, 255, 0.6)", fontWeight: "normal", textAnchor: "start" }} />
                             <YAxis tickSize={0} tickMargin={10} tick={{ stroke: "rgba(255, 255, 255, 0.6)", fontSize: 10, fontWeight: 150 }}
-                                label={{ value: 'Votes available', angle: -270, position: 'insideLeft', color: "rgba(255, 255, 255, 0.6)" }} />
+                                label={{ value: 'Votes available', angle: -270, position: 'center', fill: "rgba(255, 255, 255, 0.6)", fontWeight: "normal", }} />
                             <Tooltip />
-                            <Legend align="left" verticalAlign="top" />
-                            <Bar dataKey="voted" fill="rgba(58, 211, 158, 1)" barSize={6} fillOpacity={1} />
-                            <Bar dataKey="missed" fill="rgba(150, 152, 154, 1)" barSize={6} fillOpacity={1} />
+                            <Legend align="left" verticalAlign="top" height={50} width={200} />
+                            <Bar dataKey="Voted" fill="rgba(58, 211, 158, 1)" barSize={6} fillOpacity={1} />
+                            <Bar dataKey="Missed" fill="rgba(150, 152, 154, 1)" barSize={6} fillOpacity={1} />
                         </BarChart>
-                    </Grid>
+                    </ResponsiveContainer>
+                    <span className={classes.power}>
+                        <Typography color="textSecondary" variant="caption" className={classes.power}  >
+                            10/10000 (19h)
+            </Typography>
+                    </span>
                 </Grid>
 
             </CardContent>
