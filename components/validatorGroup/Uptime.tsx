@@ -88,9 +88,103 @@ const useStyles = makeStyles(() => {
             align: "left",
             marginLeft: "-3rem"
 
+        },
+
+        customTooltip: {
+            width: '100%',
+            display: "flex"
+        },
+
+        rootTooltip: {
+            background: "rgba(46, 51, 56, 1)",
+            opacity: 5,
+            width: "19.125rem",
+            height: "7.9rem"
+        },
+
+        cardContent: {
+            padding: '0.625rem'
         }
+
+
     };
 });
+
+const CustomTooltip = () => {
+    const classes = useStyles();
+    return (
+        <Card className={classes.rootTooltip}>
+            <CardContent className={classes.cardContent}>
+                <Grid container>
+                    <Grid item xs={5}>
+                        <Typography color="textPrimary" variant="body2" align="left" >
+                            Proposer
+            </Typography>
+                    </Grid>
+                    <Grid item xs={7}>
+                        <Typography color="textPrimary" variant="body2" align="right" >
+                            <Link
+                                href="/account/[account]/"
+                                as={`/account/${1}`}
+                                color="secondary"
+                            >
+                                Nans Aguilars </Link>
+                        </Typography>
+                    </Grid>
+
+                    <Grid item xs={5}>
+                        <Typography color="textPrimary" variant="body2" align="left" >
+                            Height
+            </Typography>
+                    </Grid>
+
+                    <Grid item xs={7}>
+                        <Typography color="textPrimary" variant="body2" align="right" >
+                            <Link
+                                href="/block/[block]/"
+                                as={`/block/${108144}`}
+                                color="secondary"
+                            >
+                                108144 </Link>
+                        </Typography>
+                    </Grid>
+
+                    <Grid item xs={5}>
+                        <Typography color="textPrimary" variant="body2" align="left" >
+                            Votes Available
+            </Typography>
+                    </Grid>
+                    <Grid item xs={7}>
+                        <Typography color="textPrimary" variant="body2" align="right" >
+                            89%
+            </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography color="textPrimary" variant="body2" align="left" >
+                            Gas (used / wanted)
+            </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography color="textPrimary" variant="body2" align="right" >
+                            1,500,795 / 3,000,000
+            </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography color="textPrimary" variant="body2" align="left" >
+                            Vote
+            </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography color="textPrimary" variant="body2" align="right" >
+                            Yes
+            </Typography>
+                    </Grid>
+                </Grid>
+            </CardContent>
+        </Card>
+    );
+
+};
 
 const Uptime = () => {
     const classes = useStyles();
@@ -120,13 +214,15 @@ const Uptime = () => {
                             margin={{
                                 top: 0, right: 0, left: -10, bottom: 5,
                             }}
+                            barGap="0"
+                            barCategoryGap="2%"
                         >
                             <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
                             <XAxis tick={{ stroke: "rgba(255, 255, 255, 0.6)", fontSize: 10, fontWeight: 150, }} dataKey="name"
                                 label={{ value: 'Blocks', position: 'insideBottomLeft', fill: "rgba(255, 255, 255, 0.6)", fontWeight: "normal", textAnchor: "start" }} />
                             <YAxis tickSize={0} tickMargin={10} tick={{ stroke: "rgba(255, 255, 255, 0.6)", fontSize: 10, fontWeight: 150 }}
                                 label={{ value: 'Votes available', angle: -270, position: 'center', fill: "rgba(255, 255, 255, 0.6)", fontWeight: "normal", }} />
-                            <Tooltip />
+                            <Tooltip content={<CustomTooltip />} />
                             <Legend align="left" verticalAlign="top" height={50} width={200} />
                             <Bar dataKey="Voted" fill="rgba(58, 211, 158, 1)" barSize={6} fillOpacity={1} />
                             <Bar dataKey="Missed" fill="rgba(150, 152, 154, 1)" barSize={6} fillOpacity={1} />
