@@ -136,8 +136,12 @@ const Confirm = () => {
                 : null}
               ) */}
                                 </Typography>
+
+                            </Grid>
+                            <Grid item xs={12}>
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
+
                             <Grid item xs={6} className={classes.item} >
                                 <Typography variant="body2" color="textPrimary" gutterBottom >
                                     Validator group
@@ -152,6 +156,10 @@ const Confirm = () => {
                 ? data.block.transactions.transactionIndex.length()
                 : "Data currently not available"} */}
                                 </Typography>
+                                
+                            </Grid>
+
+                            <Grid item xs={12}>
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
 
@@ -165,9 +173,12 @@ const Confirm = () => {
                 ? data.block.size
                 : "Data currently not available"} */}
                                 </Typography>
-                                <Divider variant="middle" className={classes.divider} />
+                              
                             </Grid>
 
+                            <Grid item xs={12}>
+                                <Divider variant="middle" className={classes.divider} />
+                            </Grid>
 
                             <Grid item xs={12} className={classes.centerContent}>
                                 <Typography variant="h6" color="textPrimary" >
