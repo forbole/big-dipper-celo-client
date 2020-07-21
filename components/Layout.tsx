@@ -13,25 +13,16 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import SearchBar from "../components/SearchBar";
 import NetworkDropdown from "../components/NetworkDropdown";
-import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import Link from "../components/Link";
 import PriceCard from "../components/PriceCard";
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
-import PersonIcon from "@material-ui/icons/Person";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Ledger from "./ledger/Ledger";
 import Footer from "../components/Footer";
 
@@ -56,6 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     icon: {
       minWidth: "1.7rem",
+      marginTop: "0.2rem"
     },
 
     drawerLogo: {
@@ -120,25 +112,25 @@ const Layout = (props: { children: React.ReactNode }) => {
         {[
           <Link href="/" color="inherit">
             {" "}
-            <Typography variant="body2">{"Dashboard"}</Typography>{" "}
+            <Typography variant="body1" color="textPrimary">{"Dashboard"}</Typography>{" "}
           </Link>,
           <Link href="/blocks" color="inherit">
             {" "}
-            <Typography variant="body2">{"Blocks"}</Typography>{" "}
+            <Typography variant="body1" color="textPrimary">{"Blocks"}</Typography>{" "}
           </Link>,
           <Link href="/transactions" color="inherit">
             {" "}
-            <Typography variant="body2">{"Transactions"}</Typography>{" "}
+            <Typography variant="body1" color="textPrimary">{"Transactions"}</Typography>{" "}
           </Link>,
           <Link href="/accounts" color="inherit">
             {" "}
-            <Typography variant="body2">{"Accounts"}</Typography>{" "}
+            <Typography variant="body1" color="textPrimary">{"Accounts"}</Typography>{" "}
           </Link>,
           <Link href="/proposals" color="inherit">
-            <Typography variant="body2">{"Proposals"}</Typography>{" "}
+            <Typography variant="body1" color="textPrimary">{"Proposals"}</Typography>{" "}
           </Link>,
           <Link href="/validatorVotes" color="inherit">
-            <Typography variant="body2">{"Validator Votes"}</Typography>{" "}
+            <Typography variant="body1" color="textPrimary">{"Validator Votes"}</Typography>{" "}
           </Link>,
         ].map((text, index) => (
           <ListItem button key={index}>
@@ -150,26 +142,26 @@ const Layout = (props: { children: React.ReactNode }) => {
       <List>
         {[
           <Link href="/account" color="inherit">
-            <Typography variant="body2">
+            <Typography variant="body1" color="textPrimary">
               <ListItemIcon className={classes.icon}>
-                <PersonIcon color="inherit" fontSize="small" />
+                <img src="/images/user_login.svg" />
               </ListItemIcon>
               {"Michelle Clark"}
             </Typography>
           </Link>,
 
           <Link href="/blocks" color="inherit">
-            <Typography variant="body2">
+            <Typography variant="body1" color="textPrimary">
               <ListItemIcon className={classes.icon}>
-                <ExitToAppIcon color="inherit" fontSize="small" />
+                <img src="/images/logout.svg" />
               </ListItemIcon>
               {"Logout"}
             </Typography>
           </Link>,
           <Link href="/transactions" color="inherit">
-            <Typography variant="body2">
+            <Typography variant="body1" color="textPrimary">
               <ListItemIcon className={classes.icon}>
-                <VpnKeyIcon color="inherit" fontSize="small" />
+                <img src="/images/connect_ledger.svg" />
               </ListItemIcon>
               {"Sign In With Ledger"}
             </Typography>{" "}
@@ -200,13 +192,7 @@ const Layout = (props: { children: React.ReactNode }) => {
               onClick={toggleDrawer(anchor, true)}
               className={classes.menuIcon}
             >
-              {/* <MenuIcon /> */}
-              {/* <Link
-                href="https://github.com/celo-org"
-                className={classes.socialMedia}
-              > */}
               <img src="/images/menu.svg" />
-              {/* </Link> */}
             </Button>
             <SwipeableDrawer
               anchor={anchor}
