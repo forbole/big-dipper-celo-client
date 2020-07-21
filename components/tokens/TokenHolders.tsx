@@ -102,6 +102,10 @@ const useStyles = makeStyles(({ spacing }) => {
       padding: '0 1rem',
     },
 
+    divider: {
+      backgroundColor: "rgba(62, 67, 71, 1)",
+    }
+
 
   }
 });
@@ -109,7 +113,7 @@ const useStyles = makeStyles(({ spacing }) => {
 
 
 
-export default function TokenHolders() {
+const TokenHolders = () => {
 
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
@@ -136,7 +140,7 @@ export default function TokenHolders() {
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.root}>
         <Grid container >
-          <Divider variant='middle' />
+          <Divider variant='middle' className={classes.divider} />
           <TableContainer className={classes.container}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
@@ -189,3 +193,5 @@ export default function TokenHolders() {
     </ExpansionPanel>
   );
 }
+
+export default TokenHolders

@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function Chips(props: any) {
+const Chips = (props: any) => {
   const classes = useStyles();
 
   switch (props.value) {
@@ -208,3 +208,5 @@ export default function Chips(props: any) {
       );
   }
 }
+
+export default Chips

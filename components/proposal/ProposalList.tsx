@@ -71,7 +71,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ProposalList() {
+const ProposalDetails = () => {
   const classes = useStyles();
   const account = "hiu43ruybr3ub3f";
   return (
@@ -181,3 +181,5 @@ export default function ProposalList() {
     </div>
   );
 }
+
+export default ProposalDetails

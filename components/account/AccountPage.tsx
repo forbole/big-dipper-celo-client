@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function AccountPage() {
+const AccountPage = () => {
   const router = useRouter();
 
   //if (!router.query.account) return <ContentLoader />;
@@ -128,7 +128,7 @@ export default function AccountPage() {
       <Grid item xs={12} lg={5} className={classes.bottomPadding}>
         <CoinBalanceHistory />
       </Grid>
-      
+
       <Grid item xs={12} lg={5} className={classes.bottomPadding}>
         <Downtime />
       </Grid>
@@ -143,6 +143,8 @@ export default function AccountPage() {
         </Grid>
       </Hidden>
     </Grid>
-    </>
+  </>
   );
 }
+
+export default AccountPage

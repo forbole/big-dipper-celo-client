@@ -99,6 +99,7 @@ const useStyles = makeStyles({
   },
   divider: {
     margin: "0.5rem",
+    backgroundColor: "rgba(62, 67, 71, 1)",
   },
   link: {
     float: "right",
@@ -112,12 +113,12 @@ const useStyles = makeStyles({
   },
 });
 
-export default function LatestTransactions(props: boolean) {
+const LatestTransactions = (props: boolean) => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const paginate: any = props === true ? page * rowsPerPage : 0;
-  const paginate_2: any = props === true? page * rowsPerPage + rowsPerPage : 5;
+  const paginate_2: any = props === true ? page * rowsPerPage + rowsPerPage : 5;
 
   const { loading, error, data } = useQuery(GET_TX, {
     pollInterval: 5000,
@@ -146,7 +147,7 @@ export default function LatestTransactions(props: boolean) {
         <Paper className={classes.root}>
           <Typography variant="body1" className={classes.box}>
             Latest Transactions{" "}
-            {props===false ? (
+            {props === false ? (
               <Link
                 href="/transactions"
                 className={classes.link}
@@ -332,4 +333,4 @@ export default function LatestTransactions(props: boolean) {
   )
 }
 
-//export default LatestTransactions;
+export default LatestTransactions;

@@ -52,6 +52,7 @@ const useStyles = makeStyles(() => {
     },
     divider: {
       margin: "0.5rem 0 0 0",
+      backgroundColor: "rgba(62, 67, 71, 1)",
     },
     arrowIcon: {
       padding: "0.25rem",
@@ -84,7 +85,7 @@ const useStyles = makeStyles(() => {
   };
 });
 
-export default function ProposalDetails() {
+const ProposalDetails = () => {
   // // const BlockDetails = (number_value : any  ) => {
   // export default function Block(number_value: any) {
   //   const router = useRouter();
@@ -306,3 +307,5 @@ export default function ProposalDetails() {
     </Card>
   );
 }
+
+export default ProposalDetails

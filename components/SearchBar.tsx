@@ -35,7 +35,7 @@ interface State {
   txSearch: string;
 }
 
-export default function SearchBar() {
+const SearchBar = () => {
   const classes = useStyles();
   const [values, setValues] = React.useState<State>({
     txSearch: "",
@@ -74,3 +74,5 @@ export default function SearchBar() {
     </div>
   );
 }
+
+export default SearchBar

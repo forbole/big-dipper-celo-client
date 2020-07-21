@@ -5,7 +5,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import Link from "../../Link";
+import Link from "../../../Link";
 
 
 
@@ -26,16 +26,14 @@ const useStyles = makeStyles({
 
     item: {
         justifyContent: "center",
-        padding: "1rem"
+        padding: "1rem 0"
     },
 
     controlButton: {
         justifyContent: "center",
         flexWrap: "wrap",
-        paddingTop: "2rem",
         textTransform: "none",
         borderRadius: 4,
-        //minHeight: "2.5rem",
         width: "100%",
     },
     controlButtonLabel: {
@@ -46,12 +44,28 @@ const useStyles = makeStyles({
         minHeight: "2.5rem",
         textAlign: "center",
     },
+    txHash: {
+        overflowWrap: "anywhere",
+        textAlign: "left",
+    },
+    proposalButtonLabel: {
+        display: "flex",
+        textTransform: "none",
+        borderRadius: 4,
+        justifyContent: "center",
+        minHeight: "2.5rem",
+        textAlign: "center",
+    },
+
+    paddingBottom: {
+        paddingBottom: "1.5rem"
+    }
 
 });
 
 
 
-const RevokeSuccess = () => {
+const Success = () => {
     const classes = useStyles();
     const [, setOpen] = React.useState(false);
 
@@ -63,8 +77,8 @@ const RevokeSuccess = () => {
 
     return (<>
 
-        <DialogContent className={classes.root}>
-            <Grid container spacing={1} >
+        <DialogContent >
+            <Grid container spacing={1} className={classes.root}>
                 <DialogContentText id="ledger-validator-group-vote" >
                     <Grid container className={classes.item}>
                         <Grid
@@ -83,30 +97,33 @@ const RevokeSuccess = () => {
                             item
                             xs={12}
                             alignItems="center"
+                            className={classes.paddingBottom}
                         >
                             <Typography
                                 variant="body2"
                                 noWrap
                                 align="center"
+                                color="textPrimary"
                             >
-                                The vote was successfully revoked.
+                                Voted Successfully
                                                   </Typography>
                         </Grid>
-                        <Grid item xs={12}>
+
+
+                        <Grid item xs={12} md={6} className={classes.controlButton} alignItems="center">
                             <Link href="/transactions">
-                                <div className={classes.controlButton}>
-                                    <Button
-                                        variant="outlined"
-                                        color="secondary"
-                                        className={classes.controlButtonLabel}
-                                        fullWidth={true}
-                                        onClick={handleClose}
-                                    >
-                                        <Typography variant="body2" noWrap>
-                                            View Transactions
-                        </Typography>
-                                    </Button>
-                                </div>
+                                <Button
+                                    variant="outlined"
+                                    color="secondary"
+                                    className={classes.proposalButtonLabel}
+                                    fullWidth={true}
+                                    onClick={handleClose}
+
+                                >
+                                    <Typography variant="body2" noWrap>
+                                        View Transactions
+                      </Typography>
+                                </Button>
                             </Link>
                         </Grid>
                     </Grid>
@@ -117,4 +134,4 @@ const RevokeSuccess = () => {
     );
 };
 
-export default RevokeSuccess
+export default Success

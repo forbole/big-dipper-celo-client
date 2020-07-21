@@ -12,7 +12,7 @@ import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import ControlButtons from '../ControlButtons'
+import ControlButtons from '../../ControlButtons'
 
 
 
@@ -89,7 +89,7 @@ const useStyles = makeStyles({
 
 
 
-const RevokeVote = () => {
+const Revoke = () => {
     let name = "Dan Stanley";
     let name_2 = "Andrea Colemans";
 
@@ -259,4 +259,4 @@ const RevokeVote = () => {
     );
 };
 
-export default RevokeVote
+export default Revoke

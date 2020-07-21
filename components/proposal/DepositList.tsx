@@ -58,7 +58,7 @@ const useStyles = makeStyles(() => {
       borderRadius: 5,
       width: "100%",
       overflow: "auto",
-    
+
     },
     box: {
       letterSpacing: "1px",
@@ -86,10 +86,13 @@ const useStyles = makeStyles(() => {
     headerLabel: {
       padding: "0 0 1rem 0.5rem"
     },
+    divider: {
+      backgroundColor: "rgba(62, 67, 71, 1)",
+    }
   };
 });
 
-export default function DepositList() {
+const DepositList = () => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -108,7 +111,7 @@ export default function DepositList() {
             Deposit (200 cGLD)
           </Typography>
 
-          <Divider variant="middle" />
+          <Divider variant="middle" className={classes.divider} />
           <Table size="medium">
             <TableHead>
               <TableRow>
@@ -210,3 +213,5 @@ export default function DepositList() {
     </Grid>
   );
 }
+
+export default DepositList

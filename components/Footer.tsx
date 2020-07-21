@@ -36,42 +36,44 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function Footer() {
+const Footer = () => {
   const classes = useStyles();
   return (
     <footer>
-        <Grid container className={classes.root}>
-          <Grid item xs={12} sm={12} md={8}>
-            <img src="/images/celo_logo.svg" />
-          </Grid>
-
-          <Grid item xs={12} sm={12} md={8}>
-            <Typography variant="body2" className={classes.text} align="left">
-              Big Dipper for Celo. Let’s make money connected.
-            </Typography>
-          </Grid>
-
-          <Grid item xs={12} sm={12} md={8} >
-            <Link
-              href="https://github.com/celo-org"
-              className={classes.socialMedia}
-            >
-              <img src="/images/social media_github.svg" />
-            </Link>
-            <Link
-              href="https://medium.com/celoorg"
-              className={classes.socialMedia}
-            >
-              <img src="/images/social media_medium.svg" />
-            </Link>
-            <Link
-              href="https://twitter.com/CeloOrg"
-              className={classes.socialMedia}
-            >
-              <img src="/images/social media_twitter.svg" />
-            </Link>
-          </Grid>
+      <Grid container className={classes.root}>
+        <Grid item xs={12} sm={12} md={8}>
+          <img src="/images/celo_logo.svg" />
         </Grid>
+
+        <Grid item xs={12} sm={12} md={8}>
+          <Typography variant="body2" className={classes.text} align="left">
+            Big Dipper for Celo. Let’s make money connected.
+            </Typography>
+        </Grid>
+
+        <Grid item xs={12} sm={12} md={8} >
+          <Link
+            href="https://github.com/celo-org"
+            className={classes.socialMedia}
+          >
+            <img src="/images/social media_github.svg" />
+          </Link>
+          <Link
+            href="https://medium.com/celoorg"
+            className={classes.socialMedia}
+          >
+            <img src="/images/social media_medium.svg" />
+          </Link>
+          <Link
+            href="https://twitter.com/CeloOrg"
+            className={classes.socialMedia}
+          >
+            <img src="/images/social media_twitter.svg" />
+          </Link>
+        </Grid>
+      </Grid>
     </footer>
   );
 }
+
+export default Footer

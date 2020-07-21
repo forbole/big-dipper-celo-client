@@ -4,7 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Link from "../components/Link";
 import Card from "@material-ui/core/Card";
-import Divider from "@material-ui/core/Divider";
 import Layout from "../components/Layout";
 import Overview from "../components/tokens/Overview";
 import ProfileSummary from "../components/tokens/ProfileSummary";

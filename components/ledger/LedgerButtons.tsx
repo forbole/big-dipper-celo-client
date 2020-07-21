@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function LedgerButtons(props: any) {
+const LedgerButtons = (props: any) => {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -151,3 +151,5 @@ export default function LedgerButtons(props: any) {
       );
   }
 }
+
+export default LedgerButtons

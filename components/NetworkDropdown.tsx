@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function NetworkDropdown() {
+const NetworkDropdown = () => {
   const classes = useStyles();
   const [show, setShow] = React.useState<string | number>("");
   const [open, setOpen] = React.useState(false);
@@ -147,3 +147,5 @@ export default function NetworkDropdown() {
     // </Container>
   );
 }
+
+export default NetworkDropdown

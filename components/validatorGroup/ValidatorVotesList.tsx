@@ -132,11 +132,15 @@ const useStyles = makeStyles(() => {
       color: "rgba(251, 204, 92, 1)",
       marginLeft: "0.25rem",
     },
+    link: {
+      float: "right",
+      textAlign: "right",
+    },
 
   };
 });
 
-const validatorVotesList = () => {
+const ValidatorVotesList = () => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -162,6 +166,10 @@ const validatorVotesList = () => {
             className={classes.headerLabel}
           >
             Validator Votes
+
+             <Link href="/blocks" className={classes.link} color="textPrimary">
+              {"view more"}
+            </Link>
           </Typography>
           <Table size="medium">
             <TableHead>
@@ -210,7 +218,7 @@ const validatorVotesList = () => {
                           as={`/validatorGroup/${'NanValdezG'}`}
                           color="secondary">
                           <Typography variant="body2" noWrap>
-                            
+
                             {row.groupName}
                           </Typography>
                         </Link>
@@ -339,7 +347,7 @@ const validatorVotesList = () => {
                             </Grid>
 
                           </Grid>
-                         
+
                         </Collapse>
                       </TableCell>
                     </TableRow>
@@ -356,4 +364,4 @@ const validatorVotesList = () => {
   );
 }
 
-export default validatorVotesList
+export default ValidatorVotesList

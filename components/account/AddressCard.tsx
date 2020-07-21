@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function AddressCard(address: any) {
+const AddressCard = (address: any) => {
   const classes = useStyles();
   // console.log(address);
   return (
@@ -58,3 +58,5 @@ export default function AddressCard(address: any) {
     </Card>
   );
 }
+
+export default AddressCard

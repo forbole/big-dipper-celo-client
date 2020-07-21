@@ -66,6 +66,7 @@ const useStyles = makeStyles(({ spacing, palette }) => {
     },
     divider: {
       margin: "0.5rem 0 0 0",
+      backgroundColor: "rgba(62, 67, 71, 1)",
     },
     inputLabel: {
       wordWrap: "break-word",
@@ -120,7 +121,7 @@ function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function TransactionDetails(hash_value: String) {
+const TransactionDetails = (hash_value: String) => {
   const classes = useStyles();
   const hash = hash_value.hash_value ? hash_value.hash_value.toString() : 0;
   const { loading, error, data } = useQuery(GET_TX_DETAILS, {
@@ -198,8 +199,8 @@ export default function TransactionDetails(hash_value: String) {
             <Typography variant="body2" component="h2">
               {data && data.transaction && data.transaction.timestamp
                 ? new Date(
-                    parseInt(data.transaction.timestamp) * 1000
-                  ).toUTCString()
+                  parseInt(data.transaction.timestamp) * 1000
+                ).toUTCString()
                 : "Data currently not available"}{" "}
               (
               {data && data.transaction && data.transaction.timestamp
@@ -217,7 +218,7 @@ export default function TransactionDetails(hash_value: String) {
             <Typography variant="body2" component="h2">
               {(data.transaction &&
                 data.transaction.value && data.transaction.value === 0) ||
-              data.transaction &&
+                data.transaction &&
                 data.transaction.value && data.transaction.value
                 ? "Contract Call"
                 : "Token Transfer"}
@@ -233,8 +234,8 @@ export default function TransactionDetails(hash_value: String) {
               {data.transaction && !data.transaction.pending ? (
                 <Chips value="Pending" />
               ) : (
-                <Chips value="Success" />
-              )}
+                  <Chips value="Success" />
+                )}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -254,8 +255,8 @@ export default function TransactionDetails(hash_value: String) {
                   {data.transaction.from.address}
                 </Link>
               ) : (
-                "Data currently not available"
-              )}
+                  "Data currently not available"
+                )}
             </Typography>
 
             <Divider variant="middle" className={classes.divider} />
@@ -275,8 +276,8 @@ export default function TransactionDetails(hash_value: String) {
                   {data.transaction.to.address}
                 </Link>
               ) : (
-                "Data currently not available"
-              )}
+                  "Data currently not available"
+                )}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -465,3 +466,5 @@ export default function TransactionDetails(hash_value: String) {
     </Card>
   );
 }
+
+export default TransactionDetails

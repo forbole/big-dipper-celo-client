@@ -30,10 +30,13 @@ const useStyles = makeStyles((theme: Theme) =>
       overflow: "hidden",
       whiteSpace: "nowrap",
     },
+    divider: {
+      backgroundColor: "rgba(62, 67, 71, 1)",
+    }
   })
 );
 
-export default function TokenOverview() {
+const TokenOverview = () => {
   const classes = useStyles();
 
   return (
@@ -43,7 +46,7 @@ export default function TokenOverview() {
           <Typography variant="body1" className={classes.box}>
             Overview
           </Typography>
-          <Divider variant="middle" />
+          <Divider variant="middle" className={classes.divider} />
         </Grid>
 
         <Grid item xs={6}>
@@ -140,3 +143,5 @@ export default function TokenOverview() {
     </Card>
   );
 }
+
+export default TokenOverview

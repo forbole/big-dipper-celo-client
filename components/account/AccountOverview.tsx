@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
     divider: {
       margin: "0.5rem",
-      backgroundColor: "rgba(61, 66, 71, 1)", 
+      backgroundColor: "rgba(62, 67, 71, 1)",
     },
 
     searchbar: {
@@ -167,12 +167,12 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: "0 0 0 1rem",
     },
 
-    searchIcon:{
-      padding:"0.25rem"
+    searchIcon: {
+      padding: "0.25rem"
     },
-    centerButtons:{
+    centerButtons: {
       justifyContent: "center",
-    alignItems: "center",
+      alignItems: "center",
     }
   })
 );
@@ -181,7 +181,7 @@ interface State {
   tokenSearch: string;
 }
 
-function TokenSearchBar() {
+const TokenSearchBar = () => {
   const classes = useStyles();
   const [values, setValues] = React.useState<State>({
     tokenSearch: "",
@@ -221,7 +221,7 @@ function TokenSearchBar() {
   );
 }
 
-function TokenDropdown() {
+const TokenDropdown = () => {
   const classes = useStyles();
   let celoGold = "14.221738 cGLD";
   let celoDollar = "492,270.513 cUSD";
@@ -304,7 +304,7 @@ function TokenDropdown() {
   );
 }
 
-export default function AccountOverview(props: any) {
+const AccountOverview = (props: any) => {
   const classes = useStyles();
   return (
     <span>
@@ -314,7 +314,7 @@ export default function AccountOverview(props: any) {
             <Typography variant="body1" className={classes.box}>
               Overview
             </Typography>
-            <Divider variant="middle" className={classes.divider}/>
+            <Divider variant="middle" className={classes.divider} />
           </Grid>
 
           <Grid item xs={6}>
@@ -368,27 +368,29 @@ export default function AccountOverview(props: any) {
           </Grid>
 
           <Grid container direction="row" alignItems="center" justify="center" className={classes.centerButtons}>
-          <Grid item xs={6} justify="center" >
-            <Button
-              variant="outlined"
-              color="secondary"
-              className={classes.buttonUnlock}
-            >
-              <Typography variant="body1">Unlock cGLD</Typography>
-            </Button>
-          </Grid>
-          <Grid item xs={6} justify="center"  >
-            <Button
-              variant="outlined"
-              color="secondary"
-              className={classes.buttonLock}
-            >
-              <Typography variant="body1">Lock cGLD</Typography>
-            </Button>
-          </Grid>
+            <Grid item xs={6} justify="center" >
+              <Button
+                variant="outlined"
+                color="secondary"
+                className={classes.buttonUnlock}
+              >
+                <Typography variant="body1">Unlock cGLD</Typography>
+              </Button>
+            </Grid>
+            <Grid item xs={6} justify="center"  >
+              <Button
+                variant="outlined"
+                color="secondary"
+                className={classes.buttonLock}
+              >
+                <Typography variant="body1">Lock cGLD</Typography>
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
       </Card>
     </span>
   );
 }
+
+export default AccountOverview

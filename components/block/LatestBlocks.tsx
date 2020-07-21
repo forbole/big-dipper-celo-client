@@ -91,6 +91,7 @@ const useStyles = makeStyles({
   },
   divider: {
     padding: "0 1rem",
+    backgroundColor: "rgba(62, 67, 71, 1)",
   },
 
   cell: {
@@ -141,30 +142,30 @@ const useStyles = makeStyles({
   },
 });
 
-export default function LatestBlocks(pagination: boolean, displayCard: boolean) {
+const LatestBlocks = (pagination: boolean, displayCard: boolean) => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  
-  let largeScreen: boolean = false;
+
+  let mediumScreen: boolean = false;
 
   const getScreenSize = () => {
     if (typeof window !== "undefined") {
-      if (window.innerWidth > 1400) return (largeScreen = true);
-      else return (largeScreen = false);
+      if (window.innerWidth > 641) return (mediumScreen = true);
+      else return (mediumScreen = false);
     }
   };
   getScreenSize();
 
   const paginate: any =
-    largeScreen === false
+    mediumScreen === false
       ? pagination === true
         ? page * rowsPerPage + rowsPerPage
         : 5
       : 14;
   const paginate_2: any =
-    largeScreen === false
+    mediumScreen === false
       ? pagination === true
         ? page * rowsPerPage + rowsPerPage
         : 10
@@ -400,4 +401,4 @@ export default function LatestBlocks(pagination: boolean, displayCard: boolean) 
   );
 }
 
-      // export default LatestBlocks;
+export default LatestBlocks;

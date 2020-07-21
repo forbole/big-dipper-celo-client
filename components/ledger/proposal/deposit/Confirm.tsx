@@ -4,7 +4,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
-//import Link from "..//Ledger.tsx"; 
+//import Link from "../../Ledger.tsx"; 
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
@@ -20,10 +20,11 @@ const useStyles = makeStyles({
         display: "block",
         textAlign: "center",
         paddingTop: "0.5rem",
+        paddingBottom: "0.5rem"
     },
 
     dialogTitle: {
-        padding: "1rem",
+        padding: "1rem 1rem 0rem 1rem",
     },
 
     dialogContent: {
@@ -54,18 +55,16 @@ const useStyles = makeStyles({
         justifyContent: "center",
     },
     iconButtonRight: {
-        padding: "0",
-        marginLeft: "0.5rem",
+        float: "right"
     },
     iconButtonLeft: {
-        marginLeft: "-0.6rem",
+        float: "left"
     },
-
 });
 
 
 
-const ConfirmRevoke = () => {
+const Confirm = () => {
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -90,8 +89,8 @@ const ConfirmRevoke = () => {
                         </IconButton>
                     </Grid>
                     <Grid item xs={10}>
-                        <Typography variant="h6" color="textPrimary" noWrap className={classes.title}>
-                            Revoke the vote
+                        <Typography variant="h6" color="textPrimary" noWrap className={classes.title} >
+                            Deposit
               </Typography>
                     </Grid>
                     <Grid item xs={1}>
@@ -111,22 +110,22 @@ const ConfirmRevoke = () => {
                     <DialogContentText id="ledger-vote" className={classes.dialog}>
                         <Grid container className={classes.dialogContent}>
 
-                            <Grid item xs={12} >
+                            <Grid item xs={12}>
                                 <Typography color="textPrimary" variant="body2" gutterBottom align="left">
-                                    You’re going to revoke 1 Locked CGLD to Emma Garrett, if that’s correct, please sign in your ledger device.
-                                                </Typography>
+                                    You’re going to deposit 1 cGLD to Proposal 10, if that’s correct, please sign in your ledger device.
+            </Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" color="textPrimary" gutterBottom>
-                                    Account
+                                <Typography variant="body2" gutterBottom color="textPrimary">
+                                    Proposal ID
             </Typography>
                             </Grid>
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" color="textPrimary" align="right" gutterBottom>
-                                    Michelle Clark
+                                <Typography variant="body2" align="right" gutterBottom color="textPrimary">
+                                    10
                 {/* {data.block && data.block.timestamp
                 ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
                 : "Data currently not available"}{" "}
@@ -139,13 +138,13 @@ const ConfirmRevoke = () => {
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
                             <Grid item xs={6} className={classes.item} >
-                                <Typography variant="body2" color="textPrimary" gutterBottom >
-                                    Validator group
+                                <Typography variant="body2" gutterBottom color="textPrimary">
+                                    Proposer
             </Typography>
                             </Grid>
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" color="textPrimary" align="right" gutterBottom>
-                                    Nan Valdez Group
+                                <Typography variant="body2" align="right" gutterBottom color="textPrimary">
+                                    Michelle Clark
                 {/* {data.block &&
               data.block.transactions &&
               data.block.transactions.transactionIndex
@@ -156,11 +155,11 @@ const ConfirmRevoke = () => {
                             </Grid>
 
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" color="textPrimary" gutterBottom>Amount</Typography>
+                                <Typography variant="body2" gutterBottom color="textPrimary">Type</Typography>
                             </Grid>
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" color="textPrimary" align="right" gutterBottom>
-                                    1 Locked CGLD
+                                <Typography variant="body2" align="right" gutterBottom color="textPrimary">
+                                    Proposal
                 {/* {data.block && data.block.size
                 ? data.block.size
                 : "Data currently not available"} */}
@@ -168,9 +167,45 @@ const ConfirmRevoke = () => {
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
 
+                            <Grid item xs={12} className={classes.item}>
+                                <Typography variant="body2" gutterBottom color="textPrimary">
+                                    Title
+            </Typography>
+                                <Typography variant="body2" gutterBottom color="textPrimary">
+                                    Don’t Burn Deposits for Rejected Governance Proposals Unless Vetoed
+                {/* {data.block && data.block.hash
+                ? data.block.hash
+                : "Data currently not available"} */}
+                                </Typography>
+                                <Divider variant="middle" className={classes.divider} />
+                            </Grid>
+
+                            <Grid item xs={12} className={classes.item}>
+                                <Typography variant="body2" gutterBottom color="textPrimary">
+                                    Description
+            </Typography>
+
+                                <Typography variant="body2" className={classes.wrapText} color="textPrimary">
+                                    Governance Working Group - Q1 2020 funding Community-spend proposal submitted by Gavin Birch (https://twitter.com/Ether_Gavin) of Figment Networks (https://figment.network) -=-=- Full proposal: https://ipfs.io/ipfs/QmSMGEoY2dfxADPfgoAsJxjjC6hwpSNx1dXAqePiCEMCbY
+                {/* {data.block && data.block.parentHash ? (
+                <Link
+                  href="transaction/[transaction]/"
+                  as={`transaction/${data.block.parentHash}`}
+                  color="secondary"
+                  //className={classes.leftInline}
+                >
+                  {data.block.parentHash}
+                </Link>
+              ) : (
+                "Data currently not available"
+              )} */}
+                                </Typography>
+                                <Divider variant="middle" className={classes.divider} />
+                            </Grid>
+
 
                             <Grid item xs={12} className={classes.centerContent}>
-                                <Typography variant="h6" color="textPrimary" >
+                                <Typography variant="h6" color="textPrimary">
                                     Please sign in your ledger device…
               </Typography>
                             </Grid>
@@ -185,4 +220,4 @@ const ConfirmRevoke = () => {
     );
 };
 
-export default ConfirmRevoke
+export default Confirm

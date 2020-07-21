@@ -51,6 +51,7 @@ const useStyles = makeStyles(() => {
     },
     divider: {
       margin: "0.5rem 0 0 0",
+      backgroundColor: "rgba(62, 67, 71, 1)",
     },
     arrowIcon: {
       padding: "0.25rem",
@@ -73,7 +74,7 @@ const useStyles = makeStyles(() => {
   };
 });
 
-export default function BlockDetails() {
+const BlockDetails = () => {
   // // const BlockDetails = (number_value : any  ) => {
   // export default function Block(number_value: any) {
   const router = useRouter();
@@ -154,8 +155,8 @@ export default function BlockDetails() {
             </Typography>
             <Typography variant="body2" component="h2">
               {data.block &&
-              data.block.transactions &&
-              data.block.transactions.transactionIndex
+                data.block.transactions &&
+                data.block.transactions.transactionIndex
                 ? data.block.transactions.transactionIndex.length()
                 : "Data currently not available"}
             </Typography>
@@ -178,15 +179,15 @@ export default function BlockDetails() {
             </Typography>
             <Typography variant="body2" component="h2">
               {data &&
-              data.block &&
-              data.block.miner &&
-              data.block.miner.name ? (
-                <Link href="#" color="secondary">
-                  {data.block.miner.name}
-                </Link>
-              ) : (
-                "Data currently not available"
-              )}
+                data.block &&
+                data.block.miner &&
+                data.block.miner.name ? (
+                  <Link href="#" color="secondary">
+                    {data.block.miner.name}
+                  </Link>
+                ) : (
+                  "Data currently not available"
+                )}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -214,13 +215,13 @@ export default function BlockDetails() {
                   href="transaction/[transaction]/"
                   as={`transaction/${data.block.parentHash}`}
                   color="secondary"
-                  //className={classes.leftInline}
+                //className={classes.leftInline}
                 >
                   {data.block.parentHash}
                 </Link>
               ) : (
-                "Data currently not available"
-              )}
+                  "Data currently not available"
+                )}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -243,8 +244,8 @@ export default function BlockDetails() {
             </Typography>
             <Typography variant="body2" component="h2">
               {data.block &&
-              data.block.transactions &&
-              data.block.transactions.nonce
+                data.block.transactions &&
+                data.block.transactions.nonce
                 ? data.block.transactions.nonce
                 : "Data currently not available"}
             </Typography>
@@ -279,3 +280,5 @@ export default function BlockDetails() {
     </Card>
   );
 }
+
+export default BlockDetails

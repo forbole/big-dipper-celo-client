@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme: Theme) =>
       textOverflow: 'ellipsis',
       flexWrap: 'wrap',
 
+    },
+    divider: {
+      backgroundColor: "rgba(62, 67, 71, 1)",
     }
 
   }),
@@ -53,11 +56,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 
-export default function ProfileSummary() {
+const ProfileSummary = () => {
   const classes = useStyles();
-
-
-
 
   return (
     <Card className={classes.root}>
@@ -66,7 +66,7 @@ export default function ProfileSummary() {
           <Typography variant="body1" className={classes.box} >
             Profile Summary
         </Typography>
-          <Divider variant='middle' />
+          <Divider variant='middle' className={classes.divider} />
         </Grid>
 
         <Grid item xs={4}>
@@ -111,3 +111,4 @@ export default function ProfileSummary() {
 }
 
 
+export default ProfileSummary

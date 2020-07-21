@@ -12,11 +12,9 @@ import ControlButtons from "./ControlButtons";
 
 const useStyles = makeStyles({
 
-root: {
-    justifyContent: "center",
-    //padding: "1rem"
-  },
-
+    root: {
+        justifyContent: "center",
+    },
 
     title: {
         display: "block",
@@ -25,11 +23,7 @@ root: {
     },
 
     message: {
-    margin: "0 0.5rem 1.5rem 0.5rem",
-  },
-
-    buttons: {
-        margin: "0 0.5rem 1rem 0.5rem",
+        margin: "0 0.5rem 1.5rem 0.5rem",
     },
 
 });
@@ -46,7 +40,7 @@ const SignInMessage = () => {
         setOpen(false);
     };
     return (
-<>
+        <>
             <DialogTitle id="ledger-dialog-signin-title">
                 <Grid container className={classes.root}>
                     <Grid item xs={12}>
@@ -64,13 +58,13 @@ const SignInMessage = () => {
                 <Grid container spacing={1} className={classes.root}>
                     <DialogContentText id="signin-ledger">
 
-                            <Grid item xs={12} className={classes.message}>
-                                <Typography variant="body2">
-                                    Please make sure your Ledger device is connected and Celo
-                                    App 1.5.0 or above is opened.
+                        <Grid item xs={12} className={classes.message}>
+                            <Typography variant="body2">
+                                Please make sure your Ledger device is connected and Celo
+                                App 1.5.0 or above is opened.
                   </Typography>
-                            </Grid>
-                        <Grid item xs={12} className={classes.buttons}>
+                        </Grid>
+                        <Grid item xs={12} >
                             <ControlButtons />
                         </Grid>
                     </DialogContentText>

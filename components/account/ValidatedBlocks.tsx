@@ -23,7 +23,7 @@ import Divider from '@material-ui/core/Divider';
 
 
 interface Column {
-  id: 'height' | 'miner' | 'txs' | 'gasUsed' | 'gasLimit'| 'time';
+  id: 'height' | 'miner' | 'txs' | 'gasUsed' | 'gasLimit' | 'time';
   label: string;
 }
 
@@ -36,7 +36,7 @@ const columns: Column[] = [
   },
   {
     id: 'gasUsed',
-    label: 'Gas Used', 
+    label: 'Gas Used',
   },
   {
     id: 'gasLimit',
@@ -49,82 +49,86 @@ const columns: Column[] = [
 ];
 
 interface Data {
-    height: string;
-    miner: string;
-    txs: string;
-    gasUsed: string;
-    gasLimit: string;
-    time: string;
+  height: string;
+  miner: string;
+  txs: string;
+  gasUsed: string;
+  gasLimit: string;
+  time: string;
 }
 
 function createData(height: string, miner: string, txs: string, gasUsed: string, gasLimit: string, time: string) {
-    return { height, miner, txs, gasUsed, gasLimit, time};
-  }
+  return { height, miner, txs, gasUsed, gasLimit, time };
+}
 
-  const rows = [
-    createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-    createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-    createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-    createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-    createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-    createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-    createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-    createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-    createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-    createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-    createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-    createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-    createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-    createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-    createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-    createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-    createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-    createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-    createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-    createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-  ];
-  
+const rows = [
+  createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
+  createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
+  createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
+  createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
+  createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
+  createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
+  createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
+  createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
+  createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
+  createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
+  createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
+  createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
+  createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
+  createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
+  createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
+  createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
+  createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
+  createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
+  createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
+  createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
+];
+
 
 const useStyles = makeStyles(({ spacing }) => {
-    return {
-        root: {
-            width: '100%',
-            padding: '0.5rem',
-            borderRadius: 5,
-            overflowY: 'auto'
-        },
-        container: {
-            borderRadius: 5,
-            width: '100%',
-            overflow: 'auto'
-        },
-        box:{
-            letterSpacing: '1px',
-            padding: '1rem',
-            display: 'inline-flex',
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-        },
-        time:{
-            padding: '0.01em',
-            margin: '0.5em'
-        },
-        tableCell:{
-            overflow: 'auto',
-            padding: '0 0.5rem'
-        },
-        table:{
-            background: '#4D5155',
-            padding: '0'
-        }
+  return {
+    root: {
+      width: '100%',
+      padding: '0.5rem',
+      borderRadius: 5,
+      overflowY: 'auto'
+    },
+    container: {
+      borderRadius: 5,
+      width: '100%',
+      overflow: 'auto'
+    },
+    box: {
+      letterSpacing: '1px',
+      padding: '1rem',
+      display: 'inline-flex',
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
+    },
+    time: {
+      padding: '0.01em',
+      margin: '0.5em'
+    },
+    tableCell: {
+      overflow: 'auto',
+      padding: '0 0.5rem'
+    },
+    table: {
+      background: '#4D5155',
+      padding: '0'
+    },
+
+    divider: {
+      backgroundColor: "rgba(62, 67, 71, 1)",
+    }
   }
 });
 
- 
 
 
-export default function ValidatedBlocks() {
-const classes = useStyles();
+
+const ValidatedBlocks = () => {
+  const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -140,77 +144,79 @@ const classes = useStyles();
   return (
 
     <ExpansionPanel>
-    <ExpansionPanelSummary
-      expandIcon={<ExpandMoreIcon />}
-      aria-controls="panel1a-content"
-      id="panel1a-header"
+      <ExpansionPanelSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel1a-content"
+        id="panel1a-header"
       >
         <Typography variant="body1" >Validated Blocks</Typography>
-        </ExpansionPanelSummary>
-    <ExpansionPanelDetails className={classes.root}>
-    <Grid container >              
-        <Divider variant='middle'/>
-      <TableContainer className={classes.container}>
-      <Paper className={classes.tableCell}>
-        <Table >
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align="left"
-                  className={classes.table}
-                  padding="checkbox" 
-                >
-                  <Typography variant="body2" noWrap className={classes.tableCell}>{column.label}</Typography>
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-              return (
-                <TableRow key={row.height} >
-            <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
-            <Link href="#"  color="secondary"  >
-            <Typography variant="body2"  noWrap> {row.height}</Typography>
-              </Link>
-            </TableCell>
-            <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-            <Link href="#" color="secondary" >
-            <Typography variant="body2" noWrap>{row.miner}</Typography>
-              </Link>
-              </TableCell>
-            <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-            <Typography variant="body2" noWrap>{row.txs}</Typography>
-            </TableCell>
-            <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-            <Typography variant="body2" noWrap>{row.gasUsed}</Typography>
-            </TableCell>
-            <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-            <Typography variant="body2" noWrap>{row.gasLimit}</Typography>
-            </TableCell>
-            <TableCell align="left" padding="checkbox" >
-            <Typography variant="body2" noWrap>{row.time}</Typography>
-            </TableCell>
-          </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-        </Paper>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
-    </Grid>
-    </ExpansionPanelDetails>
-      </ExpansionPanel>  
-);
+      </ExpansionPanelSummary>
+      <ExpansionPanelDetails className={classes.root}>
+        <Grid container >
+          <Divider variant='middle' className={classes.divider} />
+          <TableContainer className={classes.container}>
+            <Paper className={classes.tableCell}>
+              <Table >
+                <TableHead>
+                  <TableRow>
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align="left"
+                        className={classes.table}
+                        padding="checkbox"
+                      >
+                        <Typography variant="body2" noWrap className={classes.tableCell}>{column.label}</Typography>
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                    return (
+                      <TableRow key={row.height} >
+                        <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
+                          <Link href="#" color="secondary"  >
+                            <Typography variant="body2" noWrap> {row.height}</Typography>
+                          </Link>
+                        </TableCell>
+                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                          <Link href="#" color="secondary" >
+                            <Typography variant="body2" noWrap>{row.miner}</Typography>
+                          </Link>
+                        </TableCell>
+                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                          <Typography variant="body2" noWrap>{row.txs}</Typography>
+                        </TableCell>
+                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                          <Typography variant="body2" noWrap>{row.gasUsed}</Typography>
+                        </TableCell>
+                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                          <Typography variant="body2" noWrap>{row.gasLimit}</Typography>
+                        </TableCell>
+                        <TableCell align="left" padding="checkbox" >
+                          <Typography variant="body2" noWrap>{row.time}</Typography>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </Paper>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        </Grid>
+      </ExpansionPanelDetails>
+    </ExpansionPanel>
+  );
 }
+
+export default ValidatedBlocks

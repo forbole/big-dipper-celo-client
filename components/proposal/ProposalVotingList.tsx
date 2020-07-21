@@ -114,7 +114,7 @@ const useStyles = makeStyles(() => {
     };
 });
 
-export default function ProposalVotingList() {
+const ProposalVotingList = () => {
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -210,7 +210,7 @@ export default function ProposalVotingList() {
                             }
                         </Pie>
                         <Tooltip />
-                        <Legend layout="vertical" verticalAlign="middle" align="right" height={36} iconType="plainline" iconSize={20}/>
+                        <Legend layout="vertical" verticalAlign="middle" align="right" height={36} iconType="plainline" iconSize={20} />
                     </PieChart>
                 </Grid>
 
@@ -293,7 +293,7 @@ export default function ProposalVotingList() {
                                                     {row.voting_power}
                                                 </Typography>
                                             </TableCell>
-                                           
+
                                         </TableRow>
                                     );
                                 })}
@@ -313,3 +313,5 @@ export default function ProposalVotingList() {
         </Grid>
     );
 }
+
+export default ProposalVotingList

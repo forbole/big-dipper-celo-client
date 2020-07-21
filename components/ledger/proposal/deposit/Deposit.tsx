@@ -11,7 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import OutlinedInput from "@material-ui/core/OutlinedInput";
-import ControlButtons from "../ControlButtons"
+import ControlButtons from "../../ControlButtons"
 import { Select, InputLabel } from "@material-ui/core";
 
 
@@ -66,6 +66,9 @@ const useStyles = makeStyles({
         paddingBottom: '1rem'
     },
 
+    label: {
+        paddingBottom: "0.2rem",
+    }
 
 
 });
@@ -76,11 +79,11 @@ const DepositDropdown = () => {
     let name_2 = "Andrea Colemans";
     return (
         <div>
-            <Typography variant="body2" noWrap color="textPrimary">
+            <Typography variant="body2" noWrap color="textPrimary" className={classes.label}>
                 Account
         </Typography>
             <FormControl
-                fullWidth={true}
+                //fullWidth={true}
                 size="medium"
                 className={classes.formControl}
             >
@@ -90,7 +93,7 @@ const DepositDropdown = () => {
                     color="primary"
                     className={classes.depositSelect}
                     disableUnderline
-                    fullWidth={true}
+                //fullWidth={true}
                 >
                     <MenuItem value={name} className={classes.menu}>
                         <Typography variant="body2">{name}</Typography>
@@ -115,7 +118,7 @@ const DepositDropdown = () => {
             </FormControl>
 
             <div>
-                <Typography variant="body2" noWrap color="textPrimary">
+                <Typography variant="body2" noWrap color="textPrimary" className={classes.label}>
                     Amount
         </Typography>
                 <FormControl
@@ -143,13 +146,13 @@ const DepositDropdown = () => {
 }
 
 
-const ProposalDeposit = () => {
+const Deposit = () => {
     const classes = useStyles();
 
     return (
         <>
             <DialogTitle
-                id="ledger-dialog-vote-title"
+                id="ledger-proposal-deposit-title"
                 className={classes.dialogTitle}
             >
                 <Grid container className={classes.item}>
@@ -167,10 +170,10 @@ const ProposalDeposit = () => {
             </DialogTitle>
             <DialogContent >
                 <Grid container spacing={1}>
-                    <DialogContentText id="deposit-ledger">
+                    <DialogContentText id="ledger-proposal-deposit">
                         <Grid container>
                             <Grid item xs={12} className={classes.message}>
-                                <Typography variant="body2" color="textPrimary">
+                                <Typography variant="body2" color="textPrimary" gutterBottom>
                                     Deposit amount will be returned to your account after the
                                     proposal active period is finished.
                   </Typography>
@@ -178,7 +181,9 @@ const ProposalDeposit = () => {
                             <Grid item xs={12} className={classes.paddingBottom}>
                                 <DepositDropdown />
                             </Grid>
-                            <ControlButtons />
+                            <Grid item xs={12} className={classes.paddingBottom}>
+                                <ControlButtons />
+                            </Grid>
                         </Grid>
                     </DialogContentText>
                 </Grid>
@@ -187,4 +192,4 @@ const ProposalDeposit = () => {
     );
 };
 
-export default ProposalDeposit
+export default Deposit

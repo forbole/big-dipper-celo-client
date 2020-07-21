@@ -53,7 +53,7 @@ const useStyles = makeStyles(() => {
 });
 
 
-export default function CoinBalanceHistory() {
+const CoinBalanceHistory = () => {
   const classes = useStyles();
 
   return (
@@ -89,3 +89,5 @@ export default function CoinBalanceHistory() {
   );
 
 }
+
+export default CoinBalanceHistory

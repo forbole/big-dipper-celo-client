@@ -38,7 +38,7 @@ const useStyles = makeStyles(({ spacing }) => {
   };
 });
 
-export default function PriceCard(props: any) {
+const PriceCard = (props: any) => {
   const classes = useStyles();
   switch (props.size) {
     case "small":
@@ -108,3 +108,5 @@ export default function PriceCard(props: any) {
       return null;
   }
 }
+
+export default PriceCard

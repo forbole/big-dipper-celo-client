@@ -4,7 +4,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
-//import Link from "../../Ledger.tsx"; 
+//import Link from "..//Ledger.tsx"; 
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     },
 
     dialogTitle: {
-        padding: "1rem 1rem 0rem 1rem",
+        padding: "1rem",
     },
 
     dialogContent: {
@@ -45,7 +45,7 @@ const useStyles = makeStyles({
 
     wrapText: {
         wordWrap: 'break-word',
-        wordBreak: 'break-all' 
+        wordBreak: 'break-all'
 
     },
 
@@ -58,16 +58,17 @@ const useStyles = makeStyles({
         marginLeft: "0.5rem",
     },
     iconButtonLeft: {
-        marginRight: "0.5rem",
+        marginLeft: "-0.6rem",
     },
+
 });
 
 
 
-const ConfirmVote = () => {
- 
+const Confirm = () => {
+
     const classes = useStyles();
-    const [, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
 
 
     const handleClose = () => {
@@ -90,7 +91,7 @@ const ConfirmVote = () => {
                     </Grid>
                     <Grid item xs={10}>
                         <Typography variant="h6" color="textPrimary" noWrap className={classes.title}>
-                            Vote
+                            Revoke the vote
               </Typography>
                     </Grid>
                     <Grid item xs={1}>
@@ -110,22 +111,22 @@ const ConfirmVote = () => {
                     <DialogContentText id="ledger-vote" className={classes.dialog}>
                         <Grid container className={classes.dialogContent}>
 
-                            <Grid item xs={12}>
-                                <Typography color="textSecondary" variant="body2" gutterBottom align="left">
-                                    You’re going to vote for Yes, if that’s correct, please sign in your ledger device.
-            </Typography>
+                            <Grid item xs={12} >
+                                <Typography color="textPrimary" variant="body2" gutterBottom align="left">
+                                    You’re going to revoke 1 Locked CGLD to Emma Garrett, if that’s correct, please sign in your ledger device.
+                                                </Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" gutterBottom>
-                                    Proposal ID
+                                <Typography variant="body2" color="textPrimary" gutterBottom>
+                                    Account
             </Typography>
                             </Grid>
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" align="right" gutterBottom>
-                                    10
+                                <Typography variant="body2" color="textPrimary" align="right" gutterBottom>
+                                    Michelle Clark
                 {/* {data.block && data.block.timestamp
                 ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
                 : "Data currently not available"}{" "}
@@ -138,13 +139,13 @@ const ConfirmVote = () => {
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
                             <Grid item xs={6} className={classes.item} >
-                                <Typography variant="body2" gutterBottom >
-                                    Proposer
+                                <Typography variant="body2" color="textPrimary" gutterBottom >
+                                    Validator group
             </Typography>
                             </Grid>
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" align="right" gutterBottom>
-                                    Michelle Clark
+                                <Typography variant="body2" color="textPrimary" align="right" gutterBottom>
+                                    Nan Valdez Group
                 {/* {data.block &&
               data.block.transactions &&
               data.block.transactions.transactionIndex
@@ -155,11 +156,11 @@ const ConfirmVote = () => {
                             </Grid>
 
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" gutterBottom>Type</Typography>
+                                <Typography variant="body2" color="textPrimary" gutterBottom>Amount</Typography>
                             </Grid>
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" align="right" gutterBottom>
-                                    Proposal
+                                <Typography variant="body2" color="textPrimary" align="right" gutterBottom>
+                                    1 Locked CGLD
                 {/* {data.block && data.block.size
                 ? data.block.size
                 : "Data currently not available"} */}
@@ -167,51 +168,15 @@ const ConfirmVote = () => {
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
 
-                            <Grid item xs={12} className={classes.item}>
-                                <Typography variant="body2" gutterBottom>
-                                    Title
-            </Typography>
-                                <Typography variant="body2" gutterBottom >
-                                    Don’t Burn Deposits for Rejected Governance Proposals Unless Vetoed
-                {/* {data.block && data.block.hash
-                ? data.block.hash
-                : "Data currently not available"} */}
-                                </Typography>
-                                <Divider variant="middle" className={classes.divider} />
-                            </Grid>
-
-                            <Grid item xs={12} className={classes.item}>
-                                <Typography variant="body2" gutterBottom>
-                                    Description
-            </Typography>
-
-                                <Typography variant="body2"  className={classes.wrapText}>
-                                    Governance Working Group - Q1 2020 funding Community-spend proposal submitted by Gavin Birch (https://twitter.com/Ether_Gavin) of Figment Networks (https://figment.network) -=-=- Full proposal: https://ipfs.io/ipfs/QmSMGEoY2dfxADPfgoAsJxjjC6hwpSNx1dXAqePiCEMCbY
-                {/* {data.block && data.block.parentHash ? (
-                <Link
-                  href="transaction/[transaction]/"
-                  as={`transaction/${data.block.parentHash}`}
-                  color="secondary"
-                  //className={classes.leftInline}
-                >
-                  {data.block.parentHash}
-                </Link>
-              ) : (
-                "Data currently not available"
-              )} */}
-                                </Typography>
-                                <Divider variant="middle" className={classes.divider} />
-                            </Grid>
-
 
                             <Grid item xs={12} className={classes.centerContent}>
-                                <Typography variant="h6" >
+                                <Typography variant="h6" color="textPrimary" >
                                     Please sign in your ledger device…
               </Typography>
                             </Grid>
-                                        
 
-             
+
+
                         </Grid>
                     </DialogContentText>
                 </Grid>
@@ -220,4 +185,4 @@ const ConfirmVote = () => {
     );
 };
 
-export default ConfirmVote
+export default Confirm

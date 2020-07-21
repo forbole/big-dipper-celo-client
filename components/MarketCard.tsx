@@ -36,7 +36,7 @@ const useStyles = makeStyles(({ spacing }) => {
   };
 });
 
-export default function MarketCard() {
+const MarketCard = () => {
   const classes = useStyles();
   return (
     <Card className={cx(classes.card)} elevation={0}>
@@ -65,3 +65,5 @@ export default function MarketCard() {
     </Card>
   );
 }
+
+export default MarketCard

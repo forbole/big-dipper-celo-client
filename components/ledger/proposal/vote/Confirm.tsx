@@ -10,6 +10,8 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 
 
+
+
 const useStyles = makeStyles({
     root: {
         justifyContent: "center",
@@ -18,6 +20,7 @@ const useStyles = makeStyles({
         display: "block",
         textAlign: "center",
         paddingTop: "0.5rem",
+        paddingBottom: "0.3rem"
     },
 
     dialogTitle: {
@@ -32,18 +35,13 @@ const useStyles = makeStyles({
         backgroundColor: "rgba(62, 67, 71, 1)",
     },
 
-    dialog: {
-        paddingBottom: '1rem'
-    },
-
-
     item: {
         justifyContent: "center",
     },
 
     wrapText: {
         wordWrap: 'break-word',
-        wordBreak: 'break-all'
+        wordBreak: 'break-all' 
 
     },
 
@@ -56,16 +54,16 @@ const useStyles = makeStyles({
         marginLeft: "0.5rem",
     },
     iconButtonLeft: {
-        marginLeft: "-0.6rem",
+        marginRight: "0.5rem",
     },
 });
 
 
 
-const ConfirmVote = () => {
-
+const Confirm = () => {
+ 
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [, setOpen] = React.useState(false);
 
 
     const handleClose = () => {
@@ -105,24 +103,25 @@ const ConfirmVote = () => {
 
             <DialogContent >
                 <Grid container spacing={1} >
-                    <DialogContentText id="ledger-vote" className={classes.dialog}>
+                    <DialogContentText id="ledger-vote" >
                         <Grid container className={classes.dialogContent}>
 
                             <Grid item xs={12}>
-                                <Typography color="textPrimary" variant="body2" gutterBottom align="left">
-                                    You’re going to vote 1 Locked CGLD to Nan Valdez Group, if that’s correct, please sign in your ledger device.            </Typography>
+                                <Typography color="textSecondary" variant="body2" gutterBottom align="left">
+                                    You’re going to vote for Yes, if that’s correct, please sign in your ledger device.
+            </Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" color="textPrimary" gutterBottom>
-                                    Account
+                                <Typography variant="body2" gutterBottom>
+                                    Proposal ID
             </Typography>
                             </Grid>
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" color="textPrimary" align="right" gutterBottom>
-                                    Michelle Clark
+                                <Typography variant="body2" align="right" gutterBottom>
+                                    10
                 {/* {data.block && data.block.timestamp
                 ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
                 : "Data currently not available"}{" "}
@@ -135,13 +134,13 @@ const ConfirmVote = () => {
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
                             <Grid item xs={6} className={classes.item} >
-                                <Typography variant="body2" color="textPrimary" gutterBottom >
-                                    Validator group
+                                <Typography variant="body2" gutterBottom >
+                                    Proposer
             </Typography>
                             </Grid>
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" color="textPrimary" align="right" gutterBottom>
-                                    Nan Valdez Group
+                                <Typography variant="body2" align="right" gutterBottom>
+                                    Michelle Clark
                 {/* {data.block &&
               data.block.transactions &&
               data.block.transactions.transactionIndex
@@ -152,11 +151,11 @@ const ConfirmVote = () => {
                             </Grid>
 
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" color="textPrimary" gutterBottom>Amount</Typography>
+                                <Typography variant="body2" gutterBottom>Type</Typography>
                             </Grid>
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" color="textPrimary" align="right" gutterBottom>
-                                    1 Locked CGLD
+                                <Typography variant="body2" align="right" gutterBottom>
+                                    Proposal
                 {/* {data.block && data.block.size
                 ? data.block.size
                 : "Data currently not available"} */}
@@ -164,15 +163,51 @@ const ConfirmVote = () => {
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
 
+                            <Grid item xs={12} className={classes.item}>
+                                <Typography variant="body2" gutterBottom>
+                                    Title
+            </Typography>
+                                <Typography variant="body2" gutterBottom >
+                                    Don’t Burn Deposits for Rejected Governance Proposals Unless Vetoed
+                {/* {data.block && data.block.hash
+                ? data.block.hash
+                : "Data currently not available"} */}
+                                </Typography>
+                                <Divider variant="middle" className={classes.divider} />
+                            </Grid>
 
-                            <Grid item xs={12} className={classes.centerContent}>
-                                <Typography variant="h6" color="textPrimary" >
-                                    Please sign in your ledger device…
-              </Typography>
+                            <Grid item xs={12} className={classes.item}>
+                                <Typography variant="body2" gutterBottom>
+                                    Description
+            </Typography>
+
+                                <Typography variant="body2"  className={classes.wrapText}>
+                                    Governance Working Group - Q1 2020 funding Community-spend proposal submitted by Gavin Birch (https://twitter.com/Ether_Gavin) of Figment Networks (https://figment.network) -=-=- Full proposal: https://ipfs.io/ipfs/QmSMGEoY2dfxADPfgoAsJxjjC6hwpSNx1dXAqePiCEMCbY
+                {/* {data.block && data.block.parentHash ? (
+                <Link
+                  href="transaction/[transaction]/"
+                  as={`transaction/${data.block.parentHash}`}
+                  color="secondary"
+                  //className={classes.leftInline}
+                >
+                  {data.block.parentHash}
+                </Link>
+              ) : (
+                "Data currently not available"
+              )} */}
+                                </Typography>
+                                <Divider variant="middle" className={classes.divider} />
                             </Grid>
 
 
+                            <Grid item xs={12} className={classes.centerContent}>
+                                <Typography variant="h6" >
+                                    Please sign in your ledger device…
+              </Typography>
+                            </Grid>
+                                        
 
+             
                         </Grid>
                     </DialogContentText>
                 </Grid>
@@ -181,4 +216,4 @@ const ConfirmVote = () => {
     );
 };
 
-export default ConfirmVote
+export default Confirm
