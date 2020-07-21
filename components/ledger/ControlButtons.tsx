@@ -13,13 +13,16 @@ const useStyles = makeStyles({
         borderRadius: 4,
         justifyContent: "center",
         minHeight: "2.5rem",
-        maxWidth: "8.4375rem",
+        minWidth: "8.4375rem",
         textAlign: "center",
     },
 
 
     root: {
         justifyContent: "center",
+        textAlign: "center",
+        padding: "0 1rem",
+        display: "flex",
     },
 
 });
@@ -36,30 +39,31 @@ const handleClickOpen = () => {
         setOpen(false);
     };
     return (
-        <Grid container spacing={1} className={classes.root}>
-            <Grid item xs={6} >
+        <Grid container spacing={1} >
+            <Grid item xs={6} alignItems="center">
+                <div className={classes.root}>
                 <Button
                     variant="outlined"
                     color="secondary"
                     className={classes.controlButtonLabel}
-                    fullWidth={true}
+                    //fullWidth={true}
                     onClick={handleClose}
                 >
                     <Typography variant="body2" noWrap>
                         Cancel
             </Typography>
                 </Button>
-                {/* </div> */}
+                </div>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} className={classes.root}>
                 <Button
                     variant="contained"
                     color="secondary"
                     className={classes.controlButtonLabel}
-                    fullWidth={true}
+                    //fullWidth={true}
                     onClick={handleClose}
                 >
-                    <Typography variant="body2" noWrap>
+                    <Typography variant="body2" noWrap color="textPrimary">
                         Confirm
             </Typography>
                 </Button>
