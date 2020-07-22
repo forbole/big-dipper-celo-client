@@ -5,9 +5,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Layout from '../components/Layout';
 import DarkTheme from '../themes/celo-theme';
 import App, { Container } from 'next/app';
-// import withRedux from 'next-redux-wrapper';
-// import { initStore } from '../redux/store';
-// import { Provider } from 'react-redux';
 import Footer from '../components/Footer';
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
@@ -39,24 +36,12 @@ export default class TSApp extends App<AppProps, AppState>{
     }
   }
 
-  // export default withRedux(initStore)(class MyApp extends App<AppProps, AppState> {
-  //   static async getInitialProps ({Component, ctx}) {
-  //     return {
-  //       pageProps: (Component.getInitialProps ? await Component.getInitialProps(ctx) : {})
-  //     }
-  //   }
-  
+
 
   render() {
     const { Component, pageProps } = this.props;
 
-    // store.dispatch({
-    //   type: "getBlockHeight",
-    //   payload:{
-    //     description: "Block1"
-    //   }
 
-    // })
 
     return (
       <React.Fragment>
