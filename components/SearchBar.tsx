@@ -1,134 +1,78 @@
-// import React from 'react';
-// import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-// import TextField from '@material-ui/core/TextField';
-// import SearchIcon from '@material-ui/icons/Search';
-
-// const useStyles = makeStyles((theme: Theme) =>
-//   createStyles({
-//     root: {
-//       display: 'flex',
-//       flexWrap: 'wrap',
-//     },
-//     textField: {
-//       marginLeft: theme.spacing(1),
-//       marginRight: theme.spacing(1),
-//       width: '100ch',
-//     searchIcon: {
-//         width: '50ch',
-//         height: '100%',
-//         position: 'absolute',
-//         pointerEvents: 'none',
-//         display: 'flex',
-//         alignItems: 'center',
-//         justifyContent: 'center',
-//     },
-//     },
-//   }),
-// );
-
-// export default function LayoutTextFields() {
-//   const classes = useStyles();
-
-//   return (
-//     <div className={classes.root}>
-//        < SearchIcon />
-//       <div>
-//         <TextField
-//           id="filled-full-width centre"
-//           label="Label"
-//           style={{ margin: 8, }}
-//           placeholder="Placeholder"
-//           helperText="Full width!"
-//           fullWidth
-//           margin="normal"
-//           InputLabelProps={{
-//             shrink: true,
-//             // startAdornment: <InputAdornment position="start">Kg</InputAdornment>,
-//           }}
-//           variant="filled"
-
-//         />   
-//       </div>
-//     </div>
-//   );
-// }
-
-
-import React from 'react';
-import clsx from 'clsx';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import Input from '@material-ui/core/Input';
-import FilledInput from '@material-ui/core/FilledInput';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import TextField from '@material-ui/core/TextField';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import SearchIcon from '@material-ui/icons/Search';
-
+import React from "react";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import FilledInput from "@material-ui/core/FilledInput";
+import InputLabel from "@material-ui/core/InputLabel";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControl from "@material-ui/core/FormControl";
+import SearchIcon from "@material-ui/icons/Search";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'center',
-      
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "center",
+      marginTop: "-1rem",
+      padding: "0 0 1rem 0",
+      verticalAlign: "middle",
     },
-    margin: {
-      margin: theme.spacing(1),
-    },
-    // withoutLabel: {
-    //   marginTop: theme.spacing(3),
-    // },
 
-  }),
+    inputLabel: {
+      height: "2rem",
+      verticalAlign: "middle",
+      padding: "0px 1rem 1rem",
+      fontSize: "12px",
+    },
+    container: {
+      justifyContent: "center",
+      padding: "0rem",
+    },
+  })
 );
 
 interface State {
-  amount: string;
-
+  txSearch: string;
 }
 
-export default function InputAdornments() {
+const SearchBar = () => {
   const classes = useStyles();
   const [values, setValues] = React.useState<State>({
-    amount: '',
+    txSearch: "",
   });
 
-  const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (prop: keyof State) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setValues({ ...values, [prop]: event.target.value });
   };
 
-
-
-
   return (
     <div className={classes.root}>
-      {/* <div className="centre"> */}
-     
-        <FormControl fullWidth className={classes.margin} variant="filled">
-        
-          <InputLabel htmlFor="filled-adornment-amount"></InputLabel>
-         
-          <FilledInput
-            id="filled-adornment-amount"
-            value={values.amount}
-            margin="dense"
-            fullWidth
-            onChange={handleChange('amount')}
-            placeholder="Search by address / token symbol name / tx"
-            startAdornment={<InputAdornment position="start">
-                <SearchIcon />
-            </InputAdornment>}
-          />
-        
-        </FormControl> 
-      </div>
-    //   </div>
+      <Grid container spacing={1} className={classes.container}>
+        <Grid item xs={11} md={7}>
+          <FormControl fullWidth variant="filled">
+            <InputLabel htmlFor="search-bar"></InputLabel>
+
+            <FilledInput
+              className={classes.inputLabel}
+              id="search-bar"
+              value={values.txSearch}
+              fullWidth
+              disableUnderline={true}
+              onChange={handleChange("txSearch")}
+              placeholder="Search by address / token symbol name / tx"
+              startAdornment={
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+        </Grid>
+      </Grid>
+    </div>
   );
 }
+
+export default SearchBar

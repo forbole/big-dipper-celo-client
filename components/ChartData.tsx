@@ -1,129 +1,156 @@
-import React from 'react';
-import cx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Card from '@material-ui/core/Card';
-import Avatar from '@material-ui/core/Avatar';
-import Slider from '@material-ui/core/Slider';
-import Container from '@material-ui/core/Container';
+import React from "react";
+import cx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import gql from "graphql-tag";
+import { useQuery } from "@apollo/react-hooks";
+import TablePagination from "@material-ui/core/TablePagination";
+import numbro from "numbro";
+
+const GET_CHAIN = gql`
+  {
+    chain {
+      _id
+      averageBlockTime
+      txCount
+      latestHeight
+      chainId
+      tokenPrice {
+        usd
+        usdMarketCap
+      }
+      walletCount
+    }
+  }
+`;
 
 
-const useStyles = makeStyles(({ spacing, palette }) => {
-  const family =
-    '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
-  return {
-    root: {
-        display: 'flex',
-      },
-    card: {
-    display: 'inline-block',
-    justifyContent: 'center',
-      //padding: 10,
-      minWidth: 88,
-      height: 60,
-      width: 173,
-      borderRadius: 5,
-      boxShadow: '0 2px 4px 0 rgba(138, 148, 159, 0.2)',
-      '& > *:nth-child(1)': {
-        marginRight: spacing(2),
-      },
-      '& > *:nth-child(2)': {
-        flex: 'auto',
-      },
-      background: '#43484C'
-    },
-    avatar: {},
-    heading: {
-      fontFamily: family,
-      fontSize: 25,
-      marginBottom: 2,
-      marginTop: 0,
-      marginLeft: '15px',
-    },
-    subheader: {
-      fontFamily: family,
-      fontSize: 13,
-      letterSpacing: '1px',
-      marginBottom: 1,
-      marginTop: 2,
-      marginLeft: '15px',
-    },
-    value: {
-      marginLeft: 8,
-      fontSize: 14,
-      color: palette.grey[500],
-    },
-  };
+
+const useStyles = makeStyles({
+  root: {
+    display: "flex",
+    padding: "1.5%",
+  },
+  card: {
+    display: "block",
+    justifyContent: "center",
+    margin: "2%",
+    borderLeft: "4px solid #FBCC5C",
+    borderRadius: 4,
+    background: "#43484C",
+    alignItems: "center",
+  },
+  value: {
+    fontWeight: 300,
+    padding: "0.2rem 0.75rem 0.5rem 0.75rem",
+  },
+  label: {
+    display: "flex",
+    padding: "0.4rem 0.75rem 0.1rem 0.75rem",
+  },
+  container: {
+    marginTop: "1.5%",
+  },
 });
 
-const useSliderStyles = makeStyles(() => ({
-  root: {
-    height: 4,
-    justifyContent: 'center',
+const ChartData = () => {
+  const classes = useStyles();
 
-  },
-//   rail: {
-//     borderRadius: 10,
-//     height: 4,
-//     backgroundColor: 'rgb(202,211,216)',
-//   },
-//   track: {
-//     borderRadius: 10,
-//     height: 4,
-//     backgroundColor: 'rgb(117,156,250)',
-//   },
-  thumb: {
-    display: 'none',
-  },
-}));
+  const { loading, error, data } = useQuery(GET_CHAIN, {
+    pollInterval: 5000,
+  });
 
-const KanbanCard = () => {
-  const styles = useStyles();
-  const sliderStyles = useSliderStyles();
+  if (loading) return "Loading...";
+  if (error) return `Error! ${error.message}`;
+
+
   return (
-    <Container style={{ marginTop: 10 }} >
-      <div className="chart-card mb-r"  >
-    <Card className={cx(styles.card)} elevation={0}  style={{ justifyContent: 'center' }}>
-      <Box >
-      <div className={styles.subheader}>cGLD Price</div>
-        <div className={styles.heading}>$2.8</div>
-      </Box>
-    </Card>
-    <Card className={cx(styles.card)} elevation={0}  style={{ justifyContent: 'center' }}>
-      <Box>
-      <div className={styles.subheader}>cGLD Price</div>
-        <div className={styles.heading}>$2.8</div>
-      </Box>
-    </Card>
-    <Card className={cx(styles.card)} elevation={0}  style={{ justifyContent: 'center' }}>
-      <Box>
-      <div className={styles.subheader}>cGLD Price</div>
-        <div className={styles.heading}>$2.8</div>
-      </Box>
-    </Card>
-    <Card className={cx(styles.card)} elevation={0}  style={{ justifyContent: 'center' }}>
-      <Box>
-      <div className={styles.subheader}>cGLD Price</div>
-        <div className={styles.heading}>$2.8</div>
-      </Box>
-    </Card>
-    <Card className={cx(styles.card)} elevation={0}  style={{ justifyContent: 'center' }}>
-      <Box>
-      <div className={styles.subheader}>cGLD Price</div>
-        <div className={styles.heading}>$2.8</div>
-      </Box>
-    </Card>
-    <Card className={cx(styles.card)} elevation={0}  style={{ justifyContent: 'center' }}>
-      <Box>
-      <div className={styles.subheader}>cGLD Price</div>
-        <div className={styles.heading}>$2.8</div>
-        {/* <Box display={'flex'} alignItems={'center'}>
-        </Box> */}
-      </Box>
-    </Card>
+    <div>
+      <Grid container className={classes.container}>
+        <Grid item xs={6} md={3} lg={2}>
+          <Card className={cx(classes.card)} elevation={0}>
+            <Typography variant="body2" className={classes.label}>
+              cGLD Price
+            </Typography>
+            <Typography variant="h5" className={classes.value}>
+              {data.chain
+                ? "$" + numbro(data.chain.tokenPrice.usd).format("0.00")
+                : "Data currently not available"}
+            </Typography>
+          </Card>
+        </Grid>
+
+        <Grid item xs={6} md={3} lg={2}>
+          <Card className={cx(classes.card)} elevation={0}>
+            <Typography variant="body2" className={classes.label}>
+              Market Cap
+            </Typography>
+            <Typography variant="h5" className={classes.value}>
+              {data.chain
+                ? "$" +
+                numbro(data.chain.tokenPrice.usdMarketCap).format("0.00")
+                : "Data currently not available"}
+            </Typography>
+          </Card>
+        </Grid>
+
+        <Grid item xs={6} md={3} lg={2}>
+          <Card className={cx(classes.card)} elevation={0}>
+            <Typography variant="body2" className={classes.label}>
+              Average block time
+            </Typography>
+            <Typography variant="h5" className={classes.value}>
+              {data.chain
+                ? numbro(data.chain.averageBlockTime).format("0.00") +
+                  " seconds"
+                : "Data currently not available"}
+            </Typography>
+          </Card>
+        </Grid>
+
+        <Grid item xs={6} md={3} lg={2}>
+          <Card className={cx(classes.card)} elevation={0}>
+            <Typography variant="body2" className={classes.label}>
+              Total transactions
+            </Typography>
+            <Typography variant="h5" className={classes.value}>
+              {data.chain
+                ? numbro(data.chain.txCount).format("000,000")
+                : "Data currently not available"}
+            </Typography>
+          </Card>
+        </Grid>
+
+        <Grid item xs={6} md={3} lg={2}>
+          <Card className={cx(classes.card)} elevation={0}>
+            <Typography variant="body2" className={classes.label}>
+              Total blocks
+            </Typography>
+            <Typography variant="h5" className={classes.value}>
+              {data.chain
+                ? numbro(data.chain.latestHeight).format("000,000")
+                : "Data currently not available"}
+            </Typography>
+          </Card>
+        </Grid>
+
+        <Grid item xs={6} md={3} lg={2}>
+          <Card className={cx(classes.card)} elevation={0}>
+            <Typography variant="body2" className={classes.label}>
+              Wallet addresses
+            </Typography>
+            <Typography variant="h5" className={classes.value}>
+              {data.chain
+                ? numbro(data.chain.walletCount).format("000,000")
+                : "Data currently not available"}
+            </Typography>
+          </Card>
+        </Grid>
+      </Grid>
     </div>
-</Container>
   );
 };
 
-export default KanbanCard;
+export default ChartData;
