@@ -13,7 +13,6 @@ import TokenHolders from "../components/tokens/TokenHolders";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "inline-block",
       justifyContent: "center",
     },
 
@@ -29,20 +28,20 @@ export default function Tokens() {
 
   return (
     <Layout>
-      <Grid container className={classes.root} xs={12}>
-        <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+      <Grid container className={classes.root} >
+        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
           <Overview />
         </Grid>
 
-        <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
           <ProfileSummary />
         </Grid>
 
-        <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
           <Transactions />
         </Grid>
 
-        <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
           <TokenHolders />
         </Grid>
       </Grid>
