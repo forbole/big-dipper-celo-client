@@ -107,7 +107,7 @@ const AccountPage = () => {
         <Grid item xs={12} lg={5} className={classes.bottomPadding}>
           <AddressCard address={data.account.address} />
           <p></p>
-          <AccountOverview />
+          <AccountOverview balance={data.account.balance}/>
         </Grid>
       </Hidden>
 

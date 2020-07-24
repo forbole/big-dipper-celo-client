@@ -159,7 +159,7 @@ const Layout = (props: { children: React.ReactNode }) => {
             </Typography>
           </Link>,
           <Link href="/transactions" color="inherit">
-            <Typography variant="body1" color="textPrimary">
+            <Typography variant="body1" color="textPrimary" id="signin-ledger">
               <ListItemIcon className={classes.icon}>
                 <img src="/images/connect_ledger.svg" />
               </ListItemIcon>
