@@ -72,7 +72,7 @@ const useStyles = makeStyles(() => {
     return {
         root: {
             width: "100%",
-            padding: "0.5rem",
+            padding: "0 1rem",
             borderRadius: 5,
             overflowY: "auto",
         },
@@ -203,31 +203,33 @@ const Uptime = () => {
                             99.8%
             </Typography>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} alignItems="center">
                         <Divider variant="middle" className={classes.divider} />
                     </Grid>
-                    <ResponsiveContainer width='95%' aspect={1.0 / 0.9}>
-                        <BarChart
-                            // width={350}
-                            // height={250}
-                            data={data}
-                            margin={{
-                                top: 0, right: 0, left: -10, bottom: 5,
-                            }}
-                            barGap="0"
-                            barCategoryGap="2%"
-                        >
-                            <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-                            <XAxis tick={{ stroke: "rgba(255, 255, 255, 0.6)", fontSize: 10, fontWeight: 150, }} dataKey="name"
-                                label={{ value: 'Blocks', position: 'insideBottomLeft', fill: "rgba(255, 255, 255, 0.6)", fontWeight: "normal", textAnchor: "start" }} />
-                            <YAxis tickSize={0} tickMargin={10} tick={{ stroke: "rgba(255, 255, 255, 0.6)", fontSize: 10, fontWeight: 150 }}
-                                label={{ value: 'Votes available', angle: -270, position: 'center', fill: "rgba(255, 255, 255, 0.6)", fontWeight: "normal", }} />
-                            <Tooltip content={<CustomTooltip />} />
-                            <Legend align="left" verticalAlign="top" height={50} width={200} />
-                            <Bar dataKey="Voted" fill="rgba(58, 211, 158, 1)" barSize={6} fillOpacity={1} />
-                            <Bar dataKey="Missed" fill="rgba(150, 152, 154, 1)" barSize={6} fillOpacity={1} />
-                        </BarChart>
-                    </ResponsiveContainer>
+                    <Grid item xs={12} lg={10} alignItems="center">
+                        <ResponsiveContainer aspect={1.0 / 0.7}>
+                            <BarChart
+                                // width={350}
+                                // height={250}
+                                data={data}
+                                margin={{
+                                    top: 0, right: 0, left: -10, bottom: 5,
+                                }}
+                                barGap="0"
+                                barCategoryGap="2%"
+                            >
+                                <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+                                <XAxis tick={{ stroke: "rgba(255, 255, 255, 0.6)", fontSize: 10, fontWeight: 150, }} dataKey="name"
+                                    label={{ value: 'Blocks', position: 'insideBottomLeft', fill: "rgba(255, 255, 255, 0.6)", fontWeight: "normal", textAnchor: "start" }} />
+                                <YAxis tickSize={0} tickMargin={10} tick={{ stroke: "rgba(255, 255, 255, 0.6)", fontSize: 10, fontWeight: 150 }}
+                                    label={{ value: 'Votes available', angle: -270, position: 'center', fill: "rgba(255, 255, 255, 0.6)", fontWeight: "normal", }} />
+                                <Tooltip content={<CustomTooltip />} />
+                                <Legend align="left" verticalAlign="top" height={50} width={200} />
+                                <Bar dataKey="Voted" fill="rgba(58, 211, 158, 1)" barSize={6} fillOpacity={1} />
+                                <Bar dataKey="Missed" fill="rgba(150, 152, 154, 1)" barSize={6} fillOpacity={1} />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </Grid>
                     <span className={classes.power}>
                         <Typography color="textSecondary" variant="caption" className={classes.power}  >
                             10/10000 (19h)

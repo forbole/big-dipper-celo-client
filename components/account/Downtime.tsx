@@ -138,7 +138,7 @@ const Downtime = () => {
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
-        <Typography variant="body1" > Downtime</Typography>
+        <Typography variant="body1" > Downtime</Typography> 
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.root}>
         <Grid container >

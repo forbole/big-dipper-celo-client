@@ -31,16 +31,16 @@ export default function validatorGroupDetails() {
     return (
         <Layout>
             <Grid container className={classes.root}>
-                <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+                <Grid item xs={12} sm={7} className={classes.bottomPadding}>
                     <AddressCard />
                 </Grid>
-                <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+                <Grid item xs={12} sm={7} className={classes.bottomPadding}>
                     <Overview />
                 </Grid>
-                <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+                <Grid item xs={12} sm={7} className={classes.bottomPadding}>
                     <GroupMember />
                 </Grid>
-                <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+                <Grid item xs={12} sm={7} className={classes.bottomPadding}>
                     <Uptime />
                 </Grid>
             </Grid>
