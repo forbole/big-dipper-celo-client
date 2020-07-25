@@ -14,9 +14,8 @@ const getScreenSize = () => {
     }
 };
 
-const MiddleEllipsis = (str: String) => {
+function MiddleEllipsis(str: String) {
     getScreenSize();
-    console.log(getScreenSize())
 
     if (xsScreen) {
         if (str.length > 10) {
