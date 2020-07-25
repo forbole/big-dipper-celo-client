@@ -23,7 +23,6 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import TablePagination from "@material-ui/core/TablePagination";
 import numbro from "numbro";
-// import { MiddleEllipsis } from "react-middle-ellipsis";
 import { useRouter } from "next/router";
 
 import MiddleEllipsis from './../MiddleEllipsis'
@@ -305,25 +304,14 @@ const LatestBlocks = (pagination: boolean, displayCard: boolean) => {
                                 display="inline"
                                 className={classes.textContent}
                               >
-                                {/* <div
-                                  style={{
-                                    width: "40%",
-                                    minWidth: "10%",
-                                    maxWidth: "100%",
-                                    whiteSpace: "nowrap",
-                                  }}
-                                >
-                                  <MiddleEllipsis> */}
                                 <span>
-                                  {MiddleEllipsis(
+                                  {
                                     ((row.miner && row.miner.name) ||
                                       (row.miner && row.miner.affiliation)
-                                      ? row.miner.name ||
-                                      row.miner.affiliation
-                                      : null))}
+                                      ? (MiddleEllipsis(row.miner.name ||
+                                        row.miner.affiliation))
+                                      : null)}
                                 </span>
-                                {/* </MiddleEllipsis> */}
-                                {/* </div> */}
                               </Typography>
                             </Link>
                           ) : null}

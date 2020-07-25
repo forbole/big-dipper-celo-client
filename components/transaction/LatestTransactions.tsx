@@ -21,9 +21,10 @@ import Chips from "../Chips";
 import Divider from "@material-ui/core/Divider";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
-import { MiddleEllipsis } from "react-middle-ellipsis";
 import moment from "moment";
 import Router from "next/router";
+import MiddleEllipsis from './../MiddleEllipsis'
+
 
 const GET_TX = gql`
   {
@@ -194,13 +195,12 @@ const LatestTransactions = (props: boolean) => {
                                       whiteSpace: "nowrap",
                                     }}
                                   >
-                                    {/* <MiddleEllipsis> */}
+                       
                                     <a>
                                       {row.hash
-                                        ? row.hash
-                                        : "Data currently not available"}
+                                        ? MiddleEllipsis(row.hash)
+                                        : MiddleEllipsis("Data currently not available")}
                                     </a>
-                                    {/* </MiddleEllipsis> */}
                                   </div>
                                 </Link>
                               </Typography>
@@ -239,13 +239,11 @@ const LatestTransactions = (props: boolean) => {
                                         whiteSpace: "nowrap",
                                       }}
                                     >
-                                      {/* <MiddleEllipsis> */}
                                       <span>
                                         {row.from && row.from.address
-                                          ? row.from.address
-                                          : " "}
+                                          ? MiddleEllipsis(row.from.address)
+                                          : "Data currently not available"}
                                       </span>
-                                      {/* </MiddleEllipsis> */}
                                     </div>
                                   </Link>
                                 ) : null}
@@ -275,13 +273,11 @@ const LatestTransactions = (props: boolean) => {
                                         whiteSpace: "nowrap",
                                       }}
                                     >
-                                      {/* <MiddleEllipsis> */}
                                       <span>
                                         {row.to && row.to.address
-                                          ? row.to.address
-                                          : "Data currently not available"}
+                                          ? MiddleEllipsis(row.to.address)
+                                          : MiddleEllipsis("Data currently not available")}
                                       </span>
-                                      {/* </MiddleEllipsis> */}
                                     </div>
                                   </Link>
                                 ) : null}
