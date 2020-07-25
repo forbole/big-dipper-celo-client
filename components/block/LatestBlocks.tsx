@@ -26,6 +26,7 @@ import numbro from "numbro";
 // import { MiddleEllipsis } from "react-middle-ellipsis";
 import { useRouter } from "next/router";
 
+import MiddleEllipsis from './../MiddleEllipsis'
 const GET_BLOCK = gql`
   {
     blocks(pageSize: 500, page: 10) {
@@ -152,7 +153,7 @@ const LatestBlocks = (pagination: boolean, displayCard: boolean) => {
 
   const getScreenSize = () => {
     if (typeof window !== "undefined") {
-      if (window.innerWidth > 641) return (mediumScreen = true);
+      if (window.innerWidth > 960 && window.innerWidth < 1280) return (mediumScreen = true);
       else return (mediumScreen = false);
     }
   };
@@ -314,11 +315,12 @@ const LatestBlocks = (pagination: boolean, displayCard: boolean) => {
                                 >
                                   <MiddleEllipsis> */}
                                 <span>
-                                  {(row.miner && row.miner.name) ||
-                                    (row.miner && row.miner.affiliation)
-                                    ? row.miner.name ||
-                                    row.miner.affiliation
-                                    : null}
+                                  {MiddleEllipsis(
+                                    ((row.miner && row.miner.name) ||
+                                      (row.miner && row.miner.affiliation)
+                                      ? row.miner.name ||
+                                      row.miner.affiliation
+                                      : null))}
                                 </span>
                                 {/* </MiddleEllipsis> */}
                                 {/* </div> */}
