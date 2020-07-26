@@ -45,7 +45,7 @@ const AddressCard = (address: any) => {
           </Grid>
           <Grid item xs={1}>
             <Typography variant="body2" gutterBottom align="center">
-              <img src="/images/qr code.svg" />
+              <img src="/images/qr-code.svg" />
             </Typography>
           </Grid>
           <Grid item xs={12} className={classes.address}>

@@ -105,7 +105,7 @@ const NetworkDropdown = () => {
               <MenuItem className={classes.menuItem}>
                 <Avatar
                   alt="Celo Alfajores"
-                  src="/images/celo_avatar.svg"
+                  src="/images/celo-avatar.svg"
                   className={classes.celoIcon}
                 />
                 <Typography variant="body2">Celo Alfajores</Typography>
@@ -120,7 +120,7 @@ const NetworkDropdown = () => {
               <MenuItem className={classes.menuItem}>
                 <Avatar
                   alt="Celo Baklava"
-                  src="/images/celo_avatar.svg"
+                  src="/images/celo-avatar.svg"
                   className={classes.celoIcon}
                 />
                 <Typography variant="body2">Celo Baklava</Typography>
@@ -134,7 +134,7 @@ const NetworkDropdown = () => {
               <MenuItem className={classes.menuItem}>
                 <Avatar
                   alt="Celo Integration"
-                  src="/images/celo_avatar.svg"
+                  src="/images/celo-avatar.svg"
                   className={classes.celoIcon}
                 />
                 <Typography variant="body2">Celo Integration</Typography>
