@@ -75,7 +75,7 @@ const LockGoldSuccess = () => {
                                 noWrap
                                 align="center"
                             >
-                                    <img src="/images/success_icon.svg" />
+                                    <img src="/images/success-icon.svg" />
                                 </Typography>
                             </Grid>
                             <Grid

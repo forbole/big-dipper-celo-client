@@ -21,7 +21,7 @@ import Chips from "../Chips";
 import Divider from "@material-ui/core/Divider";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
-import { MiddleEllipsis } from "react-middle-ellipsis";
+// import { MiddleEllipsis } from "react-middle-ellipsis";
 import moment from "moment";
 import Router from "next/router";
 

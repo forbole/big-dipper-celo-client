@@ -26,8 +26,6 @@ const GET_CHAIN = gql`
   }
 `;
 
-
-
 const useStyles = makeStyles({
   root: {
     display: "flex",
@@ -44,7 +42,11 @@ const useStyles = makeStyles({
   },
   value: {
     fontWeight: 300,
+    display: "inline-block",
     padding: "0.2rem 0.75rem 0.5rem 0.75rem",
+  },
+  valueSuffix: {
+    padding: "0.2rem 0.75rem 0.5rem 0"
   },
   label: {
     display: "flex",
@@ -54,6 +56,11 @@ const useStyles = makeStyles({
     marginTop: "1.5%",
   },
 });
+
+const NotAvailable = () => {
+  const classes = useStyles();
+  return <span className={classes.label}>Data currently not available</span>
+}
 
 const ChartData = () => {
   const classes = useStyles();
@@ -72,13 +79,13 @@ const ChartData = () => {
         <Grid item xs={6} md={3} lg={2}>
           <Card className={cx(classes.card)} elevation={0}>
             <Typography variant="body2" className={classes.label}>
-              cGLD Price
+              Celo Price
             </Typography>
-            <Typography variant="h5" className={classes.value}>
-              {data.chain
-                ? "$" + numbro(data.chain.tokenPrice.usd).format("0.00")
-                : "Data currently not available"}
-            </Typography>
+            {data.chain.tokenPrice&&data.chain.tokenPrice.usd?
+              <Typography variant="h5" className={classes.value}>
+                $ {numbro(data.chain.tokenPrice.usd).format("0.00")}
+              </Typography>
+            : <NotAvailable />}
           </Card>
         </Grid>
 
@@ -87,12 +94,11 @@ const ChartData = () => {
             <Typography variant="body2" className={classes.label}>
               Market Cap
             </Typography>
+            {data.chain.tokenPrice&&data.chain.tokenPrice.usdMarketCap?
             <Typography variant="h5" className={classes.value}>
-              {data.chain
-                ? "$" +
-                numbro(data.chain.tokenPrice.usdMarketCap).format("0.00")
-                : "Data currently not available"}
+              $ {numbro(data.chain.tokenPrice.usdMarketCap).format("0.00")}
             </Typography>
+            : <NotAvailable />}
           </Card>
         </Grid>
 
@@ -101,12 +107,11 @@ const ChartData = () => {
             <Typography variant="body2" className={classes.label}>
               Average block time
             </Typography>
-            <Typography variant="h5" className={classes.value}>
-              {data.chain
-                ? numbro(data.chain.averageBlockTime).format("0.00") +
-                  " seconds"
-                : "Data currently not available"}
-            </Typography>
+            {data.chain?
+            <><Typography variant="h5" className={classes.value}>
+              {numbro(data.chain.averageBlockTime).format("0.00")} 
+            </Typography><span className={classes.valueSuffix}>seconds</span></>
+            : <NotAvailable />}
           </Card>
         </Grid>
 
@@ -115,11 +120,11 @@ const ChartData = () => {
             <Typography variant="body2" className={classes.label}>
               Total transactions
             </Typography>
+            {data.chain?
             <Typography variant="h5" className={classes.value}>
-              {data.chain
-                ? numbro(data.chain.txCount).format("000,000")
-                : "Data currently not available"}
+              {numbro(data.chain.txCount).format("000,000")}
             </Typography>
+            : <NotAvailable />}
           </Card>
         </Grid>
 
@@ -128,11 +133,11 @@ const ChartData = () => {
             <Typography variant="body2" className={classes.label}>
               Total blocks
             </Typography>
+            {data.chain?
             <Typography variant="h5" className={classes.value}>
-              {data.chain
-                ? numbro(data.chain.latestHeight).format("000,000")
-                : "Data currently not available"}
+              {numbro(data.chain.latestHeight).format("000,000")}
             </Typography>
+            :<NotAvailable />}
           </Card>
         </Grid>
 
@@ -141,11 +146,11 @@ const ChartData = () => {
             <Typography variant="body2" className={classes.label}>
               Wallet addresses
             </Typography>
+            {data.chain?
             <Typography variant="h5" className={classes.value}>
-              {data.chain
-                ? numbro(data.chain.walletCount).format("000,000")
-                : "Data currently not available"}
-            </Typography>
+              {numbro(data.chain.walletCount).format("000,000")}
+            </Typography>  
+            :<NotAvailable />}
           </Card>
         </Grid>
       </Grid>

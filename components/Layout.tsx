@@ -107,7 +107,7 @@ const Layout = (props: { children: React.ReactNode }) => {
     >
       <List>
         <Link href="/">
-          <img src="/images/celo_logo.svg" className={classes.drawerLogo} />
+          <img src="/images/celo-logo.svg" className={classes.drawerLogo} />
         </Link>
         {[
           <Link href="/" color="inherit">
@@ -144,7 +144,7 @@ const Layout = (props: { children: React.ReactNode }) => {
           <Link href="/account" color="inherit">
             <Typography variant="body1" color="textPrimary">
               <ListItemIcon className={classes.icon}>
-                <img src="/images/user_login.svg" />
+                <img src="/images/user-login.svg" />
               </ListItemIcon>
               {"Michelle Clark"}
             </Typography>
@@ -161,7 +161,7 @@ const Layout = (props: { children: React.ReactNode }) => {
           <Link href="/transactions" color="inherit">
             <Typography variant="body1" color="textPrimary" id="signin-ledger">
               <ListItemIcon className={classes.icon}>
-                <img src="/images/connect_ledger.svg" />
+                <img src="/images/connect-ledger.svg" />
               </ListItemIcon>
               {"Sign In With Ledger"}
             </Typography>{" "}
@@ -182,7 +182,7 @@ const Layout = (props: { children: React.ReactNode }) => {
         <AppBar position="fixed">
           <Toolbar>
             <Link href="/" className={classes.logo}>
-              <img src="/images/celo_logo.svg" />
+              <img src="/images/celo-logo.svg" />
             </Link>
 
             <div>
