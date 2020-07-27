@@ -21,9 +21,10 @@ import Chips from "../Chips";
 import Divider from "@material-ui/core/Divider";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
-// import { MiddleEllipsis } from "react-middle-ellipsis";
 import moment from "moment";
 import Router from "next/router";
+import MiddleEllipsis from './../MiddleEllipsis'
+
 
 const GET_TX = gql`
   {
@@ -31,15 +32,25 @@ const GET_TX = gql`
       transactions {
         from {
           _id
-
           address
           balance
         }
-        to {
-          _id
+        to{
           address
-          balance
+          ... on ToWalletAccount {
+            account {
+              balance
+            }
+          }
+          ... on ToWalletContract {
+            contract {
+              name
+              ABI
+            }        
+          }
         }
+        type
+        decodedInput
         value
         hash
         timestamp
@@ -158,6 +169,7 @@ const LatestTransactions = (props: boolean) => {
             ) : null}
           </Typography>
           <Divider variant="middle" className={classes.divider} />
+          {data.transactions?
           <TableContainer className={classes.container}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead></TableHead>
@@ -194,13 +206,11 @@ const LatestTransactions = (props: boolean) => {
                                       whiteSpace: "nowrap",
                                     }}
                                   >
-                                    {/* <MiddleEllipsis> */}
                                     <a>
                                       {row.hash
-                                        ? row.hash
-                                        : "Data currently not available"}
+                                        ? <MiddleEllipsis text={row.hash} />
+                                        : null}
                                     </a>
-                                    {/* </MiddleEllipsis> */}
                                   </div>
                                 </Link>
                               </Typography>
@@ -239,13 +249,11 @@ const LatestTransactions = (props: boolean) => {
                                         whiteSpace: "nowrap",
                                       }}
                                     >
-                                      {/* <MiddleEllipsis> */}
                                       <span>
                                         {row.from && row.from.address
-                                          ? row.from.address
-                                          : " "}
+                                          ? <MiddleEllipsis text={row.from.address} />
+                                          : null}
                                       </span>
-                                      {/* </MiddleEllipsis> */}
                                     </div>
                                   </Link>
                                 ) : null}
@@ -275,16 +283,14 @@ const LatestTransactions = (props: boolean) => {
                                         whiteSpace: "nowrap",
                                       }}
                                     >
-                                      {/* <MiddleEllipsis> */}
                                       <span>
                                         {row.to && row.to.address
-                                          ? row.to.address
-                                          : "Data currently not available"}
+                                          ? <MiddleEllipsis text={row.to.address} />
+                                          : null}
                                       </span>
-                                      {/* </MiddleEllipsis> */}
                                     </div>
                                   </Link>
-                                ) : null}
+                                ) : ""}
                               </Typography>
                             </Grid>
 
@@ -314,7 +320,7 @@ const LatestTransactions = (props: boolean) => {
                   })}
               </TableBody>
             </Table>
-          </TableContainer>
+          </TableContainer>:""}
           {props === true ? (
             <TablePagination
               className={"pagination"}
