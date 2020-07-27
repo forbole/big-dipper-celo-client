@@ -26,6 +26,7 @@ import numbro from "numbro";
 import { useRouter } from "next/router";
 
 import MiddleEllipsis from './../MiddleEllipsis'
+
 const GET_BLOCK = gql`
   {
     blocks(pageSize: 500, page: 10) {
@@ -308,8 +309,7 @@ const LatestBlocks = (pagination: boolean, displayCard: boolean) => {
                                   {
                                     ((row.miner && row.miner.name) ||
                                       (row.miner && row.miner.affiliation)
-                                      ? (MiddleEllipsis(row.miner.name ||
-                                        row.miner.affiliation))
+                                      ? <MiddleEllipsis text={(row.miner.name || row.miner.affiliation)} />
                                       : null)}
                                 </span>
                               </Typography>

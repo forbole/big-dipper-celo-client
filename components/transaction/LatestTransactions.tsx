@@ -198,8 +198,8 @@ const LatestTransactions = (props: boolean) => {
 
                                     <a>
                                       {row.hash
-                                        ? MiddleEllipsis(row.hash)
-                                        : MiddleEllipsis("Data currently not available")}
+                                        ? <MiddleEllipsis text={row.hash} />
+                                        : null}
                                     </a>
                                   </div>
                                 </Link>
@@ -241,9 +241,11 @@ const LatestTransactions = (props: boolean) => {
                                     >
                                       <span>
                                         {row.from && row.from.address
-                                          ? MiddleEllipsis(row.from.address)
-                                          : "Data currently not available"}
+                                          ? <MiddleEllipsis text={row.from.address} />
+                                          : null}
                                       </span>
+
+
                                     </div>
                                   </Link>
                                 ) : null}
@@ -275,8 +277,8 @@ const LatestTransactions = (props: boolean) => {
                                     >
                                       <span>
                                         {row.to && row.to.address
-                                          ? MiddleEllipsis(row.to.address)
-                                          : MiddleEllipsis("Data currently not available")}
+                                          ? <MiddleEllipsis text={row.to.address} />
+                                          : null}
                                       </span>
                                     </div>
                                   </Link>
