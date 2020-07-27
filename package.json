@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "dev": "next dev -p build-fragment",
+    "build": "next build -p build-fragment",
+    "start": "next start -p build-fragment",
+    "build-fragment": "node ./schemaQuery.ts"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
