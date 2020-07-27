@@ -121,9 +121,9 @@ function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const TransactionDetails = (hash_value: String) => {
+const TransactionDetails = (value: String) => {
   const classes = useStyles();
-  const hash = hash_value.hash_value ? hash_value.hash_value.toString() : 0;
+  const hash = value.hashValue ? value.hashValue.toString() : 0;
   const { loading, error, data } = useQuery(GET_TX_DETAILS, {
     variables: { hash },
   });
