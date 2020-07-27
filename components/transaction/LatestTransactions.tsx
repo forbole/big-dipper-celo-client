@@ -195,7 +195,7 @@ const LatestTransactions = (props: boolean) => {
                                       whiteSpace: "nowrap",
                                     }}
                                   >
-                       
+
                                     <a>
                                       {row.hash
                                         ? MiddleEllipsis(row.hash)

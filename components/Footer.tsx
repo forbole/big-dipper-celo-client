@@ -42,7 +42,7 @@ const Footer = () => {
     <footer>
       <Grid container className={classes.root}>
         <Grid item xs={12} sm={12} md={8}>
-          <img src="/images/celo_logo.svg" />
+          <img src="/images/celo-logo.svg" />
         </Grid>
 
         <Grid item xs={12} sm={12} md={8}>
@@ -56,19 +56,19 @@ const Footer = () => {
             href="https://github.com/celo-org"
             className={classes.socialMedia}
           >
-            <img src="/images/social media_github.svg" />
+            <img src="/images/social-media-github.svg" />
           </Link>
           <Link
             href="https://medium.com/celoorg"
             className={classes.socialMedia}
           >
-            <img src="/images/social media_medium.svg" />
+            <img src="/images/social-media-medium.svg" />
           </Link>
           <Link
             href="https://twitter.com/CeloOrg"
             className={classes.socialMedia}
           >
-            <img src="/images/social media_twitter.svg" />
+            <img src="/images/social-media-twitter.svg" />
           </Link>
         </Grid>
       </Grid>
