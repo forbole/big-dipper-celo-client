@@ -10,13 +10,22 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
 import { gql } from "apollo-boost";
 import { useQuery } from '@apollo/react-hooks';
+import { IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 
+import introspectionQueryResultData from '../fragmentTypes.json';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData
+});
 
 const fetch = require('node-fetch').default;
+const cache = new InMemoryCache({ fragmentMatcher });
 
 const client = new ApolloClient({
   uri: 'https://server.celo.bigdipper.live/graphql',
-  fetch: fetch
+  fetch: fetch,
+  cache,
 });
 
 
@@ -59,12 +68,12 @@ export default class TSApp extends App<AppProps, AppState>{
             <CssBaseline />
             <Layout>
               <Component {...pageProps} style={{ display: "flex" }} />
-                <Footer />
+              <Footer />
             </Layout>
           </ThemeProvider>
         </ApolloProvider>
       </React.Fragment>
     );
   }
-  }
-  
+}
+
