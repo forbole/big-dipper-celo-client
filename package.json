@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev -p build-fragment",
     "build": "next build -p build-fragment",
-    "start": "next start",
+    "start": "next start -p build-fragment",
     "build-fragment": "node ./schemaQuery.ts"
   },
   "dependencies": {
