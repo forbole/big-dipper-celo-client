@@ -12,7 +12,6 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { useRouter } from "next/router";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
-//import MiddleEllipsis from "react-middle-ellipsis";
 import ContentLoader from "react-content-loader";
 import moment from "moment";
 import LedgerButtons from "../ledger/LedgerButtons";

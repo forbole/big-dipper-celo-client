@@ -22,7 +22,6 @@ import Chip from "@material-ui/core/Chip";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 
-//import MiddleEllipsis from "react-middle-ellipsis";
 
 const GET_TX_DETAILS = gql`
   query Transaction($hash: String!) {

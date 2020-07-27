@@ -21,9 +21,10 @@ import Chips from "../Chips";
 import Divider from "@material-ui/core/Divider";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
-// import { MiddleEllipsis } from "react-middle-ellipsis";
 import moment from "moment";
 import Router from "next/router";
+import MiddleEllipsis from './../MiddleEllipsis'
+
 
 const GET_TX = gql`
   {
@@ -207,8 +208,8 @@ const LatestTransactions = (props: boolean) => {
                                   >
                                     <a>
                                       {row.hash
-                                        ? row.hash
-                                        : "Data currently not available"}
+                                        ? <MiddleEllipsis text={row.hash} />
+                                        : null}
                                     </a>
                                   </div>
                                 </Link>
@@ -250,8 +251,8 @@ const LatestTransactions = (props: boolean) => {
                                     >
                                       <span>
                                         {row.from && row.from.address
-                                          ? row.from.address
-                                          : " "}
+                                          ? <MiddleEllipsis text={row.from.address} />
+                                          : null}
                                       </span>
                                     </div>
                                   </Link>
@@ -284,8 +285,8 @@ const LatestTransactions = (props: boolean) => {
                                     >
                                       <span>
                                         {row.to && row.to.address
-                                          ? row.to.address
-                                          : "Data currently not available"}
+                                          ? <MiddleEllipsis text={row.to.address} />
+                                          : null}
                                       </span>
                                     </div>
                                   </Link>

@@ -23,8 +23,9 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import TablePagination from "@material-ui/core/TablePagination";
 import numbro from "numbro";
-// import { MiddleEllipsis } from "react-middle-ellipsis";
 import { useRouter } from "next/router";
+
+import MiddleEllipsis from './../MiddleEllipsis'
 
 const GET_BLOCK = gql`
   {
@@ -152,7 +153,7 @@ const LatestBlocks = (pagination: boolean, displayCard: boolean) => {
 
   const getScreenSize = () => {
     if (typeof window !== "undefined") {
-      if (window.innerWidth > 641) return (mediumScreen = true);
+      if (window.innerWidth > 960 && window.innerWidth < 1280) return (mediumScreen = true);
       else return (mediumScreen = false);
     }
   };
@@ -304,24 +305,13 @@ const LatestBlocks = (pagination: boolean, displayCard: boolean) => {
                                 display="inline"
                                 className={classes.textContent}
                               >
-                                {/* <div
-                                  style={{
-                                    width: "40%",
-                                    minWidth: "10%",
-                                    maxWidth: "100%",
-                                    whiteSpace: "nowrap",
-                                  }}
-                                >
-                                  <MiddleEllipsis> */}
                                 <span>
-                                  {(row.miner && row.miner.name) ||
-                                    (row.miner && row.miner.affiliation)
-                                    ? row.miner.name ||
-                                    row.miner.affiliation
-                                    : null}
+                                  {
+                                    ((row.miner && row.miner.name) ||
+                                      (row.miner && row.miner.affiliation)
+                                      ? <MiddleEllipsis text={(row.miner.name || row.miner.affiliation)} />
+                                      : null)}
                                 </span>
-                                {/* </MiddleEllipsis> */}
-                                {/* </div> */}
                               </Typography>
                             </Link>
                           ) : null}
