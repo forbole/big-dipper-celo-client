@@ -32,15 +32,25 @@ const GET_TX = gql`
       transactions {
         from {
           _id
-
           address
           balance
         }
-        to {
-          _id
+        to{
           address
-          balance
+          ... on ToWalletAccount {
+            account {
+              balance
+            }
+          }
+          ... on ToWalletContract {
+            contract {
+              name
+              ABI
+            }        
+          }
         }
+        type
+        decodedInput
         value
         hash
         timestamp
@@ -159,6 +169,7 @@ const LatestTransactions = (props: boolean) => {
             ) : null}
           </Typography>
           <Divider variant="middle" className={classes.divider} />
+          {data.transactions?
           <TableContainer className={classes.container}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead></TableHead>
@@ -195,7 +206,6 @@ const LatestTransactions = (props: boolean) => {
                                       whiteSpace: "nowrap",
                                     }}
                                   >
-
                                     <a>
                                       {row.hash
                                         ? <MiddleEllipsis text={row.hash} />
@@ -244,8 +254,6 @@ const LatestTransactions = (props: boolean) => {
                                           ? <MiddleEllipsis text={row.from.address} />
                                           : null}
                                       </span>
-
-
                                     </div>
                                   </Link>
                                 ) : null}
@@ -282,7 +290,7 @@ const LatestTransactions = (props: boolean) => {
                                       </span>
                                     </div>
                                   </Link>
-                                ) : null}
+                                ) : ""}
                               </Typography>
                             </Grid>
 
@@ -312,7 +320,7 @@ const LatestTransactions = (props: boolean) => {
                   })}
               </TableBody>
             </Table>
-          </TableContainer>
+          </TableContainer>:""}
           {props === true ? (
             <TablePagination
               className={"pagination"}
