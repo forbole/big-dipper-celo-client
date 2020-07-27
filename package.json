@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p build-fragment",
-    "build": "next build",
+    "build": "next build -p build-fragment",
     "start": "next start",
-    "build-fragment": "node ./schemaQuery.ts"  
+    "build-fragment": "node ./schemaQuery.ts"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",

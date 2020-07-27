@@ -1,1 +1,0 @@
-{"__schema":{"types":[{"kind":"INTERFACE","name":"ToWalletObject","possibleTypes":[{"name":"ToWalletAddress"},{"name":"ToWalletAccount"},{"name":"ToWalletContract"}]}]}}
