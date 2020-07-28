@@ -31,7 +31,7 @@ export default function Account() {
     <Layout>
       <Grid container className={classes.root}>
         <Grid item xs={12} sm={10} className={classes.bottomPadding}>
-          {AccountPage() }
+          <AccountPage />
         </Grid>
       </Grid>
     </Layout>

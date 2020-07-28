@@ -24,7 +24,7 @@ export default function Blocks() {
     <Layout>
       <Grid container className={classes.root}>
         <Grid item xs={12} sm={8} className={classes.bottomPadding}>
-          {LatestBlocks(false, true)}
+          <LatestBlocks pagination={false} displayCard={true} />
         </Grid>
       </Grid>
     </Layout>
