@@ -124,12 +124,12 @@ const useStyles = makeStyles({
   },
 });
 
-const LatestTransactions = (props: boolean) => {
+const LatestTransactions = (props: any) => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const paginate: any = props === true ? page * rowsPerPage : 0;
-  const paginate_2: any = props === true ? page * rowsPerPage + rowsPerPage : 5;
+  const paginate: number = props.pagination === true ? page * rowsPerPage : 0;
+  const paginate_2: number = props.pagination === true ? page * rowsPerPage + rowsPerPage : 5;
 
   const { loading, error, data } = useQuery(GET_TX, {
     pollInterval: 5000,
@@ -150,7 +150,7 @@ const LatestTransactions = (props: boolean) => {
   moment.relativeTimeThreshold("ss", 3);
 
   if (loading) return null;
-  if (error) return `Error! ${error}`;
+  if (error) return <>{`Error! ${error.message}`}</>
 
   return (<>
     <Grid container >
@@ -158,7 +158,7 @@ const LatestTransactions = (props: boolean) => {
         <Paper className={classes.root}>
           <Typography variant="body1" className={classes.box}>
             Latest Transactions{" "}
-            {props === false ? (
+            {props.pagination === false ? (
               <Link
                 href="/transactions"
                 className={classes.link}
@@ -169,159 +169,159 @@ const LatestTransactions = (props: boolean) => {
             ) : null}
           </Typography>
           <Divider variant="middle" className={classes.divider} />
-          {data.transactions?
-          <TableContainer className={classes.container}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead></TableHead>
-              <TableBody>
-                {data.transactions.transactions
-                  .slice(paginate, paginate_2)
-                  .map((row: any) => {
-                    return (
-                      <TableRow key={row.hash}>
-                        <TableCell component="th" scope="row" padding="checkbox">
-                          <Grid
-                            container
-                            spacing={1}
-                            style={{ padding: "0.5rem 0" }}
-                          >
-                            <Grid item xs={8}>
-                              <Typography
-                                variant="body2"
-                                className={classes.leftInline}
-                                noWrap
-                              >
-                                Tx#
-                            <Link
-                                  href="transaction/[transaction]/"
-                                  as={`transaction/${row.hash}`}
-                                  color="secondary"
+          {data.transactions ?
+            <TableContainer className={classes.container}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead></TableHead>
+                <TableBody>
+                  {data.transactions.transactions
+                    .slice(paginate, paginate_2)
+                    .map((row: any) => {
+                      return (
+                        <TableRow key={row.hash}>
+                          <TableCell component="th" scope="row" padding="checkbox">
+                            <Grid
+                              container
+                              spacing={1}
+                              style={{ padding: "0.5rem 0" }}
+                            >
+                              <Grid item xs={8}>
+                                <Typography
+                                  variant="body2"
                                   className={classes.leftInline}
+                                  noWrap
                                 >
-                                  <div
-                                    style={{
-                                      width: "60%",
-                                      minWidth: "40%",
-                                      maxWidth: "100%",
-                                      whiteSpace: "nowrap",
-                                    }}
+                                  Tx#
+                            <Link
+                                    href="transaction/[transaction]/"
+                                    as={`transaction/${row.hash}`}
+                                    color="secondary"
+                                    className={classes.leftInline}
                                   >
-                                    <a>
-                                      {row.hash
-                                        ? <MiddleEllipsis text={row.hash} />
-                                        : null}
-                                    </a>
-                                  </div>
-                                </Link>
-                              </Typography>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Typography
-                                variant="body2"
-                                className={classes.alignRight}
-                                noWrap
-                              >
-                                {row.timestamp
-                                  ? moment.unix(row.timestamp).fromNow()
-                                  : "Data currently not available"}
-                              </Typography>
-                            </Grid>
+                                    <div
+                                      style={{
+                                        width: "60%",
+                                        minWidth: "40%",
+                                        maxWidth: "100%",
+                                        whiteSpace: "nowrap",
+                                      }}
+                                    >
+                                      <a>
+                                        {row.hash
+                                          ? <MiddleEllipsis text={row.hash} />
+                                          : null}
+                                      </a>
+                                    </div>
+                                  </Link>
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Typography
+                                  variant="body2"
+                                  className={classes.alignRight}
+                                  noWrap
+                                >
+                                  {row.timestamp
+                                    ? moment.unix(row.timestamp).fromNow()
+                                    : "Data currently not available"}
+                                </Typography>
+                              </Grid>
 
-                            <Grid item xs={5} md={4}>
-                              <Typography
-                                variant="body2"
-                                className={classes.leftInline}
-                                noWrap
-                              >
-                                From
+                              <Grid item xs={5} md={4}>
+                                <Typography
+                                  variant="body2"
+                                  className={classes.leftInline}
+                                  noWrap
+                                >
+                                  From
                             {row.from && row.from.address ? (
-                                  <Link
-                                    href="account/[account]/"
-                                    as={`account/${row.from.address}`}
-                                    color="secondary"
-                                    className={classes.txPadding}
-                                  >
-                                    <div
-                                      style={{
-                                        width: "60%",
-                                        minWidth: "20%",
-                                        maxWidth: "100%",
-                                        whiteSpace: "nowrap",
-                                      }}
+                                    <Link
+                                      href="account/[account]/"
+                                      as={`account/${row.from.address}`}
+                                      color="secondary"
+                                      className={classes.txPadding}
                                     >
-                                      <span>
-                                        {row.from && row.from.address
-                                          ? <MiddleEllipsis text={row.from.address} />
-                                          : null}
-                                      </span>
-                                    </div>
-                                  </Link>
-                                ) : null}
-                              </Typography>
-                            </Grid>
+                                      <div
+                                        style={{
+                                          width: "60%",
+                                          minWidth: "20%",
+                                          maxWidth: "100%",
+                                          whiteSpace: "nowrap",
+                                        }}
+                                      >
+                                        <span>
+                                          {row.from && row.from.address
+                                            ? <MiddleEllipsis text={row.from.address} />
+                                            : null}
+                                        </span>
+                                      </div>
+                                    </Link>
+                                  ) : null}
+                                </Typography>
+                              </Grid>
 
-                            <Grid item xs={7} md={8}>
-                              <Typography
-                                variant="body2"
-                                align="left"
-                                className={classes.rightInline}
-                                noWrap
-                              >
-                                To
+                              <Grid item xs={7} md={8}>
+                                <Typography
+                                  variant="body2"
+                                  align="left"
+                                  className={classes.rightInline}
+                                  noWrap
+                                >
+                                  To
                             {row.to && row.to.address ? (
-                                  <Link
-                                    href="account/[account]/"
-                                    as={`account/${row.to.address}`}
-                                    color="secondary"
-                                    className={classes.txPadding}
-                                  >
-                                    <div
-                                      style={{
-                                        width: "60%",
-                                        minWidth: "20%",
-                                        maxWidth: "100%",
-                                        whiteSpace: "nowrap",
-                                      }}
+                                    <Link
+                                      href="account/[account]/"
+                                      as={`account/${row.to.address}`}
+                                      color="secondary"
+                                      className={classes.txPadding}
                                     >
-                                      <span>
-                                        {row.to && row.to.address
-                                          ? <MiddleEllipsis text={row.to.address} />
-                                          : null}
-                                      </span>
-                                    </div>
-                                  </Link>
-                                ) : ""}
-                              </Typography>
-                            </Grid>
+                                      <div
+                                        style={{
+                                          width: "60%",
+                                          minWidth: "20%",
+                                          maxWidth: "100%",
+                                          whiteSpace: "nowrap",
+                                        }}
+                                      >
+                                        <span>
+                                          {row.to && row.to.address
+                                            ? <MiddleEllipsis text={row.to.address} />
+                                            : null}
+                                        </span>
+                                      </div>
+                                    </Link>
+                                  ) : ""}
+                                </Typography>
+                              </Grid>
 
-                            <Grid item xs={6}>
-                              <Typography variant="body2" className={classes.chip}>
-                                {row.value === 0 ? (
-                                  <Chips value="Contract Call" />
-                                ) : (
-                                    <Chips value="Token Transfer" />
-                                  )}
-                              </Typography>
+                              <Grid item xs={6}>
+                                <Typography variant="body2" className={classes.chip}>
+                                  {row.value === 0 ? (
+                                    <Chips value="Contract Call" />
+                                  ) : (
+                                      <Chips value="Token Transfer" />
+                                    )}
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={6}>
+                                <Typography
+                                  variant="body2"
+                                  className={classes.alignRight}
+                                >
+                                  {row.value
+                                    ? row.value + " cGLD"
+                                    : "Data currently not available"}
+                                </Typography>
+                              </Grid>
                             </Grid>
-                            <Grid item xs={6}>
-                              <Typography
-                                variant="body2"
-                                className={classes.alignRight}
-                              >
-                                {row.value
-                                  ? row.value + " cGLD"
-                                  : "Data currently not available"}
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </TableContainer>:""}
-          {props === true ? (
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer> : ""}
+          {props.pagination === true ? (
             <TablePagination
               className={"pagination"}
               rowsPerPageOptions={[10, 25, 100]}

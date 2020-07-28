@@ -69,23 +69,23 @@ const ChartData = () => {
     pollInterval: 5000,
   });
 
-  if (loading) return "Loading...";
-  if (error) return `Error! ${error.message}`;
+  if (loading) return <>{"Loading..."}</>
+  if (error) return <>{`Error! ${error.message}`}</>
 
 
   return (
-    <div>
+    <>
       <Grid container className={classes.container}>
         <Grid item xs={6} md={3} lg={2}>
           <Card className={cx(classes.card)} elevation={0}>
             <Typography variant="body2" className={classes.label}>
               Celo Price
             </Typography>
-            {data.chain.tokenPrice&&data.chain.tokenPrice.usd?
+            {data.chain.tokenPrice && data.chain.tokenPrice.usd ?
               <Typography variant="h5" className={classes.value}>
                 $ {numbro(data.chain.tokenPrice.usd).format("0.00")}
               </Typography>
-            : <NotAvailable />}
+              : <NotAvailable />}
           </Card>
         </Grid>
 
@@ -94,11 +94,11 @@ const ChartData = () => {
             <Typography variant="body2" className={classes.label}>
               Market Cap
             </Typography>
-            {data.chain.tokenPrice&&data.chain.tokenPrice.usdMarketCap?
-            <Typography variant="h5" className={classes.value}>
-              $ {numbro(data.chain.tokenPrice.usdMarketCap).format("0.00")}
-            </Typography>
-            : <NotAvailable />}
+            {data.chain.tokenPrice && data.chain.tokenPrice.usdMarketCap ?
+              <Typography variant="h5" className={classes.value}>
+                $ {numbro(data.chain.tokenPrice.usdMarketCap).format("0.00")}
+              </Typography>
+              : <NotAvailable />}
           </Card>
         </Grid>
 
@@ -107,11 +107,11 @@ const ChartData = () => {
             <Typography variant="body2" className={classes.label}>
               Average block time
             </Typography>
-            {data.chain?
-            <><Typography variant="h5" className={classes.value}>
-              {numbro(data.chain.averageBlockTime).format("0.00")} 
-            </Typography><span className={classes.valueSuffix}>seconds</span></>
-            : <NotAvailable />}
+            {data.chain ?
+              <><Typography variant="h5" className={classes.value}>
+                {numbro(data.chain.averageBlockTime).format("0.00")}
+              </Typography><span className={classes.valueSuffix}>seconds</span></>
+              : <NotAvailable />}
           </Card>
         </Grid>
 
@@ -120,11 +120,11 @@ const ChartData = () => {
             <Typography variant="body2" className={classes.label}>
               Total transactions
             </Typography>
-            {data.chain?
-            <Typography variant="h5" className={classes.value}>
-              {numbro(data.chain.txCount).format("000,000")}
-            </Typography>
-            : <NotAvailable />}
+            {data.chain ?
+              <Typography variant="h5" className={classes.value}>
+                {numbro(data.chain.txCount).format("000,000")}
+              </Typography>
+              : <NotAvailable />}
           </Card>
         </Grid>
 
@@ -133,11 +133,11 @@ const ChartData = () => {
             <Typography variant="body2" className={classes.label}>
               Total blocks
             </Typography>
-            {data.chain?
-            <Typography variant="h5" className={classes.value}>
-              {numbro(data.chain.latestHeight).format("000,000")}
-            </Typography>
-            :<NotAvailable />}
+            {data.chain ?
+              <Typography variant="h5" className={classes.value}>
+                {numbro(data.chain.latestHeight).format("000,000")}
+              </Typography>
+              : <NotAvailable />}
           </Card>
         </Grid>
 
@@ -146,15 +146,15 @@ const ChartData = () => {
             <Typography variant="body2" className={classes.label}>
               Wallet addresses
             </Typography>
-            {data.chain?
-            <Typography variant="h5" className={classes.value}>
-              {numbro(data.chain.walletCount).format("000,000")}
-            </Typography>  
-            :<NotAvailable />}
+            {data.chain ?
+              <Typography variant="h5" className={classes.value}>
+                {numbro(data.chain.walletCount).format("000,000")}
+              </Typography>
+              : <NotAvailable />}
           </Card>
         </Grid>
       </Grid>
-    </div>
+    </>
   );
 };
 
