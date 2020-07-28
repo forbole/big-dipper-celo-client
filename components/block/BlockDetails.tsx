@@ -88,7 +88,7 @@ const BlockDetails = () => {
   });
   const classes = useStyles();
   if (loading) return null;
-  if (error) return `Error! ${error}`;
+  if (error) return <>{`Error! ${error.message}`}</>
   return (
     <Card className={classes.root}>
       <CardContent>

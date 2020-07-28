@@ -143,7 +143,7 @@ const useStyles = makeStyles({
   },
 });
 
-const LatestBlocks = (pagination: boolean, displayCard: boolean) => {
+const LatestBlocks = (props: any) => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -159,15 +159,15 @@ const LatestBlocks = (pagination: boolean, displayCard: boolean) => {
   };
   getScreenSize();
 
-  const paginate: any =
+  const paginate: number =
     mediumScreen === false
-      ? pagination === true
+      ? props.pagination === true
         ? page * rowsPerPage + rowsPerPage
         : 5
       : 14;
-  const paginate_2: any =
+  const paginate_2: number =
     mediumScreen === false
-      ? pagination === true
+      ? props.pagination === true
         ? page * rowsPerPage + rowsPerPage
         : 10
       : 28;
@@ -191,12 +191,12 @@ const LatestBlocks = (pagination: boolean, displayCard: boolean) => {
   });
 
   if (loading) return null;
-  if (error) return `Error! ${error}`;
+  if (error) return <>{`Error! ${error.message}`}</>
 
   return (<>
     <Grid container>
       <Grid item xs={12}>
-        {displayCard === true ? (
+        {props.displayCard === true ? (
           <Hidden smUp>
             <PriceCard size="large" />
           </Hidden>
@@ -204,7 +204,7 @@ const LatestBlocks = (pagination: boolean, displayCard: boolean) => {
         <Paper className={classes.root}>
           <Typography variant="body1" className={classes.box}>
             Latest Blocks{" "}
-            {pagination === false ? (
+            {props.pagination === false ? (
               <Link href="/blocks" className={classes.link} color="textPrimary">
                 {"view more"}
               </Link>
@@ -215,7 +215,7 @@ const LatestBlocks = (pagination: boolean, displayCard: boolean) => {
             <Paper className={classes.tableCell}>
               <Table>
                 <TableHead>
-                  {pagination === true ? (
+                  {props.pagination === true ? (
                     <TableRow>
                       {columns.map((column) => (
                         <TableCell
@@ -331,7 +331,7 @@ const LatestBlocks = (pagination: boolean, displayCard: boolean) => {
                             </Link>
                           </Typography>
                         </TableCell>
-                        {pagination === true ? (
+                        {props.pagination === true ? (
                           <TableCell
                             align="left"
                             padding="checkbox"
@@ -347,7 +347,7 @@ const LatestBlocks = (pagination: boolean, displayCard: boolean) => {
                             </div>
                           </TableCell>
                         ) : null}
-                        {pagination === true ? (
+                        {props.pagination === true ? (
                           <TableCell
                             align="left"
                             padding="checkbox"
@@ -372,7 +372,7 @@ const LatestBlocks = (pagination: boolean, displayCard: boolean) => {
               </Table>
             </Paper>
           </TableContainer>
-          {pagination === true ? (
+          {props.pagination === true ? (
             <TablePagination
               className={"pagination"}
               rowsPerPageOptions={[10, 25, 100]}

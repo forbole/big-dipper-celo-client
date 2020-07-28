@@ -120,9 +120,9 @@ function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const TransactionDetails = (hash_value: String) => {
+const TransactionDetails = (props: any) => {
   const classes = useStyles();
-  const hash = hash_value.hash_value ? hash_value.hash_value.toString() : 0;
+  const hash = props.hashValue ? props.hashValue : 0;
   const { loading, error, data } = useQuery(GET_TX_DETAILS, {
     variables: { hash },
   });
@@ -168,7 +168,7 @@ const TransactionDetails = (hash_value: String) => {
     return (document.getElementById("raw-input-form").value = inputValue);
   };
   if (loading) return null;
-  if (error) return `Error! ${error}`;
+  if (error) return <>{`Error! ${error.message}`}</>
   return (
     <Card className={classes.root}>
       <CardContent>

@@ -87,7 +87,7 @@ const AccountPage = () => {
   });
   const classes = useStyles();
   if (loading) return null;
-  if (error) return `Error! ${error}`;
+  if (error) return <>{`Error! ${error.message}`}</>
 
   return (<>
     <Grid container className={classes.root}>
@@ -107,7 +107,7 @@ const AccountPage = () => {
         <Grid item xs={12} lg={5} className={classes.bottomPadding}>
           <AddressCard address={data.account.address} />
           <p></p>
-          <AccountOverview balance={data.account.balance}/>
+          <AccountOverview balance={data.account.balance} />
         </Grid>
       </Hidden>
 
