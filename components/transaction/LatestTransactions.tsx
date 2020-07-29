@@ -23,8 +23,8 @@ import Divider from "@material-ui/core/Divider";
 import { useQuery } from "@apollo/react-hooks";
 import moment from "moment";
 import Router from "next/router";
-import MiddleEllipsis from './../MiddleEllipsis'
-import { GET_TX } from './../query/Transaction'
+import MiddleEllipsis from '../MiddleEllipsis'
+import { GET_TX } from '../query/Transaction'
 
 
 const useStyles = makeStyles({

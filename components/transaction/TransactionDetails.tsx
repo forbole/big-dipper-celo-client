@@ -21,7 +21,7 @@ import moment from "moment";
 import Chip from "@material-ui/core/Chip";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
-import { GET_TX_DETAILS } from './../query/Transaction'
+import { GET_TX_DETAILS } from '../query/Transaction'
 
 
 

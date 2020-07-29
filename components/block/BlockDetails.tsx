@@ -14,7 +14,7 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import ContentLoader from "react-content-loader";
 import moment from "moment";
-import { GET_BLOCK_DETAILS } from './../query/Block'
+import { GET_BLOCK_DETAILS } from '../query/Block'
 
 
 const useStyles = makeStyles(() => {

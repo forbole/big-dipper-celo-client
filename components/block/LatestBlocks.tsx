@@ -25,8 +25,8 @@ import TablePagination from "@material-ui/core/TablePagination";
 import numbro from "numbro";
 import { useRouter } from "next/router";
 
-import MiddleEllipsis from './../MiddleEllipsis'
-import { GET_BLOCK } from './../query/Block'
+import MiddleEllipsis from '../MiddleEllipsis'
+import { GET_BLOCK } from '../query/Block'
 
 
 

@@ -31,7 +31,7 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import ContentLoader from "react-content-loader";
 import numbro from "numbro";
-import { GET_ACCOUNT_DETAILS } from './../query/Account'
+import { GET_ACCOUNT_DETAILS } from '../query/Account'
 
 
 const useStyles = makeStyles((theme: Theme) =>

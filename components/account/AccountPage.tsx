@@ -33,7 +33,7 @@ import ContentLoader from "react-content-loader";
 import numbro from "numbro";
 import AccountOverview from "./AccountOverview";
 import CoinBalanceHistory from './CoinBalanceHistory'
-import { GET_ACCOUNT_DETAILS } from './../query/Account'
+import { GET_ACCOUNT_DETAILS } from '../query/Account'
 
 
 
