@@ -19,45 +19,13 @@ import Paper from "@material-ui/core/Paper";
 import TablePagination from "@material-ui/core/TablePagination";
 import Chips from "../Chips";
 import Divider from "@material-ui/core/Divider";
-import { gql } from "apollo-boost";
+// import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import moment from "moment";
 import Router from "next/router";
 import MiddleEllipsis from './../MiddleEllipsis'
+import { GET_TX } from './../query/Transaction'
 
-
-const GET_TX = gql`
-  {
-    transactions {
-      transactions {
-        from {
-          _id
-          address
-          balance
-        }
-        to{
-          address
-          ... on ToWalletAccount {
-            account {
-              balance
-            }
-          }
-          ... on ToWalletContract {
-            contract {
-              name
-              ABI
-            }        
-          }
-        }
-        type
-        decodedInput
-        value
-        hash
-        timestamp
-      }
-    }
-  }
-`;
 
 const useStyles = makeStyles({
   root: {

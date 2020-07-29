@@ -21,31 +21,10 @@ import moment from "moment";
 import Chip from "@material-ui/core/Chip";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+import { GET_TX_DETAILS } from './../query/Transaction'
 
 
-const GET_TX_DETAILS = gql`
-  query Transaction($hash: String!) {
-    transaction(hash: $hash) {
-      value
-      blockNumber
-      nonce
-      feeCurrency
-      gatewayFeeRecipient
-      gatewayFee
-      gas
-      hash
-      input
-      timestamp
-      gas
-      from {
-        address
-      }
-      to {
-        address
-      }
-    }
-  }
-`;
+
 
 const useStyles = makeStyles(({ spacing, palette }) => {
   return {

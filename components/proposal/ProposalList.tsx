@@ -12,24 +12,6 @@ import PriceCard from "../PriceCard";
 import Chips from "../../components/Chips";
 import Link from "../../components/Link";
 
-const GET_CHAIN = gql`
-  {
-    chain {
-      _id
-      averageBlockTime
-      txCount
-      latestHeight
-      chainId
-      tokenPrice {
-        usd
-        usdMarketCap
-      }
-      walletCount
-    }
-  }
-`;
-
-const chainUpdated: any[] = [];
 
 const useStyles = makeStyles({
   root: {

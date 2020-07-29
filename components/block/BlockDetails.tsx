@@ -14,28 +14,8 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import ContentLoader from "react-content-loader";
 import moment from "moment";
+import { GET_BLOCK_DETAILS } from './../query/Block'
 
-const GET_BLOCK_DETAILS = gql`
-  query Block($number: Int) {
-    block(number: $number) {
-      timestamp
-      transactions {
-        transactionIndex
-        nonce
-      }
-      size
-      miner {
-        name
-        signer
-      }
-      hash
-      parentHash
-      totalDifficulty
-      gasUsed
-      gasLimit
-    }
-  }
-`;
 
 const useStyles = makeStyles(() => {
   return {
