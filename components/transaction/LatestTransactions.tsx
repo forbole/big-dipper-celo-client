@@ -23,7 +23,8 @@ import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import moment from "moment";
 import Router from "next/router";
-import MiddleEllipsis from './../MiddleEllipsis'
+import MiddleEllipsis from '../misc/MiddleEllipsis'
+import RenderSkeleton from '../misc/RenderSkeleton';
 
 
 const GET_TX = gql`
@@ -149,7 +150,7 @@ const LatestTransactions = (props: any) => {
   moment.relativeTimeThreshold("s", 59);
   moment.relativeTimeThreshold("ss", 3);
 
-  if (loading) return null;
+  if (loading) return <RenderSkeleton />
   if (error) return <>{`Error! ${error.message}`}</>
 
   return (<>

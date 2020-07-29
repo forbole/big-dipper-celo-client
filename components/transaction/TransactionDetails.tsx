@@ -21,6 +21,7 @@ import moment from "moment";
 import Chip from "@material-ui/core/Chip";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+import RenderSkeleton from '../misc/RenderSkeleton';
 
 
 const GET_TX_DETAILS = gql`
@@ -135,11 +136,12 @@ const TransactionDetails = (props: any) => {
 
   const handleClick = () => {
     return navigator.clipboard
-      .writeText(document.getElementById("raw-input-form").value)
-      .then(() => setOpen(true))
-      .catch((err) => {
-        console.log("Something went wrong", err);
-      });
+      .writeText(document.getElementById("raw-input-form").value) != undefined ? navigator.clipboard
+        .writeText(document.getElementById("raw-input-form").value)
+        .then(() => setOpen(true))
+        .catch((err) => {
+          console.log("Something went wrong", err);
+        }) : ''
   };
 
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
@@ -167,7 +169,7 @@ const TransactionDetails = (props: any) => {
   const handleClickUTF8 = (props: any) => {
     return (document.getElementById("raw-input-form").value = inputValue);
   };
-  if (loading) return null;
+  if (loading) return <RenderSkeleton />
   if (error) return <>{`Error! ${error.message}`}</>
   return (
     <Card className={classes.root}>

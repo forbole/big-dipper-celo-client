@@ -25,7 +25,8 @@ import TablePagination from "@material-ui/core/TablePagination";
 import numbro from "numbro";
 import { useRouter } from "next/router";
 
-import MiddleEllipsis from './../MiddleEllipsis'
+import MiddleEllipsis from '../misc/MiddleEllipsis'
+import RenderSkeleton from '../misc/RenderSkeleton';
 
 const GET_BLOCK = gql`
   {
@@ -190,7 +191,7 @@ const LatestBlocks = (props: any) => {
     pollInterval: 5000,
   });
 
-  if (loading) return null;
+  if (loading) return <RenderSkeleton />
   if (error) return <>{`Error! ${error.message}`}</>
 
   return (<>

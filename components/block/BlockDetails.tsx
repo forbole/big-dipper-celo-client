@@ -14,6 +14,7 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import ContentLoader from "react-content-loader";
 import moment from "moment";
+import RenderSkeleton from '../misc/RenderSkeleton';
 
 const GET_BLOCK_DETAILS = gql`
   query Block($number: Int) {
@@ -80,14 +81,14 @@ const BlockDetails = () => {
 
   if (!router.query.block) return <ContentLoader />;
   //console.log(router.query.block);
-  const number = parseInt(router.query.block);
+  const number = parseInt((router.query.block).toString());
   const prevBlock: number = number - 1;
   const nextBlock: number = number + 1;
   const { loading, error, data } = useQuery(GET_BLOCK_DETAILS, {
     variables: { number },
   });
   const classes = useStyles();
-  if (loading) return null;
+  if (loading) return <RenderSkeleton />
   if (error) return <>{`Error! ${error.message}`}</>
   return (
     <Card className={classes.root}>

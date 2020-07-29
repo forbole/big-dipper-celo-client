@@ -1,13 +1,15 @@
 import Skeleton from '@material-ui/lab/Skeleton';
 import React from "react";
 
-export const renderSkeleton = () => {
+const RenderSkeleton = () => {
     return (<>
-        <Skeleton animation="wave" height={50} />
-        <Skeleton animation="wave" height={50} />
-        <Skeleton animation="wave" height={50} />
-        <Skeleton animation="wave" height={50} />
-        <Skeleton animation="wave" height={50} />
+        <Skeleton animation="wave" height={40} />
+        <Skeleton animation="wave" height={40} />
+        <Skeleton animation="wave" height={40} />
+        <Skeleton animation="wave" height={40} />
+        <Skeleton animation="wave" height={40} />
     </>
     )
 }
+
+export default RenderSkeleton

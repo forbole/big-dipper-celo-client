@@ -32,7 +32,9 @@ import { useQuery } from "@apollo/react-hooks";
 import ContentLoader from "react-content-loader";
 import numbro from "numbro";
 import AccountOverview from "./AccountOverview";
-import CoinBalanceHistory from './CoinBalanceHistory'
+import CoinBalanceHistory from './CoinBalanceHistory';
+import RenderSkeleton from '../misc/RenderSkeleton';
+
 
 const GET_ACCOUNT_DETAILS = gql`
   query Account($address: String!) {
@@ -86,7 +88,7 @@ const AccountPage = () => {
     variables: { address },
   });
   const classes = useStyles();
-  if (loading) return null;
+  if (loading) return <RenderSkeleton />
   if (error) return <>{`Error! ${error.message}`}</>
 
   return (<>

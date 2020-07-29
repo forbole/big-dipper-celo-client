@@ -8,6 +8,7 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import TablePagination from "@material-ui/core/TablePagination";
 import numbro from "numbro";
+import RenderSkeleton from './misc/RenderSkeleton';
 
 const GET_CHAIN = gql`
   {
@@ -69,7 +70,7 @@ const ChartData = () => {
     pollInterval: 5000,
   });
 
-  if (loading) return <>{"Loading..."}</>
+  if (loading) return <RenderSkeleton />
   if (error) return <>{`Error! ${error.message}`}</>
 
 
