@@ -1,11 +1,15 @@
 import React from "react";
 import Typography from '@material-ui/core/Typography';
+import MiddleEllipsis from './MiddleEllipsis'
+
 
 const NotAvailable = (props: any) => {
-    // const classes = useStyles();
-    const variant: string = (props.variant).toString();
-    <Typography variant={variant} noWrap >Data currently not available</Typography>
-    return <span></span>
+
+    return (
+        <Typography variant={props.variant} className={props.className}  >
+            <MiddleEllipsis text="Data not available" />
+        </Typography>
+    )
 }
 
 export default NotAvailable
