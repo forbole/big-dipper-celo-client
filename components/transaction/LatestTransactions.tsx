@@ -25,6 +25,7 @@ import moment from "moment";
 import Router from "next/router";
 import MiddleEllipsis from '../misc/MiddleEllipsis'
 import RenderSkeleton from '../misc/RenderSkeleton';
+import NotAvailable from '../misc/NotAvailable'
 
 
 const GET_TX = gql`
@@ -224,7 +225,7 @@ const LatestTransactions = (props: any) => {
                                 >
                                   {row.timestamp
                                     ? moment.unix(row.timestamp).fromNow()
-                                    : "Data currently not available"}
+                                    : <NotAvailable variant="body2" />}
                                 </Typography>
                               </Grid>
 
@@ -311,7 +312,7 @@ const LatestTransactions = (props: any) => {
                                 >
                                   {row.value
                                     ? row.value + " cGLD"
-                                    : "Data currently not available"}
+                                    : <NotAvailable variant="body2" />}
                                 </Typography>
                               </Grid>
                             </Grid>

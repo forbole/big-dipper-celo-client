@@ -15,6 +15,7 @@ import { useQuery } from "@apollo/react-hooks";
 import ContentLoader from "react-content-loader";
 import moment from "moment";
 import LedgerButtons from "../ledger/LedgerButtons";
+import NotAvailable from '../misc/NotAvailable'
 
 // const GET_BLOCK_DETAILS = gql`
 //   query Block($number: Int) {
@@ -151,7 +152,7 @@ const ProposalDetails = () => {
             <Typography variant="body2" >
               {/* {data.block && data.block.timestamp
                 ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
-                : "Data currently not available"}{" "}
+                : <NotAvailable variant="body2" />}
               (
               {data && data.block && data.block.timestamp
                 ? moment.unix(data.block.timestamp).fromNow()
@@ -169,7 +170,7 @@ const ProposalDetails = () => {
               data.block.transactions &&
               data.block.transactions.transactionIndex
                 ? data.block.transactions.transactionIndex.length()
-                : "Data currently not available"} */}
+                : <NotAvailable variant="body2" />} */}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -179,7 +180,7 @@ const ProposalDetails = () => {
             <Typography variant="body2" >
               {/* {data.block && data.block.size
                 ? data.block.size
-                : "Data currently not available"} */}
+                : <NotAvailable variant="body2" />} */}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -196,9 +197,7 @@ const ProposalDetails = () => {
                 <Link href="#" color="secondary">
                   {data.block.miner.name}
                 </Link>
-              ) : (
-                "Data currently not available"
-              )} */}
+              ) : <NotAvailable variant="body2" />} */}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -210,7 +209,7 @@ const ProposalDetails = () => {
             <Typography variant="body2"  >
               {/* {data.block && data.block.hash
                 ? data.block.hash
-                : "Data currently not available"} */}
+                : <NotAvailable variant="body2" />} */}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -230,9 +229,7 @@ const ProposalDetails = () => {
                 >
                   {data.block.parentHash}
                 </Link>
-              ) : (
-                "Data currently not available"
-              )} */}
+              ) : <NotAvailable variant="body2" />} */}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -244,7 +241,7 @@ const ProposalDetails = () => {
             <Typography variant="body2"  >
               {/* {data.block && data.block.totalDifficulty
                 ? data.block.totalDifficulty
-                : "Data currently not available"} */}
+                : <NotAvailable variant="body2" />} */}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -258,7 +255,7 @@ const ProposalDetails = () => {
               data.block.transactions &&
               data.block.transactions.nonce
                 ? data.block.transactions.nonce
-                : "Data currently not available"} */}
+                : <NotAvailable variant="body2" />} */}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -270,7 +267,7 @@ const ProposalDetails = () => {
             <Typography variant="body2"  >
               {/* {data.block && data.block.gasUsed
                 ? data.block.gasUsed
-                : "Data currently not available"} */}
+                : <NotAvailable variant="body2" />} */}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -282,7 +279,7 @@ const ProposalDetails = () => {
             <Typography variant="body2"  >
               {/* {data.block && data.block.gasLimit
                 ? data.block.gasLimit
-                : "Data currently not available"} */}
+                : <NotAvailable variant="body2" />} */}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -294,7 +291,7 @@ const ProposalDetails = () => {
             <Typography variant="body2"  >
               {/* {data.block && data.block.gasLimit
                 ? data.block.gasLimit
-                : "Data currently not available"} */}
+                : <NotAvailable variant="body2" />} */}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>

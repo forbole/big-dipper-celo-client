@@ -22,6 +22,7 @@ import Chip from "@material-ui/core/Chip";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import RenderSkeleton from '../misc/RenderSkeleton';
+import NotAvailable from '../misc/NotAvailable'
 
 
 const GET_TX_DETAILS = gql`
@@ -188,7 +189,7 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.hash
                 ? data.transaction.hash
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -202,7 +203,7 @@ const TransactionDetails = (props: any) => {
                 ? new Date(
                   parseInt(data.transaction.timestamp) * 1000
                 ).toUTCString()
-                : "Data currently not available"}{" "}
+                : <NotAvailable variant="body2" />}
               (
               {data && data.transaction && data.transaction.timestamp
                 ? moment.unix(data.transaction.timestamp).fromNow()
@@ -255,9 +256,7 @@ const TransactionDetails = (props: any) => {
                 >
                   {data.transaction.from.address}
                 </Link>
-              ) : (
-                  "Data currently not available"
-                )}
+              ) : <NotAvailable variant="body2" />}
             </Typography>
 
             <Divider variant="middle" className={classes.divider} />
@@ -276,9 +275,7 @@ const TransactionDetails = (props: any) => {
                 >
                   {data.transaction.to.address}
                 </Link>
-              ) : (
-                  "Data currently not available"
-                )}
+              ) : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -290,7 +287,7 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.value
                 ? data.transaction.value
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -306,7 +303,7 @@ const TransactionDetails = (props: any) => {
               >
                 {data.transaction && data.transaction.blockNumber
                   ? data.transaction.blockNumber
-                  : "Data currently not available"}
+                  : <NotAvailable variant="body2" />}
               </Link>
             </Typography>
             <Divider variant="middle" className={classes.divider} />
@@ -329,7 +326,7 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.nonce
                 ? data.transaction.nonce
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -341,7 +338,7 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.feeCurrency
                 ? data.transaction.feeCurrency + "cGLD"
-                : "Data currently not available"}{" "}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -353,7 +350,7 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.gatewayFeeRecipient
                 ? data.transaction.gatewayFeeRecipient
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -365,7 +362,7 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.gatewayFee
                 ? data.transaction.gatewayFee
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -438,7 +435,7 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.gas
                 ? data.transaction.gas
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
