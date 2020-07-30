@@ -67,9 +67,9 @@ export default class TSApp extends App<AppProps, AppState>{
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
             <Layout>
-              <Component {...pageProps} style={{ display: "flex" }} />
-              <Footer />
+              <Component {...pageProps} style={{ display: "flex", }} />
             </Layout>
+            <Footer />
           </ThemeProvider>
         </ApolloProvider>
       </React.Fragment>
