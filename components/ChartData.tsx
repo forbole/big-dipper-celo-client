@@ -39,6 +39,7 @@ const useStyles = makeStyles({
     borderRadius: 4,
     background: "#43484C",
     alignItems: "center",
+    height: "4.3rem"
   },
   value: {
     fontWeight: 300,
@@ -50,14 +51,14 @@ const useStyles = makeStyles({
   },
   label: {
     display: "flex",
-    padding: "0.4rem 0.75rem 0.1rem 0.75rem",
+    padding: "0.4rem 0.75rem 0 0.75rem",
   },
 
 });
 
 const NotAvailable = () => {
   const classes = useStyles();
-  return <span className={classes.label}>Data currently not available</span>
+  return <span className={classes.label}>Data not available</span>
 }
 
 const ChartData = () => {
