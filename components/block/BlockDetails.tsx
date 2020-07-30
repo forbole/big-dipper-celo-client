@@ -14,6 +14,9 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import ContentLoader from "react-content-loader";
 import moment from "moment";
+import ComponentLoader from '../misc/ComponentLoader';
+import NotAvailable from '../misc/NotAvailable'
+import ErrorMessage from '../misc/ErrorMessage';
 import { GET_BLOCK_DETAILS } from '../query/Block'
 
 
@@ -60,15 +63,15 @@ const BlockDetails = () => {
 
   if (!router.query.block) return <ContentLoader />;
   //console.log(router.query.block);
-  const number = parseInt(router.query.block);
+  const number = parseInt((router.query.block).toString());
   const prevBlock: number = number - 1;
   const nextBlock: number = number + 1;
   const { loading, error, data } = useQuery(GET_BLOCK_DETAILS, {
     variables: { number },
   });
   const classes = useStyles();
-  if (loading) return null;
-  if (error) return <>{`Error! ${error.message}`}</>
+  if (loading) return <ComponentLoader />
+  if (error) return <ErrorMessage message={error.message} />
   return (
     <Card className={classes.root}>
       <CardContent>
@@ -119,7 +122,7 @@ const BlockDetails = () => {
             <Typography variant="body2" component="h2">
               {data.block && data.block.timestamp
                 ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
-                : "Data currently not available"}{" "}
+                : <NotAvailable variant="body2" />}
               (
               {data && data.block && data.block.timestamp
                 ? moment.unix(data.block.timestamp).fromNow()
@@ -137,7 +140,7 @@ const BlockDetails = () => {
                 data.block.transactions &&
                 data.block.transactions.transactionIndex
                 ? data.block.transactions.transactionIndex.length()
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -147,7 +150,7 @@ const BlockDetails = () => {
             <Typography variant="body2" component="h2">
               {data.block && data.block.size
                 ? data.block.size
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -164,9 +167,7 @@ const BlockDetails = () => {
                   <Link href="#" color="secondary">
                     {data.block.miner.name}
                   </Link>
-                ) : (
-                  "Data currently not available"
-                )}
+                ) : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -178,7 +179,7 @@ const BlockDetails = () => {
             <Typography variant="body2" component="h2">
               {data.block && data.block.hash
                 ? data.block.hash
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -198,9 +199,7 @@ const BlockDetails = () => {
                 >
                   {data.block.parentHash}
                 </Link>
-              ) : (
-                  "Data currently not available"
-                )}
+              ) : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -212,7 +211,7 @@ const BlockDetails = () => {
             <Typography variant="body2" component="h2">
               {data.block && data.block.totalDifficulty
                 ? data.block.totalDifficulty
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -226,7 +225,7 @@ const BlockDetails = () => {
                 data.block.transactions &&
                 data.block.transactions.nonce
                 ? data.block.transactions.nonce
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -238,7 +237,7 @@ const BlockDetails = () => {
             <Typography variant="body2" component="h2">
               {data.block && data.block.gasUsed
                 ? data.block.gasUsed
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -250,7 +249,7 @@ const BlockDetails = () => {
             <Typography variant="body2" component="h2">
               {data.block && data.block.gasLimit
                 ? data.block.gasLimit
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
