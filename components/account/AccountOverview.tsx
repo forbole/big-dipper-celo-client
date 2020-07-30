@@ -27,8 +27,8 @@ import FilledInput from "@material-ui/core/FilledInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
 import { useRouter } from "next/router";
-import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import gql from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import ContentLoader from "react-content-loader";
 import numbro from "numbro";
 import { GET_ACCOUNT_DETAILS } from '../query/Account'
