@@ -115,14 +115,22 @@ const TransactionDetails = (props: any) => {
       ? data.transaction.input
       : null;
 
+
+  let rawInputForm: HTMLInputElement;
+  let rawinputValue: string;
+
+  if (typeof document !== 'undefined') {
+    rawInputForm = document.getElementById("raw-input-form") as HTMLInputElement
+    rawinputValue = rawInputForm ? rawInputForm.value : ' '
+  }
+
   const handleClick = () => {
     return navigator.clipboard
-      .writeText(document.getElementById("raw-input-form").value) != undefined ? navigator.clipboard
-        .writeText(document.getElementById("raw-input-form").value)
-        .then(() => setOpen(true))
-        .catch((err) => {
-          console.log("Something went wrong", err);
-        }) : ''
+      .writeText(rawinputValue)
+      .then(() => setOpen(true))
+      .catch((err) => {
+        console.log("Something went wrong", err);
+      })
   };
 
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
@@ -133,6 +141,7 @@ const TransactionDetails = (props: any) => {
   };
 
   function ascii_to_hex(str: String) {
+    console.log(str)
     var arr1 = [];
     for (var n = 0, l = str.length; n < l; n++) {
       var hex = Number(str.charCodeAt(n)).toString(16);
@@ -142,14 +151,15 @@ const TransactionDetails = (props: any) => {
   }
 
   const handleClickHex = (props: any) => {
-    return (document.getElementById("raw-input-form").value = ascii_to_hex(
+    return (rawinputValue === ascii_to_hex(
       inputValue
     ));
   };
 
   const handleClickUTF8 = (props: any) => {
-    return (document.getElementById("raw-input-form").value = inputValue);
+    return (rawinputValue === inputValue);
   };
+  
   if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
   return (
