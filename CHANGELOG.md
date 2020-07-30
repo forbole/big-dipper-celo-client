@@ -16,3 +16,4 @@
 * Implemented Ledger Dialog Screens 
 * [#5] Fixed Functional components by adding JSX Tags to return value
 * [#3] Updated attribute element to CamelCase
+* [#21] Updated ChartData component height and fixed the layout to keep equal spacing between components 
