@@ -21,6 +21,9 @@ import moment from "moment";
 import Chip from "@material-ui/core/Chip";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+import ComponentLoader from '../misc/ComponentLoader';
+import NotAvailable from '../misc/NotAvailable'
+import ErrorMessage from '../misc/ErrorMessage';
 import { GET_TX_DETAILS } from '../query/Transaction'
 
 
@@ -114,11 +117,12 @@ const TransactionDetails = (props: any) => {
 
   const handleClick = () => {
     return navigator.clipboard
-      .writeText(document.getElementById("raw-input-form").value)
-      .then(() => setOpen(true))
-      .catch((err) => {
-        console.log("Something went wrong", err);
-      });
+      .writeText(document.getElementById("raw-input-form").value) != undefined ? navigator.clipboard
+        .writeText(document.getElementById("raw-input-form").value)
+        .then(() => setOpen(true))
+        .catch((err) => {
+          console.log("Something went wrong", err);
+        }) : ''
   };
 
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
@@ -146,8 +150,8 @@ const TransactionDetails = (props: any) => {
   const handleClickUTF8 = (props: any) => {
     return (document.getElementById("raw-input-form").value = inputValue);
   };
-  if (loading) return null;
-  if (error) return <>{`Error! ${error.message}`}</>
+  if (loading) return <ComponentLoader />
+  if (error) return <ErrorMessage message={error.message} />
   return (
     <Card className={classes.root}>
       <CardContent>
@@ -165,7 +169,7 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.hash
                 ? data.transaction.hash
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -179,7 +183,7 @@ const TransactionDetails = (props: any) => {
                 ? new Date(
                   parseInt(data.transaction.timestamp) * 1000
                 ).toUTCString()
-                : "Data currently not available"}{" "}
+                : <NotAvailable variant="body2" />}
               (
               {data && data.transaction && data.transaction.timestamp
                 ? moment.unix(data.transaction.timestamp).fromNow()
@@ -232,9 +236,7 @@ const TransactionDetails = (props: any) => {
                 >
                   {data.transaction.from.address}
                 </Link>
-              ) : (
-                  "Data currently not available"
-                )}
+              ) : <NotAvailable variant="body2" />}
             </Typography>
 
             <Divider variant="middle" className={classes.divider} />
@@ -253,9 +255,7 @@ const TransactionDetails = (props: any) => {
                 >
                   {data.transaction.to.address}
                 </Link>
-              ) : (
-                  "Data currently not available"
-                )}
+              ) : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -267,7 +267,7 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.value
                 ? data.transaction.value
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -283,7 +283,7 @@ const TransactionDetails = (props: any) => {
               >
                 {data.transaction && data.transaction.blockNumber
                   ? data.transaction.blockNumber
-                  : "Data currently not available"}
+                  : <NotAvailable variant="body2" />}
               </Link>
             </Typography>
             <Divider variant="middle" className={classes.divider} />
@@ -306,7 +306,7 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.nonce
                 ? data.transaction.nonce
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -318,7 +318,7 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.feeCurrency
                 ? data.transaction.feeCurrency + "cGLD"
-                : "Data currently not available"}{" "}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -330,7 +330,7 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.gatewayFeeRecipient
                 ? data.transaction.gatewayFeeRecipient
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -342,7 +342,7 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.gatewayFee
                 ? data.transaction.gatewayFee
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -415,7 +415,7 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.gas
                 ? data.transaction.gas
-                : "Data currently not available"}
+                : <NotAvailable variant="body2" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>

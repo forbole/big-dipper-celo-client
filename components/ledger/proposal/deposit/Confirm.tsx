@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
+import NotAvailable from '../../../misc/NotAvailable'
 
 
 
@@ -128,7 +129,7 @@ const Confirm = () => {
                                     10
                 {/* {data.block && data.block.timestamp
                 ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
-                : "Data currently not available"}{" "}
+                : <NotAvailable variant="body2" />}
               (
               {data && data.block && data.block.timestamp
                 ? moment.unix(data.block.timestamp).fromNow()
@@ -149,7 +150,7 @@ const Confirm = () => {
               data.block.transactions &&
               data.block.transactions.transactionIndex
                 ? data.block.transactions.transactionIndex.length()
-                : "Data currently not available"} */}
+                : <NotAvailable variant="body2" />} */}
                                 </Typography>
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
@@ -162,7 +163,7 @@ const Confirm = () => {
                                     Proposal
                 {/* {data.block && data.block.size
                 ? data.block.size
-                : "Data currently not available"} */}
+                : <NotAvailable variant="body2" />} */}
                                 </Typography>
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
@@ -175,7 +176,7 @@ const Confirm = () => {
                                     Don’t Burn Deposits for Rejected Governance Proposals Unless Vetoed
                 {/* {data.block && data.block.hash
                 ? data.block.hash
-                : "Data currently not available"} */}
+                : <NotAvailable variant="body2" />} */}
                                 </Typography>
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
@@ -196,9 +197,7 @@ const Confirm = () => {
                 >
                   {data.block.parentHash}
                 </Link>
-              ) : (
-                "Data currently not available"
-              )} */}
+              ) : <NotAvailable variant="body2" />} */}
                                 </Typography>
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>

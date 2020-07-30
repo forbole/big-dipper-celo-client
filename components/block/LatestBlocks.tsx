@@ -8,14 +8,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Link from "../Link";
-import Router from "next/router";
 import Grid from "@material-ui/core/Grid";
 import { Divider } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import cx from "clsx";
-import Card from "@material-ui/core/Card";
-import Layout from "../Layout";
-import theme from "../../themes/celo-theme";
 import moment from "moment";
 import Hidden from "@material-ui/core/Hidden";
 import PriceCard from "../PriceCard";
@@ -25,7 +20,9 @@ import TablePagination from "@material-ui/core/TablePagination";
 import numbro from "numbro";
 import { useRouter } from "next/router";
 
-import MiddleEllipsis from '../MiddleEllipsis'
+import MiddleEllipsis from '../misc/MiddleEllipsis'
+import ComponentLoader from '../misc/ComponentLoader';
+import ErrorMessage from '../misc/ErrorMessage';
 import { GET_BLOCK } from '../query/Block'
 
 
@@ -171,8 +168,8 @@ const LatestBlocks = (props: any) => {
     pollInterval: 5000,
   });
 
-  if (loading) return null;
-  if (error) return <>{`Error! ${error.message}`}</>
+  if (loading) return <ComponentLoader />
+  if (error) return <ErrorMessage message={error.message} />
 
   return (<>
     <Grid container>
