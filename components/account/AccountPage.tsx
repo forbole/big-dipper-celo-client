@@ -15,7 +15,7 @@ import ContentLoader from "react-content-loader";
 import numbro from "numbro";
 import AccountOverview from "./AccountOverview";
 import CoinBalanceHistory from './CoinBalanceHistory';
-import RenderSkeleton from '../misc/RenderSkeleton';
+import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 
 
@@ -71,7 +71,7 @@ const AccountPage = () => {
     variables: { address },
   });
   const classes = useStyles();
-  if (loading) return <RenderSkeleton />
+  if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
 
   return (<>

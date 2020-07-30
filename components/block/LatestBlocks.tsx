@@ -21,7 +21,7 @@ import numbro from "numbro";
 import { useRouter } from "next/router";
 
 import MiddleEllipsis from '../misc/MiddleEllipsis'
-import RenderSkeleton from '../misc/RenderSkeleton';
+import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 
 const GET_BLOCK = gql`
@@ -187,7 +187,7 @@ const LatestBlocks = (props: any) => {
     pollInterval: 5000,
   });
 
-  if (loading) return <RenderSkeleton />
+  if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
 
   return (<>

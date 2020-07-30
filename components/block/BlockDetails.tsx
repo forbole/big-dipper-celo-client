@@ -14,7 +14,7 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import ContentLoader from "react-content-loader";
 import moment from "moment";
-import RenderSkeleton from '../misc/RenderSkeleton';
+import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
 
@@ -90,7 +90,7 @@ const BlockDetails = () => {
     variables: { number },
   });
   const classes = useStyles();
-  if (loading) return <RenderSkeleton />
+  if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
   return (
     <Card className={classes.root}>

@@ -21,7 +21,7 @@ import moment from "moment";
 import Chip from "@material-ui/core/Chip";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
-import RenderSkeleton from '../misc/RenderSkeleton';
+import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
 
@@ -171,7 +171,7 @@ const TransactionDetails = (props: any) => {
   const handleClickUTF8 = (props: any) => {
     return (document.getElementById("raw-input-form").value = inputValue);
   };
-  if (loading) return <RenderSkeleton />
+  if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
   return (
     <Card className={classes.root}>

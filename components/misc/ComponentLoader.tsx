@@ -1,7 +1,7 @@
 import Skeleton from '@material-ui/lab/Skeleton';
 import React from "react";
 
-const RenderSkeleton = (props: any) => {
+const ComponentLoader = (props: any) => {
     if (props.size === "small") {
         return (<>
             <Skeleton animation="wave" height={20} />
@@ -22,4 +22,4 @@ const RenderSkeleton = (props: any) => {
     }
 }
 
-export default RenderSkeleton 
+export default ComponentLoader 

@@ -8,7 +8,7 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import TablePagination from "@material-ui/core/TablePagination";
 import numbro from "numbro";
-import RenderSkeleton from './misc/RenderSkeleton';
+import ComponentLoader from './misc/ComponentLoader';
 import NotAvailable from './misc/NotAvailable'
 import ErrorMessage from './misc/ErrorMessage';
 
@@ -69,7 +69,7 @@ const ChartData = () => {
     pollInterval: 5000,
   });
 
-  if (loading) return <RenderSkeleton size="small" />
+  if (loading) return <ComponentLoader size="small" />
   if (error) return <ErrorMessage message={error.message} />
 
 

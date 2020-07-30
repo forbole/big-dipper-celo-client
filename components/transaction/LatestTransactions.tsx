@@ -24,7 +24,7 @@ import { useQuery } from "@apollo/react-hooks";
 import moment from "moment";
 import Router from "next/router";
 import MiddleEllipsis from '../misc/MiddleEllipsis'
-import RenderSkeleton from '../misc/RenderSkeleton';
+import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
 
@@ -152,7 +152,7 @@ const LatestTransactions = (props: any) => {
   moment.relativeTimeThreshold("s", 59);
   moment.relativeTimeThreshold("ss", 3);
 
-  if (loading) return <RenderSkeleton />
+  if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
 
   return (<>
