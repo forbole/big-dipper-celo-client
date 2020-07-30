@@ -34,12 +34,11 @@ const useStyles = makeStyles({
   card: {
     display: "block",
     justifyContent: "center",
-    //margin: "2%",
     borderLeft: "4px solid #FBCC5C",
     borderRadius: 4,
     background: "#43484C",
     alignItems: "center",
-    height: "4.3rem"
+    height: "100%"
   },
   value: {
     fontWeight: 300,
