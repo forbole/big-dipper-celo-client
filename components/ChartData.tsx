@@ -70,7 +70,7 @@ const ChartData = () => {
               <Typography variant="h5" className={classes.value}>
                 $ {numbro(data.chain.tokenPrice.usd).format("0.00")}
               </Typography>
-              : <NotAvailable variant="h5" className={classes.value} />}
+              : <NotAvailable variant="body2" className={classes.value} />}
           </Card>
         </Grid>
 
@@ -83,7 +83,7 @@ const ChartData = () => {
               <Typography variant="h5" className={classes.value}>
                 $ {numbro(data.chain.tokenPrice.usdMarketCap).format("0.00")}
               </Typography>
-              : <NotAvailable variant="h5" className={classes.value} />}
+              : <NotAvailable variant="body2" className={classes.value} />}
           </Card>
         </Grid>
 
@@ -96,7 +96,7 @@ const ChartData = () => {
               <><Typography variant="h5" className={classes.value}>
                 {numbro(data.chain.averageBlockTime).format("0.00")}
               </Typography><span className={classes.valueSuffix}>seconds</span></>
-              : <NotAvailable variant="h5" className={classes.value} />}
+              : <NotAvailable variant="body2" className={classes.value} />}
           </Card>
         </Grid>
 
@@ -109,7 +109,7 @@ const ChartData = () => {
               <Typography variant="h5" className={classes.value}>
                 {numbro(data.chain.txCount).format("000,000")}
               </Typography>
-              : <NotAvailable variant="h5" className={classes.value} />}
+              : <NotAvailable variant="body2" className={classes.value} />}
           </Card>
         </Grid>
 
@@ -122,7 +122,7 @@ const ChartData = () => {
               <Typography variant="h5" className={classes.value}>
                 {numbro(data.chain.latestHeight).format("000,000")}
               </Typography>
-              : <NotAvailable variant="h5" className={classes.value} />}
+              : <NotAvailable variant="body2" className={classes.value} />}
           </Card>
         </Grid>
 
@@ -135,7 +135,7 @@ const ChartData = () => {
               <Typography variant="h5" className={classes.value}>
                 {numbro(data.chain.walletCount).format("000,000")}
               </Typography>
-              : <NotAvailable variant="h5" className={classes.value} />}
+              : <NotAvailable variant="body2" className={classes.value} />}
           </Card>
         </Grid>
       </Grid>
