@@ -11,9 +11,6 @@ const useStyles = makeStyles(() =>
       justifyContent: "center",
     },
 
-    bottomPadding: {
-      padding: "1rem",
-    },
   })
 );
 
@@ -21,8 +18,8 @@ export default function Accounts() {
   const classes = useStyles();
   return (
     <Layout>
-      <Grid container className={classes.root}>
-        <Grid item xs={12} className={classes.bottomPadding}>
+      <Grid container spacing={2} className={classes.root}>
+        <Grid item xs={12}>
           <AccountList />
         </Grid>
       </Grid>

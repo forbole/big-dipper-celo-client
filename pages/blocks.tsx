@@ -11,10 +11,6 @@ const useStyles = makeStyles(() =>
       justifyContent: "center",
     },
 
-    bottomPadding: {
-      overflow: "auto",
-      padding: "1rem",
-    },
   })
 );
 
@@ -22,8 +18,8 @@ export default function Blocks() {
   const classes = useStyles();
   return (
     <Layout>
-      <Grid container className={classes.root}>
-        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+      <Grid container spacing={2} className={classes.root}>
+        <Grid item xs={12} sm={8}>
           <LatestBlocks pagination={false} displayCard={true} />
         </Grid>
       </Grid>

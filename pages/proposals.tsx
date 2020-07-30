@@ -13,9 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "center",
     },
 
-    bottomPadding: {
-      padding: "0.5rem",
-    },
+
   })
 );
 
@@ -23,14 +21,14 @@ export default function Proposals() {
   const classes = useStyles();
   return (
     <Layout>
-      <Grid container className={classes.root}>
-        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+      <Grid container spacing={2} className={classes.root}>
+        <Grid item xs={12} sm={8} >
           <MarketCard />
         </Grid>
-        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+        <Grid item xs={12} sm={8} >
           <ProposalList />
         </Grid>
-        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+        <Grid item xs={12} sm={8} >
           {/* <DepositList /> */}
         </Grid>
       </Grid>
