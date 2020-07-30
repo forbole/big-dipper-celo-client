@@ -1,6 +1,6 @@
 # Changelog
 
-# Unreleased
+## Unreleased
 
 * Implemented page Layout 
 * Implemented Drawer, Search Bar, Footer, Price Card, Chart Data, Network Dropdown
@@ -16,4 +16,5 @@
 * Implemented Ledger Dialog Screens 
 * [#5] Fixed Functional components by adding JSX Tags to return value
 * [#3] Updated attribute element to CamelCase
-* [#25] Grouped all gql queries into single directory 'query' 
+* [#25] Grouped all gql queries into single directory 'query'
+* [#28] Fixed the `build-fragement` npm script by runing it as Javscript
