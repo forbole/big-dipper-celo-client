@@ -157,7 +157,7 @@ const ValidatorVotesList = () => {
   // };
 
   return (
-    <Grid container spacing={1} justify="center" className={classes.container}>
+    <Grid container  justify="center" className={classes.container}>
       <Paper className={classes.paper}>
         <TableContainer>
           <Typography
