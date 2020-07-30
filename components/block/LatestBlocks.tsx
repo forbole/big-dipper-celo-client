@@ -25,27 +25,8 @@ import TablePagination from "@material-ui/core/TablePagination";
 import numbro from "numbro";
 import { useRouter } from "next/router";
 
-import MiddleEllipsis from './../MiddleEllipsis'
-
-const GET_BLOCK = gql`
-  {
-    blocks(pageSize: 500, page: 10) {
-      blocks {
-        number
-        miner {
-          name
-          affiliation
-        }
-        transactions {
-          transactionIndex
-        }
-        gasUsed
-        gasLimit
-        timestamp
-      }
-    }
-  }
-`;
+import MiddleEllipsis from '../MiddleEllipsis'
+import { GET_BLOCK } from '../query/Block'
 
 
 
