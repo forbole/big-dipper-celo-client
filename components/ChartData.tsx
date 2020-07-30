@@ -8,23 +8,8 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import TablePagination from "@material-ui/core/TablePagination";
 import numbro from "numbro";
+import { GET_CHAIN } from './query/Chain'
 
-const GET_CHAIN = gql`
-  {
-    chain {
-      _id
-      averageBlockTime
-      txCount
-      latestHeight
-      chainId
-      tokenPrice {
-        usd
-        usdMarketCap
-      }
-      walletCount
-    }
-  }
-`;
 
 const useStyles = makeStyles({
   root: {
