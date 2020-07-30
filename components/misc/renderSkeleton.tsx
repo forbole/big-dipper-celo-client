@@ -22,4 +22,4 @@ const RenderSkeleton = (props: any) => {
     }
 }
 
-export default RenderSkeleton
+export default RenderSkeleton 

@@ -16,6 +16,7 @@ import ContentLoader from "react-content-loader";
 import moment from "moment";
 import LedgerButtons from "../ledger/LedgerButtons";
 import NotAvailable from '../misc/NotAvailable'
+import ErrorMessage from '../misc/ErrorMessage';
 
 // const GET_BLOCK_DETAILS = gql`
 //   query Block($number: Int) {
@@ -101,7 +102,7 @@ const ProposalDetails = () => {
   //   });
   const classes = useStyles();
   //   if (loading) return null;
-  //   if (error) return <>{`Error! ${error.message}`}</>
+  //   if (error) return <ErrorMessage message={error.message} />
   return (
     <Card className={classes.root}>
       <CardContent>

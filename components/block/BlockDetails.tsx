@@ -16,6 +16,7 @@ import ContentLoader from "react-content-loader";
 import moment from "moment";
 import RenderSkeleton from '../misc/RenderSkeleton';
 import NotAvailable from '../misc/NotAvailable'
+import ErrorMessage from '../misc/ErrorMessage';
 
 const GET_BLOCK_DETAILS = gql`
   query Block($number: Int) {
@@ -90,7 +91,7 @@ const BlockDetails = () => {
   });
   const classes = useStyles();
   if (loading) return <RenderSkeleton />
-  if (error) return <>{`Error! ${error.message}`}</>
+  if (error) return <ErrorMessage message={error.message} />
   return (
     <Card className={classes.root}>
       <CardContent>

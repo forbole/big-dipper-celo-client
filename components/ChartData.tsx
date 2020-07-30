@@ -10,6 +10,8 @@ import TablePagination from "@material-ui/core/TablePagination";
 import numbro from "numbro";
 import RenderSkeleton from './misc/RenderSkeleton';
 import NotAvailable from './misc/NotAvailable'
+import ErrorMessage from './misc/ErrorMessage';
+
 
 const GET_CHAIN = gql`
   {
@@ -68,7 +70,7 @@ const ChartData = () => {
   });
 
   if (loading) return <RenderSkeleton size="small" />
-  if (error) return <>{`Error! ${error.message}`}</>
+  if (error) return <ErrorMessage message={error.message} />
 
 
   return (

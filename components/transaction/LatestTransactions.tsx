@@ -26,6 +26,7 @@ import Router from "next/router";
 import MiddleEllipsis from '../misc/MiddleEllipsis'
 import RenderSkeleton from '../misc/RenderSkeleton';
 import NotAvailable from '../misc/NotAvailable'
+import ErrorMessage from '../misc/ErrorMessage';
 
 
 const GET_TX = gql`
@@ -152,7 +153,7 @@ const LatestTransactions = (props: any) => {
   moment.relativeTimeThreshold("ss", 3);
 
   if (loading) return <RenderSkeleton />
-  if (error) return <>{`Error! ${error.message}`}</>
+  if (error) return <ErrorMessage message={error.message} />
 
   return (<>
     <Grid container >
