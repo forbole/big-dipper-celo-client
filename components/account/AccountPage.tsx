@@ -17,17 +17,9 @@ import AccountOverview from "./AccountOverview";
 import CoinBalanceHistory from './CoinBalanceHistory';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
+import { GET_ACCOUNT_DETAILS } from '../query/Account'
 
 
-const GET_ACCOUNT_DETAILS = gql`
-  query Account($address: String!) {
-    account(address: $address) {
-      _id
-      address
-      balance
-    }
-  }
-`;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

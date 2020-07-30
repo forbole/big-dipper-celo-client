@@ -23,26 +23,7 @@ import { useRouter } from "next/router";
 import MiddleEllipsis from '../misc/MiddleEllipsis'
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
-
-const GET_BLOCK = gql`
-  {
-    blocks(pageSize: 500, page: 10) {
-      blocks {
-        number
-        miner {
-          name
-          affiliation
-        }
-        transactions {
-          transactionIndex
-        }
-        gasUsed
-        gasLimit
-        timestamp
-      }
-    }
-  }
-`;
+import { GET_BLOCK } from '../query/Block'
 
 
 

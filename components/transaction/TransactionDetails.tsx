@@ -24,31 +24,10 @@ import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
+import { GET_TX_DETAILS } from '../query/Transaction'
 
 
-const GET_TX_DETAILS = gql`
-  query Transaction($hash: String!) {
-    transaction(hash: $hash) {
-      value
-      blockNumber
-      nonce
-      feeCurrency
-      gatewayFeeRecipient
-      gatewayFee
-      gas
-      hash
-      input
-      timestamp
-      gas
-      from {
-        address
-      }
-      to {
-        address
-      }
-    }
-  }
-`;
+
 
 const useStyles = makeStyles(({ spacing, palette }) => {
   return {

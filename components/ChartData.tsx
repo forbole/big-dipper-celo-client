@@ -12,23 +12,8 @@ import ComponentLoader from './misc/ComponentLoader';
 import NotAvailable from './misc/NotAvailable'
 import ErrorMessage from './misc/ErrorMessage';
 
+import { GET_CHAIN } from './query/Chain'
 
-const GET_CHAIN = gql`
-  {
-    chain {
-      _id
-      averageBlockTime
-      txCount
-      latestHeight
-      chainId
-      tokenPrice {
-        usd
-        usdMarketCap
-      }
-      walletCount
-    }
-  }
-`;
 
 const useStyles = makeStyles({
   root: {

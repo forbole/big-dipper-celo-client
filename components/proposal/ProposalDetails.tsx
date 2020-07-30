@@ -18,27 +18,6 @@ import LedgerButtons from "../ledger/LedgerButtons";
 import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
 
-// const GET_BLOCK_DETAILS = gql`
-//   query Block($number: Int) {
-//     block(number: $number) {
-//       timestamp
-//       transactions {
-//         transactionIndex
-//         nonce
-//       }
-//       size
-//       miner {
-//         name
-//         signer
-//       }
-//       hash
-//       parentHash
-//       totalDifficulty
-//       gasUsed
-//       gasLimit
-//     }
-//   }
-// `;
 
 const useStyles = makeStyles(() => {
   return {
