@@ -1,6 +1,6 @@
+
 const fetch = require('node-fetch');
 const fs = require('fs');
-
 
 fetch(`https://server.celo.bigdipper.live/graphql`, {
   method: 'POST',
@@ -26,10 +26,10 @@ fetch(`https://server.celo.bigdipper.live/graphql`, {
   .then(result => {
     // here we're filtering out any type information unrelated to unions or interfaces
     const filteredData = result.data.__schema.types.filter(
-      (type: { possibleTypes: any; }) => type.possibleTypes !== null,
+      (type) => type.possibleTypes !== null,
     );
     result.data.__schema.types = filteredData;
-    fs.writeFileSync('./fragmentTypes.json', JSON.stringify(result.data), (err: any) => {
+    fs.writeFileSync('./fragmentTypes.json', JSON.stringify(result.data), (err) => {
       if (err) {
         console.error('Error writing fragmentTypes file', err);
       } else {
