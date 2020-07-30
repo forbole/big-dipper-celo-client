@@ -7,6 +7,10 @@ import Typography from "@material-ui/core/Typography";
 import { useQuery } from "@apollo/client"; 
 import TablePagination from "@material-ui/core/TablePagination";
 import numbro from "numbro";
+import ComponentLoader from './misc/ComponentLoader';
+import NotAvailable from './misc/NotAvailable'
+import ErrorMessage from './misc/ErrorMessage';
+
 import { GET_CHAIN } from './query/Chain'
 
 
@@ -41,10 +45,6 @@ const useStyles = makeStyles({
   },
 });
 
-const NotAvailable = () => {
-  const classes = useStyles();
-  return <span className={classes.label}>Data currently not available</span>
-}
 
 const ChartData = () => {
   const classes = useStyles();
@@ -53,8 +53,8 @@ const ChartData = () => {
     pollInterval: 5000,
   });
 
-  if (loading) return <>{"Loading..."}</>
-  if (error) return <>{`Error! ${error.message}`}</>
+  if (loading) return <ComponentLoader size="small" />
+  if (error) return <ErrorMessage message={error.message} />
 
 
   return (
@@ -69,7 +69,7 @@ const ChartData = () => {
               <Typography variant="h5" className={classes.value}>
                 $ {numbro(data.chain.tokenPrice.usd).format("0.00")}
               </Typography>
-              : <NotAvailable />}
+              : <NotAvailable variant="body2" className={classes.value} />}
           </Card>
         </Grid>
 
@@ -82,7 +82,7 @@ const ChartData = () => {
               <Typography variant="h5" className={classes.value}>
                 $ {numbro(data.chain.tokenPrice.usdMarketCap).format("0.00")}
               </Typography>
-              : <NotAvailable />}
+              : <NotAvailable variant="body2" className={classes.value} />}
           </Card>
         </Grid>
 
@@ -95,7 +95,7 @@ const ChartData = () => {
               <><Typography variant="h5" className={classes.value}>
                 {numbro(data.chain.averageBlockTime).format("0.00")}
               </Typography><span className={classes.valueSuffix}>seconds</span></>
-              : <NotAvailable />}
+              : <NotAvailable variant="body2" className={classes.value} />}
           </Card>
         </Grid>
 
@@ -108,7 +108,7 @@ const ChartData = () => {
               <Typography variant="h5" className={classes.value}>
                 {numbro(data.chain.txCount).format("000,000")}
               </Typography>
-              : <NotAvailable />}
+              : <NotAvailable variant="body2" className={classes.value} />}
           </Card>
         </Grid>
 
@@ -121,7 +121,7 @@ const ChartData = () => {
               <Typography variant="h5" className={classes.value}>
                 {numbro(data.chain.latestHeight).format("000,000")}
               </Typography>
-              : <NotAvailable />}
+              : <NotAvailable variant="body2" className={classes.value} />}
           </Card>
         </Grid>
 
@@ -134,7 +134,7 @@ const ChartData = () => {
               <Typography variant="h5" className={classes.value}>
                 {numbro(data.chain.walletCount).format("000,000")}
               </Typography>
-              : <NotAvailable />}
+              : <NotAvailable variant="body2" className={classes.value} />}
           </Card>
         </Grid>
       </Grid>

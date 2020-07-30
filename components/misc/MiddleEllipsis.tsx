@@ -51,21 +51,28 @@ class MiddleEllipsis extends React.Component<TextProps, { screenSize: String }>{
             case 'xs': if (str.length > 10) {
                 return str.substr(0, 5) + '...' + str.substr(str.length - 6, str.length)
             }
-                break;
+            else {
+                return str;
+            }
             case 'sm': if (str.length > 12) {
-                return str.substr(0, 13) + '...' + str.substr(str.length - 10, str.length)
+                return str.substr(0, 6) + '...' + str.substr(str.length - 10, str.length)
             }
-                break;
+            else {
+                return str;
+            }
             case 'md': if (str.length > 15) {
-                return str.substr(0, 15) + '...' + str.substr(str.length - 15, str.length)
+                return str.substr(0, 7) + '...' + str.substr(str.length - 15, str.length)
+            } else {
+                return str;
             }
-                break;
-            case 'lg': if (str.length > 25) {
-                return str.substr(0, 15) + '...' + str.substr(str.length - 15, str.length)
+            case 'lg': if (str.length > 20) {
+                return str.substr(0, 9) + '...' + str.substr(str.length - 15, str.length)
             }
-                break;
+            else {
+                return str;
+            }
 
-            default: return str || ''
+            default: return str
         }
 
 

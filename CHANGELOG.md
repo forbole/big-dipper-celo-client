@@ -16,6 +16,8 @@
 * Implemented Ledger Dialog Screens 
 * [#5] Fixed Functional components by adding JSX Tags to return value
 * [#3] Updated attribute element to CamelCase
+* [#23] Added NotAvailable, ErrorMessage, ComponentLoader components in /misc
+* [#24] Implemented ComponentLoader in /misc
 * [#25] Grouped all gql queries into single directory 'query'
 * [#28] Fixed the `build-fragement` npm script by runing it as Javscript
 * [#11] Migrated imports of Apollo Client React components from 'apollo-react'  to 'apollo-client' package

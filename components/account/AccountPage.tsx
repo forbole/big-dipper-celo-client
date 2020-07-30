@@ -1,21 +1,6 @@
 import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Link from "../Link";
-import Card from "@material-ui/core/Card";
-import Divider from "@material-ui/core/Divider";
-import CardContent from "@material-ui/core/CardContent";
-import FileCopyIcon from "@material-ui/icons/FileCopy";
-import Container from "@material-ui/core/Container";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import Avatar from "@material-ui/core/Avatar";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import Button from "@material-ui/core/Button";
-import Chips from "../Chips";
 import AccountTransactions from "./Transactions";
 import InternalTransactions from "./InternalTransactions";
 import Downtime from "./Downtime";
@@ -23,15 +8,14 @@ import ValidatedBlocks from "./ValidatedBlocks";
 import AddressCard from "./AddressCard";
 import AccountDetails from "./AccountDetails";
 import Hidden from "@material-ui/core/Hidden";
-import FilledInput from "@material-ui/core/FilledInput";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import SearchIcon from "@material-ui/icons/Search";
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
 import ContentLoader from "react-content-loader";
 import numbro from "numbro";
 import AccountOverview from "./AccountOverview";
-import CoinBalanceHistory from './CoinBalanceHistory'
+import CoinBalanceHistory from './CoinBalanceHistory';
+import ComponentLoader from '../misc/ComponentLoader';
+import ErrorMessage from '../misc/ErrorMessage';
 import { GET_ACCOUNT_DETAILS } from '../query/Account'
 
 
@@ -78,8 +62,8 @@ const AccountPage = () => {
     variables: { address },
   });
   const classes = useStyles();
-  if (loading) return null;
-  if (error) return <>{`Error! ${error.message}`}</>
+  if (loading) return <ComponentLoader />
+  if (error) return <ErrorMessage message={error.message} />
 
   return (<>
     <Grid container className={classes.root}>

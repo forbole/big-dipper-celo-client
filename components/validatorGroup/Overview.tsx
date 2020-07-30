@@ -15,6 +15,7 @@ import { useQuery } from "@apollo/client";
 import ContentLoader from "react-content-loader";
 import moment from "moment";
 import LedgerButtons from "../ledger/LedgerButtons";
+import NotAvailable from '../misc/NotAvailable'
 
 
 const useStyles = makeStyles(() => {
@@ -90,14 +91,14 @@ const Overview = () => {
                             Nan Valdez G
                             {/* {data.block && data.block.timestamp
                 ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
-                : "Data currently not available"}{" "}
+                : <NotAvailable variant="body2" />}
               (
               {data && data.block && data.block.timestamp
                 ? moment.unix(data.block.timestamp).fromNow()
                 : null}
               ) */}
                         </Typography>
-                        
+
                     </Grid>
                     <Grid item xs={12}>
                         <Divider variant="middle" className={classes.divider} />
@@ -115,7 +116,7 @@ const Overview = () => {
               data.block.transactions &&
               data.block.transactions.transactionIndex
                 ? data.block.transactions.transactionIndex.length()
-                : "Data currently not available"} */}
+                : <NotAvailable variant="body2" />} */}
                         </Typography>
 
                     </Grid>
@@ -134,7 +135,7 @@ const Overview = () => {
                             10%
                             {/* {data.block && data.block.hash
                 ? data.block.hash
-                : "Data currently not available"} */}
+                : <NotAvailable variant="body2" />} */}
                         </Typography>
                     </Grid>
 
@@ -159,9 +160,7 @@ const Overview = () => {
                 >
                   {data.block.parentHash}
                 </Link>
-              ) : (
-                "Data currently not available"
-              )} */}
+              ) : <NotAvailable variant="body2" />} */}
                         </Typography>
                     </Grid>
 
@@ -179,7 +178,7 @@ const Overview = () => {
                             10.9%
                             {/* {data.block && data.block.totalDifficulty
                 ? data.block.totalDifficulty
-                : "Data currently not available"} */}
+                : <NotAvailable variant="body2" />} */}
                         </Typography>
                     </Grid>
 
@@ -197,7 +196,7 @@ const Overview = () => {
               data.block.transactions &&
               data.block.transactions.nonce
                 ? data.block.transactions.nonce
-                : "Data currently not available"} */}
+                : <NotAvailable variant="body2" />} */}
                         </Typography>
                     </Grid>
 
