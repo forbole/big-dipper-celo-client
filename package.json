@@ -10,6 +10,7 @@
     "build-fragment": "node ./schemaQuery.js"
   },
   "dependencies": {
+    "@apollo/client": "^3.1.1",
     "@apollo/react-hooks": "^3.1.5",
     "@devexpress/dx-react-chart": "^2.7.0",
     "@devexpress/dx-react-chart-material-ui": "^2.7.0",
