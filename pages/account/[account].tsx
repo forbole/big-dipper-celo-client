@@ -10,15 +10,8 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: "flex",
       justifyContent: "center",
-      paddingTop: "2%",
     },
 
-    bottomPadding: {
-      overflow: "auto",
-      // paddingTop: '1.5%',
-      // paddingBottom: '1.5%',
-      //   padding: "1rem",
-    },
   })
 );
 
@@ -29,8 +22,8 @@ export default function Account() {
 
   return (
     <Layout>
-      <Grid container className={classes.root}>
-        <Grid item xs={12} sm={10} className={classes.bottomPadding}>
+      <Grid container spacing={2} className={classes.root}>
+        <Grid item xs={12} sm={10}  >
           <AccountPage />
         </Grid>
       </Grid>

@@ -73,7 +73,8 @@ const useStyles = makeStyles(({ spacing }) => {
   return {
     root: {
       width: '100%',
-      overflowY: 'auto'
+      overflowY: 'auto',
+      padding: "0.5rem"
     },
     container: {
       borderRadius: 5,
@@ -82,7 +83,7 @@ const useStyles = makeStyles(({ spacing }) => {
     },
     box: {
       letterSpacing: '1px',
-      padding: '1rem',
+      padding: "0.5rem",
       display: 'inline-flex',
       overflow: 'hidden',
       whiteSpace: 'nowrap',
@@ -143,12 +144,11 @@ const AccountList = () => {
   };
 
   return (
-    <Grid container className={classes.blocks}>
+    <Grid container >
       <Grid item xs={12} >
         <Paper className={classes.root}>
           <Typography variant="body1" className={classes.box} >
             Accounts </Typography>
-          <Divider variant='middle' className={classes.divider} />
           <TableContainer className={classes.container}>
             <Paper className={classes.tableCell}>
               <Table >
@@ -171,9 +171,7 @@ const AccountList = () => {
                     return (
                       <TableRow key={row.rank} >
                         <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
-                          <Link href="#" color="secondary"  >
-                            <Typography variant="body2" noWrap> {row.rank}</Typography>
-                          </Link>
+                          <Typography variant="body2" noWrap> {row.rank}</Typography>
                         </TableCell>
                         <TableCell align="left" padding="checkbox" className={classes.tableCell}>
                           <Link href="#" color="secondary" >

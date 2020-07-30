@@ -57,11 +57,6 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: "0 0 0 1rem",
     },
 
-    bottomPadding: {
-      overflow: "auto",
-      padding: "0.5rem 1rem",
-    },
-
     divider: {
       margin: "0.5rem",
       backgroundColor: "rgba(62, 67, 71, 1)",
@@ -90,21 +85,21 @@ const AccountPage = () => {
   if (error) return <>{`Error! ${error.message}`}</>
 
   return (<>
-    <Grid container className={classes.root}>
+    <Grid container spacing={2} className={classes.root}>
       <Hidden lgUp>
-        <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+        <Grid item xs={12} lg={5} >
           <AddressCard address={data.account.address} />
         </Grid>
       </Hidden>
 
       <Hidden lgUp>
-        <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+        <Grid item xs={12} lg={5} >
           <AccountOverview balance={data.account.balance} />
         </Grid>
       </Hidden>
 
       <Hidden mdDown>
-        <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+        <Grid item xs={12} lg={5}  >
           <AddressCard address={data.account.address} />
           <p></p>
           <AccountOverview balance={data.account.balance} />
@@ -112,33 +107,33 @@ const AccountPage = () => {
       </Hidden>
 
       <Hidden mdDown>
-        <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+        <Grid item xs={12} lg={5}  >
           <AccountDetails />
         </Grid>
       </Hidden>
 
-      <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+      <Grid item xs={12} lg={5}  >
         <AccountTransactions />
       </Grid>
 
-      <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+      <Grid item xs={12} lg={5}  >
         <InternalTransactions />
       </Grid>
 
-      <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+      <Grid item xs={12} lg={5}  >
         <CoinBalanceHistory />
       </Grid>
 
-      <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+      <Grid item xs={12} lg={5}  >
         <Downtime />
       </Grid>
 
-      <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+      <Grid item xs={12} lg={5}  >
         <ValidatedBlocks />
       </Grid>
 
       <Hidden lgUp>
-        <Grid item xs={12} lg={5} className={classes.bottomPadding}>
+        <Grid item xs={12} lg={5}  >
           <AccountDetails />
         </Grid>
       </Hidden>
