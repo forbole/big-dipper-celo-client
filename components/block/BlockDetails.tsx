@@ -54,13 +54,12 @@ const useStyles = makeStyles(() => {
 });
 
 const BlockDetails = () => {
-  // // const BlockDetails = (number_value : any  ) => {
-  // export default function Block(number_value: any) {
   const router = useRouter();
 
   if (!router.query.block) return <ContentLoader />;
-  //console.log(router.query.block);
-  const number = parseInt(router.query.block);
+
+  //parse to String first to satisfy typecheck 
+  const number = parseInt(router.query.block.toString());
   const prevBlock: number = number - 1;
   const nextBlock: number = number + 1;
   const { loading, error, data } = useQuery(GET_BLOCK_DETAILS, {
