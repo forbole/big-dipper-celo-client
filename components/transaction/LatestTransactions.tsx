@@ -19,11 +19,13 @@ import Paper from "@material-ui/core/Paper";
 import TablePagination from "@material-ui/core/TablePagination";
 import Chips from "../Chips";
 import Divider from "@material-ui/core/Divider";
-// import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import moment from "moment";
 import Router from "next/router";
-import MiddleEllipsis from '../MiddleEllipsis'
+import MiddleEllipsis from '../misc/MiddleEllipsis'
+import ComponentLoader from '../misc/ComponentLoader';
+import NotAvailable from '../misc/NotAvailable'
+import ErrorMessage from '../misc/ErrorMessage';
 import { GET_TX } from '../query/Transaction'
 
 
@@ -117,8 +119,8 @@ const LatestTransactions = (props: any) => {
   moment.relativeTimeThreshold("s", 59);
   moment.relativeTimeThreshold("ss", 3);
 
-  if (loading) return null;
-  if (error) return <>{`Error! ${error.message}`}</>
+  if (loading) return <ComponentLoader />
+  if (error) return <ErrorMessage message={error.message} />
 
   return (<>
     <Grid container >
@@ -191,7 +193,7 @@ const LatestTransactions = (props: any) => {
                                 >
                                   {row.timestamp
                                     ? moment.unix(row.timestamp).fromNow()
-                                    : "Data currently not available"}
+                                    : <NotAvailable variant="body2" />}
                                 </Typography>
                               </Grid>
 
@@ -278,7 +280,7 @@ const LatestTransactions = (props: any) => {
                                 >
                                   {row.value
                                     ? row.value + " cGLD"
-                                    : "Data currently not available"}
+                                    : <NotAvailable variant="body2" />}
                                 </Typography>
                               </Grid>
                             </Grid>

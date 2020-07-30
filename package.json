@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p build-fragment",
-    "build": "next build -p build-fragment",
-    "start": "next start -p build-fragment",
-    "build-fragment": "node ./schemaQuery.ts"
+    "dev": "npm-run-all -p build-fragment dev-next",
+    "dev-next": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "build-fragment": "node ./schemaQuery.js"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
@@ -26,6 +27,7 @@
     "moment": "^2.27.0",
     "next": "^9.4.4",
     "node-fetch": "^2.6.0",
+    "npm-run-all": "^4.1.5",
     "numbro": "^2.3.1",
     "react": "^16.13.1",
     "react-apollo": "^3.1.5",
