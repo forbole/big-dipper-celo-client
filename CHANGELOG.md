@@ -17,3 +17,4 @@
 * [#5] Fixed Functional components by adding JSX Tags to return value
 * [#3] Updated attribute element to CamelCase
 * [#25] Grouped all gql queries into single directory 'query' 
+* [#35] Fixed error 'block number is not assignable to type 'string' ' by parsing its value to a string 
