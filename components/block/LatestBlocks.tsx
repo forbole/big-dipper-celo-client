@@ -194,7 +194,7 @@ const LatestBlocks = (props: any) => {
   if (error) return <>{`Error! ${error.message}`}</>
 
   return (<>
-    <Grid container>
+    <Grid container spacing={2}>
       <Grid item xs={12}>
         {props.displayCard === true ? (
           <Hidden smUp>

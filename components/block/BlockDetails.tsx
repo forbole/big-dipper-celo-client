@@ -41,7 +41,6 @@ const useStyles = makeStyles(() => {
   return {
     root: {
       width: "100%",
-      padding: "1%",
       borderRadius: 5,
       wordWrap: "break-word",
     },
@@ -69,6 +68,7 @@ const useStyles = makeStyles(() => {
     iconButtonLeft: {
       padding: "0",
       float: "left",
+      marginLeft: "-0.625rem"
     },
   };
 });
@@ -80,7 +80,7 @@ const BlockDetails = () => {
 
   if (!router.query.block) return <ContentLoader />;
   //console.log(router.query.block);
-  const number = parseInt(router.query.block);
+  const number = parseInt((router.query.block).toString());
   const prevBlock: number = number - 1;
   const nextBlock: number = number + 1;
   const { loading, error, data } = useQuery(GET_BLOCK_DETAILS, {
@@ -92,9 +92,9 @@ const BlockDetails = () => {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Grid container spacing={1} justify="center" className={classes.item}>
+        <Grid container spacing={2} justify="center" className={classes.item}>
           <Grid item xs={10}>
-            <Typography color="textSecondary" variant="subtitle1" paragraph>
+            <Typography color="textPrimary" variant="subtitle1" >
               Block #{number}
             </Typography>
           </Grid>
