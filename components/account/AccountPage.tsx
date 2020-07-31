@@ -54,11 +54,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 
-const AccountPage = () => {
-
+const AccountPage = (props: any) => {
   const classes = useStyles();
-  if (loading) return <ComponentLoader />
-  if (error) return <ErrorMessage message={error.message} />
+
+  const accountAddress = props.address
 
   return (<>
     <Grid container className={classes.root}>
