@@ -37,6 +37,7 @@ import { GET_CHAIN } from '../query/Chain'
 import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
+import MiddleEllipsis from '../misc/MiddleEllipsis'
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
     formControl: {
       minWidth: "9.75rem",
-      padding: "0 1rem 0 0",
+      //spadding: "0 1rem 0 0",
       // marginBottom: "1rem",
       marginTop: "-1rem",
       float: "right",
@@ -216,10 +217,10 @@ const TokenSearchBar = () => {
   );
 }
 
-const TokenDropdown = () => {
+const TokenDropdown = (props: any) => {
   const classes = useStyles();
-  let celoGold = "14.221738 cGLD";
-  let celoDollar = "492,270.513 cUSD";
+  // let celoGold = "14.221738 cGLD";
+  // let celoDollar = "492,270.513 cUSD";
   return (
     <FormControl className={classes.formControl} hiddenLabel>
       <InputLabel
@@ -227,7 +228,7 @@ const TokenDropdown = () => {
         className={classes.inputLabel}
       >
         <Typography
-          variant="body1"
+          variant="caption"
           color="textSecondary"
           gutterBottom
         >
@@ -264,12 +265,12 @@ const TokenDropdown = () => {
         </Typography>
         <MenuItem value={1} className={classes.dropdownSelection}>
           <Typography
-            variant="body1"
+            variant="caption"
             color="textSecondary"
             className={classes.tokenValue}
             gutterBottom
           >
-            {celoDollar}
+            {numbro((props.usd).toLocaleString('fullwide',)).format("0.0")}
           </Typography>
         </MenuItem>
 
@@ -286,12 +287,12 @@ const TokenDropdown = () => {
 
         <MenuItem value={2} className={classes.dropdownSelection}>
           <Typography
-            variant="body1"
+            variant="caption"
             color="textSecondary"
             className={classes.tokenValue}
             gutterBottom
           >
-            {celoGold}
+            {numbro((props.celo).toLocaleString('fullwide',)).format("0.0")}
           </Typography>
         </MenuItem>
       </Select>
@@ -331,8 +332,8 @@ const AccountOverview = (props: any) => {
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Typography variant="body2" className={classes.alignRight}>
-              {accountQuery.data.account.address}
+            <Typography variant="body2" className={classes.alignRight} >
+              <MiddleEllipsis text={accountQuery.data.account.address} />
             </Typography>
           </Grid>
 
@@ -347,13 +348,13 @@ const AccountOverview = (props: any) => {
           </Grid>
 
           <Grid item xs={6} md={6}>
-            <Typography variant="body2" className={classes.alignRight} noWrap>
-              {numbro((accountQuery.data.account.balance).toLocaleString('fullwide',)).format("0.000000")} CELO
+            <Typography variant="body2" className={classes.alignRight} >
+              {numbro((accountQuery.data.account.balance).toLocaleString('fullwide',)).format("0.00")} CELO
             </Typography>
           </Grid>
           <Grid item xs={12} md={12} >
             <Typography variant="body2" className={classes.alignRight} noWrap>
-              $ {((accountQuery.data.account.balance * chainQuery.data.chain.tokenPrice.usd).toLocaleString('fullwide',))}
+              $ {numbro((accountQuery.data.account.balance * chainQuery.data.chain.tokenPrice.usd).toLocaleString('fullwide',)).format("0.00")}
             </Typography>
           </Grid>
 
@@ -368,7 +369,7 @@ const AccountOverview = (props: any) => {
           </Grid>
 
           <Grid item xs={8} md={2}>
-            <TokenDropdown />
+            <TokenDropdown celo={accountQuery.data.account.totalBalance.gold} usd={accountQuery.data.account.totalBalance.usd} />
           </Grid>
 
           <Grid item xs={12}>
