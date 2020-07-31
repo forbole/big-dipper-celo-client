@@ -62,7 +62,7 @@ const useStyles = makeStyles(({ spacing }) => {
     },
     box: {
       letterSpacing: '1px',
-      padding: '1rem',
+      padding: '1rem 0 0.5rem 1rem',
       display: 'inline-flex',
       overflow: 'hidden',
       whiteSpace: 'nowrap',
@@ -94,11 +94,6 @@ const useStyles = makeStyles(({ spacing }) => {
       },
 
     },
-
-    blocks: {
-      // padding: '1.5%',
-    },
-
     divider: {
       margin: '0.5rem',
       backgroundColor: "rgba(62, 67, 71, 1)",
@@ -129,12 +124,11 @@ const AccountList = () => {
   if (error) return <ErrorMessage message={error.message} />
 
   return (
-    <Grid container className={classes.blocks}>
+    <Grid container  >
       <Grid item xs={12} >
         <Paper className={classes.root}>
           <Typography variant="body1" className={classes.box} >
             Accounts </Typography>
-          <Divider variant='middle' className={classes.divider} />
           <TableContainer className={classes.container}>
             <Paper className={classes.tableCell}>
               <Table >
