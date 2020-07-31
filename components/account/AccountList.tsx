@@ -18,22 +18,12 @@ import Paper from '@material-ui/core/Paper';
 import theme from '../../themes/celo-theme';
 import TablePagination from '@material-ui/core/TablePagination';
 import Divider from '@material-ui/core/Divider';
-import gql from "graphql-tag";
+import { GET_ACCOUNTS } from '../query/Account'
 import { useQuery } from "@apollo/react-hooks";
-import { useRouter } from "next/router";
-
-
-
-const GET_ACCOUNT_LIST = gql`
- query AccountsList{
-  accounts{
-    _id
-    address
-    balance
-  }
-}
-`;
-
+import ComponentLoader from '../misc/ComponentLoader';
+import NotAvailable from '../misc/NotAvailable'
+import ErrorMessage from '../misc/ErrorMessage';
+import MiddleEllipsis from '../misc/MiddleEllipsis'
 
 
 interface Column {
@@ -56,7 +46,6 @@ interface Data {
   percentage: string;
   txsCount: string;
 }
-
 
 
 
@@ -122,7 +111,7 @@ const useStyles = makeStyles(({ spacing }) => {
 const AccountList = () => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(16);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -133,14 +122,12 @@ const AccountList = () => {
     setPage(0);
   };
 
-
-  const { loading, error, data } = useQuery(GET_ACCOUNT_LIST, {
-    pollInterval: 10000,
+  const { loading, error, data } = useQuery(GET_ACCOUNTS, {
   });
 
-  if (loading) return null;
-  if (error) return <>{`Error! ${error.message}`}</>
-  // if(data) return <>{console.log(data)}</>
+  if (loading) return <ComponentLoader />
+  if (error) return <ErrorMessage message={error.message} />
+
   return (
     <Grid container className={classes.blocks}>
       <Grid item xs={12} >
@@ -166,28 +153,28 @@ const AccountList = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {data.accounts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: any) => {
+                  {data.accounts.accounts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: any, index: number) => {
                     return (
-                      <TableRow key={row._id} >
+                      <TableRow key={index} >
                         <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
-                          <Link href="#" color="secondary"  >
-                            <Typography variant="body2" noWrap> {row._id}</Typography>
-                          </Link>
+                          <Typography variant="body2" noWrap> {index + 1}</Typography>
                         </TableCell>
                         <TableCell align="left" padding="checkbox" className={classes.tableCell}>
                           <Link href="#" color="secondary" >
-                            <Typography variant="body2" noWrap>{row.address}</Typography>
+                            <Typography variant="body2" noWrap>
+                              <MiddleEllipsis text={row.address} />
+                            </Typography>
                           </Link>
                         </TableCell>
                         <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                          <Typography variant="body2" noWrap>{row.balance}</Typography>
+                          <Typography variant="body2" noWrap>{(row.balance).toLocaleString('fullwide')} cGLD</Typography>
                         </TableCell>
-                        {/* <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                          <Typography variant="body2" noWrap>{data.percentage}</Typography>
+                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                          <Typography variant="body2" noWrap>{row.percentage}</Typography>
                         </TableCell>
                         <TableCell align="left" padding="checkbox" className={classes.tableCell}>
                           <Typography variant="body2" noWrap>{row.txsCount}</Typography>
-                        </TableCell> */}
+                        </TableCell>
                       </TableRow>
                     );
                   })}
@@ -198,7 +185,7 @@ const AccountList = () => {
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
-            count={data.accounts.length}
+            count={data.accounts.accounts.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}
