@@ -32,6 +32,11 @@ import { useQuery } from "@apollo/react-hooks";
 import ContentLoader from "react-content-loader";
 import numbro from "numbro";
 import { GET_ACCOUNT_DETAILS } from '../query/Account'
+import { GET_CHAIN } from '../query/Chain'
+
+import ComponentLoader from '../misc/ComponentLoader';
+import NotAvailable from '../misc/NotAvailable'
+import ErrorMessage from '../misc/ErrorMessage';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -76,12 +81,6 @@ const useStyles = makeStyles((theme: Theme) =>
       //padding: "0.3rem 1rem 0 0",
     },
 
-    alignRightPrice: {
-      display: "block",
-      float: "right",
-      paddingRight: "1rem",
-      marginTop: "-0.5rem",
-    },
 
     buttonUnlock: {
       justifyContent: "center",
@@ -108,10 +107,7 @@ const useStyles = makeStyles((theme: Theme) =>
       overflow: "hidden",
       whiteSpace: "nowrap",
     },
-    chip: {
-      display: "block",
-      marginLeft: "1rem",
-    },
+
 
     divider: {
       //margin: "0.5rem",
@@ -305,14 +301,19 @@ const TokenDropdown = () => {
 
 const AccountOverview = (props: any) => {
   const classes = useStyles();
-  const address: string = (props.address).toString()
+  console.log(props.address)
+  const address: string = props.address ? (props.address).toString() : ''
 
-  const { loading, error, data } = useQuery(GET_ACCOUNT_DETAILS, {
+  const accountQuery = useQuery(GET_ACCOUNT_DETAILS, {
     variables: { address },
   });
 
-  if (loading) return null;
-  if (error) return <>{`Error! ${error.message}`}</>
+  const chainQuery = useQuery(GET_CHAIN, {
+  });
+
+
+  if (accountQuery.loading || chainQuery.loading) return <ComponentLoader />
+  if (accountQuery.error || chainQuery.error) return <ErrorMessage message={accountQuery.error.message || chainQuery.error.message} />
   return (
     <span>
       <Card className={classes.root}>
@@ -331,7 +332,7 @@ const AccountOverview = (props: any) => {
           </Grid>
           <Grid item xs={6}>
             <Typography variant="body2" className={classes.alignRight}>
-              {"Michelle Clark"}
+              {accountQuery.data.account.address}
             </Typography>
           </Grid>
 
@@ -339,20 +340,20 @@ const AccountOverview = (props: any) => {
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid item xs={6} md={9}>
+          <Grid item xs={6} md={6}>
             <Typography variant="body2" className={classes.alignLeft}>
               Balance
             </Typography>
           </Grid>
 
-          <Grid item xs={6} md={3}>
-            <Typography variant="body2" className={classes.alignRight}>
-              {/* {numbro(parseFloat(data.balance)).format("0.000000")} cGLD */}
+          <Grid item xs={6} md={6}>
+            <Typography variant="body2" className={classes.alignRight} noWrap>
+              {numbro((accountQuery.data.account.balance).toLocaleString('fullwide',)).format("0.000000")} CELO
             </Typography>
           </Grid>
-          <Grid item xs={12} md={12}>
-            <Typography variant="body2" className={classes.alignRightPrice}>
-              {"$41.978089412"}
+          <Grid item xs={12} md={12} >
+            <Typography variant="body2" className={classes.alignRight} noWrap>
+              $ {((accountQuery.data.account.balance * chainQuery.data.chain.tokenPrice.usd).toLocaleString('fullwide',))}
             </Typography>
           </Grid>
 
@@ -361,7 +362,7 @@ const AccountOverview = (props: any) => {
           </Grid>
 
           <Grid item xs={4} md={10}>
-            <Typography variant="body2" className={classes.chip}>
+            <Typography variant="body2">
               Tokens
             </Typography>
           </Grid>
