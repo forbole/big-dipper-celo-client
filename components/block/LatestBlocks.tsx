@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -127,24 +127,25 @@ const LatestBlocks = (props: any) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
 
-  let mediumScreen: boolean = false;
+  let fullList: boolean = false;
 
   const getScreenSize = () => {
     if (typeof window !== "undefined") {
-      if (window.innerWidth > 960 && window.innerWidth < 1280) return (mediumScreen = true);
-      else return (mediumScreen = false);
+      if (window.innerWidth > 1200) return (fullList = true);
+      else return (fullList = false);
     }
   };
+
   getScreenSize();
 
   const paginate: number =
-    mediumScreen === false
+    fullList === false
       ? props.pagination === true
         ? page * rowsPerPage + rowsPerPage
         : 5
       : 14;
   const paginate_2: number =
-    mediumScreen === false
+    fullList === false
       ? props.pagination === true
         ? page * rowsPerPage + rowsPerPage
         : 10
@@ -282,6 +283,7 @@ const LatestBlocks = (props: any) => {
                                 variant="body2"
                                 display="inline"
                                 className={classes.textContent}
+                                noWrap
                               >
                                 <span>
                                   {
