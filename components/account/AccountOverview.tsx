@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
-      justifyContent: "center",
+      padding: "1rem"
     },
 
     formControl: {
@@ -67,13 +67,13 @@ const useStyles = makeStyles((theme: Theme) =>
     alignLeft: {
       display: "flex",
       overflow: "auto",
-      padding: "0.3rem 0 0 1rem",
+      //padding: "0.3rem 0 0 1rem",
     },
 
     alignRight: {
       display: "block",
       float: "right",
-      padding: "0.3rem 1rem 0 0",
+      //padding: "0.3rem 1rem 0 0",
     },
 
     alignRightPrice: {
@@ -103,7 +103,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
     box: {
       letterSpacing: "1px",
-      padding: "1rem",
+      paddingBottom: "1rem",
       display: "block",
       overflow: "hidden",
       whiteSpace: "nowrap",
@@ -114,7 +114,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     divider: {
-      margin: "0.5rem",
+      //margin: "0.5rem",
       backgroundColor: "rgba(62, 67, 71, 1)",
     },
 
@@ -164,8 +164,15 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     centerButtons: {
       justifyContent: "center",
-      alignItems: "center",
-    }
+      flexWrap: "wrap",
+      padding: "0.1rem",
+      textTransform: "none",
+    },
+
+    centerContent: {
+      display: "flex",
+      justifyContent: "center",
+    },
   })
 );
 
@@ -298,9 +305,17 @@ const TokenDropdown = () => {
 
 const AccountOverview = (props: any) => {
   const classes = useStyles();
+  const address: string = (props.address).toString()
+
+  const { loading, error, data } = useQuery(GET_ACCOUNT_DETAILS, {
+    variables: { address },
+  });
+
+  if (loading) return null;
+  if (error) return <>{`Error! ${error.message}`}</>
   return (
     <span>
-      <Card>
+      <Card className={classes.root}>
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <Typography variant="body1" className={classes.box}>
@@ -332,7 +347,7 @@ const AccountOverview = (props: any) => {
 
           <Grid item xs={6} md={3}>
             <Typography variant="body2" className={classes.alignRight}>
-              {numbro(parseFloat(props.balance)).format("0.000000")} cGLD
+              {/* {numbro(parseFloat(data.balance)).format("0.000000")} cGLD */}
             </Typography>
           </Grid>
           <Grid item xs={12} md={12}>
@@ -359,24 +374,28 @@ const AccountOverview = (props: any) => {
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid container direction="row" alignItems="center" justify="center" className={classes.centerButtons}>
-            <Grid item xs={6} justify="center" >
-              <Button
-                variant="outlined"
-                color="secondary"
-                className={classes.buttonUnlock}
-              >
-                <Typography variant="body1">Unlock cGLD</Typography>
-              </Button>
+          <Grid container >
+            <Grid item xs={6} className={classes.centerContent} >
+              <div className={classes.centerButtons}>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  className={classes.buttonUnlock}
+                >
+                  <Typography variant="body1">Unlock cGLD</Typography>
+                </Button>
+              </div>
             </Grid>
-            <Grid item xs={6} justify="center"  >
-              <Button
-                variant="outlined"
-                color="secondary"
-                className={classes.buttonLock}
-              >
-                <Typography variant="body1">Lock cGLD</Typography>
-              </Button>
+            <Grid item xs={6} className={classes.centerContent} >
+              <div className={classes.centerButtons}>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  className={classes.buttonLock}
+                >
+                  <Typography variant="body1">Lock cGLD</Typography>
+                </Button>
+              </div>
             </Grid>
           </Grid>
         </Grid>

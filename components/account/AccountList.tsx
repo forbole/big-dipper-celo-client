@@ -18,16 +18,32 @@ import Paper from '@material-ui/core/Paper';
 import theme from '../../themes/celo-theme';
 import TablePagination from '@material-ui/core/TablePagination';
 import Divider from '@material-ui/core/Divider';
+import gql from "graphql-tag";
+import { useQuery } from "@apollo/react-hooks";
+import { useRouter } from "next/router";
+
+
+
+const GET_ACCOUNT_LIST = gql`
+ query AccountsList{
+  accounts{
+    _id
+    address
+    balance
+  }
+}
+`;
+
 
 
 interface Column {
-  id: 'rank' | 'moniker' | 'balance' | 'percentage' | 'txsCount';
+  id: 'rank' | 'address' | 'balance' | 'percentage' | 'txsCount';
   label: string;
 }
 
 const columns: Column[] = [
   { id: 'rank', label: 'Rank', },
-  { id: 'moniker', label: 'Moniker', },
+  { id: 'address', label: 'Address', },
   { id: 'balance', label: 'Balance', },
   { id: 'percentage', label: 'Percentage', },
   { id: 'txsCount', label: 'Txs Count', },
@@ -35,38 +51,13 @@ const columns: Column[] = [
 
 interface Data {
   rank: string;
-  moniker: string;
+  address: string;
   balance: string;
   percentage: string;
   txsCount: string;
 }
 
-function createData(rank: string, moniker: string, balance: string, percentage: string, txsCount: string) {
-  return { rank, moniker, balance, percentage, txsCount };
-}
 
-const rows = [
-  createData('1', 'Michelle Cl…', '12,859.009432 cGLD', '6%', '19'),
-  createData('2', 'Rachel Hug…', '11,374.009573 cGLD', '5%', '24'),
-  createData('3', 'Will Chavez', '10,384.395824 cGLD', '9%', '65'),
-  createData('4', 'Will Gibson', '10,384.395824 cGLD', '6%', '444'),
-  createData('5', 'Pamela', '6,937.009423 cGLD', '12%', '22'),
-  createData('6', 'Michelle Cl…', '8,998.039425 cGLD', '10%', '114'),
-  createData('7', 'Rachel Hug…', '6,937.009423 cGLD', '9%', '787'),
-  createData('8', 'Will Chavez', '10,004.958632 cGLD', '2%', '78'),
-  createData('9', 'Will Gibson', '12,859.009432 cGLD', '1%', '5'),
-  createData('10', 'Pamela', '10,004.958631 cGLD', '6%', '22'),
-  createData('11', 'Michelle Cl…', '6,937.009423 cGLD', '7%', '35'),
-  createData('12', 'Rachel Hug…', '10,004.958632 cGLD', '8%', '67'),
-  createData('13', 'Will Chavez', '10,104.958632 cGLD', '1%', '42'),
-  createData('14', 'Will Gibson', '6,937.009423 cGLD', '4%', '12'),
-  createData('15', 'Pamela', '10,344.958632 cGLD', '5%', '76'),
-  createData('16', 'Michelle Cl…', '6,937.009423 cGLD', '6%', '45'),
-  createData('17', 'Rachel Hug…', '10,004.958632 cGLD', '14%', '34'),
-  createData('18', 'Will Chavez', '12,859.009431 cGLD', '11%', '37'),
-  createData('19', 'Will Gibson', '6,937.009423 cGLD', '18%', '57'),
-  createData('20', 'Pamela', '10,004.958636 cGLD', '12%', '17'),
-];
 
 
 const useStyles = makeStyles(({ spacing }) => {
@@ -142,6 +133,14 @@ const AccountList = () => {
     setPage(0);
   };
 
+
+  const { loading, error, data } = useQuery(GET_ACCOUNT_LIST, {
+    pollInterval: 10000,
+  });
+
+  if (loading) return null;
+  if (error) return <>{`Error! ${error.message}`}</>
+  // if(data) return <>{console.log(data)}</>
   return (
     <Grid container className={classes.blocks}>
       <Grid item xs={12} >
@@ -167,28 +166,28 @@ const AccountList = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                  {data.accounts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: any) => {
                     return (
-                      <TableRow key={row.rank} >
+                      <TableRow key={row._id} >
                         <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
                           <Link href="#" color="secondary"  >
-                            <Typography variant="body2" noWrap> {row.rank}</Typography>
+                            <Typography variant="body2" noWrap> {row._id}</Typography>
                           </Link>
                         </TableCell>
                         <TableCell align="left" padding="checkbox" className={classes.tableCell}>
                           <Link href="#" color="secondary" >
-                            <Typography variant="body2" noWrap>{row.moniker}</Typography>
+                            <Typography variant="body2" noWrap>{row.address}</Typography>
                           </Link>
                         </TableCell>
                         <TableCell align="left" padding="checkbox" className={classes.tableCell}>
                           <Typography variant="body2" noWrap>{row.balance}</Typography>
                         </TableCell>
-                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                          <Typography variant="body2" noWrap>{row.percentage}</Typography>
+                        {/* <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                          <Typography variant="body2" noWrap>{data.percentage}</Typography>
                         </TableCell>
                         <TableCell align="left" padding="checkbox" className={classes.tableCell}>
                           <Typography variant="body2" noWrap>{row.txsCount}</Typography>
-                        </TableCell>
+                        </TableCell> */}
                       </TableRow>
                     );
                   })}
@@ -199,7 +198,7 @@ const AccountList = () => {
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
-            count={rows.length}
+            count={data.accounts.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}

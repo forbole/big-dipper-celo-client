@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const AddressCard = (address: any) => {
+const AddressCard = (props: any) => {
   const classes = useStyles();
   // console.log(address);
   return (
@@ -50,7 +50,7 @@ const AddressCard = (address: any) => {
           </Grid>
           <Grid item xs={12} className={classes.address}>
             <Typography variant="body2" align="left">
-              {address.address}
+              {props.address}
             </Typography>
           </Grid>
         </Grid>
