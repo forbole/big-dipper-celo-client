@@ -166,7 +166,7 @@ const AccountList = () => {
                           </Link>
                         </TableCell>
                         <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                          <Typography variant="body2" noWrap>{numbro((row.balance).toLocaleString('fullwide')).format("0.000000")} cGLD</Typography>
+                          <Typography variant="body2" noWrap>{numbro((row.balance).toLocaleString('fullwide')).format("0.000000")} CELO</Typography>
                         </TableCell>
                         <TableCell align="left" padding="checkbox" className={classes.tableCell}>
                           <Typography variant="body2" noWrap>{row.percentage}</Typography>
