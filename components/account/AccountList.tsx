@@ -154,7 +154,11 @@ const AccountList = () => {
                           <Typography variant="body2" noWrap> {index + 1}</Typography>
                         </TableCell>
                         <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                          <Link href="#" color="secondary" >
+                          <Link
+                            href="/account/[account]/"
+                            as={`/account/${row.address}`}
+                            color="secondary"
+                          >
                             <Typography variant="body2" noWrap>
                               <MiddleEllipsis text={row.address} />
                             </Typography>
