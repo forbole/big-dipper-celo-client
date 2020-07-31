@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import Link from "../Link";
 import { makeStyles } from "@material-ui/core/styles";
@@ -33,7 +33,7 @@ const useStyles = makeStyles(({ spacing, palette }) => {
   return {
     root: {
       width: "100%",
-      padding: "1%",
+      // padding: "1%",
       borderRadius: 5,
       wordWrap: "break-word",
       margin: "none",
@@ -105,57 +105,61 @@ function Alert(props: AlertProps) {
 const TransactionDetails = (props: any) => {
   const classes = useStyles();
   const hash = props.hashValue ? props.hashValue : 0;
+
   const { loading, error, data } = useQuery(GET_TX_DETAILS, {
     variables: { hash },
   });
   const [open, setOpen] = React.useState(false);
 
-  let inputValue =
-    data && data.transaction && data.transaction.input
-      ? data.transaction.input
-      : null;
+  let inputValue = data && data.transaction && data.transaction.input
+    ? data.transaction.input
+    : null;
 
-  const handleClick = () => {
+
+  const copyText = () => {
+    let rawInputForm = document.getElementById("rawInputForm") as HTMLInputElement
     return navigator.clipboard
-      .writeText(document.getElementById("raw-input-form").value) != undefined ? navigator.clipboard
-        .writeText(document.getElementById("raw-input-form").value)
-        .then(() => setOpen(true))
-        .catch((err) => {
-          console.log("Something went wrong", err);
-        }) : ''
+      .writeText(rawInputForm.value)
+      .then(() => setOpen(true))
+      .catch((err) => {
+        console.log("Something went wrong", err);
+      })
   };
 
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+  const closeAlert = (event?: React.SyntheticEvent, reason?: string) => {
     if (reason === "clickaway") {
       return;
     }
     setOpen(false);
   };
 
-  function ascii_to_hex(str: String) {
+  function asciiToHex(str: String) {
     var arr1 = [];
     for (var n = 0, l = str.length; n < l; n++) {
       var hex = Number(str.charCodeAt(n)).toString(16);
       arr1.push(hex);
     }
-    return arr1.join("");
+    return arr1.join("").toString();
   }
 
   const handleClickHex = (props: any) => {
-    return (document.getElementById("raw-input-form").value = ascii_to_hex(
-      inputValue
-    ));
+    let rawInputForm = document.getElementById("rawInputForm") as HTMLInputElement
+    rawInputForm.value = asciiToHex(inputValue)
+    return rawInputForm.value
   };
 
   const handleClickUTF8 = (props: any) => {
-    return (document.getElementById("raw-input-form").value = inputValue);
+    let rawInputForm = document.getElementById("rawInputForm") as HTMLInputElement
+    (rawInputForm.value) = inputValue
+    return rawInputForm.value
   };
+
   if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Grid container spacing={1} className={classes.item}>
+        <Grid container spacing={1} >
           <Grid item xs={12}>
             <Typography color="textSecondary" variant="subtitle1" paragraph>
               Transaction Details
@@ -384,7 +388,7 @@ const TransactionDetails = (props: any) => {
               aria-label="copy"
               size="small"
               className={classes.alignRight}
-              onClick={handleClick}
+              onClick={copyText}
             >
               <img src="/images/copy.svg" />
             </IconButton>
@@ -393,16 +397,16 @@ const TransactionDetails = (props: any) => {
             <FormControl fullWidth variant="filled" size="small" margin="dense">
               <FilledInput
                 className={classes.inputLabel}
-                id="raw-input-form"
+                id="rawInputForm"
+                type="text"
                 value={
-                  data.transaction && data.transaction.input
-                    ? ascii_to_hex(data.transaction.input)
-                    : " "
+                  asciiToHex(data.transaction.input)
                 }
                 disableUnderline={true}
                 readOnly
                 style={{ padding: "0.7rem" }}
                 multiline
+
               />
             </FormControl>
             <Divider variant="middle" className={classes.divider} />
@@ -421,26 +425,26 @@ const TransactionDetails = (props: any) => {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2" >
               Gas Limit
             </Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2">
               20,000.000
             </Typography>
-            <Divider variant="middle" className={classes.divider} />
           </Grid>
         </Grid>
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert
-            onClose={handleClose}
-            severity="success"
-            // variant="outlined"
-            className={classes.alertMessage}
-          >
-            <Typography variant="body1">Copied!</Typography>
-          </Alert>
-        </Snackbar>{" "}
       </CardContent>
+      <Snackbar open={open} autoHideDuration={6000} onClose={closeAlert}>
+        <Alert
+          onClose={closeAlert}
+          severity="success"
+          // variant="outlined"
+          className={classes.alertMessage}
+        >
+          <Typography variant="body1">Copied!</Typography>
+        </Alert>
+      </Snackbar>{" "}
+
     </Card>
   );
 }
