@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm-run-all -p build-fragment dev-next",
+    "dev": "npm-run-all -p build-fragment build-possible-types dev-next",
     "dev-next": "next dev",
     "build": "next build",
     "start": "next start",
-    "build-fragment": "node ./schemaQuery.js ./possibleTypesQuery.js"
+    "build-fragment": "node ./schemaQuery.js ",
+    "build-possible-types": "node ./possibleTypesQuery.js"
   },
   "dependencies": {
     "@apollo/client": "^3.1.1",
