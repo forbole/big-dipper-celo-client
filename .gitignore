@@ -19,6 +19,7 @@
 # misc
 .DS_Store
 fragmentTypes.json
+possibleTypes.json
 
 # debug
 npm-debug.log*

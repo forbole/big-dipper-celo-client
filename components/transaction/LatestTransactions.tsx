@@ -19,7 +19,7 @@ import Paper from "@material-ui/core/Paper";
 import TablePagination from "@material-ui/core/TablePagination";
 import Chips from "../Chips";
 import Divider from "@material-ui/core/Divider";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import moment from "moment";
 import Router from "next/router";
 import MiddleEllipsis from '../misc/MiddleEllipsis'

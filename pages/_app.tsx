@@ -6,26 +6,22 @@ import Layout from '../components/Layout';
 import DarkTheme from '../themes/celo-theme';
 import App, { Container } from 'next/app';
 import Footer from '../components/Footer';
-import { ApolloProvider } from '@apollo/react-hooks';
-import ApolloClient from 'apollo-boost';
-import { gql } from "apollo-boost";
-import { useQuery } from '@apollo/react-hooks';
-import { IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
+import { ApolloClient, ApolloProvider, useQuery, HttpLink } from '@apollo/client';
+import { gql } from "@apollo/client";
 
-import introspectionQueryResultData from '../fragmentTypes.json';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { InMemoryCache } from '@apollo/client/cache';
+import possibleTypes from '../possibleTypes.json'
 
-const fragmentMatcher = new IntrospectionFragmentMatcher({
-  introspectionQueryResultData
-});
-
-const fetch = require('node-fetch').default;
-const cache = new InMemoryCache({ fragmentMatcher });
+const cache = new InMemoryCache({ possibleTypes });
 
 const client = new ApolloClient({
-  uri: 'https://server.celo.bigdipper.live/graphql',
-  fetch: fetch,
   cache,
+  link: new HttpLink({ uri: 'https://server.celo.bigdipper.live/graphql' },),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'cache-and-network',
+    },
+  },
 });
 
 
