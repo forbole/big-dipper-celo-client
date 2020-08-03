@@ -21,4 +21,5 @@
 * [#25] Grouped all gql queries into single directory 'query'
 * [#28] Fixed the `build-fragement` npm script by runing it as Javscript
 * [#35] Fixed error 'block number is not assignable to type 'string' ' by parsing its value to a string 
+* [#37] Fixed error occuring in TransactionDetails for production build 
 * [#11] Migrated imports of Apollo Client React components from 'apollo-react'  to 'apollo-client' package
