@@ -22,3 +22,8 @@
 * [#28] Fixed the `build-fragement` npm script by runing it as Javscript
 * [#35] Fixed error 'block number is not assignable to type 'string' ' by parsing its value to a string 
 * [#37] Fixed error occuring in TransactionDetails for production build 
+* Updated address card & copy function
+* Added QR Code Display on button click
+* Removed Token Search Bar from Token Dropdown in Account Overview
+* Removed Internal Transactions
+* Removed Block Confirmation value in Transaction Details 

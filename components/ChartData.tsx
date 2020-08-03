@@ -43,6 +43,7 @@ const useStyles = makeStyles({
   },
   container: {
     marginTop: "1.5%",
+    height: "100%"
   },
 });
 

@@ -116,12 +116,6 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: "rgba(62, 67, 71, 1)",
     },
 
-    searchbar: {
-      display: "flex",
-      flexWrap: "wrap",
-      justifyContent: "center",
-      verticalAlign: "middle",
-    },
 
     label: {
       height: "2rem",
@@ -174,54 +168,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface State {
-  tokenSearch: string;
-}
-
-const TokenSearchBar = () => {
-  const classes = useStyles();
-  const [values, setValues] = React.useState<State>({
-    tokenSearch: "",
-  });
-
-  const handleChange = (prop: keyof State) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
-  return (
-    <div className={classes.searchbar}>
-      <Grid container spacing={1} className={classes.container}>
-        <Grid item xs={10}>
-          <FormControl fullWidth variant="filled">
-            <InputLabel htmlFor="token-search-input"></InputLabel>
-
-            <FilledInput
-              className={classes.label}
-              id="token-search-input"
-              value={values.tokenSearch}
-              fullWidth
-              disableUnderline={true}
-              onChange={handleChange("tokenSearch")}
-              placeholder="Search tokens"
-              startAdornment={
-                <InputAdornment position="start" className={classes.searchIcon}>
-                  <SearchIcon />
-                </InputAdornment>
-              }
-            />
-          </FormControl>
-        </Grid>
-      </Grid>
-    </div>
-  );
-}
 
 const TokenDropdown = (props: any) => {
   const classes = useStyles();
-  // let celoGold = "14.221738 cGLD";
-  // let celoDollar = "492,270.513 cUSD";
+
   return (
     <FormControl className={classes.formControl} hiddenLabel>
       <InputLabel
@@ -245,17 +195,6 @@ const TokenDropdown = (props: any) => {
         // labelWidth={600}
         style={{ padding: "0" }}
       >
-        <TokenSearchBar />
-        <ListSubheader ><Typography
-          variant="body1"
-          color="textSecondary"
-          gutterBottom
-          className={classes.erc20}
-        >
-          ERC-20 (2)
-        </Typography></ListSubheader>
-        <Divider className={classes.divider} />
-
         <Typography
           variant="body1"
           color="textPrimary"
