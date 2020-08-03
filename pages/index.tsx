@@ -34,9 +34,6 @@ export default function Index() {
         <Grid item xs={12} lg={6} className={classes.bottomPadding}>
           <LatestTransactions pagination={false} />
         </Grid>
-        <Grid item xs={12} lg={6} className={classes.bottomPadding}>
-          <Ledger />
-        </Grid>
       </Grid>
     </Layout>
   );
