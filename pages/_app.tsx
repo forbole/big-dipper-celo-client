@@ -12,12 +12,11 @@ import { gql } from "@apollo/client";
 import { InMemoryCache } from '@apollo/client/cache';
 import possibleTypes from '../possibleTypes.json'
 
-const fetch = require('cross-fetch');
 const cache = new InMemoryCache({ possibleTypes });
 
 const client = new ApolloClient({
   cache,
-  link: new HttpLink({ uri: 'https://server.celo.bigdipper.live/graphql', fetch }),
+  link: new HttpLink({ uri: 'https://server.celo.bigdipper.live/graphql' },),
   defaultOptions: {
     watchQuery: {
       fetchPolicy: 'cache-and-network',
