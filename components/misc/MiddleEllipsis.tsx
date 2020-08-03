@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 interface TextProps {
     text: String;
@@ -14,29 +15,36 @@ class MiddleEllipsis extends React.Component<TextProps, { screenSize: String }>{
         }
     }
 
-    getScreenSize() {
-        if (typeof window !== "undefined") {
-            if (window.innerWidth < 600) {
-                this.setState({
-                    screenSize: 'xs'
-                })
-            }
-            else if (window.innerWidth > 600 && window.innerWidth < 960) {
-                this.setState({
-                    screenSize: 'sm'
-                })
-            }
-            else if (window.innerWidth > 960 && window.innerWidth < 1280) {
-                this.setState({
-                    screenSize: 'md'
-                })
-            }
-            else {
-                this.setState({
-                    screenSize: 'lg'
-                })
-            }
+
+    getScreenSize = () => {
+        const theme = useTheme();
+        const xs = useMediaQuery(theme.breakpoints.up('xs'));
+        const sm = useMediaQuery(theme.breakpoints.up('sm'));
+        const md = useMediaQuery(theme.breakpoints.up('md'));
+        const lg = useMediaQuery(theme.breakpoints.up('lg'));
+
+        if (xs) {
+            return this.setState({
+                screenSize: 'xs'
+            })
         }
+        else if (sm) {
+            return this.setState({
+                screenSize: 'sm'
+            })
+        }
+        else if (md) {
+            return this.setState({
+                screenSize: 'md'
+            })
+        }
+        else {
+            return this.setState({
+                screenSize: 'lg'
+            })
+        }
+
+
     }
 
 
@@ -45,6 +53,7 @@ class MiddleEllipsis extends React.Component<TextProps, { screenSize: String }>{
     }
 
     render() {
+
         let str = this.props.text
 
         switch (this.state.screenSize) {
