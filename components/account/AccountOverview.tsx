@@ -316,7 +316,6 @@ const AccountOverview = (props: any) => {
     variables: { address },
   });
 
-
   if (accountQuery.loading || chainQuery.loading) return <ComponentLoader />
   if (accountQuery.error || chainQuery.error) return <ErrorMessage message={accountQuery.error ? accountQuery.error.message : ' ' || chainQuery.error ? chainQuery.error.message : ' '} />
   return (
@@ -335,7 +334,7 @@ const AccountOverview = (props: any) => {
               Moniker
             </Typography>
           </Grid>
-          <Grid item xs={6}>{validatorQuery.data.validator && validatorQuery.data.validator.name ?
+          <Grid item xs={6}>{validatorQuery && validatorQuery.data && validatorQuery.data.validator && validatorQuery.data.validator.name ?
             <Typography variant="body2" className={classes.alignRight} > {validatorQuery.data.validator.name} </Typography> :
             accountQuery.data.account && accountQuery.data.account.address ?
               <Typography variant="body2" className={classes.alignRight} >

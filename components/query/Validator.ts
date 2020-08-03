@@ -2,7 +2,7 @@ import { gql } from "apollo-boost";
 
 
 export const GET_VALIDATOR = gql`
-    query Transaction($address: String!) {
+    query Validator($address: String!) {
     validator(address: $address){
     affiliation
     blsPublicKey
@@ -22,4 +22,3 @@ export const GET_VALIDATOR = gql`
   }
 }
 `;
- 
