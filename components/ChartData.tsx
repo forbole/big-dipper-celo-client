@@ -27,6 +27,7 @@ const useStyles = makeStyles({
     borderRadius: 4,
     background: "#43484C",
     alignItems: "center",
+    height: "100%"
   },
   value: {
     fontWeight: 300,
@@ -42,7 +43,6 @@ const useStyles = makeStyles({
   },
   container: {
     marginTop: "1.5%",
-    height: "100%"
   },
 });
 
