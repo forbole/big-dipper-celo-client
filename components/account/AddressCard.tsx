@@ -8,6 +8,13 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import Alert from "@material-ui/lab/Alert";
 import { IconButton } from "@material-ui/core";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+
+
+var QRCode = require('qrcode.react');
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,15 +39,34 @@ const useStyles = makeStyles((theme: Theme) =>
       background: "#3AD39E",
       color: "rgba(61, 66, 71, 1)",
     },
+
+    dialog: {
+      justifyContent: "center",
+      alignContent: "center",
+      alignItems: "center",
+      display: "flex"
+    },
+
+    dialogTitle: {
+      display: "flex",
+      paddingBottom: "0rem"
+
+    },
+
+    item: {
+      justifyContent: "center",
+      display: "flex",
+      alignContent: "center",
+    },
   })
 );
-
 
 
 
 const AddressCard = (props: any) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [openQR, setOpenQR] = React.useState(false);
 
 
   const copyText = () => {
@@ -53,9 +79,59 @@ const AddressCard = (props: any) => {
       })
   };
 
+
+
   const closeAlert = (event?: React.SyntheticEvent, reason?: string) => {
     setOpen(false);
   };
+
+  const showQR = () => {
+    setOpenQR(true);
+  };
+  const closeQR = () => {
+    setOpenQR(false);
+  };
+
+
+  const ShowQRCode = () => {
+    return (
+      <Dialog
+        open={openQR}
+        onClose={closeQR}
+        aria-labelledby="qr-code-dialog"
+        maxWidth="sm"
+        className={classes.dialog}
+      >
+        <DialogTitle id="qr-code-title" className={classes.dialogTitle}>
+          <Grid container >
+            <Grid item xs={12} className={classes.item}>
+              <Typography variant="h6" color="textPrimary">
+                QR Code
+              </Typography>
+            </Grid>
+            <Grid item xs={12} className={classes.item}>
+              <Typography variant="caption" color="textSecondary" noWrap>
+                {props.address}
+              </Typography>
+
+            </Grid>
+          </Grid>
+        </DialogTitle>
+
+        <DialogContent >
+
+          <DialogContentText id="qr-code"  >
+            <Grid container spacing={1} >
+              <Grid item xs={12} className={classes.item}  >
+                <QRCode value={`https://celo.bigdipper.live/account/${props.address}`} />
+              </Grid>
+            </Grid>
+          </DialogContentText>
+
+        </DialogContent>
+      </Dialog >
+    )
+  }
 
 
   return (
@@ -82,8 +158,10 @@ const AddressCard = (props: any) => {
               <IconButton
                 aria-label="qrCode"
                 size="small"
+                onClick={showQR}
               >
                 <img src="/images/qr-code.svg" />
+                <ShowQRCode />
               </IconButton>
 
             </Grid>
