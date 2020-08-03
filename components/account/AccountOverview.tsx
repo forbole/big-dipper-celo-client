@@ -31,8 +31,9 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import ContentLoader from "react-content-loader";
 import numbro from "numbro";
-import { GET_ACCOUNT_DETAILS } from '../query/Account'
-import { GET_CHAIN } from '../query/Chain'
+import { GET_ACCOUNT_DETAILS } from '../query/Account';
+import { GET_CHAIN } from '../query/Chain';
+import { GET_VALIDATOR } from '../query/Validator';
 
 import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable'
@@ -302,7 +303,6 @@ const TokenDropdown = (props: any) => {
 
 const AccountOverview = (props: any) => {
   const classes = useStyles();
-  console.log(props.address)
   const address: string = props.address ? (props.address).toString() : ''
 
   const accountQuery = useQuery(GET_ACCOUNT_DETAILS, {
@@ -312,9 +312,13 @@ const AccountOverview = (props: any) => {
   const chainQuery = useQuery(GET_CHAIN, {
   });
 
+  const validatorQuery = useQuery(GET_VALIDATOR, {
+    variables: { address },
+  });
+
 
   if (accountQuery.loading || chainQuery.loading) return <ComponentLoader />
-  if (accountQuery.error || chainQuery.error) return <ErrorMessage message={accountQuery.error.message || chainQuery.error.message} />
+  if (accountQuery.error || chainQuery.error) return <ErrorMessage message={accountQuery.error ? accountQuery.error.message : ' ' || chainQuery.error ? chainQuery.error.message : ' '} />
   return (
     <span>
       <Card className={classes.root}>
@@ -331,10 +335,12 @@ const AccountOverview = (props: any) => {
               Moniker
             </Typography>
           </Grid>
-          <Grid item xs={6}>
-            <Typography variant="body2" className={classes.alignRight} >
-              <MiddleEllipsis text={accountQuery.data.account.address} />
-            </Typography>
+          <Grid item xs={6}>{validatorQuery.data.validator && validatorQuery.data.validator.name ?
+            <Typography variant="body2" className={classes.alignRight} > {validatorQuery.data.validator.name} </Typography> :
+            accountQuery.data.account && accountQuery.data.account.address ?
+              <Typography variant="body2" className={classes.alignRight} >
+                <MiddleEllipsis text={accountQuery.data.account.address} />
+              </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
           </Grid>
 
           <Grid item xs={12}>
@@ -348,28 +354,30 @@ const AccountOverview = (props: any) => {
           </Grid>
 
           <Grid item xs={6} md={6}>
-            <Typography variant="body2" className={classes.alignRight} >
+            {accountQuery.data.account && accountQuery.data.account.balance ? <Typography variant="body2" className={classes.alignRight} >
               {numbro((accountQuery.data.account.balance).toLocaleString('fullwide',)).format("0.00")} CELO
-            </Typography>
+  </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
           </Grid>
           <Grid item xs={12} md={12} >
-            <Typography variant="body2" className={classes.alignRight} noWrap>
-              $ {numbro((accountQuery.data.account.balance * chainQuery.data.chain.tokenPrice.usd).toLocaleString('fullwide',)).format("0.00")}
-            </Typography>
+            {accountQuery.data.account && accountQuery.data.account.balance && chainQuery.data.chain && chainQuery.data.chain.tokenPrice && chainQuery.data.chain.tokenPrice.usd ?
+              < Typography variant="body2" className={classes.alignRight} noWrap>
+                $ {numbro((accountQuery.data.account.balance * chainQuery.data.chain.tokenPrice.usd).toLocaleString('fullwide',)).format("0.00")}
+              </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
           </Grid>
 
           <Grid item xs={12}>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid item xs={4} md={10}>
+          <Grid item xs={4} md={4}>
             <Typography variant="body2">
               Tokens
             </Typography>
           </Grid>
 
-          <Grid item xs={8} md={2}>
-            <TokenDropdown celo={accountQuery.data.account.totalBalance.gold} usd={accountQuery.data.account.totalBalance.usd} />
+          <Grid item xs={8} md={8}> {accountQuery.data.account && accountQuery.data.account.totalBalance && accountQuery.data.account.totalBalance.gold && accountQuery.data.account.totalBalance.usd ?
+            <TokenDropdown celo={accountQuery.data.account.totalBalance.gold} usd={accountQuery.data.account.totalBalance.usd} /> :
+            < NotAvailable variant="body2" className={classes.alignRight} />}
           </Grid>
 
           <Grid item xs={12}>
@@ -402,7 +410,7 @@ const AccountOverview = (props: any) => {
           </Grid>
         </Grid>
       </Card>
-    </span>
+    </span >
   );
 }
 
