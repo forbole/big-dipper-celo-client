@@ -32,9 +32,6 @@ export default function Index() {
         <Grid item xs={12} lg={6}  >
           <LatestTransactions pagination={false} />
         </Grid>
-        <Grid item xs={12} lg={6}  >
-          <Ledger />
-        </Grid>
       </Grid>
       </Grid>
     </Layout>

@@ -1,8 +1,9 @@
-import { gql } from "apollo-boost";
+import { gql } from "@apollo/client";
 
 export const GET_BLOCK = gql`
-  {
-    blocks(pageSize: 500, page: 10) {
+  query Block($pageSize: Int, $page: Int) {
+    blocks(pageSize: $pageSize, page: $page) {
+      totalCounts
       blocks {
         number
         miner {

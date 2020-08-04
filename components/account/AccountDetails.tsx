@@ -5,9 +5,9 @@ import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/sty
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles(({ spacing }) => {
@@ -60,15 +60,15 @@ const AccountDetails = () => {
     const classes = useStyles();
 
     return (
-        <ExpansionPanel>
-            <ExpansionPanelSummary
+        <Accordion>
+            <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
+                aria-controls="accoountDetailsPanel"
+                id="accoountDetailsPanel"
             >
                 <Typography variant="body1" > Account Details</Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails className={classes.root}>
+            </AccordionSummary>
+            <AccordionDetails className={classes.root}>
                 <Grid container >
                     <Divider variant='middle' className={classes.divider} />
 
@@ -230,8 +230,8 @@ const AccountDetails = () => {
                     </Grid>
 
                 </Grid>
-            </ExpansionPanelDetails>
-        </ExpansionPanel>
+            </AccordionDetails>
+        </Accordion>
     );
 }
 

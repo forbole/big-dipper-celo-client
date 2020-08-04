@@ -11,20 +11,19 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       justifyContent: "center",
     },
-
   })
 );
 
 export default function Account() {
   const classes = useStyles();
   const router = useRouter();
-  const { Account } = router.query;
+  const accountAddress = router.query.account
 
   return (
     <Layout>
-      <Grid container spacing={2} className={classes.root}>
-        <Grid item xs={12} sm={10}  >
-          <AccountPage />
+      <Grid container className={classes.root}>
+        <Grid item xs={12} sm={10}>
+          <AccountPage address={accountAddress} />
         </Grid>
       </Grid>
     </Layout>

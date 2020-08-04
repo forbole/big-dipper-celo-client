@@ -20,7 +20,8 @@ export default function Blocks() {
     <Layout>
       <Grid container spacing={2} className={classes.root}>
         <Grid item xs={12} sm={8}>
-          <LatestBlocks pagination={false} displayCard={true} />
+          <LatestBlocks pagination={true} displayCard={true} />
+
         </Grid>
       </Grid>
     </Layout>

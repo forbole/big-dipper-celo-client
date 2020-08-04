@@ -4,10 +4,17 @@ import MiddleEllipsis from './MiddleEllipsis'
 
 
 const NotAvailable = (props: any) => {
+    if (props.wrap) {
+        return (
+            <Typography variant={props.variant} className={props.className}  >
+                <MiddleEllipsis text="Data not available" />
+            </Typography>
+        )
 
+    }
     return (
         <Typography variant={props.variant} className={props.className}  >
-            <MiddleEllipsis text="Data not available" />
+            Data not available
         </Typography>
     )
 }

@@ -126,9 +126,9 @@ const Layout = (props: { children: React.ReactNode }) => {
             {" "}
             <Typography variant="body1" color="textPrimary">{"Accounts"}</Typography>{" "}
           </Link>,
-          <Link href="/proposals" color="inherit">
-            <Typography variant="body1" color="textPrimary">{"Proposals"}</Typography>{" "}
-          </Link>,
+          // <Link href="/proposals" color="inherit">
+          //   <Typography variant="body1" color="textPrimary">{"Proposals"}</Typography>{" "}
+          // </Link>,
           <Link href="/validatorVotes" color="inherit">
             <Typography variant="body1" color="textPrimary">{"Validator Votes"}</Typography>{" "}
           </Link>,
@@ -138,8 +138,8 @@ const Layout = (props: { children: React.ReactNode }) => {
           </ListItem>
         ))}
       </List>
-      <Divider />
-      <List>
+      {/* <Divider /> */}
+      {/* <List>
         {[
           <Link href="/account" color="inherit">
             <Typography variant="body1" color="textPrimary">
@@ -171,7 +171,7 @@ const Layout = (props: { children: React.ReactNode }) => {
             <ListItemText primary={text} />
           </ListItem>
         ))}
-      </List>
+      </List> */}
     </div>
   );
 

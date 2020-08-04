@@ -15,8 +15,6 @@ import Paper from "@material-ui/core/Paper";
 import Divider from "@material-ui/core/Divider";
 import LinearProgress from '@material-ui/core/LinearProgress';
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
-
-
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
@@ -142,8 +140,6 @@ const useStyles = makeStyles(() => {
 
 const ValidatorVotesList = () => {
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const [open, setOpen] = React.useState(false);
 
@@ -174,9 +170,9 @@ const ValidatorVotesList = () => {
           <Table size="medium">
             <TableHead>
               <TableRow>
-                {columns.map((column) => (
+                {columns.map((column: any, index: number) => (
                   <TableCell
-                    key={column.id}
+                    key={index}
                     align={column.align}
                     className={classes.table}
                     padding="checkbox"
@@ -194,168 +190,166 @@ const ValidatorVotesList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (<>
-                    <TableRow key={row.groupName}>
-                      <TableCell component="th"
-                        scope="row"
-                        padding="none">
-                        <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-                          {open ? <KeyboardArrowDownIcon fontSize="small" className={classes.arrowIcon} /> : <KeyboardArrowRightIcon fontSize="small" className={classes.arrowIcon} />}
-                        </IconButton>
-                      </TableCell>
-                      <TableCell
-                        component="th"
-                        scope="row"
-                        padding="checkbox"
-                        align="left"
-                        className={classes.tableCell}
-                      >
-                        <Link
-                          href="/validatorGroup/[validatorGroupDetails]/"
-                          as={`/validatorGroup/${'NanValdezG'}`}
-                          color="secondary">
-                          <Typography variant="body2" noWrap>
+              {rows.map((row: any, index: number) => {
+                return (<>
+                  <TableRow key={index}>
+                    <TableCell component="th"
+                      scope="row"
+                      padding="none">
+                      <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+                        {open ? <KeyboardArrowDownIcon fontSize="small" className={classes.arrowIcon} /> : <KeyboardArrowRightIcon fontSize="small" className={classes.arrowIcon} />}
+                      </IconButton>
+                    </TableCell>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      padding="checkbox"
+                      align="left"
+                      className={classes.tableCell}
+                    >
+                      <Link
+                        href="/validatorGroup/[validatorGroupDetails]/"
+                        as={`/validatorGroup/${'NanValdezG'}`}
+                        color="secondary">
+                        <Typography variant="body2" noWrap>
 
-                            {row.groupName}
-                          </Typography>
-                        </Link>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        padding="checkbox"
-                        className={classes.tableCell}
-                      >
-                        <Typography variant="caption" noWrap>
-                          {row.votesAvailable}
-                          <LinearProgress variant="determinate" value={81}
-                            classes={{
-                              colorPrimary: classes.progress,
-                              barColorPrimary: classes.progressBar,
-                            }}
-                          />
+                          {row.groupName}
                         </Typography>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        padding="checkbox"
-                        className={classes.tableCell}
-                      >
-                        <Typography variant="body2" noWrap>
-                          {row.electedTotal}
-                        </Typography>
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        padding="checkbox"
-                        className={classes.tableCell}
-                      >
-                        <Typography variant="body2" noWrap>
-                          {row.lockedcGLD}
-                        </Typography>
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        padding="checkbox"
-                        className={classes.tableCell}
-                      >
-                        <Typography variant="body2" noWrap>
-                          {row.groupShare}
-                        </Typography>
-                      </TableCell>
+                      </Link>
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      padding="checkbox"
+                      className={classes.tableCell}
+                    >
+                      <Typography variant="caption" noWrap>
+                        {row.votesAvailable}
+                        <LinearProgress variant="determinate" value={81}
+                          classes={{
+                            colorPrimary: classes.progress,
+                            barColorPrimary: classes.progressBar,
+                          }}
+                        />
+                      </Typography>
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      padding="checkbox"
+                      className={classes.tableCell}
+                    >
+                      <Typography variant="body2" noWrap>
+                        {row.electedTotal}
+                      </Typography>
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      padding="checkbox"
+                      className={classes.tableCell}
+                    >
+                      <Typography variant="body2" noWrap>
+                        {row.lockedcGLD}
+                      </Typography>
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      padding="checkbox"
+                      className={classes.tableCell}
+                    >
+                      <Typography variant="body2" noWrap>
+                        {row.groupShare}
+                      </Typography>
+                    </TableCell>
 
-                      <TableCell
-                        align="right"
-                        padding="checkbox"
-                        className={classes.tableCell}
-                      >
-                        <Typography variant="body2" noWrap>
-                          {row.voterRewards}
-                        </Typography>
-                      </TableCell>
+                    <TableCell
+                      align="right"
+                      padding="checkbox"
+                      className={classes.tableCell}
+                    >
+                      <Typography variant="body2" noWrap>
+                        {row.voterRewards}
+                      </Typography>
+                    </TableCell>
 
-                      <TableCell
-                        align="right"
-                        padding="checkbox"
-                        className={classes.tableCell}
-                      >
-                        <Typography variant="body2" noWrap>
-                          {row.uptime}
-                        </Typography>
-                      </TableCell>
+                    <TableCell
+                      align="right"
+                      padding="checkbox"
+                      className={classes.tableCell}
+                    >
+                      <Typography variant="body2" noWrap>
+                        {row.uptime}
+                      </Typography>
+                    </TableCell>
 
-                      <TableCell
-                        align="right"
-                        padding="checkbox"
-                        className={classes.tableCell}
-                      >
-                        <Typography variant="body2" noWrap>
-                          {row.attestation}
-                        </Typography>
-                      </TableCell>
-                    </TableRow>
+                    <TableCell
+                      align="right"
+                      padding="checkbox"
+                      className={classes.tableCell}
+                    >
+                      <Typography variant="body2" noWrap>
+                        {row.attestation}
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
 
-                    <TableRow>
-                      <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                        <Collapse in={open} timeout="auto" unmountOnExit>
-                          <Grid container >
-                            <Grid item xs={8} className={classes.groupInfo}>
-                              <Typography variant="caption" className={classes.groupInfoNum}> #1</Typography>
-                              <Link
-                                href="/account/[account]/"
-                                as={`/account/${10}`}
-                                color="secondary">
-                                <Typography variant="caption" >
-                                  Vincent Lynch
+                  <TableRow>
+                    <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                      <Collapse in={open} timeout="auto" unmountOnExit>
+                        <Grid container >
+                          <Grid item xs={8} className={classes.groupInfo}>
+                            <Typography variant="caption" className={classes.groupInfoNum}> #1</Typography>
+                            <Link
+                              href="/account/[account]/"
+                              as={`/account/${10}`}
+                              color="secondary">
+                              <Typography variant="caption" >
+                                Vincent Lynch
                               </Typography>
-                              </Link>
-                              <FiberManualRecordIcon className={classes.dotIcon} />
-                            </Grid>
-                            <Grid item xs={8} className={classes.groupInfoAddress}>
-                              <Typography variant="caption" color="textSecondary" > <span id="group-info-address"  >{'0x0f66….1571'}</span></Typography>
-                              <IconButton
-                                aria-label="copy"
-                                size="small"
-                              //onClick={handleClick}
-                              >
-                                <img src="/images/copy.svg" />
-                              </IconButton>
-                            </Grid>
-
-                            <Grid item xs={8} className={classes.groupInfo}>
-                              <Typography variant="caption" className={classes.groupInfoNum}> #2</Typography>
-                              <Link
-                                href="/account/[account]/"
-                                as={`/account/${10}`}
-                                color="secondary">
-                                <Typography variant="caption" >
-                                  Michelle Clark
-                              </Typography>
-                              </Link>
-                            </Grid>
-                            <Grid item xs={8} className={classes.groupInfoAddress}>
-                              <Typography variant="caption" color="textSecondary"  > <span id="group-info-address"  >{'0x0f66….1571'}</span></Typography>
-                              <IconButton
-                                aria-label="copy"
-                                size="small"
-                              //onClick={handleClick}
-                              >
-                                <img src="/images/copy.svg" />
-                              </IconButton>
-                            </Grid>
-
+                            </Link>
+                            <FiberManualRecordIcon className={classes.dotIcon} />
+                          </Grid>
+                          <Grid item xs={8} className={classes.groupInfoAddress}>
+                            <Typography variant="caption" color="textSecondary" > <span id="group-info-address"  >{'0x0f66….1571'}</span></Typography>
+                            <IconButton
+                              aria-label="copy"
+                              size="small"
+                            //onClick={handleClick}
+                            >
+                              <img src="/images/copy.svg" />
+                            </IconButton>
                           </Grid>
 
-                        </Collapse>
-                      </TableCell>
-                    </TableRow>
-                  </>
+                          <Grid item xs={8} className={classes.groupInfo}>
+                            <Typography variant="caption" className={classes.groupInfoNum}> #2</Typography>
+                            <Link
+                              href="/account/[account]/"
+                              as={`/account/${10}`}
+                              color="secondary">
+                              <Typography variant="caption" >
+                                Michelle Clark
+                              </Typography>
+                            </Link>
+                          </Grid>
+                          <Grid item xs={8} className={classes.groupInfoAddress}>
+                            <Typography variant="caption" color="textSecondary"  > <span id="group-info-address"  >{'0x0f66….1571'}</span></Typography>
+                            <IconButton
+                              aria-label="copy"
+                              size="small"
+                            //onClick={handleClick}
+                            >
+                              <img src="/images/copy.svg" />
+                            </IconButton>
+                          </Grid>
+
+                        </Grid>
+
+                      </Collapse>
+                    </TableCell>
+                  </TableRow>
+                </>
 
 
-                  );
-                })}
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>

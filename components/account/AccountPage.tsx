@@ -9,8 +9,7 @@ import AddressCard from "./AddressCard";
 import AccountDetails from "./AccountDetails";
 import Hidden from "@material-ui/core/Hidden";
 import { useRouter } from "next/router";
-import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import ContentLoader from "react-content-loader";
 import numbro from "numbro";
 import AccountOverview from "./AccountOverview";
@@ -47,73 +46,48 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const AccountPage = () => {
-  const router = useRouter();
 
-  //if (!router.query.account) return <ContentLoader />;
-  //console.log(router.query.block);
-  const address = router.query.account;
-  console.log(address);
-  const { loading, error, data } = useQuery(GET_ACCOUNT_DETAILS, {
-    variables: { address },
-  });
+
+const AccountPage = (props: any) => {
   const classes = useStyles();
-  if (loading) return <ComponentLoader />
-  if (error) return <ErrorMessage message={error.message} />
+
+  const accountAddress = props.address
 
   return (<>
-    <Grid container spacing={2} className={classes.root}>
-      <Hidden lgUp>
-        <Grid item xs={12} lg={5} >
-          <AddressCard address={data.account.address} />
-        </Grid>
-      </Hidden>
 
-      <Hidden lgUp>
-        <Grid item xs={12} lg={5} >
-          <AccountOverview balance={data.account.balance} />
-        </Grid>
-      </Hidden>
+    <Grid container className={classes.root}>
 
-      <Hidden mdDown>
-        <Grid item xs={12} lg={5}  >
-          <AddressCard address={data.account.address} />
-          <p></p>
-          <AccountOverview balance={data.account.balance} />
-        </Grid>
-      </Hidden>
+      <Grid item xs={12} md={8} className={classes.bottomPadding}>
+        <AddressCard address={accountAddress} />
+      </Grid>
 
-      <Hidden mdDown>
-        <Grid item xs={12} lg={5}  >
-          <AccountDetails />
-        </Grid>
-      </Hidden>
+      <Grid item xs={12} md={8} className={classes.bottomPadding}>
+        <AccountOverview address={accountAddress} />
+      </Grid>
 
-      <Grid item xs={12} lg={5}  >
+
+      <Grid item xs={12} md={8} className={classes.bottomPadding}>
         <AccountTransactions />
       </Grid>
 
-      <Grid item xs={12} lg={5}  >
-        <InternalTransactions />
-      </Grid>
 
-      <Grid item xs={12} lg={5}  >
+      <Grid item xs={12} md={8} className={classes.bottomPadding}>
         <CoinBalanceHistory />
       </Grid>
 
-      <Grid item xs={12} lg={5}  >
+      <Grid item xs={12} md={8} className={classes.bottomPadding}>
         <Downtime />
       </Grid>
 
-      <Grid item xs={12} lg={5}  >
+      <Grid item xs={12} md={8} className={classes.bottomPadding}>
         <ValidatedBlocks />
       </Grid>
 
-      <Hidden lgUp>
-        <Grid item xs={12} lg={5}  >
-          <AccountDetails />
-        </Grid>
-      </Hidden>
+
+      <Grid item xs={12} md={8} className={classes.bottomPadding}>
+        <AccountDetails />
+      </Grid>
+
     </Grid>
   </>
   );
