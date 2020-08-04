@@ -24,4 +24,9 @@
 * [#37] Fixed error occuring in TransactionDetails for production build 
 * [#11] Migrated imports of Apollo Client React components from 'apollo-react'  to 'apollo-client' package 
 * [#45] Hidden Proposals, Ledger, Sign In, Logout Buttons 
+* Updated address card & copy function
+* Added QR Code Display on button click
+* Removed Token Search Bar from Token Dropdown in Account Overview
+* Removed Internal Transactions
+* Removed Block Confirmation value in Transaction Details 
 * [#43] Updated Pagination for LatestBlocks, LatestTransactions, AccountList, Downtime, Transactions, ValidatedBlocks, DepositList, ProposalVotingList, TokenHolders & ValidatorVotesList

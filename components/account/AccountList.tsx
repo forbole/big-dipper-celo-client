@@ -14,16 +14,23 @@ import Paper from '@material-ui/core/Paper';
 import theme from '../../themes/celo-theme';
 import TablePagination from '@material-ui/core/TablePagination';
 import Divider from '@material-ui/core/Divider';
+import { GET_ACCOUNTS } from '../query/Account'
+import { useQuery } from "@apollo/react-hooks";
+import ComponentLoader from '../misc/ComponentLoader';
+import NotAvailable from '../misc/NotAvailable'
+import ErrorMessage from '../misc/ErrorMessage';
+import MiddleEllipsis from '../misc/MiddleEllipsis'
+import numbro from "numbro";
 
 
 interface Column {
-  id: 'rank' | 'moniker' | 'balance' | 'percentage' | 'txsCount';
+  id: 'rank' | 'address' | 'balance' | 'percentage' | 'txsCount';
   label: string;
 }
 
 const columns: Column[] = [
   { id: 'rank', label: 'Rank', },
-  { id: 'moniker', label: 'Moniker', },
+  { id: 'address', label: 'Address', },
   { id: 'balance', label: 'Balance', },
   { id: 'percentage', label: 'Percentage', },
   { id: 'txsCount', label: 'Txs Count', },
@@ -31,38 +38,12 @@ const columns: Column[] = [
 
 interface Data {
   rank: string;
-  moniker: string;
+  address: string;
   balance: string;
   percentage: string;
   txsCount: string;
 }
 
-function createData(rank: string, moniker: string, balance: string, percentage: string, txsCount: string) {
-  return { rank, moniker, balance, percentage, txsCount };
-}
-
-const rows = [
-  createData('1', 'Michelle Cl…', '12,859.009432 cGLD', '6%', '19'),
-  createData('2', 'Rachel Hug…', '11,374.009573 cGLD', '5%', '24'),
-  createData('3', 'Will Chavez', '10,384.395824 cGLD', '9%', '65'),
-  createData('4', 'Will Gibson', '10,384.395824 cGLD', '6%', '444'),
-  createData('5', 'Pamela', '6,937.009423 cGLD', '12%', '22'),
-  createData('6', 'Michelle Cl…', '8,998.039425 cGLD', '10%', '114'),
-  createData('7', 'Rachel Hug…', '6,937.009423 cGLD', '9%', '787'),
-  createData('8', 'Will Chavez', '10,004.958632 cGLD', '2%', '78'),
-  createData('9', 'Will Gibson', '12,859.009432 cGLD', '1%', '5'),
-  createData('10', 'Pamela', '10,004.958631 cGLD', '6%', '22'),
-  createData('11', 'Michelle Cl…', '6,937.009423 cGLD', '7%', '35'),
-  createData('12', 'Rachel Hug…', '10,004.958632 cGLD', '8%', '67'),
-  createData('13', 'Will Chavez', '10,104.958632 cGLD', '1%', '42'),
-  createData('14', 'Will Gibson', '6,937.009423 cGLD', '4%', '12'),
-  createData('15', 'Pamela', '10,344.958632 cGLD', '5%', '76'),
-  createData('16', 'Michelle Cl…', '6,937.009423 cGLD', '6%', '45'),
-  createData('17', 'Rachel Hug…', '10,004.958632 cGLD', '14%', '34'),
-  createData('18', 'Will Chavez', '12,859.009431 cGLD', '11%', '37'),
-  createData('19', 'Will Gibson', '6,937.009423 cGLD', '18%', '57'),
-  createData('20', 'Pamela', '10,004.958636 cGLD', '12%', '17'),
-];
 
 
 const useStyles = makeStyles(({ spacing }) => {
@@ -78,7 +59,7 @@ const useStyles = makeStyles(({ spacing }) => {
     },
     box: {
       letterSpacing: '1px',
-      padding: '1rem',
+      padding: '1rem 0 0.5rem 1rem',
       display: 'inline-flex',
       overflow: 'hidden',
       whiteSpace: 'nowrap',
@@ -110,11 +91,6 @@ const useStyles = makeStyles(({ spacing }) => {
       },
 
     },
-
-    blocks: {
-      // padding: '1.5%',
-    },
-
     divider: {
       margin: '0.5rem',
       backgroundColor: "rgba(62, 67, 71, 1)",
@@ -130,8 +106,10 @@ const AccountList = () => {
   const rowsOption3 = 50;
 
   const classes = useStyles();
+
   const [page, setPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(10)
+
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -142,13 +120,18 @@ const AccountList = () => {
     setPage(0);
   };
 
+  const { loading, error, data } = useQuery(GET_ACCOUNTS, {
+  });
+
+  if (loading) return <ComponentLoader />
+  if (error) return <ErrorMessage message={error.message} />
+
   return (
-    <Grid container className={classes.blocks}>
+    <Grid container  >
       <Grid item xs={12} >
         <Paper className={classes.root}>
           <Typography variant="body1" className={classes.box} >
             Accounts </Typography>
-          <Divider variant='middle' className={classes.divider} />
           <TableContainer className={classes.container}>
             <Paper className={classes.tableCell}>
               <Table >
@@ -171,17 +154,21 @@ const AccountList = () => {
                     return (
                       <TableRow key={index} >
                         <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
-                          <Link href="#" color="secondary"  >
-                            <Typography variant="body2" noWrap> {row.rank}</Typography>
+                          <Typography variant="body2" noWrap> {index + 1}</Typography>
+                        </TableCell>
+                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                          <Link
+                            href="/account/[account]/"
+                            as={`/account/${row.address}`}
+                            color="secondary"
+                          >
+                            <Typography variant="body2" noWrap>
+                              <MiddleEllipsis text={row.address} />
+                            </Typography>
                           </Link>
                         </TableCell>
                         <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                          <Link href="#" color="secondary" >
-                            <Typography variant="body2" noWrap>{row.moniker}</Typography>
-                          </Link>
-                        </TableCell>
-                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                          <Typography variant="body2" noWrap>{row.balance}</Typography>
+                          <Typography variant="body2" noWrap>{numbro((row.balance).toLocaleString('fullwide')).format("0.000000")} CELO</Typography>
                         </TableCell>
                         <TableCell align="left" padding="checkbox" className={classes.tableCell}>
                           <Typography variant="body2" noWrap>{row.percentage}</Typography>

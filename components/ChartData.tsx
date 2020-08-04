@@ -27,6 +27,7 @@ const useStyles = makeStyles({
     borderRadius: 4,
     background: "#43484C",
     alignItems: "center",
+    height: "100%"
   },
   value: {
     fontWeight: 300,
