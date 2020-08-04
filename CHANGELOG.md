@@ -24,4 +24,4 @@
 * [#37] Fixed error occuring in TransactionDetails for production build 
 * [#11] Migrated imports of Apollo Client React components from 'apollo-react'  to 'apollo-client' package 
 * [#45] Hidden Proposals, Ledger, Sign In, Logout Buttons 
-* Updated Pagination for LatestBlocks & LatestTransactions
+* Updated Pagination for LatestBlocks, LatestTransactions, AccountList, Downtime, Transactions, ValidatedBlocks, DepositList, ProposalVotingList, TokenHolders & ValidatorVotesList

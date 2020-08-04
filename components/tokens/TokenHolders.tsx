@@ -114,17 +114,22 @@ const useStyles = makeStyles(({ spacing }) => {
 
 
 const TokenHolders = () => {
+  const rowsOption1 = 5;
+  const rowsOption2 = 10;
+  const rowsOption3 = 30;
+
+
 
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [page, setPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(5)
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
+    setPageSize(+event.target.value);
     setPage(0);
   };
 
@@ -146,9 +151,9 @@ const TokenHolders = () => {
               <TableHead>
               </TableHead>
               <TableBody>
-                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                {rows.map((row: any, index: number) => {
                   return (
-                    <TableRow key={row.address} >
+                    <TableRow key={index} >
                       <TableCell component="th" scope="row" padding="checkbox"  >
                         <Grid container spacing={1} style={{ padding: '0.5rem 0', }}>
                           <Grid item xs={12}>
@@ -179,10 +184,10 @@ const TokenHolders = () => {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25, 100]}
+            rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
             component="div"
             count={rows.length}
-            rowsPerPage={rowsPerPage}
+            rowsPerPage={pageSize}
             page={page}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}

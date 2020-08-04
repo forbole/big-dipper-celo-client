@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Link from '../Link';
 import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
@@ -17,6 +17,7 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 interface Data {
   tx: string;
@@ -101,17 +102,31 @@ const useStyles = makeStyles(({ spacing }) => {
 
 
 const AccountTransactions = () => {
+  const rowsOption1 = 10;
+  const rowsOption2 = 30;
+  const rowsOption3 = 50;
 
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const theme = useTheme();
+  const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
+  const [page, setPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(5)
+
+  useEffect(() => {
+    if (largeScreen) {
+      setPageSize(10)
+    }
+    else {
+      setPageSize(5)
+    }
+  })
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
+    setPageSize(+event.target.value);
     setPage(0);
   };
 
@@ -133,9 +148,9 @@ const AccountTransactions = () => {
               <TableHead>
               </TableHead>
               <TableBody>
-                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                {rows.map((row: any, index: number) => {
                   return (
-                    <TableRow key={row.tx} >
+                    <TableRow key={index} >
                       <TableCell component="th" scope="row" padding="checkbox"  >
                         <Grid container spacing={1} style={{ padding: '0.5rem 0' }}>
                           <Grid item xs={8}>
@@ -191,10 +206,10 @@ const AccountTransactions = () => {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25, 100]}
+            rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
             component="div"
             count={rows.length}
-            rowsPerPage={rowsPerPage}
+            rowsPerPage={pageSize}
             page={page}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
