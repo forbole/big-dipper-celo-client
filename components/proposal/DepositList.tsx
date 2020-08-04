@@ -94,10 +94,6 @@ const useStyles = makeStyles(() => {
 
 const DepositList = () => {
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-
 
   return (
     <Grid container spacing={1} justify="center" className={classes.container}>
@@ -115,9 +111,9 @@ const DepositList = () => {
           <Table size="medium">
             <TableHead>
               <TableRow>
-                {columns.map((column) => (
+                {columns.map((column: any, index: number) => (
                   <TableCell
-                    key={column.id}
+                    key={index}
                     align={column.align}
                     className={classes.table}
                     padding="checkbox"
@@ -134,44 +130,42 @@ const DepositList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow key={row.depositor}>
-                      <TableCell
-                        component="th"
-                        scope="row"
-                        padding="checkbox"
-                        align="left"
-                        className={classes.tableCell}
-                      >
-                        <Link href="#" color="secondary">
-                          <Typography variant="body2" noWrap>
-                            {" "}
-                            {row.depositor}
-                          </Typography>
-                        </Link>
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        padding="checkbox"
-                        className={classes.tableCell}
-                      >
+              {rows.map((row: any, index: number) => {
+                return (
+                  <TableRow key={index}>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      padding="checkbox"
+                      align="left"
+                      className={classes.tableCell}
+                    >
+                      <Link href="#" color="secondary">
                         <Typography variant="body2" noWrap>
-                          {row.amount}
+                          {" "}
+                          {row.depositor}
                         </Typography>
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        padding="checkbox"
-                        className={classes.tableCell}
-                      >
-                        <Typography variant="body2" noWrap>
-                          {row.time}
-                        </Typography>
-                      </TableCell>
-                      {/* <TableCell
+                      </Link>
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      padding="checkbox"
+                      className={classes.tableCell}
+                    >
+                      <Typography variant="body2" noWrap>
+                        {row.amount}
+                      </Typography>
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      padding="checkbox"
+                      className={classes.tableCell}
+                    >
+                      <Typography variant="body2" noWrap>
+                        {row.time}
+                      </Typography>
+                    </TableCell>
+                    {/* <TableCell
                         align="left"
                         padding="checkbox"
                         className={classes.tableCell}
@@ -194,21 +188,13 @@ const DepositList = () => {
                           {row.time}
                         </Typography>
                       </TableCell> */}
-                    </TableRow>
-                  );
-                })}
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
-        {/* <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        /> */}
+
       </Paper>
     </Grid>
   );

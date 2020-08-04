@@ -15,9 +15,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Divider from '@material-ui/core/Divider';
 
@@ -128,30 +128,34 @@ const useStyles = makeStyles(({ spacing }) => {
 
 
 const ValidatedBlocks = () => {
+  const rowsOption1 = 10;
+  const rowsOption2 = 30;
+  const rowsOption3 = 50;
+
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(10)
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
+    setPageSize(+event.target.value);
     setPage(0);
   };
 
   return (
 
-    <ExpansionPanel>
-      <ExpansionPanelSummary
+    <Accordion>
+      <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1a-content"
-        id="panel1a-header"
+        aria-controls="accountValidatedBlocksPanel"
+        id="accountValidatedBlocksPanel"
       >
         <Typography variant="body1" >Validated Blocks</Typography>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails className={classes.root}>
+      </AccordionSummary>
+      <AccordionDetails className={classes.root}>
         <Grid container >
           <Divider variant='middle' className={classes.divider} />
           <TableContainer className={classes.container}>
@@ -159,9 +163,9 @@ const ValidatedBlocks = () => {
               <Table >
                 <TableHead>
                   <TableRow>
-                    {columns.map((column) => (
+                    {columns.map((column: any, index: number) => (
                       <TableCell
-                        key={column.id}
+                        key={index}
                         align="left"
                         className={classes.table}
                         padding="checkbox"
@@ -172,9 +176,9 @@ const ValidatedBlocks = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                  {rows.map((row: any, index: number) => {
                     return (
-                      <TableRow key={row.height} >
+                      <TableRow key={index} >
                         <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
                           <Link href="#" color="secondary"  >
                             <Typography variant="body2" noWrap> {row.height}</Typography>
@@ -205,17 +209,17 @@ const ValidatedBlocks = () => {
             </Paper>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
             component="div"
             count={rows.length}
-            rowsPerPage={rowsPerPage}
+            rowsPerPage={pageSize}
             page={page}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />
         </Grid>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+      </AccordionDetails>
+    </Accordion>
   );
 }
 

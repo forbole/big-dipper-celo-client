@@ -11,52 +11,37 @@ const useStyles = makeStyles(({ spacing }) => {
   return {
     card: {
       display: "flex",
-      padding: "0.3rem",
+      padding: "1rem",
       justifyContent: "center",
-      //borderLeft: "thick solid #FBCC5C",
       background: "#43484C",
       borderRadius: 5,
-      //boxShadow: "0 2px 4px 0 rgba(138, 148, 159, 0.2)",
     },
 
-    cGLD: {
-      padding: "0.5rem 0 0.1rem 0.5rem",
-    },
-    cGLDPrice: {
-      padding: "0.5rem 0.5rem 0.1rem 0",
-    },
 
-    marketCap: {
-      padding: "0.1rem 0 0.5rem 0.5rem",
-    },
-
-    marketPrice: {
-      padding: "0.1rem 0.5rem 0.5rem 0",
-    },
   };
 });
 
 const MarketCard = () => {
   const classes = useStyles();
   return (
-    <Card className={cx(classes.card)} elevation={0}>
-      <Grid container>
-        <Grid item xs={6} className={classes.cGLD}>
+    <Card className={cx(classes.card)} >
+      <Grid container spacing={1}>
+        <Grid item xs={6}  >
           <Typography align="left" variant="body1">
             cGLD Price
           </Typography>
         </Grid>
-        <Grid item xs={6} className={classes.cGLDPrice}>
+        <Grid item xs={6}  >
           <Typography align="right" variant="body1">
             $2.8
           </Typography>
         </Grid>
-        <Grid item xs={6} className={classes.marketCap}>
+        <Grid item xs={6}  >
           <Typography align="left" variant="body1">
             Market Cap
           </Typography>
         </Grid>
-        <Grid item xs={6} className={classes.marketPrice}>
+        <Grid item xs={6}  >
           <Typography align="right" variant="body1">
             $10,413,896
           </Typography>

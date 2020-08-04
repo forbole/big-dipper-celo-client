@@ -10,14 +10,6 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: "flex",
       justifyContent: "center",
-      paddingTop: "2%",
-    },
-
-    bottomPadding: {
-      overflow: "auto",
-      // paddingTop: '1.5%',
-      // paddingBottom: '1.5%',
-      //   padding: "1rem",
     },
   })
 );
@@ -25,13 +17,13 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Account() {
   const classes = useStyles();
   const router = useRouter();
-  const { Account } = router.query;
+  const accountAddress = router.query.account
 
   return (
     <Layout>
       <Grid container className={classes.root}>
-        <Grid item xs={12} sm={10} className={classes.bottomPadding}>
-          <AccountPage />
+        <Grid item xs={12} sm={10}>
+          <AccountPage address={accountAddress} />
         </Grid>
       </Grid>
     </Layout>

@@ -21,9 +21,6 @@ import {
 } from 'recharts';
 
 
-//window.dispatchEvent(new CustomEvent('resize'))
-
-
 interface Column {
     id: "voter" | "answer" | "voting_power";
     label: string;
@@ -115,16 +112,20 @@ const useStyles = makeStyles(() => {
 });
 
 const ProposalVotingList = () => {
+    const rowsOption1 = 10;
+    const rowsOption2 = 30;
+    const rowsOption3 = 50;
+
     const classes = useStyles();
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [page, setPage] = React.useState(1);
+    const [pageSize, setPageSize] = React.useState(10)
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRowsPerPage(+event.target.value);
+        setPageSize(+event.target.value);
         setPage(0);
     };
 
@@ -165,7 +166,7 @@ const ProposalVotingList = () => {
     })(Tabs);
 
     return (
-        <Grid container spacing={1} justify="center" className={classes.container}>
+        <Grid container  justify="center" className={classes.container}>
             <Paper className={classes.paper}>
                 <Typography
                     color="textPrimary"
@@ -237,9 +238,9 @@ const ProposalVotingList = () => {
                     <Table size="medium">
                         <TableHead>
                             <TableRow>
-                                {columns.map((column) => (
+                                {columns.map((column: any, index: number) => (
                                     <TableCell
-                                        key={column.id}
+                                        key={index}
                                         align={column.align}
                                         className={classes.table}
                                         padding="checkbox"
@@ -256,55 +257,53 @@ const ProposalVotingList = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row) => {
-                                    return (
-                                        <TableRow key={row.voter}>
-                                            <TableCell
-                                                component="th"
-                                                scope="row"
-                                                padding="checkbox"
-                                                align="left"
-                                                className={classes.tableCell}
-                                            >
-                                                <Link href="#" color="secondary">
-                                                    <Typography variant="body2" noWrap>
-                                                        {" "}
-                                                        {row.voter}
-                                                    </Typography>
-                                                </Link>
-                                            </TableCell>
-                                            <TableCell
-                                                align="right"
-                                                padding="checkbox"
-                                                className={classes.tableCell}
-                                            >
+                            {rows.map((row: any, index: number) => {
+                                return (
+                                    <TableRow key={index}>
+                                        <TableCell
+                                            component="th"
+                                            scope="row"
+                                            padding="checkbox"
+                                            align="left"
+                                            className={classes.tableCell}
+                                        >
+                                            <Link href="#" color="secondary">
                                                 <Typography variant="body2" noWrap>
-                                                    {row.answer}
+                                                    {" "}
+                                                    {row.voter}
                                                 </Typography>
-                                            </TableCell>
-                                            <TableCell
-                                                align="right"
-                                                padding="checkbox"
-                                                className={classes.tableCell}
-                                            >
-                                                <Typography variant="body2" noWrap>
-                                                    {row.voting_power}
-                                                </Typography>
-                                            </TableCell>
+                                            </Link>
+                                        </TableCell>
+                                        <TableCell
+                                            align="right"
+                                            padding="checkbox"
+                                            className={classes.tableCell}
+                                        >
+                                            <Typography variant="body2" noWrap>
+                                                {row.answer}
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell
+                                            align="right"
+                                            padding="checkbox"
+                                            className={classes.tableCell}
+                                        >
+                                            <Typography variant="body2" noWrap>
+                                                {row.voting_power}
+                                            </Typography>
+                                        </TableCell>
 
-                                        </TableRow>
-                                    );
-                                })}
+                                    </TableRow>
+                                );
+                            })}
                         </TableBody>
                     </Table>
                 </TableContainer>
                 <TablePagination
-                    rowsPerPageOptions={[10, 25, 100]}
+                    rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
                     component="div"
                     count={rows.length}
-                    rowsPerPage={rowsPerPage}
+                    rowsPerPage={pageSize}
                     page={page}
                     onChangePage={handleChangePage}
                     onChangeRowsPerPage={handleChangeRowsPerPage}

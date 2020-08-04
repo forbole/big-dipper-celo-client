@@ -22,6 +22,14 @@
 * [#28] Fixed the `build-fragement` npm script by runing it as Javscript
 * [#35] Fixed error 'block number is not assignable to type 'string' ' by parsing its value to a string 
 * [#37] Fixed error occuring in TransactionDetails for production build 
-* [#11] Migrated imports of Apollo Client React components from 'apollo-react'  to 'apollo-client' package
+ [#11] Migrated imports of Apollo Client React components from 'apollo-react'  to 'apollo-client' package 
 * [#45] Hidden Proposals, Ledger, Sign In, Logout Buttons 
+* Updated address card & copy function
+* Added QR Code Display on button click
+* Removed Token Search Bar from Token Dropdown in Account Overview
+* Removed Internal Transactions
+* Removed Block Confirmation value in Transaction Details 
+* [#43] Updated Pagination for LatestBlocks, LatestTransactions, AccountList, Downtime, Transactions, ValidatedBlocks, DepositList, ProposalVotingList, TokenHolders & ValidatorVotesList
+* [#21] Updated ChartData component height and fixed the layout to keep equal spacing between components 
 * [#41] Updated Middle Ellipsis screen size function to useMediaQuery 
+

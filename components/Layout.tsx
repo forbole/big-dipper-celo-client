@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     content: {
       flexGrow: 1,
-      padding: "auto",
+      padding: "0.5rem",
       marginTop: "4rem",
       overflow: "auto",
     },

@@ -33,7 +33,6 @@ const useStyles = makeStyles(({ spacing, palette }) => {
   return {
     root: {
       width: "100%",
-      // padding: "1%",
       borderRadius: 5,
       wordWrap: "break-word",
       margin: "none",
@@ -159,7 +158,7 @@ const TransactionDetails = (props: any) => {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Grid container spacing={1} >
+        <Grid container spacing={2} className={classes.item}>
           <Grid item xs={12}>
             <Typography color="textSecondary" variant="subtitle1" paragraph>
               Transaction Details
@@ -289,16 +288,6 @@ const TransactionDetails = (props: any) => {
                   ? data.transaction.blockNumber
                   : <NotAvailable variant="body2" />}
               </Link>
-            </Typography>
-            <Divider variant="middle" className={classes.divider} />
-          </Grid>
-
-          <Grid item xs={12} className={classes.item}>
-            <Typography variant="body2" component="h2">
-              Block Confirmation
-            </Typography>
-            <Typography variant="body2" component="h2">
-              22,733
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>

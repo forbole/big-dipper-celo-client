@@ -11,10 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "center",
     },
 
-    bottomPadding: {
-      overflow: "auto",
-      padding: "1rem",
-    },
+
   })
 );
 
@@ -22,9 +19,9 @@ export default function Transactions() {
   const classes = useStyles();
   return (
     <Layout>
-      <Grid container className={classes.root}>
-        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
-          {LatestTransactions(true)}
+      <Grid container spacing={2} className={classes.root}>
+        <Grid item xs={12} sm={8} >
+          <LatestTransactions pagination={true} />
         </Grid>
       </Grid>
     </Layout>

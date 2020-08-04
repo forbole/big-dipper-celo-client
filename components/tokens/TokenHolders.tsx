@@ -13,9 +13,9 @@ import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
 import Chips from '../Chips';
 import Divider from '@material-ui/core/Divider';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 interface Data {
@@ -114,31 +114,36 @@ const useStyles = makeStyles(({ spacing }) => {
 
 
 const TokenHolders = () => {
+  const rowsOption1 = 5;
+  const rowsOption2 = 10;
+  const rowsOption3 = 30;
+
+
 
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [page, setPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(5)
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
+    setPageSize(+event.target.value);
     setPage(0);
   };
 
   return (
 
-    <ExpansionPanel>
-      <ExpansionPanelSummary
+    <Accordion>
+      <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1a-content"
-        id="panel1a-header"
+        aria-controls="tokenHoldersPanel"
+        id="tokenHoldersPanel"
       >
         <Typography variant="body1" > Token Holders {"(6148)"}</Typography>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails className={classes.root}>
+      </AccordionSummary>
+      <AccordionDetails className={classes.root}>
         <Grid container >
           <Divider variant='middle' className={classes.divider} />
           <TableContainer className={classes.container}>
@@ -146,9 +151,9 @@ const TokenHolders = () => {
               <TableHead>
               </TableHead>
               <TableBody>
-                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                {rows.map((row: any, index: number) => {
                   return (
-                    <TableRow key={row.address} >
+                    <TableRow key={index} >
                       <TableCell component="th" scope="row" padding="checkbox"  >
                         <Grid container spacing={1} style={{ padding: '0.5rem 0', }}>
                           <Grid item xs={12}>
@@ -179,18 +184,18 @@ const TokenHolders = () => {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25, 100]}
+            rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
             component="div"
             count={rows.length}
-            rowsPerPage={rowsPerPage}
+            rowsPerPage={pageSize}
             page={page}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />
 
         </Grid>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+      </AccordionDetails>
+    </Accordion>
   );
 }
 
