@@ -66,8 +66,8 @@ const CoinBalanceHistory = () => {
         <Typography variant="body1">Coin Balance History</Typography>
       </AccordionSummary>
       <AccordionDetails className={classes.root}>
-        <Grid container className={classes.container}>
-          <Grid item xs={12} lg={10} alignItems="center">
+        <Grid container className={classes.container} >
+          <Grid item xs={12} lg={10} >
             {/* <div style={{ width: '50%', height: '35%' }}> */}
             <ResponsiveContainer width='95%' aspect={1.0 / 0.7}>
               <AreaChart
