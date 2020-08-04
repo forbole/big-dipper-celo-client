@@ -151,7 +151,7 @@ const AccountList = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row: any, index: number) => {
+                  {data.accounts.accounts.map((row: any, index: number) => {
                     return (
                       <TableRow key={index} >
                         <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
@@ -187,7 +187,7 @@ const AccountList = () => {
           <TablePagination
             rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
             component="div"
-            count={rows.length}
+            count={data.accounts.accounts.length}
             rowsPerPage={pageSize}
             page={page}
             onChangePage={handleChangePage}
