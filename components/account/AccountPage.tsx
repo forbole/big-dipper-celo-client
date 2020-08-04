@@ -71,9 +71,9 @@ const AccountPage = (props: any) => {
       </Grid>
 
 
-      <Grid item xs={12} md={8} >
+      {/* <Grid item xs={12} md={8} >
         <CoinBalanceHistory />
-      </Grid>
+      </Grid> */}
 
       <Grid item xs={12} md={8} >
         <Downtime />
