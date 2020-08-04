@@ -23,4 +23,5 @@
 * [#35] Fixed error 'block number is not assignable to type 'string' ' by parsing its value to a string 
 * [#37] Fixed error occuring in TransactionDetails for production build 
 * [#11] Migrated imports of Apollo Client React components from 'apollo-react'  to 'apollo-client' package
+* [#45] Hidden Proposals, Ledger, Sign In, Logout Buttons 
 * [#41] Updated Middle Ellipsis screen size function to useMediaQuery 
