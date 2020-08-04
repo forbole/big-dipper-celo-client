@@ -17,7 +17,6 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import Button from "@material-ui/core/Button";
 import Chips from "../Chips";
 import AccountTransactions from "./Transactions";
-import InternalTransactions from "./InternalTransactions";
 import Downtime from "./Downtime";
 import ValidatedBlocks from "./ValidatedBlocks";
 import AddressCard from "./AddressCard";
@@ -256,7 +255,7 @@ const AccountOverview = (props: any) => {
   });
 
   if (accountQuery.loading || chainQuery.loading) return <ComponentLoader />
-  if (accountQuery.error || chainQuery.error) return <ErrorMessage message={accountQuery.error ? accountQuery.error.message : ' ' || chainQuery.error ? chainQuery.error.message : ' '} />
+  if (accountQuery.error || chainQuery.error) return <ErrorMessage message={accountQuery.error ? accountQuery.error.message : ' ' || (chainQuery.error ? chainQuery.error.message : ' ')} />
   return (
     <span>
       <Card className={classes.root}>

@@ -16,37 +16,37 @@ const MiddleEllipsis = ({ text }: AppProps) => {
 
     if (xs) {
         if (str.length > 10) {
-            return str.substr(0, 5) + '...' + str.substr(str.length - 18, str.length)
+            return <>str.substr(0, 5) + '...' + str.substr(str.length - 18, str.length)</>
         }
         else {
-            return str;
+            return <>str</>;
         }
     }
     else if (sm) {
         if (str.length > 12) {
-            return str.substr(0, 6) + '...' + str.substr(str.length - 20, str.length)
+            return <>str.substr(0, 6) + '...' + str.substr(str.length - 20, str.length)</>
         }
         else {
-            return str;
+            return <>str</>;
         }
     }
     else if (md) {
         if (str.length > 15) {
-            return str.substr(0, 7) + '...' + str.substr(str.length - 15, str.length)
+            return <>str.substr(0, 7) + '...' + str.substr(str.length - 15, str.length)</>
         } else {
-            return str;
+            return <>str</>;
         }
     }
     else if (lg) {
         if (str.length > 17) {
-            return str.substr(0, 8) + '...' + str.substr(str.length - 5, str.length)
+            return <>str.substr(0, 8) + '...' + str.substr(str.length - 5, str.length)</>
         }
         else {
-            return str;
+            return <>str</>;
         }
     }
     else {
-        return str;
+        return <>str</>;
     }
 }
 

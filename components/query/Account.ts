@@ -6,10 +6,10 @@ export const GET_ACCOUNTS = gql`
       page
       totalCounts
       accounts{
-      _id
-      address
-      balance
-    }
+        _id
+        address
+        balance
+      }
     }
   }
 `;
@@ -20,12 +20,12 @@ export const GET_ACCOUNT_DETAILS = gql`
       address
       balance
       totalBalance{
-        gold
-        lockedGold
-        usd
-        total
-        pending
-    }
+          gold
+          lockedGold
+          usd
+          total
+          pending
+      }
       accountSummary
       isAccount
       isSigner
