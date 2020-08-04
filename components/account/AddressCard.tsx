@@ -58,6 +58,17 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignContent: "center",
     },
+
+    qrCode: {
+      border: "solid #fff",
+      borderWidth: "0.375rem"
+    },
+
+    iconButtonRight: {
+      padding: "0",
+      marginLeft: "0.5rem",
+      float: "right",
+    },
   })
 );
 
@@ -89,9 +100,9 @@ const AddressCard = (props: any) => {
     setOpenQR(true);
   };
   const closeQR = () => {
+    console.log("CLOSE MEEEEEE")
     setOpenQR(false);
   };
-
 
   const ShowQRCode = () => {
     return (
@@ -104,6 +115,15 @@ const AddressCard = (props: any) => {
       >
         <DialogTitle id="qr-code-title" className={classes.dialogTitle}>
           <Grid container >
+            <Grid item xs={12}>
+              <IconButton
+                aria-label="Close"
+                className={classes.iconButtonRight}
+                onClick={closeQR}
+              >
+                <img src="/images/cross.svg" color="textPrimary" />
+              </IconButton>
+            </Grid>
             <Grid item xs={12} className={classes.item}>
               <Typography variant="h6" color="textPrimary">
                 QR Code
@@ -123,7 +143,7 @@ const AddressCard = (props: any) => {
           <DialogContentText id="qr-code"  >
             <Grid container spacing={1} >
               <Grid item xs={12} className={classes.item}  >
-                <QRCode value={`https://celo.bigdipper.live/account/${props.address}`} />
+                <QRCode value={`https://celo.bigdipper.live/account/${props.address}`} className={classes.qrCode} />
               </Grid>
             </Grid>
           </DialogContentText>
@@ -180,7 +200,6 @@ const AddressCard = (props: any) => {
         <Alert
           onClose={closeAlert}
           severity="success"
-          // variant="outlined"
           className={classes.alertMessage}
         >
           <Typography variant="body1">Copied!</Typography>
