@@ -106,7 +106,6 @@ const LatestTransactions = (props: any) => {
   const rowsOption3 = 100;
 
   useEffect(() => {
-    console.log(props.pagination)
     if (props.pagination) {
       setPageSize(14)
     }

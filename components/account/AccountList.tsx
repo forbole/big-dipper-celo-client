@@ -122,6 +122,7 @@ const AccountList = () => {
   };
 
   const { loading, error, data } = useQuery(GET_ACCOUNTS, {
+    variables: { pageSize, page },
   });
 
   if (loading) return <ComponentLoader />
@@ -151,7 +152,7 @@ const AccountList = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row: any, index: number) => {
+                  {data.accounts.accounts.map((row: any, index: number) => {
                     return (
                       <TableRow key={index} >
                         <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
@@ -169,10 +170,10 @@ const AccountList = () => {
                           </Link>
                         </TableCell>
                         <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                          <Typography variant="body2" noWrap>{numbro((row.balance).toLocaleString('fullwide')).format("0.000000")} CELO</Typography>
+                          <Typography variant="body2" noWrap>{row.balance ? numbro((row.balance).toLocaleString('fullwide')).format("0.000000") : '0.0000' } CELO</Typography>
                         </TableCell>
                         <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                          <Typography variant="body2" noWrap>{row.percentage}</Typography>
+                          {/* <Typography variant="body2" noWrap>{row.percentage}</Typography> */}
                         </TableCell>
                         <TableCell align="left" padding="checkbox" className={classes.tableCell}>
                           <Typography variant="body2" noWrap>{row.txsCount}</Typography>
@@ -187,7 +188,7 @@ const AccountList = () => {
           <TablePagination
             rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
             component="div"
-            count={rows.length}
+            count={data.accounts.totalCounts}
             rowsPerPage={pageSize}
             page={page}
             onChangePage={handleChangePage}
