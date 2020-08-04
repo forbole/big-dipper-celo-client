@@ -2,7 +2,6 @@ import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import AccountTransactions from "./Transactions";
-import InternalTransactions from "./InternalTransactions";
 import Downtime from "./Downtime";
 import ValidatedBlocks from "./ValidatedBlocks";
 import AddressCard from "./AddressCard";
@@ -67,7 +66,7 @@ const AccountPage = (props: any) => {
 
 
       <Grid item xs={12} md={8} >
-        <AccountTransactions />
+        <AccountTransactions address={accountAddress} />
       </Grid>
 
 

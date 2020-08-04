@@ -57,3 +57,35 @@ export const GET_TX_DETAILS = gql`
     }
   }
 `;
+
+
+export const GET_ACCOUNT_TX = gql`
+  query TransactionsByAccount($address: String!) {
+    transactionsByAccount(address: $address) {
+      totalCounts
+      transactions{
+        hash
+        timestamp
+        from {
+              _id
+              address
+              balance
+            }
+            to{
+              address
+              ... on ToWalletAccount {
+                account {
+                  balance
+                }
+              }
+              ... on ToWalletContract {
+                contract {
+                  name
+                  ABI
+                }        
+              }
+            }
+    }
+    }
+  }
+`;

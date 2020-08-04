@@ -180,20 +180,9 @@ const LatestTransactions = (props: any) => {
                                   color="secondary"
                                   className={classes.leftInline}
                                 >
-                                  <div
-                                    style={{
-                                      width: "60%",
-                                      minWidth: "40%",
-                                      maxWidth: "100%",
-                                      whiteSpace: "nowrap",
-                                    }}
-                                  >
-                                    <a>
-                                      {row.hash
-                                        ? <MiddleEllipsis text={row.hash} />
-                                        : null}
-                                    </a>
-                                  </div>
+                                  {row.hash
+                                    ? <MiddleEllipsis text={row.hash} />
+                                    : null}
                                 </Link>
                               </Typography>
                             </Grid>
@@ -223,20 +212,11 @@ const LatestTransactions = (props: any) => {
                                     color="secondary"
                                     className={classes.txPadding}
                                   >
-                                    <div
-                                      style={{
-                                        width: "60%",
-                                        minWidth: "20%",
-                                        maxWidth: "100%",
-                                        whiteSpace: "nowrap",
-                                      }}
-                                    >
-                                      <span>
-                                        {row.from && row.from.address
-                                          ? <MiddleEllipsis text={row.from.address} />
-                                          : null}
-                                      </span>
-                                    </div>
+
+                                    {row.from && row.from.address
+                                      ? <MiddleEllipsis text={row.from.address} />
+                                      : null}
+
                                   </Link>
                                 ) : null}
                               </Typography>
@@ -291,7 +271,7 @@ const LatestTransactions = (props: any) => {
                                 className={classes.alignRight}
                               >
                                 {row.value
-                                  ? row.value + " cGLD"
+                                  ? row.value + " CELO"
                                   : <NotAvailable variant="body2" />}
                               </Typography>
                             </Grid>
