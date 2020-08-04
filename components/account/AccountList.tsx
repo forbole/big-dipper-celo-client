@@ -15,7 +15,7 @@ import theme from '../../themes/celo-theme';
 import TablePagination from '@material-ui/core/TablePagination';
 import Divider from '@material-ui/core/Divider';
 import { GET_ACCOUNTS } from '../query/Account'
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
