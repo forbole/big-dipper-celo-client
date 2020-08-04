@@ -100,7 +100,6 @@ const AddressCard = (props: any) => {
     setOpenQR(true);
   };
   const closeQR = () => {
-    console.log("CLOSE MEEEEEE")
     setOpenQR(false);
   };
 
