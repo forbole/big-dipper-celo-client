@@ -295,16 +295,6 @@ const TransactionDetails = (props: any) => {
 
           <Grid item xs={12} className={classes.item}>
             <Typography variant="body2" component="h2">
-              Block Confirmation
-            </Typography>
-            <Typography variant="body2" component="h2">
-              22,733
-            </Typography>
-            <Divider variant="middle" className={classes.divider} />
-          </Grid>
-
-          <Grid item xs={12} className={classes.item}>
-            <Typography variant="body2" component="h2">
               Nonce
             </Typography>
             <Typography variant="body2" component="h2">
