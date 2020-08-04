@@ -2,18 +2,21 @@ import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 
-const MiddleEllipsis = (props: any) => {
-    const theme = useTheme();
-    const xs = useMediaQuery(theme.breakpoints.up('xs'));
-    const sm = useMediaQuery(theme.breakpoints.up('sm'));
-    const md = useMediaQuery(theme.breakpoints.up('md'));
-    const lg = useMediaQuery(theme.breakpoints.up('lg'));
+type AppProps = { text: string };
 
-    let str = props.text
+const MiddleEllipsis = ({ text }: AppProps) => {
+    const theme = useTheme();
+    const xs = useMediaQuery((theme.breakpoints.up('xs')) && (theme.breakpoints.down('sm')));
+    const sm = useMediaQuery((theme.breakpoints.up('sm')) && (theme.breakpoints.down('md')));
+    const md = useMediaQuery((theme.breakpoints.up('md')) && (theme.breakpoints.down('lg')));
+    const lg = useMediaQuery((theme.breakpoints.up('lg')) && (theme.breakpoints.down('xl')));
+
+    let str = text
+
 
     if (xs) {
         if (str.length > 10) {
-            return str.substr(0, 5) + '...' + str.substr(str.length - 6, str.length)
+            return str.substr(0, 5) + '...' + str.substr(str.length - 18, str.length)
         }
         else {
             return str;
@@ -21,7 +24,7 @@ const MiddleEllipsis = (props: any) => {
     }
     else if (sm) {
         if (str.length > 12) {
-            return str.substr(0, 6) + '...' + str.substr(str.length - 10, str.length)
+            return str.substr(0, 6) + '...' + str.substr(str.length - 20, str.length)
         }
         else {
             return str;
@@ -36,7 +39,7 @@ const MiddleEllipsis = (props: any) => {
     }
     else if (lg) {
         if (str.length > 17) {
-            return str.substr(0, 9) + '...' + str.substr(str.length - 15, str.length)
+            return str.substr(0, 8) + '...' + str.substr(str.length - 5, str.length)
         }
         else {
             return str;
@@ -45,7 +48,6 @@ const MiddleEllipsis = (props: any) => {
     else {
         return str;
     }
-
 }
 
 export default MiddleEllipsis
