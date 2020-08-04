@@ -123,16 +123,15 @@ const useStyles = makeStyles({
 
 
 const LatestBlocks = (props: any) => {
-  const classes = useStyles();
-  const theme = useTheme();
-  const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
-
-  const [page, setPage] = React.useState(1);
-  const [pageSize, setPageSize] = React.useState(5)
-
   const rowsOption1 = 14;
   const rowsOption2 = 28;
   const rowsOption3 = 100;
+
+  const classes = useStyles();
+  const theme = useTheme();
+  const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
+  const [page, setPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(5)
 
 
   useEffect(() => {
