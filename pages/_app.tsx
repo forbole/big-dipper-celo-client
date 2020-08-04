@@ -16,7 +16,7 @@ const cache = new InMemoryCache({ possibleTypes });
 
 const client = new ApolloClient({
   cache,
-  link: new HttpLink({ uri: 'https://server.celo.bigdipper.live/graphql' },),
+  link: new HttpLink({ uri: process.env.uriGQL },),
   defaultOptions: {
     watchQuery: {
       fetchPolicy: 'cache-and-network',
