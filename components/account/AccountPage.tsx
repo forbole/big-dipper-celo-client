@@ -33,11 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: "0 0 0 1rem",
     },
 
-    bottomPadding: {
-      overflow: "auto",
-      padding: "0.5rem 1rem",
-    },
-
     divider: {
       margin: "0.5rem",
       backgroundColor: "rgba(62, 67, 71, 1)",
@@ -59,38 +54,37 @@ const AccountPage = (props: any) => {
   const accountAddress = props.address
 
   return (<>
-    <Grid container className={classes.root}>
 
-      <Grid item xs={12} md={8} className={classes.bottomPadding}>
+    <Grid container spacing={2} className={classes.root}>
+
+      <Grid item xs={12} md={8} >
         <AddressCard address={accountAddress} />
       </Grid>
 
-
-
-      <Grid item xs={12} md={8} className={classes.bottomPadding}>
+      <Grid item xs={12} md={8} >
         <AccountOverview address={accountAddress} />
       </Grid>
 
 
-      <Grid item xs={12} md={8} className={classes.bottomPadding}>
+      <Grid item xs={12} md={8} >
         <AccountTransactions />
       </Grid>
 
 
-      <Grid item xs={12} md={8} className={classes.bottomPadding}>
+      <Grid item xs={12} md={8} >
         <CoinBalanceHistory />
       </Grid>
 
-      <Grid item xs={12} md={8} className={classes.bottomPadding}>
+      <Grid item xs={12} md={8} >
         <Downtime />
       </Grid>
 
-      <Grid item xs={12} md={8} className={classes.bottomPadding}>
+      <Grid item xs={12} md={8} >
         <ValidatedBlocks />
       </Grid>
 
 
-      <Grid item xs={12} md={8} className={classes.bottomPadding}>
+      <Grid item xs={12} md={8} >
         <AccountDetails />
       </Grid>
 

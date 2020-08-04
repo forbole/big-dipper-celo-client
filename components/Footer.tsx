@@ -11,8 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
 import { createStyles, useTheme, Theme } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles({
     root: {
       backgroundColor: "#131619",
       opacity: 1,
@@ -33,8 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "2rem",
       width: "2rem",
     },
-  })
-);
+  });
 
 const Footer = () => {
   const classes = useStyles();

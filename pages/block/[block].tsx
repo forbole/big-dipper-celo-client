@@ -12,12 +12,6 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "center",
     },
 
-    bottomPadding: {
-      overflow: "auto",
-      // paddingTop: '1.5%',
-      // paddingBottom: '1.5%',
-      padding: "1rem",
-    },
   })
 );
 
@@ -28,8 +22,8 @@ export default function Block() {
   // const pid = parseInt(router.query.block);
   return (
     <Layout>
-      <Grid container className={classes.root}>
-        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+      <Grid container spacing={2} className={classes.root}>
+        <Grid item xs={12} sm={8} >
           <BlockDetails />
         </Grid>
       </Grid>

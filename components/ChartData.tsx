@@ -22,7 +22,6 @@ const useStyles = makeStyles({
   card: {
     display: "block",
     justifyContent: "center",
-    margin: "2%",
     borderLeft: "4px solid #FBCC5C",
     borderRadius: 4,
     background: "#43484C",
@@ -39,11 +38,9 @@ const useStyles = makeStyles({
   },
   label: {
     display: "flex",
-    padding: "0.4rem 0.75rem 0.1rem 0.75rem",
+    padding: "0.4rem 0.75rem 0 0.75rem",
   },
-  container: {
-    marginTop: "1.5%",
-  },
+
 });
 
 
@@ -60,7 +57,7 @@ const ChartData = () => {
 
   return (
     <>
-      <Grid container className={classes.container}>
+      <Grid container spacing={1} >
         <Grid item xs={6} md={3} lg={2}>
           <Card className={cx(classes.card)} elevation={0}>
             <Typography variant="body2" className={classes.label}>

@@ -15,7 +15,7 @@ import theme from '../../themes/celo-theme';
 import TablePagination from '@material-ui/core/TablePagination';
 import Divider from '@material-ui/core/Divider';
 import { GET_ACCOUNTS } from '../query/Account'
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
@@ -50,7 +50,8 @@ const useStyles = makeStyles(({ spacing }) => {
   return {
     root: {
       width: '100%',
-      overflowY: 'auto'
+      overflowY: 'auto',
+      padding: "0.5rem"
     },
     container: {
       borderRadius: 5,
@@ -59,7 +60,7 @@ const useStyles = makeStyles(({ spacing }) => {
     },
     box: {
       letterSpacing: '1px',
-      padding: '1rem 0 0.5rem 1rem',
+      padding: "0.5rem",
       display: 'inline-flex',
       overflow: 'hidden',
       whiteSpace: 'nowrap',
@@ -127,7 +128,7 @@ const AccountList = () => {
   if (error) return <ErrorMessage message={error.message} />
 
   return (
-    <Grid container  >
+    <Grid container>
       <Grid item xs={12} >
         <Paper className={classes.root}>
           <Typography variant="body1" className={classes.box} >

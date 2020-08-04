@@ -16,10 +16,6 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "center",
     },
 
-    bottomPadding: {
-      overflow: "auto",
-      padding: "1rem",
-    },
   })
 );
 
@@ -28,20 +24,20 @@ export default function Tokens() {
 
   return (
     <Layout>
-      <Grid container className={classes.root} >
-        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+      <Grid container spacing={2} className={classes.root} >
+        <Grid item xs={12} sm={8} >
           <Overview />
         </Grid>
 
-        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+        <Grid item xs={12} sm={8} >
           <ProfileSummary />
         </Grid>
 
-        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+        <Grid item xs={12} sm={8} >
           <Transactions />
         </Grid>
 
-        <Grid item xs={12} sm={8} className={classes.bottomPadding}>
+        <Grid item xs={12} sm={8} >
           <TokenHolders />
         </Grid>
       </Grid>

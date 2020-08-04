@@ -133,7 +133,6 @@ const LatestBlocks = (props: any) => {
   const [page, setPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(5)
 
-
   useEffect(() => {
     if (largeScreen) {
       setPageSize(14)
@@ -167,7 +166,7 @@ const LatestBlocks = (props: any) => {
   if (error) return <ErrorMessage message={error.message} />
 
   return (<>
-    <Grid container>
+    <Grid container spacing={2}>
       <Grid item xs={12}>
         {props.displayCard === true ? (
           <Hidden smUp>
@@ -277,6 +276,7 @@ const LatestBlocks = (props: any) => {
                                 variant="body2"
                                 display="inline"
                                 className={classes.textContent}
+                                noWrap
                               >
                                 <span>
                                   {

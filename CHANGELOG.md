@@ -30,3 +30,5 @@
 * Removed Internal Transactions
 * Removed Block Confirmation value in Transaction Details 
 * [#43] Updated Pagination for LatestBlocks, LatestTransactions, AccountList, Downtime, Transactions, ValidatedBlocks, DepositList, ProposalVotingList, TokenHolders & ValidatorVotesList
+* [#21] Updated ChartData component height and fixed the layout to keep equal spacing between components 
+

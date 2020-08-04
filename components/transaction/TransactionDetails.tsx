@@ -33,7 +33,6 @@ const useStyles = makeStyles(({ spacing, palette }) => {
   return {
     root: {
       width: "100%",
-      // padding: "1%",
       borderRadius: 5,
       wordWrap: "break-word",
       margin: "none",
@@ -159,7 +158,7 @@ const TransactionDetails = (props: any) => {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Grid container spacing={1} >
+        <Grid container spacing={2} className={classes.item}>
           <Grid item xs={12}>
             <Typography color="textSecondary" variant="subtitle1" paragraph>
               Transaction Details
