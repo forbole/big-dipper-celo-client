@@ -13,9 +13,9 @@ import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
 import Chips from '../Chips';
 import Divider from '@material-ui/core/Divider';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 interface Data {
@@ -117,15 +117,15 @@ const AccountTransactions = () => {
 
   return (
 
-    <ExpansionPanel>
-      <ExpansionPanelSummary
+    <Accordion>
+      <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1a-content"
-        id="panel1a-header"
+        aria-controls="accountTransactionsPanel"
+        id="accountTransactionsPanel"
       >
         <Typography variant="body1" > Transactions {"(1000)"}</Typography>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails className={classes.root}>
+      </AccordionSummary>
+      <AccordionDetails className={classes.root}>
         <Grid container >
           <Divider variant='middle' />
           <TableContainer className={classes.container}>
@@ -201,8 +201,8 @@ const AccountTransactions = () => {
           />
 
         </Grid>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+      </AccordionDetails>
+    </Accordion>
   );
 }
 

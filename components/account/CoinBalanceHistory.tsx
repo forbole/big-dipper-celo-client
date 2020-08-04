@@ -8,9 +8,9 @@ import Link from "../Link";
 import {
   makeStyles, withStyles
 } from "@material-ui/core/styles";
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Grid from '@material-ui/core/Grid';
 
@@ -57,15 +57,15 @@ const CoinBalanceHistory = () => {
   const classes = useStyles();
 
   return (
-    <ExpansionPanel>
-      <ExpansionPanelSummary
+    <Accordion>
+      <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
-        aria-controls="coin-balance-history"
-        id="coin-balance-history"
+        aria-controls="coinBalanceHistoryPanel"
+        id="coinBalanceHistoryPanel"
       >
         <Typography variant="body1">Coin Balance History</Typography>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails className={classes.root}>
+      </AccordionSummary>
+      <AccordionDetails className={classes.root}>
         <Grid container className={classes.container}>
           <Grid item xs={12} lg={10} alignItems="center">
             {/* <div style={{ width: '50%', height: '35%' }}> */}
@@ -87,11 +87,11 @@ const CoinBalanceHistory = () => {
                 <Area type={cardinal} dataKey="cGLD" stroke="rgba(58, 211, 158, 1)" fill="rgba(58, 211, 158, 0.15)" fillOpacity={1} />
               </AreaChart>
             </ResponsiveContainer>
-          {/* </div> */}
+            {/* </div> */}
+          </Grid>
         </Grid>
-        </Grid>
-      </ExpansionPanelDetails>
-    </ExpansionPanel >
+      </AccordionDetails>
+    </Accordion >
   );
 
 }
