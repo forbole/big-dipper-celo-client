@@ -29,3 +29,4 @@
 * Removed Token Search Bar from Token Dropdown in Account Overview
 * Removed Internal Transactions
 * Removed Block Confirmation value in Transaction Details 
+* [#43] Updated Pagination for LatestBlocks, LatestTransactions, AccountList, Downtime, Transactions, ValidatedBlocks, DepositList, ProposalVotingList, TokenHolders & ValidatorVotesList

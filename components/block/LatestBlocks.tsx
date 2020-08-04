@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -18,13 +18,12 @@ import { useQuery } from "@apollo/client";
 import TablePagination from "@material-ui/core/TablePagination";
 import numbro from "numbro";
 import { useRouter } from "next/router";
-
 import MiddleEllipsis from '../misc/MiddleEllipsis'
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import { GET_BLOCK } from '../query/Block'
-
-
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 interface Column {
   id: "height" | "validator" | "txs" | "gasUsed" | "gasLimit" | "time";
@@ -51,6 +50,7 @@ const columns_homepage: Column[] = [
 const useStyles = makeStyles({
   root: {
     width: "100%",
+    height: "100%",
     padding: "1.5%",
     borderRadius: 4,
     wordWrap: "break-word",
@@ -120,34 +120,28 @@ const useStyles = makeStyles({
   },
 });
 
+
+
 const LatestBlocks = (props: any) => {
+  const rowsOption1 = 14;
+  const rowsOption2 = 28;
+  const rowsOption3 = 100;
+
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const theme = useTheme();
+  const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
+  const [page, setPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(5)
 
 
-  let mediumScreen: boolean = false;
-
-  const getScreenSize = () => {
-    if (typeof window !== "undefined") {
-      if (window.innerWidth > 960 && window.innerWidth < 1280) return (mediumScreen = true);
-      else return (mediumScreen = false);
+  useEffect(() => {
+    if (largeScreen) {
+      setPageSize(14)
     }
-  };
-  getScreenSize();
-
-  const paginate: number =
-    mediumScreen === false
-      ? props.pagination === true
-        ? page * rowsPerPage + rowsPerPage
-        : 5
-      : 14;
-  const paginate_2: number =
-    mediumScreen === false
-      ? props.pagination === true
-        ? page * rowsPerPage + rowsPerPage
-        : 10
-      : 28;
+    else {
+      setPageSize(5)
+    }
+  })
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -156,14 +150,16 @@ const LatestBlocks = (props: any) => {
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setRowsPerPage(+event.target.value);
+    setPageSize(+event.target.value);
     setPage(0);
   };
 
   moment.relativeTimeThreshold("s", 59);
   moment.relativeTimeThreshold("ss", 3);
 
+
   const { loading, error, data } = useQuery(GET_BLOCK, {
+    variables: { pageSize, page },
     pollInterval: 5000,
   });
 
@@ -233,9 +229,9 @@ const LatestBlocks = (props: any) => {
                     )}
                 </TableHead>
                 <TableBody>
-                  {data.blocks.blocks.slice(paginate, paginate_2).map((row: any) => {
+                  {data.blocks.blocks.map((row: any, index: number) => {
                     return (
-                      <TableRow key={row.number}>
+                      <TableRow key={index}>
                         <TableCell
                           component="th"
                           scope="row"
@@ -352,10 +348,10 @@ const LatestBlocks = (props: any) => {
           {props.pagination === true ? (
             <TablePagination
               className={"pagination"}
-              rowsPerPageOptions={[10, 25, 100]}
+              rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
               component="div"
-              count={data.blocks.blocks.length}
-              rowsPerPage={rowsPerPage}
+              count={data.blocks.totalCounts}
+              rowsPerPage={pageSize}
               page={page}
               onChangePage={handleChangePage}
               onChangeRowsPerPage={handleChangeRowsPerPage}

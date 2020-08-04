@@ -118,16 +118,20 @@ const useStyles = makeStyles(({ spacing }) => {
 
 
 const Downtime = () => {
+  const rowsOption1 = 10;
+  const rowsOption2 = 30;
+  const rowsOption3 = 50;
+
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(10)
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
+    setPageSize(+event.target.value);
     setPage(0);
   };
 
@@ -161,9 +165,9 @@ const Downtime = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                  {rows.map((row: any, index: number) => {
                     return (
-                      <TableRow key={row.height} >
+                      <TableRow key={index} >
                         <TableCell component="th" scope="row" align="left" className={classes.tableCell} >
                           <Link href="#" color="secondary"  >
                             <Typography variant="body2" noWrap> {row.height}</Typography>
@@ -194,10 +198,10 @@ const Downtime = () => {
             </Paper>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
             component="div"
             count={rows.length}
-            rowsPerPage={rowsPerPage}
+            rowsPerPage={pageSize}
             page={page}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}

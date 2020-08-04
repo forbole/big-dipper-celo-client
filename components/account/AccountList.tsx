@@ -1,13 +1,9 @@
-import React from 'react';
-import Container from '@material-ui/core/Container';
+import React, { useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Link from '../Link';
 import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
-import Hidden from '@material-ui/core/Hidden';
 import Grid from '@material-ui/core/Grid';
 import cx from 'clsx';
-import Card from '@material-ui/core/Card';
-import Layout from '../Layout';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -105,16 +101,22 @@ const useStyles = makeStyles(({ spacing }) => {
 
 
 const AccountList = () => {
+  const rowsOption1 = 10;
+  const rowsOption2 = 30;
+  const rowsOption3 = 50;
+
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(16);
+
+  const [page, setPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(10)
+
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
+    setPageSize(+event.target.value);
     setPage(0);
   };
 
@@ -148,7 +150,7 @@ const AccountList = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {data.accounts.accounts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: any, index: number) => {
+                  {rows.map((row: any, index: number) => {
                     return (
                       <TableRow key={index} >
                         <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
@@ -182,10 +184,10 @@ const AccountList = () => {
             </Paper>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
             component="div"
-            count={data.accounts.accounts.length}
-            rowsPerPage={rowsPerPage}
+            count={rows.length}
+            rowsPerPage={pageSize}
             page={page}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}

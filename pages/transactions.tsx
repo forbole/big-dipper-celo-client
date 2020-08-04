@@ -24,7 +24,7 @@ export default function Transactions() {
     <Layout>
       <Grid container className={classes.root}>
         <Grid item xs={12} sm={8} className={classes.bottomPadding}>
-          {LatestTransactions(true)}
+          <LatestTransactions pagination={true} />
         </Grid>
       </Grid>
     </Layout>

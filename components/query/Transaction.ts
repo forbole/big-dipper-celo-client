@@ -1,33 +1,34 @@
 import { gql } from "@apollo/client";
 
 export const GET_TX = gql`
-  {
-    transactions {
-      transactions {
-        from {
-          _id
-          address
-          balance
-        }
-        to{
-          address
-          ... on ToWalletAccount {
-            account {
+  query Transactions($pageSize: Int, $page: Int){
+      transactions(pageSize: $pageSize, page: $page){
+        totalCounts
+        transactions{
+            from {
+              _id
+              address
               balance
             }
-          }
-          ... on ToWalletContract {
-            contract {
-              name
-              ABI
-            }        
-          }
-        }
-        type
-        decodedInput
-        value
-        hash
-        timestamp
+            to{
+              address
+              ... on ToWalletAccount {
+                account {
+                  balance
+                }
+              }
+              ... on ToWalletContract {
+                contract {
+                  name
+                  ABI
+                }        
+              }
+            }
+            type
+            decodedInput
+            value
+            hash
+            timestamp
       }
     }
   }
