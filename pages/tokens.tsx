@@ -25,19 +25,19 @@ export default function Tokens() {
   return (
     <Layout>
       <Grid container spacing={2} className={classes.root} >
-        <Grid item xs={12} sm={8} >
+        <Grid item xs={12} md={7} >
           <Overview />
         </Grid>
 
-        <Grid item xs={12} sm={8} >
+        <Grid item xs={12} md={7} >
           <ProfileSummary />
         </Grid>
 
-        <Grid item xs={12} sm={8} >
+        <Grid item xs={12} md={7} >
           <Transactions />
         </Grid>
 
-        <Grid item xs={12} sm={8} >
+        <Grid item xs={12} md={7} >
           <TokenHolders />
         </Grid>
       </Grid>

@@ -22,7 +22,7 @@ export default function Account() {
   return (
     <Layout>
       <Grid container className={classes.root}>
-        <Grid item xs={12} sm={10}>
+        <Grid item xs={12} md={7}>
           <AccountPage address={accountAddress} />
         </Grid>
       </Grid>

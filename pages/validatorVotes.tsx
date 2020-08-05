@@ -24,10 +24,10 @@ export default function ValidatorVotes() {
     return (
         <Layout>
             <Grid container spacing={2} className={classes.root}>
-                <Grid item xs={12} sm={8} >
+                <Grid item xs={12} md={7} >
                     <MarketCard />
                 </Grid>
-                <Grid item xs={12} sm={8} >
+                <Grid item xs={12} md={7} >
                     <ValidatorVotesList />
                 </Grid>
 

@@ -139,7 +139,7 @@ const AddressCard = (props: any) => {
       <Card>
         <CardContent>
           <Grid container spacing={1} className={classes.card}>
-            <Grid item xs={10} sm={10} md={10}>
+            <Grid item xs={10} >
               <Typography variant="body1" gutterBottom>
                 Address
             </Typography>
