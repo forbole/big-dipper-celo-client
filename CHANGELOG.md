@@ -33,4 +33,5 @@
 * [#21] Updated ChartData component height and fixed the layout to keep equal spacing between components 
 * [#30] Stored the GraphQL & account endpoint in environment variable
 * [#41] Updated Middle Ellipsis screen size function to useMediaQuery 
+* Updated height of LatestBlocks and LatestTransactions to keep it equal on medium+ screens
 
