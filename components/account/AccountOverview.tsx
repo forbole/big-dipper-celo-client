@@ -209,7 +209,7 @@ const TokenDropdown = (props: any) => {
             className={classes.tokenValue}
             gutterBottom
           >
-            {numbro((props.usd).toLocaleString('fullwide',)).format("0.0")}
+            {numbro((props.usd).toLocaleString('fullwide',)).format("0.0000")}
           </Typography>
         </MenuItem>
 
@@ -231,7 +231,7 @@ const TokenDropdown = (props: any) => {
             className={classes.tokenValue}
             gutterBottom
           >
-            {numbro((props.celo).toLocaleString('fullwide',)).format("0.0")}
+            {numbro((props.celo).toLocaleString('fullwide',)).format("0.0000")}
           </Typography>
         </MenuItem>
       </Select>
@@ -266,19 +266,32 @@ const AccountOverview = (props: any) => {
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
-
-          <Grid item xs={6}>
-            <Typography variant="body2" className={classes.alignLeft}>
-              Moniker
+          {validatorQuery && validatorQuery.data && validatorQuery.data.validator && validatorQuery.data.validator.name ?
+            <>
+              <Grid item xs={6}>
+                <Typography variant="body2" className={classes.alignLeft}>
+                  Moniker
             </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="body2" className={classes.alignRight} > {validatorQuery.data.validator.name} </Typography> :
           </Grid>
-          <Grid item xs={6}>{validatorQuery && validatorQuery.data && validatorQuery.data.validator && validatorQuery.data.validator.name ?
-            <Typography variant="body2" className={classes.alignRight} > {validatorQuery.data.validator.name} </Typography> :
-            accountQuery.data.account && accountQuery.data.account.address ?
-              <Typography variant="body2" className={classes.alignRight} >
-                <MiddleEllipsis text={accountQuery.data.account.address} />
-              </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
-          </Grid>
+            </> :
+
+            <>
+              <Grid item xs={6}>
+                <Typography variant="body2" className={classes.alignLeft}>
+                  Account
+            </Typography>
+              </Grid>
+              <Grid item xs={6}>{
+                <Typography variant="body2" className={classes.alignRight} >
+                  <MiddleEllipsis text={accountQuery.data.account.address} />
+                </Typography>}
+              </Grid>
+            </>
+          }
+
 
           <Grid item xs={12}>
             <Divider variant="middle" className={classes.divider} />
@@ -292,13 +305,13 @@ const AccountOverview = (props: any) => {
 
           <Grid item xs={6} md={6}>
             {accountQuery.data.account && accountQuery.data.account.balance ? <Typography variant="body2" className={classes.alignRight} >
-              {numbro((accountQuery.data.account.balance).toLocaleString('fullwide',)).format("0.00")} CELO
+              {numbro((accountQuery.data.account.balance).toLocaleString('fullwide',)).format("0.0000")} CELO
   </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
           </Grid>
           <Grid item xs={12} md={12} >
             {accountQuery.data.account && accountQuery.data.account.balance && chainQuery.data.chain && chainQuery.data.chain.tokenPrice && chainQuery.data.chain.tokenPrice.usd ?
               < Typography variant="body2" className={classes.alignRight} noWrap>
-                $ {numbro((accountQuery.data.account.balance * chainQuery.data.chain.tokenPrice.usd).toLocaleString('fullwide',)).format("0.00")}
+                $ {numbro((accountQuery.data.account.balance * chainQuery.data.chain.tokenPrice.usd).toLocaleString('fullwide',)).format("0.0000")}
               </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
           </Grid>
 
@@ -314,7 +327,7 @@ const AccountOverview = (props: any) => {
 
           <Grid item xs={8} md={8}> {accountQuery.data.account && accountQuery.data.account.totalBalance && accountQuery.data.account.totalBalance.gold && accountQuery.data.account.totalBalance.usd ?
             <TokenDropdown celo={accountQuery.data.account.totalBalance.gold} usd={accountQuery.data.account.totalBalance.usd} /> :
-            < NotAvailable variant="body2" className={classes.alignRight} />}
+            <TokenDropdown celo={0} usd={0} />}
           </Grid>
 
           <Grid item xs={12}>
