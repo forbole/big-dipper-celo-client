@@ -9,6 +9,8 @@ export const GET_BLOCK = gql`
         miner {
           name
           affiliation
+          signer
+          address
         }
         transactions {
           transactionIndex

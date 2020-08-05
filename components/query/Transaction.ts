@@ -66,6 +66,7 @@ export const GET_ACCOUNT_TX = gql`
       transactions{
         hash
         timestamp
+        gas
         from {
               _id
               address
