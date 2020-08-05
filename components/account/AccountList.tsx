@@ -184,15 +184,14 @@ const AccountList = () => {
                             : <NotAvailable variant="body2" />}
                         </TableCell>
                         <TableCell align="right" padding="checkbox" className={classes.tableCell}>
-                          {/* <Typography variant="body2" noWrap>{numbro((totalSupply.data.chain.cUSDTotalSupply).toLocaleString('fullwide')).format("0.0000")}</Typography> */}
                           {row.balance && totalSupply && totalSupply.data && totalSupply.data.chain && totalSupply.data.chain.cUSDTotalSupply ?
                             <Typography variant="body2" noWrap>{numbro((row.balance / totalSupply.data.chain.cUSDTotalSupply) * 100).format("0.0000000")}</Typography>
                             : <NotAvailable variant="body2" />}
                         </TableCell>
                         <TableCell align="right" padding="checkbox" className={classes.tableCell}>
-                          {row.txsCount ?
-                            <Typography variant="body2" noWrap >{numbro(row.txsCount).format("000,000")}</Typography>
-                            : <NotAvailable variant="body2" />}
+                          {row.txCount ?
+                            <Typography variant="body2" noWrap >{numbro(row.txCount).format("0,000")}</Typography>
+                            : '0'}
                         </TableCell>
                       </TableRow>
                     );
