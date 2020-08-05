@@ -38,12 +38,12 @@ const useStyles = makeStyles({
     wordWrap: "break-word",
     margin: "none",
   },
-  
-  rootContainer: {
+
+  container: {
     height: "100%",
   },
 
-  container: {
+  table: {
     borderRadius: 5,
     width: "100%",
     overflow: "hidden",
@@ -52,7 +52,7 @@ const useStyles = makeStyles({
   leftInline: {
     display: "flex",
     overflow: "hidden",
-    padding: "0 0 0 1rem",
+    padding: "0 0 0 0.5rem",
   },
   rightInline: {
     display: "flex",
@@ -71,7 +71,7 @@ const useStyles = makeStyles({
 
   chip: {
     display: "block",
-    marginLeft: "1rem",
+    marginLeft: "0.5rem",
   },
 
   alignRight: {
@@ -143,7 +143,7 @@ const LatestTransactions = (props: any) => {
   if (error) return <ErrorMessage message={error.message} />
 
   return (<>
-    <Grid container className={classes.rootContainer}>
+    <Grid container className={classes.container}>
       <Grid item xs={12}>
         <Paper className={classes.root}>
           <Typography variant="body1" className={classes.box}>
@@ -160,7 +160,7 @@ const LatestTransactions = (props: any) => {
           </Typography>
           <Divider variant="middle" className={classes.divider} />
           {data.transactions ?
-            <TableContainer className={classes.container}>
+            <TableContainer className={classes.table}>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead></TableHead>
                 <TableBody>

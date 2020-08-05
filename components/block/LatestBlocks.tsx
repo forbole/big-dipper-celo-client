@@ -56,7 +56,7 @@ const useStyles = makeStyles({
     wordWrap: "break-word",
     margin: "none",
   },
-  rootContainer: {
+  container: {
     height: "100%",
   },
   box: {
@@ -167,7 +167,7 @@ const LatestBlocks = (props: any) => {
   if (error) return <ErrorMessage message={error.message} />
 
   return (<>
-    <Grid container spacing={2} className={classes.rootContainer}>
+    <Grid container spacing={2} className={classes.container}>
       <Grid item xs={12}>
         {props.displayCard === true ? (
           <Hidden smUp>
