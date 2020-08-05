@@ -9,6 +9,7 @@ export const GET_ACCOUNTS = gql`
         _id
         address
         balance
+        txCount
       }
     }
   }

@@ -15,6 +15,7 @@ import theme from '../../themes/celo-theme';
 import TablePagination from '@material-ui/core/TablePagination';
 import Divider from '@material-ui/core/Divider';
 import { GET_ACCOUNTS } from '../query/Account'
+import { GET_TOTAL_SUPPLY } from '../query/Chain'
 import { useQuery } from "@apollo/client";
 import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable'
@@ -26,14 +27,15 @@ import numbro from "numbro";
 interface Column {
   id: 'rank' | 'address' | 'balance' | 'percentage' | 'txsCount';
   label: string;
+  align: string;
 }
 
 const columns: Column[] = [
-  { id: 'rank', label: 'Rank', },
-  { id: 'address', label: 'Address', },
-  { id: 'balance', label: 'Balance', },
-  { id: 'percentage', label: 'Percentage', },
-  { id: 'txsCount', label: 'Txs Count', },
+  { id: 'rank', label: 'Rank', align: 'left' },
+  { id: 'address', label: 'Address', align: 'left' },
+  { id: 'balance', label: 'Balance', align: 'right' },
+  { id: 'percentage', label: 'Percentage', align: 'right' },
+  { id: 'txsCount', label: 'Txs Count', align: 'right' },
 ];
 
 interface Data {
@@ -102,14 +104,14 @@ const useStyles = makeStyles(({ spacing }) => {
 
 
 const AccountList = () => {
-  const rowsOption1 = 10;
-  const rowsOption2 = 30;
-  const rowsOption3 = 50;
+  const rowsOption1 = 20;
+  const rowsOption2 = 50;
+  const rowsOption3 = 100;
 
   const classes = useStyles();
 
   const [page, setPage] = React.useState(1);
-  const [pageSize, setPageSize] = React.useState(10)
+  const [pageSize, setPageSize] = React.useState(20)
 
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -125,9 +127,14 @@ const AccountList = () => {
     variables: { pageSize, page },
   });
 
+  const totalSupply = useQuery(GET_TOTAL_SUPPLY, {
+  });
+
+
+
   if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
-
+  console.log(totalSupply)
   return (
     <Grid container>
       <Grid item xs={12} >
@@ -142,7 +149,7 @@ const AccountList = () => {
                     {columns.map((column) => (
                       <TableCell
                         key={column.id}
-                        align="left"
+                        align={column.align}
                         className={classes.table}
                         padding="checkbox"
                       >
@@ -158,25 +165,34 @@ const AccountList = () => {
                         <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
                           <Typography variant="body2" noWrap> {index + 1}</Typography>
                         </TableCell>
-                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                          <Link
-                            href="/account/[account]/"
-                            as={`/account/${row.address}`}
-                            color="secondary"
-                          >
-                            <Typography variant="body2" noWrap>
-                              <MiddleEllipsis text={row.address} />
-                            </Typography>
-                          </Link>
+                        {row.address ?
+                          <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                            <Link
+                              href="/account/[account]/"
+                              as={`/account/${row.address}`}
+                              color="secondary"
+                            >
+                              <Typography variant="body2" noWrap>
+                                <MiddleEllipsis text={row.address} />
+                              </Typography>
+                            </Link>
+                          </TableCell>
+                          : <NotAvailable variant="body2" />}
+                        <TableCell align="right" padding="checkbox" className={classes.tableCell}>
+                          {row.balance ?
+                            <Typography variant="body2" >{numbro((row.balance).toLocaleString('fullwide')).format("0.0000")} CELO</Typography>
+                            : <NotAvailable variant="body2" />}
                         </TableCell>
-                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                          <Typography variant="body2" noWrap>{row.balance ? numbro((row.balance).toLocaleString('fullwide')).format("0.000000") : '0.0000' } CELO</Typography>
+                        <TableCell align="right" padding="checkbox" className={classes.tableCell}>
+                          {/* <Typography variant="body2" noWrap>{numbro((totalSupply.data.chain.cUSDTotalSupply).toLocaleString('fullwide')).format("0.0000")}</Typography> */}
+                          {row.balance && totalSupply && totalSupply.data && totalSupply.data.chain && totalSupply.data.chain.cUSDTotalSupply ?
+                            <Typography variant="body2" noWrap>{numbro((row.balance / totalSupply.data.chain.cUSDTotalSupply) * 100).format("0.0000000")}</Typography>
+                            : <NotAvailable variant="body2" />}
                         </TableCell>
-                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                          {/* <Typography variant="body2" noWrap>{row.percentage}</Typography> */}
-                        </TableCell>
-                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                          <Typography variant="body2" noWrap>{row.txsCount}</Typography>
+                        <TableCell align="right" padding="checkbox" className={classes.tableCell}>
+                          {row.txsCount ?
+                            <Typography variant="body2" noWrap>{numbro(row.txsCount).format("000,000")}</Typography>
+                            : <NotAvailable variant="body2" />}
                         </TableCell>
                       </TableRow>
                     );

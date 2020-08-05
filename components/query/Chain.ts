@@ -17,3 +17,14 @@ export const GET_CHAIN = gql`
   }
 `;
 
+
+export const GET_TOTAL_SUPPLY = gql`
+  query GetTotalSupply
+    {
+      chain {
+        cUSDTotalSupply
+        celoTotalSupply
+      }
+    }
+  
+`;
