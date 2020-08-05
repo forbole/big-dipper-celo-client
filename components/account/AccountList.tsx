@@ -180,7 +180,7 @@ const AccountList = () => {
                           : <NotAvailable variant="body2" />}
                         <TableCell align="right" padding="checkbox" className={classes.tableCell}>
                           {row.balance ?
-                            <Typography variant="body2" >{numbro((row.balance).toLocaleString('fullwide')).format("0.0000")} CELO</Typography>
+                            <Typography variant="body2" noWrap>{numbro((row.balance).toLocaleString('fullwide')).format("0.0000")} CELO</Typography>
                             : <NotAvailable variant="body2" />}
                         </TableCell>
                         <TableCell align="right" padding="checkbox" className={classes.tableCell}>
@@ -191,7 +191,7 @@ const AccountList = () => {
                         </TableCell>
                         <TableCell align="right" padding="checkbox" className={classes.tableCell}>
                           {row.txsCount ?
-                            <Typography variant="body2" noWrap>{numbro(row.txsCount).format("000,000")}</Typography>
+                            <Typography variant="body2" noWrap >{numbro(row.txsCount).format("000,000")}</Typography>
                             : <NotAvailable variant="body2" />}
                         </TableCell>
                       </TableRow>

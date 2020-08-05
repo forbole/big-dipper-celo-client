@@ -13,7 +13,7 @@ const NotAvailable = (props: any) => {
 
     }
     return (
-        <Typography variant={props.variant} className={props.className}  >
+        <Typography variant={props.variant} className={props.className} noWrap>
             Data not available
         </Typography>
     )
