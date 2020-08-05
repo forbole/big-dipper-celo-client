@@ -33,11 +33,16 @@ const useStyles = makeStyles({
   root: {
     width: "100%",
     height: "100%",
-    padding: "1.5%",
-    borderRadius: 5,
+    padding: "0.5rem",
+    borderRadius: 4,
     wordWrap: "break-word",
     margin: "none",
   },
+  
+  rootContainer: {
+    height: "100%",
+  },
+
   container: {
     borderRadius: 5,
     width: "100%",
@@ -80,7 +85,7 @@ const useStyles = makeStyles({
     padding: "0 0 0 0.5rem",
   },
   divider: {
-    margin: "0.5rem",
+    margin: "0",
     backgroundColor: "rgba(62, 67, 71, 1)",
   },
   link: {
@@ -138,7 +143,7 @@ const LatestTransactions = (props: any) => {
   if (error) return <ErrorMessage message={error.message} />
 
   return (<>
-    <Grid container >
+    <Grid container className={classes.rootContainer}>
       <Grid item xs={12}>
         <Paper className={classes.root}>
           <Typography variant="body1" className={classes.box}>

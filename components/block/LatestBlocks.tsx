@@ -51,10 +51,13 @@ const useStyles = makeStyles({
   root: {
     width: "100%",
     height: "100%",
-    padding: "1.5%",
+    padding: "0.5rem",
     borderRadius: 4,
     wordWrap: "break-word",
     margin: "none",
+  },
+  rootContainer: {
+    height: "100%",
   },
   box: {
     letterSpacing: "1px",
@@ -102,8 +105,6 @@ const useStyles = makeStyles({
       flex: "auto",
     },
   },
-
-
 
   textContent: {
     textOverflow: "ellipsis",
@@ -166,7 +167,7 @@ const LatestBlocks = (props: any) => {
   if (error) return <ErrorMessage message={error.message} />
 
   return (<>
-    <Grid container spacing={2}>
+    <Grid container spacing={2} className={classes.rootContainer}>
       <Grid item xs={12}>
         {props.displayCard === true ? (
           <Hidden smUp>
