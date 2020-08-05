@@ -132,7 +132,7 @@ const Downtime = () => {
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPageSize(+event.target.value);
-    setPage(0);
+    setPage(1);
   };
 
   return (
@@ -205,6 +205,13 @@ const Downtime = () => {
             page={page}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
+            backIconButtonProps={{
+              'aria-label': 'Previous',
+              'disabled': page === 1,
+            }}
+            nextIconButtonProps={{
+              'aria-label': 'Next',
+            }}
           />
         </Grid>
       </AccordionDetails>
