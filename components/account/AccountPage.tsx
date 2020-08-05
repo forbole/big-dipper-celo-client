@@ -84,7 +84,7 @@ const AccountPage = (props: any) => {
 
 
       <Grid item xs={12} md={8} >
-        <AccountDetails />
+        <AccountDetails address={accountAddress}/>
       </Grid>
 
     </Grid>

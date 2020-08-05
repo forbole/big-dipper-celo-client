@@ -274,7 +274,7 @@ const AccountOverview = (props: any) => {
             </Typography>
               </Grid>
               <Grid item xs={6}>
-                <Typography variant="body2" className={classes.alignRight} > {validatorQuery.data.validator.name} </Typography> :
+                <Typography variant="body2" className={classes.alignRight} > {validatorQuery.data.validator.name} </Typography> 
           </Grid>
             </> :
 

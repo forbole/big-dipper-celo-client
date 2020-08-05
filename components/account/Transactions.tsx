@@ -52,7 +52,6 @@ const useStyles = makeStyles(({ spacing }) => {
 
     leftInline: {
       display: 'flex',
-      overflow: 'auto',
       padding: '0 0 0 1rem',
     },
     rightInline: {
@@ -161,8 +160,8 @@ const AccountTransactions = ({ address }: AppProps) => {
 
                             <Typography variant="body2" className={classes.leftInline}>
                               Tx#  <Link
-                                href="transaction/[transaction]/"
-                                as={`transaction/${row.hash}`}
+                                href="/transaction/[transaction]/"
+                                as={`../transaction/${row.hash}`}
                                 color="secondary"
                                 className={classes.leftInline}
                               >
@@ -184,7 +183,7 @@ const AccountTransactions = ({ address }: AppProps) => {
                             <Typography variant="body2" className={classes.leftInline}>
                               From   <Link
                                 href="account/[account]/"
-                                as={`account/${row.from.address}`}
+                                as={`${row.from.address}`}
                                 color="secondary"
                                 className={classes.txPadding}
                               >
@@ -199,7 +198,7 @@ const AccountTransactions = ({ address }: AppProps) => {
                             <Typography variant="body2" align='left' className={classes.rightInline}>
                               To <Link
                                 href="account/[account]/"
-                                as={`account/${row.from.address}`}
+                                as={`${row.from.address}`}
                                 color="secondary"
                                 className={classes.txPadding}
                               >
@@ -212,14 +211,14 @@ const AccountTransactions = ({ address }: AppProps) => {
 
                           <Grid item xs={6} >
                             <Typography variant="body2" className={classes.chip}>
-                              {/* <Chips value={row.chip} /> */}
+                              <Chips value="Token Transfer" />
                             </Typography>
 
                           </Grid>
                           <Grid item xs={6}>
                             <Typography variant="body2" className={classes.alignRight} >
-                              {row.value
-                                ? row.value + " CELO"
+                              {row.gas
+                                ? row.gas + " CELO"
                                 : <NotAvailable variant="body2" />}
                             </Typography>
                           </Grid>

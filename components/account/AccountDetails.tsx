@@ -9,18 +9,27 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { GET_VALIDATOR } from '../query/Validator'
+import { GET_ACCOUNT_DETAILS } from '../query/Account'
+import ComponentLoader from '../misc/ComponentLoader';
+import NotAvailable from '../misc/NotAvailable';
+import ErrorMessage from '../misc/ErrorMessage';
+import { useQuery } from "@apollo/client";
+import MiddleEllipsis from '../misc/MiddleEllipsis'
+import numbro from "numbro";
+
 
 const useStyles = makeStyles(({ spacing }) => {
     return {
         root: {
             width: '100%',
-            padding: '0.5rem',
+            padding: '1rem',
             borderRadius: 5,
             wordWrap: 'break-word',
 
         },
         item: {
-            padding: '0 0 1rem 0.5rem',
+            padding: '0 0 0.5rem 0',
 
         },
         divider: {
@@ -42,24 +51,40 @@ const useStyles = makeStyles(({ spacing }) => {
         },
         alignRight: {
             float: 'right',
-            // wordWrap: 'break-word',
+            wordWrap: 'break-word',
             overflowWrap: 'anywhere',
+            display: "flex",
+            textAlign: "right"
         },
         alignLeft: {
             float: 'left',
         },
-
-
     }
 });
 
+type AppProps = { address: string };
 
 
-
-const AccountDetails = () => {
+const AccountDetails = ({ address }: AppProps) => {
     const classes = useStyles();
 
-    return (
+
+    const { loading, error, data } = useQuery(GET_VALIDATOR, {
+        variables: { address },
+        pollInterval: 5000,
+    });
+
+
+    const accountQuery = useQuery(GET_ACCOUNT_DETAILS, {
+        variables: { address },
+        pollInterval: 5000,
+    });
+
+
+    if (loading) return <ComponentLoader />
+    if (error) return <ErrorMessage message={error.message} />
+
+    if (data.validator && accountQuery.data.account) return (
         <Accordion>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -81,9 +106,10 @@ const AccountDetails = () => {
                     </Typography>
                         </Grid>
                         <Grid item xs={8} className={classes.item} >
-                            <Typography variant="body2" className={classes.alignRight} >
-                                {"Michelle Clark"}
-                            </Typography>
+                            {data.validator && data.validator.name ?
+                                <Typography variant="body2" className={classes.alignRight} >
+                                    {data.validator.name}
+                                </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
                         </Grid>
 
                         <Grid item xs={12}>
@@ -91,14 +117,17 @@ const AccountDetails = () => {
                         </Grid>
 
                         <Grid item xs={4} className={classes.item}>
+
                             <Typography variant="body2" className={classes.alignLeft}>
                                 Metadata URL
                     </Typography>
                         </Grid>
                         <Grid item xs={8} className={classes.item} >
-                            <Typography variant="body2" className={classes.alignRight}  >
-                                <Link href="#" color="secondary">{"https://storage.googleap..."}</Link>
-                            </Typography>
+                            {accountQuery.data && accountQuery.data.account && accountQuery.data.account.accountSummary && accountQuery.data.account.accountSummary.metadataURL ?
+                                <Link href="/" target="_blank" color="secondary"> <Typography variant="body2" className={classes.alignRight} >
+                                    {accountQuery.data.account.accountSummary.metadataURL}
+                                </Typography> </Link> :
+                                < NotAvailable variant="body2" className={classes.alignRight} />}
                         </Grid>
 
                         <Grid item xs={12}>
@@ -120,7 +149,7 @@ const AccountDetails = () => {
                             <Divider variant='middle' className={classes.divider} />
                         </Grid>
 
-                        <Grid item xs={6} className={classes.item}>
+                        {/* <Grid item xs={6} className={classes.item}>
                             <Typography variant="body2" className={classes.alignLeft}>
                                 Attestations Requested
                     </Typography>
@@ -148,7 +177,7 @@ const AccountDetails = () => {
 
                         <Grid item xs={12}>
                             <Divider variant='middle' className={classes.divider} />
-                        </Grid>
+                        </Grid> */}
 
                         <Grid item xs={5} className={classes.item}>
                             <Typography variant="body2" className={classes.alignLeft}>
@@ -156,12 +185,17 @@ const AccountDetails = () => {
                     </Typography>
                         </Grid>
                         <Grid item xs={7} className={classes.item} >
-                            <Typography variant="body2" className={classes.alignRight}  >
-                                {"10,000 cGLD"}
-                            </Typography>
-                            <Typography variant="body2" className={classes.alignRight}  >
-                                {"10,000 non-voting cGLD"}
-                            </Typography>
+                            {accountQuery.data && accountQuery.data.account && accountQuery.data.account.lockedGold && accountQuery.data.account.lockedGold.total && accountQuery.data.account.lockedGold.nonvoting ?
+                                <>
+                                    <Typography variant="body2" className={classes.alignRight}  >
+                                        {/* {numbro(((accountQuery.data.account.lockedGold.total)).toLocaleString('fullwide',)).format("0.0000")} CELO */}
+                                    </Typography>
+                                    <Typography variant="body2" className={classes.alignRight}  >
+                                        {/* {numbro((accountQuery.data.account.lockedGold.nonvoting).toLocaleString('fullwide')).format("0.0000")} */}
+                                        {"non-voting cGLD"}
+                                    </Typography>
+                                </> :
+                                < NotAvailable variant="body2" className={classes.alignRight} />}
                         </Grid>
 
                         <Grid item xs={12}>
@@ -169,14 +203,17 @@ const AccountDetails = () => {
                         </Grid>
 
                         <Grid item xs={3} className={classes.item}>
+
                             <Typography variant="body2" className={classes.alignLeft}>
                                 Score
                     </Typography>
                         </Grid>
                         <Grid item xs={9} className={classes.item} >
-                            <Typography variant="body2" className={classes.alignRight} >
-                                {"45.8994%"}
-                            </Typography>
+                            {data.validator && data.validator.score ?
+                                <Typography variant="body2" className={classes.alignRight} >
+                                    {data.validator.score}
+                                </Typography> :
+                                < NotAvailable variant="body2" className={classes.alignRight} />}
                         </Grid>
 
                         <Grid item xs={12}>
@@ -187,12 +224,20 @@ const AccountDetails = () => {
                         <Grid item xs={4} className={classes.item}>
                             <Typography variant="body2" className={classes.alignLeft}>
                                 Affiliiation
-                    </Typography>
-                        </Grid>
-                        <Grid item xs={8} className={classes.item} >
-                            <Typography variant="body2" className={classes.alignRight}  >
-                                <Link href="#" color="secondary" >{"0xa5611567865ftre78fhfd5fd577rfcf75645fy"}</Link>
                             </Typography>
+                        </Grid>
+
+                        <Grid item xs={8} className={classes.item} >
+                            {data.validator && data.validator.affiliation ?
+                                <Typography variant="body2" className={classes.alignRight}  >
+                                    <Link
+                                        href="/validatorGroup/[validatorGroupDetails]/"
+                                        as={`../validatorGroup/${data.validator.affiliation}`}
+                                        color="secondary"
+                                    >
+                                        {data.validator.affiliation}</Link>
+                                </Typography> :
+                                < NotAvailable variant="body2" className={classes.alignRight} />}
                         </Grid>
 
                         <Grid item xs={12}>
@@ -203,19 +248,22 @@ const AccountDetails = () => {
                         <Grid item xs={6} className={classes.item}>
                             <Typography variant="body2" className={classes.alignLeft}>
                                 Validator Signer
-                    </Typography>
-                        </Grid>
-                        <Grid item xs={6} className={classes.item} >
-                            <Typography variant="body2" className={classes.alignRight} >
-                                {"Michelle Clark"}
                             </Typography>
+                        </Grid>
+
+                        <Grid item xs={6} className={classes.item} >
+                            {data.validator && data.validator.signer ?
+                                <Typography variant="body2" className={classes.alignRight} >
+                                    {data.validator.signer}
+                                </Typography> :
+                                < NotAvailable variant="body2" className={classes.alignRight} />}
                         </Grid>
 
                         <Grid item xs={12}>
                             <Divider variant='middle' className={classes.divider} />
                         </Grid>
 
-
+                        {/* 
                         <Grid item xs={5} className={classes.item}>
                             <Typography variant="body2">
                                 All Signers
@@ -223,9 +271,9 @@ const AccountDetails = () => {
                         </Grid>
                         <Grid item xs={7} className={classes.item} >
                             <Typography variant="body2" className={classes.alignRight}  >
-                                <Link href="#" color="secondary">{"0xa56443ff65ftre78fhfd5fd577rfcf75645fy"}</Link>
+                                {"0xa56443ff65ftre78fhfd5fd577rfcf75645fy"}
                             </Typography>
-                        </Grid>
+                        </Grid> */}
 
                     </Grid>
 
@@ -233,6 +281,9 @@ const AccountDetails = () => {
             </AccordionDetails>
         </Accordion>
     );
+    else {
+        return null;
+    }
 }
 
 export default AccountDetails
