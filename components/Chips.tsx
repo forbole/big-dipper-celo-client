@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     transfer: {
       borderRadius: 5,
-      backgroundColor: "rgba(217, 131, 28, 1)",
+      backgroundColor: "rgba(240, 65, 85, 1)",
       padding: "0",
       fontSize: "	0.875rem",
       width: "7rem",
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     report: {
       borderRadius: 5,
-      backgroundColor: "rgba(240, 65, 85, 1)",
+      backgroundColor: "rgba(217, 131, 28, 1)",
       padding: "0",
       fontSize: "	0.875rem",
       width: "7rem",
