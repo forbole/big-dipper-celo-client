@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexWrap: "wrap",
       padding: "0.1rem",
     },
-    contraclCall: {
+    contractCall: {
       borderRadius: 5,
       backgroundColor: "rgba(31, 217, 110, 1)",
       padding: "0",
@@ -38,9 +38,16 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: "	0.875rem",
       width: "7rem",
     },
-    delegateAll: {
+    exchange: {
       borderRadius: 5,
       backgroundColor: "rgba(182, 83, 244, 1)",
+      padding: "0",
+      fontSize: "	0.875rem",
+      width: "7rem",
+    },
+    report: {
+      borderRadius: 5,
+      backgroundColor: "rgba(240, 65, 85, 1)",
       padding: "0",
       fontSize: "	0.875rem",
       width: "7rem",
@@ -99,6 +106,15 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: "	0.875rem",
       width: "4.7rem",
     },
+
+    default: {
+      borderRadius: 5,
+      backgroundColor: "rgba(30,117,217,1)",
+      padding: "0",
+      fontSize: "	0.875rem",
+      width: "7rem",
+      textTransform: 'capitalize'
+    },
   })
 );
 
@@ -106,7 +122,7 @@ const Chips = (props: any) => {
   const classes = useStyles();
 
   switch (props.value) {
-    case "Token Transfer":
+    case "tokenTransfer":
       return (
         <div className={classes.root}>
           <Chip
@@ -116,17 +132,17 @@ const Chips = (props: any) => {
           />
         </div>
       );
-    case "Contract Call":
+    case "contractCall":
       return (
         <div className={classes.root}>
           <Chip
             size="small"
             label="Contract Call"
-            className={classes.contraclCall}
+            className={classes.contractCall}
           />
         </div>
       );
-    case "Success":
+    case "success":
       return (
         <div className={classes.root}>
           <Chip
@@ -137,24 +153,35 @@ const Chips = (props: any) => {
           />
         </div>
       );
-    case "Pending":
+    case "pending":
       return (
         <div className={classes.root}>
           <Chip size="small" label="Pending" className={classes.pending} />
         </div>
       );
 
-    case "Delegate All":
+    case "exchange":
       return (
         <div className={classes.root}>
           <Chip
             size="small"
-            label="Delegate All"
-            className={classes.delegateAll}
+            label="Exchange"
+            className={classes.exchange}
           />
         </div>
       );
-    case "Static Call":
+
+    case "report":
+      return (
+        <div className={classes.root}>
+          <Chip
+            size="small"
+            label="Report"
+            className={classes.report}
+          />
+        </div>
+      );
+    case "staticCall":
       return (
         <div className={classes.root}>
           <Chip
@@ -203,7 +230,7 @@ const Chips = (props: any) => {
     default:
       return (
         <div className={classes.root}>
-          <Chip size="small" label={props.value} />
+          <Chip size="small" label={(props.value)} className={classes.default} />
         </div>
       );
   }
