@@ -6,7 +6,6 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import gql from "@apollo/client";
 import { useQuery } from "@apollo/client";
-import TablePagination from "@material-ui/core/TablePagination";
 import * as numbro from "numbro";
 import PriceCard from "../PriceCard";
 import Chips from "../../components/Chips";
