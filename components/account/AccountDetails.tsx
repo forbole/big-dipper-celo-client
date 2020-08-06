@@ -93,7 +93,7 @@ const AccountDetails = ({ address }: AppProps) => {
     if (data.validator && accountQuery.data) return (
         <Accordion>
             <AccordionSummary
-                expandIcon={<ExpandMoreIcon  className={classes.icon} />}
+                expandIcon={<ExpandMoreIcon className={classes.icon} />}
                 aria-controls="accoountDetailsPanel"
                 id="accoountDetailsPanel"
             >
@@ -279,23 +279,59 @@ const AccountDetails = ({ address }: AppProps) => {
                             <Divider variant='middle' className={classes.divider} />
                         </Grid>
 
-                        {/* 
+
                         <Grid item xs={5} className={classes.item}>
                             <Typography variant="body2">
                                 All Signers
                     </Typography>
                         </Grid>
-                        <Grid item xs={7} className={classes.item} >
-                            <Typography variant="body2" className={classes.alignRight}  >
-                                {"0xa56443ff65ftre78fhfd5fd577rfcf75645fy"}
-                            </Typography>
-                        </Grid> */}
 
+                        {accountQuery.data && accountQuery.data.account && accountQuery.data.account.accountSummary && accountQuery.data.account.accountSummary.authorizedSigners ?
+                            <>
+                                <Grid item xs={7} className={classes.item} >
+                                    <Link
+                                        href="/account/[account]/"
+                                        as={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.vote}`}
+                                        color="secondary"
+                                    >
+                                        <Typography variant="body2" className={classes.alignRight}  >
+                                            {accountQuery.data.account.accountSummary.authorizedSigners.vote}
+                                        </Typography>
+                                    </Link>
+                                </Grid>
+                                <Grid item xs={12} className={classes.item} >
+                                    <Link
+                                        href="/account/[account]/"
+                                        as={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.validator}`}
+                                        color="secondary"
+                                    >
+                                        <Typography variant="body2" className={classes.alignRight}  >
+                                            {accountQuery.data.account.accountSummary.authorizedSigners.validator}
+                                        </Typography>
+                                    </Link>
+                                </Grid>
+                                <Grid item xs={12} className={classes.item} >
+                                    <Link
+                                        href="/account/[account]/"
+                                        as={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.attestation}`}
+                                        color="secondary"
+                                    >
+                                        <Typography variant="body2" className={classes.alignRight}  >
+                                            {accountQuery.data.account.accountSummary.authorizedSigners.attestation}
+                                        </Typography>
+                                    </Link>
+                                </Grid> </>
+
+                            : <>
+                                <Grid item xs={7} className={classes.item} >
+                                    <NotAvailable variant="body2" />
+                                </Grid>
+                            </>}
                     </Grid>
 
                 </Grid>
-            </AccordionDetails>
-        </Accordion>
+            </AccordionDetails >
+        </Accordion >
     );
     else {
         return null;
