@@ -33,5 +33,5 @@
 * [#21] Updated ChartData component height and fixed the layout to keep equal spacing between components 
 * [#30] Stored the GraphQL & account endpoint in environment variable
 * [#41] Updated Middle Ellipsis screen size function to useMediaQuery 
+* Updated Grid size on medium screens to 7
 * Disabled back button on Page 1 in TablePagination
-
