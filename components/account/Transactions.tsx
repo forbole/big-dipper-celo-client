@@ -88,7 +88,9 @@ const useStyles = makeStyles(({ spacing }) => {
       margin: '0.5rem 0 0 0',
       backgroundColor: "rgba(62, 67, 71, 1)",
     },
-
+    icon: {
+      fill: "rgba(255,255,255,1)",
+    },
   }
 });
 
@@ -132,12 +134,12 @@ const AccountTransactions = ({ address }: AppProps) => {
 
   if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
-console.log(data)
+  
   return (
 
     <Accordion>
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
+        expandIcon={<ExpandMoreIcon className={classes.icon}/>}
         aria-controls="accountTransactionsPanel"
         id="accountTransactionsPanel"
       >

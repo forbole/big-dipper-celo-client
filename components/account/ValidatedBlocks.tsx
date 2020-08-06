@@ -120,7 +120,10 @@ const useStyles = makeStyles(({ spacing }) => {
 
     divider: {
       backgroundColor: "rgba(62, 67, 71, 1)",
-    }
+    },
+    icon: {
+      fill: "rgba(255,255,255,1)",
+    },
   }
 });
 
@@ -149,7 +152,7 @@ const ValidatedBlocks = () => {
 
     <Accordion>
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
+        expandIcon={<ExpandMoreIcon className={classes.icon}/>}
         aria-controls="accountValidatedBlocksPanel"
         id="accountValidatedBlocksPanel"
       >

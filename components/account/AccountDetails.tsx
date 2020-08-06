@@ -61,7 +61,11 @@ const useStyles = makeStyles(({ spacing }) => {
         alignLeft: {
             float: 'left',
         },
+        icon: {
+            fill: "rgba(255,255,255,1)",
+        },
     }
+
 });
 
 type AppProps = { address: string };
@@ -86,10 +90,10 @@ const AccountDetails = ({ address }: AppProps) => {
     if (loading) return <ComponentLoader />
     if (error) return <ErrorMessage message={error.message} />
 
-    if (data.validator && accountQuery.data.account) return (
+    if (data.validator && accountQuery.data) return (
         <Accordion>
             <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
+                expandIcon={<ExpandMoreIcon  className={classes.icon} />}
                 aria-controls="accoountDetailsPanel"
                 id="accoountDetailsPanel"
             >
@@ -117,8 +121,8 @@ const AccountDetails = ({ address }: AppProps) => {
 
                                 <Grid item xs={12}>
                                     <Divider variant='middle' className={classes.divider} />
-                                </Grid> 
-                                </> : null}
+                                </Grid>
+                            </> : null}
 
                         <Grid item xs={4} className={classes.item}>
 
@@ -188,23 +192,27 @@ const AccountDetails = ({ address }: AppProps) => {
                                 Locked Gold
                     </Typography>
                         </Grid>
-                        <Grid item xs={8} className={classes.item} >
-                            {accountQuery.data && accountQuery.data.account && accountQuery.data.account.lockedGold && accountQuery.data.account.lockedGold.total && accountQuery.data.account.lockedGold.nonvoting ?
-                                <>
-                                    <Typography variant="body2" className={classes.alignRight}  >
-                                        {BigNumber.prototype.toFormat.call(
-                                            new BigNumber(accountQuery.data.account.lockedGold.total)
-                                        )}
-                                    </Typography>
+
+                        {accountQuery.data && accountQuery.data.account && accountQuery.data.account.lockedGold && accountQuery.data.account.lockedGold.total && accountQuery.data.account.lockedGold.nonvoting ?
+                            <><Grid item xs={8} className={classes.item} >
+                                <Typography variant="body2" className={classes.alignRight}  >
+                                    {BigNumber.prototype.toFormat.call(
+                                        new BigNumber(accountQuery.data.account.lockedGold.total)
+                                    )} CELO
+                                </Typography>
+                            </Grid>
+                                <Grid item xs={12} className={classes.item} >
                                     <Typography variant="body2" className={classes.alignRight}  >
                                         {BigNumber.prototype.toFormat.call(
                                             new BigNumber(accountQuery.data.account.lockedGold.nonvoting)
-                                        )}
-                                        {" non-voting cGLD"}
+                                        )} non-voting CELO
                                     </Typography>
-                                </> :
-                                < NotAvailable variant="body2" className={classes.alignRight} />}
-                        </Grid>
+                                </Grid>
+                            </>
+                            :
+                            <Grid item xs={8} className={classes.item} >
+                                < NotAvailable variant="body2" className={classes.alignRight} />
+                            </Grid>}
 
                         <Grid item xs={12}>
                             <Divider variant='middle' className={classes.divider} />
@@ -219,7 +227,7 @@ const AccountDetails = ({ address }: AppProps) => {
                         <Grid item xs={9} className={classes.item} >
                             {data.validator && data.validator.score ?
                                 <Typography variant="body2" className={classes.alignRight} >
-                                    {data.validator.score}
+                                    {data.validator.score}%
                                 </Typography> :
                                 < NotAvailable variant="body2" className={classes.alignRight} />}
                         </Grid>
