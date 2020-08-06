@@ -122,12 +122,12 @@ const Chips = (props: any) => {
   const classes = useStyles();
 
   switch (props.value) {
-    case "tokenTransfer":
+    case "transfer":
       return (
         <div className={classes.root}>
           <Chip
             size="small"
-            label="Token Transfer"
+            label="Transfer"
             className={classes.transfer}
           />
         </div>
