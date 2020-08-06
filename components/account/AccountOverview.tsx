@@ -274,28 +274,16 @@ const AccountOverview = (props: any) => {
             </Typography>
               </Grid>
               <Grid item xs={6}>
-                <Typography variant="body2" className={classes.alignRight} > {validatorQuery.data.validator.name} </Typography> 
-          </Grid>
-            </> :
-
-            <>
-              <Grid item xs={6}>
-                <Typography variant="body2" className={classes.alignLeft}>
-                  Account
-            </Typography>
+                <Typography variant="body2" className={classes.alignRight} > {validatorQuery.data.validator.name} </Typography>
               </Grid>
-              <Grid item xs={6}>{
-                <Typography variant="body2" className={classes.alignRight} >
-                  <MiddleEllipsis text={accountQuery.data.account.address} />
-                </Typography>}
+              <Grid item xs={12}>
+                <Divider variant="middle" className={classes.divider} />
               </Grid>
-            </>
+            </> :  null
           }
 
 
-          <Grid item xs={12}>
-            <Divider variant="middle" className={classes.divider} />
-          </Grid>
+
 
           <Grid item xs={6} md={6}>
             <Typography variant="body2" className={classes.alignLeft}>
