@@ -23,6 +23,7 @@ import ErrorMessage from '../misc/ErrorMessage';
 import MiddleEllipsis from '../misc/MiddleEllipsis'
 import numbro from "numbro";
 
+const BigNumber = require('bignumber.js');
 
 interface Column {
   id: 'rank' | 'address' | 'balance' | 'percentage' | 'txsCount';
@@ -180,7 +181,11 @@ const AccountList = () => {
                           : <NotAvailable variant="body2" />}
                         <TableCell align="right" padding="checkbox" className={classes.tableCell}>
                           {row.balance ?
-                            <Typography variant="body2" noWrap>{numbro((row.balance).toLocaleString('fullwide')).format("0.0000")} CELO</Typography>
+                            <Typography variant="body2" noWrap>
+                              {BigNumber.prototype.toFormat.call(
+                                new BigNumber(row.balance)
+                              )} CELO
+                              </Typography>
                             : <NotAvailable variant="body2" />}
                         </TableCell>
                         <TableCell align="right" padding="checkbox" className={classes.tableCell}>

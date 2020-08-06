@@ -39,6 +39,8 @@ import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
 import MiddleEllipsis from '../misc/MiddleEllipsis'
 
+const BigNumber = require('bignumber.js');
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -209,7 +211,9 @@ const TokenDropdown = (props: any) => {
             className={classes.tokenValue}
             gutterBottom
           >
-            {numbro((props.usd).toLocaleString('fullwide',)).format("0.0000")}
+            {BigNumber.prototype.toFormat.call(
+              new BigNumber(props.usd)
+            )}
           </Typography>
         </MenuItem>
 
@@ -231,7 +235,9 @@ const TokenDropdown = (props: any) => {
             className={classes.tokenValue}
             gutterBottom
           >
-            {numbro((props.celo).toLocaleString('fullwide',)).format("0.0000")}
+            {BigNumber.prototype.toFormat.call(
+              new BigNumber(props.celo)
+            )}
           </Typography>
         </MenuItem>
       </Select>
@@ -279,11 +285,8 @@ const AccountOverview = (props: any) => {
               <Grid item xs={12}>
                 <Divider variant="middle" className={classes.divider} />
               </Grid>
-            </> :  null
+            </> : null
           }
-
-
-
 
           <Grid item xs={6} md={6}>
             <Typography variant="body2" className={classes.alignLeft}>
@@ -293,13 +296,17 @@ const AccountOverview = (props: any) => {
 
           <Grid item xs={6} md={6}>
             {accountQuery.data.account && accountQuery.data.account.balance ? <Typography variant="body2" className={classes.alignRight} >
-              {numbro((accountQuery.data.account.balance).toLocaleString('fullwide',)).format("0.0000")} CELO
-  </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
+              {BigNumber.prototype.toFormat.call(
+                new BigNumber(accountQuery.data.account.balance)
+              )} CELO
+            </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
           </Grid>
           <Grid item xs={12} md={12} >
             {accountQuery.data.account && accountQuery.data.account.balance && chainQuery.data.chain && chainQuery.data.chain.tokenPrice && chainQuery.data.chain.tokenPrice.usd ?
               < Typography variant="body2" className={classes.alignRight} noWrap>
-                $ {numbro((accountQuery.data.account.balance * chainQuery.data.chain.tokenPrice.usd).toLocaleString('fullwide',)).format("0.0000")}
+                ${BigNumber.prototype.toFormat.call(
+                new BigNumber(accountQuery.data.account.balance * chainQuery.data.chain.tokenPrice.usd)
+              )}
               </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
           </Grid>
 

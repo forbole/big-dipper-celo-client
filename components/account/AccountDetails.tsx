@@ -17,7 +17,9 @@ import ErrorMessage from '../misc/ErrorMessage';
 import { useQuery } from "@apollo/client";
 import MiddleEllipsis from '../misc/MiddleEllipsis'
 import numbro from "numbro";
+// import BigNumber from "./bignumber.mjs"
 
+const BigNumber = require('bignumber.js');
 
 const useStyles = makeStyles(({ spacing }) => {
     return {
@@ -99,22 +101,24 @@ const AccountDetails = ({ address }: AppProps) => {
 
                     <Grid container spacing={1} justify="center" className={classes.item}>
 
-
-                        <Grid item xs={4} className={classes.item}>
-                            <Typography variant="body2" className={classes.alignLeft}>
-                                Moniker
+                        {data.validator && data.validator.name ?
+                            <>
+                                <Grid item xs={4} className={classes.item}>
+                                    <Typography variant="body2" className={classes.alignLeft}>
+                                        Moniker
                     </Typography>
-                        </Grid>
-                        <Grid item xs={8} className={classes.item} >
-                            {data.validator && data.validator.name ?
-                                <Typography variant="body2" className={classes.alignRight} >
-                                    {data.validator.name}
-                                </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
-                        </Grid>
+                                </Grid>
+                                <Grid item xs={8} className={classes.item} >
 
-                        <Grid item xs={12}>
-                            <Divider variant='middle' className={classes.divider} />
-                        </Grid>
+                                    <Typography variant="body2" className={classes.alignRight} >
+                                        {data.validator.name}
+                                    </Typography>
+                                </Grid>
+
+                                <Grid item xs={12}>
+                                    <Divider variant='middle' className={classes.divider} />
+                                </Grid> 
+                                </> : null}
 
                         <Grid item xs={4} className={classes.item}>
 
@@ -141,7 +145,7 @@ const AccountDetails = ({ address }: AppProps) => {
                         </Grid>
                         <Grid item xs={8} className={classes.item} >
                             <Typography variant="body2" className={classes.alignRight}  >
-                                {"validator"}
+                                validator
                             </Typography>
                         </Grid>
 
@@ -179,20 +183,24 @@ const AccountDetails = ({ address }: AppProps) => {
                             <Divider variant='middle' className={classes.divider} />
                         </Grid> */}
 
-                        <Grid item xs={5} className={classes.item}>
+                        <Grid item xs={4} className={classes.item}>
                             <Typography variant="body2" className={classes.alignLeft}>
                                 Locked Gold
                     </Typography>
                         </Grid>
-                        <Grid item xs={7} className={classes.item} >
+                        <Grid item xs={8} className={classes.item} >
                             {accountQuery.data && accountQuery.data.account && accountQuery.data.account.lockedGold && accountQuery.data.account.lockedGold.total && accountQuery.data.account.lockedGold.nonvoting ?
                                 <>
                                     <Typography variant="body2" className={classes.alignRight}  >
-                                        {/* {numbro(((accountQuery.data.account.lockedGold.total)).toLocaleString('fullwide',)).format("0.0000")} CELO */}
+                                        {BigNumber.prototype.toFormat.call(
+                                            new BigNumber(accountQuery.data.account.lockedGold.total)
+                                        )}
                                     </Typography>
                                     <Typography variant="body2" className={classes.alignRight}  >
-                                        {/* {numbro((accountQuery.data.account.lockedGold.nonvoting).toLocaleString('fullwide')).format("0.0000")} */}
-                                        {"non-voting cGLD"}
+                                        {BigNumber.prototype.toFormat.call(
+                                            new BigNumber(accountQuery.data.account.lockedGold.nonvoting)
+                                        )}
+                                        {" non-voting cGLD"}
                                     </Typography>
                                 </> :
                                 < NotAvailable variant="body2" className={classes.alignRight} />}
