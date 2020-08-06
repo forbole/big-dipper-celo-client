@@ -15,7 +15,6 @@ import IconButton from "@material-ui/core/IconButton";
 import { useRouter } from "next/router";
 import gql from "@apollo/client";
 import { useQuery } from "@apollo/client";
-import TablePagination from "@material-ui/core/TablePagination";
 import * as numbro from "numbro";
 import moment from "moment";
 import Chip from "@material-ui/core/Chip";
