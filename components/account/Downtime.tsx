@@ -17,16 +17,22 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import { DOWNTIME } from '../query/Downtime'
-
+import { GET_ACCOUNT_DETAILS } from '../query/Account'
+import { useQuery } from "@apollo/client";
+import ComponentLoader from '../misc/ComponentLoader';
+import NotAvailable from '../misc/NotAvailable';
+import ErrorMessage from '../misc/ErrorMessage';
+import moment from "moment";
+import MiddleEllipsis from '../misc/MiddleEllipsis'
 
 interface Column {
-  id: 'height' | 'miner' | 'txs' | 'gasUsed' | 'gasLimit' | 'time';
+  id: 'height' | 'proposer' | 'txs' | 'gasUsed' | 'gasLimit' | 'time';
   label: string;
 }
 
 const columns: Column[] = [
   { id: 'height', label: 'Height', },
-  { id: 'miner', label: 'Validator', },
+  { id: 'proposer', label: 'Proposer', },
   {
     id: 'txs',
     label: 'Txs',
@@ -44,43 +50,6 @@ const columns: Column[] = [
     label: 'Time',
   },
 ];
-
-interface Data {
-  height: string;
-  miner: string;
-  txs: string;
-  gasUsed: string;
-  gasLimit: string;
-  time: string;
-}
-
-function createData(height: string, miner: string, txs: string, gasUsed: string, gasLimit: string, time: string) {
-  return { height, miner, txs, gasUsed, gasLimit, time };
-}
-
-const rows = [
-  createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-  createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-  createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-  createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-  createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-  createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-  createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-  createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-  createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-  createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-  createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-  createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-  createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-  createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-  createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-  createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-  createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-  createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-  createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-  createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-];
-
 
 const useStyles = makeStyles(({ spacing }) => {
   return {
@@ -119,9 +88,9 @@ const useStyles = makeStyles(({ spacing }) => {
 });
 
 
+type DowntimeProps = { address: string };
 
-
-const Downtime = () => {
+const Downtime = ({ address }: DowntimeProps) => {
   const rowsOption1 = 10;
   const rowsOption2 = 30;
   const rowsOption3 = 50;
@@ -136,13 +105,28 @@ const Downtime = () => {
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPageSize(+event.target.value);
-    setPage(0);
+    setPage(1);
   };
+
+  const accountQuery = useQuery(GET_ACCOUNT_DETAILS, {
+    variables: { address },
+  });
+
+  address = (accountQuery.data && accountQuery.data.account && accountQuery.data.account.accountSummary && accountQuery.data.account.accountSummary.authorizedSigners && accountQuery.data.account.accountSummary.authorizedSigners.validator) ? accountQuery.data.account.accountSummary.authorizedSigners.validator : ""
+
+
+  const { loading, error, data } = useQuery(DOWNTIME, {
+    variables: { address, pageSize, page },
+    pollInterval: 5000,
+  });
+
+  if (loading) return <ComponentLoader />
+  if (error) return <ErrorMessage message={error.message} />
 
   return (
     <Accordion>
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon className={classes.icon}/>}
+        expandIcon={<ExpandMoreIcon className={classes.icon} />}
         aria-controls="accountDowntimePanel"
         id="accountDowntimePanel"
       >
@@ -170,30 +154,46 @@ const Downtime = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {rows.map((row: any, index: number) => {
+                    {data.downtime.blocks.map((row: any, index: number) => {
                       return (
                         <TableRow key={index} >
                           <TableCell component="th" scope="row" align="left" className={classes.tableCell} >
                             <Link href="#" color="secondary"  >
-                              <Typography variant="body2" noWrap> {row.height}</Typography>
+                              <Typography variant="body2" noWrap> {row.number}</Typography>
                             </Link>
                           </TableCell>
                           <TableCell align="left" className={classes.tableCell}>
-                            <Link href="#" color="secondary" >
-                              <Typography variant="body2" noWrap>{row.miner}</Typography>
-                            </Link>
+                            {row.miner && row.miner.name ?
+                              <Link href="#" color="secondary" >
+                                <Typography variant="body2" noWrap>{row.miner.name}</Typography>
+                              </Link>
+                              : <NotAvailable variant="body2" />}
                           </TableCell>
                           <TableCell align="left" className={classes.tableCell}>
-                            <Typography variant="body2" noWrap>{row.txs}</Typography>
+                            {row.hash ?
+                              <Link
+                                href="/transaction/[transaction]/"
+                                as={`../transaction/${row.hash}`}
+                                color="secondary"
+                              >
+                              <MiddleEllipsis text={row.hash}/>
+                              </Link>
+                              : <NotAvailable variant="body2" />}
                           </TableCell>
                           <TableCell align="left" className={classes.tableCell}>
-                            <Typography variant="body2" noWrap>{row.gasUsed}</Typography>
+                            {row.gasUsed ?
+                              <Typography variant="body2" noWrap>{row.gasUsed}</Typography>
+                              : <NotAvailable variant="body2" />}
                           </TableCell>
                           <TableCell align="left" className={classes.tableCell}>
-                            <Typography variant="body2" noWrap>{row.gasLimit}</Typography>
+                            {row.gasLimit ?
+                              <Typography variant="body2" noWrap>{row.gasLimit}</Typography>
+                              : <NotAvailable variant="body2" />}
                           </TableCell>
                           <TableCell align="left" >
-                            <Typography variant="body2" noWrap>{row.time}</Typography>
+                            {row.timestamp ?
+                              <Typography variant="body2" noWrap>{moment.unix(row.timestamp).fromNow()}</Typography>
+                              : <NotAvailable variant="body2" />}
                           </TableCell>
                         </TableRow>
                       );
@@ -205,7 +205,7 @@ const Downtime = () => {
             <TablePagination
               rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
               component="div"
-              count={rows.length}
+              count={data.downtime.totalCounts}
               rowsPerPage={pageSize}
               page={page}
               onChangePage={handleChangePage}

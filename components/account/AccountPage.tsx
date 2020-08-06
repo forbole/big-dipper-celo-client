@@ -3,7 +3,7 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import AccountTransactions from "./Transactions";
 import Downtime from "./Downtime";
-import ValidatedBlocks from "./ValidatedBlocks";
+import ProposedBlocks from "./ProposedBlocks";
 import AddressCard from "./AddressCard";
 import AccountDetails from "./AccountDetails";
 import Hidden from "@material-ui/core/Hidden";
@@ -75,11 +75,11 @@ const AccountPage = (props: any) => {
       </Grid> */}
 
       <Grid item xs={12} md={8} >
-        <Downtime />
+        <Downtime address={accountAddress}/>
       </Grid>
 
       <Grid item xs={12} md={8} >
-        <ValidatedBlocks />
+        <ProposedBlocks />
       </Grid>
 
 
