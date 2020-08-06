@@ -5,6 +5,7 @@ export const GET_TX = gql`
       transactions(pageSize: $pageSize, page: $page){
         totalCounts
         transactions{
+          type
             from {
               _id
               address
@@ -67,6 +68,7 @@ export const GET_ACCOUNT_TX = gql`
         hash
         timestamp
         gas
+        type
         from {
               _id
               address

@@ -257,13 +257,11 @@ const LatestTransactions = (props: any) => {
                             </Grid>
 
                             <Grid item xs={6}>
-                              <Typography variant="body2" className={classes.chip}>
-                                {row.value === 0 ? (
-                                  <Chips value="Contract Call" />
-                                ) : (
-                                    <Chips value="Token Transfer" />
-                                  )}
-                              </Typography>
+                              {row.type ?
+                                <Typography variant="body2" className={classes.chip}>
+                                  <Chips value={row.type} />
+                                </Typography>
+                                : null}
                             </Grid>
                             <Grid item xs={6}>
                               <Typography

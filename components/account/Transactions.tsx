@@ -132,7 +132,7 @@ const AccountTransactions = ({ address }: AppProps) => {
 
   if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
-
+console.log(data)
   return (
 
     <Accordion>
@@ -211,10 +211,11 @@ const AccountTransactions = ({ address }: AppProps) => {
                             </Grid>
 
                             <Grid item xs={6} >
-                              <Typography variant="body2" className={classes.chip}>
-                                <Chips value="Token Transfer" />
-                              </Typography>
+                              {row.type ?
+                                <Typography variant="body2" className={classes.chip}>
 
+                                  <Chips value={row.type} />
+                                </Typography> : null}
                             </Grid>
                             <Grid item xs={6}>
                               <Typography variant="body2" className={classes.alignRight} >
