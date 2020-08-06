@@ -147,65 +147,67 @@ const Downtime = () => {
       <AccordionDetails className={classes.root}>
         <Grid container >
           <Divider variant='middle' className={classes.divider} />
-          <TableContainer className={classes.container}>
-            <Paper className={classes.tableCell}>
-              <Table >
-                <TableHead>
-                  <TableRow>
-                    {columns.map((column) => (
-                      <TableCell
-                        key={column.id}
-                        align="left"
-                        className={classes.table}
-                        padding="checkbox"
-                      >
-                        <Typography variant="body2" noWrap className={classes.tableCell}>{column.label}</Typography>
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rows.map((row: any, index: number) => {
-                    return (
-                      <TableRow key={index} >
-                        <TableCell component="th" scope="row" align="left" className={classes.tableCell} >
-                          <Link href="#" color="secondary"  >
-                            <Typography variant="body2" noWrap> {row.height}</Typography>
-                          </Link>
+          <Grid item xs={12}>
+            <TableContainer className={classes.container}>
+              <Paper className={classes.tableCell}>
+                <Table >
+                  <TableHead>
+                    <TableRow>
+                      {columns.map((column) => (
+                        <TableCell
+                          key={column.id}
+                          align="left"
+                          className={classes.table}
+                          padding="checkbox"
+                        >
+                          <Typography variant="body2" noWrap className={classes.tableCell}>{column.label}</Typography>
                         </TableCell>
-                        <TableCell align="left" className={classes.tableCell}>
-                          <Link href="#" color="secondary" >
-                            <Typography variant="body2" noWrap>{row.miner}</Typography>
-                          </Link>
-                        </TableCell>
-                        <TableCell align="left" className={classes.tableCell}>
-                          <Typography variant="body2" noWrap>{row.txs}</Typography>
-                        </TableCell>
-                        <TableCell align="left" className={classes.tableCell}>
-                          <Typography variant="body2" noWrap>{row.gasUsed}</Typography>
-                        </TableCell>
-                        <TableCell align="left" className={classes.tableCell}>
-                          <Typography variant="body2" noWrap>{row.gasLimit}</Typography>
-                        </TableCell>
-                        <TableCell align="left" >
-                          <Typography variant="body2" noWrap>{row.time}</Typography>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </Paper>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={pageSize}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {rows.map((row: any, index: number) => {
+                      return (
+                        <TableRow key={index} >
+                          <TableCell component="th" scope="row" align="left" className={classes.tableCell} >
+                            <Link href="#" color="secondary"  >
+                              <Typography variant="body2" noWrap> {row.height}</Typography>
+                            </Link>
+                          </TableCell>
+                          <TableCell align="left" className={classes.tableCell}>
+                            <Link href="#" color="secondary" >
+                              <Typography variant="body2" noWrap>{row.miner}</Typography>
+                            </Link>
+                          </TableCell>
+                          <TableCell align="left" className={classes.tableCell}>
+                            <Typography variant="body2" noWrap>{row.txs}</Typography>
+                          </TableCell>
+                          <TableCell align="left" className={classes.tableCell}>
+                            <Typography variant="body2" noWrap>{row.gasUsed}</Typography>
+                          </TableCell>
+                          <TableCell align="left" className={classes.tableCell}>
+                            <Typography variant="body2" noWrap>{row.gasLimit}</Typography>
+                          </TableCell>
+                          <TableCell align="left" >
+                            <Typography variant="body2" noWrap>{row.time}</Typography>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </Paper>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={pageSize}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+          </Grid>
         </Grid>
       </AccordionDetails>
     </Accordion>

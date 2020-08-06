@@ -146,53 +146,54 @@ const TokenHolders = () => {
       <AccordionDetails className={classes.root}>
         <Grid container >
           <Divider variant='middle' className={classes.divider} />
-          <TableContainer className={classes.container}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-              </TableHead>
-              <TableBody>
-                {rows.map((row: any, index: number) => {
-                  return (
-                    <TableRow key={index} >
-                      <TableCell component="th" scope="row" padding="checkbox"  >
-                        <Grid container spacing={1} style={{ padding: '0.5rem 0', }}>
-                          <Grid item xs={12}>
-                            <Link href="#" color="secondary" >
-                              <Typography variant="body2" className={classes.truncateAlignRight} >
-                                {row.address}
-                              </Typography> </Link>
+          <Grid item xs={12}>
+            <TableContainer className={classes.container}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                </TableHead>
+                <TableBody>
+                  {rows.map((row: any, index: number) => {
+                    return (
+                      <TableRow key={index} >
+                        <TableCell component="th" scope="row" padding="checkbox"  >
+                          <Grid container spacing={1} style={{ padding: '0.5rem 0', }}>
+                            <Grid item xs={12}>
+                              <Link href="#" color="secondary" >
+                                <Typography variant="body2" className={classes.truncateAlignRight} >
+                                  {row.address}
+                                </Typography> </Link>
+                            </Grid>
+                            <Grid item xs={12} >
+                              <Typography variant="body2" className={classes.alignRight}>
+                                {row.value}
+                              </Typography>
+                            </Grid>
+
+                            <Grid item xs={12} >
+                              <Typography variant="body2" color="textSecondary" className={classes.alignRight}>
+                                {row.percentage}
+                              </Typography>
+                            </Grid>
+
                           </Grid>
-                          <Grid item xs={12} >
-                            <Typography variant="body2" className={classes.alignRight}>
-                              {row.value}
-                            </Typography>
-                          </Grid>
+                        </TableCell>
 
-                          <Grid item xs={12} >
-                            <Typography variant="body2" color="textSecondary" className={classes.alignRight}>
-                              {row.percentage}
-                            </Typography>
-                          </Grid>
-
-                        </Grid>
-                      </TableCell>
-
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={pageSize}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
-
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={pageSize}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+          </Grid>
         </Grid>
       </AccordionDetails>
     </Accordion>
