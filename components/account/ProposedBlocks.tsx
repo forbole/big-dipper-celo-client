@@ -130,7 +130,7 @@ const useStyles = makeStyles(({ spacing }) => {
 
 
 
-const ValidatedBlocks = () => {
+const ProposedBlocks = () => {
   const rowsOption1 = 10;
   const rowsOption2 = 30;
   const rowsOption3 = 50;
@@ -152,11 +152,11 @@ const ValidatedBlocks = () => {
 
     <Accordion>
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon className={classes.icon}/>}
+        expandIcon={<ExpandMoreIcon className={classes.icon} />}
         aria-controls="accountValidatedBlocksPanel"
         id="accountValidatedBlocksPanel"
       >
-        <Typography variant="body1" >Validated Blocks</Typography>
+        <Typography variant="body1" >Proposed Blocks</Typography>
       </AccordionSummary>
       <AccordionDetails className={classes.root}>
         <Grid container >
@@ -228,4 +228,4 @@ const ValidatedBlocks = () => {
   );
 }
 
-export default ValidatedBlocks
+export default ProposedBlocks
