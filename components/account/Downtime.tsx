@@ -16,6 +16,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
+import { DOWNTIME } from '../query/Downtime'
 
 
 interface Column {
@@ -110,7 +111,10 @@ const useStyles = makeStyles(({ spacing }) => {
     },
     divider: {
       backgroundColor: "rgba(62, 67, 71, 1)",
-    }
+    },
+    icon: {
+      fill: "rgba(255,255,255,1)",
+    },
   }
 });
 
@@ -138,7 +142,7 @@ const Downtime = () => {
   return (
     <Accordion>
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
+        expandIcon={<ExpandMoreIcon className={classes.icon}/>}
         aria-controls="accountDowntimePanel"
         id="accountDowntimePanel"
       >
