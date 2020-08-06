@@ -1,6 +1,11 @@
 # Changelog
 
-## Unreleased
+## [Unreleased]
+
+* Updated Grid size on medium screens to 7
+* Disabled back button on Page 1 in TablePagination
+
+## v0.1.0
 
 * Implemented page Layout 
 * Implemented Drawer, Search Bar, Footer, Price Card, Chart Data, Network Dropdown
@@ -33,5 +38,3 @@
 * [#21] Updated ChartData component height and fixed the layout to keep equal spacing between components 
 * [#30] Stored the GraphQL & account endpoint in environment variable
 * [#41] Updated Middle Ellipsis screen size function to useMediaQuery 
-* Updated Grid size on medium screens to 7
-* Disabled back button on Page 1 in TablePagination
