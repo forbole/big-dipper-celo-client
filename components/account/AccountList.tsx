@@ -135,7 +135,7 @@ const AccountList = () => {
 
   if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
-  console.log(totalSupply)
+
   return (
     <Grid container>
       <Grid item xs={12} >
