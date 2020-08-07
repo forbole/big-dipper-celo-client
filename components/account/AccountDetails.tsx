@@ -62,7 +62,7 @@ const useStyles = makeStyles(({ spacing }) => {
             float: 'left',
         },
         icon: {
-            fill: "rgba(255,255,255,1)",
+            fill: "rgba(255, 255, 255, 0.6)",
         },
     }
 

@@ -96,7 +96,7 @@ const useStyles = makeStyles(({ spacing }) => {
       backgroundColor: "rgba(62, 67, 71, 1)",
     },
     icon: {
-      fill: "rgba(255,255,255,1)",
+      fill: "rgba(255, 255, 255, 0.6)",
     },
   }
 });
