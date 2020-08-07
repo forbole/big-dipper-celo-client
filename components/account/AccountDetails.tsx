@@ -25,7 +25,7 @@ const useStyles = makeStyles(({ spacing }) => {
     return {
         root: {
             width: '100%',
-            padding: '1rem',
+            padding: '0 1rem 1rem 1rem',
             borderRadius: 5,
             wordWrap: 'break-word',
 
@@ -91,7 +91,7 @@ const AccountDetails = ({ address }: AppProps) => {
     if (error) return <ErrorMessage message={error.message} />
 
     if (data.validator && accountQuery.data) return (
-        <Accordion>
+        <Accordion defaultExpanded>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon className={classes.icon} />}
                 aria-controls="accoountDetailsPanel"

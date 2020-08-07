@@ -115,7 +115,7 @@ const Downtime = ({ address }: DowntimeProps) => {
   if (error) return <ErrorMessage message={error.message} />
 
   return (
-    <Accordion>
+    <Accordion defaultExpanded>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon className={classes.icon} />}
         aria-controls="accountDowntimePanel"
