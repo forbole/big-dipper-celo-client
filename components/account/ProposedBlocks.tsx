@@ -20,16 +20,25 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Divider from '@material-ui/core/Divider';
-
+import { GET_PROPOSED_BLOCKS } from '../query/Block'
+import { GET_ACCOUNT_DETAILS } from '../query/Account'
+import { useQuery } from "@apollo/client";
+import numbro from "numbro";
+import { useRouter } from "next/router";
+import MiddleEllipsis from '../misc/MiddleEllipsis'
+import ComponentLoader from '../misc/ComponentLoader';
+import NotAvailable from '../misc/NotAvailable';
+import ErrorMessage from '../misc/ErrorMessage';
+import moment from "moment";
 
 interface Column {
-  id: 'height' | 'miner' | 'txs' | 'gasUsed' | 'gasLimit' | 'time';
+  id: 'height' | 'proposer' | 'txs' | 'gasUsed' | 'gasLimit' | 'time';
   label: string;
 }
 
 const columns: Column[] = [
   { id: 'height', label: 'Height', },
-  { id: 'miner', label: 'Validator', },
+  { id: 'proposer', label: 'Proposer', },
   {
     id: 'txs',
     label: 'Txs',
@@ -48,50 +57,15 @@ const columns: Column[] = [
   },
 ];
 
-interface Data {
-  height: string;
-  miner: string;
-  txs: string;
-  gasUsed: string;
-  gasLimit: string;
-  time: string;
-}
-
-function createData(height: string, miner: string, txs: string, gasUsed: string, gasLimit: string, time: string) {
-  return { height, miner, txs, gasUsed, gasLimit, time };
-}
-
-const rows = [
-  createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-  createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-  createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-  createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-  createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-  createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-  createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-  createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-  createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-  createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-  createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-  createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-  createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-  createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-  createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-  createData('1087144', 'Michelle Cl…', '7', '1215', '548946', '14s ago'),
-  createData('1087143', 'Rachel Hug…', '0', '54889', '5484894', '2 mins ago'),
-  createData('1087142', 'Will Chavez', '8', '4515868', '656888', '2 mins ago'),
-  createData('1087141', 'Will Gibson', '128', '56165', '646868', '2 mins ago'),
-  createData('1087140', 'Pamela', '10', '34685468', '54684', '2 mins ago'),
-];
 
 
 const useStyles = makeStyles(({ spacing }) => {
   return {
     root: {
       width: '100%',
-      padding: '0.5rem',
+      padding: '0 0.5rem 0.5rem 0.5rem',
       borderRadius: 5,
-      overflowY: 'auto'
+      marginTop: "-0.5rem"
     },
     container: {
       borderRadius: 5,
@@ -111,7 +85,7 @@ const useStyles = makeStyles(({ spacing }) => {
     },
     tableCell: {
       overflow: 'auto',
-      padding: '0 0.5rem'
+      padding: '0.5rem'
     },
     table: {
       background: '#4D5155',
@@ -129,8 +103,9 @@ const useStyles = makeStyles(({ spacing }) => {
 
 
 
+type ProposedBlocksProps = { address: string };
 
-const ProposedBlocks = () => {
+const ProposedBlocks = ({ address }: ProposedBlocksProps) => {
   const rowsOption1 = 10;
   const rowsOption2 = 30;
   const rowsOption3 = 50;
@@ -145,12 +120,31 @@ const ProposedBlocks = () => {
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPageSize(+event.target.value);
-    setPage(0);
+    setPage(1);
   };
+
+  const accountQuery = useQuery(GET_ACCOUNT_DETAILS, {
+    variables: { address },
+  });
+
+  address = (accountQuery.data && accountQuery.data.account && accountQuery.data.account.accountSummary &&
+    accountQuery.data.account.accountSummary.authorizedSigners && accountQuery.data.account.accountSummary.authorizedSigners.validator)
+    ? accountQuery.data.account.accountSummary.authorizedSigners.validator : ""
+
+
+  console.log(address)
+
+  const { loading, error, data } = useQuery(GET_PROPOSED_BLOCKS, {
+    variables: { address, pageSize, page },
+    pollInterval: 5000,
+  });
+
+  if (loading) return <ComponentLoader />
+  if (error) return <ErrorMessage message={error.message} />
 
   return (
 
-    <Accordion>
+    <Accordion defaultExpanded>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon className={classes.icon} />}
         aria-controls="accountValidatedBlocksPanel"
@@ -159,63 +153,78 @@ const ProposedBlocks = () => {
         <Typography variant="body1" >Proposed Blocks</Typography>
       </AccordionSummary>
       <AccordionDetails className={classes.root}>
-        <Grid container >
+        <Grid container className={classes.tableCell}>
           <Divider variant='middle' className={classes.divider} />
           <Grid item xs={12}>
             <TableContainer className={classes.container}>
-              <Paper className={classes.tableCell}>
-                <Table >
-                  <TableHead>
-                    <TableRow>
-                      {columns.map((column: any, index: number) => (
-                        <TableCell
-                          key={index}
-                          align="left"
-                          className={classes.table}
-                          padding="checkbox"
-                        >
-                          <Typography variant="body2" noWrap className={classes.tableCell}>{column.label}</Typography>
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rows.map((row: any, index: number) => {
-                      return (
-                        <TableRow key={index} >
-                          <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
+              <Table >
+                <TableHead>
+                  <TableRow>
+                    {columns.map((column: any, index: number) => (
+                      <TableCell
+                        key={index}
+                        align="left"
+                        className={classes.table}
+                        padding="checkbox"
+                      >
+                        <Typography variant="body2" noWrap className={classes.tableCell}>{column.label}</Typography>
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data.proposedBlocks.blocks.map((row: any, index: number) => {
+                    return (
+                      <TableRow key={index} >
+
+                        <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
+                          {row.number ?
                             <Link href="#" color="secondary"  >
-                              <Typography variant="body2" noWrap> {row.height}</Typography>
+                              <Typography variant="body2" noWrap> {row.number}</Typography>
                             </Link>
-                          </TableCell>
-                          <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                            : ""}
+                        </TableCell>
+
+                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                          {(row.miner && row.miner.name) || (row.miner && row.miner.signerAccount && row.miner.signerAccount.address) ?
                             <Link href="#" color="secondary" >
-                              <Typography variant="body2" noWrap>{row.miner}</Typography>
+                              <Typography variant="body2" noWrap>{row.miner.name || <MiddleEllipsis text={row.miner.signerAccount.address} />}</Typography>
                             </Link>
-                          </TableCell>
-                          <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                            <Typography variant="body2" noWrap>{row.txs}</Typography>
-                          </TableCell>
-                          <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                            : <NotAvailable variant="body2" />}
+                        </TableCell>
+
+                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                          {row.transactions && row.transactions.transactionIndex ?
+                            <Typography variant="body2" noWrap>{row.transactions.transactionIndex}</Typography>
+                            : "0"}
+                        </TableCell>
+
+                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                          {row.gasUsed ?
                             <Typography variant="body2" noWrap>{row.gasUsed}</Typography>
-                          </TableCell>
-                          <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                            : <NotAvailable variant="body2" />}
+                        </TableCell>
+
+                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                          {row.gasLimit ?
                             <Typography variant="body2" noWrap>{row.gasLimit}</Typography>
-                          </TableCell>
-                          <TableCell align="left" padding="checkbox" >
-                            <Typography variant="body2" noWrap>{row.time}</Typography>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              </Paper>
+                            : <NotAvailable variant="body2" />}
+                        </TableCell>
+                        <TableCell align="left" padding="checkbox" >
+                          {row.timestamp ?
+                            <Typography variant="body2" noWrap>{moment.unix(row.timestamp).fromNow()}</Typography>
+                            : <NotAvailable variant="body2" />}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
               component="div"
-              count={rows.length}
+              count={data.proposedBlocks.totalCounts}
               rowsPerPage={pageSize}
               page={page}
               onChangePage={handleChangePage}

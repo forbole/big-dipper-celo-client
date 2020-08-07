@@ -75,16 +75,16 @@ const AccountPage = (props: any) => {
       </Grid> */}
 
       <Grid item xs={12} md={8} >
-        <Downtime address={accountAddress}/>
+        <Downtime address={accountAddress} />
       </Grid>
 
       <Grid item xs={12} md={8} >
-        <ProposedBlocks />
+        <ProposedBlocks address={accountAddress} />
       </Grid>
 
 
       <Grid item xs={12} md={8} >
-        <AccountDetails address={accountAddress}/>
+        <AccountDetails address={accountAddress} />
       </Grid>
 
     </Grid>
