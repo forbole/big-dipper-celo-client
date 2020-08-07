@@ -6,11 +6,21 @@ export const GET_BLOCK = gql`
       totalCounts
       blocks {
         number
-        miner {
+        miner{
           name
-          affiliation
           signer
-
+        }
+        signers{
+          exist
+          signer
+          validator{
+            name
+            score
+            validatorGroup{
+              name
+              commission
+            }
+          }
         }
         transactions {
           transactionIndex
@@ -27,6 +37,8 @@ export const GET_BLOCK = gql`
 export const GET_BLOCK_DETAILS = gql`
   query Block($number: Int) {
     block(number: $number) {
+      hash
+      number
       timestamp
       transactions {
         transactionIndex
@@ -37,7 +49,18 @@ export const GET_BLOCK_DETAILS = gql`
         name
         signer
       }
-      hash
+      signers{
+        signer
+        exist
+        validator{
+          name
+          score
+           validatorGroup{
+            address
+          }
+        }
+      }
+     
       parentHash
       totalDifficulty
       gasUsed
