@@ -153,7 +153,7 @@ const BlockDetails = () => {
 
           <Grid item xs={12} >
             <Typography variant="body2" component="h2">
-              Miner
+              Validator
             </Typography>
             <Typography variant="body2" component="h2">
               {data &&
