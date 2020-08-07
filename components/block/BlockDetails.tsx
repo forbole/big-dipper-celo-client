@@ -26,9 +26,7 @@ const useStyles = makeStyles(() => {
       borderRadius: 5,
       wordWrap: "break-word",
     },
-    item: {
-      padding: "0 0 1rem 0.5rem",
-    },
+
     divider: {
       margin: "0.5rem 0 0 0",
       backgroundColor: "rgba(62, 67, 71, 1)",
@@ -73,7 +71,7 @@ const BlockDetails = () => {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Grid container spacing={2} justify="center" className={classes.item}>
+        <Grid container spacing={2} justify="center" >
           <Grid item xs={10}>
             <Typography color="textPrimary" variant="subtitle1" >
               Block #{number}
@@ -113,7 +111,7 @@ const BlockDetails = () => {
           <Grid item xs={12}>
             <Divider />
           </Grid>
-          <Grid item xs={12} className={classes.item}>
+          <Grid item xs={12} >
             <Typography variant="body2" component="h2">
               Time
             </Typography>
@@ -129,7 +127,7 @@ const BlockDetails = () => {
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
-          <Grid item xs={12} className={classes.item}>
+          <Grid item xs={12} >
             <Typography variant="body2" component="h2">
               Transactions
             </Typography>
@@ -137,13 +135,13 @@ const BlockDetails = () => {
               {data.block &&
                 data.block.transactions &&
                 data.block.transactions.transactionIndex
-                ? data.block.transactions.transactionIndex.length()
-                : <NotAvailable variant="body2" />}
+                ? data.block.transactions.transactionIndex
+                : "0"}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid item xs={12} className={classes.item}>
+          <Grid item xs={12} >
             <Typography variant="body2">Size</Typography>
             <Typography variant="body2" component="h2">
               {data.block && data.block.size
@@ -153,7 +151,7 @@ const BlockDetails = () => {
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid item xs={12} className={classes.item}>
+          <Grid item xs={12} >
             <Typography variant="body2" component="h2">
               Miner
             </Typography>
@@ -170,7 +168,7 @@ const BlockDetails = () => {
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid item xs={12} className={classes.item}>
+          <Grid item xs={12} >
             <Typography variant="body2" component="h2">
               Hash
             </Typography>
@@ -182,7 +180,7 @@ const BlockDetails = () => {
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid item xs={12} className={classes.item}>
+          <Grid item xs={12} >
             <Typography variant="body2" component="h2">
               Parent Hash
             </Typography>
@@ -202,7 +200,7 @@ const BlockDetails = () => {
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid item xs={12} className={classes.item}>
+          <Grid item xs={12} >
             <Typography variant="body2" component="h2">
               Total Difficulty
             </Typography>
@@ -214,7 +212,7 @@ const BlockDetails = () => {
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid item xs={12} className={classes.item}>
+          <Grid item xs={12} >
             <Typography variant="body2" component="h2">
               Nonce
             </Typography>
@@ -228,7 +226,7 @@ const BlockDetails = () => {
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid item xs={12} className={classes.item}>
+          <Grid item xs={12} >
             <Typography variant="body2" component="h2">
               Gas Used
             </Typography>
@@ -240,7 +238,7 @@ const BlockDetails = () => {
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid item xs={12} className={classes.item}>
+          <Grid item xs={12} >
             <Typography variant="body2" component="h2">
               Gas Limit
             </Typography>
@@ -251,6 +249,33 @@ const BlockDetails = () => {
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
+
+          <Grid item xs={12} >
+            <Typography variant="body2" component="h2" gutterBottom>
+              Signers
+            </Typography>
+            {data.block && data.block.signers
+              ?
+              data.block.signers.map((row: any, index: number) => {
+                return (
+                  <span key={index}>
+
+                    <Typography variant="body2" gutterBottom >
+                      <Link
+                        href="/validatorGroup/[validatorGroupDetails]/"
+                        as={row.validator && row.validator.validatorGroup && row.validator.validatorGroup.address ?
+                          `/validatorGroup/${row.validator.validatorGroup.address}` : ""}
+                        color="secondary">
+                        {row.validator.name}
+                      </Link>
+                    </Typography>
+                  </span>
+                )
+              })
+              : <NotAvailable variant="body2" />}
+          </Grid>
+
+
         </Grid>
       </CardContent>
     </Card>
