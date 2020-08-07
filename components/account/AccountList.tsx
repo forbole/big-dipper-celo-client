@@ -118,7 +118,7 @@ const AccountList = () => {
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPageSize(+event.target.value);
-    setPage(0);
+    setPage(1);
   };
 
   const { loading, error, data } = useQuery(GET_ACCOUNTS, {
@@ -151,7 +151,7 @@ const AccountList = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row: any, index: number) => {
+                  {data.accounts.accounts.map((row: any, index: number) => {
                     return (
                       <TableRow key={index} >
                         <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
@@ -187,11 +187,18 @@ const AccountList = () => {
           <TablePagination
             rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
             component="div"
-            count={rows.length}
+            count={data.accounts.accounts.length}
             rowsPerPage={pageSize}
             page={page}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
+            backIconButtonProps={{
+              'aria-label': 'Previous',
+              'disabled': page === 1,
+            }}
+            nextIconButtonProps={{
+              'aria-label': 'Next',
+            }}
           />
         </Paper>
       </Grid>

@@ -126,7 +126,7 @@ const ProposalVotingList = () => {
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPageSize(+event.target.value);
-        setPage(0);
+        setPage(1);
     };
 
     const [value, setValue] = React.useState(0);
@@ -307,6 +307,13 @@ const ProposalVotingList = () => {
                     page={page}
                     onChangePage={handleChangePage}
                     onChangeRowsPerPage={handleChangeRowsPerPage}
+                    backIconButtonProps={{
+                        'aria-label': 'Previous',
+                        'disabled': page === 1,
+                    }}
+                    nextIconButtonProps={{
+                        'aria-label': 'Next',
+                    }}
                 />
             </Paper>
         </Grid>

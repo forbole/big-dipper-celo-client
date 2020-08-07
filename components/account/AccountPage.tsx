@@ -2,7 +2,6 @@ import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import AccountTransactions from "./Transactions";
-import InternalTransactions from "./InternalTransactions";
 import Downtime from "./Downtime";
 import ValidatedBlocks from "./ValidatedBlocks";
 import AddressCard from "./AddressCard";
@@ -57,34 +56,34 @@ const AccountPage = (props: any) => {
 
     <Grid container spacing={2} className={classes.root}>
 
-      <Grid item xs={12} md={8} >
+      <Grid item xs={12} >
         <AddressCard address={accountAddress} />
       </Grid>
 
-      <Grid item xs={12} md={8} >
+      <Grid item xs={12} >
         <AccountOverview address={accountAddress} />
       </Grid>
 
 
-      <Grid item xs={12} md={8} >
+      <Grid item xs={12} >
         <AccountTransactions />
       </Grid>
 
 
-      <Grid item xs={12} md={8} >
+      <Grid item xs={12}  >
         <CoinBalanceHistory />
       </Grid>
 
-      <Grid item xs={12} md={8} >
+      <Grid item xs={12} >
         <Downtime />
       </Grid>
 
-      <Grid item xs={12} md={8} >
+      <Grid item xs={12} >
         <ValidatedBlocks />
       </Grid>
 
 
-      <Grid item xs={12} md={8} >
+      <Grid item xs={12} >
         <AccountDetails />
       </Grid>
 

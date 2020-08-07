@@ -142,7 +142,7 @@ const AddressCard = (props: any) => {
           <DialogContentText id="qr-code"  >
             <Grid container spacing={1} >
               <Grid item xs={12} className={classes.item}  >
-                <QRCode value={`https://celo.bigdipper.live/account/${props.address}`} className={classes.qrCode} />
+                <QRCode value={`${process.env.uriAccount}/${props.address}`} className={classes.qrCode} />
               </Grid>
             </Grid>
           </DialogContentText>
@@ -158,7 +158,7 @@ const AddressCard = (props: any) => {
       <Card>
         <CardContent>
           <Grid container spacing={1} className={classes.card}>
-            <Grid item xs={10} sm={10} md={10}>
+            <Grid item xs={10} >
               <Typography variant="body1" gutterBottom>
                 Address
             </Typography>

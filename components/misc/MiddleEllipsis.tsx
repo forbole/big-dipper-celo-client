@@ -1,81 +1,52 @@
-import React, { Component } from 'react';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 
-interface TextProps {
-    text: String;
-}
+type AppProps = { text: string };
+
+const MiddleEllipsis = ({ text }: AppProps) => {
+    const theme = useTheme();
+    const xs = useMediaQuery((theme.breakpoints.up('xs')) && (theme.breakpoints.down('sm')));
+    const sm = useMediaQuery((theme.breakpoints.up('sm')) && (theme.breakpoints.down('md')));
+    const md = useMediaQuery((theme.breakpoints.up('md')) && (theme.breakpoints.down('lg')));
+    const lg = useMediaQuery((theme.breakpoints.up('lg')) && (theme.breakpoints.down('xl')));
+
+    let str = text
 
 
-class MiddleEllipsis extends React.Component<TextProps, { screenSize: String }>{
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            screenSize: '',
+    if (xs) {
+        if (str.length > 10) {
+            return <>{str.substr(0, 5)}...{str.substr(str.length - 18, str.length)}</>
+        }
+        else {
+            return <>{str}</>;
         }
     }
-
-    getScreenSize() {
-        if (typeof window !== "undefined") {
-            if (window.innerWidth < 600) {
-                this.setState({
-                    screenSize: 'xs'
-                })
-            }
-            else if (window.innerWidth > 600 && window.innerWidth < 960) {
-                this.setState({
-                    screenSize: 'sm'
-                })
-            }
-            else if (window.innerWidth > 960 && window.innerWidth < 1280) {
-                this.setState({
-                    screenSize: 'md'
-                })
-            }
-            else {
-                this.setState({
-                    screenSize: 'lg'
-                })
-            }
+    else if (sm) {
+        if (str.length > 12) {
+            return <>{str.substr(0, 6)}...{str.substr(str.length - 20, str.length)}</>
+        }
+        else {
+            return <>{str}</>;
         }
     }
-
-
-    componentDidMount() {
-        this.getScreenSize();
-    }
-
-    render() {
-        let str = this.props.text
-
-        switch (this.state.screenSize) {
-            case 'xs': if (str.length > 10) {
-                return str.substr(0, 5) + '...' + str.substr(str.length - 6, str.length)
-            }
-            else {
-                return str;
-            }
-            case 'sm': if (str.length > 12) {
-                return str.substr(0, 6) + '...' + str.substr(str.length - 10, str.length)
-            }
-            else {
-                return str;
-            }
-            case 'md': if (str.length > 15) {
-                return str.substr(0, 7) + '...' + str.substr(str.length - 15, str.length)
-            } else {
-                return str;
-            }
-            case 'lg': if (str.length > 20) {
-                return str.substr(0, 9) + '...' + str.substr(str.length - 15, str.length)
-            }
-            else {
-                return str;
-            }
-
-            default: return str
+    else if (md) {
+        if (str.length > 15) {
+            return <>{str.substr(0, 7)}...{str.substr(str.length - 15, str.length)}</>
+        } else {
+            return <>{str}</>;
         }
-
-
+    }
+    else if (lg) {
+        if (str.length > 17) {
+            return <>{str.substr(0, 8)}...{str.substr(str.length - 5, str.length)}</>
+        }
+        else {
+            return <>{str}</>;
+        }
+    }
+    else {
+        return <>{str}</>;
     }
 }
 

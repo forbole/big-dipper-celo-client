@@ -19,7 +19,7 @@ export default function Accounts() {
   return (
     <Layout>
       <Grid container spacing={2} className={classes.root}>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={7}>
           <AccountList />
         </Grid>
       </Grid>
