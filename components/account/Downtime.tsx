@@ -33,30 +33,19 @@ interface Column {
 const columns: Column[] = [
   { id: 'height', label: 'Height', },
   { id: 'proposer', label: 'Proposer', },
-  {
-    id: 'txs',
-    label: 'Txs',
-  },
-  {
-    id: 'gasUsed',
-    label: 'Gas Used',
-  },
-  {
-    id: 'gasLimit',
-    label: 'Gas Limit',
-  },
-  {
-    id: 'time',
-    label: 'Time',
-  },
+  { id: 'txs', label: 'Txs', },
+  { id: 'gasUsed', label: 'Gas Used', },
+  { id: 'gasLimit', label: 'Gas Limit', },
+  { id: 'time', label: 'Time', },
 ];
 
 const useStyles = makeStyles(({ spacing }) => {
   return {
     root: {
       width: '100%',
-      padding: '0.5rem',
-      overflowY: 'auto'
+      padding: '0 0.5rem 0.5rem 0.5rem',
+      overflowY: 'auto',
+      marginTop: "-0.5rem",
     },
     container: {
       borderRadius: 5,
@@ -72,7 +61,7 @@ const useStyles = makeStyles(({ spacing }) => {
     },
     tableCell: {
       overflow: 'auto',
-      padding: '0 0.5rem'
+      padding: '0.5rem'
     },
     table: {
       background: '#4D5155',
@@ -112,7 +101,9 @@ const Downtime = ({ address }: DowntimeProps) => {
     variables: { address },
   });
 
-  address = (accountQuery.data && accountQuery.data.account && accountQuery.data.account.accountSummary && accountQuery.data.account.accountSummary.authorizedSigners && accountQuery.data.account.accountSummary.authorizedSigners.validator) ? accountQuery.data.account.accountSummary.authorizedSigners.validator : ""
+  address = (accountQuery.data && accountQuery.data.account && accountQuery.data.account.accountSummary &&
+    accountQuery.data.account.accountSummary.authorizedSigners && accountQuery.data.account.accountSummary.authorizedSigners.validator)
+    ? accountQuery.data.account.accountSummary.authorizedSigners.validator : ""
 
 
   const { loading, error, data } = useQuery(DOWNTIME, {
@@ -133,74 +124,68 @@ const Downtime = ({ address }: DowntimeProps) => {
         <Typography variant="body1" > Downtime</Typography>
       </AccordionSummary>
       <AccordionDetails className={classes.root}>
-        <Grid container >
+        <Grid container className={classes.tableCell}>
           <Divider variant='middle' className={classes.divider} />
           <Grid item xs={12}>
             <TableContainer className={classes.container}>
-              <Paper className={classes.tableCell}>
-                <Table >
-                  <TableHead>
-                    <TableRow>
-                      {columns.map((column) => (
-                        <TableCell
-                          key={column.id}
-                          align="left"
-                          className={classes.table}
-                          padding="checkbox"
-                        >
-                          <Typography variant="body2" noWrap className={classes.tableCell}>{column.label}</Typography>
+              {/* <Paper className={classes.tableCell}> */}
+              <Table >
+                <TableHead>
+                  <TableRow>
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align="left"
+                        className={classes.table}
+                        padding="checkbox"
+                      >
+                        <Typography variant="body2" noWrap className={classes.tableCell}>{column.label}</Typography>
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data.downtime.blocks.map((row: any, index: number) => {
+                    return (
+                      <TableRow key={index} >
+                        <TableCell component="th" scope="row" align="left" padding="checkbox" className={classes.tableCell} >
+                          <Link href="#" color="secondary"  >
+                            <Typography variant="body2" noWrap> {row.number}</Typography>
+                          </Link>
                         </TableCell>
-                      ))}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {data.downtime.blocks.map((row: any, index: number) => {
-                      return (
-                        <TableRow key={index} >
-                          <TableCell component="th" scope="row" align="left" className={classes.tableCell} >
-                            <Link href="#" color="secondary"  >
-                              <Typography variant="body2" noWrap> {row.number}</Typography>
+                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                          {row.miner && row.miner.name ?
+                            <Link href="#" color="secondary" >
+                              <Typography variant="body2" noWrap>{row.miner.name}</Typography>
                             </Link>
-                          </TableCell>
-                          <TableCell align="left" className={classes.tableCell}>
-                            {row.miner && row.miner.name ?
-                              <Link href="#" color="secondary" >
-                                <Typography variant="body2" noWrap>{row.miner.name}</Typography>
-                              </Link>
-                              : <NotAvailable variant="body2" />}
-                          </TableCell>
-                          <TableCell align="left" className={classes.tableCell}>
-                            {row.hash ?
-                              <Link
-                                href="/transaction/[transaction]/"
-                                as={`../transaction/${row.hash}`}
-                                color="secondary"
-                              >
-                              <MiddleEllipsis text={row.hash}/>
-                              </Link>
-                              : <NotAvailable variant="body2" />}
-                          </TableCell>
-                          <TableCell align="left" className={classes.tableCell}>
-                            {row.gasUsed ?
-                              <Typography variant="body2" noWrap>{row.gasUsed}</Typography>
-                              : <NotAvailable variant="body2" />}
-                          </TableCell>
-                          <TableCell align="left" className={classes.tableCell}>
-                            {row.gasLimit ?
-                              <Typography variant="body2" noWrap>{row.gasLimit}</Typography>
-                              : <NotAvailable variant="body2" />}
-                          </TableCell>
-                          <TableCell align="left" >
-                            {row.timestamp ?
-                              <Typography variant="body2" noWrap>{moment.unix(row.timestamp).fromNow()}</Typography>
-                              : <NotAvailable variant="body2" />}
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              </Paper>
+                            : <NotAvailable variant="body2" />}
+                        </TableCell>
+                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                          {row.transactions && row.transactions.transactionIndex ?
+                            <MiddleEllipsis text={row.transactions.transactionIndex} />
+                            : "0"}
+                        </TableCell>
+                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                          {row.gasUsed ?
+                            <Typography variant="body2" noWrap>{row.gasUsed}</Typography>
+                            : <NotAvailable variant="body2" />}
+                        </TableCell>
+                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                          {row.gasLimit ?
+                            <Typography variant="body2" noWrap>{row.gasLimit}</Typography>
+                            : <NotAvailable variant="body2" />}
+                        </TableCell>
+                        <TableCell align="left" padding="checkbox">
+                          {row.timestamp ?
+                            <Typography variant="body2" noWrap>{moment.unix(row.timestamp).fromNow()}</Typography>
+                            : <NotAvailable variant="body2" />}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+              {/* </Paper> */}
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}

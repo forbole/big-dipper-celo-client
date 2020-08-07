@@ -14,6 +14,9 @@ export const DOWNTIME = gql`
         gasUsed
         gasLimit
         timestamp
+        transactions{
+        transactionIndex
+        }
         miner{
           name
           signer
