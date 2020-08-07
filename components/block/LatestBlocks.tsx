@@ -299,7 +299,7 @@ const LatestBlocks = (props: any) => {
                             <Link href="#" color="secondary">
                               {row.transactions &&
                                 row.transactions.transactionIndex
-                                ? row.transactions.transactionIndex.length()
+                                ? row.transactions.transactionIndex
                                 : 0}
                             </Link>
                           </Typography>

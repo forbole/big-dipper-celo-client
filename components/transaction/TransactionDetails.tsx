@@ -169,11 +169,11 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               Hash
             </Typography>
-            <Typography variant="body2" component="h2">
-              {data.transaction && data.transaction.hash
-                ? data.transaction.hash
-                : <NotAvailable variant="body2" />}
-            </Typography>
+            {data.transaction && data.transaction.hash ?
+              <Typography variant="body2" component="h2">
+                {data.transaction.hash}
+              </Typography>
+              : <NotAvailable variant="body2" />}
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
@@ -216,7 +216,7 @@ const TransactionDetails = (props: any) => {
               Status
             </Typography>
             <Typography variant="body2" component="h2">
-              {data.transaction && !data.transaction.pending ? (
+              {data.transaction && data.transaction.pending ? (
                 <Chips value="Pending" />
               ) : (
                   <Chips value="Success" />
@@ -230,8 +230,9 @@ const TransactionDetails = (props: any) => {
               From
             </Typography>
 
-            <Typography variant="body2" component="h2">
-              {data.transaction && data.transaction.from ? (
+            {data.transaction && data.transaction.from ?
+              <Typography variant="body2" component="h2">
+                (
                 <Link
                   href="/account/[account]/"
                   as={`/account/${data.transaction.from.address}`}
@@ -239,8 +240,9 @@ const TransactionDetails = (props: any) => {
                 >
                   {data.transaction.from.address}
                 </Link>
-              ) : <NotAvailable variant="body2" />}
+              )
             </Typography>
+              : <NotAvailable variant="body2" />}
 
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -249,8 +251,8 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               To
             </Typography>
-            <Typography variant="body2" component="h2">
-              {data.transaction && data.transaction.to ? (
+            {data.transaction && data.transaction.to ?
+              <Typography variant="body2" component="h2">
                 <Link
                   href="/account/[account]/"
                   as={`/account/${data.transaction.to.address}`}
@@ -258,8 +260,9 @@ const TransactionDetails = (props: any) => {
                 >
                   {data.transaction.to.address}
                 </Link>
-              ) : <NotAvailable variant="body2" />}
-            </Typography>
+              </Typography>
+              : <NotAvailable variant="body2" />}
+
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
@@ -267,11 +270,12 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               Value
             </Typography>
-            <Typography variant="body2" component="h2">
-              {data.transaction && data.transaction.value
-                ? data.transaction.value
-                : <NotAvailable variant="body2" />}
-            </Typography>
+
+            {data.transaction && data.transaction.value ?
+              <Typography variant="body2" component="h2">
+                {data.transaction.value}
+              </Typography>
+              : <NotAvailable variant="body2" />}
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
@@ -279,16 +283,15 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               Block Height
             </Typography>
-            <Typography variant="body2" component="h2">
-              <Link
-                href={`/block/${data.transaction.blockNumber}`}
-                color="secondary"
-              >
-                {data.transaction && data.transaction.blockNumber
-                  ? data.transaction.blockNumber
-                  : <NotAvailable variant="body2" />}
-              </Link>
-            </Typography>
+            {data.transaction && data.transaction.blockNumber ?
+              < Typography variant="body2" component="h2">
+                <Link
+                  href={`/block/${data.transaction.blockNumber}`}
+                  color="secondary"
+                > {data.transaction.blockNumber}
+                </Link>
+              </Typography>
+              : <NotAvailable variant="body2" />}
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
@@ -296,11 +299,11 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               Nonce
             </Typography>
-            <Typography variant="body2" component="h2">
-              {data.transaction && data.transaction.nonce
-                ? data.transaction.nonce
-                : <NotAvailable variant="body2" />}
-            </Typography>
+            {data.transaction && data.transaction.nonce ?
+              < Typography variant="body2" component="h2">
+                {data.transaction.nonce}
+              </Typography>
+              : <NotAvailable variant="body2" />}
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
@@ -308,11 +311,11 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               Transaction Fee
             </Typography>
-            <Typography variant="body2" component="h2">
-              {data.transaction && data.transaction.feeCurrency
-                ? data.transaction.feeCurrency + "cGLD"
-                : <NotAvailable variant="body2" />}
+            {data.transaction && data.transaction.feeCurrency ?
+              <Typography variant="body2" component="h2">
+                {data.transaction.feeCurrency} + "cGLD"
             </Typography>
+              : <NotAvailable variant="body2" />}
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
@@ -320,11 +323,11 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               Fee Receipient
             </Typography>
-            <Typography variant="body2" component="h2">
-              {data.transaction && data.transaction.gatewayFeeRecipient
-                ? data.transaction.gatewayFeeRecipient
-                : <NotAvailable variant="body2" />}
-            </Typography>
+            {data.transaction && data.transaction.gatewayFeeRecipient
+              ? <Typography variant="body2" component="h2">
+                {data.transaction.gatewayFeeRecipient}
+              </Typography>
+              : <NotAvailable variant="body2" />}
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
@@ -332,11 +335,13 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               Gate Fee
             </Typography>
-            <Typography variant="body2" component="h2">
-              {data.transaction && data.transaction.gatewayFee
-                ? data.transaction.gatewayFee
-                : <NotAvailable variant="body2" />}
-            </Typography>
+            {data.transaction && data.transaction.gatewayFee
+              ?
+              <Typography variant="body2" component="h2">
+                {data.transaction.gatewayFee}
+              </Typography>
+              : <NotAvailable variant="body2" />}
+
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
@@ -344,9 +349,11 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               Transaction Speed
             </Typography>
-            <Typography variant="body2" component="h2">
-              1.5 seconds
-            </Typography>
+            {data.transaction && data.transaction.speed ?
+              <Typography variant="body2" component="h2">
+                {data.transaction.speed}
+              </Typography>
+              : <NotAvailable variant="body2" />}
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
@@ -405,11 +412,11 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" component="h2">
               Gas Used
             </Typography>
-            <Typography variant="body2" component="h2">
-              {data.transaction && data.transaction.gas
-                ? data.transaction.gas
-                : <NotAvailable variant="body2" />}
-            </Typography>
+            {data.transaction && data.transaction.gas ?
+              <Typography variant="body2" component="h2">
+                {data.transaction.gas}
+              </Typography>
+              : <NotAvailable variant="body2" />}
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
@@ -417,9 +424,11 @@ const TransactionDetails = (props: any) => {
             <Typography variant="body2" >
               Gas Limit
             </Typography>
-            <Typography variant="body2">
-              20,000.000
-            </Typography>
+            {data.transaction && data.transaction.gasLimit
+              ? <Typography variant="body2">
+                {data.transaction.gasLimit}
+              </Typography>
+              : <NotAvailable variant="body2" />}
           </Grid>
         </Grid>
       </CardContent>
@@ -434,7 +443,7 @@ const TransactionDetails = (props: any) => {
         </Alert>
       </Snackbar>{" "}
 
-    </Card>
+    </Card >
   );
 }
 
