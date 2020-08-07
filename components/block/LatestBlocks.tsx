@@ -266,10 +266,10 @@ const LatestBlocks = (props: any) => {
                           padding="checkbox"
                           className={classes.tableCell}
                         >
-                          {row.miner && row.miner.affiliation ? (
+                          {row.miner && row.miner.address ? (
                             <Link
                               href="/account/[account]/"
-                              as={`/account/${row.miner.affiliation}`}
+                              as={`/account/${row.miner.address}`}
                               color="secondary"
                             >
                               <Typography
@@ -281,8 +281,8 @@ const LatestBlocks = (props: any) => {
                                 <span>
                                   {
                                     ((row.miner && row.miner.name) ||
-                                      (row.miner && row.miner.affiliation)
-                                      ? <MiddleEllipsis text={(row.miner.name || row.miner.affiliation)} />
+                                      (row.miner && row.miner.address)
+                                      ? <MiddleEllipsis text={(row.miner.name || row.miner.address)} />
                                       : null)}
                                 </span>
                               </Typography>
