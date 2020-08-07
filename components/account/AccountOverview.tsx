@@ -18,7 +18,6 @@ import Button from "@material-ui/core/Button";
 import Chips from "../Chips";
 import AccountTransactions from "./Transactions";
 import Downtime from "./Downtime";
-import ValidatedBlocks from "./ValidatedBlocks";
 import AddressCard from "./AddressCard";
 import AccountDetails from "./AccountDetails";
 import Hidden from "@material-ui/core/Hidden";
@@ -38,6 +37,7 @@ import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
 import MiddleEllipsis from '../misc/MiddleEllipsis'
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 const BigNumber = require('bignumber.js');
 
@@ -87,6 +87,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
     buttonUnlock: {
       justifyContent: "center",
+      [theme.breakpoints.down('xs')]: {
+        width: "7.5rem",
+      },
       width: "9.5rem",
       padding: "0.5rem",
       textTransform: "none",
@@ -96,7 +99,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
     buttonLock: {
       justifyContent: "center",
-      width: "9.5rem",
+      [theme.breakpoints.down('xs')]: {
+        width: "7.5rem",
+      },
+      width:  "9.5rem",
       padding: "0.5rem",
       textTransform: "none",
       border: "solid thin",
@@ -166,6 +172,14 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       justifyContent: "center",
     },
+
+    icon: {
+      fill: "rgba(255, 255, 255, 0.6)",
+      paddingRight: "0.5rem",
+      fontWeight: 300,
+      width: "1.75rem"
+
+    },
   })
 );
 
@@ -195,6 +209,10 @@ const TokenDropdown = (props: any) => {
         disableUnderline={true}
         // labelWidth={600}
         style={{ padding: "0" }}
+        IconComponent={KeyboardArrowDownIcon}
+        classes={{
+          icon: classes.icon,
+        }}
       >
         <Typography
           variant="body1"
@@ -288,20 +306,20 @@ const AccountOverview = (props: any) => {
             </> : null
           }
 
-          <Grid item xs={6} md={6}>
+          <Grid item xs={3} >
             <Typography variant="body2" className={classes.alignLeft}>
               Balance
             </Typography>
           </Grid>
 
-          <Grid item xs={6} md={6}>
+          <Grid item xs={9} >
             {accountQuery.data.account && accountQuery.data.account.balance ? <Typography variant="body2" className={classes.alignRight} >
               {BigNumber.prototype.toFormat.call(
                 new BigNumber(accountQuery.data.account.balance)
               )} CELO
             </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
           </Grid>
-          <Grid item xs={12} md={12} >
+          <Grid item xs={12}  >
             {accountQuery.data.account && accountQuery.data.account.balance && chainQuery.data.chain && chainQuery.data.chain.tokenPrice && chainQuery.data.chain.tokenPrice.usd ?
               < Typography variant="body2" className={classes.alignRight} noWrap>
                 ${BigNumber.prototype.toFormat.call(
@@ -329,7 +347,7 @@ const AccountOverview = (props: any) => {
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid container >
+          <Grid container spacing={2} >
             <Grid item xs={6} className={classes.centerContent} >
               <div className={classes.centerButtons}>
                 <Button
