@@ -124,7 +124,7 @@ const AccountTransactions = ({ address }: AppProps) => {
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPageSize(+event.target.value);
-    setPage(0);
+    setPage(1);
   };
 
   const { loading, error, data } = useQuery(GET_ACCOUNT_TX, {
@@ -227,24 +227,31 @@ const AccountTransactions = ({ address }: AppProps) => {
                               </Typography>
                             </Grid>
                           </Grid>
-                        </TableCell>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
+            component="div"
+            count={data.transactionsByAccount.totalCounts}
+            rowsPerPage={pageSize}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+            backIconButtonProps={{
+              'aria-label': 'Previous',
+              'disabled': page === 1,
+            }}
+            nextIconButtonProps={{
+              'aria-label': 'Next',
+            }}
+          />
 
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
-              component="div"
-              count={data.transactionsByAccount.totalCounts}
-              rowsPerPage={pageSize}
-              page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-            />
-          </Grid>
+        </Grid>
         </Grid>
       </AccordionDetails>
     </Accordion>

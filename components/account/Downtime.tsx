@@ -128,7 +128,6 @@ const Downtime = ({ address }: DowntimeProps) => {
           <Divider variant='middle' className={classes.divider} />
           <Grid item xs={12}>
             <TableContainer className={classes.container}>
-              {/* <Paper className={classes.tableCell}> */}
               <Table >
                 <TableHead>
                   <TableRow>
@@ -185,7 +184,6 @@ const Downtime = ({ address }: DowntimeProps) => {
                   })}
                 </TableBody>
               </Table>
-              {/* </Paper> */}
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
@@ -195,6 +193,13 @@ const Downtime = ({ address }: DowntimeProps) => {
               page={page}
               onChangePage={handleChangePage}
               onChangeRowsPerPage={handleChangeRowsPerPage}
+              backIconButtonProps={{
+                'aria-label': 'Previous',
+                'disabled': page === 1,
+              }}
+              nextIconButtonProps={{
+                'aria-label': 'Next',
+              }}
             />
           </Grid>
         </Grid>

@@ -121,7 +121,7 @@ const AccountList = () => {
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPageSize(+event.target.value);
-    setPage(0);
+    setPage(1);
   };
 
   const { loading, error, data } = useQuery(GET_ACCOUNTS, {
@@ -213,6 +213,13 @@ const AccountList = () => {
             page={page}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
+            backIconButtonProps={{
+              'aria-label': 'Previous',
+              'disabled': page === 1,
+            }}
+            nextIconButtonProps={{
+              'aria-label': 'Next',
+            }}
           />
         </Paper>
       </Grid>

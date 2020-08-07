@@ -56,34 +56,34 @@ const AccountPage = (props: any) => {
 
     <Grid container spacing={2} className={classes.root}>
 
-      <Grid item xs={12} md={8} >
+      <Grid item xs={12}  >
         <AddressCard address={accountAddress} />
       </Grid>
 
-      <Grid item xs={12} md={8} >
+      <Grid item xs={12}  >
         <AccountOverview address={accountAddress} />
       </Grid>
 
 
-      <Grid item xs={12} md={8} >
+      <Grid item xs={12} >
         <AccountTransactions address={accountAddress} />
       </Grid>
 
 
-      {/* <Grid item xs={12} md={8} >
+      {/* <Grid item xs={12} >
         <CoinBalanceHistory />
       </Grid> */}
 
-      <Grid item xs={12} md={8} >
+      <Grid item xs={12} >
         <Downtime address={accountAddress} />
       </Grid>
 
-      <Grid item xs={12} md={8} >
+      <Grid item xs={12}>
         <ProposedBlocks address={accountAddress} />
       </Grid>
 
 
-      <Grid item xs={12} md={8} >
+      <Grid item xs={12}>
         <AccountDetails address={accountAddress} />
       </Grid>
 

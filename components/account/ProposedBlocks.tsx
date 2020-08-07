@@ -229,6 +229,13 @@ const ProposedBlocks = ({ address }: ProposedBlocksProps) => {
               page={page}
               onChangePage={handleChangePage}
               onChangeRowsPerPage={handleChangeRowsPerPage}
+              backIconButtonProps={{
+                'aria-label': 'Previous',
+                'disabled': page === 1,
+              }}
+              nextIconButtonProps={{
+                'aria-label': 'Next',
+              }}
             />
           </Grid>
         </Grid>

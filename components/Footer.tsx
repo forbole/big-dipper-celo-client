@@ -39,17 +39,17 @@ const Footer = () => {
   return (
     <footer>
       <Grid container className={classes.root}>
-        <Grid item xs={12} sm={12} md={8}>
+        <Grid item xs={12}  md={8}>
           <img src="/images/celo-logo.svg" />
         </Grid>
 
-        <Grid item xs={12} sm={12} md={8}>
+        <Grid item xs={12} md={8}>
           <Typography variant="body2" className={classes.text} align="left">
             Big Dipper for Celo. Let’s make money connected.
             </Typography>
         </Grid>
 
-        <Grid item xs={12} sm={12} md={8} >
+        <Grid item xs={12} md={8} >
           <Link
             href="https://github.com/celo-org"
             className={classes.socialMedia}

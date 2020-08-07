@@ -76,7 +76,6 @@ const NetworkDropdown = () => {
   };
 
   return (
-    // <Container className={classes.networkContainer}>
     <Grid container spacing={1} className={classes.networkContainer}>
       <Grid item xs={12}>
         <FormControl className={classes.formControl}>
@@ -144,7 +143,6 @@ const NetworkDropdown = () => {
         </FormControl>
       </Grid>
     </Grid>
-    // </Container>
   );
 }
 
