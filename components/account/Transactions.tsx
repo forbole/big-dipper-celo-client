@@ -25,6 +25,7 @@ import ErrorMessage from '../misc/ErrorMessage';
 import { useQuery } from "@apollo/client";
 import MiddleEllipsis from '../misc/MiddleEllipsis'
 import moment from "moment";
+import numbro from "numbro";
 
 
 interface Data {
@@ -143,7 +144,7 @@ const AccountTransactions = ({ address }: AppProps) => {
         aria-controls="accountTransactionsPanel"
         id="accountTransactionsPanel"
       >
-        <Typography variant="body1" > Transactions ({data.transactionsByAccount.totalCounts})</Typography>
+        <Typography variant="body1" > Transactions ({numbro(data.transactionsByAccount.totalCounts).format("0,000")})</Typography>
       </AccordionSummary>
       <AccordionDetails className={classes.root}>
         <Grid container >
@@ -227,31 +228,31 @@ const AccountTransactions = ({ address }: AppProps) => {
                               </Typography>
                             </Grid>
                           </Grid>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
-            component="div"
-            count={data.transactionsByAccount.totalCounts}
-            rowsPerPage={pageSize}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-            backIconButtonProps={{
-              'aria-label': 'Previous',
-              'disabled': page === 1,
-            }}
-            nextIconButtonProps={{
-              'aria-label': 'Next',
-            }}
-          />
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
+              component="div"
+              count={data.transactionsByAccount.totalCounts}
+              rowsPerPage={pageSize}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+              backIconButtonProps={{
+                'aria-label': 'Previous',
+                'disabled': page === 1,
+              }}
+              nextIconButtonProps={{
+                'aria-label': 'Next',
+              }}
+            />
 
-        </Grid>
+          </Grid>
         </Grid>
       </AccordionDetails>
     </Accordion>
