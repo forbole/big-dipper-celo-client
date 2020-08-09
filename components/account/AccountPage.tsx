@@ -15,7 +15,7 @@ import AccountOverview from "./AccountOverview";
 import CoinBalanceHistory from './CoinBalanceHistory';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
-import { GET_ACCOUNT_DETAILS } from '../query/Account'
+import { GET_VALIDATOR } from '../query/Validator'
 
 
 
@@ -50,23 +50,31 @@ const useStyles = makeStyles((theme: Theme) =>
 const AccountPage = (props: any) => {
   const classes = useStyles();
 
-  const accountAddress = props.address
+  const address = props.address
+
+  const { loading, error, data } = useQuery(GET_VALIDATOR, {
+    variables: { address },
+    pollInterval: 5000,
+  });
+
+  const isValidator = data && data.validator ? true : false;
+
 
   return (<>
 
     <Grid container spacing={2} className={classes.root}>
 
       <Grid item xs={12}  >
-        <AddressCard address={accountAddress} />
+        <AddressCard address={address} />
       </Grid>
 
       <Grid item xs={12}  >
-        <AccountOverview address={accountAddress} />
+        <AccountOverview address={address} />
       </Grid>
 
 
       <Grid item xs={12} >
-        <AccountTransactions address={accountAddress} />
+        <AccountTransactions address={address} />
       </Grid>
 
 
@@ -74,18 +82,18 @@ const AccountPage = (props: any) => {
         <CoinBalanceHistory />
       </Grid> */}
 
-      <Grid item xs={12} >
-        <Downtime address={accountAddress} />
-      </Grid>
+      {isValidator ? <Grid item xs={12} >
+        <Downtime address={address} />
+      </Grid> : null}
 
-      <Grid item xs={12}>
-        <ProposedBlocks address={accountAddress} />
-      </Grid>
+      {isValidator ? <Grid item xs={12}>
+        <ProposedBlocks address={address} />
+      </Grid> : null}
 
 
-      <Grid item xs={12}>
-        <AccountDetails address={accountAddress} />
-      </Grid>
+      {isValidator ? <Grid item xs={12}>
+        <AccountDetails address={address} />
+      </Grid> : null}
 
     </Grid>
   </>
