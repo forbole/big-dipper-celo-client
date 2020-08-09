@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: "0.5rem",
       textTransform: "none",
       border: "solid thin",
-      margin: "0.3rem 0 1rem 1rem",
+      margin: "0.3rem 0 0.2rem 1rem",
     },
 
     buttonLock: {
@@ -105,7 +105,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: "0.5rem",
       textTransform: "none",
       border: "solid thin",
-      margin: "0.3rem 1rem 1rem 0",
+      margin: "0.3rem 1rem 0.2rem 0",
     },
 
     box: {
@@ -330,7 +330,7 @@ const AccountOverview = (props: any) => {
           <Grid item xs={12}>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
-
+{/* 
           <Grid item xs={4} md={4}>
             <Typography variant="body2">
               Tokens
@@ -344,7 +344,7 @@ const AccountOverview = (props: any) => {
 
           <Grid item xs={12}>
             <Divider variant="middle" className={classes.divider} />
-          </Grid>
+          </Grid> */}
 
           <Grid container spacing={2} >
             <Grid item xs={6} className={classes.centerContent} >
