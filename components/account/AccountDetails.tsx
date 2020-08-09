@@ -17,9 +17,8 @@ import ErrorMessage from '../misc/ErrorMessage';
 import { useQuery } from "@apollo/client";
 import MiddleEllipsis from '../misc/MiddleEllipsis'
 import numbro from "numbro";
-// import BigNumber from "./bignumber.mjs"
+import BigNumber from 'bignumber.js'
 
-const BigNumber = require('bignumber.js');
 
 const useStyles = makeStyles(({ spacing }) => {
     return {

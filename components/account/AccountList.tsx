@@ -23,8 +23,7 @@ import ErrorMessage from '../misc/ErrorMessage';
 import MiddleEllipsis from '../misc/MiddleEllipsis'
 import numbro from "numbro";
 import getConfig from 'next/config'
-
-const BigNumber = require('bignumber.js');
+import BigNumber from 'bignumber.js'
 
 interface Column {
   id: 'rank' | 'address' | 'balance' | 'percentage' | 'txsCount';

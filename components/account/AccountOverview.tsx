@@ -38,8 +38,7 @@ import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
 import MiddleEllipsis from '../misc/MiddleEllipsis'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-
-const BigNumber = require('bignumber.js');
+import BigNumber from 'bignumber.js'
 
 
 const useStyles = makeStyles((theme: Theme) =>
