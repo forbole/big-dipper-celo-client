@@ -2,238 +2,76 @@ import React from "react";
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import Chip from "@material-ui/core/Chip";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import { amber, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, orange, deepOrange, brown, grey, blueGrey } from '@material-ui/core/colors';
+import theme from "../themes/celo-theme";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      justifyContent: "center",
-      flexWrap: "wrap",
-      padding: "0.1rem",
-    },
-    contractCall: {
-      borderRadius: 5,
-      backgroundColor: "rgba(31, 217, 110, 1)",
-      padding: "0",
-      fontSize: "	0.875rem",
-      width: "7rem",
-    },
-    transfer: {
-      borderRadius: 5,
-      backgroundColor: "rgba(240, 65, 85, 1)",
-      padding: "0",
-      fontSize: "	0.875rem",
-      width: "7rem",
-    },
-    success: {
-      borderRadius: 5,
-      backgroundColor: "rgba(31, 217, 110, 1)",
-      padding: "0",
-      fontSize: "	0.875rem",
-      width: "7rem",
-    },
-    pending: {
-      borderRadius: 5,
-      backgroundColor: "rgba(255, 0, 0, 0.2)",
-      padding: "0",
-      fontSize: "	0.875rem",
-      width: "7rem",
-    },
-    exchange: {
-      borderRadius: 5,
-      backgroundColor: "rgba(182, 83, 244, 1)",
-      padding: "0",
-      fontSize: "	0.875rem",
-      width: "7rem",
-    },
-    report: {
-      borderRadius: 5,
-      backgroundColor: "rgba(217, 131, 28, 1)",
-      padding: "0",
-      fontSize: "	0.875rem",
-      width: "7rem",
-    },
-    staticCall: {
-      borderRadius: 5,
-      backgroundColor: "rgba(31, 196, 217, 1)",
-      padding: "0",
-      fontSize: "	0.875rem",
-      width: "7rem",
-    },
 
-    create: {
+    contractType: {
       borderRadius: 5,
-      backgroundColor: "rgba(34, 217, 110, 1)",
-      padding: "0",
+      backgroundColor: grey[500],
       fontSize: "	0.875rem",
-      width: "7rem",
-    },
-
-    passed: {
-      borderRadius: 4,
-      backgroundColor: "rgba(34, 217, 110, 1)",
-      padding: "0",
-      fontSize: "	0.875rem",
-      width: "4.7rem",
-    },
-    rejected: {
-      borderRadius: 4,
-      backgroundColor: "rgba(211, 58, 58, 1)",
-      padding: "0",
-      fontSize: "	0.875rem",
-      width: "4.7rem",
-    },
-    removed: {
-      borderRadius: 4,
-      backgroundColor: "rgba(217, 131, 31, 1)",
-      padding: "0",
-      fontSize: "	0.875rem",
-      width: "4.7rem",
-    },
-
-    deposit: {
-      borderRadius: 5,
-      backgroundColor: "rgba(67, 72, 76, 1)",
-      border: "solid 1px rgba(255, 255, 255, 0.6)",
-      padding: "0.1rem",
-      fontSize: "	0.875rem",
-      width: "4.7rem",
-    },
-    vote: {
-      borderRadius: 4,
-      backgroundColor: "rgba(67, 72, 76, 1)",
-      border: "solid 1px rgba(255, 255, 255, 0.6)",
-      padding: "0",
-      fontSize: "	0.875rem",
-      width: "4.7rem",
-    },
-
-    default: {
-      borderRadius: 5,
-      backgroundColor: "rgba(30,117,217,1)",
-      padding: "0",
-      fontSize: "	0.875rem",
-      width: "7rem",
-      textTransform: 'capitalize'
+      width: "5rem",
+      textTransform: 'capitalize',
+      marginRight: "0.5rem"
     },
   })
 );
 
-const Chips = (props: any) => {
+type ChipsProps = { contractName: string, type: string, actionResult: string };
+
+const Chips = ({ contractName, type, actionResult }: ChipsProps) => {
   const classes = useStyles();
 
-  switch (props.value) {
-    case "transfer":
-      return (
-        <div className={classes.root}>
-          <Chip
-            size="small"
-            label="Transfer"
-            className={classes.transfer}
-          />
-        </div>
-      );
-    case "contractCall":
-      return (
-        <div className={classes.root}>
-          <Chip
-            size="small"
-            label="Contract Call"
-            className={classes.contractCall}
-          />
-        </div>
-      );
-    case "success":
-      return (
-        <div className={classes.root}>
-          <Chip
-            size="small"
-            icon={<CheckCircleIcon />}
-            label="Success"
-            className={classes.success}
-          />
-        </div>
-      );
-    case "pending":
-      return (
-        <div className={classes.root}>
-          <Chip size="small" label="Pending" className={classes.pending} />
-        </div>
-      );
-
-    case "exchange":
-      return (
-        <div className={classes.root}>
-          <Chip
-            size="small"
-            label="Exchange"
-            className={classes.exchange}
-          />
-        </div>
-      );
-
-    case "report":
-      return (
-        <div className={classes.root}>
-          <Chip
-            size="small"
-            label="Report"
-            className={classes.report}
-          />
-        </div>
-      );
-    case "staticCall":
-      return (
-        <div className={classes.root}>
-          <Chip
-            size="small"
-            label="Static Call"
-            className={classes.staticCall}
-          />
-        </div>
-      );
-    case "Create":
-      return (
-        <div className={classes.root}>
-          <Chip size="small" label="Create" className={classes.create} />
-        </div>
-      );
-    case "Passed":
-      return (
-        <div className={classes.root}>
-          <Chip size="small" label="Passed" className={classes.passed} />
-        </div>
-      );
-    case "Rejected":
-      return (
-        <div className={classes.root}>
-          <Chip size="small" label="Rejected" className={classes.rejected} />
-        </div>
-      );
-    case "Removed":
-      return (
-        <div className={classes.root}>
-          <Chip size="small" label="Removed" className={classes.removed} />
-        </div>
-      );
-    case "Deposit":
-      return (
-        <div className={classes.root}>
-          <Chip size="small" label="Deposit" className={classes.deposit} />
-        </div>
-      );
-    case "Vote":
-      return (
-        <div className={classes.root}>
-          <Chip size="small" label="Vote" className={classes.vote} />
-        </div>
-      );
-    default:
-      return (
-        <div className={classes.root}>
-          <Chip size="small" label={(props.value)} className={classes.default} />
-        </div>
-      );
+  const contractColors = {
+    Random: lightGreen['A700'],
+    EpochRewards: green[700],
+    DowntimeSlasher: blue[700],
+    Registry: deepPurple['A100'],
+    BlockchainParameters: brown[500],
+    LockedGold: orange[700],
+    Freezer: indigo[700],
+    Exchange: lime[700],
+    Election: amber[300],
+    GasPriceMinimum: purple[900],
+    StableToken: deepOrange[600],
+    FeeCurrencyWhitelist: cyan[900],
+    TransferWhitelist: blueGrey[500],
+    Validators: teal[700],
+    SortedOracles: red['A100'],
+    Governance: cyan[700],
+    GoldToken: yellow[600],
+    DoubleSigningSlasher: yellow['A400'],
+    Escrow: lightGreen[700],
+    Attestations: pink[600],
+    Accounts: purple[600],
+    Reserve: lightBlue[700],
   }
+
+  const ledgerColors = {
+    Success: green[500],
+    Passed: green['A700'],
+    Create: lightGreen[700],
+    Rejected: red[800],
+    Removed: orange[600],
+    Deposit: theme.palette.background.paper,
+    Vote: theme.palette.background.paper,
+    Pending: teal[400]
+  }
+
+  const borderElement = {
+    Deposit: "solid 1px rgba(255, 255, 255, 0.6)",
+    Vote: "solid 1px rgba(255, 255, 255, 0.6)"
+  }
+
+  return (
+    <React.Fragment>
+      {contractName ? <Chip size="small" label={contractName} style={{ backgroundColor: contractColors[contractName], borderRadius: 5, width: "7rem", marginRight: "0.5rem", fontSize: "	0.875rem", }} /> : null}
+      {type ? <Chip size="small" label={type} className={classes.contractType} /> : null}
+      {actionResult ? <Chip size="small" label={actionResult} style={{ backgroundColor: ledgerColors[actionResult], border: borderElement[actionResult], borderRadius: 5, width: "7rem", marginRight: "0.5rem", fontSize: "	0.875rem", }} /> : null}
+    </React.Fragment>
+  )
 }
 
 export default Chips
