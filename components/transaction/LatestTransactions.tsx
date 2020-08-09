@@ -261,7 +261,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
                             <Grid item xs={6}>
                               {row.type ?
                                 <Typography variant="body2" className={classes.chip}>
-                                  <Chips value={row.type} />
+                                  <Chips type={row.type} contractName="" actionResult="" />
                                 </Typography>
                                 : null}
                             </Grid>

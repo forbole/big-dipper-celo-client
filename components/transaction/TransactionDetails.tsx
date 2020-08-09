@@ -216,9 +216,9 @@ const TransactionDetails = (props: any) => {
             </Typography>
             <Typography variant="body2" component="h2">
               {data.transaction && !data.transaction.pending ? (
-                <Chips value="Pending" />
+                <Chips type="" contractName="" actionResult="Pending" />
               ) : (
-                  <Chips value="Success" />
+                  <Chips type="" contractName="" actionResult="Success" />
                 )}
             </Typography>
             <Divider variant="middle" className={classes.divider} />

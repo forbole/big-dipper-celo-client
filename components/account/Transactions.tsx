@@ -207,7 +207,7 @@ const AccountTransactions = ({ address }: AppProps) => {
                               {row.type ?
                                 <Typography variant="body2" className={classes.chip}>
 
-                                  <Chips value={row.type} />
+                                  <Chips type={row.type} contractName="" actionResult="" />
                                 </Typography> : null}
                             </Grid>
                             <Grid item xs={6}>
