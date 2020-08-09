@@ -30,6 +30,7 @@ import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable';
 import ErrorMessage from '../misc/ErrorMessage';
 import moment from "moment";
+import getConfig from 'next/config'
 
 interface Column {
   id: 'height' | 'proposer' | 'txs' | 'gasUsed' | 'gasLimit' | 'time';
@@ -106,13 +107,13 @@ const useStyles = makeStyles(({ spacing }) => {
 type ProposedBlocksProps = { address: string };
 
 const ProposedBlocks = ({ address }: ProposedBlocksProps) => {
-  const rowsOption1 = 10;
-  const rowsOption2 = 30;
-  const rowsOption3 = 50;
 
   const classes = useStyles();
-  const [page, setPage] = React.useState(1);
-  const [pageSize, setPageSize] = React.useState(10)
+
+  const { publicRuntimeConfig } = getConfig()
+
+  const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
+  const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXsmall)
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -120,7 +121,7 @@ const ProposedBlocks = ({ address }: ProposedBlocksProps) => {
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPageSize(+event.target.value);
-    setPage(1);
+    setPage(publicRuntimeConfig.setPage);
   };
 
   const accountQuery = useQuery(GET_ACCOUNT_DETAILS, {
@@ -222,7 +223,7 @@ const ProposedBlocks = ({ address }: ProposedBlocksProps) => {
               </Table>
             </TableContainer>
             <TablePagination
-              rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
+              rowsPerPageOptions={[publicRuntimeConfig.rowXsmall, publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge,]}
               component="div"
               count={data.proposedBlocks.totalCounts}
               rowsPerPage={pageSize}

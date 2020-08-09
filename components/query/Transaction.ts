@@ -61,8 +61,8 @@ export const GET_TX_DETAILS = gql`
 
 
 export const GET_ACCOUNT_TX = gql`
-  query TransactionsByAccount($address: String!) {
-    transactionsByAccount(address: $address) {
+  query TransactionsByAccount($address: String!, $pageSize: Int, $page: Int) {
+    transactionsByAccount(address: $address, pageSize: $pageSize, page: $page) {
       totalCounts
       transactions{
         hash

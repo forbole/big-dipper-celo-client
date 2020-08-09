@@ -17,6 +17,7 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import getConfig from 'next/config'
 
 interface Data {
   address: string;
@@ -114,15 +115,12 @@ const useStyles = makeStyles(({ spacing }) => {
 
 
 const TokenHolders = () => {
-  const rowsOption1 = 5;
-  const rowsOption2 = 10;
-  const rowsOption3 = 30;
-
-
-
   const classes = useStyles();
-  const [page, setPage] = React.useState(1);
-  const [pageSize, setPageSize] = React.useState(5)
+
+  const { publicRuntimeConfig } = getConfig()
+
+  const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
+  const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXxsmall)
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -130,7 +128,7 @@ const TokenHolders = () => {
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPageSize(+event.target.value);
-    setPage(1);
+    setPage(publicRuntimeConfig.setPage);
   };
 
   return (
@@ -184,7 +182,7 @@ const TokenHolders = () => {
               </Table>
             </TableContainer>
             <TablePagination
-              rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
+              rowsPerPageOptions={[publicRuntimeConfig.rowXxsmall, publicRuntimeConfig.rowXsmall, publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge,]}
               component="div"
               count={rows.length}
               rowsPerPage={pageSize}

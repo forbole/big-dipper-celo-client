@@ -26,6 +26,8 @@ import { useQuery } from "@apollo/client";
 import MiddleEllipsis from '../misc/MiddleEllipsis'
 import moment from "moment";
 import numbro from "numbro";
+import getConfig from 'next/config'
+
 
 
 interface Data {
@@ -100,24 +102,12 @@ moment.relativeTimeThreshold("s", 59);
 moment.relativeTimeThreshold("ss", 3);
 
 const AccountTransactions = ({ address }: AppProps) => {
-  const rowsOption1 = 10;
-  const rowsOption2 = 30;
-  const rowsOption3 = 50;
 
   const classes = useStyles();
-  const theme = useTheme();
-  const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
-  const [page, setPage] = React.useState(1);
-  const [pageSize, setPageSize] = React.useState(5)
+  const { publicRuntimeConfig } = getConfig()
 
-  useEffect(() => {
-    if (largeScreen) {
-      setPageSize(10)
-    }
-    else {
-      setPageSize(5)
-    }
-  })
+  const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
+  const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXxsmall)
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -125,11 +115,11 @@ const AccountTransactions = ({ address }: AppProps) => {
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPageSize(+event.target.value);
-    setPage(1);
+    setPage(publicRuntimeConfig.setPage);
   };
 
   const { loading, error, data } = useQuery(GET_ACCOUNT_TX, {
-    variables: { address },
+    variables: { address, pageSize, page },
     pollInterval: 5000,
   });
 
@@ -151,7 +141,7 @@ const AccountTransactions = ({ address }: AppProps) => {
           <Divider variant='middle' />
           <Grid item xs={12}>
             <TableContainer className={classes.container}>
-              <Table stickyHeader aria-label="sticky table">
+              <Table >
                 <TableHead>
                 </TableHead>
                 <TableBody>
@@ -234,24 +224,24 @@ const AccountTransactions = ({ address }: AppProps) => {
                   })}
                 </TableBody>
               </Table>
+              <TablePagination
+                className="account-txs"
+                rowsPerPageOptions={[publicRuntimeConfig.rowXxsmall, publicRuntimeConfig.rowXsmall, publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge,]}
+                component="div"
+                count={data.transactionsByAccount.totalCounts}
+                rowsPerPage={pageSize}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+                backIconButtonProps={{
+                  'aria-label': 'Previous',
+                  'disabled': page === 1,
+                }}
+                nextIconButtonProps={{
+                  'aria-label': 'Next',
+                }}
+              />
             </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
-              component="div"
-              count={data.transactionsByAccount.totalCounts}
-              rowsPerPage={pageSize}
-              page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-              backIconButtonProps={{
-                'aria-label': 'Previous',
-                'disabled': page === 1,
-              }}
-              nextIconButtonProps={{
-                'aria-label': 'Next',
-              }}
-            />
-
           </Grid>
         </Grid>
       </AccordionDetails>

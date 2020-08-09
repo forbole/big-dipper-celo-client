@@ -27,6 +27,7 @@ import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
 import { GET_TX } from '../query/Transaction'
+import getConfig from 'next/config'
 
 
 const useStyles = makeStyles({
@@ -41,7 +42,8 @@ const useStyles = makeStyles({
   container: {
     borderRadius: 5,
     width: "100%",
-    overflow: "hidden",
+    //overflow: "hidden",
+    height: "100%",
   },
 
   leftInline: {
@@ -95,29 +97,27 @@ const useStyles = makeStyles({
   },
 });
 
-const LatestTransactions = (props: any) => {
+moment.relativeTimeThreshold("s", 59);
+moment.relativeTimeThreshold("ss", 3);
+
+type LatestTxsProps = { pagination: boolean };
+
+
+const LatestTransactions = ({ pagination }: LatestTxsProps) => {
   const classes = useStyles();
+  const { publicRuntimeConfig } = getConfig()
 
-  const [page, setPage] = React.useState(1);
-  const [pageSize, setPageSize] = React.useState(5)
+  const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
+  const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXxsmall)
 
-  const rowsOption1 = 14;
-  const rowsOption2 = 28;
-  const rowsOption3 = 100;
-
-  useEffect(() => {
-    if (props.pagination) {
-      setPageSize(14)
-    }
-    else {
-      setPageSize(5)
-    }
-  })
-
-  const { loading, error, data } = useQuery(GET_TX, {
-    variables: { pageSize, page },
-    pollInterval: 5000,
-  });
+  // useEffect(() => {
+  //   if (props.pagination) {
+  //     setPageSize(14)
+  //   }
+  //   else {
+  //     setPageSize(5)
+  //   }
+  // })
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -127,22 +127,24 @@ const LatestTransactions = (props: any) => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setPageSize(+event.target.value);
-    setPage(1);
+    setPage(publicRuntimeConfig.setPage);
   };
 
-  moment.relativeTimeThreshold("s", 59);
-  moment.relativeTimeThreshold("ss", 3);
+  const { loading, error, data } = useQuery(GET_TX, {
+    variables: { pageSize, page },
+    pollInterval: 5000,
+  });
 
   if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
 
   return (<>
-    <Grid container >
+    <Grid container className={classes.container}>
       <Grid item xs={12}>
         <Paper className={classes.root}>
           <Typography variant="body1" className={classes.box}>
             Latest Transactions{" "}
-            {props.pagination === false ? (
+            {pagination === false ? (
               <Link
                 href="/transactions"
                 className={classes.link}
@@ -280,26 +282,27 @@ const LatestTransactions = (props: any) => {
                   })}
                 </TableBody>
               </Table>
+
+              {pagination === true ? (
+                <TablePagination
+                  className="pagination"
+                  rowsPerPageOptions={[publicRuntimeConfig.rowXsmall, publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge,]}
+                  component="div"
+                  count={data.transactions.totalCounts}
+                  rowsPerPage={pageSize}
+                  page={page}
+                  onChangePage={handleChangePage}
+                  onChangeRowsPerPage={handleChangeRowsPerPage}
+                  backIconButtonProps={{
+                    'aria-label': 'Previous',
+                    'disabled': page === 1,
+                  }}
+                  nextIconButtonProps={{
+                    'aria-label': 'Next',
+                  }}
+                />
+              ) : null}
             </TableContainer> : ""}
-          {props.pagination === true ? (
-            <TablePagination
-              className={"pagination"}
-              rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
-              component="div"
-              count={data.transactions.totalCounts}
-              rowsPerPage={pageSize}
-              page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-              backIconButtonProps={{
-                'aria-label': 'Previous',
-                'disabled': page === 1,
-              }}
-              nextIconButtonProps={{
-                'aria-label': 'Next',
-              }}
-            />
-          ) : null}
         </Paper>
       </Grid></Grid>
   </>

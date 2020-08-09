@@ -22,6 +22,7 @@ import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
 import MiddleEllipsis from '../misc/MiddleEllipsis'
 import numbro from "numbro";
+import getConfig from 'next/config'
 
 const BigNumber = require('bignumber.js');
 
@@ -105,15 +106,11 @@ const useStyles = makeStyles(({ spacing }) => {
 
 
 const AccountList = () => {
-  const rowsOption1 = 20;
-  const rowsOption2 = 50;
-  const rowsOption3 = 100;
-
   const classes = useStyles();
+  const { publicRuntimeConfig } = getConfig()
 
-  const [page, setPage] = React.useState(1);
-  const [pageSize, setPageSize] = React.useState(20)
-
+  const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
+  const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowMedium)
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -121,7 +118,7 @@ const AccountList = () => {
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPageSize(+event.target.value);
-    setPage(1);
+    setPage(publicRuntimeConfig.setPage);
   };
 
   const { loading, error, data } = useQuery(GET_ACCOUNTS, {
@@ -206,7 +203,7 @@ const AccountList = () => {
             </Paper>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
+            rowsPerPageOptions={[publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge,]}
             component="div"
             count={data.accounts.totalCounts}
             rowsPerPage={pageSize}

@@ -24,6 +24,7 @@ import ErrorMessage from '../misc/ErrorMessage';
 import { GET_BLOCK } from '../query/Block'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+import getConfig from 'next/config'
 
 interface Column {
   id: "height" | "validator" | "txs" | "gasUsed" | "gasLimit" | "time";
@@ -55,6 +56,7 @@ const useStyles = makeStyles({
     borderRadius: 4,
     wordWrap: "break-word",
     margin: "none",
+    overflow: "hidden",
   },
   box: {
     letterSpacing: "1px",
@@ -120,27 +122,43 @@ const useStyles = makeStyles({
   },
 });
 
-
+moment.relativeTimeThreshold("s", 59);
+moment.relativeTimeThreshold("ss", 3);
 
 const LatestBlocks = (props: any) => {
-  const rowsOption1 = 14;
-  const rowsOption2 = 28;
-  const rowsOption3 = 100;
-
   const classes = useStyles();
   const theme = useTheme();
   const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
-  const [page, setPage] = React.useState(1);
-  const [pageSize, setPageSize] = React.useState(5)
+
+  const { publicRuntimeConfig } = getConfig()
+
+  const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
+  const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowSmall);
+
+  // {
+  //   props.pagination === false ?
+  //     useEffect(() => {
+  //       if (largeScreen) {
+  //         setPageSize(publicRuntimeConfig.rowSmall)
+  //       }
+  //       else {
+  //         setPageSize(publicRuntimeConfig.rowXxsmall)
+  //       }
+  //     }) : null
+  // }
+
 
   useEffect(() => {
-    if (largeScreen) {
-      setPageSize(14)
+    if (props.pagination === false) {
+      if (largeScreen) {
+        setPageSize(publicRuntimeConfig.rowSmall)
+      }
+      else {
+        setPageSize(publicRuntimeConfig.rowXxsmall)
+      }
     }
-    else {
-      setPageSize(5)
-    }
-  })
+  });
+
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -150,12 +168,8 @@ const LatestBlocks = (props: any) => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setPageSize(+event.target.value);
-    setPage(1);
+    setPage(publicRuntimeConfig.setPage);
   };
-
-  moment.relativeTimeThreshold("s", 59);
-  moment.relativeTimeThreshold("ss", 3);
-
 
   const { loading, error, data } = useQuery(GET_BLOCK, {
     variables: { pageSize, page },
@@ -348,7 +362,7 @@ const LatestBlocks = (props: any) => {
           {props.pagination === true ? (
             <TablePagination
               className={"pagination"}
-              rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
+              rowsPerPageOptions={[publicRuntimeConfig.rowXxsmall, publicRuntimeConfig.rowXsmall, publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge,]}
               component="div"
               count={data.blocks.totalCounts}
               rowsPerPage={pageSize}
