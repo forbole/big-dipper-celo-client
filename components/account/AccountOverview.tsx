@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down('xs')]: {
         width: "7.5rem",
       },
-      width:  "9.5rem",
+      width: "9.5rem",
       padding: "0.5rem",
       textTransform: "none",
       border: "solid thin",
@@ -322,9 +322,9 @@ const AccountOverview = (props: any) => {
           <Grid item xs={12}  >
             {accountQuery.data.account && accountQuery.data.account.balance && chainQuery.data.chain && chainQuery.data.chain.tokenPrice && chainQuery.data.chain.tokenPrice.usd ?
               < Typography variant="body2" className={classes.alignRight} noWrap>
-                ${BigNumber.prototype.toFormat.call(
-                new BigNumber(accountQuery.data.account.balance * chainQuery.data.chain.tokenPrice.usd)
-              )}
+                {BigNumber.prototype.toFormat.call(
+                  new BigNumber(accountQuery.data.account.balance * chainQuery.data.chain.tokenPrice.usd)
+                )} cUSD
               </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
           </Grid>
 
