@@ -22,13 +22,13 @@ export default function Proposals() {
   return (
     <Layout>
       <Grid container spacing={2} className={classes.root}>
-        <Grid item xs={12} md={7} >
+        <Grid item xs={12} >
           <MarketCard />
         </Grid>
-        <Grid item xs={12} md={7} >
+        <Grid item xs={12} >
           <ProposalList />
         </Grid>
-        <Grid item xs={12} md={7} >
+        <Grid item xs={12} >
           {/* <DepositList /> */}
         </Grid>
       </Grid>

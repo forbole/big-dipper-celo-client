@@ -26,16 +26,16 @@ export default function Proposal() {
   return (
     <Layout>
       <Grid container spacing={2} className={classes.root}>
-        <Grid item xs={12} md={8} >
+        <Grid item xs={12} >
           <MarketCard />
         </Grid>
-        <Grid item xs={12} md={8} >
+        <Grid item xs={12} >
           <ProposalDetails />
         </Grid>
-        <Grid item xs={12} md={8} >
+        <Grid item xs={12} >
           <ProposalVotingList />
         </Grid>
-        <Grid item xs={12} md={8} >
+        <Grid item xs={12} >
           <DepositList />
         </Grid>
       </Grid>
