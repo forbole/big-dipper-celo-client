@@ -47,43 +47,14 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       padding: "1rem"
     },
-
-    formControl: {
-      minWidth: "9.75rem",
-      //spadding: "0 1rem 0 0",
-      // marginBottom: "1rem",
-      marginTop: "-1rem",
-      float: "right",
-      // maxHeight: theme.spacing(4),
-      // marginTop: theme.spacing(-1.5),
-    },
-
-    select: {
-      fontSize: "14px",
-      border: "solid rgba(255, 255, 255, 0.6) ",
-      borderWidth: "0.09rem",
-      borderRadius: 5,
-      minWidth: "9.75rem",
-    },
-
-    inputLabel: {
-      fontSize: "15px",
-      paddingLeft: "1rem",
-    },
-
     alignLeft: {
       display: "flex",
       overflow: "auto",
-      //padding: "0.3rem 0 0 1rem",
     },
-
     alignRight: {
       display: "block",
       float: "right",
-      //padding: "0.3rem 1rem 0 0",
     },
-
-
     buttonUnlock: {
       justifyContent: "center",
       [theme.breakpoints.down('xs')]: {
@@ -95,7 +66,6 @@ const useStyles = makeStyles((theme: Theme) =>
       border: "solid thin",
       margin: "0.3rem 0 0.2rem 1rem",
     },
-
     buttonLock: {
       justifyContent: "center",
       [theme.breakpoints.down('xs')]: {
@@ -107,7 +77,6 @@ const useStyles = makeStyles((theme: Theme) =>
       border: "solid thin",
       margin: "0.3rem 1rem 0.2rem 0",
     },
-
     box: {
       letterSpacing: "1px",
       paddingBottom: "1rem",
@@ -115,50 +84,8 @@ const useStyles = makeStyles((theme: Theme) =>
       overflow: "hidden",
       whiteSpace: "nowrap",
     },
-
-
     divider: {
-      //margin: "0.5rem",
       backgroundColor: "rgba(62, 67, 71, 1)",
-    },
-
-
-    label: {
-      height: "2rem",
-      verticalAlign: "middle",
-      padding: "0 1rem 1rem 0",
-      fontSize: "12px",
-      backgroundColor: "rgba(61, 66, 71, 1)"
-    },
-    container: {
-      justifyContent: "center",
-      padding: "0rem",
-      minWidth: "14.75rem",
-    },
-
-    tokenValue: {
-      paddingLeft: "0.5rem",
-    },
-
-    dropdownSelection: {
-      margin: "-2.4rem 0 0 0rem",
-      paddingLeft: "0.5rem",
-      paddingTop: "2.1rem",
-      paddingBottom: "-0.5rem",
-      // minHeight: "3.3rem",
-    },
-
-    erc20: {
-      margin: "0rem 0rem -0.8rem 0rem",
-      padding: "1.25rem 0"
-    },
-
-    listSubheader: {
-      padding: "0 0 0 1rem",
-    },
-
-    searchIcon: {
-      padding: "0.25rem"
     },
     centerButtons: {
       justifyContent: "center",
@@ -166,105 +93,17 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: "0.1rem",
       textTransform: "none",
     },
-
     centerContent: {
       display: "flex",
       justifyContent: "center",
     },
-
-    icon: {
-      fill: "rgba(255, 255, 255, 0.6)",
-      paddingRight: "0.5rem",
-      fontWeight: 300,
-      width: "1.75rem"
-
-    },
   })
 );
 
+type AccountOverviewProps = { address: string };
 
-const TokenDropdown = (props: any) => {
+const AccountOverview = ({ address }: AccountOverviewProps) => {
   const classes = useStyles();
-
-  return (
-    <FormControl className={classes.formControl} hiddenLabel>
-      <InputLabel
-        htmlFor="token-dropdown-select"
-        className={classes.inputLabel}
-      >
-        <Typography
-          variant="caption"
-          color="textSecondary"
-          gutterBottom
-        >
-          Select a token
-        </Typography>
-      </InputLabel>
-
-      <Select
-        id="token-dropdown-select"
-        color="primary"
-        className={classes.select}
-        disableUnderline={true}
-        // labelWidth={600}
-        style={{ padding: "0" }}
-        IconComponent={KeyboardArrowDownIcon}
-        classes={{
-          icon: classes.icon,
-        }}
-      >
-        <Typography
-          variant="body1"
-          color="textPrimary"
-          className={classes.listSubheader}
-          gutterBottom
-        >
-          Celo Dollar
-        </Typography>
-        <MenuItem value={1} className={classes.dropdownSelection}>
-          <Typography
-            variant="caption"
-            color="textSecondary"
-            className={classes.tokenValue}
-            gutterBottom
-          >
-            {BigNumber.prototype.toFormat.call(
-              new BigNumber(props.usd)
-            )}
-          </Typography>
-        </MenuItem>
-
-        <Divider variant="middle" className={classes.divider} />
-
-        <Typography
-          variant="body1"
-          color="textPrimary"
-          className={classes.listSubheader}
-          gutterBottom
-        >
-          Celo Gold
-        </Typography>
-
-        <MenuItem value={2} className={classes.dropdownSelection}>
-          <Typography
-            variant="caption"
-            color="textSecondary"
-            className={classes.tokenValue}
-            gutterBottom
-          >
-            {BigNumber.prototype.toFormat.call(
-              new BigNumber(props.celo)
-            )}
-          </Typography>
-        </MenuItem>
-      </Select>
-    </FormControl>
-  );
-}
-
-const AccountOverview = (props: any) => {
-  const classes = useStyles();
-  const address: string = props.address ? (props.address).toString() : ''
 
   const accountQuery = useQuery(GET_ACCOUNT_DETAILS, {
     variables: { address },
@@ -330,21 +169,6 @@ const AccountOverview = (props: any) => {
           <Grid item xs={12}>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
-{/* 
-          <Grid item xs={4} md={4}>
-            <Typography variant="body2">
-              Tokens
-            </Typography>
-          </Grid>
-
-          <Grid item xs={8} md={8}> {accountQuery.data.account && accountQuery.data.account.totalBalance && accountQuery.data.account.totalBalance.gold && accountQuery.data.account.totalBalance.usd ?
-            <TokenDropdown celo={accountQuery.data.account.totalBalance.gold} usd={accountQuery.data.account.totalBalance.usd} /> :
-            <TokenDropdown celo={0} usd={0} />}
-          </Grid>
-
-          <Grid item xs={12}>
-            <Divider variant="middle" className={classes.divider} />
-          </Grid> */}
 
           <Grid container spacing={2} >
             <Grid item xs={6} className={classes.centerContent} >

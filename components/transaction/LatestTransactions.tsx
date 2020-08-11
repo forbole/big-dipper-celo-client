@@ -111,7 +111,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
   const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXxsmall)
 
   // useEffect(() => {
-  //   if (props.pagination) {
+  //   if (pagination) {
   //     setPageSize(14)
   //   }
   //   else {

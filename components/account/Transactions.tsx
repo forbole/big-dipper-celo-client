@@ -29,18 +29,6 @@ import numbro from "numbro";
 import getConfig from 'next/config'
 
 
-
-interface Data {
-  tx: string;
-  from: string;
-  to: string;
-  time: string;
-  chip: string;
-  total: string;
-}
-
-
-
 const useStyles = makeStyles(({ spacing }) => {
   return {
     root: {
@@ -97,11 +85,12 @@ const useStyles = makeStyles(({ spacing }) => {
   }
 });
 
-type AppProps = { address: string };
 moment.relativeTimeThreshold("s", 59);
 moment.relativeTimeThreshold("ss", 3);
 
-const AccountTransactions = ({ address }: AppProps) => {
+type TransactionsProps = { address: string };
+
+const AccountTransactions = ({ address }: TransactionsProps) => {
 
   const classes = useStyles();
   const { publicRuntimeConfig } = getConfig()

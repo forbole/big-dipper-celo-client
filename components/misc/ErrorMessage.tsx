@@ -2,12 +2,14 @@ import React from "react";
 import Typography from '@material-ui/core/Typography';
 import MiddleEllipsis from './MiddleEllipsis'
 
+type ErrorMsgProps = { message: string };
 
-const ErrorMessage = (props: any) => {
+
+const ErrorMessage = ({ message }: ErrorMsgProps) => {
 
     return (
         <Typography variant="caption" >
-            {props.message}
+            {message}
         </Typography>
     )
 }

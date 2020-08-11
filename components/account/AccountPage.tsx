@@ -45,12 +45,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+type AccountPageProps = { address: string };
 
-
-const AccountPage = (props: any) => {
+const AccountPage = ({ address }: AccountPageProps) => {
   const classes = useStyles();
-
-  const address = props.address
 
   const { loading, error, data } = useQuery(GET_VALIDATOR, {
     variables: { address },

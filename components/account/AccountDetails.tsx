@@ -67,10 +67,10 @@ const useStyles = makeStyles(({ spacing }) => {
 
 });
 
-type AppProps = { address: string };
+type AccountDetailsProps = { address: string };
 
 
-const AccountDetails = ({ address }: AppProps) => {
+const AccountDetails = ({ address }: AccountDetailsProps) => {
     const classes = useStyles();
 
 
