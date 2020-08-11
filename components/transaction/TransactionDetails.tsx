@@ -232,7 +232,6 @@ const TransactionDetails = (props: any) => {
 
             {data.transaction && data.transaction.from ?
               <Typography variant="body2" component="h2">
-                (
                 <Link
                   href="/account/[account]/"
                   as={`/account/${data.transaction.from.address}`}
@@ -240,7 +239,6 @@ const TransactionDetails = (props: any) => {
                 >
                   {data.transaction.from.address}
                 </Link>
-              )
             </Typography>
               : <NotAvailable variant="body2" />}
 
