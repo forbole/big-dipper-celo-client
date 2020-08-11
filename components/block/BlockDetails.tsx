@@ -1,7 +1,7 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Link from "../Link";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
@@ -17,7 +17,8 @@ import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
 import { GET_BLOCK_DETAILS } from '../query/Block'
-
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 const useStyles = makeStyles(() => {
   return {
@@ -50,11 +51,58 @@ const useStyles = makeStyles(() => {
       float: "left",
       marginLeft: "-0.625rem"
     },
+
+    tabs: {
+      fontSize: "1rem",
+      textTransform: "none",
+      display: "inline-block"
+    },
+    icon: {
+      fill: "rgba(58, 211, 158, 1)",
+      marginTop: "0.1rem",
+      marginRight: "-0.2rem",
+    },
+
+    signersList: {
+      paddingLeft: "2rem"
+    }
   };
 });
 
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: any;
+  value: any;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`all-signers-tab-${index}`}
+      aria-labelledby={`all-signers-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography>{children}</Typography>
+          </Grid>
+        </Grid>
+      )}
+    </div>
+  );
+}
+
+
 const BlockDetails = () => {
   const router = useRouter();
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
 
   if (!router.query.block) return <ContentLoader />;
 
@@ -65,7 +113,41 @@ const BlockDetails = () => {
   const { loading, error, data } = useQuery(GET_BLOCK_DETAILS, {
     variables: { number },
   });
-  const classes = useStyles();
+
+
+  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    setValue(newValue);
+  };
+
+
+  const StyledTabs = withStyles({
+    root: {
+      paddingBottom: "0.5rem",
+      "& div.MuiTabs-scroller": {
+        "& .MuiTabs-flexContainer": {
+          display: "flex",
+          flexWrap: "wrap",
+        },
+        " & .Mui-selected": {
+          color: "rgba(255, 255, 255, 0.8)",
+        },
+        " & .MuiTab-wrapper": {
+          display: "block",
+          fontSize: "0.875rem",
+          " & .all-signers-icon": {
+            verticalAlign: "middle",
+            height: '1.3rem',
+            width: '1.3rem',
+            margin: "0 0.5rem",
+
+          }
+        },
+      }
+    }
+
+  })(Tabs);
+
+
   if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
   return (
@@ -254,31 +336,73 @@ const BlockDetails = () => {
             <Typography variant="body2" component="h2" gutterBottom>
               Signers
             </Typography>
-            {data.block && data.block.signers
-              ?
-              data.block.signers.map((row: any, index: number) => {
-                return (
-                  <span key={index}>
 
-                    <Typography variant="body2" gutterBottom >
-                      <Link
-                        href="/validatorGroup/[validatorGroupDetails]/"
-                        as={row.validator && row.validator.validatorGroup && row.validator.validatorGroup.address ?
-                          `/validatorGroup/${row.validator.validatorGroup.address}` : ""}
-                        color="secondary">
-                        {row.validator.name}
-                      </Link>
-                    </Typography>
-                  </span>
-                )
-              })
-              : <NotAvailable variant="body2" />}
+            <Grid item xs={12}>
+              <StyledTabs
+                value={value}
+                textColor="primary"
+                onChange={handleChange}
+                aria-label="Block Signers Tabs"
+                variant="fullWidth"
+                TabIndicatorProps={{
+                  style: {
+                    backgroundColor: "rgba(255, 255, 255, 0.8)",
+
+                  }
+                }}
+              >
+                <Tab label="Signed Block" icon={<img src="/images/up.svg" className="all-signers-icon" />} className={classes.tabs} wrapped={false} />
+                <Tab label="Missed Blocks" icon={<img src="/images/down.svg" className="all-signers-icon" />} className={classes.tabs} wrapped={false} />
+
+              </StyledTabs>
+
+              {data.block && data.block.signers
+                ?
+                <ol className={classes.signersList}>
+                  {data.block.signers.map((row: any, index: number) => {
+                    if (row.exist) {
+                      return (
+                        <TabPanel value={value} index={0}>
+                          <li key={index}>
+                            <Typography variant="body2" gutterBottom >
+                              <Link
+                                href="/validatorGroup/[validatorGroupDetails]/"
+                                as={row.validator && row.validator.validatorGroup && row.validator.validatorGroup.address ?
+                                  `/validatorGroup/${row.validator.validatorGroup.address}` : ""}
+                                color="secondary">
+                                {row.validator.name || row.signer}
+                              </Link>
+                            </Typography>
+                          </li>
+                        </TabPanel>
+                      )
+                    }
+                    else {
+                      return (
+                        <TabPanel value={value} index={1}>
+                          <li key={index}>
+                            <Typography variant="body2" gutterBottom >
+                              <Link
+                                href="/validatorGroup/[validatorGroupDetails]/"
+                                as={row.validator && row.validator.validatorGroup && row.validator.validatorGroup.address ?
+                                  `/validatorGroup/${row.validator.validatorGroup.address}` : ""}
+                                color="secondary">
+                                {row.validator.name}
+                              </Link>
+                            </Typography>
+                          </li>
+                        </TabPanel>
+                      )
+                    }
+
+                  })}
+                </ol>
+                : <NotAvailable variant="body2" />}
+            </Grid>
           </Grid>
-
-
         </Grid>
       </CardContent>
-    </Card>
+    </Card >
   );
 }
 
