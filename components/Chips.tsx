@@ -24,45 +24,45 @@ type ChipsProps = { contractName: string, type: string, actionResult: string };
 const Chips = ({ contractName, type, actionResult }: ChipsProps) => {
   const classes = useStyles();
 
-  const contractColors = {
-    Random: lightGreen['A700'],
-    EpochRewards: green[700],
-    DowntimeSlasher: blue[700],
-    Registry: deepPurple['A100'],
-    BlockchainParameters: brown[500],
-    LockedGold: orange[700],
-    Freezer: indigo[700],
-    Exchange: lime[700],
-    Election: amber[300],
-    GasPriceMinimum: purple[900],
-    StableToken: deepOrange[600],
-    FeeCurrencyWhitelist: cyan[900],
-    TransferWhitelist: blueGrey[500],
-    Validators: teal[700],
-    SortedOracles: red['A100'],
-    Governance: cyan[700],
-    GoldToken: yellow[600],
-    DoubleSigningSlasher: yellow['A400'],
-    Escrow: lightGreen[700],
-    Attestations: pink[600],
-    Accounts: purple[600],
-    Reserve: lightBlue[700],
+  const contractColors: any = {
+    'Random': lightGreen['A700'],
+    'EpochRewards': green[700],
+    'DowntimeSlasher': blue[700],
+    'Registry': deepPurple['A100'],
+    'BlockchainParameters': brown[500],
+    'LockedGold': orange[700],
+    'Freezer': indigo[700],
+    'Exchange': lime[700],
+    'Election': amber[300],
+    'GasPriceMinimum': purple[900],
+    'StableToken': deepOrange[600],
+    'FeeCurrencyWhitelist': cyan[900],
+    'TransferWhitelist': blueGrey[500],
+    'Validators': teal[700],
+    'SortedOracles': red['A100'],
+    'Governance': cyan[700],
+    'GoldToken': yellow[600],
+    'DoubleSigningSlasher': yellow['A400'],
+    'Escrow': lightGreen[700],
+    'Attestations': pink[600],
+    'Accounts': purple[600],
+    'Reserve': lightBlue[700],
   }
 
-  const ledgerColors = {
-    Success: green[500],
-    Passed: green['A700'],
-    Create: lightGreen[700],
-    Rejected: red[800],
-    Removed: orange[600],
-    Deposit: theme.palette.background.paper,
-    Vote: theme.palette.background.paper,
-    Pending: teal[400]
+  const ledgerColors: any = {
+    'Success': green[500],
+    'Passed': green['A700'],
+    'Create': lightGreen[700],
+    'Rejected': red[800],
+    'Removed': orange[600],
+    'Deposit': theme.palette.background.paper,
+    'Vote': theme.palette.background.paper,
+    'Pending': teal[400]
   }
 
-  const borderElement = {
-    Deposit: "solid 1px rgba(255, 255, 255, 0.6)",
-    Vote: "solid 1px rgba(255, 255, 255, 0.6)"
+  const borderElement: any = {
+    'Deposit': "solid 1px rgba(255, 255, 255, 0.6)",
+    'Vote': "solid 1px rgba(255, 255, 255, 0.6)"
   }
 
   return (
