@@ -5,6 +5,7 @@
 * Updated Grid size on medium screens to 7
 * Disabled back button on Page 1 in TablePagination
 * Updated the address of a miner in LatestBlocks
+* [#60] Changed footer logo & social links to Big Dipper
 
 ## v0.1.0
 
