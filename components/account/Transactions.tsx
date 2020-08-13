@@ -72,7 +72,7 @@ const useStyles = makeStyles(({ spacing }) => {
 
     txPadding: {
       display: 'flex',
-      overflow: 'auto',
+      overflow: 'hidden',
       padding: '0 0 0 0.5rem',
     },
     divider: {
