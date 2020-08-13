@@ -14,6 +14,8 @@
 * Adjusted button size in AccountOverview for xs screens
 * Updated Accordion to display expanded as default
 * Linked real-time data in Account Section
+* [#59] Unified layout on the desktop 
+
 
 ## v0.1.0
 
