@@ -10,7 +10,6 @@ export const GET_BLOCK = gql`
           name
           affiliation
           signer
-          address
         }
         transactions {
           transactionIndex
