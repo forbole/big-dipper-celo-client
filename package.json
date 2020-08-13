@@ -21,6 +21,7 @@
     "@types/recharts": "^1.8.14",
     "apollo-client": "^2.6.10",
     "apollo-link": "^1.2.14",
+    "bignumber.js": "^9.0.0",
     "cross-fetch": "^3.0.5",
     "graphql": "^15.3.0",
     "graphql-tools": "^6.0.15",

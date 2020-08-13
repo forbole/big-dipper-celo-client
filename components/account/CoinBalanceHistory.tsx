@@ -57,7 +57,7 @@ const CoinBalanceHistory = () => {
   const classes = useStyles();
 
   return (
-    <Accordion>
+    <Accordion defaultExpanded>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="coinBalanceHistoryPanel"

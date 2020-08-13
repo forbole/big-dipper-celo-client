@@ -18,29 +18,15 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-
-interface Data {
-  tx: string;
-  from: string;
-  to: string;
-  time: string;
-  chip: string;
-  total: string;
-}
-
-function createData(tx: string, from: string, to: string, time: string, chip: string, total: string) {
-  return { tx, from, to, time, chip, total };
-}
-
-const rows = [
-  createData(' 0xd3b4592hfh..', '0xd3b92hdsdf..', '0xd3bretretretert4592hdsw12df..', '2 mins ago', 'Contract Call', '3023412.22 cGLD'),
-  createData(' 0xd3b4882hfh..', '0x98b45d12df..', '0xd3b4592hdsw12df..', '5 mins ago', 'Token Transfer', '3023412.22 cGLD'),
-  createData(' 0xdsdb4592hfh..', '0xd6hdsw12df..', '0xd3b4592hdsw12df..', '1 mins ago', 'Contract Call', '603412.22 cGLD'),
-  createData(' 0xd3b4592hfh..', '0xd3dsw12df..', '0xd3b4592hdsw12df..', '3 mins ago', 'Contract Call', '7023412.22 cGLD'),
-  createData(' 0xd3b4592hfh..', '0xd3hdsw12df..', '0xd3b4592hdsw12df..', '8 mins ago', 'Contract Call', '5023412.22 cGLD'),
-  createData(' 0xd3b4592hfh..', '0xd392hdsw12df..', '0xd3b4592hdsw12df..', '6 mins ago', 'Contract Call', '8023412.22 cGLD'),
-  createData(' 0xd3b4592hfh..', '0xd392hdsw12df..', '0xd3b4592hdsw12df..', '2 mins ago', 'Contract Call', '24023412.22 cGLD'),
-];
+import { GET_ACCOUNT_TX } from '../query/Transaction'
+import ComponentLoader from '../misc/ComponentLoader';
+import NotAvailable from '../misc/NotAvailable';
+import ErrorMessage from '../misc/ErrorMessage';
+import { useQuery } from "@apollo/client";
+import MiddleEllipsis from '../misc/MiddleEllipsis'
+import moment from "moment";
+import numbro from "numbro";
+import getConfig from 'next/config'
 
 
 const useStyles = makeStyles(({ spacing }) => {
@@ -57,7 +43,6 @@ const useStyles = makeStyles(({ spacing }) => {
 
     leftInline: {
       display: 'flex',
-      overflow: 'auto',
       padding: '0 0 0 1rem',
     },
     rightInline: {
@@ -87,39 +72,31 @@ const useStyles = makeStyles(({ spacing }) => {
 
     txPadding: {
       display: 'flex',
-      overflow: 'auto',
+      overflow: 'hidden',
       padding: '0 0 0 0.5rem',
     },
     divider: {
       margin: '0.5rem 0 0 0',
       backgroundColor: "rgba(62, 67, 71, 1)",
     },
-
+    icon: {
+      fill: "rgba(255, 255, 255, 0.6)",
+    },
   }
 });
 
+moment.relativeTimeThreshold("s", 59);
+moment.relativeTimeThreshold("ss", 3);
 
+type TransactionsProps = { address: string };
 
-
-const AccountTransactions = () => {
-  const rowsOption1 = 10;
-  const rowsOption2 = 30;
-  const rowsOption3 = 50;
+const AccountTransactions = ({ address }: TransactionsProps) => {
 
   const classes = useStyles();
-  const theme = useTheme();
-  const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
-  const [page, setPage] = React.useState(1);
-  const [pageSize, setPageSize] = React.useState(5)
+  const { publicRuntimeConfig } = getConfig()
 
-  useEffect(() => {
-    if (largeScreen) {
-      setPageSize(10)
-    }
-    else {
-      setPageSize(5)
-    }
-  })
+  const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
+  const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXxsmall)
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -127,101 +104,138 @@ const AccountTransactions = () => {
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPageSize(+event.target.value);
-    setPage(1);
+    setPage(publicRuntimeConfig.setPage);
   };
+
+  const { loading, error, data } = useQuery(GET_ACCOUNT_TX, {
+    variables: { address, pageSize, page },
+    pollInterval: 5000,
+  });
+
+  if (loading) return <ComponentLoader />
+  if (error) return <ErrorMessage message={error.message} />
 
   return (
 
-    <Accordion>
+    <Accordion defaultExpanded>
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
+        expandIcon={<ExpandMoreIcon className={classes.icon} />}
         aria-controls="accountTransactionsPanel"
         id="accountTransactionsPanel"
       >
-        <Typography variant="body1" > Transactions {"(1000)"}</Typography>
+        <Typography variant="body1" > Transactions ({numbro(data.transactionsByAccount.totalCounts).format("0,000")})</Typography>
       </AccordionSummary>
       <AccordionDetails className={classes.root}>
         <Grid container >
           <Divider variant='middle' />
-          <TableContainer className={classes.container}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-              </TableHead>
-              <TableBody>
-                {rows.map((row: any, index: number) => {
-                  return (
-                    <TableRow key={index} >
-                      <TableCell component="th" scope="row" padding="checkbox"  >
-                        <Grid container spacing={1} style={{ padding: '0.5rem 0' }}>
-                          <Grid item xs={8}>
+          <Grid item xs={12}>
+            <TableContainer className={classes.container}>
+              <Table >
+                <TableHead>
+                </TableHead>
+                <TableBody>
+                  {data.transactionsByAccount.transactions.map((row: any, index: number) => {
+                    return (
+                      <TableRow key={index} >
+                        <TableCell component="th" scope="row" padding="checkbox"  >
+                          <Grid container spacing={1} style={{ padding: '0.5rem 0' }}>
+                            <Grid item xs={8}>
 
-                            <Typography variant="body2" className={classes.leftInline}>
-                              Tx#   <Link href="#" color="secondary" className={classes.leftInline}>
-                                {row.tx}
-                              </Link>
-                            </Typography>
+                              <Typography variant="body2" className={classes.leftInline}>
+                                Tx#  <Link
+                                  href="/transaction/[transaction]/"
+                                  as={`../transaction/${row.hash}`}
+                                  color="secondary"
+                                  className={classes.leftInline}
+                                >
+                                  {row.hash
+                                    ? <MiddleEllipsis text={row.hash} />
+                                    : <NotAvailable variant="body2" />}
+                                </Link>
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={4} >
+                              <Typography variant="body2" className={classes.alignRight}>
+                                {row.timestamp
+                                  ? moment.unix(row.timestamp).fromNow()
+                                  : <NotAvailable variant="body2" />}
+                              </Typography>
+                            </Grid>
+
+                            <Grid item xs={5} md={4} >
+                              <Typography variant="body2" className={classes.leftInline}>
+                                From   <Link
+                                  href="account/[account]/"
+                                  as={`${row.from.address}`}
+                                  color="secondary"
+                                  className={classes.txPadding}
+                                >
+                                  {row.from && row.from.address
+                                    ? <MiddleEllipsis text={row.from.address} />
+                                    : <NotAvailable variant="body2" />}
+                                </Link>
+                              </Typography>
+                            </Grid>
+
+                            <Grid item xs={7} md={8}>
+                              <Typography variant="body2" align='left' className={classes.rightInline}>
+                                To <Link
+                                  href="account/[account]/"
+                                  as={`${row.from.address}`}
+                                  color="secondary"
+                                  className={classes.txPadding}
+                                >
+                                  {row.to && row.to.address
+                                    ? <MiddleEllipsis text={row.to.address} />
+                                    : <NotAvailable variant="body2" />}
+                                </Link>
+                              </Typography>
+                            </Grid>
+
+                            <Grid item xs={6} >
+                              {row.type && row.to && row.to.contract && row.to.contract.name ?
+                                <Typography variant="body2" className={classes.chip}>
+                                  <Chips type={row.type} contractName={row.to.contract.name} />
+                                </Typography> :
+                                (row.type ?
+                                  <Typography variant="body2" className={classes.chip}>
+                                    <Chips type={row.type} />
+                                  </Typography>
+                                  : null)}
+                            </Grid>
+                            <Grid item xs={6}>
+                              <Typography variant="body2" className={classes.alignRight} >
+                                {row.gas
+                                  ? row.gas + " CELO"
+                                  : <NotAvailable variant="body2" />}
+                              </Typography>
+                            </Grid>
                           </Grid>
-                          <Grid item xs={4} >
-                            <Typography variant="body2" className={classes.alignRight}>
-                              {row.time}
-                            </Typography>
-                          </Grid>
-
-                          <Grid item xs={5} md={4} >
-                            <Typography variant="body2" className={classes.leftInline}>
-                              From  <Link href="#" color="secondary" className={classes.txPadding} >
-                                {row.from}
-                              </Link>
-                            </Typography>
-                          </Grid>
-
-                          <Grid item xs={7} md={8}>
-                            <Typography variant="body2" align='left' className={classes.rightInline}>
-                              To  <Link href="#" color="secondary" className={classes.txPadding}>
-                                {row.to}
-                              </Link>
-                            </Typography>
-                          </Grid>
-
-
-
-                          <Grid item xs={6} >
-                            <Typography variant="body2" className={classes.chip}>
-                              <Chips value={row.chip} />
-                            </Typography>
-
-                          </Grid>
-                          <Grid item xs={6}>
-                            <Typography variant="body2" className={classes.alignRight} >
-                              {row.total}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </TableCell>
-
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={pageSize}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-            backIconButtonProps={{
-              'aria-label': 'Previous',
-              'disabled': page === 1,
-            }}
-            nextIconButtonProps={{
-              'aria-label': 'Next',
-            }}
-          />
-
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+              <TablePagination
+                className="account-txs"
+                rowsPerPageOptions={[publicRuntimeConfig.rowXxsmall, publicRuntimeConfig.rowXsmall, publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge,]}
+                component="div"
+                count={data.transactionsByAccount.totalCounts}
+                rowsPerPage={pageSize}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+                backIconButtonProps={{
+                  'aria-label': 'Previous',
+                  'disabled': page === 1,
+                }}
+                nextIconButtonProps={{
+                  'aria-label': 'Next',
+                }}
+              />
+            </TableContainer>
+          </Grid>
         </Grid>
       </AccordionDetails>
     </Accordion>

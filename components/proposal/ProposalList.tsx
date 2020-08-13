@@ -6,7 +6,6 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import gql from "@apollo/client";
 import { useQuery } from "@apollo/client";
-import TablePagination from "@material-ui/core/TablePagination";
 import * as numbro from "numbro";
 import PriceCard from "../PriceCard";
 import Chips from "../../components/Chips";
@@ -89,7 +88,7 @@ const ProposalDetails = () => {
                 </Typography>
               </Grid>
               <Grid item xs={3} sm={2} className={classes.proposalButton}>
-                <Chips value="Vote" />
+                <Chips type="" contractName="" actionResult="Vote" />
               </Grid>
               <Grid item xs={11} sm={8} className={classes.proposalDescription}>
                 Don’t Burn Deposits for Rejected Governance Proposals Unless
@@ -120,7 +119,7 @@ const ProposalDetails = () => {
                 </Typography>
               </Grid>
               <Grid item xs={3} className={classes.proposalButton}>
-                <Chips value="Deposit" />
+                <Chips type="" contractName="" actionResult="Deposit" />
               </Grid>
               <Grid item xs={12} className={classes.proposalDescription}>
                 Adjustment of blocks_per_year to come aligned with actual block
@@ -151,7 +150,7 @@ const ProposalDetails = () => {
                 </Typography>
               </Grid>
               <Grid item xs={3} className={classes.proposalButton}>
-                <Chips value="Passed" />
+                <Chips type="" contractName="" actionResult="Passed" />
               </Grid>
               <Grid item xs={12} className={classes.proposalDescription}>
                 Notification for Security Critical Hard Fork at Block 482100

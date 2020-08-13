@@ -9,6 +9,7 @@ export const GET_BLOCK = gql`
         miner {
           name
           affiliation
+          signer
         }
         transactions {
           transactionIndex
@@ -42,4 +43,30 @@ export const GET_BLOCK_DETAILS = gql`
       gasLimit
     }
   }
+`;
+
+
+export const GET_PROPOSED_BLOCKS = gql`
+  query proposedBlocks($address: String!, $pageSize: Int, $page: Int){
+  proposedBlocks(address: $address, pageSize: $pageSize, page: $page ){
+    totalCounts
+    hasMore
+    blocks{
+      number
+      transactions{
+        transactionIndex
+      }
+      gasUsed
+      gasLimit
+      timestamp
+      miner{
+        name
+        signerAccount{
+          address
+        }
+      }
+      
+    }
+  }
+}
 `;

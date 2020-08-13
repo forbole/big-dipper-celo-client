@@ -19,6 +19,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import {
     PieChart, Pie, Sector, Cell, Tooltip, Legend, Line
 } from 'recharts';
+import getConfig from 'next/config'
 
 
 interface Column {
@@ -112,13 +113,11 @@ const useStyles = makeStyles(() => {
 });
 
 const ProposalVotingList = () => {
-    const rowsOption1 = 10;
-    const rowsOption2 = 30;
-    const rowsOption3 = 50;
-
     const classes = useStyles();
-    const [page, setPage] = React.useState(1);
-    const [pageSize, setPageSize] = React.useState(10)
+    const { publicRuntimeConfig } = getConfig()
+
+    const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
+    const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXsmall)
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -126,7 +125,7 @@ const ProposalVotingList = () => {
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPageSize(+event.target.value);
-        setPage(1);
+        setPage(publicRuntimeConfig.setPage);
     };
 
     const [value, setValue] = React.useState(0);
@@ -166,7 +165,7 @@ const ProposalVotingList = () => {
     })(Tabs);
 
     return (
-        <Grid container  justify="center" className={classes.container}>
+        <Grid container justify="center" className={classes.container}>
             <Paper className={classes.paper}>
                 <Typography
                     color="textPrimary"
@@ -300,7 +299,7 @@ const ProposalVotingList = () => {
                     </Table>
                 </TableContainer>
                 <TablePagination
-                    rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
+                    rowsPerPageOptions={[publicRuntimeConfig.rowXsmall, publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge,]}
                     component="div"
                     count={rows.length}
                     rowsPerPage={pageSize}
