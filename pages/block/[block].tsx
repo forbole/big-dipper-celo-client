@@ -23,7 +23,7 @@ export default function Block() {
   return (
     <Layout>
       <Grid container spacing={2} className={classes.root}>
-        <Grid item xs={12} md={7} >
+        <Grid item xs={12} >
           <BlockDetails />
         </Grid>
       </Grid>

@@ -103,6 +103,7 @@ moment.relativeTimeThreshold("ss", 3);
 type LatestTxsProps = { pagination: boolean };
 
 
+
 const LatestTransactions = ({ pagination }: LatestTxsProps) => {
   const classes = useStyles();
   const { publicRuntimeConfig } = getConfig()

@@ -20,7 +20,7 @@ export default function Transactions() {
   return (
     <Layout>
       <Grid container spacing={2} className={classes.root}>
-        <Grid item xs={12} md={7} >
+        <Grid item xs={12}>
           <LatestTransactions pagination={true} />
         </Grid>
       </Grid>
