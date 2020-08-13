@@ -25,6 +25,8 @@ import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
 import Ledger from "./ledger/Ledger";
 import Footer from "../components/Footer";
+import Container from '@material-ui/core/Container';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -77,8 +79,8 @@ const Layout = (props: { children: React.ReactNode }) => {
   });
 
   const anchor = "right";
-
-  let loggedIn = true;
+  const theme = useTheme();
+  const largeScreen = useMediaQuery(theme.breakpoints.up('lg'));
 
   const toggleDrawer = (anchor: Anchor, open: boolean) => (
     event: React.KeyboardEvent | React.MouseEvent
@@ -209,7 +211,9 @@ const Layout = (props: { children: React.ReactNode }) => {
             </span>
           </Hidden>
         </AppBar>
-        <main className={classes.content}>{props.children}</main>
+        <Container maxWidth="lg" disableGutters={largeScreen ? false : true} >
+          <main className={classes.content}>{props.children}</main>
+        </Container>
       </React.Fragment>
     </div>
   );

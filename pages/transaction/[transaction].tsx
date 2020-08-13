@@ -24,7 +24,7 @@ export default function Transaction() {
   return (
     <Layout>
       <Grid container className={classes.root}>
-        <Grid item xs={12} md={7}>
+        <Grid item xs={12}>
           <TransactionDetails hash={router.query.transaction} />
         </Grid>
       </Grid>

@@ -15,6 +15,7 @@
 * Updated Accordion to display expanded as default
 * Linked real-time data in Account Section
 * [#60] Changed footer logo & social links to Big Dipper
+* [#59] Unified layout on the desktop 
 
 
 ## v0.1.0
