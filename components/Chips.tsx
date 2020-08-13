@@ -12,14 +12,14 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: 5,
       backgroundColor: grey[500],
       fontSize: "	0.875rem",
-      width: "5rem",
+      width: "auto",
       textTransform: 'capitalize',
       marginRight: "0.5rem"
     },
   })
 );
 
-type ChipsProps = { contractName: string, type: string, actionResult: string };
+type ChipsProps = { contractName?: string, type?: string, actionResult?: string };
 
 const Chips = ({ contractName, type, actionResult }: ChipsProps) => {
   const classes = useStyles();
@@ -41,7 +41,7 @@ const Chips = ({ contractName, type, actionResult }: ChipsProps) => {
     'Validators': teal[700],
     'SortedOracles': red['A100'],
     'Governance': cyan[700],
-    'GoldToken': yellow[600],
+    'GoldToken': yellow[700],
     'DoubleSigningSlasher': yellow['A400'],
     'Escrow': lightGreen[700],
     'Attestations': pink[600],
