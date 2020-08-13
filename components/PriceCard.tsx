@@ -38,9 +38,12 @@ const useStyles = makeStyles(({ spacing }) => {
   };
 });
 
-const PriceCard = (props: any) => {
+type PriceCardProps = { size: string };
+
+
+const PriceCard = ({ size }: PriceCardProps) => {
   const classes = useStyles();
-  switch (props.size) {
+  switch (size) {
     case "small":
       return (
         <Card className={cx(classes.smallCard)} elevation={0}>

@@ -9,16 +9,12 @@ export const GET_VALIDATOR = gql`
     ecdsaPublicKey
     name
     score
+    signer
     validatorGroup{
       address
       commission
     }
-    signer{
-      isSigner
-      isAccount
-      attestation
-      lockedGold
-    }
+  
   }
 }
 `;

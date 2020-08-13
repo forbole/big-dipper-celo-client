@@ -15,25 +15,28 @@ import theme from '../../themes/celo-theme';
 import TablePagination from '@material-ui/core/TablePagination';
 import Divider from '@material-ui/core/Divider';
 import { GET_ACCOUNTS } from '../query/Account'
+import { GET_TOTAL_SUPPLY } from '../query/Chain'
 import { useQuery } from "@apollo/client";
 import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
 import MiddleEllipsis from '../misc/MiddleEllipsis'
 import numbro from "numbro";
-
+import getConfig from 'next/config'
+import BigNumber from 'bignumber.js'
 
 interface Column {
   id: 'rank' | 'address' | 'balance' | 'percentage' | 'txsCount';
   label: string;
+  align: string;
 }
 
 const columns: Column[] = [
-  { id: 'rank', label: 'Rank', },
-  { id: 'address', label: 'Address', },
-  { id: 'balance', label: 'Balance', },
-  { id: 'percentage', label: 'Percentage', },
-  { id: 'txsCount', label: 'Txs Count', },
+  { id: 'rank', label: 'Rank', align: 'left' },
+  { id: 'address', label: 'Address', align: 'left' },
+  { id: 'balance', label: 'Balance', align: 'right' },
+  { id: 'percentage', label: 'Percentage', align: 'right' },
+  { id: 'txsCount', label: 'Txs Count', align: 'right' },
 ];
 
 interface Data {
@@ -102,15 +105,11 @@ const useStyles = makeStyles(({ spacing }) => {
 
 
 const AccountList = () => {
-  const rowsOption1 = 10;
-  const rowsOption2 = 30;
-  const rowsOption3 = 50;
-
   const classes = useStyles();
+  const { publicRuntimeConfig } = getConfig()
 
-  const [page, setPage] = React.useState(1);
-  const [pageSize, setPageSize] = React.useState(10)
-
+  const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
+  const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowMedium)
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -118,13 +117,19 @@ const AccountList = () => {
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPageSize(+event.target.value);
-    setPage(1);
+    setPage(publicRuntimeConfig.setPage);
   };
 
   const { loading, error, data } = useQuery(GET_ACCOUNTS, {
+    variables: { pageSize, page },
   });
 
-  if (loading) return <ComponentLoader />
+  const totalSupply = useQuery(GET_TOTAL_SUPPLY, {
+  });
+
+
+
+  if (loading) return <ComponentLoader  />
   if (error) return <ErrorMessage message={error.message} />
 
   return (
@@ -141,7 +146,7 @@ const AccountList = () => {
                     {columns.map((column) => (
                       <TableCell
                         key={column.id}
-                        align="left"
+                        align={column.align}
                         className={classes.table}
                         padding="checkbox"
                       >
@@ -157,25 +162,37 @@ const AccountList = () => {
                         <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
                           <Typography variant="body2" noWrap> {index + 1}</Typography>
                         </TableCell>
-                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                          <Link
-                            href="/account/[account]/"
-                            as={`/account/${row.address}`}
-                            color="secondary"
-                          >
+                        {row.address ?
+                          <TableCell align="left" padding="checkbox" className={classes.tableCell}>
+                            <Link
+                              href="/account/[account]/"
+                              as={`/account/${row.address}`}
+                              color="secondary"
+                            >
+                              <Typography variant="body2" noWrap>
+                                <MiddleEllipsis text={row.address} />
+                              </Typography>
+                            </Link>
+                          </TableCell>
+                          : <NotAvailable variant="body2" />}
+                        <TableCell align="right" padding="checkbox" className={classes.tableCell}>
+                          {row.balance ?
                             <Typography variant="body2" noWrap>
-                              <MiddleEllipsis text={row.address} />
-                            </Typography>
-                          </Link>
+                              {BigNumber.prototype.toFormat.call(
+                                new BigNumber(row.balance)
+                              )} CELO
+                              </Typography>
+                            : <NotAvailable variant="body2" />}
                         </TableCell>
-                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                          <Typography variant="body2" noWrap>{numbro((row.balance).toLocaleString('fullwide')).format("0.000000")} CELO</Typography>
+                        <TableCell align="right" padding="checkbox" className={classes.tableCell}>
+                          {row.balance && totalSupply && totalSupply.data && totalSupply.data.chain && totalSupply.data.chain.cUSDTotalSupply ?
+                            <Typography variant="body2" noWrap>{numbro((row.balance / totalSupply.data.chain.cUSDTotalSupply) * 100).format("0.0000000")}</Typography>
+                            : <NotAvailable variant="body2" />}
                         </TableCell>
-                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                          <Typography variant="body2" noWrap>{row.percentage}</Typography>
-                        </TableCell>
-                        <TableCell align="left" padding="checkbox" className={classes.tableCell}>
-                          <Typography variant="body2" noWrap>{row.txsCount}</Typography>
+                        <TableCell align="right" padding="checkbox" className={classes.tableCell}>
+                          {row.txCount ?
+                            <Typography variant="body2" noWrap >{numbro(row.txCount).format("0,000")}</Typography>
+                            : '0'}
                         </TableCell>
                       </TableRow>
                     );
@@ -185,9 +202,9 @@ const AccountList = () => {
             </Paper>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
+            rowsPerPageOptions={[publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge,]}
             component="div"
-            count={data.accounts.accounts.length}
+            count={data.accounts.totalCounts}
             rowsPerPage={pageSize}
             page={page}
             onChangePage={handleChangePage}

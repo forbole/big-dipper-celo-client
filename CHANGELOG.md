@@ -5,7 +5,17 @@
 * Updated Grid size on medium screens to 7
 * Disabled back button on Page 1 in TablePagination
 * Updated the address of a miner in LatestBlocks
+* Hidden Coin Balance History
+* Moved Table Pagination to right in all components
+* Added & updated components to BigNumber.js
+* Changed name from ValidatedBlocks to ProposedBlocks
+* Updated Chips value and colors 
+* Added All Signers in AccountDetails
+* Adjusted button size in AccountOverview for xs screens
+* Updated Accordion to display expanded as default
+* Linked real-time data in Account Section
 * [#59] Unified layout on the desktop 
+
 
 ## v0.1.0
 

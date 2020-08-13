@@ -25,7 +25,7 @@ export default function Transaction() {
     <Layout>
       <Grid container className={classes.root}>
         <Grid item xs={12}>
-          <TransactionDetails hashValue={router.query.transaction} />
+          <TransactionDetails hash={router.query.transaction} />
         </Grid>
       </Grid>
     </Layout>

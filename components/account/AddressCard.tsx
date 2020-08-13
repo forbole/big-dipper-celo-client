@@ -61,9 +61,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+type AddressCardProps = { address: string };
 
 
-const AddressCard = (props: any) => {
+const AddressCard = ({ address }: AddressCardProps) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [openQR, setOpenQR] = React.useState(false);
@@ -111,7 +112,7 @@ const AddressCard = (props: any) => {
             </Grid>
             <Grid item xs={12} className={classes.item}>
               <Typography variant="caption" color="textSecondary" noWrap>
-                {props.address}
+                {address}
               </Typography>
 
             </Grid>
@@ -123,7 +124,7 @@ const AddressCard = (props: any) => {
           <DialogContentText id="qr-code"  >
             <Grid container spacing={1} >
               <Grid item xs={12} className={classes.item}  >
-                <QRCode value={`${process.env.uriAccount}/${props.address}`} />
+                <QRCode value={`${process.env.uriAccount}/${address}`} />
               </Grid>
             </Grid>
           </DialogContentText>
@@ -168,7 +169,7 @@ const AddressCard = (props: any) => {
             <Grid item xs={12} className={classes.address} >
               <div >
                 <Typography variant="body2" align="left" id="accountAddress" >
-                  {props.address}
+                  {address}
                 </Typography>
               </div>
             </Grid>

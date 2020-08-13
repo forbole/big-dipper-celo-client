@@ -45,7 +45,6 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       padding: "0.5rem",
       marginTop: "4rem",
-      overflow: "auto",
     },
     icon: {
       minWidth: "1.7rem",
