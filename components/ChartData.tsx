@@ -4,8 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { useQuery } from "@apollo/client";
-import TablePagination from "@material-ui/core/TablePagination";
+import { useQuery } from "@apollo/client"; 
 import numbro from "numbro";
 import ComponentLoader from './misc/ComponentLoader';
 import NotAvailable from './misc/NotAvailable'
