@@ -15,7 +15,6 @@ import IconButton from "@material-ui/core/IconButton";
 import { useRouter } from "next/router";
 import gql from "@apollo/client";
 import { useQuery } from "@apollo/client";
-import TablePagination from "@material-ui/core/TablePagination";
 import * as numbro from "numbro";
 import moment from "moment";
 import Chip from "@material-ui/core/Chip";
@@ -101,9 +100,11 @@ function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const TransactionDetails = (props: any) => {
+type TxDetailsProps = { hash: string };
+
+
+const TransactionDetails = ({ hash }: TxDetailsProps) => {
   const classes = useStyles();
-  const hash = props.hashValue ? props.hashValue : 0;
 
   const { loading, error, data } = useQuery(GET_TX_DETAILS, {
     variables: { hash },
@@ -141,13 +142,13 @@ const TransactionDetails = (props: any) => {
     return arr1.join("").toString();
   }
 
-  const handleClickHex = (props: any) => {
+  const handleClickHex = () => {
     let rawInputForm = document.getElementById("rawInputForm") as HTMLInputElement
     rawInputForm.value = asciiToHex(inputValue)
     return rawInputForm.value
   };
 
-  const handleClickUTF8 = (props: any) => {
+  const handleClickUTF8 = () => {
     let rawInputForm = document.getElementById("rawInputForm") as HTMLInputElement
     (rawInputForm.value) = inputValue
     return rawInputForm.value
@@ -217,9 +218,9 @@ const TransactionDetails = (props: any) => {
             </Typography>
             <Typography variant="body2" component="h2">
               {data.transaction && data.transaction.pending ? (
-                <Chips value="Pending" />
+                <Chips actionResult="Pending" />
               ) : (
-                  <Chips value="Success" />
+                  <Chips actionResult="Success" />
                 )}
             </Typography>
             <Divider variant="middle" className={classes.divider} />

@@ -24,6 +24,7 @@ import ErrorMessage from '../misc/ErrorMessage';
 import { GET_BLOCK } from '../query/Block'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+import getConfig from 'next/config'
 
 interface Column {
   id: "height" | "validator" | "txs" | "gasUsed" | "gasLimit" | "time";
@@ -55,6 +56,7 @@ const useStyles = makeStyles({
     borderRadius: 4,
     wordWrap: "break-word",
     margin: "none",
+    overflow: "hidden",
   },
   box: {
     letterSpacing: "1px",
@@ -120,27 +122,46 @@ const useStyles = makeStyles({
   },
 });
 
+moment.relativeTimeThreshold("s", 59);
+moment.relativeTimeThreshold("ss", 3);
+
+type LatestBlocksProps = { pagination?: boolean, displayCard?: boolean };
 
 
-const LatestBlocks = (props: any) => {
-  const rowsOption1 = 14;
-  const rowsOption2 = 28;
-  const rowsOption3 = 100;
-
+const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
   const classes = useStyles();
   const theme = useTheme();
   const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
-  const [page, setPage] = React.useState(1);
-  const [pageSize, setPageSize] = React.useState(5)
+
+  const { publicRuntimeConfig } = getConfig()
+
+  const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
+  const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowSmall);
+
+  // {
+  //   props.pagination === false ?
+  //     useEffect(() => {
+  //       if (largeScreen) {
+  //         setPageSize(publicRuntimeConfig.rowSmall)
+  //       }
+  //       else {
+  //         setPageSize(publicRuntimeConfig.rowXxsmall)
+  //       }
+  //     }) : null
+  // }
+
 
   useEffect(() => {
-    if (largeScreen) {
-      setPageSize(14)
+    if (pagination === false) {
+      if (largeScreen) {
+        setPageSize(publicRuntimeConfig.rowSmall)
+      }
+      else {
+        setPageSize(publicRuntimeConfig.rowXxsmall)
+      }
     }
-    else {
-      setPageSize(5)
-    }
-  })
+  });
+
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -150,12 +171,8 @@ const LatestBlocks = (props: any) => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setPageSize(+event.target.value);
-    setPage(1);
+    setPage(publicRuntimeConfig.setPage);
   };
-
-  moment.relativeTimeThreshold("s", 59);
-  moment.relativeTimeThreshold("ss", 3);
-
 
   const { loading, error, data } = useQuery(GET_BLOCK, {
     variables: { pageSize, page },
@@ -168,7 +185,7 @@ const LatestBlocks = (props: any) => {
   return (<>
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        {props.displayCard === true ? (
+        {displayCard ? (
           <Hidden smUp>
             <PriceCard size="large" />
           </Hidden>
@@ -176,7 +193,7 @@ const LatestBlocks = (props: any) => {
         <Paper className={classes.root}>
           <Typography variant="body1" className={classes.box}>
             Latest Blocks{" "}
-            {props.pagination === false ? (
+            {pagination === false ? (
               <Link href="/blocks" className={classes.link} color="textPrimary">
                 {"view more"}
               </Link>
@@ -187,7 +204,7 @@ const LatestBlocks = (props: any) => {
             <Paper className={classes.tableCell}>
               <Table>
                 <TableHead>
-                  {props.pagination === true ? (
+                  {pagination ? (
                     <TableRow>
                       {columns.map((column) => (
                         <TableCell
@@ -304,7 +321,7 @@ const LatestBlocks = (props: any) => {
                             </Link>
                           </Typography>
                         </TableCell>
-                        {props.pagination === true ? (
+                        {pagination ? (
                           <TableCell
                             align="left"
                             padding="checkbox"
@@ -320,7 +337,7 @@ const LatestBlocks = (props: any) => {
                             </div>
                           </TableCell>
                         ) : null}
-                        {props.pagination === true ? (
+                        {pagination ? (
                           <TableCell
                             align="left"
                             padding="checkbox"
@@ -345,10 +362,10 @@ const LatestBlocks = (props: any) => {
               </Table>
             </Paper>
           </TableContainer>
-          {props.pagination === true ? (
+          {pagination ? (
             <TablePagination
               className={"pagination"}
-              rowsPerPageOptions={[rowsOption1, rowsOption2, rowsOption3]}
+              rowsPerPageOptions={[publicRuntimeConfig.rowXxsmall, publicRuntimeConfig.rowXsmall, publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge,]}
               component="div"
               count={data.blocks.totalCounts}
               rowsPerPage={pageSize}

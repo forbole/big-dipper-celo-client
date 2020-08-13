@@ -22,7 +22,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const LedgerButtons = (props: any) => {
+type LedgerButtonsProps = { option?: string, variant?: string };
+
+
+const LedgerButtons = ({ option, variant }: LedgerButtonsProps) => {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -35,7 +38,7 @@ const LedgerButtons = (props: any) => {
     setOpen(false);
   };
 
-  switch (props.option) {
+  switch (option) {
     case "Cancel":
       return (
         <div className={classes.root}>
@@ -144,7 +147,7 @@ const LedgerButtons = (props: any) => {
             fullWidth={true}
           >
             <Typography variant="body2" noWrap>
-              {props.variant}
+              {variant}
             </Typography>
           </Button>{" "}
         </div>

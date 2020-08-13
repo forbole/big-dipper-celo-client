@@ -5,6 +5,7 @@ export const GET_TX = gql`
       transactions(pageSize: $pageSize, page: $page){
         totalCounts
         transactions{
+          type
             from {
               _id
               address
@@ -54,6 +55,40 @@ export const GET_TX_DETAILS = gql`
       to {
         address
       }
+    }
+  }
+`;
+
+
+export const GET_ACCOUNT_TX = gql`
+  query TransactionsByAccount($address: String!, $pageSize: Int, $page: Int) {
+    transactionsByAccount(address: $address, pageSize: $pageSize, page: $page) {
+      totalCounts
+      transactions{
+        hash
+        timestamp
+        gas
+        type
+        from {
+              _id
+              address
+              balance
+            }
+            to{
+              address
+              ... on ToWalletAccount {
+                account {
+                  balance
+                }
+              }
+              ... on ToWalletContract {
+                contract {
+                  name
+                  ABI
+                }        
+              }
+            }
+    }
     }
   }
 `;

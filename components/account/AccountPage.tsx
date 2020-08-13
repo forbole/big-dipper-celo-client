@@ -3,7 +3,7 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import AccountTransactions from "./Transactions";
 import Downtime from "./Downtime";
-import ValidatedBlocks from "./ValidatedBlocks";
+import ProposedBlocks from "./ProposedBlocks";
 import AddressCard from "./AddressCard";
 import AccountDetails from "./AccountDetails";
 import Hidden from "@material-ui/core/Hidden";
@@ -15,7 +15,7 @@ import AccountOverview from "./AccountOverview";
 import CoinBalanceHistory from './CoinBalanceHistory';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
-import { GET_ACCOUNT_DETAILS } from '../query/Account'
+import { GET_VALIDATOR } from '../query/Validator'
 
 
 
@@ -45,47 +45,53 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+type AccountPageProps = { address: string };
 
-
-const AccountPage = (props: any) => {
+const AccountPage = ({ address }: AccountPageProps) => {
   const classes = useStyles();
 
-  const accountAddress = props.address
+  const { loading, error, data } = useQuery(GET_VALIDATOR, {
+    variables: { address },
+    pollInterval: 5000,
+  });
+
+  const isValidator = data && data.validator ? true : false;
+
 
   return (<>
 
     <Grid container spacing={2} className={classes.root}>
 
-      <Grid item xs={12} >
-        <AddressCard address={accountAddress} />
+      <Grid item xs={12}  >
+        <AddressCard address={address} />
       </Grid>
-
-      <Grid item xs={12} >
-        <AccountOverview address={accountAddress} />
-      </Grid>
-
-
-      <Grid item xs={12} >
-        <AccountTransactions />
-      </Grid>
-
 
       <Grid item xs={12}  >
+        <AccountOverview address={address} />
+      </Grid>
+
+
+      <Grid item xs={12} >
+        <AccountTransactions address={address} />
+      </Grid>
+
+
+      {/* <Grid item xs={12} >
         <CoinBalanceHistory />
-      </Grid>
+      </Grid> */}
 
-      <Grid item xs={12} >
-        <Downtime />
-      </Grid>
+      {isValidator ? <Grid item xs={12} >
+        <Downtime address={address} />
+      </Grid> : null}
 
-      <Grid item xs={12} >
-        <ValidatedBlocks />
-      </Grid>
+      {isValidator ? <Grid item xs={12}>
+        <ProposedBlocks address={address} />
+      </Grid> : null}
 
 
-      <Grid item xs={12} >
-        <AccountDetails />
-      </Grid>
+      {isValidator ? <Grid item xs={12}>
+        <AccountDetails address={address} />
+      </Grid> : null}
 
     </Grid>
   </>
