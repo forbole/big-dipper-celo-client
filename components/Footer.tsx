@@ -7,13 +7,14 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { Divider } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { createStyles, useTheme, Theme } from "@material-ui/core/styles";
+import theme from "../themes/celo-theme"
 
 const useStyles = makeStyles({
   root: {
     backgroundColor: "#131619",
     opacity: 1,
     justifyContent: "center",
-    padding: '2rem',
+    padding: '2rem 0',
     position: 'absolute'
   },
   text: {
@@ -41,6 +42,14 @@ const useStyles = makeStyles({
     marginLeft: "-0.55rem",
     display: "inline-block",
     verticalAlign: "middle",
+  },
+
+  footerLink: {
+    color: theme.palette.common.white,
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "underline"
+    }
   }
 
 });
@@ -50,33 +59,21 @@ const Footer = () => {
   return (
     <footer>
       <Grid container className={classes.root}>
-        <Grid item xs={12} md={8}>
-          <img src="/images/bigdipper-logo.svg" className={classes.bdLogo} />
-        </Grid>
-
-        <Grid item xs={12} md={8}>
-          <Typography variant="body2" className={classes.text} align="left">
-            Big Dipper for Celo, presented by Forbole.
-            </Typography>
-        </Grid>
-
-        <Grid item xs={12} md={8} >
+        <Grid item sm={11} md={9}>
+          <div><img src="/images/bigdipper-logo.svg" className={classes.bdLogo} /></div>
+          <div><Typography variant="body2" className={classes.text} align="left">
+            Big Dipper for Celo, presented by <a href="https://forbole.com" className={classes.footerLink} target="_blank">Forbole</a>.
+            </Typography></div>
+          <div>
           <Link
-            href="https://cosmos.bigdipper.live"
-            target="_blank"
-            className={classes.bdIcon}
-          >
-            <img src="/images/bigdipper-icon.svg" />
-          </Link>
-          <Link
-            href="https://github.com/forbole/big-dipper"
+            href="https://github.com/forbole/big-dipper-celo-client"
             target="_blank"
             className={classes.socialMedia}
           >
             <img src="/images/social-media-github.svg" />
           </Link>
           <Link
-            href="https://medium.com/forbole"
+            href="https://medium.com/bigdipperlive"
             target="_blank"
             className={classes.socialMedia}
           >
@@ -88,7 +85,7 @@ const Footer = () => {
             className={classes.socialMedia}
           >
             <img src="/images/social-media-twitter.svg" />
-          </Link>
+          </Link></div>
         </Grid>
       </Grid>
     </footer>
