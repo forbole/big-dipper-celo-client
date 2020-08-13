@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## v0.1.1
 
 * Updated Grid size on medium screens to 7
 * Disabled back button on Page 1 in TablePagination
