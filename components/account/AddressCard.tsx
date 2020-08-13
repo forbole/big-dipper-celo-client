@@ -143,7 +143,7 @@ const AddressCard = ({ address }: AddressCardProps) => {
           <DialogContentText id="qr-code"  >
             <Grid container spacing={1} >
               <Grid item xs={12} className={classes.item}  >
-                <QRCode value={`${process.env.uriAccount}/${props.address}`} className={classes.qrCode} />
+                <QRCode value={`${process.env.uriAccount}/${address}`} className={classes.qrCode} />
               </Grid>
             </Grid>
           </DialogContentText>
