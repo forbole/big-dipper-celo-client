@@ -1,14 +1,15 @@
 import { gql } from "@apollo/client";
 
 export const GET_ACCOUNTS = gql`
-  query Accounts {
-    accounts {
+  query Accounts($pageSize: Int, $page: Int) {
+    accounts(pageSize: $pageSize, page: $page) {
       page
       totalCounts
       accounts{
         _id
         address
         balance
+        txCount
       }
     }
   }

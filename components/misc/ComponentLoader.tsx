@@ -1,8 +1,10 @@
 import Skeleton from '@material-ui/lab/Skeleton';
 import React from "react";
 
-const ComponentLoader = (props: any) => {
-    if (props.size === "small") {
+type ComponentLoaderProps = { size?: string };
+
+const ComponentLoader = ({ size }: ComponentLoaderProps) => {
+    if (size === "small") {
         return (<>
             <Skeleton animation="wave" height={20} />
             <Skeleton animation="wave" height={25} />
