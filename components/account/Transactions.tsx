@@ -193,11 +193,15 @@ const AccountTransactions = ({ address }: TransactionsProps) => {
                             </Grid>
 
                             <Grid item xs={6} >
-                              {row.type ?
+                              {row.type && row.to && row.to.contract && row.to.contract.name ?
                                 <Typography variant="body2" className={classes.chip}>
-
-                                  <Chips type={row.type} contractName="" actionResult="" />
-                                </Typography> : null}
+                                  <Chips type={row.type} contractName={row.to.contract.name} />
+                                </Typography> :
+                                (row.type ?
+                                  <Typography variant="body2" className={classes.chip}>
+                                    <Chips type={row.type} />
+                                  </Typography>
+                                  : null)}
                             </Grid>
                             <Grid item xs={6}>
                               <Typography variant="body2" className={classes.alignRight} >

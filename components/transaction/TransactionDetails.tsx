@@ -218,9 +218,9 @@ const TransactionDetails = ({ hash }: TxDetailsProps) => {
             </Typography>
             <Typography variant="body2" component="h2">
               {data.transaction && !data.transaction.pending ? (
-                <Chips type="" contractName="" actionResult="Pending" />
+                <Chips actionResult="Pending" />
               ) : (
-                  <Chips type="" contractName="" actionResult="Success" />
+                  <Chips actionResult="Success" />
                 )}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
