@@ -283,10 +283,10 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                           padding="checkbox"
                           className={classes.tableCell}
                         >
-                          {row.miner && row.miner.address ? (
+                          {row.miner && row.miner.signer ? (
                             <Link
                               href="/account/[account]/"
-                              as={`/account/${row.miner.address}`}
+                              as={`/account/${row.miner.signer}`}
                               color="secondary"
                             >
                               <Typography
@@ -298,8 +298,8 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                                 <span>
                                   {
                                     ((row.miner && row.miner.name) ||
-                                      (row.miner && row.miner.address)
-                                      ? <MiddleEllipsis text={(row.miner.name || row.miner.address)} />
+                                      (row.miner && row.miner.signer)
+                                      ? <MiddleEllipsis text={(row.miner.name || row.miner.signer)} />
                                       : null)}
                                 </span>
                               </Typography>
@@ -315,8 +315,8 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                           <Typography variant="body2" noWrap>
                             <Link href="#" color="secondary">
                               {row.transactions &&
-                                row.transactions.transactionIndex
-                                ? row.transactions.transactionIndex.length()
+                                row.transactions
+                                ? row.transactions.length
                                 : 0}
                             </Link>
                           </Typography>

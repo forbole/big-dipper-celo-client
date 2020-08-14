@@ -19,13 +19,13 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Transaction() {
   const classes = useStyles();
   const router = useRouter();
-  const { Transaction } = router.query;
+  const transactionHash = router.query.transaction;
 
   return (
     <Layout>
       <Grid container className={classes.root}>
         <Grid item xs={12}>
-          <TransactionDetails hash={router.query.transaction} />
+          <TransactionDetails hash={transactionHash} />
         </Grid>
       </Grid>
     </Layout>

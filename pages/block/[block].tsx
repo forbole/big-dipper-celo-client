@@ -18,13 +18,13 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Block() {
   const classes = useStyles();
   const router = useRouter();
-  const { Block } = router.query;
-  // const pid = parseInt(router.query.block);
+  const blockNumber = parseFloat(router.query.block);
+
   return (
     <Layout>
       <Grid container spacing={2} className={classes.root}>
         <Grid item xs={12} >
-          <BlockDetails />
+          <BlockDetails number={blockNumber} />
         </Grid>
       </Grid>
     </Layout>
