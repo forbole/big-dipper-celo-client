@@ -97,17 +97,14 @@ function TabPanel(props: TabPanelProps) {
     </div>
   );
 }
+type BlockDetailsProps = { number?: number };
 
 
-const BlockDetails = () => {
+const BlockDetails = ({ number }: BlockDetailsProps) => {
   const router = useRouter();
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
-  if (!router.query.block) return <ContentLoader />;
-
-  //parse to String first to satisfy typecheck 
-  const number = parseInt(router.query.block.toString());
   const prevBlock: number = number - 1;
   const nextBlock: number = number + 1;
   const { loading, error, data } = useQuery(GET_BLOCK_DETAILS, {
