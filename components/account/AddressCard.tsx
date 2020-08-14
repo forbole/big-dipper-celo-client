@@ -92,7 +92,6 @@ const AddressCard = ({ address }: AddressCardProps) => {
   };
 
 
-
   const closeAlert = (event?: React.SyntheticEvent, reason?: string) => {
     setOpen(false);
   };
@@ -126,7 +125,7 @@ const AddressCard = ({ address }: AddressCardProps) => {
             </Grid>
             <Grid item xs={12} className={classes.item}>
               <Typography variant="h6" color="textPrimary">
-                QR Code
+                Scan Me!
               </Typography>
             </Grid>
             <Grid item xs={12} className={classes.item}>
@@ -181,8 +180,8 @@ const AddressCard = ({ address }: AddressCardProps) => {
                 onClick={showQR}
               >
                 <img src="/images/qr-code.svg" />
-                <ShowQRCode />
               </IconButton>
+              <ShowQRCode />
 
             </Grid>
             <Grid item xs={12} className={classes.address} >
