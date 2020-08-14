@@ -259,7 +259,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
                               </Typography>
                             </Grid>
 
-                            <Grid item xs={6}>
+                            <Grid item xs={12} lg={9}>
                               {row.type && row.to && row.to.contract && row.to.contract.name ?
                                 <Typography variant="body2" className={classes.chip}>
                                   <Chips type={row.type} contractName={row.to.contract.name} />
@@ -270,7 +270,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
                                   </Typography>
                                   : null)}
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={12} lg={3}>
                               <Typography
                                 variant="body2"
                                 className={classes.alignRight}
