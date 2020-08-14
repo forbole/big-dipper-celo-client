@@ -58,6 +58,17 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignContent: "center",
     },
+
+    qrCode: {
+      border: "solid #fff",
+      borderWidth: "0.375rem"
+    },
+
+    iconButtonRight: {
+      padding: "0",
+      marginLeft: "0.5rem",
+      float: "right",
+    },
   })
 );
 
@@ -81,7 +92,6 @@ const AddressCard = ({ address }: AddressCardProps) => {
   };
 
 
-
   const closeAlert = (event?: React.SyntheticEvent, reason?: string) => {
     setOpen(false);
   };
@@ -92,7 +102,6 @@ const AddressCard = ({ address }: AddressCardProps) => {
   const closeQR = () => {
     setOpenQR(false);
   };
-
 
   const ShowQRCode = () => {
     return (
@@ -105,9 +114,18 @@ const AddressCard = ({ address }: AddressCardProps) => {
       >
         <DialogTitle id="qr-code-title" className={classes.dialogTitle}>
           <Grid container >
+            <Grid item xs={12}>
+              <IconButton
+                aria-label="Close"
+                className={classes.iconButtonRight}
+                onClick={closeQR}
+              >
+                <img src="/images/cross.svg" color="textPrimary" />
+              </IconButton>
+            </Grid>
             <Grid item xs={12} className={classes.item}>
               <Typography variant="h6" color="textPrimary">
-                QR Code
+                Scan Me!
               </Typography>
             </Grid>
             <Grid item xs={12} className={classes.item}>
@@ -124,7 +142,7 @@ const AddressCard = ({ address }: AddressCardProps) => {
           <DialogContentText id="qr-code"  >
             <Grid container spacing={1} >
               <Grid item xs={12} className={classes.item}  >
-                <QRCode value={`${process.env.uriAccount}/${address}`} />
+                <QRCode value={`${process.env.uriAccount}/${address}`} className={classes.qrCode} />
               </Grid>
             </Grid>
           </DialogContentText>
@@ -162,8 +180,8 @@ const AddressCard = ({ address }: AddressCardProps) => {
                 onClick={showQR}
               >
                 <img src="/images/qr-code.svg" />
-                <ShowQRCode />
               </IconButton>
+              <ShowQRCode />
 
             </Grid>
             <Grid item xs={12} className={classes.address} >
@@ -181,7 +199,6 @@ const AddressCard = ({ address }: AddressCardProps) => {
         <Alert
           onClose={closeAlert}
           severity="success"
-          // variant="outlined"
           className={classes.alertMessage}
         >
           <Typography variant="body1">Copied!</Typography>
