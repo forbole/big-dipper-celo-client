@@ -315,8 +315,8 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                           <Typography variant="body2" noWrap>
                             <Link href="#" color="secondary">
                               {row.transactions &&
-                                row.transactions.transactionIndex
-                                ? row.transactions.transactionIndex
+                                row.transactions
+                                ? row.transactions.length
                                 : 0}
                             </Link>
                           </Typography>

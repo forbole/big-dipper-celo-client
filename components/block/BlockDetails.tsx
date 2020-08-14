@@ -216,8 +216,8 @@ const BlockDetails = () => {
             <Typography variant="body2" component="h2">
               {data.block &&
                 data.block.transactions &&
-                data.block.transactions.transactionIndex
-                ? data.block.transactions.transactionIndex
+                data.block.transactions
+                ? data.block.transactions.length
                 : "0"}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
