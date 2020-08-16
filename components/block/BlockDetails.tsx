@@ -97,11 +97,10 @@ function TabPanel(props: TabPanelProps) {
     </div>
   );
 }
-type BlockDetailsProps = { number?: number };
+type BlockDetailsProps = { number: number };
 
 
 const BlockDetails = ({ number }: BlockDetailsProps) => {
-  const router = useRouter();
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -238,8 +237,12 @@ const BlockDetails = ({ number }: BlockDetailsProps) => {
               {data &&
                 data.block &&
                 data.block.miner &&
-                data.block.miner.name ? (
-                  <Link href="#" color="secondary">
+                data.block.miner.name || data.block.miner.signer ? (
+                  < Link
+                    href="/account/[account]/"
+                    as={`../account/${data.block.miner.signer}`}
+                    color="secondary"
+                  >
                     {data.block.miner.name}
                   </Link>
                 ) : <NotAvailable variant="body2" />}
@@ -267,8 +270,8 @@ const BlockDetails = ({ number }: BlockDetailsProps) => {
             <Typography variant="body2" component="h2">
               {data.block && data.block.parentHash ? (
                 <Link
-                  href="transaction/[transaction]/"
-                  as={`transaction/${data.block.parentHash}`}
+                  href="/transaction/[transaction]/"
+                  as={`../transaction/${data.block.parentHash}`}
                   color="secondary"
                 //className={classes.leftInline}
                 >
@@ -349,7 +352,7 @@ const BlockDetails = ({ number }: BlockDetailsProps) => {
                 }}
               >
                 <Tab label="Signed Block" icon={<img src="/images/up.svg" className="all-signers-icon" />} className={classes.tabs} wrapped={false} />
-                <Tab label="Missed Blocks" icon={<img src="/images/down.svg" className="all-signers-icon" />} className={classes.tabs} wrapped={false} />
+                <Tab label="Missed Block" icon={<img src="/images/down.svg" className="all-signers-icon" />} className={classes.tabs} wrapped={false} />
 
               </StyledTabs>
 
