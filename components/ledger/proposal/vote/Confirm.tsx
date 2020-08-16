@@ -64,7 +64,7 @@ const useStyles = makeStyles({
 const Confirm = () => {
  
     const classes = useStyles();
-    const [, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
 
 
     const handleClose = () => {

@@ -34,7 +34,7 @@ export default function Tokens() {
         </Grid>
 
         <Grid item xs={12} >
-          <Transactions />
+          <Transactions address="" />
         </Grid>
 
         <Grid item xs={12} >

@@ -273,7 +273,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                               as={`/block/${row.number}`}
                               color="secondary"
                             >
-                              <a>{row.number}</a>
+                              {row.number}
                             </Link>
                           </Typography>
                         </TableCell>

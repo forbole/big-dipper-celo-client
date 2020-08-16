@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Transaction() {
   const classes = useStyles();
   const router = useRouter();
-  const transactionHash = router.query.transaction;
+  const transactionHash: string = router.query.transaction as string
 
   return (
     <Layout>

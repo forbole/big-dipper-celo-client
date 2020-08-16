@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 
 const SignInMessage = () => {
     const classes = useStyles();
-    const [, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);

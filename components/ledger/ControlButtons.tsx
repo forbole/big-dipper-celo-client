@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 
 const ControlButtons = () => {
     const classes = useStyles();
-    const [, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
 
 const handleClickOpen = () => {
         setOpen(true);

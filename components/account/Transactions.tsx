@@ -60,11 +60,6 @@ const useStyles = makeStyles(({ spacing }) => {
       whiteSpace: 'nowrap',
     },
 
-    chip: {
-      display: 'block',
-      marginLeft: '1rem',
-    },
-
     alignRight: {
       paddingRight: '1rem',
       float: 'right',
@@ -165,8 +160,8 @@ const AccountTransactions = ({ address }: TransactionsProps) => {
                             <Grid item xs={5} md={4} >
                               <Typography variant="body2" className={classes.leftInline}>
                                 From   <Link
-                                  href="account/[account]/"
-                                  as={`${row.from.address}`}
+                                  href="/account/[account]/"
+                                  as={`../account/${row.from.address}`}
                                   color="secondary"
                                   className={classes.txPadding}
                                 >
@@ -180,8 +175,8 @@ const AccountTransactions = ({ address }: TransactionsProps) => {
                             <Grid item xs={7} md={8}>
                               <Typography variant="body2" align='left' className={classes.rightInline}>
                                 To <Link
-                                  href="account/[account]/"
-                                  as={`${row.from.address}`}
+                                  href="/account/[account]/"
+                                  as={`../account/${row.to.address}`}
                                   color="secondary"
                                   className={classes.txPadding}
                                 >
@@ -192,18 +187,15 @@ const AccountTransactions = ({ address }: TransactionsProps) => {
                               </Typography>
                             </Grid>
 
-                            <Grid item xs={6} >
+                            <Grid item xs={12} lg={8}  >
                               {row.type && row.to && row.to.contract && row.to.contract.name ?
-                                <Typography variant="body2" className={classes.chip}>
-                                  <Chips type={row.type} contractName={row.to.contract.name} />
-                                </Typography> :
+                                <Chips type={row.type} contractName={row.to.contract.name} />
+                                :
                                 (row.type ?
-                                  <Typography variant="body2" className={classes.chip}>
-                                    <Chips type={row.type} />
-                                  </Typography>
+                                  <Chips type={row.type} />
                                   : null)}
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={12} lg={4}>
                               <Typography variant="body2" className={classes.alignRight} >
                                 {row.gas
                                   ? row.gas + " CELO"

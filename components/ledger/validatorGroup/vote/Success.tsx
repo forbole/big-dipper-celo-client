@@ -67,7 +67,7 @@ const useStyles = makeStyles({
 
 const Success = () => {
     const classes = useStyles();
-    const [, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
 
 
 
