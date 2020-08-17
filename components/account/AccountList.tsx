@@ -111,6 +111,7 @@ const AccountList = () => {
   const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
   const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowMedium)
 
+  const field = "balance"
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -121,7 +122,7 @@ const AccountList = () => {
   };
 
   const { loading, error, data } = useQuery(GET_ACCOUNTS, {
-    variables: { pageSize, page },
+    variables: { pageSize, page, field },
   });
 
   const totalSupply = useQuery(GET_TOTAL_SUPPLY, {

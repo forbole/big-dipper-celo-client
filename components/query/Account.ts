@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_ACCOUNTS = gql`
-  query Accounts($pageSize: Int, $page: Int) {
-    accounts(pageSize: $pageSize, page: $page) {
+  query Accounts($pageSize: Int, $page: Int, $field: String!  ) {
+    accounts(pageSize: $pageSize, page: $page, sortBy:{field: $field, order: DESC}) {
       page
       totalCounts
       accounts{
