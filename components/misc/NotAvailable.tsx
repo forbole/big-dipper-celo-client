@@ -2,7 +2,7 @@ import React from "react";
 import Typography from '@material-ui/core/Typography';
 import MiddleEllipsis from './MiddleEllipsis'
 
-type NotAvailableProps = { wrap?: boolean, variant: string, className?: string };
+type NotAvailableProps = { wrap?: boolean, variant: any, className?: string };
 
 const NotAvailable = ({ wrap, variant, className }: NotAvailableProps) => {
     if (wrap) {
