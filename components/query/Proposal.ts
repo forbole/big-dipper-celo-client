@@ -22,6 +22,10 @@ export const GET_PROPOSALS = gql`
         signature
         transactionHash
         transactionIndex
+        proposalTitle
+        proposalAuthor
+        proposalStatus
+        proposalOverview
       }
     }
   }

@@ -113,9 +113,15 @@ const ProposalDetails = () => {
                     <Chips type="" contractName="" actionResult="Vote" />
                   </Grid>
                   <Grid item xs={11} sm={8} className={classes.proposalDescription}>
-                    Don’t Burn Deposits for Rejected Governance Proposals Unless
-                    Vetoed
-              </Grid>
+                    {row.returnValues && row.returnValues.proposalId && row.proposalTitle ?
+                      <Link
+                        href="/proposal/[proposal]/"
+                        as={`/proposal/${row.returnValues.proposalId}`}
+                        color="textPrimary"
+                      >
+                        {row.proposalTitle}
+                      </Link> : null}
+                  </Grid>
                 </Grid>
               </Card>
             </Grid>
