@@ -213,7 +213,7 @@ const TransactionDetails = ({ hash }: TxDetailsProps) => {
           </Grid>
 
           <Grid item xs={12} className={classes.item}>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2" component="h2" gutterBottom>
               Status
             </Typography>
             <Typography variant="body2" component="h2">
@@ -240,7 +240,7 @@ const TransactionDetails = ({ hash }: TxDetailsProps) => {
                 >
                   {data.transaction.from.address}
                 </Link>
-            </Typography>
+              </Typography>
               : <NotAvailable variant="body2" />}
 
             <Divider variant="middle" className={classes.divider} />
@@ -355,57 +355,58 @@ const TransactionDetails = ({ hash }: TxDetailsProps) => {
               : <NotAvailable variant="body2" />}
             <Divider variant="middle" className={classes.divider} />
           </Grid>
-
-          <Grid item xs={3} md={1} className={classes.item}>
-            <Typography variant="body2" component="h2">
-              Raw Input
+          {data && data.transaction && data.transaction.input ?
+            <> <Grid item xs={3} md={1} className={classes.item}>
+              <Typography variant="body2" component="h2">
+                Raw Input
             </Typography>
-          </Grid>
-          <Grid item xs={2} md={1} className={classes.alignRight}>
-            <Chip
-              label="Hex"
-              size="small"
-              className={classes.hex}
-              onClick={handleClickHex}
-            />
-          </Grid>
-          <Grid item xs={3} md={1}>
-            <Chip
-              label="UTF-8"
-              size="small"
-              className={classes.uft8}
-              onClick={handleClickUTF8}
-            />
-          </Grid>
+            </Grid>
+              <Grid item xs={2} md={1} className={classes.alignRight}>
+                <Chip
+                  label="Hex"
+                  size="small"
+                  className={classes.hex}
+                  onClick={handleClickHex}
+                />
+              </Grid>
+              <Grid item xs={3} md={1}>
+                <Chip
+                  label="UTF-8"
+                  size="small"
+                  className={classes.uft8}
+                  onClick={handleClickUTF8}
+                />
+              </Grid>
 
-          <Grid item xs={4} md={9} className={classes.alignRight}>
-            <IconButton
-              aria-label="copy"
-              size="small"
-              className={classes.alignRight}
-              onClick={copyText}
-            >
-              <img src="/images/copy.svg" />
-            </IconButton>
-          </Grid>
-          <Grid item xs={12} className={classes.alignLeft}>
-            <FormControl fullWidth variant="filled" size="small" margin="dense">
-              <FilledInput
-                className={classes.inputLabel}
-                id="rawInputForm"
-                type="text"
-                value={
-                  asciiToHex(data.transaction.input)
-                }
-                disableUnderline={true}
-                readOnly
-                style={{ padding: "0.7rem" }}
-                multiline
+              <Grid item xs={4} md={9} className={classes.alignRight}>
+                <IconButton
+                  aria-label="copy"
+                  size="small"
+                  className={classes.alignRight}
+                  onClick={copyText}
+                >
+                  <img src="/images/copy.svg" />
+                </IconButton>
+              </Grid>
 
-              />
-            </FormControl>
-            <Divider variant="middle" className={classes.divider} />
-          </Grid>
+              <Grid item xs={12} className={classes.alignLeft}>
+                <FormControl fullWidth variant="filled" size="small" margin="dense">
+                  <FilledInput
+                    className={classes.inputLabel}
+                    id="rawInputForm"
+                    type="text"
+                    value={
+                      asciiToHex(data.transaction.input)
+                    }
+                    disableUnderline={true}
+                    readOnly
+                    style={{ padding: "0.7rem" }}
+                    multiline
+
+                  />
+                </FormControl>
+                <Divider variant="middle" className={classes.divider} />
+              </Grid> </> : null}
 
           <Grid item xs={12} className={classes.item}>
             <Typography variant="body2" component="h2">

@@ -18,13 +18,13 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Block() {
   const classes = useStyles();
   const router = useRouter();
-  const blockNumber = parseFloat(router.query.block);
+  const blockNumber: string = router.query.block as string
 
   return (
     <Layout>
       <Grid container spacing={2} className={classes.root}>
         <Grid item xs={12} >
-          <BlockDetails number={blockNumber} />
+          <BlockDetails blockNumber={blockNumber} />
         </Grid>
       </Grid>
     </Layout>

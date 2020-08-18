@@ -29,7 +29,7 @@ import getConfig from 'next/config'
 interface Column {
   id: "height" | "validator" | "txs" | "gasUsed" | "gasLimit" | "time";
   label: string;
-  align: any;
+  align: 'left' | 'right';
 }
 
 const columns: Column[] = [
@@ -273,7 +273,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                               as={`/block/${row.number}`}
                               color="secondary"
                             >
-                              <a>{row.number}</a>
+                              {row.number}
                             </Link>
                           </Typography>
                         </TableCell>

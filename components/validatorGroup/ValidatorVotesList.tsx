@@ -25,7 +25,7 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 interface Column {
   id: "dropdown" | "groupName" | "votesAvailable" | "electedTotal" | "lockedcGLD" | "groupShare" | "voterRewards" | "uptime" | "attestation";
   label: string;
-  align: any;
+  align: 'left' | 'right';
 }
 
 const columns: Column[] = [
@@ -153,7 +153,7 @@ const ValidatorVotesList = () => {
   // };
 
   return (
-    <Grid container  justify="center" className={classes.container}>
+    <Grid container justify="center" className={classes.container}>
       <Paper className={classes.paper}>
         <TableContainer>
           <Typography

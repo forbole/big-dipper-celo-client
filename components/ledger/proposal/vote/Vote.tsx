@@ -130,7 +130,7 @@ const Vote = () => {
     let name_2 = "Andrea Colemans";
 
     const classes = useStyles();
-    const [, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
 
 
 

@@ -152,17 +152,13 @@ const AccountOverview = ({ address }: AccountOverviewProps) => {
 
           <Grid item xs={9} >
             {accountQuery.data.account && accountQuery.data.account.balance ? <Typography variant="body2" className={classes.alignRight} >
-              {BigNumber.prototype.toFormat.call(
-                new BigNumber(accountQuery.data.account.balance)
-              )} CELO
+              {new BigNumber(accountQuery.data.account.balance).toFormat(4)} CELO
             </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
           </Grid>
           <Grid item xs={12}  >
             {accountQuery.data.account && accountQuery.data.account.balance && chainQuery.data.chain && chainQuery.data.chain.tokenPrice && chainQuery.data.chain.tokenPrice.usd ?
-              < Typography variant="body2" className={classes.alignRight} noWrap>
-                {BigNumber.prototype.toFormat.call(
-                  new BigNumber(accountQuery.data.account.balance * chainQuery.data.chain.tokenPrice.usd)
-                )} cUSD
+              < Typography variant="body2" className={classes.alignRight}>
+                {new BigNumber(accountQuery.data.account.balance * chainQuery.data.chain.tokenPrice.usd).toFormat(4)} cUSD
               </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
           </Grid>
 

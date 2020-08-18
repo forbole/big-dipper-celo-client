@@ -28,7 +28,7 @@ export default function validatorGroupDetails() {
         <Layout>
             <Grid container spacing={2} className={classes.root}>
                 <Grid item xs={12}>
-                    <AddressCard />
+                    <AddressCard address="" />
                 </Grid>
                 <Grid item xs={12}>
                     <Overview />
