@@ -25,10 +25,11 @@ import numbro from "numbro";
 import getConfig from 'next/config'
 import BigNumber from 'bignumber.js'
 
+
 interface Column {
   id: 'rank' | 'address' | 'balance' | 'percentage' | 'txsCount';
   label: string;
-  align: any;
+  align: 'left' | 'right' ;
 }
 
 const columns: Column[] = [
