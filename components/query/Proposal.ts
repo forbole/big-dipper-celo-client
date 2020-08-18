@@ -30,3 +30,28 @@ export const GET_PROPOSALS = gql`
     }
   }
 `;
+
+export const GET_PROPOSAL = gql`
+  query Proposals($proposalNumber: Int ) {
+    proposal(proposalNumber: $proposalNumber) {
+        _id
+        proposalNumber
+        address
+        blockHash
+        blockNumber
+        event
+        logIndex
+        raw
+        removed
+        returnValues
+        signature
+        transactionHash
+        transactionIndex
+        proposalTitle
+        proposalAuthor
+        proposalStatus
+        proposalOverview
+      
+    }
+  }
+`;

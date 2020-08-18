@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Proposal() {
   const classes = useStyles();
   const router = useRouter();
-  const { Proposal } = router.query;
-  // const pid = parseInt(router.query.block);
+  const proposalNumber: string = router.query.proposal as string;
+
   return (
     <Layout>
       <Grid container spacing={2} className={classes.root}>
@@ -30,7 +30,7 @@ export default function Proposal() {
           <MarketCard />
         </Grid>
         <Grid item xs={12} >
-          <ProposalDetails />
+          <ProposalDetails proposal={proposalNumber} />
         </Grid>
         <Grid item xs={12} >
           <ProposalVotingList />
