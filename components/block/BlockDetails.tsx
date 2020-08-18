@@ -97,12 +97,14 @@ function TabPanel(props: TabPanelProps) {
     </div>
   );
 }
-type BlockDetailsProps = { number: number };
+type BlockDetailsProps = { blockNumber: string };
 
 
-const BlockDetails = ({ number }: BlockDetailsProps) => {
+const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+
+  const number: number = parseFloat(blockNumber)
 
   const prevBlock: number = number - 1;
   const nextBlock: number = number + 1;
