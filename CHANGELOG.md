@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.2
+
+* Added Signers in BlockDetails
+
 ## v0.1.1
 
 * Updated Grid size on medium screens to 7
@@ -16,7 +20,6 @@
 * Linked real-time data in Account Section
 * [#60] Changed footer logo & social links to Big Dipper
 * [#59] Unified layout on the desktop 
-* Added Signers in BlockDetails
 
 
 ## v0.1.0
