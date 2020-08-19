@@ -26,6 +26,7 @@ export const GET_PROPOSALS = gql`
         proposalAuthor
         proposalStatus
         proposalOverview
+        status
       }
     }
   }
