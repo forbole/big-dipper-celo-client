@@ -21,6 +21,13 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Box from '@material-ui/core/Box';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import { GET_VALIDATOR_GROUPS } from '../query/ValidatorGroup'
+import { useQuery } from "@apollo/client";
+import ComponentLoader from '../misc/ComponentLoader';
+import NotAvailable from '../misc/NotAvailable'
+import ErrorMessage from '../misc/ErrorMessage';
+import getConfig from 'next/config'
+
 
 interface Column {
   id: "dropdown" | "groupName" | "votesAvailable" | "electedTotal" | "lockedcGLD" | "groupShare" | "voterRewards" | "uptime" | "attestation";
@@ -40,19 +47,6 @@ const columns: Column[] = [
   { id: "attestation", label: "Attestation", align: "right" },
 ];
 
-
-function createData(dropdown: string, groupName: string, votesAvailable: string, electedTotal: string, lockedcGLD: string, groupShare: string, voterRewards: string, uptime: string, attestation: string) {
-  return { dropdown, groupName, votesAvailable, electedTotal, lockedcGLD, groupShare, voterRewards, uptime, attestation };
-}
-
-const rows = [
-  createData("", "Michelle Clark", "0.9% 38.8% of 2.4%", " 1 | 2", "2000", "10%", "999.89CGLD", "99.9%", "10.9%"),
-  createData("", "Rachel Hugh", "0.9% 38.8% of 2.4%", "2 | 3", "31232", "12%", "999.89CGLD", "99.9%", "10.9%"),
-  createData("", "Natasha", "0.9% 38.8% of 2.4%", "1 | 2", "243244", "12%", "999.89CGLD", "99.9%", "10.9%"),
-  createData("", "Rith Jackson", "0.9% 38.8% of 2.4%", "0 | 2", "234217", "21%", "999.89CGLD", "99.9%", "10.9%"),
-  createData("", "Kelly Mendex", "65894856 cGLD", "0 | 2", "12378421", "23%", "999.89CGLD", "99.9%", "10.9%"),
-  createData("", "Marilym Ford", "2478 cGLD", "0 | 2", "237243", "22%", "999.89CGLD", "99.9%", "10.9%"),
-];
 
 const useStyles = makeStyles(() => {
   return {
@@ -143,14 +137,19 @@ const ValidatorVotesList = () => {
 
   const [open, setOpen] = React.useState(false);
 
-  // const handleClick = () => {
-  //   return navigator.clipboard
-  //     .writeText(document.getElementById("group-info-address").innerText)
-  //     .then(() => setOpen(true))
-  //     .catch((err) => {
-  //       console.log("Something went wrong", err);
-  //     });
-  // };
+  const { publicRuntimeConfig } = getConfig()
+
+  const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
+  const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowMedium)
+
+  const { loading, error, data } = useQuery(GET_VALIDATOR_GROUPS, {
+    variables: { pageSize, page },
+  });
+
+
+
+  if (loading) return <ComponentLoader />
+  if (error) return <ErrorMessage message={error.message} />
 
   return (
     <Grid container justify="center" className={classes.container}>
@@ -190,7 +189,7 @@ const ValidatorVotesList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row: any, index: number) => {
+              {data.validatorGroups.validatorGroups.map((row: any, index: number) => {
                 return (<>
                   <TableRow key={index}>
                     <TableCell component="th"
@@ -206,16 +205,16 @@ const ValidatorVotesList = () => {
                       padding="checkbox"
                       align="left"
                       className={classes.tableCell}
-                    >
+                    > {row.name || row.address ?
                       <Link
                         href="/validatorGroup/[validatorGroupDetails]/"
                         as={`/validatorGroup/${'NanValdezG'}`}
                         color="secondary">
                         <Typography variant="body2" noWrap>
 
-                          {row.groupName}
+                          {row.name || row.address}
                         </Typography>
-                      </Link>
+                      </Link> : <NotAvailable variant="body2" />}
                     </TableCell>
                     <TableCell
                       align="left"
@@ -291,54 +290,40 @@ const ValidatorVotesList = () => {
                     </TableCell>
                   </TableRow>
 
+                  {/* id={`validatorGroupCollapse${index}`} */}
                   <TableRow>
                     <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                      <Collapse in={open} timeout="auto" unmountOnExit>
+                      <Collapse in={open} timeout="auto" unmountOnExit key={index} >
                         <Grid container >
-                          <Grid item xs={8} className={classes.groupInfo}>
-                            <Typography variant="caption" className={classes.groupInfoNum}> #1</Typography>
-                            <Link
-                              href="/account/[account]/"
-                              as={`/account/${10}`}
-                              color="secondary">
-                              <Typography variant="caption" >
-                                Vincent Lynch
-                              </Typography>
-                            </Link>
-                            <FiberManualRecordIcon className={classes.dotIcon} />
-                          </Grid>
-                          <Grid item xs={8} className={classes.groupInfoAddress}>
-                            <Typography variant="caption" color="textSecondary" > <span id="group-info-address"  >{'0x0f66….1571'}</span></Typography>
-                            <IconButton
-                              aria-label="copy"
-                              size="small"
-                            //onClick={handleClick}
-                            >
-                              <img src="/images/copy.svg" />
-                            </IconButton>
-                          </Grid>
-
-                          <Grid item xs={8} className={classes.groupInfo}>
-                            <Typography variant="caption" className={classes.groupInfoNum}> #2</Typography>
-                            <Link
-                              href="/account/[account]/"
-                              as={`/account/${10}`}
-                              color="secondary">
-                              <Typography variant="caption" >
-                                Michelle Clark
-                              </Typography>
-                            </Link>
-                          </Grid>
-                          <Grid item xs={8} className={classes.groupInfoAddress}>
-                            <Typography variant="caption" color="textSecondary"  > <span id="group-info-address"  >{'0x0f66….1571'}</span></Typography>
-                            <IconButton
-                              aria-label="copy"
-                              size="small"
-                            //onClick={handleClick}
-                            >
-                              <img src="/images/copy.svg" />
-                            </IconButton>
-                          </Grid>
+                          {row.members.map((memberRow: any, index: number) => {
+                            return (<>
+                              <Grid item xs={8} className={classes.groupInfo} key={index}>
+                                {memberRow.name || memberRow.address ?
+                                  <> < Typography variant="caption" className={classes.groupInfoNum}> #{index + 1}</Typography>
+                                    <Link
+                                      href="/account/[account]/"
+                                      as={`/account/${10}`}
+                                      color="secondary">
+                                      <Typography variant="caption" >
+                                        {memberRow.name || memberRow.address}
+                                      </Typography>
+                                    </Link>
+                                    <FiberManualRecordIcon className={classes.dotIcon} />
+                                  </> :
+                                  <NotAvailable variant="caption" />}
+                              </Grid>
+                              <Grid item xs={8} className={classes.groupInfoAddress}>
+                                <Typography variant="caption" color="textSecondary" > <span id="group-info-address"  >{'0x0f66….1571'}</span></Typography>
+                                <IconButton
+                                  aria-label="copy"
+                                  size="small"
+                                //onClick={handleClick}
+                                >
+                                  <img src="/images/copy.svg" />
+                                </IconButton>
+                              </Grid>
+                            </>)
+                          })}
 
                         </Grid>
 
@@ -354,7 +339,7 @@ const ValidatorVotesList = () => {
           </Table>
         </TableContainer>
       </Paper>
-    </Grid>
+    </Grid >
   );
 }
 
