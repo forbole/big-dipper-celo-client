@@ -14,6 +14,7 @@ import getConfig from 'next/config'
 import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
+import MiddleEllipsis from '../misc/MiddleEllipsis'
 import { GET_PROPOSALS } from '../query/Proposal'
 
 const useStyles = makeStyles({
@@ -104,13 +105,23 @@ const ProposalDetails = () => {
                           href="/account/[account]/"
                           as={`/account/${row.returnValues.proposer}`}
                           color="secondary"
-                        >
-                          {row.returnValues.proposer}
+                        > <MiddleEllipsis text={row.returnValues.proposer} />
                         </Link> : null}
                     </Typography>
                   </Grid>
                   <Grid item xs={3} sm={2} className={classes.proposalButton}>
-                    <Chips type="" contractName="" actionResult="Vote" />
+                    {row.removed ?
+                      <Chips actionResult="Removed" />
+                      : null}
+                    {row.status === "Approved" ?
+                      <Chips actionResult="Passed" />
+                      : <Chips actionResult="Rejected" />}
+                    {row.status === "Vote" ?
+                      <Chips type="" contractName="" actionResult="Vote" />
+                      : null}
+                    {row.status === "Deposit" ?
+                      <Chips type="" contractName="" actionResult="Deposit" />
+                      : null}
                   </Grid>
                   <Grid item xs={11} sm={8} className={classes.proposalDescription}>
                     {row.returnValues && row.returnValues.proposalId && row.proposalTitle ?
