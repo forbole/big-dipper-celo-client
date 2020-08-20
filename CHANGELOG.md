@@ -5,7 +5,7 @@
 * [#69] Hidden Search Bar and Network Selection
 * [#68] Added transaction contract input parameters in TransactionDetails
 * Hidden Validator Votes
-* Changed token name from cGLD to CELO 
+* [#74] Changed token name from cGLD to CELO 
 
 ## v0.1.2
 
