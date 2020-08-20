@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
     content: {
       flexGrow: 1,
       padding: "0.5rem",
-      marginTop: "4rem",
+      marginTop: "2rem",
     },
     icon: {
       minWidth: "1.7rem",
@@ -186,9 +186,9 @@ const Layout = (props: { children: React.ReactNode }) => {
               <img src="/images/celo-logo.svg" />
             </Link>
 
-            <div>
+            {/* <div>
               <NetworkDropdown />
-            </div>
+            </div> */}
             <Button
               onClick={toggleDrawer(anchor, true)}
               className={classes.menuIcon}
@@ -204,7 +204,7 @@ const Layout = (props: { children: React.ReactNode }) => {
               {list(anchor)}
             </SwipeableDrawer>
           </Toolbar>
-          <SearchBar />
+          {/* <SearchBar /> */}
           <Hidden lgDown>
             <span className={classes.priceCard}>
               <PriceCard />
