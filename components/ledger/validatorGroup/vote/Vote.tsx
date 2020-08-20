@@ -234,12 +234,12 @@ const Vote = () => {
                                         </InputLabel>
                                         <OutlinedInput
                                             id="id-lock-gold-dialog"
-                                            endAdornment={<InputAdornment position="end">cGLD</InputAdornment>}
+                                            endAdornment={<InputAdornment position="end">CELO</InputAdornment>}
                                             labelWidth={295}
                                         />
                                     </FormControl>
                                     <Typography variant="body2" noWrap color="textSecondary" align="right" className={classes.paddingBottom}>
-                                        Max 14.99217479 Locked CGLD
+                                        Max 14.99217479 Locked CELO
         </Typography>
                                 </Grid>
                             </div>

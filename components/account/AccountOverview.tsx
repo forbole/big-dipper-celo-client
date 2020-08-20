@@ -174,7 +174,7 @@ const AccountOverview = ({ address }: AccountOverviewProps) => {
                   color="secondary"
                   className={classes.buttonUnlock}
                 >
-                  <Typography variant="body1">Unlock cGLD</Typography>
+                  <Typography variant="body1">Unlock CELO</Typography>
                 </Button>
               </div>
             </Grid>
@@ -185,7 +185,7 @@ const AccountOverview = ({ address }: AccountOverviewProps) => {
                   color="secondary"
                   className={classes.buttonLock}
                 >
-                  <Typography variant="body1">Lock cGLD</Typography>
+                  <Typography variant="body1">Lock CELO</Typography>
                 </Button>
               </div>
             </Grid>
