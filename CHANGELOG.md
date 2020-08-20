@@ -1,7 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+
 * [#69] Hidden Search Bar and Network Selection
+* Hidden Validator Votes
 
 ## v0.1.2
 
