@@ -50,7 +50,7 @@ const InputCard = ({ hash }: InputCardProps) => {
         <Card className={classes.card} >
             <Grid container spacing={1}>
                 <Grid item xs={6}  >
-                    <Typography align="left" variant="body1" >
+                    <Typography align="left" variant="body2" >
                         Method Id
           </Typography>
                 </Grid>
@@ -60,7 +60,7 @@ const InputCard = ({ hash }: InputCardProps) => {
                     </Typography>
                 </Grid>
                 <Grid item xs={1}  >
-                    <Typography align="left" variant="body1">
+                    <Typography align="left" variant="body2">
                         Call
           </Typography>
                 </Grid>
