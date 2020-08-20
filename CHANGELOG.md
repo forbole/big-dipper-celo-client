@@ -1,5 +1,8 @@
 # Changelog
 
+## [Unreleased]
+* [#69] Hidden Search Bar and Network Selection
+
 ## v0.1.2
 
 * Added Signers in BlockDetails
