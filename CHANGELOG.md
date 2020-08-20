@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased]
+
+* [#68] Added transaction contract input parameters in TransactionDetails
+
 ## v0.1.2
 
 * Added Signers in BlockDetails
