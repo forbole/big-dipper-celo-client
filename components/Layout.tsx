@@ -130,9 +130,9 @@ const Layout = (props: { children: React.ReactNode }) => {
           // <Link href="/proposals" color="inherit">
           //   <Typography variant="body1" color="textPrimary">{"Proposals"}</Typography>{" "}
           // </Link>,
-          <Link href="/validatorVotes" color="inherit">
-            <Typography variant="body1" color="textPrimary">{"Validator Votes"}</Typography>{" "}
-          </Link>,
+          // <Link href="/validatorVotes" color="inherit">
+          //   <Typography variant="body1" color="textPrimary">{"Validator Votes"}</Typography>{" "}
+          // </Link>,
         ].map((text, index) => (
           <ListItem button key={index}>
             <ListItemText primary={text} />

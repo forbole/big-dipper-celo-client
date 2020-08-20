@@ -1,5 +1,8 @@
 # Changelog
 
+## [Unreleased]
+* Hidden Validator Votes
+
 ## v0.1.2
 
 * Added Signers in BlockDetails
