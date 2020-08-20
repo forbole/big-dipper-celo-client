@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 * [#69] Hidden Search Bar and Network Selection
+* [#68] Added transaction contract input parameters in TransactionDetails
 * Hidden Validator Votes
 
 ## v0.1.2
