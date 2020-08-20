@@ -40,6 +40,7 @@ export const GET_TX_DETAILS = gql`
     transaction(hash: $hash) {
       value
       blockNumber
+      decodedInput
       nonce
       feeCurrency
       gatewayFeeRecipient
