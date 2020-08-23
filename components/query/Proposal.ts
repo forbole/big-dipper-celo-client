@@ -27,13 +27,14 @@ export const GET_PROPOSALS = gql`
         proposalStatus
         proposalOverview
         status
+        upvoteList
       }
     }
   }
 `;
 
 export const GET_PROPOSAL = gql`
-  query Proposals($proposalNumber: Int ) {
+  query Proposal($proposalNumber: Int ) {
     proposal(proposalNumber: $proposalNumber) {
         _id
         proposalNumber
@@ -52,7 +53,9 @@ export const GET_PROPOSAL = gql`
         proposalAuthor
         proposalStatus
         proposalOverview
-      
+        upvoteList
+        votes
+        totalVotesList
     }
   }
 `;

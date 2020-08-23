@@ -33,10 +33,10 @@ export default function Proposal() {
           <ProposalDetails proposal={proposalNumber} />
         </Grid>
         <Grid item xs={12} >
-          <ProposalVotingList />
+          <ProposalVotingList proposal={proposalNumber} />
         </Grid>
         <Grid item xs={12} >
-          <DepositList />
+          <DepositList proposal={proposalNumber} />
         </Grid>
       </Grid>
     </Layout>
