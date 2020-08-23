@@ -20,7 +20,11 @@ import {
     PieChart, Pie, Sector, Cell, Tooltip, Legend, Line
 } from 'recharts';
 import getConfig from 'next/config'
-
+import NotAvailable from '../misc/NotAvailable'
+import ComponentLoader from '../misc/ComponentLoader'
+import ErrorMessage from '../misc/ErrorMessage';
+import { GET_PROPOSAL } from '../query/Proposal';
+import { useQuery } from "@apollo/client";
 
 interface Column {
     id: "voter" | "answer" | "voting_power";
@@ -112,9 +116,13 @@ const useStyles = makeStyles(() => {
     };
 });
 
-const ProposalVotingList = () => {
+type ProposalVotingListProps = { proposal: string };
+
+
+const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
     const classes = useStyles();
     const { publicRuntimeConfig } = getConfig()
+    const proposalNumber = parseInt(proposal)
 
     const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
     const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXsmall)
@@ -135,15 +143,23 @@ const ProposalVotingList = () => {
     };
 
 
-    const data = [
-        { name: 'Yes', value: 500 },
-        { name: 'No', value: 300 },
-        { name: 'No With Veto', value: 200 },
-        { name: 'Abstain', value: 50 },
-    ];
+    const { loading, error, data } = useQuery(GET_PROPOSAL, {
+        variables: { proposalNumber },
+    });
+
+
+
+    const chartData =
+        data && data.proposal && data.proposal.votes ? [
+            { name: 'Yes', value: data.proposal.votes.Yes },
+            { name: 'No', value: data.proposal.votes.No },
+            // { name: 'No With Veto', value: 200 },
+            { name: 'Abstain', value: data.proposal.votes.Abstain }
+        ] : null;
+
     const COLORS = ['rgba(40, 201, 137, 1)', // Yes
         'rgba(240, 40, 119, 1)', // No
-        'rgba(39, 113, 202, 1)', //No With Veto
+        // 'rgba(39, 113, 202, 1)', //No With Veto
         'rgba(230, 128, 49, 1)']; // Abstain
 
 
@@ -164,6 +180,11 @@ const ProposalVotingList = () => {
         }
     })(Tabs);
 
+
+    if (loading) return <ComponentLoader />
+    if (error) return <ErrorMessage message={error.message} />
+
+
     return (
         <Grid container justify="center" className={classes.container}>
             <Paper className={classes.paper}>
@@ -180,7 +201,7 @@ const ProposalVotingList = () => {
                         variant="subtitle1"
                         className={classes.priceDisplay}
                     >
-                        81,674,736.604642 cGLD
+                        81,674,736.604642 Big
           </Typography>
                 </Grid>
                 <Grid item xs={12}>
@@ -189,13 +210,13 @@ const ProposalVotingList = () => {
                         variant="subtitle1"
                         className={classes.headerLabel}
                     >
-                        (~81M of ~186M cGLD)
+                        (~81M of ~186M cGLDBig)
           </Typography>
                 </Grid>
                 <Grid item xs={12}>
                     <PieChart width={350} height={220} className={classes.pieChart}>
                         <Pie
-                            data={data}
+                            data={chartData}
                             cx={120}
                             cy={120}
                             innerRadius={70}
@@ -206,7 +227,7 @@ const ProposalVotingList = () => {
                             dataKey="value"
                         >
                             {
-                                data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
+                                chartData.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
                             }
                         </Pie>
                         <Tooltip />
@@ -228,7 +249,7 @@ const ProposalVotingList = () => {
                     >
                         <Tab label="All(60)" className={classes.tabs} />
                         <Tab label="Yes(43)" className={classes.tabs} />
-                        <Tab label="No With Veto(2)" className={classes.tabs} />
+                        {/* <Tab label="No With Veto(2)" className={classes.tabs} /> */}
                         <Tab label="No(18)" className={classes.tabs} />
                         <Tab label="Abstain(1)" className={classes.tabs} />
                     </StyledTabs>
