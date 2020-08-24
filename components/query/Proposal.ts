@@ -56,6 +56,10 @@ export const GET_PROPOSAL = gql`
         upvoteList
         votes
         totalVotesList
+        executionEpoch
+        expirationEpoch
+        proposalEpoch
+        referrendumEpoch
     }
   }
 `;
