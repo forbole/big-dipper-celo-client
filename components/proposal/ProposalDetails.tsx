@@ -132,42 +132,50 @@ const ProposalDetails = ({ proposal }: ProposalDetailsProps) => {
           </Grid>
 
           <Grid item xs={12}>
-            <Divider />
+            <Divider variant="middle" className={classes.divider} />
           </Grid>
-          <Grid item xs={6} lg={12} className={classes.item}>
-            <Typography variant="body2">
+
+          <Grid item xs={6} className={classes.item}>
+            <Typography variant="body2" gutterBottom>
               Proposal ID
             </Typography>
           </Grid>
-          <Grid item xs={6} lg={12}  >
+          <Grid item xs={6} >
             <Typography variant="body2" className={classes.alignRight} >
               {data.proposal && data.proposal.returnValues && data.proposal.returnValues.proposalId
                 ? data.proposal.returnValues.proposalId
                 : <NotAvailable variant="body2" />}
 
             </Typography>
+          </Grid>
+
+          <Grid item xs={12}>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
-          <Grid item xs={4} lg={12} className={classes.item}>
+
+          <Grid item xs={4} lg={6} className={classes.item}>
             <Typography variant="body2" >
               Proposer
             </Typography>
           </Grid>
-          <Grid item xs={8} lg={12}  >
+          <Grid item xs={8} lg={6}  >
             <Typography variant="body2" className={classes.alignRight} >
               {data.proposal && data.proposal.returnValues && data.proposal.returnValues.proposer
                 ? data.proposal.returnValues.proposer
                 : <NotAvailable variant="body2" />}
             </Typography>
+          </Grid>
+
+          <Grid item xs={12}>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid item xs={6} lg={12} className={classes.item}>
+          <Grid item xs={6} className={classes.item}>
             <Typography variant="body2">
               Type
             </Typography>
           </Grid>
-          <Grid item xs={6} lg={12} >
+          <Grid item xs={6} >
             <Typography variant="body2" className={classes.alignRight}>
               {/* {data &&
               data.block &&
@@ -178,6 +186,9 @@ const ProposalDetails = ({ proposal }: ProposalDetailsProps) => {
                 </Link>
               ) : <NotAvailable variant="body2" />} */}
             </Typography>
+          </Grid>
+
+          <Grid item xs={12}>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
@@ -190,6 +201,9 @@ const ProposalDetails = ({ proposal }: ProposalDetailsProps) => {
                 ? data.proposal.proposalTitle
                 : <NotAvailable variant="body2" />}
             </Typography>
+          </Grid>
+
+          <Grid item xs={12}>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
@@ -203,77 +217,93 @@ const ProposalDetails = ({ proposal }: ProposalDetailsProps) => {
                 ? data.proposal.proposalOverview
                 : <NotAvailable variant="body2" />}
             </Typography>
+          </Grid>
+
+          <Grid item xs={12}>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid item xs={4} lg={12} className={classes.item}>
+          <Grid item xs={4} lg={6} className={classes.item}>
             <Typography variant="body2"  >
               Deposit
             </Typography>
           </Grid>
-          <Grid item xs={8} lg={12}  >
+          <Grid item xs={8} lg={6}  >
             {data.proposal && data.proposal.returnValues && data.proposal.returnValues.deposit ?
               < Typography variant="body2" className={classes.alignRight} >
                 {data.proposal.returnValues.deposit}
               </Typography> : <NotAvailable variant="body2" />}
+          </Grid>
+
+          <Grid item xs={12}>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid item xs={4} lg={12} className={classes.item}>
+          <Grid item xs={4} lg={6} className={classes.item}>
             <Typography variant="body2"  >
               Submitted Time
             </Typography>
           </Grid>
-          <Grid item xs={8} lg={12}  >
+          <Grid item xs={8} lg={6}  >
             {data.proposal && data.proposal.returnValues && data.proposal.returnValues.timestamp ?
               <Typography variant="body2" className={classes.alignRight} >
                 {new Date(parseInt(data.proposal.returnValues.timestamp) * 1000).toUTCString()}
               </Typography> : <NotAvailable variant="body2" />}
+          </Grid>
+
+          <Grid item xs={12}>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid item xs={4} lg={12} className={classes.item}>
+          <Grid item xs={4} lg={6} className={classes.item}>
             <Typography variant="body2"  >
               Deposit End Time
             </Typography>
           </Grid>
-          <Grid item xs={8} lg={12}  >
-            <Typography variant="body2" className={classes.alignRight} >
-              {/* {data.block && data.block.gasUsed
-                ? data.block.gasUsed
-                : <NotAvailable variant="body2" />} */}
-            </Typography>
+          <Grid item xs={8} lg={6}  >
+            {data.proposal && data.proposal.executionEpoch ?
+              < Typography variant="body2" className={classes.alignRight} >
+                {new Date((data.proposal.executionEpoch) * 1000).toUTCString()}
+              </Typography> : <NotAvailable variant="body2" />}
+          </Grid>
+
+          <Grid item xs={12}>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid item xs={4} lg={12} className={classes.item}>
+          <Grid item xs={4} lg={6} className={classes.item}>
             <Typography variant="body2"  >
               Voting Start Time
             </Typography>
           </Grid>
-          <Grid item xs={8} lg={12}  >
-            <Typography variant="body2" className={classes.alignRight} >
-              {/* {data.block && data.block.gasLimit
-                ? data.block.gasLimit
-                : <NotAvailable variant="body2" />} */}
-            </Typography>
+          <Grid item xs={8} lg={6}  >
+            {data.proposal && data.proposal.referrendumEpoch ?
+              < Typography variant="body2" className={classes.alignRight} >
+                {new Date((data.proposal.referrendumEpoch) * 1000).toUTCString()}
+              </Typography> : <NotAvailable variant="body2" />}
+          </Grid>
+
+          <Grid item xs={12}>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid item xs={4} lg={12} className={classes.item}>
+          <Grid item xs={4} lg={6} className={classes.item}>
             <Typography variant="body2"  >
               Voting End Time
             </Typography>
           </Grid>
-          <Grid item xs={8} lg={12}  >
-            <Typography variant="body2" className={classes.alignRight} >
-              {/* {data.block && data.block.gasLimit
-                ? data.block.gasLimit
-                : <NotAvailable variant="body2" />} */}
-            </Typography>
+          <Grid item xs={8} lg={6}  >
+            {data.proposal && data.proposal.expirationEpoch ?
+              < Typography variant="body2" className={classes.alignRight} >
+                {new Date((data.proposal.expirationEpoch) * 1000).toUTCString()}
+              </Typography> : <NotAvailable variant="body2" />}
+          </Grid>
+
+          <Grid item xs={12}>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
-          <Grid item xs={12} sm={2} className={classes.centerContent}>
+
+          <Grid item xs={12} className={classes.centerContent}>
             <LedgerButtons option="Vote" />
           </Grid>
         </Grid>
