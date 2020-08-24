@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import Link from "../Link";
 import {
@@ -84,7 +84,9 @@ type DepositListProps = { proposal: string };
 const DepositList = ({ proposal }: DepositListProps) => {
   const classes = useStyles();
   const proposalNumber = parseInt(proposal)
-  let hash = "";
+  let hashValue: string = "";
+
+  const [hash, setHash] = React.useState("");
 
   const { loading, error, data } = useQuery(GET_PROPOSAL, {
     variables: { proposalNumber },
@@ -93,6 +95,10 @@ const DepositList = ({ proposal }: DepositListProps) => {
   const txDetails = useQuery(GET_TX_DETAILS, {
     variables: { hash },
   });
+
+  // useEffect(() => {
+  //   setHash(hashValue)
+  // })
 
   if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
@@ -134,48 +140,51 @@ const DepositList = ({ proposal }: DepositListProps) => {
             </TableHead>
             <TableBody>
 
-                { Object.keys(data.proposal.upvoteList).forEach(function (row: any, index: number) {
+              {Object.keys(data.proposal.upvoteList).map(function (row: any, index: number) {
+                // hashValue = data.proposal.upvoteList[row].transactionHash
+                return (
+                  <TableRow key={index}>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      padding="checkbox"
+                      align="left"
+                      className={classes.tableCell}
+                    >
+                      {data.proposal && data.proposal.upvoteList[row] && data.proposal.upvoteList[row].returnValues && data.proposal.upvoteList[row].returnValues.account ?
+                        <Link
+                          href="/account/[account]/"
+                          as={`/account/${data.proposal.upvoteList[row].returnValues.account}`}
+                          color="secondary"
+                        >
+                          <Typography variant="body2" noWrap>
+                            {" "}
+                            {data.proposal.upvoteList[row].returnValues.account}
+                          </Typography>
+                        </Link> : <NotAvailable variant="body2" />}
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      padding="checkbox"
+                      className={classes.tableCell}
+                    >
+                      {data.proposal && data.proposal.upvoteList[row] && data.proposal.upvoteList[row].returnValues && data.proposal.upvoteList[row].returnValues.upvotes ?
+                        <Typography variant="body2" noWrap>
+                          {data.proposal.upvoteList[row].returnValues.upvotes}
+                        </Typography> : <NotAvailable variant="body2" />}
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      padding="checkbox"
+                      className={classes.tableCell}
+                    >
 
-                    hash = row.transactionHash
-
-                    return (
-                      <TableRow key={index}>
-                        <TableCell
-                          component="th"
-                          scope="row"
-                          padding="checkbox"
-                          align="left"
-                          className={classes.tableCell}
-                        >
-                          {row.returnValues && row.returnValues.account ?
-                            <Link href="#" color="secondary">
-                              <Typography variant="body2" noWrap>
-                                {" "}
-                                {row.returnValues.account}
-                              </Typography>
-                            </Link> : <NotAvailable variant="body2" />}
-                        </TableCell>
-                        <TableCell
-                          align="right"
-                          padding="checkbox"
-                          className={classes.tableCell}
-                        >
-                          {row.returnValues && row.returnValues.upvotes ?
-                            <Typography variant="body2" noWrap>
-                              {row.returnValues.upvotes}
-                            </Typography> : <NotAvailable variant="body2" />}
-                        </TableCell>
-                        <TableCell
-                          align="right"
-                          padding="checkbox"
-                          className={classes.tableCell}
-                        >
-                          {txDetails.data && txDetails.data.transaction && txDetails.data.transaction.timestamp ?
-                            <Typography variant="body2" noWrap>
-                              {new Date(parseInt(txDetails.data.transaction.timestamp) * 1000).toUTCString()}
-                            </Typography> : <NotAvailable variant="body2" />}
-                        </TableCell>
-                        {/* <TableCell
+                      {txDetails.data && txDetails.data.transaction && txDetails.data.transaction.timestamp ?
+                        <Typography variant="body2" noWrap>
+                          {new Date(parseInt(txDetails.data.transaction.timestamp) * 1000).toUTCString()}
+                        </Typography> : <NotAvailable variant="body2" />}
+                    </TableCell>
+                    {/* <TableCell
                         align="left"
                         padding="checkbox"
                         className={classes.tableCell}
@@ -198,10 +207,11 @@ const DepositList = ({ proposal }: DepositListProps) => {
                           {row.time}
                         </Typography>
                       </TableCell> */}
-                      </TableRow>
-                    );
-                  })
-                }
+                  </TableRow>
+                );
+
+              })
+              }
             </TableBody>
           </Table>
         </TableContainer>
