@@ -158,7 +158,6 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
         variables: { proposalNumber },
     });
 
-
     const RednderTabs = (voteType: any) => {
         return (<>
             <TableContainer>
@@ -236,7 +235,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
             <TablePagination
                 rowsPerPageOptions={[publicRuntimeConfig.rowXsmall, publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge,]}
                 component="div"
-                count={rows.length}
+                count={Object.keys(data.proposal.totalVotesList[voteType.voteType]).length}
                 rowsPerPage={pageSize}
                 page={page}
                 onChangePage={handleChangePage}
