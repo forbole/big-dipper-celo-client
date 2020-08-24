@@ -30,7 +30,7 @@ import BigNumber from 'bignumber.js'
 interface Column {
     id: "voter" | "answer" | "voting_power";
     label: string;
-    align: any;
+    align: 'left' | 'right';
 }
 
 const columns: Column[] = [

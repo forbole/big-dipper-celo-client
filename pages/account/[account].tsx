@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Account() {
   const classes = useStyles();
   const router = useRouter();
-  const accountAddress = router.query.account
+  const accountAddress: string = router.query.account as string
 
   return (
     <Layout>

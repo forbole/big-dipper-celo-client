@@ -23,7 +23,7 @@ import { useQuery } from "@apollo/client";
 interface Column {
   id: "depositor" | "amount" | "time";
   label: string;
-  align: any;
+  align: 'left' | 'right';
 }
 
 const columns: Column[] = [

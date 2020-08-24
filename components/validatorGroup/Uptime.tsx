@@ -203,10 +203,10 @@ const Uptime = () => {
                             99.8%
             </Typography>
                     </Grid>
-                    <Grid item xs={12} alignItems="center">
+                    <Grid item xs={12} >
                         <Divider variant="middle" className={classes.divider} />
                     </Grid>
-                    <Grid item xs={12} lg={10} alignItems="center">
+                    <Grid item xs={12} lg={10} >
                         <ResponsiveContainer aspect={1.0 / 0.7}>
                             <BarChart
                                 // width={350}
@@ -219,9 +219,9 @@ const Uptime = () => {
                                 barCategoryGap="2%"
                             >
                                 <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-                                <XAxis tick={{ stroke: "rgba(255, 255, 255, 0.6)", fontSize: 10, fontWeight: 150, }} dataKey="name"
+                                <XAxis tick={{ stroke: "rgba(255, 255, 255, 0.6)", fontSize: 10, fontWeight: 200, }} dataKey="name"
                                     label={{ value: 'Blocks', position: 'insideBottomLeft', fill: "rgba(255, 255, 255, 0.6)", fontWeight: "normal", textAnchor: "start" }} />
-                                <YAxis tickSize={0} tickMargin={10} tick={{ stroke: "rgba(255, 255, 255, 0.6)", fontSize: 10, fontWeight: 150 }}
+                                <YAxis tickSize={0} tickMargin={10} tick={{ stroke: "rgba(255, 255, 255, 0.6)", fontSize: 10, fontWeight: 200 }}
                                     label={{ value: 'Votes available', angle: -270, position: 'center', fill: "rgba(255, 255, 255, 0.6)", fontWeight: "normal", }} />
                                 <Tooltip content={<CustomTooltip />} />
                                 <Legend align="left" verticalAlign="top" height={50} width={200} />

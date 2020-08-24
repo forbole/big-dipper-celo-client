@@ -28,7 +28,7 @@ import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
 import { GET_TX } from '../query/Transaction'
 import getConfig from 'next/config'
-
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles({
   root: {
@@ -64,11 +64,6 @@ const useStyles = makeStyles({
     display: "block",
     overflow: "hidden",
     whiteSpace: "nowrap",
-  },
-
-  chip: {
-    display: "block",
-    marginLeft: "1rem",
   },
 
   alignRight: {
@@ -109,16 +104,15 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
   const { publicRuntimeConfig } = getConfig()
 
   const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
-  const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXxsmall)
+  const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowSmall)
 
-  // useEffect(() => {
-  //   if (pagination) {
-  //     setPageSize(14)
-  //   }
-  //   else {
-  //     setPageSize(5)
-  //   }
-  // })
+  useEffect(() => {
+    if (pagination === false) {
+      setPageSize(publicRuntimeConfig.rowXxsmall)
+    }
+
+  });
+
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -240,34 +234,18 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
                                     color="secondary"
                                     className={classes.txPadding}
                                   >
-                                    <div
-                                      style={{
-                                        width: "60%",
-                                        minWidth: "20%",
-                                        maxWidth: "100%",
-                                        whiteSpace: "nowrap",
-                                      }}
-                                    >
-                                      <span>
-                                        {row.to && row.to.address
-                                          ? <MiddleEllipsis text={row.to.address} />
-                                          : null}
-                                      </span>
-                                    </div>
+                                    <MiddleEllipsis text={row.to.address} />
                                   </Link>
                                 ) : ""}
                               </Typography>
                             </Grid>
 
-                            <Grid item xs={12} lg={9}>
+                            <Grid item xs={12} lg={9} >
                               {row.type && row.to && row.to.contract && row.to.contract.name ?
-                                <Typography variant="body2" className={classes.chip}>
-                                  <Chips type={row.type} contractName={row.to.contract.name} />
-                                </Typography> :
+                                <Chips type={row.type} contractName={row.to.contract.name} />
+                                :
                                 (row.type ?
-                                  <Typography variant="body2" className={classes.chip}>
-                                    <Chips type={row.type} />
-                                  </Typography>
+                                  <Chips type={row.type} />
                                   : null)}
                             </Grid>
                             <Grid item xs={12} lg={3}>
@@ -291,7 +269,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
               {pagination === true ? (
                 <TablePagination
                   className="pagination"
-                  rowsPerPageOptions={[publicRuntimeConfig.rowXsmall, publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge,]}
+                  rowsPerPageOptions={[publicRuntimeConfig.rowXxsmall, publicRuntimeConfig.rowXsmall, publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge,]}
                   component="div"
                   count={data.transactions.totalCounts}
                   rowsPerPage={pageSize}

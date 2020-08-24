@@ -25,10 +25,11 @@ import numbro from "numbro";
 import getConfig from 'next/config'
 import BigNumber from 'bignumber.js'
 
+
 interface Column {
   id: 'rank' | 'address' | 'balance' | 'percentage' | 'txsCount';
   label: string;
-  align: string;
+  align: 'left' | 'right' ;
 }
 
 const columns: Column[] = [
@@ -130,7 +131,7 @@ const AccountList = () => {
 
 
 
-  if (loading) return <ComponentLoader  />
+  if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
 
   return (
@@ -179,9 +180,7 @@ const AccountList = () => {
                         <TableCell align="right" padding="checkbox" className={classes.tableCell}>
                           {row.balance ?
                             <Typography variant="body2" noWrap>
-                              {BigNumber.prototype.toFormat.call(
-                                new BigNumber(row.balance)
-                              )} CELO
+                              {new BigNumber(row.balance).toFormat(4)} CELO
                               </Typography>
                             : <NotAvailable variant="body2" />}
                         </TableCell>

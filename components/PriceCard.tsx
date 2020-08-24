@@ -38,7 +38,7 @@ const useStyles = makeStyles(({ spacing }) => {
   };
 });
 
-type PriceCardProps = { size: string };
+type PriceCardProps = { size?: string };
 
 
 const PriceCard = ({ size }: PriceCardProps) => {

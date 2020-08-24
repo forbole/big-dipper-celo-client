@@ -19,17 +19,6 @@ import MiddleEllipsis from '../misc/MiddleEllipsis'
 import numbro from "numbro";
 import BigNumber from 'bignumber.js'
 
-const bgFormat = {
-    prefix: '',
-    decimalSeparator: '.',
-    groupSeparator: ',',
-    groupSize: 3,
-    secondaryGroupSize: 0,
-    fractionGroupSeparator: ' ',
-    fractionGroupSize: 0,
-    suffix: ''
-  }
-
 const useStyles = makeStyles(({ spacing }) => {
     return {
         root: {
@@ -205,16 +194,12 @@ const AccountDetails = ({ address }: AccountDetailsProps) => {
                         {accountQuery.data && accountQuery.data.account && accountQuery.data.account.lockedGold && accountQuery.data.account.lockedGold.total && accountQuery.data.account.lockedGold.nonvoting ?
                             <><Grid item xs={8} className={classes.item} >
                                 <Typography variant="body2" className={classes.alignRight}  >
-                                    {BigNumber.prototype.toFormat.call(
-                                        new BigNumber(accountQuery.data.account.lockedGold.total), bgFormat
-                                    )} CELO
+                                    {new BigNumber(accountQuery.data.account.lockedGold.total).toFormat(4)} CELO
                                 </Typography>
                             </Grid>
                                 <Grid item xs={12} className={classes.item} >
                                     <Typography variant="body2" className={classes.alignRight}  >
-                                        {BigNumber.prototype.toFormat.call(
-                                            new BigNumber(accountQuery.data.account.lockedGold.nonvoting), bgFormat
-                                        )} non-voting CELO
+                                        {new BigNumber(accountQuery.data.account.lockedGold.nonvoting).toFormat(4)} non-voting CELO
                                     </Typography>
                                 </Grid>
                             </>

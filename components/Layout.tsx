@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
     content: {
       flexGrow: 1,
       padding: "0.5rem",
-      marginTop: "4rem",
+      marginTop: "2rem",
     },
     icon: {
       minWidth: "1.7rem",
@@ -130,9 +130,9 @@ const Layout = (props: { children: React.ReactNode }) => {
           // <Link href="/proposals" color="inherit">
           //   <Typography variant="body1" color="textPrimary">{"Proposals"}</Typography>{" "}
           // </Link>,
-          <Link href="/validatorVotes" color="inherit">
-            <Typography variant="body1" color="textPrimary">{"Validator Votes"}</Typography>{" "}
-          </Link>,
+          // <Link href="/validatorVotes" color="inherit">
+          //   <Typography variant="body1" color="textPrimary">{"Validator Votes"}</Typography>{" "}
+          // </Link>,
         ].map((text, index) => (
           <ListItem button key={index}>
             <ListItemText primary={text} />
@@ -186,9 +186,9 @@ const Layout = (props: { children: React.ReactNode }) => {
               <img src="/images/celo-logo.svg" />
             </Link>
 
-            <div>
+            {/* <div>
               <NetworkDropdown />
-            </div>
+            </div> */}
             <Button
               onClick={toggleDrawer(anchor, true)}
               className={classes.menuIcon}
@@ -204,7 +204,7 @@ const Layout = (props: { children: React.ReactNode }) => {
               {list(anchor)}
             </SwipeableDrawer>
           </Toolbar>
-          <SearchBar />
+          {/* <SearchBar /> */}
           <Hidden lgDown>
             <span className={classes.priceCard}>
               <PriceCard />

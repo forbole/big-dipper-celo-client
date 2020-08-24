@@ -1,8 +1,9 @@
 import React from "react";
 import Typography from '@material-ui/core/Typography';
 import MiddleEllipsis from './MiddleEllipsis'
+import { Variant } from '@material-ui/core/styles/createTypography'
 
-type NotAvailableProps = { wrap?: boolean, variant: string, className?: string };
+type NotAvailableProps = { wrap?: boolean, variant: Variant, className?: string };
 
 const NotAvailable = ({ wrap, variant, className }: NotAvailableProps) => {
     if (wrap) {
@@ -21,3 +22,4 @@ const NotAvailable = ({ wrap, variant, className }: NotAvailableProps) => {
 }
 
 export default NotAvailable
+
