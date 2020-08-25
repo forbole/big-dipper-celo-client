@@ -15,7 +15,12 @@ import { useQuery } from "@apollo/client";
 import ContentLoader from "react-content-loader";
 import moment from "moment";
 import LedgerButtons from "../ledger/LedgerButtons";
+import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable'
+import ErrorMessage from '../misc/ErrorMessage';
+import { GET_VALIDATOR_GROUP } from '../query/Validator'
+import { GET_ACCOUNT_DETAILS } from '../query/Account'
+import BigNumber from 'bignumber.js'
 
 
 const useStyles = makeStyles(() => {
@@ -63,12 +68,31 @@ const useStyles = makeStyles(() => {
 
         cardItem: {
             padding: "1rem"
+        },
+
+        alignRight: {
+            float: "right",
         }
     };
 });
 
-const Overview = () => {
+type OverviewProps = { address: string };
+
+
+const Overview = ({ address }: OverviewProps) => {
     const classes = useStyles();
+
+    const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
+        variables: { address },
+    });
+
+    const accountData = useQuery(GET_ACCOUNT_DETAILS, {
+        variables: { address },
+    });
+
+    if (loading) return <ComponentLoader />
+    if (error) return <ErrorMessage message={error.message} />
+
     return (
         <Card className={classes.root}>
             <CardContent>
@@ -87,18 +111,10 @@ const Overview = () => {
             </Typography>
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
-                        <Typography variant="body2" align="right" >
-                            Nan Valdez G
-                            {/* {data.block && data.block.timestamp
-                ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
-                : <NotAvailable variant="body2" />}
-              (
-              {data && data.block && data.block.timestamp
-                ? moment.unix(data.block.timestamp).fromNow()
-                : null}
-              ) */}
-                        </Typography>
-
+                        {data.validatorGroup && data.validatorGroup.name ?
+                            <Typography variant="body2" align="right" >
+                                {data.validatorGroup.name}
+                            </Typography> : <NotAvailable variant="body2" className={classes.alignRight} />}
                     </Grid>
                     <Grid item xs={12}>
                         <Divider variant="middle" className={classes.divider} />
@@ -110,14 +126,10 @@ const Overview = () => {
             </Typography>
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
-                        <Typography variant="body2" align="right" >
-                            2,000 CGLD
-                            {/* {data.block &&
-              data.block.transactions &&
-              data.block.transactions.transactionIndex
-                ? data.block.transactions.transactionIndex.length()
-                : <NotAvailable variant="body2" />} */}
-                        </Typography>
+                        {accountData.data && accountData.data.account.totalBalance && accountData.data.account.totalBalance.lockedGold ?
+                            <Typography variant="body2" align="right" >
+                                {new BigNumber(accountData.data.account.totalBalance.lockedGold).toFormat(2)}
+                            </Typography> : <NotAvailable variant="body2" className={classes.alignRight} />}
 
                     </Grid>
 
@@ -138,8 +150,10 @@ const Overview = () => {
                 : <NotAvailable variant="body2" />} */}
                         </Typography>
                     </Grid>
-
+                    
+                    <Grid item xs={12}> 
                     <Divider variant="middle" className={classes.divider} />
+                    </Grid>
 
 
                     <Grid item xs={6} className={classes.item}>
@@ -171,15 +185,13 @@ const Overview = () => {
                     <Grid item xs={6} className={classes.item}>
                         <Typography variant="body2"  >
                             Attestation
-            </Typography>
+                        </Typography>
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
-                        <Typography variant="body2" align="right"  >
-                            10.9%
-                            {/* {data.block && data.block.totalDifficulty
-                ? data.block.totalDifficulty
-                : <NotAvailable variant="body2" />} */}
-                        </Typography>
+                        {accountData.data && accountData.data.account.attestation ?
+                            <Typography variant="body2" align="right"  >
+                                {accountData.data.account.attestation}
+                            </Typography> : <NotAvailable variant="body2" className={classes.alignRight} />}
                     </Grid>
 
                     <Grid item xs={12}>

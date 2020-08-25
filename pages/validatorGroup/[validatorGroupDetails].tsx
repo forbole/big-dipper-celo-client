@@ -23,18 +23,19 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function validatorGroupDetails() {
     const classes = useStyles();
     const router = useRouter();
-    const { ValidatorGroupDet } = router.query;
+    const validatorGroup: string = router.query.validatorGroupDetails as string
+
     return (
         <Layout>
             <Grid container spacing={2} className={classes.root}>
                 <Grid item xs={12}>
-                    <AddressCard address="" />
+                    <AddressCard address={validatorGroup} />
                 </Grid>
                 <Grid item xs={12}>
-                    <Overview />
+                    <Overview address={validatorGroup} />
                 </Grid>
                 <Grid item xs={12}>
-                    <GroupMember />
+                    <GroupMember address={validatorGroup} />
                 </Grid>
                 <Grid item xs={12}>
                     <Uptime />
