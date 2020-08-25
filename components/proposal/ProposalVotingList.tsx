@@ -325,7 +325,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
                             outerRadius={80}
                             //fill="#8884d8"
                             strokeWidth={0}
-                            paddingAngle={2}
+                            paddingAngle={0.5}
                             dataKey="value"
                         >
                             {
