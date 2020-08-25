@@ -135,7 +135,7 @@ const useStyles = makeStyles(() => {
 const ValidatorVotesList = () => {
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState("");
 
   const { publicRuntimeConfig } = getConfig()
 
@@ -195,8 +195,8 @@ const ValidatorVotesList = () => {
                     <TableCell component="th"
                       scope="row"
                       padding="none">
-                      <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-                        {open ? <KeyboardArrowDownIcon fontSize="small" className={classes.arrowIcon} /> : <KeyboardArrowRightIcon fontSize="small" className={classes.arrowIcon} />}
+                      <IconButton aria-label="expand row" size="small" id={`panel${index}`} onClick={() => !(open === `panel${index}`) ? setOpen(`panel${index}`) : setOpen("")}>
+                        {(open === `panel${index}`) ? <KeyboardArrowDownIcon fontSize="small" className={classes.arrowIcon} /> : <KeyboardArrowRightIcon fontSize="small" className={classes.arrowIcon} />}
                       </IconButton>
                     </TableCell>
                     <TableCell
@@ -290,10 +290,9 @@ const ValidatorVotesList = () => {
                     </TableCell>
                   </TableRow>
 
-                  {/* id={`validatorGroupCollapse${index}`} */}
                   <TableRow>
                     <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                      <Collapse in={open} timeout="auto" unmountOnExit key={index} >
+                      <Collapse in={open === `panel${index}`} timeout="auto" unmountOnExit key={`panel${index}`}>
                         <Grid container >
                           {row.members.map((memberRow: any, index: number) => {
                             return (<>
