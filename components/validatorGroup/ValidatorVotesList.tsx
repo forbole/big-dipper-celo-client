@@ -27,7 +27,9 @@ import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
 import getConfig from 'next/config'
-
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+import Alert from "@material-ui/lab/Alert";
 
 interface Column {
   id: "dropdown" | "groupName" | "votesAvailable" | "electedTotal" | "lockedcGLD" | "groupShare" | "voterRewards" | "uptime" | "attestation";
@@ -129,6 +131,11 @@ const useStyles = makeStyles(() => {
       textAlign: "right",
     },
 
+    alertMessage: {
+      background: "#3AD39E",
+      color: "rgba(61, 66, 71, 1)",
+    },
+
   };
 });
 
@@ -136,7 +143,7 @@ const ValidatorVotesList = () => {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState("");
-
+  const [copy, setCopy] = React.useState(false);
   const { publicRuntimeConfig } = getConfig()
 
   const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
@@ -146,12 +153,26 @@ const ValidatorVotesList = () => {
     variables: { pageSize, page },
   });
 
+  const copyText = (id: number) => {
+    console.log(id)
+    let rawInputForm = document.getElementById(`groupInfoAddress${id}`) as HTMLInputElement
+    return navigator.clipboard
+      .writeText(rawInputForm.innerHTML)
+      .then(() => setCopy(true))
+      .catch((err) => {
+        console.log("Something went wrong", err);
+      })
+  };
+
+  const closeAlert = (event?: React.SyntheticEvent, reason?: string) => {
+    setCopy(false);
+  };
 
 
   if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
 
-  return (
+  return (<>
     <Grid container justify="center" className={classes.container}>
       <Paper className={classes.paper}>
         <TableContainer>
@@ -312,26 +333,25 @@ const ValidatorVotesList = () => {
                                   <NotAvailable variant="caption" />}
                               </Grid>
                               <Grid item xs={8} className={classes.groupInfoAddress}>
-                                <Typography variant="caption" color="textSecondary" > <span id="group-info-address"  >{'0x0f66….1571'}</span></Typography>
-                                <IconButton
-                                  aria-label="copy"
-                                  size="small"
-                                //onClick={handleClick}
-                                >
-                                  <img src="/images/copy.svg" />
-                                </IconButton>
+                                {memberRow.address ?
+                                  <>
+                                    <Typography variant="caption" color="textSecondary" id={`groupInfoAddress${index}`}>{memberRow.address}</Typography>
+                                    <IconButton
+                                      aria-label="copy"
+                                      size="small"
+                                      onClick={() => copyText(index)}
+                                    >
+                                      <img src="/images/copy.svg" />
+                                    </IconButton>
+                                  </> : null}
                               </Grid>
                             </>)
                           })}
-
                         </Grid>
-
                       </Collapse>
                     </TableCell>
                   </TableRow>
                 </>
-
-
                 );
               })}
             </TableBody>
@@ -339,6 +359,16 @@ const ValidatorVotesList = () => {
         </TableContainer>
       </Paper>
     </Grid >
+    <Snackbar open={copy} autoHideDuration={6000} onClose={closeAlert}>
+      <Alert
+        onClose={closeAlert}
+        severity="success"
+        className={classes.alertMessage}
+      >
+        <Typography variant="body1">Copied!</Typography>
+      </Alert>
+    </Snackbar>
+  </>
   );
 }
 
