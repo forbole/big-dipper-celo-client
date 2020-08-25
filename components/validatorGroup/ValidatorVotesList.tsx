@@ -182,10 +182,6 @@ const ValidatorVotesList = () => {
             className={classes.headerLabel}
           >
             Validator Votes
-
-             <Link href="/blocks" className={classes.link} color="textPrimary">
-              {"view more"}
-            </Link>
           </Typography>
           <Table size="medium">
             <TableHead>
