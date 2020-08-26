@@ -21,15 +21,17 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Box from '@material-ui/core/Box';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import { GET_VALIDATOR_GROUPS } from '../query/ValidatorGroup'
+import { GET_VALIDATOR_GROUPS } from '../query/ValidatorGroup';
+import { GET_ACCOUNT_DETAILS } from '../query/Account';
 import { useQuery } from "@apollo/client";
 import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
-import getConfig from 'next/config'
+import getConfig from 'next/config';
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import Alert from "@material-ui/lab/Alert";
+import BigNumber from 'bignumber.js'
 
 interface Column {
   id: "dropdown" | "groupName" | "votesAvailable" | "electedTotal" | "lockedcGLD" | "groupShare" | "voterRewards" | "uptime" | "attestation";
@@ -153,6 +155,7 @@ const ValidatorVotesList = () => {
     variables: { pageSize, page },
   });
 
+
   const copyText = (id: number) => {
     console.log(id)
     let rawInputForm = document.getElementById(`groupInfoAddress${id}`) as HTMLInputElement
@@ -253,27 +256,30 @@ const ValidatorVotesList = () => {
                       padding="checkbox"
                       className={classes.tableCell}
                     >
-                      <Typography variant="body2" noWrap>
-                        {row.electedTotal}
-                      </Typography>
+                      {row.members ?
+                        <Typography variant="body2" noWrap>
+                          {} / {row.members.length}
+                        </Typography> : <NotAvailable variant="body2" />}
                     </TableCell>
                     <TableCell
                       align="right"
                       padding="checkbox"
                       className={classes.tableCell}
                     >
-                      <Typography variant="body2" noWrap>
-                        {row.lockedcGLD}
-                      </Typography>
+                      {row.lockedGoldAmount ?
+                        <Typography variant="body2" noWrap>
+                          {new BigNumber(row.lockedGoldAmount).toFormat(0)}
+                        </Typography> : <NotAvailable variant="body2" />}
                     </TableCell>
                     <TableCell
                       align="right"
                       padding="checkbox"
                       className={classes.tableCell}
                     >
-                      <Typography variant="body2" noWrap>
-                        {row.groupShare}
-                      </Typography>
+                      {row.commission ?
+                        <Typography variant="body2" noWrap>
+                          {row.commission * 100} %
+                        </Typography> : <NotAvailable variant="body2" />}
                     </TableCell>
 
                     <TableCell
