@@ -241,15 +241,16 @@ const ValidatorVotesList = () => {
                       padding="checkbox"
                       className={classes.tableCell}
                     >
-                      <Typography variant="caption" noWrap>
-                        {row.votesAvailable}
-                        <LinearProgress variant="determinate" value={81}
-                          classes={{
-                            colorPrimary: classes.progress,
-                            barColorPrimary: classes.progressBar,
-                          }}
-                        />
-                      </Typography>
+                      {row.votesAvailable ?
+                        <Typography variant="caption" noWrap>
+                          {new BigNumber(((row.votes / process.env.CELO) / (row.votesAvailable / process.env.CELO)) * 100).toFormat(2)} %
+                          <LinearProgress variant="determinate" value={new BigNumber(((row.votes / process.env.CELO) / (row.votesAvailable / process.env.CELO)) * 100).toFormat(2)}
+                            classes={{
+                              colorPrimary: classes.progress,
+                              barColorPrimary: classes.progressBar,
+                            }}
+                          />
+                        </Typography> : <NotAvailable variant="body2" />}
                     </TableCell>
                     <TableCell
                       align="left"
@@ -268,7 +269,7 @@ const ValidatorVotesList = () => {
                     >
                       {row.lockedGoldAmount ?
                         <Typography variant="body2" noWrap>
-                          {new BigNumber(row.lockedGoldAmount).toFormat(0)}
+                          {new BigNumber(row.lockedGoldAmount / process.env.CELO).toFormat(0)}
                         </Typography> : <NotAvailable variant="body2" />}
                     </TableCell>
                     <TableCell

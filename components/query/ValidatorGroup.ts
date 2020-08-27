@@ -20,6 +20,8 @@ export const GET_VALIDATOR_GROUPS = gql`
         nextCommissionBlock
         slashingMultiplier
         lockedGoldAmount
+        votes
+        votesAvailable
   
 	}
   }
