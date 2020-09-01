@@ -34,7 +34,7 @@ import Alert from "@material-ui/lab/Alert";
 import BigNumber from 'bignumber.js'
 
 interface Column {
-  id: "dropdown" | "groupName" | "votesAvailable" | "electedTotal" | "lockedcGLD" | "groupShare" | "voterRewards" | "uptime" | "attestation";
+  id: "dropdown" | "groupName" | "votesAvailable" | "electedTotal" | "lockedcGLD" | "groupShare" | "voterRewards" | "groupScore" | "attestation";
   label: string;
   align: 'left' | 'right';
 }
@@ -47,7 +47,7 @@ const columns: Column[] = [
   { id: "lockedcGLD", label: "Locked cGLD", align: "right" },
   { id: "groupShare", label: "Group Share", align: "right" },
   { id: "voterRewards", label: "Voter Rewards", align: "right" },
-  { id: "uptime", label: "Uptime", align: "right" },
+  { id: "groupScore", label: "Group Score", align: "right" },
   { id: "attestation", label: "Attestation", align: "right" },
 ];
 
