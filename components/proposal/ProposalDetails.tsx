@@ -19,6 +19,7 @@ import NotAvailable from '../misc/NotAvailable'
 import ComponentLoader from '../misc/ComponentLoader'
 import ErrorMessage from '../misc/ErrorMessage';
 import { GET_PROPOSAL } from '../query/Proposal'
+import BigNumber from 'bignumber.js'
 
 const useStyles = makeStyles(() => {
   return {
@@ -231,7 +232,7 @@ const ProposalDetails = ({ proposal }: ProposalDetailsProps) => {
           <Grid item xs={8} lg={6}  >
             {data.proposal && data.proposal.returnValues && data.proposal.returnValues.deposit ?
               < Typography variant="body2" className={classes.alignRight} >
-                {data.proposal.returnValues.deposit}
+                {new BigNumber(data.proposal.returnValues.deposit / process.env.CELO).toFormat()}
               </Typography> : <NotAvailable variant="body2" />}
           </Grid>
 
