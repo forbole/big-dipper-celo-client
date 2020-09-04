@@ -90,7 +90,7 @@ const useStyles = makeStyles({
         fontWeight: 400,
     },
     voteYesButton: {
-        backgroundColor: "rgba(58, 211, 158, 1)",
+        backgroundColor: "rgba(8, 178, 122, 1)",
         textTransform: "none",
         width: '100%',
         color: '#fff',

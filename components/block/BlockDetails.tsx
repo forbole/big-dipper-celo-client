@@ -37,7 +37,7 @@ const useStyles = makeStyles(() => {
       justifyContent: "center",
       border: "solid rgba(67, 72, 76, 1) ",
       borderRadius: 5,
-      backgroundColor: "rgba(77, 81, 85, 1)",
+      backgroundColor: "rgba(246, 247, 249, 1)",
       color: "rgba(255, 255, 255, 0.6)",
       height: "1.5rem",
       width: "1.5rem",
@@ -58,7 +58,7 @@ const useStyles = makeStyles(() => {
       display: "inline-block"
     },
     icon: {
-      fill: "rgba(58, 211, 158, 1)",
+      fill: "rgba(8, 178, 122, 1)",
       marginTop: "0.1rem",
       marginRight: "-0.2rem",
     },

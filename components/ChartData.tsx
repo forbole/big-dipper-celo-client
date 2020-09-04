@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     justifyContent: "center",
     borderLeft: "4px solid #FBCC5C",
     borderRadius: 4,
-    background: "#43484C",
+    background: "rgba(255, 255, 255, 1)",
     alignItems: "center",
     height: "100%"
   },

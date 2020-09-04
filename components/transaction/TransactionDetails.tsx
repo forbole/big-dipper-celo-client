@@ -51,6 +51,7 @@ const useStyles = makeStyles(({ spacing, palette }) => {
       wordWrap: "break-word",
       padding: "0.5rem",
       fontSize: "0.75rem",
+      backgroundColor: "rgba(246, 247, 249, 1)",
     },
     alignRight: {
       //display: 'block',

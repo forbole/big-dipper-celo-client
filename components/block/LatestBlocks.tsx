@@ -83,7 +83,7 @@ const useStyles = makeStyles({
     padding: "0.4rem",
   },
   table: {
-    background: "#4D5155",
+    background: "rgba(246, 247, 249, 1)",
     padding: "0.2rem",
   },
   inline: {
@@ -93,7 +93,7 @@ const useStyles = makeStyles({
     padding: "1rem",
     justifyContent: "center",
     marginBottom: "1rem",
-    background: "#43484C",
+    background: "rgba(255, 255, 255, 1)",
     alignItems: "center",
     borderRadius: 4,
     boxShadow: "0 2px 4px 0 rgba(138, 148, 159, 0.2)",

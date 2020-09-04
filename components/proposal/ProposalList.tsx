@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     //justifyContent: "center",
     //margin: "2%",
     borderRadius: 4,
-    background: "#43484C",
+    background: "rgba(255, 255, 255, 1)",
     alignItems: "center",
   },
   value: {

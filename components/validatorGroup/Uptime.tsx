@@ -225,7 +225,7 @@ const Uptime = () => {
                                     label={{ value: 'Votes available', angle: -270, position: 'center', fill: "rgba(255, 255, 255, 0.6)", fontWeight: "normal", }} />
                                 <Tooltip content={<CustomTooltip />} />
                                 <Legend align="left" verticalAlign="top" height={50} width={200} />
-                                <Bar dataKey="Voted" fill="rgba(58, 211, 158, 1)" barSize={6} fillOpacity={1} />
+                                <Bar dataKey="Voted" fill="rgba(8, 178, 122, 1)" barSize={6} fillOpacity={1} />
                                 <Bar dataKey="Missed" fill="rgba(150, 152, 154, 1)" barSize={6} fillOpacity={1} />
                             </BarChart>
                         </ResponsiveContainer>

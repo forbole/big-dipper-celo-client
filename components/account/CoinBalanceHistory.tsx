@@ -84,7 +84,7 @@ const CoinBalanceHistory = () => {
                 <YAxis tickSize={0} tickMargin={10} tick={{ stroke: "rgba(255, 255, 255, 0.6)", fontSize: 10, fontWeight: 150 }} />
                 <Tooltip />
                 {/* <Area type="monotone" dataKey="cGLD" stroke="#8884d8" fill="rgba(58, 211, 158, 0.15)" fillOpacity={1} /> */}
-                <Area type={cardinal} dataKey="cGLD" stroke="rgba(58, 211, 158, 1)" fill="rgba(58, 211, 158, 0.15)" fillOpacity={1} />
+                <Area type={cardinal} dataKey="cGLD" stroke="rgba(8, 178, 122, 1)" fill="rgba(58, 211, 158, 0.15)" fillOpacity={1} />
               </AreaChart>
             </ResponsiveContainer>
             {/* </div> */}
