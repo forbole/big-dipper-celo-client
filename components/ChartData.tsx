@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { useQuery } from "@apollo/client"; 
+import { useQuery } from "@apollo/client";
 import numbro from "numbro";
 import ComponentLoader from './misc/ComponentLoader';
 import NotAvailable from './misc/NotAvailable'
@@ -18,6 +18,39 @@ const useStyles = makeStyles({
     display: "flex",
     padding: "1.5%",
   },
+
+  blocksCard: {
+    display: "block",
+    justifyContent: "center",
+    borderRadius: 4,
+    background: "rgba(53, 208, 126, 1)",
+    alignItems: "left",
+    height: "8.75rem",
+  },
+  transactionsCard: {
+    display: "block",
+    justifyContent: "center",
+    borderRadius: 4,
+    background: "rgba(190, 150, 253, 1)",
+    alignItems: "left",
+    height: "8.75rem",
+  },
+  priceCard: {
+    display: "block",
+    justifyContent: "center",
+    borderRadius: 4,
+    background: "rgba(250, 123, 108, 1)",
+    alignItems: "left",
+    height: "8.75rem",
+  },
+  marketCapCard: {
+    display: "block",
+    justifyContent: "center",
+    borderRadius: 4,
+    background: "rgba(239, 195, 78, 1)",
+    alignItems: "left",
+    height: "8.75rem",
+  },
   card: {
     display: "block",
     justifyContent: "center",
@@ -25,19 +58,23 @@ const useStyles = makeStyles({
     borderRadius: 4,
     background: "rgba(255, 255, 255, 1)",
     alignItems: "center",
-    height: "100%"
+    height: "100%",
   },
   value: {
     fontWeight: 300,
     display: "inline-block",
-    padding: "0.2rem 0.75rem 0.5rem 0.75rem",
+    padding: "0 0.75rem 2rem 1.5rem",
+    color: "rgba(255, 255, 255, 1)"
+
   },
   valueSuffix: {
     padding: "0.2rem 0.75rem 0.5rem 0"
   },
   label: {
     display: "flex",
-    padding: "0.4rem 0.75rem 0 0.75rem",
+    padding: "1.5rem 0.75rem 1.5rem 1.5rem",
+    color: "rgba(255, 255, 255, 1)"
+
   },
 
 });
@@ -56,80 +93,56 @@ const ChartData = () => {
 
   return (
     <>
+
       <Grid container spacing={1} >
-        <Grid item xs={6} md={3} lg={2}>
-          <Card className={cx(classes.card)} elevation={0}>
-            <Typography variant="body2" className={classes.label}>
-              Celo Price
-            </Typography>
-            {data.chain.tokenPrice && data.chain.tokenPrice.usd >= 0 ?
-              <Typography variant="h5" className={classes.value}>
-                $ {numbro(data.chain.tokenPrice.usd).format("0.00")}
-              </Typography>
-              : <NotAvailable variant="body1" className={classes.value} />}
-          </Card>
-        </Grid>
 
-        <Grid item xs={6} md={3} lg={2}>
-          <Card className={cx(classes.card)} elevation={0}>
-            <Typography variant="body2" className={classes.label}>
-              Market Cap
-            </Typography>
-            {data.chain.tokenPrice && data.chain.tokenPrice.usdMarketCap >= 0 ?
-              <Typography variant="h5" className={classes.value}>
-                $ {numbro(data.chain.tokenPrice.usdMarketCap).format("0.00")}
-              </Typography>
-              : <NotAvailable variant="body1" className={classes.value} />}
-          </Card>
-        </Grid>
-
-        <Grid item xs={6} md={3} lg={2}>
-          <Card className={cx(classes.card)} elevation={0}>
-            <Typography variant="body2" className={classes.label}>
-              Average block time
-            </Typography>
-            {data.chain && data.chain.averageBlockTime >= 0 ?
-              <><Typography variant="h5" className={classes.value}>
-                {numbro(data.chain.averageBlockTime).format("0.00")}
-              </Typography><span className={classes.valueSuffix}>seconds</span></>
-              : <NotAvailable variant="body1" className={classes.value} />}
-          </Card>
-        </Grid>
-
-        <Grid item xs={6} md={3} lg={2}>
-          <Card className={cx(classes.card)} elevation={0}>
-            <Typography variant="body2" className={classes.label}>
-              Total transactions
-            </Typography>
-            {data.chain && data.chain.txCount >= 0 ?
-              <Typography variant="h5" className={classes.value}>
-                {numbro(data.chain.txCount).format("000,000")}
-              </Typography>
-              : <NotAvailable variant="body1" className={classes.value} />}
-          </Card>
-        </Grid>
-
-        <Grid item xs={6} md={3} lg={2}>
-          <Card className={cx(classes.card)} elevation={0}>
+        <Grid item xs={6} md={3}>
+          <Card className={cx(classes.blocksCard)} elevation={0}>
             <Typography variant="body2" className={classes.label}>
               Total blocks
             </Typography>
             {data.chain && data.chain.latestHeight >= 0 ?
-              <Typography variant="h5" className={classes.value}>
+              <Typography variant="h4" className={classes.value}>
                 {numbro(data.chain.latestHeight).format("000,000")}
               </Typography>
               : <NotAvailable variant="body1" className={classes.value} />}
           </Card>
         </Grid>
 
-        <Grid item xs={6} md={3} lg={2}>
-          <Card className={cx(classes.card)} elevation={0}>
+        <Grid item xs={6} md={3} >
+          <Card className={cx(classes.transactionsCard)} elevation={0}>
             <Typography variant="body2" className={classes.label}>
-              Wallet addresses
+              Total transactions
             </Typography>
-            {data.chain && data.chain.walletCount >= 0 ?
-              <Typography variant="h5" className={classes.value}>
-                {numbro(data.chain.walletCount).format("000,000")}
+            {data.chain && data.chain.txCount >= 0 ?
+              <Typography variant="h4" className={classes.value}>
+                {numbro(data.chain.txCount).format("000,000")}
+              </Typography>
+              : <NotAvailable variant="body1" className={classes.value} />}
+          </Card>
+        </Grid>
+
+        <Grid item xs={6} md={3}>
+          <Card className={cx(classes.priceCard)} elevation={0}>
+            <Typography variant="body2" className={classes.label}>
+              Celo Price
+            </Typography>
+            {data.chain.tokenPrice && data.chain.tokenPrice.usd >= 0 ?
+              <Typography variant="h4" className={classes.value}>
+                $ {numbro(data.chain.tokenPrice.usd).format("0.00")}
+              </Typography>
+              : <NotAvailable variant="body1" className={classes.value} />}
+          </Card>
+        </Grid>
+
+        <Grid item xs={6} md={3}>
+          <Card className={cx(classes.marketCapCard)} elevation={0}>
+            <Typography variant="body2" className={classes.label}>
+              Market Cap
+            </Typography>
+            {data.chain.tokenPrice && data.chain.tokenPrice.usdMarketCap >= 0 ?
+              <Typography variant="h4" className={classes.value}>
+                $ {numbro(data.chain.tokenPrice.usdMarketCap).format("0.00")}
               </Typography>
               : <NotAvailable variant="body1" className={classes.value} />}
           </Card>
