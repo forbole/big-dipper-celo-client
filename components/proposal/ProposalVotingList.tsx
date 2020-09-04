@@ -70,7 +70,7 @@ const useStyles = makeStyles(() => {
             padding: "0.5rem",
         },
         table: {
-            background: "#4D5155",
+            background: "rgba(246, 247, 249, 1)",
             padding: "0",
         },
         paper: {

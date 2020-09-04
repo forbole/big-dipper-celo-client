@@ -19,6 +19,7 @@ import ErrorMessage from '../misc/ErrorMessage';
 import { GET_PROPOSAL } from '../query/Proposal';
 import { GET_TX_DETAILS } from '../query/Transaction';
 import { useQuery } from "@apollo/client";
+import BigNumber from 'bignumber.js'
 
 interface Column {
   id: "depositor" | "amount" | "time";
@@ -63,7 +64,7 @@ const useStyles = makeStyles(() => {
       padding: "0.5rem",
     },
     table: {
-      background: "#4D5155",
+      background: "rgba(246, 247, 249, 1)",
       padding: "0",
     },
     paper: {
@@ -170,7 +171,7 @@ const DepositList = ({ proposal }: DepositListProps) => {
                     >
                       {data.proposal && data.proposal.upvoteList[row] && data.proposal.upvoteList[row].returnValues && data.proposal.upvoteList[row].returnValues.upvotes ?
                         <Typography variant="body2" noWrap>
-                          {data.proposal.upvoteList[row].returnValues.upvotes}
+                          {new BigNumber(data.proposal.upvoteList[row].returnValues.upvotes / process.env.CELO).toFormat()}
                         </Typography> : <NotAvailable variant="body2" />}
                     </TableCell>
                     <TableCell
