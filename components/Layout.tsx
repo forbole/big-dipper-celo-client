@@ -211,7 +211,7 @@ const Layout = (props: { children: React.ReactNode }) => {
             </span>
           </Hidden>
         </AppBar>
-        <Container maxWidth="lg" disableGutters={largeScreen ? false : true} >
+        <Container maxWidth="xl" disableGutters={largeScreen ? false : true} >
           <main className={classes.content}>{props.children}</main>
         </Container>
       </React.Fragment>
