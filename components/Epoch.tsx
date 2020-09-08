@@ -105,7 +105,7 @@ const Epoch = ({ epochNumber }: EpochProps) => {
                         Epoch
                     </Typography>
 
-                    <div style={{ width: '100%', height: 283 }}>
+                    <div style={{ width: '100%', height: 287 }}>
                         <ResponsiveContainer>
                             <PieChart>
                                 <Pie
@@ -127,13 +127,13 @@ const Epoch = ({ epochNumber }: EpochProps) => {
 
 
                     <Grid item xs={12} className={classes.epochData} >
-                        <Typography variant="body1" >
+                        <Typography variant="body1" noWrap >
                             <span className={classes.currentEpochText}>134</span> th Epoch
                         </Typography>
-                        <Typography variant="body1" gutterBottom >
+                        <Typography variant="body1" gutterBottom noWrap>
                             <span className={classes.currentEpochText}>8</span> h <span className={classes.currentEpochText}>27</span> m <span className={classes.currentEpochText}>6</span> s
                         </Typography>
-                        <Typography variant="body2" >
+                        <Typography variant="body2" noWrap>
                             until Epoch Ends
                         </Typography>
 
@@ -141,11 +141,11 @@ const Epoch = ({ epochNumber }: EpochProps) => {
 
 
                     <Grid item xs={5} className={classes.epochNumber}>
-                        <Typography variant="body1"  >
+                        <Typography variant="body1" noWrap>
                             182
                          </Typography>
                         <Divider variant="middle" className={classes.divider} />
-                        <Typography variant="body1"  >
+                        <Typography variant="body1" noWrap >
                             17280
                      </Typography>
                     </Grid>
