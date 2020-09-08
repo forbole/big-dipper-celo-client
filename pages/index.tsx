@@ -1,7 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import React from 'react';
-
 import LatestBlocks from '../components/block/LatestBlocks';
 import ChartData from '../components/home/ChartData';
 import Epoch from '../components/home/Epoch';
