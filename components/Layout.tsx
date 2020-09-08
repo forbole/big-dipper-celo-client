@@ -186,42 +186,42 @@ const Layout = (props: { children: React.ReactNode }) => {
             <Link href="/" color="inherit">
               <Typography variant="body1" color="textPrimary">
                 <ListItemIcon className={classes.icon}>
-                  <img src="/images/img/home.svg" />
+                  <img src="/images/home.svg" />
                 </ListItemIcon>
                 {"Dashboard"}</Typography>{" "}
             </Link>,
             <Link href="/blocks" color="inherit">
               <Typography variant="body1" color="textPrimary">
                 <ListItemIcon className={classes.icon}>
-                  <img src="/images/img/blocks.svg" />
+                  <img src="/images/blocks.svg" />
                 </ListItemIcon>
                 {"Blocks"}</Typography>{" "}
             </Link>,
             <Link href="/transactions" color="inherit">
               <Typography variant="body1" color="textPrimary">
                 <ListItemIcon className={classes.icon}>
-                  <img src="/images/img/txs.svg" />
+                  <img src="/images/txs.svg" />
                 </ListItemIcon>
                 {"Transactions"}</Typography>{" "}
             </Link>,
             <Link href="/accounts" color="inherit">
               <Typography variant="body1" color="textPrimary">
                 <ListItemIcon className={classes.icon}>
-                  <img src="/images/img/validators.svg" />
+                  <img src="/images/validators.svg" />
                 </ListItemIcon>
                 {"Accounts"}</Typography>{" "}
             </Link>,
             <Link href="/proposals" color="inherit">
               <Typography variant="body1" color="textPrimary">
                 <ListItemIcon className={classes.icon}>
-                  <img src="/images/img/proposal.svg" />
+                  <img src="/images/proposal.svg" />
                 </ListItemIcon>
                 {"Proposals"}</Typography>{" "}
             </Link>,
             <Link href="/validatorVotes" color="inherit">
               <Typography variant="body1" color="textPrimary">
                 <ListItemIcon className={classes.icon}>
-                  <img src="/images/img/vote.svg" />
+                  <img src="/images/vote.svg" />
                 </ListItemIcon>
                 {"Validator Votes"}</Typography>{" "}
             </Link>,
@@ -235,7 +235,7 @@ const Layout = (props: { children: React.ReactNode }) => {
             <Link href="/account" color="inherit">
               <Typography variant="body1" color="textPrimary">
                 <ListItemIcon className={classes.icon}>
-                  <img src="/images/img/user-login.svg" />
+                  <img src="/images/user-login.svg" />
                 </ListItemIcon>
                 {"Michelle Clark"}
               </Typography>
@@ -244,7 +244,7 @@ const Layout = (props: { children: React.ReactNode }) => {
             <Link href="/blocks" color="inherit">
               <Typography variant="body1" color="textPrimary">
                 <ListItemIcon className={classes.icon}>
-                  <img src="/images/img/logout.svg" />
+                  <img src="/images/logout.svg" />
                 </ListItemIcon>
                 {"Logout"}
               </Typography>
