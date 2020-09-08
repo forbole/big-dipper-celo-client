@@ -137,10 +137,10 @@ const TokenPrice = ({ pagination, displayCard }: LatestBlocksProps) => {
                     <Grid container spacing={1}>
                         <Grid item xs={4} className={classes.priceCardsProps}>
                             <Card className={classes.priceCard} elevation={0}>
-                                <Typography variant="body2" className={classes.label} color="textSecondary">
+                                <Typography variant="body2" className={classes.label} color="textSecondary" noWrap>
                                     Price
                              </Typography>
-                                <Typography variant="body1" className={classes.value} color="textPrimary">
+                                <Typography variant="body1" className={classes.value} color="textPrimary" noWrap>
                                     $ 4.75
                                 </Typography>
                             </Card>
@@ -148,10 +148,10 @@ const TokenPrice = ({ pagination, displayCard }: LatestBlocksProps) => {
                         </Grid>
                         <Grid item xs={4} className={classes.priceCardsProps}>
                             <Card className={classes.marketCard} elevation={0}>
-                                <Typography variant="body2" className={classes.label} color="textSecondary">
+                                <Typography variant="body2" className={classes.label} color="textSecondary" noWrap>
                                     Market Cap
                              </Typography>
-                                <Typography variant="body1" className={classes.value} color="textPrimary">
+                                <Typography variant="body1" className={classes.value} color="textPrimary" noWrap>
                                     $ 551,195.53
                                 </Typography>
                             </Card>
@@ -161,27 +161,29 @@ const TokenPrice = ({ pagination, displayCard }: LatestBlocksProps) => {
 
 
 
-                    <Grid item xs={12}>
-                        <ResponsiveContainer width='100%' aspect={largeScreen ? 1.0 / 0.3 : 1.0 / 0.5}>
-                            <LineChart
-                                width={500}
-                                height={300}
-                                data={data}
-                                margin={{
-                                    top: 30, right: 0, left: 0, bottom: 0,
-                                }}
-                            >
-                                <CartesianGrid strokeDasharray="3 3" strokeWidth={1} opacity={0.3} />
-                                <XAxis dataKey="name" tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
-                                <YAxis yAxisId="left" tickSize={0} tickMargin={10} tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
-                                <YAxis yAxisId="right" orientation="right" tickSize={0} tickMargin={10} tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
-                                <Tooltip />
-                                <Line yAxisId="left" type="monotone" dataKey="pv" stroke="rgba(102, 227, 157, 1)" activeDot={{ r: 2 }} />
-                                <Line yAxisId="right" type="monotone" dataKey="uv" stroke="rgba(255, 177, 52, 1)" activeDot={{ stroke: 'rgba(250, 123, 108, 1)', r: 2 }} />
-                            </LineChart>
-                        </ResponsiveContainer>
-
-                    </Grid>
+                    {/* <Grid item xs={12}> */}
+                        <div style={{ width: '100%', height: 260 }}>
+                            <ResponsiveContainer>
+                                {/* <ResponsiveContainer width='100%' aspect={largeScreen ? 1.0 / 0.3 : 1.0 / 0.5}> */}
+                                <LineChart
+                                    width={500}
+                                    height={300}
+                                    data={data}
+                                    margin={{
+                                        top: 30, right: 0, left: 0, bottom: 0,
+                                    }}
+                                >
+                                    <CartesianGrid strokeDasharray="3 3" strokeWidth={1} opacity={0.3} />
+                                    <XAxis dataKey="name" tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
+                                    <YAxis yAxisId="left" tickSize={0} tickMargin={10} tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
+                                    <YAxis yAxisId="right" orientation="right" tickSize={0} tickMargin={10} tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
+                                    <Tooltip />
+                                    <Line yAxisId="left" type="monotone" dataKey="pv" stroke="rgba(102, 227, 157, 1)" activeDot={{ r: 2 }} />
+                                    <Line yAxisId="right" type="monotone" dataKey="uv" stroke="rgba(255, 177, 52, 1)" activeDot={{ stroke: 'rgba(250, 123, 108, 1)', r: 2 }} />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </div>
+                    {/* </Grid> */}
                 </Paper>
             </Grid>
         </Grid>
