@@ -20,7 +20,7 @@ import { useQuery } from "@apollo/client";
 import ComponentLoader from '../../../misc/ComponentLoader';
 import NotAvailable from '../../../misc/NotAvailable'
 import ErrorMessage from '../../../misc/ErrorMessage';
-import LedgerCelo from './../../LedgerCelo'
+import Ledger from './../../Ledger';
 import Login from '../../Login'
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -150,7 +150,6 @@ const LockGold = ({ isOpen, pageAddress, showButton }: LockGoldProps) => {
     const [amount, setAmount] = React.useState('');
     const [dialogError, setDialogError] = React.useState(false);
     const [dialogErrorMessage, setDialogErrorMessage] = React.useState('');
-    const address = currentUser;
     const [ledgerError, setLedgerError] = React.useState(false);
     const [ledgerErrorMessage, setLedgerErrorMessage] = React.useState('');
     const [ledgerLoading, setLedgerLoading] = React.useState(false);
