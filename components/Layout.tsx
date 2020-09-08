@@ -141,8 +141,6 @@ const Layout = (props: { children: React.ReactNode }) => {
 
 	return (
 		<div className={classes.root}>
-			<CssBaseline />
-
 			<AppBar
 				position="fixed"
 				className={clsx(classes.appBar)}
