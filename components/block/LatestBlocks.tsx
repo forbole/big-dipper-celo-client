@@ -69,10 +69,7 @@ const useStyles = makeStyles({
     float: "right",
     textAlign: "right",
   },
-  divider: {
-    padding: "0 1rem",
-    backgroundColor: "rgba(62, 67, 71, 1)",
-  },
+
 
   cell: {
     maxHeight: "1rem",
@@ -81,10 +78,12 @@ const useStyles = makeStyles({
   tableCell: {
     overflow: "auto",
     padding: "0.4rem",
+    border: "solid 1px rgba(255, 255, 255, 1)"
   },
   table: {
-    background: "rgba(246, 247, 249, 1)",
     padding: "0.2rem",
+    border: "solid 1px rgba(255, 255, 255, 1)"
+
   },
   inline: {
     paddingLeft: "0rem",
@@ -120,6 +119,8 @@ const useStyles = makeStyles({
     minWidth: "2rem",
     maxWidth: "15rem",
   },
+
+
 });
 
 moment.relativeTimeThreshold("s", 59);
@@ -199,8 +200,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
               </Link>
             ) : null}
           </Typography>
-          <Divider variant="middle" className={classes.divider} />
-          <TableContainer>
+          <TableContainer >
             <Paper className={classes.tableCell}>
               <Table>
                 <TableHead>
@@ -244,10 +244,10 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                       </TableRow>
                     )}
                 </TableHead>
-                <TableBody>
+                <TableBody >
                   {data.blocks.blocks.map((row: any, index: number) => {
                     return (
-                      <TableRow key={index}>
+                      <TableRow key={index} style={index % 2 ? { background: "rgba(248, 248, 248, 1)", border: "none" } : { background: "#fff" }}>
                         <TableCell
                           component="th"
                           scope="row"
@@ -294,6 +294,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                                 display="inline"
                                 className={classes.textContent}
                                 noWrap
+                               
                               >
                                 <span>
                                   {
@@ -312,7 +313,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                           padding="checkbox"
                           className={classes.tableCell}
                         >
-                          <Typography variant="body2" noWrap>
+                          <Typography variant="body2" noWrap color="textSecondary">
                             <Link href="#" color="secondary">
                               {row.transactions &&
                                 row.transactions
@@ -328,7 +329,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                             className={classes.tableCell}
                           >
                             <div className={classes.truncareText}>
-                              <Typography variant="body2" noWrap>
+                              <Typography variant="body2" noWrap color="textSecondary">
                                 {numbro(row.gasUsed / 1000000000).format(
                                   "0.0000"
                                 )}{" "}
@@ -344,14 +345,14 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                             className={classes.tableCell}
                           >
                             <div className={classes.truncareText}>
-                              <Typography variant="body2" noWrap>
+                              <Typography variant="body2" noWrap color="textSecondary">
                                 {row.gasLimit ? row.gasLimit : "Not available"}
                               </Typography>
                             </div>
                           </TableCell>
                         ) : null}
-                        <TableCell align="right" padding="checkbox">
-                          <Typography variant="body2" noWrap>
+                        <TableCell align="right" padding="checkbox" className={classes.tableCell}>
+                          <Typography variant="body2" noWrap color="textSecondary">
                             {moment.unix(row.timestamp).fromNow()}
                           </Typography>
                         </TableCell>
