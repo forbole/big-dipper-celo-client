@@ -34,8 +34,9 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import Box from '@material-ui/core/Box'
 
-const drawerWidth = 240;
+const drawerWidth = 220;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -67,6 +68,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth,
       flexShrink: 0,
       whiteSpace: 'nowrap',
+      margin: "-1rem"
     },
     drawerOpen: {
       width: drawerWidth,
@@ -96,14 +98,17 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3),
-      marginTop: "0.5rem"
+      // padding: "1rem",
+      marginTop: "2.5rem"
     },
     icon: {
       paddingRight: "2rem",
       paddingLeft: "0.5rem",
       marginTop: "0.3rem"
     },
+    box: {
+      padding: "0.5rem"
+    }
   }),
 );
 
@@ -216,7 +221,7 @@ const Layout = (props: { children: React.ReactNode }) => {
             <Link href="/validatorVotes" color="inherit">
               <Typography variant="body1" color="textPrimary">
                 <ListItemIcon className={classes.icon}>
-                  <img src="/images/img/proposal.svg" />
+                  <img src="/images/img/vote.svg" />
                 </ListItemIcon>
                 {"Validator Votes"}</Typography>{" "}
             </Link>,
@@ -260,9 +265,11 @@ const Layout = (props: { children: React.ReactNode }) => {
         </List>
 
       </Drawer>
-      <Container maxWidth="xl" disableGutters={largeScreen ? false : true} >
+      {/* <Container  disableGutters={largeScreen ? false : true} > */}
+      <Box display="flex" className={classes.box}>
         <main className={classes.content}>{props.children}</main>
-      </Container>
+      </Box>
+      {/* </Container> */}
     </div>
   );
 }
