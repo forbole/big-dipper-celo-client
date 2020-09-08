@@ -50,6 +50,10 @@ const useStyles = makeStyles({
     "&:hover": {
       textDecoration: "underline"
     }
+  },
+
+  logo: {
+    paddingLeft: "5rem"
   }
 
 });
@@ -59,33 +63,33 @@ const Footer = () => {
   return (
     <footer>
       <Grid container className={classes.root}>
-        <Grid item sm={11} md={9}>
+        <Grid item xs={12} md={9} className={classes.logo}>
           <div><img src="/images/bigdipper-logo.svg" className={classes.bdLogo} /></div>
-          <div><Typography variant="body2" className={classes.text} align="left">
+          <div><Typography variant="body2" className={classes.text} align="left" color="textSecondary">
             Big Dipper for Celo, presented by <a href="https://forbole.com" className={classes.footerLink} target="_blank">Forbole</a>.
             </Typography></div>
           <div>
-          <Link
-            href="https://github.com/forbole/big-dipper-celo-client"
-            target="_blank"
-            className={classes.socialMedia}
-          >
-            <img src="/images/social-media-github.svg" />
-          </Link>
-          <Link
-            href="https://medium.com/bigdipperlive"
-            target="_blank"
-            className={classes.socialMedia}
-          >
-            <img src="/images/social-media-medium.svg" />
-          </Link>
-          <Link
-            href="https://twitter.com/bigdipperlive"
-            target="_blank"
-            className={classes.socialMedia}
-          >
-            <img src="/images/social-media-twitter.svg" />
-          </Link></div>
+            <Link
+              href="https://github.com/forbole/big-dipper-celo-client"
+              target="_blank"
+              className={classes.socialMedia}
+            >
+              <img src="/images/social-media-github.svg" />
+            </Link>
+            <Link
+              href="https://medium.com/bigdipperlive"
+              target="_blank"
+              className={classes.socialMedia}
+            >
+              <img src="/images/social-media-medium.svg" />
+            </Link>
+            <Link
+              href="https://twitter.com/bigdipperlive"
+              target="_blank"
+              className={classes.socialMedia}
+            >
+              <img src="/images/social-media-twitter.svg" />
+            </Link></div>
         </Grid>
       </Grid>
     </footer>
