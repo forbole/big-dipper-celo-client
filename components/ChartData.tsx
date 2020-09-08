@@ -25,7 +25,7 @@ const useStyles = makeStyles({
     borderRadius: 4,
     background: "rgba(53, 208, 126, 1)",
     alignItems: "left",
-    height: "8.75rem",
+    height: "7.5rem",
   },
   transactionsCard: {
     display: "block",
@@ -33,7 +33,7 @@ const useStyles = makeStyles({
     borderRadius: 4,
     background: "rgba(190, 150, 253, 1)",
     alignItems: "left",
-    height: "8.75rem",
+    height: "7.5rem",
   },
   priceCard: {
     display: "block",
@@ -41,7 +41,7 @@ const useStyles = makeStyles({
     borderRadius: 4,
     background: "rgba(250, 123, 108, 1)",
     alignItems: "left",
-    height: "8.75rem",
+    height: "7.5rem",
   },
   marketCapCard: {
     display: "block",
@@ -49,7 +49,7 @@ const useStyles = makeStyles({
     borderRadius: 4,
     background: "rgba(239, 195, 78, 1)",
     alignItems: "left",
-    height: "8.75rem",
+    height: "7.5rem",
   },
   card: {
     display: "block",
@@ -72,10 +72,23 @@ const useStyles = makeStyles({
   },
   label: {
     display: "flex",
-    padding: "1.5rem 0.75rem 1.5rem 1.5rem",
+    padding: "1.5rem 0.75rem 1rem 1.5rem",
     color: "rgba(255, 255, 255, 1)"
 
   },
+
+  dollarSign: {
+    color: "rgba(255, 255, 255, 1)",
+    display: "inline-block",
+    marginLeft: "1.5rem",
+    verticalAlign: "text-bottom"
+  },
+  dollarValue: {
+    color: "rgba(255, 255, 255, 1)",
+    fontWeight: 300,
+    display: "inline-block",
+
+  }
 
 });
 
@@ -128,9 +141,10 @@ const ChartData = () => {
               Celo Price
             </Typography>
             {data.chain.tokenPrice && data.chain.tokenPrice.usd >= 0 ?
-              <Typography variant="h4" className={classes.value}>
-                $ {numbro(data.chain.tokenPrice.usd).format("0.00")}
-              </Typography>
+              <> <Typography variant="h6" className={classes.dollarSign}>$</Typography>
+                <Typography variant="h4" className={classes.dollarValue}>
+                  {numbro(data.chain.tokenPrice.usd).format("0.00")}
+                </Typography> </>
               : <NotAvailable variant="body1" className={classes.value} />}
           </Card>
         </Grid>
@@ -141,9 +155,10 @@ const ChartData = () => {
               Market Cap
             </Typography>
             {data.chain.tokenPrice && data.chain.tokenPrice.usdMarketCap >= 0 ?
-              <Typography variant="h4" className={classes.value}>
-                $ {numbro(data.chain.tokenPrice.usdMarketCap).format("0.00")}
-              </Typography>
+              <><Typography variant="h6" className={classes.dollarSign}>$</Typography>
+                <Typography variant="h4" className={classes.dollarValue}>
+                  {numbro(data.chain.tokenPrice.usdMarketCap).format("0.00")}
+                </Typography></>
               : <NotAvailable variant="body1" className={classes.value} />}
           </Card>
         </Grid>
