@@ -93,25 +93,25 @@ const ValidatorsGroups = ({ epochNumber }: ValidatorsGroupsProps) => {
                         <Grid item xs={12} className={classes.data}>
                             <Grid item xs={6} className={classes.validatorData}>
                                 <img src="/images/validator-icon.svg" />
-                                <Typography variant="body1" className={classes.infoData}>
+                                <Typography variant="body1" className={classes.infoData} noWrap>
                                     Validators
                                 </Typography>
-                                <Typography variant="h4" >
+                                <Typography variant="h4" noWrap >
                                     100/155
                                 </Typography>
-                                <Typography variant="body2" color="textSecondary" gutterBottom>
+                                <Typography variant="body2" color="textSecondary" gutterBottom noWrap>
                                     Elected / Registered
                                 </Typography>
                             </Grid>
                             <Grid item xs={6} className={classes.groupsData} >
                                 <img src="/images/groups.svg" />
-                                <Typography variant="body1" className={classes.infoData}>
+                                <Typography variant="body1" className={classes.infoData} noWrap>
                                     Groups
                                 </Typography>
-                                <Typography variant="h4" >
+                                <Typography variant="h4" noWrap >
                                     67/68
                                 </Typography>
-                                <Typography variant="body2" color="textSecondary" gutterBottom className={classes.valueData}>
+                                <Typography variant="body2" color="textSecondary" gutterBottom className={classes.valueData} noWrap>
                                     Elected / Registered
                                 </Typography>
                             </Grid>
