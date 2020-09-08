@@ -81,7 +81,6 @@ const useStyles = makeStyles({
     border: "none"
   },
   table: {
-    background: "rgba(246, 247, 249, 1)",
     padding: "0.2rem",
     border: "none"
 
@@ -293,7 +292,6 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                                 display="inline"
                                 className={classes.textContent}
                                 noWrap
-
                               >
                                 <span>
                                   {
