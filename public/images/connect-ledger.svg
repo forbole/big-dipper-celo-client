@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
     <title>connect ledger</title>
     <desc>Created with Sketch.</desc>
-    <g id="connect-ledger" stroke="none" stroke-width="1" fill="rgba(213, 214, 215, 1)" fill-rule="evenodd">
+    <g id="connect-ledger" stroke="none" stroke-width="1" fill="rgba(153, 153, 153, 1)" fill-rule="evenodd">
         <path d="M8.473,6.609 C7.76459457,4.60506857 5.71550591,3.40295591 3.6206485,3.76233294 C1.52579109,4.12170997 -0.00547757923,5.93804019 -0.00547757923,8.0635 C-0.00547757923,10.1889598 1.52579109,12.00529 3.6206485,12.3646671 C5.71550591,12.7240441 7.76459457,11.5219314 8.473,9.518 L11.637,9.518 L11.637,12.427 L14.546,12.427 L14.546,9.518 L16,9.518 L16,6.609 L8.473,6.609 Z M4.364,9.51800034 C3.56042569,9.51800034 2.909,8.86657431 2.909,8.063 C2.909,7.25942569 3.56042569,6.608 4.364,6.608 C5.16757431,6.608 5.81900034,7.25942569 5.81900034,8.063 C5.81926555,8.44897134 5.66605662,8.81921059 5.3931336,9.0921336 C5.12021059,9.36505662 4.74997134,9.51826555 4.364,9.51800034 L4.364,9.51800034 Z" id="Path_108" fill="rgba(213, 214, 215, 1)" fill-rule="nonzero"></path>
     </g>
 </svg>
