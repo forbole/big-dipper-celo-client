@@ -59,7 +59,7 @@ const useStyles = makeStyles({
 
   box: {
     letterSpacing: "1px",
-    padding: "0.6rem",
+    padding: "0.6rem 0.6rem 1.35rem 0.6rem",
     display: "block",
     overflow: "hidden",
     whiteSpace: "nowrap",
