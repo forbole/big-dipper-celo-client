@@ -25,7 +25,7 @@ const useStyles = makeStyles({
     borderRadius: 4,
     background: "rgba(53, 208, 126, 1)",
     alignItems: "left",
-    height: "7.5rem",
+    height: "8.75rem",
   },
   transactionsCard: {
     display: "block",
@@ -33,7 +33,7 @@ const useStyles = makeStyles({
     borderRadius: 4,
     background: "rgba(190, 150, 253, 1)",
     alignItems: "left",
-    height: "7.5rem",
+    height: "8.75rem",
   },
   priceCard: {
     display: "block",
@@ -41,7 +41,7 @@ const useStyles = makeStyles({
     borderRadius: 4,
     background: "rgba(250, 123, 108, 1)",
     alignItems: "left",
-    height: "7.5rem",
+    height: "8.75rem",
   },
   marketCapCard: {
     display: "block",
@@ -49,7 +49,7 @@ const useStyles = makeStyles({
     borderRadius: 4,
     background: "rgba(239, 195, 78, 1)",
     alignItems: "left",
-    height: "7.5rem",
+    height: "8.75rem",
   },
   card: {
     display: "block",
