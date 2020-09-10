@@ -29,7 +29,7 @@ const useStyles = makeStyles({
     },
     box: {
         letterSpacing: "1px",
-        padding: "0.6rem",
+        padding: "0.8rem",
         display: "block",
         overflow: "hidden",
         whiteSpace: "nowrap",
@@ -48,8 +48,8 @@ const useStyles = makeStyles({
 
     epochNumber: {
         display: "block",
-        marginTop: "-14rem",
-        paddingLeft: "3.5rem",
+        marginTop: "-19rem",
+        paddingLeft: "3.2rem",
         fontWeight: 400,
         position: "absolute",
         textAlign: "center",
@@ -62,7 +62,7 @@ const useStyles = makeStyles({
     },
     epochData: {
         display: "inline-block",
-        marginTop: "-15.5rem",
+        marginTop: "-19.5rem",
         marginLeft: "12.5rem",
         position: "absolute",
     },
@@ -97,36 +97,36 @@ const Epoch = ({ epochNumber }: EpochProps) => {
     // if (error) return <ErrorMessage message={error.message} />
 
     return (<>
-        <Grid container spacing={1} className={classes.menu}>
+        <Grid container spacing={2} className={classes.menu}>
             <Grid item xs={12}>
                 <Paper className={classes.root}>
 
                     <Typography variant="body1" className={classes.box}>
                         Epoch
                     </Typography>
+                    <Grid item xs={6}>
+                        <div style={{ width: '100%', height: 357 }}>
+                            <ResponsiveContainer>
+                                <PieChart>
+                                    <Pie
+                                        data={data}
+                                        cx={95}
+                                        cy={80}
+                                        innerRadius={60}
+                                        outerRadius={70}
+                                        fill="rgba(28, 134, 252, 1)"
+                                        strokeWidth={0}
+                                        paddingAngle={2}
+                                        dataKey="value"
+                                    />
+                                    <Tooltip />
+                                </PieChart>
 
-                    <div style={{ width: '100%', height: 287 }}>
-                        <ResponsiveContainer>
-                            <PieChart>
-                                <Pie
-                                    data={data}
-                                    cx={95}
-                                    cy={80}
-                                    innerRadius={60}
-                                    outerRadius={70}
-                                    fill="rgba(28, 134, 252, 1)"
-                                    strokeWidth={0}
-                                    paddingAngle={2}
-                                    dataKey="value"
-                                />
-                                <Tooltip />
-                            </PieChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </Grid>
 
-                        </ResponsiveContainer>
-                    </div>
-
-
-                    <Grid item xs={12} className={classes.epochData} >
+                    <Grid item xs={6} className={classes.epochData} >
                         <Typography variant="body1" noWrap >
                             <span className={classes.currentEpochText}>134</span> th Epoch
                         </Typography>
