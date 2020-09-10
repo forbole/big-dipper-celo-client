@@ -1,12 +1,7 @@
 
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
+
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { Divider } from "@material-ui/core";
@@ -36,8 +31,6 @@ const useStyles = makeStyles({
         height: "100%",
         padding: "1.5%",
         borderRadius: 4,
-        wordWrap: "break-word",
-        margin: "none",
         overflow: "hidden",
     },
     box: {
@@ -160,30 +153,26 @@ const TokenPrice = ({ pagination, displayCard }: LatestBlocksProps) => {
                     </Grid>
 
 
-
-                    {/* <Grid item xs={12}> */}
-                        <div style={{ width: '100%', height: 260 }}>
-                            <ResponsiveContainer>
-                                {/* <ResponsiveContainer width='100%' aspect={largeScreen ? 1.0 / 0.3 : 1.0 / 0.5}> */}
-                                <LineChart
-                                    width={500}
-                                    height={300}
-                                    data={data}
-                                    margin={{
-                                        top: 30, right: 0, left: 0, bottom: 0,
-                                    }}
-                                >
-                                    <CartesianGrid strokeDasharray="3 3" strokeWidth={1} opacity={0.3} />
-                                    <XAxis dataKey="name" tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
-                                    <YAxis yAxisId="left" tickSize={0} tickMargin={10} tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
-                                    <YAxis yAxisId="right" orientation="right" tickSize={0} tickMargin={10} tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
-                                    <Tooltip />
-                                    <Line yAxisId="left" type="monotone" dataKey="pv" stroke="rgba(102, 227, 157, 1)" activeDot={{ r: 2 }} />
-                                    <Line yAxisId="right" type="monotone" dataKey="uv" stroke="rgba(255, 177, 52, 1)" activeDot={{ stroke: 'rgba(250, 123, 108, 1)', r: 2 }} />
-                                </LineChart>
-                            </ResponsiveContainer>
-                        </div>
-                    {/* </Grid> */}
+                    <div style={{ width: '100%', height: 290 }}>
+                        <ResponsiveContainer>
+                            <LineChart
+                                width={500}
+                                height={250}
+                                data={data}
+                                margin={{
+                                    top: 20, right: 0, left: 0, bottom: 0,
+                                }}
+                            >
+                                <CartesianGrid strokeDasharray="3 3" strokeWidth={1} opacity={0.3} />
+                                <XAxis dataKey="name" tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
+                                <YAxis yAxisId="left" tickSize={0} tickMargin={10} tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
+                                <YAxis yAxisId="right" orientation="right" tickSize={0} tickMargin={10} tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
+                                <Tooltip />
+                                <Line yAxisId="left" type="monotone" dataKey="pv" stroke="rgba(102, 227, 157, 1)" activeDot={{ r: 2 }} strokeWidth={2} />
+                                <Line yAxisId="right" type="monotone" dataKey="uv" stroke="rgba(255, 177, 52, 1)" activeDot={{ stroke: 'rgba(250, 123, 108, 1)', r: 2 }} strokeWidth={2} />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
                 </Paper>
             </Grid>
         </Grid>
