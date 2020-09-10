@@ -11,10 +11,7 @@ import ErrorMessage from './misc/ErrorMessage';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import getConfig from 'next/config'
-import {
-    PieChart, Pie, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Sector, Cell, Line
-} from 'recharts';
-import Card from "@material-ui/core/Card";
+
 
 
 const useStyles = makeStyles({
@@ -23,18 +20,19 @@ const useStyles = makeStyles({
         height: "100%",
         padding: "1.5%",
         borderRadius: 4,
-        overflow: "hidden",
+        paddingBottom: "3.55rem",
     },
     box: {
         letterSpacing: "1px",
-        padding: "0.6rem",
-        display: "block",
+        padding: "0.8rem 0.6rem 3.9rem 0.6rem",
         overflow: "hidden",
         whiteSpace: "nowrap",
+        display: "flex",
     },
 
     rootMain: {
-        height: '100%'
+        height: '100%',
+
     },
 
     data: {
@@ -42,17 +40,15 @@ const useStyles = makeStyles({
 
     },
     groupsData: {
-        padding: "1rem",
         textAlign: "center"
 
     },
     validatorData: {
-        padding: "1rem",
         textAlign: "center"
 
     },
     infoData: {
-        paddingTop: "1.2rem",
+        paddingTop: "1.5rem",
         paddingBottom: "0.4rem"
     },
 
@@ -82,7 +78,7 @@ const ValidatorsGroups = ({ epochNumber }: ValidatorsGroupsProps) => {
     // if (error) return <ErrorMessage message={error.message} />
 
     return (<>
-        <Grid container spacing={1} className={classes.rootMain}>
+        <Grid container spacing={2} className={classes.rootMain}>
             <Grid item xs={12}>
                 <Paper className={classes.root}>
 
