@@ -23,30 +23,26 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Index() {
   const classes = useStyles();
   return (
-    <Layout >
-      <Grid container className={classes.root}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} >
-            <ChartData />
-          </Grid>
-          <Grid item xs={12} lg={6}>
-            <TokenPrice />
-          </Grid>
-          <Grid item xs={12} md={6} lg={3} >
-            <Epoch />
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <ValidatorsGroups />
-          </Grid>
-
-          <Grid item xs={12} lg={6}  >
-            <LatestBlocks pagination={false} displayCard={false} />
-          </Grid>
-          <Grid item xs={12} lg={6}  >
-            <LatestTransactions pagination={false} />
-          </Grid>
-        </Grid>
+    <Grid container className={classes.root} spacing={2}>
+      <Grid item xs={12} >
+        <ChartData />
       </Grid>
-    </Layout>
+      <Grid item xs={12} lg={6}>
+        <TokenPrice />
+      </Grid>
+      <Grid item xs={12} md={6} lg={3} >
+        <Epoch />
+      </Grid>
+      <Grid item xs={12} md={6} lg={3}>
+        <ValidatorsGroups />
+      </Grid>
+
+      <Grid item xs={12} lg={6}  >
+        <LatestBlocks pagination={false} displayCard={false} />
+      </Grid>
+      <Grid item xs={12} lg={6}  >
+        <LatestTransactions pagination={false} />
+      </Grid>
+    </Grid>
   );
 }
