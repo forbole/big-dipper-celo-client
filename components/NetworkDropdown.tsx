@@ -20,11 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "inline-block",
       justifyContent: "center",
     },
-    networkContainer: {
-      // paddingTop: "0.7rem",
-      // marginLeft: "4rem",
-      // marginBottom: "-1rem",
-    },
+
     formControl: {
       minWidth: "9.75rem",
       float: "right",
@@ -59,11 +55,11 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: "-0.4rem",
     },
     divider: {
-      backgroundColor: "rgba(62, 67, 71, 1)",
+      backgroundColor: "rgba(0, 0, 0, 0.16)",
+      margin: "0 1rem",
     },
     menuItem: {
-      marginTop: "-0.3rem",
-      marginBottom: "-0.3rem",
+      verticalAlign: "middle",
     },
 
     inputLabel: {
