@@ -12,20 +12,21 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: "flex",
       flexWrap: "wrap",
-      justifyContent: "center",
-      marginTop: "-1rem",
-      padding: "0 0 1rem 0",
-      verticalAlign: "middle",
+      borderRadius: 5,
+      
     },
 
     inputLabel: {
       height: "2rem",
       verticalAlign: "middle",
       padding: "0px 1rem 1rem",
-      fontSize: "12px",
+      marginTop: "0.4rem",
+      fontSize: "14px",
+      background: "rgba(255, 255, 255, 1)",
+      width: "100%",
+      display: "flex",
     },
     container: {
-      justifyContent: "center",
       padding: "0rem",
     },
   })
@@ -49,9 +50,9 @@ const SearchBar = () => {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={1} className={classes.container}>
-        <Grid item xs={11} md={7}>
-          <FormControl fullWidth variant="filled">
+      <Grid container spacing={1} >
+        <Grid item xs={12}>
+          <FormControl fullWidth  variant="filled" margin="dense">
             <InputLabel htmlFor="search-bar"></InputLabel>
 
             <FilledInput
