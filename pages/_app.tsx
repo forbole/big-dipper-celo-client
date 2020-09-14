@@ -8,6 +8,7 @@ import App, { Container } from 'next/app';
 import Footer from '../components/Footer';
 import { ApolloClient, ApolloProvider, useQuery, HttpLink } from '@apollo/client';
 import { gql } from "@apollo/client";
+import BottomNavigation from '../components/BottomNavigation'
 
 import { InMemoryCache } from '@apollo/client/cache';
 import possibleTypes from '../possibleTypes.json'
@@ -47,7 +48,6 @@ export default class TSApp extends App<AppProps, AppState>{
     const { Component, pageProps } = this.props;
 
 
-
     return (
       <React.Fragment>
         <ApolloProvider client={client}>
@@ -66,6 +66,7 @@ export default class TSApp extends App<AppProps, AppState>{
               <Component {...pageProps} style={{ display: "flex", }} />
             </Layout>
             <Footer />
+            <BottomNavigation />
           </ThemeProvider>
         </ApolloProvider>
       </React.Fragment>
