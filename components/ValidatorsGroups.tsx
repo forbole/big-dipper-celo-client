@@ -20,7 +20,7 @@ const useStyles = makeStyles({
         height: "100%",
         padding: "1.5%",
         borderRadius: 4,
-        paddingBottom: "3.55rem",
+        paddingBottom: "3.57rem",
     },
     box: {
         letterSpacing: "1px",
