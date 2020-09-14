@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import Layout from "../../components/Layout";
 import Grid from "@material-ui/core/Grid";
 import TransactionDetails from "../../components/transaction/TransactionDetails";
 import InputParameters from "../../components/transaction/InputParameters";
@@ -14,7 +13,6 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: "flex",
       justifyContent: "center",
-      // paddingTop: "2%",
     },
 
   })
@@ -26,7 +24,6 @@ export default function Transaction() {
   const transactionHash: string = router.query.transaction as string
 
   return (
-    <Layout>
       <Grid container spacing={2} className={classes.root}>
         <Grid item xs={12}>
           <TransactionDetails hash={transactionHash} />
@@ -38,6 +35,5 @@ export default function Transaction() {
           <InputParameters hash={transactionHash} />
         </Grid>
       </Grid>
-    </Layout>
   );
 }

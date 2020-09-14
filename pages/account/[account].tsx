@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import Layout from "../../components/Layout";
 import Grid from "@material-ui/core/Grid";
 import AccountPage from "../../components/account/AccountPage";
 import { useRouter } from "next/router";
@@ -20,12 +19,10 @@ export default function Account() {
   const accountAddress: string = router.query.account as string
 
   return (
-    <Layout>
       <Grid container className={classes.root}>
         <Grid item xs={12} >
           <AccountPage address={accountAddress} />
         </Grid>
       </Grid>
-    </Layout>
   );
 }

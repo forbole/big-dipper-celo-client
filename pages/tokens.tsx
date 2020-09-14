@@ -4,7 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Link from "../components/Link";
 import Card from "@material-ui/core/Card";
-import Layout from "../components/Layout";
 import Overview from "../components/tokens/Overview";
 import ProfileSummary from "../components/tokens/ProfileSummary";
 import Transactions from "../components/account/Transactions";
@@ -23,7 +22,6 @@ export default function Tokens() {
   const classes = useStyles();
 
   return (
-    <Layout>
       <Grid container spacing={2} className={classes.root} >
         <Grid item xs={12}  >
           <Overview />
@@ -41,6 +39,5 @@ export default function Tokens() {
           <TokenHolders />
         </Grid>
       </Grid>
-    </Layout>
   );
 }
