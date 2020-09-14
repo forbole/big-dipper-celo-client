@@ -124,7 +124,6 @@ const useStyles = makeStyles((theme: Theme) =>
 			},
 		}
 
-
 	}),
 );
 
