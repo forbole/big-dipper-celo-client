@@ -78,11 +78,11 @@ const useStyles = makeStyles({
   tableCell: {
     overflow: "auto",
     padding: "0.4rem",
-    border: "solid 1px rgba(255, 255, 255, 1)"
+    border: "none"
   },
   table: {
     padding: "0.2rem",
-    border: "solid 1px rgba(255, 255, 255, 1)"
+    border: "none"
 
   },
   inline: {
@@ -247,7 +247,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                 <TableBody >
                   {data.blocks.blocks.map((row: any, index: number) => {
                     return (
-                      <TableRow key={index} style={index % 2 ? { background: "rgba(248, 248, 248, 1)", border: "none" } : { background: "#fff" }}>
+                      <TableRow key={index} style={index % 2 ? { background: "rgba(248, 248, 248, 1)", border: "none" } : { background: "rgb(255,255,255)" }}>
                         <TableCell
                           component="th"
                           scope="row"
@@ -255,7 +255,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                           align="left"
                           className={classes.tableCell}
                         >
-                          <Typography variant="body2" color="secondary" noWrap>
+                          <Typography variant="body2"  noWrap>
                             {/* <a href="block/[...block]" as={`block/${row.number}`}  onClick={handleClick} >
       {row.number}
     </a> */}
@@ -294,7 +294,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                                 display="inline"
                                 className={classes.textContent}
                                 noWrap
-                               
+
                               >
                                 <span>
                                   {
