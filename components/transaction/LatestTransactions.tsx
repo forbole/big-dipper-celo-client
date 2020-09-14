@@ -59,7 +59,7 @@ const useStyles = makeStyles({
 
   box: {
     letterSpacing: "1px",
-    padding: "0.6rem 0.6rem 1.35rem 0.6rem",
+    padding: "0.6rem 0.6rem 1rem 0.6rem",
     display: "block",
     overflow: "hidden",
     whiteSpace: "nowrap",
@@ -88,7 +88,13 @@ const useStyles = makeStyles({
 
   chip: {
     marginBottom: "0.5rem",
-  }
+  },
+
+  divider: {
+    backgroundColor: "rgba(232, 232, 232, 1)",
+    margin: "0 1rem",
+    display: "flex",
+  },
 });
 
 moment.relativeTimeThreshold("s", 59);
@@ -161,7 +167,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
                             container
                             spacing={1}
                             style={{
-                              padding: "0.5rem 0", background: "rgba(255, 255, 255, 1)"
+                              padding: "0.2rem 0", background: "rgba(255, 255, 255, 1)"
                             }}
                           >
                             <Grid item xs={8}>
@@ -258,7 +264,11 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
                                   : <NotAvailable variant="body2" />}
                               </Typography>
                             </Grid>
+                            <Grid item xs={12}>
+                              <Divider className={classes.divider} />
+                            </Grid>
                           </Grid>
+
                         </TableCell>
                       </TableRow>
                     );
