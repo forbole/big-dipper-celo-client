@@ -87,7 +87,7 @@ const useStyles = makeStyles(() => {
       padding: "0 0 1rem 0.5rem"
     },
     divider: {
-      backgroundColor: "rgba(62, 67, 71, 1)",
+      backgroundColor: "rgba(232, 232, 232, 1)",
     }
   };
 });

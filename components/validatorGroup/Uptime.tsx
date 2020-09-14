@@ -82,7 +82,7 @@ const useStyles = makeStyles(() => {
         },
         divider: {
             margin: "0.15rem 0rem",
-            backgroundColor: "rgba(62, 67, 71, 1)",
+            backgroundColor: "rgba(232, 232, 232, 1)",
         },
         power: {
             align: "left",
