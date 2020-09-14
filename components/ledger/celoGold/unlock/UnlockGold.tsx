@@ -277,8 +277,8 @@ const UnlockGold = ({ isOpen, pageAddress, showButton }: UnlockGoldProps): JSX.E
         variables: { address },
     });
 
-    if (loading) return null
-    if (error) return null
+    if (loading) return null as any
+    if (error) return null as any
     if (currentAddress === currentUser) {
         return (
             <>
@@ -398,7 +398,7 @@ const UnlockGold = ({ isOpen, pageAddress, showButton }: UnlockGoldProps): JSX.E
         );
     }
     else {
-        return null
+        return null as any
     }
 };
 
