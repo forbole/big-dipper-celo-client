@@ -29,16 +29,16 @@ const useStyles = makeStyles(() => {
     },
 
     divider: {
-      margin: "0.5rem 0 0 0",
-      backgroundColor: "rgba(62, 67, 71, 1)",
+      marginTop: "0.5rem",
+      backgroundColor: "rgba(232, 232, 232, 1)",
     },
     arrowIcon: {
-      padding: "0.25rem",
+      padding: "0.3rem",
       justifyContent: "center",
-      border: "solid rgba(67, 72, 76, 1) ",
+      border: "solid 1px rgba(119, 119, 119, 1) ",
       borderRadius: 5,
-      backgroundColor: "rgba(246, 247, 249, 1)",
-      color: "rgba(255, 255, 255, 0.6)",
+      backgroundColor: "rgba(255, 255, 255, 0.6)",
+      color: "rgba(119, 119, 119, 1)",
       height: "1.5rem",
       width: "1.5rem",
     },
@@ -127,7 +127,7 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
           flexWrap: "wrap",
         },
         " & .Mui-selected": {
-          color: "rgba(255, 255, 255, 0.8)",
+          color: "rgba(119, 119, 119, 1)",
         },
         " & .MuiTab-wrapper": {
           display: "block",
@@ -195,7 +195,7 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
             <Typography variant="body2" component="h2">
               Time
             </Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2" component="h2" color="textSecondary">
               {data.block && data.block.timestamp
                 ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
                 : <NotAvailable variant="body2" />}
@@ -208,10 +208,10 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
             <Divider variant="middle" className={classes.divider} />
           </Grid>
           <Grid item xs={12} >
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2" >
               Transactions
             </Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2" color="textSecondary">
               {data.block &&
                 data.block.transactions &&
                 data.block.transactions
@@ -223,10 +223,10 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
 
           <Grid item xs={12} >
             <Typography variant="body2">Size</Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2" component="h2" color="textSecondary">
               {data.block && data.block.size
                 ? data.block.size
-                : <NotAvailable variant="body2" />}
+                : <NotAvailable variant="body2" color="textSecondary" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -247,7 +247,7 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
                   >
                     {data.block.miner.name}
                   </Link>
-                ) : <NotAvailable variant="body2" />}
+                ) : <NotAvailable variant="body2" color="textSecondary" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -256,10 +256,10 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
             <Typography variant="body2" component="h2">
               Hash
             </Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2" component="h2" color="textSecondary" >
               {data.block && data.block.hash
                 ? data.block.hash
-                : <NotAvailable variant="body2" />}
+                : <NotAvailable variant="body2" color="textSecondary" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -279,7 +279,7 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
                 >
                   {data.block.parentHash}
                 </Link>
-              ) : <NotAvailable variant="body2" />}
+              ) : <NotAvailable variant="body2" color="textSecondary" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -288,10 +288,10 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
             <Typography variant="body2" component="h2">
               Total Difficulty
             </Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2" component="h2" color="textSecondary" >
               {data.block && data.block.totalDifficulty
                 ? data.block.totalDifficulty
-                : <NotAvailable variant="body2" />}
+                : <NotAvailable variant="body2" color="textSecondary" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -300,12 +300,12 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
             <Typography variant="body2" component="h2">
               Nonce
             </Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2" component="h2" color="textSecondary" >
               {data.block &&
                 data.block.transactions &&
                 data.block.transactions.nonce
                 ? data.block.transactions.nonce
-                : <NotAvailable variant="body2" />}
+                : <NotAvailable variant="body2" color="textSecondary" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -314,10 +314,10 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
             <Typography variant="body2" component="h2">
               Gas Used
             </Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2" component="h2" color="textSecondary" >
               {data.block && data.block.gasUsed
                 ? data.block.gasUsed
-                : <NotAvailable variant="body2" />}
+                : <NotAvailable variant="body2" color="textSecondary" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -326,10 +326,10 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
             <Typography variant="body2" component="h2">
               Gas Limit
             </Typography>
-            <Typography variant="body2" component="h2">
+            <Typography variant="body2" component="h2" color="textSecondary" >
               {data.block && data.block.gasLimit
                 ? data.block.gasLimit
-                : <NotAvailable variant="body2" />}
+                : <NotAvailable variant="body2" color="textSecondary" />}
             </Typography>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
@@ -348,7 +348,7 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
                 variant="fullWidth"
                 TabIndicatorProps={{
                   style: {
-                    backgroundColor: "rgba(255, 255, 255, 0.8)",
+                    backgroundColor: "textSecondary",
 
                   }
                 }}
