@@ -134,8 +134,6 @@ const Layout = (props: { children: React.ReactNode }): JSX.Element => {
 
     return (
         <div className={classes.root}>
-            <CssBaseline />
-
             <AppBar position="fixed" className={clsx(classes.appBar)}>
                 <Grid container spacing={1} className={classes.toolbarItems}>
                     <Grid item md={4}>
