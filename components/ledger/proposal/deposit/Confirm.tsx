@@ -113,7 +113,7 @@ const Confirm = () => {
 
                             <Grid item xs={12}>
                                 <Typography color="textPrimary" variant="body2" gutterBottom align="left">
-                                    You’re going to deposit 1 cGLD to Proposal 10, if that’s correct, please sign in your ledger device.
+                                    You’re going to deposit 1 CELO to Proposal 10, if that’s correct, please sign in your ledger device.
             </Typography>
                             </Grid>
                             <Grid item xs={12}>

@@ -32,18 +32,18 @@ function createData(depositor: string, amount: string, time: string) {
 }
 
 const rows = [
-  createData("Michelle Clark", "59.0096541 cGLD", "April 22 2020"),
-  createData("Rachel Hugh", "22 cGLD", "April 22 2020"),
-  createData("Natasha", "565646 cGLD", "April 22 2020"),
-  createData("Rith Jackson", "24755 cGLD", "April 22 2020"),
-  createData("Kelly Mendex", "65894856 cGLD", "April 22 2020"),
-  createData("Marilym Ford", "2478 cGLD", "April 22 2020"),
-  createData("Fionna Wells", "976.14755 cGLD", "April 22 2020"),
-  createData("Sandra Jones", "18949.18115615 cGLD", "April 22 2020"),
-  createData("Beverly", "78.145521 cGLD", "April 22 2020"),
-  createData("Sonia Fone", "99.147 cGLD", "April 22 2020"),
-  createData("1087144", "472.31111 cGLD", "April 22 2020"),
-  createData("1087143", "887 cGLD", "April 22 2020"),
+  createData("Michelle Clark", "59.0096541 CELO", "April 22 2020"),
+  createData("Rachel Hugh", "22 CELO", "April 22 2020"),
+  createData("Natasha", "565646 CELO", "April 22 2020"),
+  createData("Rith Jackson", "24755 CELO", "April 22 2020"),
+  createData("Kelly Mendex", "65894856 CELO", "April 22 2020"),
+  createData("Marilym Ford", "2478 CELO", "April 22 2020"),
+  createData("Fionna Wells", "976.14755 CELO", "April 22 2020"),
+  createData("Sandra Jones", "18949.18115615 CELO", "April 22 2020"),
+  createData("Beverly", "78.145521 CELO", "April 22 2020"),
+  createData("Sonia Fone", "99.147 CELO", "April 22 2020"),
+  createData("1087144", "472.31111 CELO", "April 22 2020"),
+  createData("1087143", "887 CELO", "April 22 2020"),
 ];
 
 const useStyles = makeStyles(() => {
@@ -104,7 +104,7 @@ const DepositList = () => {
             variant="subtitle1"
             className={classes.headerLabel}
           >
-            Deposit (200 cGLD)
+            Deposit (200 CELO)
           </Typography>
 
           <Divider variant="middle" className={classes.divider} />
