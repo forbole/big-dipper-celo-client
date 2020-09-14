@@ -1,239 +1,278 @@
 import React from "react";
 import clsx from "clsx";
 import {
-  createStyles,
-  makeStyles,
-  useTheme,
-  Theme,
+	createStyles,
+	makeStyles,
+	useTheme,
+	Theme,
 } from "@material-ui/core/styles";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import SearchBar from "../components/SearchBar";
 import NetworkDropdown from "../components/NetworkDropdown";
 import Link from "../components/Link";
-import PriceCard from "../components/PriceCard";
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
-import Ledger from "./ledger/Ledger";
-import Footer from "../components/Footer";
 import Container from '@material-ui/core/Container';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import Box from '@material-ui/core/Box'
+
 
 const drawerWidth = 220;
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
-    },
-    appBar: {
-      zIndex: theme.zIndex.drawer + 1,
-      transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-    },
-    appBarShift: {
-      marginLeft: drawerWidth,
-      width: `calc(100% - ${drawerWidth}px)`,
-      transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    menuButton: {
-      marginRight: 36,
-    },
-    hide: {
-      display: 'none',
-    },
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-      whiteSpace: 'nowrap',
-      margin: "-1rem"
-    },
-    drawerOpen: {
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    drawerClose: {
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      overflowX: 'hidden',
-      width: theme.spacing(7) + 1,
-      [theme.breakpoints.up('sm')]: {
-        width: theme.spacing(9) + 1,
-      },
-    },
-    toolbar: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-end',
-      padding: theme.spacing(0, 1),
-      // necessary for content to be below app bar
-      ...theme.mixins.toolbar,
-    },
-    content: {
-      flexGrow: 1,
-      // padding: "1rem",
-      marginTop: "2.5rem"
-    },
-    icon: {
-      paddingRight: "2rem",
-      paddingLeft: "0.5rem",
-      marginTop: "0.3rem"
-    },
-    box: {
-      padding: "0.5rem"
-    }
-  }),
+	createStyles({
+		root: {
+			display: 'flex',
+		},
+		appBar: {
+			boxShadow: "none",
+			position: "absolute",
+			textAlign: "right"
+		},
+		menuButton: {
+			marginLeft: "0.3rem"
+		},
+		drawer: {
+			width: drawerWidth,
+			flexShrink: 0,
+			whiteSpace: 'nowrap',
+		},
+		drawerOpen: {
+			width: drawerWidth,
+			transition: theme.transitions.create('width', {
+				easing: theme.transitions.easing.sharp,
+				duration: theme.transitions.duration.enteringScreen,
+			}),
+		},
+		drawerClose: {
+			transition: theme.transitions.create('width', {
+				easing: theme.transitions.easing.sharp,
+				duration: theme.transitions.duration.leavingScreen,
+			}),
+			overflowX: 'hidden',
+			width: theme.spacing(7) + 1,
+			[theme.breakpoints.up('sm')]: {
+				width: theme.spacing(9) + 1,
+			},
+		},
+		content: {
+			[theme.breakpoints.down('sm')]: {
+				marginTop: "8rem"
+			},
+			[theme.breakpoints.up('md')]: {
+				marginTop: "5.5rem"
+			},
+			paddingBottom: "1rem"
+
+		},
+		icon: {
+			paddingRight: "2rem",
+			paddingLeft: "0.5rem",
+			marginTop: "0.3rem"
+		},
+		loginButton: {
+			background: "rgba(153, 153, 153, 1)",
+			borderRadius: 5,
+			padding: "0.1rem",
+			verticalAlign: "middle",
+		},
+
+		login: {
+			marginTop: "0.8rem",
+			// marginLeft: "-1rem",
+			textAlign: "center",
+
+		},
+		toolbarItems: {
+			verticalAlign: "middle",
+			marginTop: "0.95rem",
+			marginBottom: "0.5rem",
+			textAlign: "right"
+		},
+
+		searchBar: {
+			textAlign: "right",
+			[theme.breakpoints.down('sm')]: {
+				margin: "-0.5rem 1rem 0rem 1rem",
+			},
+			[theme.breakpoints.up('md')]: {
+				marginLeft: "-0.5rem",
+			},
+
+		},
+		celoIcon: {
+			textAlign: "left",
+			marginTop: "0.325rem",
+			marginLeft: "0.5rem"
+		},
+
+
+	}),
 );
 
 
 
+
 const Layout = (props: { children: React.ReactNode }) => {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
+	const classes = useStyles();
+	const [open, setOpen] = React.useState(false);
 
-  const theme = useTheme();
-  const largeScreen = useMediaQuery(theme.breakpoints.up('lg'));
+
+	const theme = useTheme();
+	const largeScreen = useMediaQuery(theme.breakpoints.up('md'));
 
 
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+	const handleDrawerOpen = () => {
+		setOpen(true);
+	};
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+	const handleDrawerClose = () => {
+		setOpen(false);
+	};
 
-  return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="Open Celo Drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
-            })}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        classes={{
-          paper: clsx({
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
-          }),
-        }}
-      >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {[
-            <Link href="/" color="inherit">
-              <Typography variant="body1" color="textPrimary">
-                <ListItemIcon className={classes.icon}>
-                  <img src="/images/home.svg" />
-                </ListItemIcon>
-                {"Dashboard"}</Typography>{" "}
-            </Link>,
-            <Link href="/blocks" color="inherit">
-              <Typography variant="body1" color="textPrimary">
-                <ListItemIcon className={classes.icon}>
-                  <img src="/images/blocks.svg" />
-                </ListItemIcon>
-                {"Blocks"}</Typography>{" "}
-            </Link>,
-            <Link href="/transactions" color="inherit">
-              <Typography variant="body1" color="textPrimary">
-                <ListItemIcon className={classes.icon}>
-                  <img src="/images/txs.svg" />
-                </ListItemIcon>
-                {"Transactions"}</Typography>{" "}
-            </Link>,
-            <Link href="/accounts" color="inherit">
-              <Typography variant="body1" color="textPrimary">
-                <ListItemIcon className={classes.icon}>
-                  <img src="/images/validators.svg" />
-                </ListItemIcon>
-                {"Accounts"}</Typography>{" "}
-            </Link>,
-            <Link href="/proposals" color="inherit">
-              <Typography variant="body1" color="textPrimary">
-                <ListItemIcon className={classes.icon}>
-                  <img src="/images/proposal.svg" />
-                </ListItemIcon>
-                {"Proposals"}</Typography>{" "}
-            </Link>,
-            <Link href="/validatorVotes" color="inherit">
-              <Typography variant="body1" color="textPrimary">
-                <ListItemIcon className={classes.icon}>
-                  <img src="/images/vote.svg" />
-                </ListItemIcon>
-                {"Validator Votes"}</Typography>{" "}
-            </Link>,
-          ].map((text, index) => (
-            <ListItem button key={index}>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-          {/* <Divider />
+	return (
+		<div className={classes.root}>
+			<CssBaseline />
+
+			<AppBar
+				position="fixed"
+				className={clsx(classes.appBar)}
+			>
+				<Grid container spacing={1} className={classes.toolbarItems} >
+					<Grid item md={4} >
+						{""}
+					</Grid>
+					<Hidden smDown>
+						<Grid item md={5} className={classes.searchBar}>
+							<SearchBar />
+						</Grid>
+					</Hidden>
+					<Hidden smUp>
+						<Grid item xs={5} className={classes.celoIcon}>
+							<img src="/images/celo-logo.svg" />
+						</Grid>
+					</Hidden>
+					<Grid item xs={5} md={2}>
+						<NetworkDropdown />
+					</Grid>
+					<Grid item xs={1} md={1} className={classes.login}>
+						<IconButton
+							// color="inherit"
+							aria-label="Login"
+							onClick={handleDrawerOpen}
+							//edge="start"
+							className={classes.loginButton}
+						>
+							<img src="/images/connect-ledger.svg" />
+						</IconButton>
+					</Grid>
+
+					<Hidden smUp>
+						<Grid item xs={12} className={classes.searchBar}>
+							<SearchBar />
+						</Grid>
+					</Hidden>
+				</Grid>
+
+			</AppBar>
+			{largeScreen ?
+				<>
+					<Drawer
+						variant="permanent"
+						className={clsx(classes.drawer, {
+							[classes.drawerOpen]: open,
+							[classes.drawerClose]: !open,
+						})}
+						classes={{
+							paper: clsx({
+								[classes.drawerOpen]: open,
+								[classes.drawerClose]: !open,
+							}),
+						}}
+					>
+						{!open ? <IconButton
+							color="inherit"
+							aria-label="Open Celo Drawer"
+							onClick={handleDrawerOpen}
+							edge="start"
+							className={clsx(classes.menuButton)}
+						>
+							{<img src="/images/celo-icon.svg" />}
+						</IconButton> :
+							<IconButton
+								color="inherit"
+								aria-label="Open Celo Drawer"
+								onClick={handleDrawerClose}
+								edge="start"
+								className={clsx(classes.menuButton)}
+							>
+								{<img src="/images/celo-logo.svg" />}
+							</IconButton>
+						}
+						<Divider />
+
+						<List>
+							{[
+								<Link href="/" color="inherit">
+									<Typography variant="body1" color="textSecondary">
+										<ListItemIcon className={classes.icon}>
+											<img src="/images/home.svg" />
+										</ListItemIcon>
+										{"Dashboard"}</Typography>{" "}
+								</Link>,
+								<Link href="/blocks" color="inherit">
+									<Typography variant="body1" color="textSecondary">
+										<ListItemIcon className={classes.icon}>
+											<img src="/images/blocks.svg" />
+										</ListItemIcon>
+										{"Blocks"}</Typography>{" "}
+								</Link>,
+								<Link href="/transactions" color="inherit">
+									<Typography variant="body1" color="textSecondary">
+										<ListItemIcon className={classes.icon}>
+											<img src="/images/txs.svg" />
+										</ListItemIcon>
+										{"Transactions"}</Typography>{" "}
+								</Link>,
+								<Link href="/accounts" color="inherit">
+									<Typography variant="body1" color="textSecondary">
+										<ListItemIcon className={classes.icon}>
+											<img src="/images/validators.svg" />
+										</ListItemIcon>
+										{"Accounts"}</Typography>{" "}
+								</Link>,
+								<Link href="/proposals" color="inherit">
+									<Typography variant="body1" color="textSecondary">
+										<ListItemIcon className={classes.icon}>
+											<img src="/images/proposal.svg" />
+										</ListItemIcon>
+										{"Proposals"}</Typography>{" "}
+								</Link>,
+								<Link href="/validatorVotes" color="inherit">
+									<Typography variant="body1" color="textSecondary">
+										<ListItemIcon className={classes.icon}>
+											<img src="/images/vote.svg" />
+										</ListItemIcon>
+										{"Validator Votes"}</Typography>{" "}
+								</Link>,
+							].map((text, index) => (
+								<ListItem button key={index}>
+									<ListItemText primary={text} />
+								</ListItem>
+							))}
+							{/* <Divider />
           {[
             <Link href="/account" color="inherit">
-              <Typography variant="body1" color="textPrimary">
+              <Typography variant="body1" color="textSecondary">
                 <ListItemIcon className={classes.icon}>
                   <img src="/images/user-login.svg" />
                 </ListItemIcon>
@@ -242,7 +281,7 @@ const Layout = (props: { children: React.ReactNode }) => {
             </Link>,
 
             <Link href="/blocks" color="inherit">
-              <Typography variant="body1" color="textPrimary">
+              <Typography variant="body1" color="textSecondary">
                 <ListItemIcon className={classes.icon}>
                   <img src="/images/logout.svg" />
                 </ListItemIcon>
@@ -250,7 +289,7 @@ const Layout = (props: { children: React.ReactNode }) => {
               </Typography>
             </Link>,
             <Link href="/transactions" color="inherit">
-              <Typography variant="body1" color="textPrimary" id="signin-ledger">
+              <Typography variant="body1" color="textSecondary" id="signin-ledger">
                 <ListItemIcon className={classes.icon}>
                   <img src="/images/connect-ledger.svg" />
                 </ListItemIcon>
@@ -262,15 +301,15 @@ const Layout = (props: { children: React.ReactNode }) => {
               <ListItemText primary={text} />
             </ListItem>
           ))} */}
-        </List>
+						</List>
 
-      </Drawer>
-      {/* <Container  disableGutters={largeScreen ? false : true} > */}
-      <Box display="flex" className={classes.box}>
-        <main className={classes.content}>{props.children}</main>
-      </Box>
-      {/* </Container> */}
-    </div>
-  );
+					</Drawer>
+				</> : null}
+			<Container maxWidth="xl" className={classes.content} >
+				<div>{props.children}</div>
+			</Container>
+
+		</div >
+	);
 }
 export default Layout;
