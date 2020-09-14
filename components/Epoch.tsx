@@ -37,7 +37,7 @@ const useStyles = makeStyles({
 
     divider: {
         width: "4rem",
-        backgroundColor: "rgba(62, 67, 71, 1)",
+        backgroundColor: "rgba(232, 232, 232, 1)",
         fontWeight: 600,
     },
 
