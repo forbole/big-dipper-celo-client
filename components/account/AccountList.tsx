@@ -29,7 +29,7 @@ import BigNumber from 'bignumber.js'
 interface Column {
   id: 'rank' | 'address' | 'balance' | 'percentage' | 'txsCount';
   label: string;
-  align: 'left' | 'right' ;
+  align: 'left' | 'right';
 }
 
 const columns: Column[] = [
@@ -64,18 +64,21 @@ const useStyles = makeStyles(({ spacing }) => {
     },
     box: {
       letterSpacing: '1px',
-      padding: "0.5rem",
+      padding: "0.6rem",
       display: 'inline-flex',
       overflow: 'hidden',
       whiteSpace: 'nowrap',
     },
     tableCell: {
       overflow: 'auto',
-      padding: '0.4rem'
+      padding: '0.4rem',
+      border: "none"
+
     },
     table: {
-      background: 'rgba(246, 247, 249, 1)',
-      padding: '0'
+      padding: '0.2rem',
+      border: "none"
+
     },
     inline: {
       paddingLeft: '0rem',
@@ -98,7 +101,7 @@ const useStyles = makeStyles(({ spacing }) => {
     },
     divider: {
       margin: '0.5rem',
-      backgroundColor: "rgba(62, 67, 71, 1)",
+      backgroundColor: "rgba(232, 232, 232, 1)",
     },
   }
 });
@@ -159,9 +162,9 @@ const AccountList = () => {
                 <TableBody>
                   {data.accounts.accounts.map((row: any, index: number) => {
                     return (
-                      <TableRow key={index} >
+                      <TableRow key={index} style={index % 2 ? { background: "rgba(248, 248, 248, 1)", border: "none" } : { background: "rgb(255,255,255)" }}>
                         <TableCell component="th" scope="row" padding="checkbox" align="left" className={classes.tableCell} >
-                          <Typography variant="body2" noWrap> {index + 1}</Typography>
+                          <Typography variant="body2" color="textPrimary" noWrap> {index + 1}</Typography>
                         </TableCell>
                         {row.address ?
                           <TableCell align="left" padding="checkbox" className={classes.tableCell}>
@@ -178,20 +181,20 @@ const AccountList = () => {
                           : <NotAvailable variant="body2" />}
                         <TableCell align="right" padding="checkbox" className={classes.tableCell}>
                           {row.balance ?
-                            <Typography variant="body2" noWrap>
+                            <Typography variant="body2" color="textSecondary" noWrap>
                               {new BigNumber(row.balance).toFormat(4)} CELO
                               </Typography>
                             : <NotAvailable variant="body2" />}
                         </TableCell>
                         <TableCell align="right" padding="checkbox" className={classes.tableCell}>
                           {row.balance && totalSupply && totalSupply.data && totalSupply.data.chain && totalSupply.data.chain.cUSDTotalSupply ?
-                            <Typography variant="body2" noWrap>{numbro((row.balance / totalSupply.data.chain.cUSDTotalSupply) * 100).format("0.0000000")}</Typography>
+                            <Typography variant="body2" color="textSecondary" noWrap>{numbro((row.balance / totalSupply.data.chain.cUSDTotalSupply) * 100).format("0.0000000")}</Typography>
                             : <NotAvailable variant="body2" />}
                         </TableCell>
                         <TableCell align="right" padding="checkbox" className={classes.tableCell}>
                           {row.txCount ?
-                            <Typography variant="body2" noWrap >{numbro(row.txCount).format("0,000")}</Typography>
-                            : '0'}
+                            <Typography variant="body2" color="textSecondary" noWrap >{numbro(row.txCount).format("0,000")}</Typography>
+                            : <Typography variant="body2" color="textSecondary" noWrap >0</Typography>}
                         </TableCell>
                       </TableRow>
                     );
