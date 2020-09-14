@@ -110,7 +110,7 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		celoIcon: {
 			textAlign: "left",
-			marginTop: "0.325rem",
+			marginTop: "-0.325rem",
 			marginLeft: "0.5rem"
 		},
 
@@ -158,7 +158,12 @@ const Layout = (props: { children: React.ReactNode }) => {
 					</Hidden>
 					<Hidden smUp>
 						<Grid item xs={5} className={classes.celoIcon}>
-							<img src="/images/celo-logo.svg" />
+							<IconButton
+								color="inherit"
+								aria-label="Celo Dashboard"
+								edge="start"
+							><img src="/images/celo-logo.svg" />
+							</IconButton>
 						</Grid>
 					</Hidden>
 					<Grid item xs={5} md={2}>
