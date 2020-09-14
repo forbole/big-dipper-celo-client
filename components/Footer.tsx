@@ -53,7 +53,7 @@ const useStyles = makeStyles({
   },
 
   logo: {
-    paddingLeft: "5rem"
+    paddingLeft: "2rem"
   }
 
 });
