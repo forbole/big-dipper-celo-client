@@ -255,7 +255,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                           align="left"
                           className={classes.tableCell}
                         >
-                          <Typography variant="body2"  noWrap>
+                          <Typography variant="body2" noWrap>
                             {/* <a href="block/[...block]" as={`block/${row.number}`}  onClick={handleClick} >
       {row.number}
     </a> */}
@@ -313,13 +313,11 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                           padding="checkbox"
                           className={classes.tableCell}
                         >
-                          <Typography variant="body2" noWrap color="textSecondary">
-                            <Link href="#" color="secondary">
-                              {row.transactions &&
-                                row.transactions
-                                ? row.transactions.length
-                                : 0}
-                            </Link>
+                          <Typography variant="body2" noWrap color="secondary">
+                            {row.transactions &&
+                              row.transactions
+                              ? row.transactions.length
+                              : 0}
                           </Typography>
                         </TableCell>
                         {pagination ? (
