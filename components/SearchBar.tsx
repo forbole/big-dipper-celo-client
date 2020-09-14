@@ -13,14 +13,15 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexWrap: "wrap",
       borderRadius: 5,
-      
+      [theme.breakpoints.down('sm')]: {
+        marginTop: "0.5rem"
+      },
     },
 
     inputLabel: {
       height: "2rem",
       verticalAlign: "middle",
       padding: "0px 1rem 1rem",
-      marginTop: "0.4rem",
       fontSize: "14px",
       background: "rgba(255, 255, 255, 1)",
       width: "100%",
@@ -52,7 +53,7 @@ const SearchBar = () => {
     <div className={classes.root}>
       <Grid container spacing={1} >
         <Grid item xs={12}>
-          <FormControl fullWidth  variant="filled" margin="dense">
+          <FormControl fullWidth variant="filled" margin="dense">
             <InputLabel htmlFor="search-bar"></InputLabel>
 
             <FilledInput
