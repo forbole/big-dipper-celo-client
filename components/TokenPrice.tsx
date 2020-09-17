@@ -22,6 +22,7 @@ import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 import Card from "@material-ui/core/Card";
+import { GET_COIN_HISTORY_BY_NUM_OF_DAYS } from './query/Coin'
 
 
 
@@ -78,47 +79,37 @@ const useStyles = makeStyles({
 
 
 
-const data = [
-    {
-        name: 'Page A', uv: 4000, pv: 2400, amt: 2400,
-    },
-    {
-        name: 'Page B', uv: 3000, pv: 1398, amt: 2210,
-    },
-    {
-        name: 'Page C', uv: 2000, pv: 9800, amt: 2290,
-    },
-    {
-        name: 'Page D', uv: 2780, pv: 3908, amt: 2000,
-    },
-    {
-        name: 'Page E', uv: 1890, pv: 4800, amt: 2181,
-    },
-    {
-        name: 'Page F', uv: 2390, pv: 3800, amt: 2500,
-    },
-    {
-        name: 'Page G', uv: 3490, pv: 4300, amt: 2100,
-    },
-];
 
 
-type LatestBlocksProps = { pagination?: boolean, displayCard?: boolean };
+type TokenPriceProps = { pagination?: boolean, displayCard?: boolean };
 
 
-const TokenPrice = ({ pagination, displayCard }: LatestBlocksProps) => {
+const TokenPrice = () => {
     const classes = useStyles();
     const theme = useTheme();
     const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
+    const days = 1;
+    
+    const { loading, error, data } = useQuery(GET_COIN_HISTORY_BY_NUM_OF_DAYS, {
+        variables: { days },
+        pollInterval: 5000,
+    });
+    let datars = []
+  
 
+    if (loading) return <ComponentLoader />
+    if (error) return <ErrorMessage message={error.message} />
 
-    // const { loading, error, data } = useQuery(GET_BLOCK, {
-    //     variables: { pageSize, page },
-    //     pollInterval: 5000,
-    // });
+    for (let c = 0; c < data.coinHistoryByNumOfDays.prices.length; c++) {
+        datars[c] = [
+            {
+                time: moment(data.coinHistoryByNumOfDays.prices[c][0]).format("DD MMM YYYY hh:mm a"),
+                price: data.coinHistoryByNumOfDays.prices[c][1]
+            }
+        ]
+        console.log(moment(data.coinHistoryByNumOfDays.prices[c][0]).format("DD MMM YYYY hh:mm a"))
 
-    // if (loading) return <ComponentLoader />
-    // if (error) return <ErrorMessage message={error.message} />
+    }
 
     return (<>
         <Grid container spacing={2}>
@@ -158,17 +149,17 @@ const TokenPrice = ({ pagination, displayCard }: LatestBlocksProps) => {
                             <LineChart
                                 width={500}
                                 height={250}
-                                data={data}
+                                data={datars}
                                 margin={{
                                     top: 20, right: 0, left: 0, bottom: 0,
                                 }}
                             >
                                 <CartesianGrid strokeDasharray="3 3" strokeWidth={1} opacity={0.3} />
-                                <XAxis dataKey="name" tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
+                                <XAxis dataKey="time" tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
                                 <YAxis yAxisId="left" tickSize={0} tickMargin={10} tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
                                 <YAxis yAxisId="right" orientation="right" tickSize={0} tickMargin={10} tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
                                 <Tooltip />
-                                <Line yAxisId="left" type="monotone" dataKey="pv" stroke="rgba(102, 227, 157, 1)" activeDot={{ r: 2 }} strokeWidth={2} />
+                                <Line yAxisId="left" type="monotone" dataKey="price" stroke="rgba(102, 227, 157, 1)" activeDot={{ r: 2 }} strokeWidth={2} />
                                 <Line yAxisId="right" type="monotone" dataKey="uv" stroke="rgba(255, 177, 52, 1)" activeDot={{ stroke: 'rgba(250, 123, 108, 1)', r: 2 }} strokeWidth={2} />
                             </LineChart>
                         </ResponsiveContainer>
