@@ -60,7 +60,7 @@ const SearchBar = () => {
               className={classes.inputLabel}
               id="search-bar"
               value={values.txSearch}
-              fullWidth
+              fullWidth={true}
               disableUnderline={true}
               onChange={handleChange("txSearch")}
               placeholder="Search by address / token symbol name / tx"
