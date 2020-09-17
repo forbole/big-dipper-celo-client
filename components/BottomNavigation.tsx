@@ -19,6 +19,33 @@ import Link from "../components/Link";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 
+interface TabPanelProps {
+    children?: React.ReactNode;
+    index: any;
+    value: any;
+}
+
+function TabPanel(props: TabPanelProps) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`bottom-navigation-${index}`}
+            aria-labelledby={`bottom-navigation-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box p={3}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+
+
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
         flexGrow: 1,
@@ -35,8 +62,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 }));
 
-export default function BottomNav() {
+export default function BottomNavigation() {
     const classes = useStyles();
+    const [value, setValue] = React.useState("");
+
+    const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+        setValue(newValue);
+    };
 
     const theme = useTheme();
     const largeScreen = useMediaQuery(theme.breakpoints.up('md'));
@@ -46,6 +78,7 @@ export default function BottomNav() {
             <div className={classes.root}>
                 <AppBar position="fixed" color="primary" style={{ top: "auto", bottom: 0 }}>
                     <Tabs
+                        value={value}
                         scrollButtons="off"
                         aria-label="Celo Bottom Navigation"
                     >
@@ -53,7 +86,7 @@ export default function BottomNav() {
                             <Tab icon={<img src="/images/home.svg" />} aria-label="Dashboard" className={classes.tabElement} />
                         </Link>
                         <Link href="/blocks" color="inherit">
-                            <Tab icon={<img src="/images/blocks.svg" />} aria-label="Blocks"className={classes.tabElement}  />
+                            <Tab icon={<img src="/images/blocks.svg" />} aria-label="Blocks" className={classes.tabElement} />
                         </Link>
                         <Link href="/transactions" color="inherit">
                             <Tab icon={<img src="/images/txs.svg" />} aria-label="Transactions" className={classes.tabElement} />
