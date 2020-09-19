@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from "../components/Link";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useScrollTrigger, Slide } from '@material-ui/core';
 
 
 interface TabPanelProps {
@@ -65,6 +66,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function BottomNavigation() {
     const classes = useStyles();
     const [value, setValue] = React.useState("");
+    const trigger = useScrollTrigger();
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
         setValue(newValue);
@@ -76,32 +78,34 @@ export default function BottomNavigation() {
     if (!largeScreen) {
         return (
             <div className={classes.root}>
-                <AppBar position="fixed" color="primary" style={{ top: "auto", bottom: 0 }}>
-                    <Tabs
-                        value={value}
-                        scrollButtons="off"
-                        aria-label="Celo Bottom Navigation"
-                    >
-                        <Link href="/" color="inherit">
-                            <Tab icon={<img src="/images/home.svg" />} aria-label="Dashboard" className={classes.tabElement} />
-                        </Link>
-                        <Link href="/blocks" color="inherit">
-                            <Tab icon={<img src="/images/blocks.svg" />} aria-label="Blocks" className={classes.tabElement} />
-                        </Link>
-                        <Link href="/transactions" color="inherit">
-                            <Tab icon={<img src="/images/txs.svg" />} aria-label="Transactions" className={classes.tabElement} />
-                        </Link>
-                        <Link href="/accounts" color="inherit">
-                            <Tab icon={<img src="/images/validators.svg" />} aria-label="Accounts" className={classes.tabElement} />
-                        </Link>
-                        <Link href="/proposals" color="inherit">
-                            <Tab icon={<img src="/images/proposal.svg" />} aria-label="Proposals" className={classes.tabElement} />
-                        </Link>
-                        <Link href="/validatorVotes" color="inherit">
-                            <Tab icon={<img src="/images/vote.svg" />} aria-label="ValidatorVotes" className={classes.tabElement} />
-                        </Link>
-                    </Tabs>
-                </AppBar>
+                <Slide appear={false} direction="up" in={!trigger}>
+                    <AppBar position="fixed" color="primary" style={{ top: "auto", bottom: 0 }}>
+                        <Tabs
+                            value={value}
+                            scrollButtons="off"
+                            aria-label="Celo Bottom Navigation"
+                        >
+                            <Link href="/" color="inherit">
+                                <Tab icon={<img src="/images/home.svg" />} aria-label="Dashboard" className={classes.tabElement} />
+                            </Link>
+                            <Link href="/blocks" color="inherit">
+                                <Tab icon={<img src="/images/blocks.svg" />} aria-label="Blocks" className={classes.tabElement} />
+                            </Link>
+                            <Link href="/transactions" color="inherit">
+                                <Tab icon={<img src="/images/txs.svg" />} aria-label="Transactions" className={classes.tabElement} />
+                            </Link>
+                            <Link href="/accounts" color="inherit">
+                                <Tab icon={<img src="/images/validators.svg" />} aria-label="Accounts" className={classes.tabElement} />
+                            </Link>
+                            <Link href="/proposals" color="inherit">
+                                <Tab icon={<img src="/images/proposal.svg" />} aria-label="Proposals" className={classes.tabElement} />
+                            </Link>
+                            <Link href="/validatorVotes" color="inherit">
+                                <Tab icon={<img src="/images/vote.svg" />} aria-label="ValidatorVotes" className={classes.tabElement} />
+                            </Link>
+                        </Tabs>
+                    </AppBar>
+                </Slide>
             </div>
         );
     }
