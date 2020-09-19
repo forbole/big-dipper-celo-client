@@ -132,7 +132,7 @@ const GroupMember = () => {
 
                     <Grid item xs={6} >
                         <Typography variant="body1" align="right" color="textPrimary">
-                            1,000 CGLD
+                            1,000 CELO
                         </Typography>
                     </Grid>
 
@@ -146,7 +146,7 @@ const GroupMember = () => {
                     </Grid>
                     <Grid item xs={6} >
                         <Typography variant="body2" align="right" >
-                            0.987CGLD
+                            0.987CELO
             </Typography>
                     </Grid>
 
@@ -171,7 +171,7 @@ const GroupMember = () => {
 
                     <Grid item xs={6} >
                         <Typography variant="body1" align="right" color="textPrimary">
-                            1,000 CGLD
+                            1,000 CELO
                         </Typography>
                     </Grid>
 
@@ -185,7 +185,7 @@ const GroupMember = () => {
                     </Grid>
                     <Grid item xs={6} >
                         <Typography variant="body2" align="right" >
-                            0.987CGLD
+                            0.987CELO
             </Typography>
                     </Grid>
 

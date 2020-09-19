@@ -106,12 +106,12 @@ const Overview = () => {
 
                     <Grid item xs={6} className={classes.item}>
                         <Typography variant="body2" >
-                            Locked cGLD
+                            Locked CELO
             </Typography>
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
                         <Typography variant="body2" align="right" >
-                            2,000 CGLD
+                            2,000 CELO
                             {/* {data.block &&
               data.block.transactions &&
               data.block.transactions.transactionIndex
