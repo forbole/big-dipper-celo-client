@@ -272,9 +272,9 @@ const TokenPrice = () => {
                                 <XAxis dataKey="time" tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
                                 <YAxis yAxisId="left" tickSize={0} tickMargin={10} tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
                                 <YAxis yAxisId="right" orientation="right" tickSize={0} tickMargin={10} tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
-                                <Tooltip cursor={false} />
-                                <Line yAxisId="left" type="monotone" dataKey="price" stroke="rgba(102, 227, 157, 1)" activeDot={{ r: 1 }} strokeWidth={1} />
-                                <Line yAxisId="right" type="monotone" dataKey="uv" stroke="rgba(255, 177, 52, 1)" activeDot={{ stroke: 'rgba(250, 123, 108, 1)', r: 0 }} strokeWidth={2} />
+                                <Tooltip />
+                                <Line yAxisId="left" type="monotone" dataKey="price" stroke="rgba(102, 227, 157, 1)" activeDot={{ stroke: "rgba(102, 128, 113, 1)", r: 3 }} strokeWidth={2} dot={false} />
+                                <Line yAxisId="right" type="monotone" dataKey="uv" stroke="rgba(255, 177, 52, 1)" activeDot={{ stroke: 'rgba(250, 123, 108, 1)', r: 0 }} strokeWidth={2} dot={false} />
                             </LineChart>
                         </ResponsiveContainer>
                     </div>
