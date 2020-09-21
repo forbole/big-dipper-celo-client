@@ -17,22 +17,22 @@ import Grid from '@material-ui/core/Grid';
 const dataY = [{ value: 2000000 }, { value: 4000000 }, { value: 6000000 }, { value: 80000000 }, { value: 6000000 }, { value: 120000000 }];
 const data = [
   {
-    name: 'Apr 10', cGLD: 2500000,
+    name: 'Apr 10', CELO: 2500000,
   },
   {
-    name: 'Apr 11', cGLD: 6000000,
+    name: 'Apr 11', CELO: 6000000,
   },
   {
-    name: 'Apr 12', cGLD: 5400000,
+    name: 'Apr 12', CELO: 5400000,
   },
   {
-    name: 'Apr 13', cGLD: 4000000,
+    name: 'Apr 13', CELO: 4000000,
   },
   {
-    name: 'Apr 14', cGLD: 6200000,
+    name: 'Apr 14', CELO: 6200000,
   },
   {
-    name: 'Apr 15', cGLD: 7800000,
+    name: 'Apr 15', CELO: 7800000,
   },
 ];
 
@@ -83,8 +83,8 @@ const CoinBalanceHistory = () => {
                 <XAxis dataKey="name" tick={{ stroke: "rgba(255, 255, 255, 0.6)", fontSize: 10, fontWeight: 150 }} />
                 <YAxis tickSize={0} tickMargin={10} tick={{ stroke: "rgba(255, 255, 255, 0.6)", fontSize: 10, fontWeight: 150 }} />
                 <Tooltip />
-                {/* <Area type="monotone" dataKey="cGLD" stroke="#8884d8" fill="rgba(58, 211, 158, 0.15)" fillOpacity={1} /> */}
-                <Area type={cardinal} dataKey="cGLD" stroke="rgba(8, 178, 122, 1)" fill="rgba(58, 211, 158, 0.15)" fillOpacity={1} />
+                {/* <Area type="monotone" dataKey="CELO" stroke="#8884d8" fill="rgba(58, 211, 158, 0.15)" fillOpacity={1} /> */}
+                <Area type={cardinal} dataKey="CELO" stroke="rgba(58, 211, 158, 1)" fill="rgba(58, 211, 158, 0.15)" fillOpacity={1} />
               </AreaChart>
             </ResponsiveContainer>
             {/* </div> */}

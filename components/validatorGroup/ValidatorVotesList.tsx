@@ -23,7 +23,7 @@ import Box from '@material-ui/core/Box';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 interface Column {
-  id: "dropdown" | "groupName" | "votesAvailable" | "electedTotal" | "lockedcGLD" | "groupShare" | "voterRewards" | "uptime" | "attestation";
+  id: "dropdown" | "groupName" | "votesAvailable" | "electedTotal" | "lockedCELO" | "groupShare" | "voterRewards" | "uptime" | "attestation";
   label: string;
   align: 'left' | 'right';
 }
@@ -33,7 +33,7 @@ const columns: Column[] = [
   { id: "groupName", label: "Group Name", align: "left" },
   { id: "votesAvailable", label: "Votes Available", align: "left" },
   { id: "electedTotal", label: "Elected/Total", align: "left" },
-  { id: "lockedcGLD", label: "Locked cGLD", align: "right" },
+  { id: "lockedCELO", label: "Locked CELO", align: "right" },
   { id: "groupShare", label: "Group Share", align: "right" },
   { id: "voterRewards", label: "Voter Rewards", align: "right" },
   { id: "uptime", label: "Uptime", align: "right" },
@@ -41,17 +41,17 @@ const columns: Column[] = [
 ];
 
 
-function createData(dropdown: string, groupName: string, votesAvailable: string, electedTotal: string, lockedcGLD: string, groupShare: string, voterRewards: string, uptime: string, attestation: string) {
-  return { dropdown, groupName, votesAvailable, electedTotal, lockedcGLD, groupShare, voterRewards, uptime, attestation };
+function createData(dropdown: string, groupName: string, votesAvailable: string, electedTotal: string, lockedCELO: string, groupShare: string, voterRewards: string, uptime: string, attestation: string) {
+  return { dropdown, groupName, votesAvailable, electedTotal, lockedCELO, groupShare, voterRewards, uptime, attestation };
 }
 
 const rows = [
-  createData("", "Michelle Clark", "0.9% 38.8% of 2.4%", " 1 | 2", "2000", "10%", "999.89CGLD", "99.9%", "10.9%"),
-  createData("", "Rachel Hugh", "0.9% 38.8% of 2.4%", "2 | 3", "31232", "12%", "999.89CGLD", "99.9%", "10.9%"),
-  createData("", "Natasha", "0.9% 38.8% of 2.4%", "1 | 2", "243244", "12%", "999.89CGLD", "99.9%", "10.9%"),
-  createData("", "Rith Jackson", "0.9% 38.8% of 2.4%", "0 | 2", "234217", "21%", "999.89CGLD", "99.9%", "10.9%"),
-  createData("", "Kelly Mendex", "65894856 cGLD", "0 | 2", "12378421", "23%", "999.89CGLD", "99.9%", "10.9%"),
-  createData("", "Marilym Ford", "2478 cGLD", "0 | 2", "237243", "22%", "999.89CGLD", "99.9%", "10.9%"),
+  createData("", "Michelle Clark", "0.9% 38.8% of 2.4%", " 1 | 2", "2000", "10%", "999.89CELO", "99.9%", "10.9%"),
+  createData("", "Rachel Hugh", "0.9% 38.8% of 2.4%", "2 | 3", "31232", "12%", "999.89CELO", "99.9%", "10.9%"),
+  createData("", "Natasha", "0.9% 38.8% of 2.4%", "1 | 2", "243244", "12%", "999.89CELO", "99.9%", "10.9%"),
+  createData("", "Rith Jackson", "0.9% 38.8% of 2.4%", "0 | 2", "234217", "21%", "999.89CELO", "99.9%", "10.9%"),
+  createData("", "Kelly Mendex", "65894856 CELO", "0 | 2", "12378421", "23%", "999.89CELO", "99.9%", "10.9%"),
+  createData("", "Marilym Ford", "2478 CELO", "0 | 2", "237243", "22%", "999.89CELO", "99.9%", "10.9%"),
 ];
 
 const useStyles = makeStyles(() => {
@@ -247,7 +247,7 @@ const ValidatorVotesList = () => {
                       className={classes.tableCell}
                     >
                       <Typography variant="body2" noWrap>
-                        {row.lockedcGLD}
+                        {row.lockedCELO}
                       </Typography>
                     </TableCell>
                     <TableCell

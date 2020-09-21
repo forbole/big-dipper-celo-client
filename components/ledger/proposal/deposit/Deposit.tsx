@@ -137,7 +137,7 @@ const DepositDropdown = () => {
                     </InputLabel>
                     <OutlinedInput
                         id="id-deposit-dialog"
-                    // endAdornment={<InputAdornment position="end">cGLD</InputAdornment>}
+                    // endAdornment={<InputAdornment position="end">CELO</InputAdornment>}
                     />
                 </FormControl>
             </div>

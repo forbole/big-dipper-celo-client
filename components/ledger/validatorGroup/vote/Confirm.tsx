@@ -111,7 +111,7 @@ const Confirm = () => {
 
                             <Grid item xs={12}>
                                 <Typography color="textPrimary" variant="body2" gutterBottom align="left">
-                                    You’re going to vote 1 Locked CGLD to Nan Valdez Group, if that’s correct, please sign in your ledger device.            </Typography>
+                                    You’re going to vote 1 Locked CELO to Nan Valdez Group, if that’s correct, please sign in your ledger device.            </Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Divider variant="middle" className={classes.divider} />
@@ -157,7 +157,7 @@ const Confirm = () => {
                             </Grid>
                             <Grid item xs={6} className={classes.item}>
                                 <Typography variant="body2" color="textPrimary" align="right" gutterBottom>
-                                    1 Locked CGLD
+                                    1 Locked CELO
                 {/* {data.block && data.block.size
                 ? data.block.size
                 : <NotAvailable variant="body2" />} */}

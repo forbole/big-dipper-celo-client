@@ -115,7 +115,7 @@ const UnlockGoldConfirm = () => {
                         <Grid container className={classes.dialogContent}>
                             <Grid item xs={12}>
                                 <Typography variant="body2" noWrap={false} color="textPrimary" gutterBottom>
-                                    You are going to unlock {"2"} cGLD, it that's correct, please
+                                    You are going to unlock {"2"} CELO, it that's correct, please
                   sign in your ledger device.
                 </Typography>
                             </Grid>
@@ -169,7 +169,7 @@ const UnlockGoldConfirm = () => {
                                         align="right"
                                         color="textPrimary"
                                     >
-                                        {"2"} cGLD
+                                        {"2"} CELO
                   </Typography>
                                 </Grid>
                             </Grid>
@@ -196,7 +196,7 @@ const UnlockGoldConfirm = () => {
                                         align="right"
                                         color="textPrimary"
                                     >
-                                        {"0.00001"} cGLD
+                                        {"0.00001"} CELO
                   </Typography>
                                 </Grid>
                             </Grid>

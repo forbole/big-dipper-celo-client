@@ -100,7 +100,7 @@ const UnlockGoldDialog = () => {
             </InputLabel>
             <OutlinedInput
                 id="unlock-gold-dialog"
-                endAdornment={<InputAdornment position="end">cGLD</InputAdornment>}
+                endAdornment={<InputAdornment position="end">CELO</InputAdornment>}
                 labelWidth={295}
             />
         </FormControl>
@@ -208,7 +208,7 @@ const UnlockGold = () => {
                                     noWrap
                                     className={classes.alignRight}
                                 >
-                                    Max {"14.99217479 cGLD"}
+                                    Max {"14.99217479 CELO"}
                                 </Typography>
                             </Grid>
 

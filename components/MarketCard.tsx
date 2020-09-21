@@ -28,7 +28,7 @@ const MarketCard = () => {
       <Grid container spacing={1}>
         <Grid item xs={6}  >
           <Typography align="left" variant="body1">
-            cGLD Price
+            CELO Price
           </Typography>
         </Grid>
         <Grid item xs={6}  >

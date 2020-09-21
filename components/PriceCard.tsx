@@ -50,7 +50,7 @@ const PriceCard = ({ size }: PriceCardProps) => {
           <Grid container>
             <Grid item md={5}>
               <Typography align="left" variant="body2">
-                cGLD Price
+                CELO Price
               </Typography>
             </Grid>
             <Grid item md={5}>
@@ -86,7 +86,7 @@ const PriceCard = ({ size }: PriceCardProps) => {
           <Grid container>
             <Grid item xs={5}>
               <Typography align="left" variant="body1">
-                cGLD Price
+                CELO Price
               </Typography>
             </Grid>
             <Grid item xs={6}>
