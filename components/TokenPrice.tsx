@@ -1,37 +1,29 @@
 
-import React, { useEffect, Fragment, useState } from "react";
+import React, { useState } from "react";
 import { makeStyles, withStyles, createStyles, Theme } from "@material-ui/core/styles";
-
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import { Divider } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import moment from "moment";
 import Hidden from "@material-ui/core/Hidden";
 import { useQuery } from "@apollo/client";
-import TablePagination from "@material-ui/core/TablePagination";
 import numbro from "numbro";
-import { useRouter } from "next/router";
-import MiddleEllipsis from './misc/MiddleEllipsis'
-import ComponentLoader from './misc/ComponentLoader';
-import ErrorMessage from './misc/ErrorMessage';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
-import getConfig from 'next/config'
-import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
-} from 'recharts';
-import Card from "@material-ui/core/Card";
-import { GET_COIN_HISTORY_BY_NUM_OF_DAYS } from './query/Coin'
-import { GET_CHAIN } from './query/Chain'
-import NotAvailable from './misc/NotAvailable'
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
-    KeyboardTimePicker,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
+import BigNumber from 'bignumber.js'
+import ComponentLoader from './misc/ComponentLoader';
+import ErrorMessage from './misc/ErrorMessage';
+import { useTheme } from '@material-ui/core/styles';
+import {
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+} from 'recharts';
+import Card from "@material-ui/core/Card";
+import { GET_COIN_HISTORY_BY_DATES } from './query/Coin'
+import { GET_CHAIN } from './query/Chain'
+import NotAvailable from './misc/NotAvailable'
 
 
 
@@ -123,93 +115,133 @@ const StyledDatePicker = withStyles({
             position: "absolute",
             marginLeft: "5.5rem"
         },
+        "& .MuiFormLabel-root": {
+            transform: "translate(0, -1px) scale(1)",
+            marginBottom: "0.5rem",
+            position: "absolute"
+        },
+
+        "& .MuiInputBase-root": {
+            marginTop: "1.3rem",
+            position: "relative"
+        },
+
+        "& .MuiFormLabel-asterisk": {
+            display: "none"
+        }
     }
 
 })(KeyboardDatePicker);
 
 
-function SelectDate() {
-    const classes = useStyles();
-    const [selectedFromDate, setSelectedFromDate] = React.useState<Date | null>(
-        new Date('2014-08-18T21:11:54'),
-    );
 
-    const [selectedToDate, setSelectedToDate] = React.useState<Date | null>(
-        new Date('2014-08-19T21:11:54'),
-    );
-    const handleDateFromChange = (date: Date | null) => {
-        setSelectedFromDate(date);
-    };
-    const handleDateToChange = (date: Date | null) => {
-        setSelectedToDate(date);
-    };
+function formatDate(date: any) {
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate()
 
-    console.log(selectedFromDate)
+    if (month < 10)
+        month = '0' + month;
+    if (day < 10)
+        day = '0' + day;
 
-    return (
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container className={classes.dateSelection}>
-                <Grid item xs={6}>
-                    <StyledDatePicker
-                        disableToolbar
-                        variant="inline"
-                        format="MM/dd/yyyy"
-                        margin="none"
-                        id="date-picker-from"
-                        label="Date from"
-                        value={selectedFromDate}
-                        onChange={handleDateFromChange}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
-                        className={classes.selectDateFrom}
-
-                    />
-                </Grid>
-
-                <Grid item xs={6}>
-                    <StyledDatePicker
-                        disableToolbar
-                        variant="inline"
-                        format="MM/dd/yyyy"
-                        margin="none"
-                        id="date-picker-to"
-                        label="Date to"
-                        value={selectedToDate}
-                        onChange={handleDateToChange}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
-                        className={classes.selectDateTo}
-                    />
-                </Grid>
-            </Grid>
-        </MuiPickersUtilsProvider>
-    );
+    return [day, month, year].join('-');
 }
-
-type TokenPriceProps = { pagination?: boolean, displayCard?: boolean };
-
 
 const TokenPrice = () => {
     const classes = useStyles();
-    const theme = useTheme();
-    const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
-    const days = 1;
 
-    const { loading, error, data } = useQuery(GET_COIN_HISTORY_BY_NUM_OF_DAYS, {
-        variables: { days },
+    let currentDay = new Date();
+    let weekBefore = currentDay.setDate(currentDay.getDate() - 7) //returns unix timestamp
+    let oneWeekBefore = new Date(weekBefore) //parse unix timestamp to Date
+
+    //set line chart to display past 7 days by default
+    const [dateFrom, setDateFrom] = React.useState<Date | String | null>(
+        formatDate(oneWeekBefore)
+    );
+
+    const [dateTo, setDateTo] = React.useState<Date | String | null>(
+        formatDate(new Date())
+    );
+
+    const handleDateFromChange = (date: Date | String | null) => {
+        let formatDateFrom = formatDate(date)
+        setDateFrom(formatDateFrom)
+    };
+
+    const handleDateToChange = (date: Date | String | null) => {
+        let formatDateTo = formatDate(date)
+        setDateTo(formatDateTo)
+    };
+
+    const SelectDate = () => {
+        return (
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container className={classes.dateSelection}>
+                    <Grid item xs={6}>
+                        <StyledDatePicker
+                            disableToolbar
+                            disableFuture
+                            variant="inline"
+                            format="MM/dd/yyyy"
+                            margin="none"
+                            id="date-picker-from"
+                            label={<Typography variant="body2">Date from</Typography>}
+                            value={dateFrom}
+                            onChange={handleDateFromChange}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                            }}
+                            className={classes.selectDateFrom}
+                            autoOk={true}
+                            helperText=''
+                            error={false}
+                            required
+                        // mask="dd-MM-YYYY"
+                        />
+                    </Grid>
+
+                    <Grid item xs={6}>
+                        <StyledDatePicker
+                            disableToolbar
+                            disableFuture
+                            variant="inline"
+                            format="MM/dd/yyyy"
+                            margin="none"
+                            id="date-picker-to"
+                            label={<Typography variant="body2">Date to</Typography>}
+                            value={dateTo}
+                            onChange={handleDateToChange}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                            }}
+                            className={classes.selectDateTo}
+                            autoOk={true}
+                            helperText=''
+                            error={false}
+                            required
+                            inputValue=''
+                        // mask="dd-MM-YYYY"
+                        />
+                    </Grid>
+                </Grid>
+            </MuiPickersUtilsProvider>
+        )
+    }
+
+
+    const coinHistoryByDates = useQuery(GET_COIN_HISTORY_BY_DATES, {
+        variables: { dateFrom, dateTo },
         pollInterval: 5000,
     });
-
 
     const chainData = useQuery(GET_CHAIN, {
         pollInterval: 5000,
     });
 
 
-    if (loading) return <ComponentLoader />
-    if (error) return <ErrorMessage message={error.message} />
+    if (coinHistoryByDates.loading || chainData.loading) return <ComponentLoader />
+    if (coinHistoryByDates.error || chainData.error) return <ErrorMessage message={coinHistoryByDates.error.message || chainData.error.message} />
 
     return (<>
         <Grid container spacing={1}>
@@ -219,7 +251,7 @@ const TokenPrice = () => {
                         Token Price
                     </Typography>
                     <Grid container spacing={2}>
-                        <Grid item xs={6} md={3} className={classes.priceCardsProps}>
+                        <Grid item xs={6} md={2} className={classes.priceCardsProps}>
                             <Card className={classes.priceCard} elevation={0}>
                                 <Typography variant="body2" className={classes.label} color="textSecondary" noWrap>
                                     Price
@@ -231,19 +263,19 @@ const TokenPrice = () => {
                             </Card>
 
                         </Grid>
-                        <Grid item xs={6} md={3} className={classes.priceCardsProps}>
+                        <Grid item xs={6} md={4} className={classes.priceCardsProps}>
                             <Card className={classes.marketCard} elevation={0}>
                                 <Typography variant="body2" className={classes.label} color="textSecondary" noWrap>
                                     Market Cap
                              </Typography>
-                                {chainData.data && chainData.data.chain && chainData.data.chain.tokenPrice && chainData.data.chain.tokenPrice.usdMarketCap >= 0 ?
+                                {chainData.data && chainData.data.chain && chainData.data.chain.celoTotalSupply && chainData.data.chain.tokenPrice && chainData.data.chain.tokenPrice.usd >= 0 ?
                                     <Typography variant="body1" className={classes.value} color="textPrimary" noWrap>
-                                        $ {numbro(chainData.data.chain.tokenPrice.usdMarketCap).format("0.00")}
+                                        $ {(new BigNumber((chainData.data.chain.tokenPrice.usd * chainData.data.chain.celoTotalSupply) / process.env.CELO).toFormat(2))}
                                     </Typography> : <NotAvailable variant="body2" />}
                             </Card>
                         </Grid>
-                        <Hidden mdDown>
-                            <Grid item xs={12} lg={5}>
+                        <Hidden smDown>
+                            <Grid item md={6}>
                                 <SelectDate />
                             </Grid>
                         </Hidden>
@@ -263,18 +295,19 @@ const TokenPrice = () => {
                             <LineChart
                                 width={500}
                                 height={250}
-                                data={data.coinHistoryByNumOfDays.prices}
+                                data={coinHistoryByDates.data && coinHistoryByDates.data.coinHistoryByDates && coinHistoryByDates.data.coinHistoryByDates.prices ?
+                                    coinHistoryByDates.data.coinHistoryByDates.prices : null}
                                 margin={{
                                     top: 20, right: 0, left: 0, bottom: 0,
                                 }}
                             >
                                 <CartesianGrid strokeDasharray="3 3" strokeWidth={1} opacity={0.3} />
-                                <XAxis dataKey="time" tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
+                                <XAxis dataKey="Time" tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
                                 <YAxis yAxisId="left" tickSize={0} tickMargin={10} tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
                                 <YAxis yAxisId="right" orientation="right" tickSize={0} tickMargin={10} tick={{ stroke: "rgba(119, 119, 119, 1)", fontSize: 10, fontWeight: 150 }} />
                                 <Tooltip />
-                                <Line yAxisId="left" type="monotone" dataKey="price" stroke="rgba(102, 227, 157, 1)" activeDot={{ stroke: "rgba(102, 128, 113, 1)", r: 3 }} strokeWidth={2} dot={false} />
-                                <Line yAxisId="right" type="monotone" dataKey="uv" stroke="rgba(255, 177, 52, 1)" activeDot={{ stroke: 'rgba(250, 123, 108, 1)', r: 0 }} strokeWidth={2} dot={false} />
+                                <Line yAxisId="left" type="monotone" dataKey="CELO" stroke="rgba(102, 227, 157, 1)" activeDot={{ stroke: "rgba(102, 128, 113, 1)", r: 3 }} strokeWidth={2} dot={false} />
+                                <Line yAxisId="right" type="monotone" dataKey="Market_Cap" stroke="rgba(255, 177, 52, 1)" activeDot={{ stroke: 'rgba(250, 123, 108, 1)', r: 0 }} strokeWidth={2} dot={false} />
                             </LineChart>
                         </ResponsiveContainer>
                     </div>
