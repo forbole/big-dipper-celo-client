@@ -7,7 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import gql from "@apollo/client";
 import { useQuery } from "@apollo/client";
 import * as numbro from "numbro";
-import PriceCard from "../PriceCard";
 import Chips from "../../components/Chips";
 import Link from "../../components/Link";
 

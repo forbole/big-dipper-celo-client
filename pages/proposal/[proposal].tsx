@@ -3,7 +3,7 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import ProposalDetails from "../../components/proposal/ProposalDetails";
 import { useRouter } from "next/router";
-import MarketCard from "../../components/MarketCard";
+import PriceCard from "../../components/PriceCard";
 import DepositList from "../../components/proposal/DepositList";
 import ProposalVotingList from "../../components/proposal/ProposalVotingList"
 
@@ -25,7 +25,7 @@ export default function Proposal() {
   return (
         <Grid container spacing={2} className={classes.root}>
         <Grid item xs={12} >
-          <MarketCard />
+        <PriceCard />
         </Grid>
         <Grid item xs={12} >
           <ProposalDetails />

@@ -6,12 +6,16 @@ import { makeStyles, useTheme, Theme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import cx from "clsx";
 import Card from "@material-ui/core/Card";
+import { GET_CHAIN } from "./query/Chain";
+import { useQuery } from "@apollo/client";
+import NotAvailable from './misc/NotAvailable';
+import numbro from "numbro";
+import ComponentLoader from './misc/ComponentLoader';
+import ErrorMessage from './misc/ErrorMessage';
+import BigNumber from 'bignumber.js'
 
 const useStyles = makeStyles(({ spacing }) => {
   return {
-    inline: {
-      //marginRight: '0rem',
-    },
     smallCard: {
       display: "flex",
       padding: "0.5rem",
@@ -38,78 +42,45 @@ const useStyles = makeStyles(({ spacing }) => {
   };
 });
 
-type PriceCardProps = { size?: string };
 
-
-const PriceCard = ({ size }: PriceCardProps) => {
+const PriceCard = () => {
   const classes = useStyles();
-  switch (size) {
-    case "small":
-      return (
-        <Card className={cx(classes.smallCard)} elevation={0}>
-          <Grid container>
-            <Grid item md={5}>
-              <Typography align="left" variant="body2">
-                CELO Price
-              </Typography>
-            </Grid>
-            <Grid item md={5}>
-              <Typography
-                align="right"
-                variant="body2"
-                className={classes.price}
-              >
-                $2.8
-              </Typography>
-            </Grid>
-            <Grid item md={5} className={classes.inline}>
-              <Typography align="left" variant="body2">
-                Market Cap
-              </Typography>
-            </Grid>
-            <Grid item md={5}>
-              <Typography
-                align="right"
-                variant="body2"
-                className={classes.price}
-              >
-                $10,413,896
-              </Typography>
-            </Grid>
-          </Grid>
-        </Card>
-      );
 
-    case "large":
-      return (
-        <Card className={cx(classes.largeCard)} elevation={0}>
-          <Grid container>
-            <Grid item xs={5}>
-              <Typography align="left" variant="body1">
-                CELO Price
+  const chainData = useQuery(GET_CHAIN, {
+    pollInterval: 5000,
+  });
+
+  if (chainData.loading) return <ComponentLoader />
+  if (chainData.error) return <ErrorMessage message={chainData.error.message} />
+
+  return (
+    <Card className={cx(classes.largeCard)} elevation={0}>
+      <Grid container>
+        <Grid item xs={5}>
+          <Typography align="left" variant="body1">
+            CELO Price
               </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography align="right" className={classes.setFontSize}>
-                $2.8
+        </Grid>
+        <Grid item xs={6}>
+          {chainData.data && chainData.data.chain && chainData.data.chain.tokenPrice && chainData.data.chain.tokenPrice.usd >= 0 ?
+            <Typography align="right" className={classes.setFontSize}>
+              $ {numbro(chainData.data.chain.tokenPrice.usd).format("0.00")}
+            </Typography> : <NotAvailable variant="body2" />}
+        </Grid>
+        <Grid item xs={5} >
+          <Typography align="left" variant="body1">
+            Market Cap
               </Typography>
-            </Grid>
-            <Grid item xs={5} className={classes.inline}>
-              <Typography align="left" variant="body1">
-                Market Cap
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography align="right" className={classes.setFontSize}>
-                $10,413,896
-              </Typography>
-            </Grid>
-          </Grid>
-        </Card>
-      );
-    default:
-      return null;
-  }
+        </Grid>
+        <Grid item xs={6}>
+          {chainData.data && chainData.data.chain && chainData.data.chain.celoTotalSupply && chainData.data.chain.tokenPrice && chainData.data.chain.tokenPrice.usd >= 0 ?
+            <Typography align="right" className={classes.setFontSize}>
+              $ {(new BigNumber((chainData.data.chain.tokenPrice.usd * chainData.data.chain.celoTotalSupply) / process.env.CELO).toFormat(2))}
+            </Typography> : <NotAvailable variant="body2" />}
+        </Grid>
+      </Grid>
+    </Card>
+  );
 }
 
 export default PriceCard

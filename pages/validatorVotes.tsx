@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { useRouter } from "next/router";
-import MarketCard from "../components/MarketCard";
+import PriceCard from "../components/PriceCard";
 import ValidatorVotesList from "../components/validatorGroup/ValidatorVotesList"
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -23,7 +23,7 @@ export default function ValidatorVotes() {
     return (
             <Grid container spacing={2} className={classes.root}>
                 <Grid item xs={12} >
-                    <MarketCard />
+                <PriceCard />
                 </Grid>
                 <Grid item xs={12} >
                     <ValidatorVotesList />
