@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { Divider } from "@material-ui/core";
@@ -20,86 +20,103 @@ import { GET_BLOCK } from './query/Block'
 import { GET_EPOCH } from "./query/Epoch"
 import EpochCountdown from "./EpochCountdown"
 
-const useStyles = makeStyles({
-    root: {
-        width: "100%",
-        height: "100%",
-        padding: "1.5%",
-        borderRadius: 4,
-        overflow: "hidden",
-    },
-    box: {
-        letterSpacing: "1px",
-        padding: "0.8rem",
-        display: "block",
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-    },
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            width: "100%",
+            height: "100%",
+            padding: "1.5%",
+            borderRadius: 4,
+            overflow: "hidden",
+            // display: "flex"
 
-    divider: {
-        width: "4rem",
-        backgroundColor: "rgba(232, 232, 232, 1)",
-        fontWeight: 600,
-    },
+        },
+        box: {
+            letterSpacing: "1px",
+            padding: "0.8rem",
+            display: "block",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+        },
 
-    menu: {
-        height: '100%'
-    },
+        divider: {
+            width: "4rem",
+            backgroundColor: "rgba(232, 232, 232, 1)",
+            fontWeight: 600,
+        },
 
-    epochNumber: {
-        display: "block",
-        marginTop: "-19rem",
-        paddingLeft: "3.2rem",
-        fontWeight: 400,
-        position: "absolute",
-        textAlign: "center",
-    },
+        menu: {
+            height: '100%',
+            width: "100%",
+            display: "inline-flex"
+        },
 
-    currentEpochText: {
-        fontWeight: 400,
-        color: "rgba(28, 134, 252, 1)",
-        fontSize: "1.5rem"
-    },
-    epochData: {
-        display: "inline-block",
-        marginTop: "-19.5rem",
-        marginLeft: "12.5rem",
-        position: "absolute",
-    },
+        epochNumber: {
+            display: "block",
+            marginTop: "-19rem",
+            paddingLeft: "3.2rem",
+            fontWeight: 400,
+            position: "absolute",
+            textAlign: "center",
+        },
 
-    blockProposer: {
-        marginTop: "-7rem",
-        marginLeft: "1rem",
-        display: "flex",
-    },
+        currentEpochText: {
+            fontWeight: 400,
+            color: "rgba(28, 134, 252, 1)",
+            fontSize: "1.5rem"
+        },
+        epochData: {
+            display: "inline-block",
+            marginTop: "-19.5rem",
 
-    blockProposerAddress: {
-        paddingLeft: "3.5rem",
-        paddingRight: "1.5rem",
-        wordBreak: "break-word",
-        wordWrap: "break-word",
+            [theme.breakpoints.down('lg')]: {
+                float: "left",
+                paddingLeft: "14rem",
+            },
+            [theme.breakpoints.up('lg')]: {
+                float: "right",
+                paddingRight: "2rem",
+                paddingLeft: "11rem"
+            },
 
-        display: "flex",
-        textAlign: "left",
+        },
 
-    },
+        blockProposer: {
+            marginTop: "-7rem",
+            marginLeft: "1rem",
+            display: "flex",
+        },
 
-    blockProposerName: {
-        paddingLeft: "3.5rem",
-        paddingRight: "1.5rem",
-        marginTop: "0.5rem",
-        wordBreak: "break-word",
-        display: "flex",
-        textAlign: "left",
-    },
+        blockProposerAddress: {
+            paddingLeft: "3.5rem",
+            paddingRight: "1.5rem",
+            wordBreak: "break-word",
+            wordWrap: "break-word",
 
-    roundIcon: {
-        marginTop: "-0.25rem",
-        border: "solid 2px rgba(8, 178, 122, 1)",
-        borderRadius: 50,
-        position: "absolute",
-    }
-});
+            display: "flex",
+            textAlign: "left",
+
+        },
+
+        blockProposerName: {
+            paddingLeft: "3.5rem",
+            paddingRight: "1.5rem",
+            marginTop: "0.5rem",
+            wordBreak: "break-word",
+            display: "flex",
+            textAlign: "left",
+        },
+
+        roundIcon: {
+            marginTop: "-0.25rem",
+            border: "solid 2px rgba(8, 178, 122, 1)",
+            borderRadius: 50,
+            position: "absolute",
+        },
+
+
+    }),
+);
 
 
 
@@ -124,12 +141,9 @@ const Epoch = () => {
     });
 
 
-    useEffect(() => {
-
-    });
 
     if (blockProposer.loading || loading) return <ComponentLoader />
-    if (blockProposer.error || error) return <ErrorMessage message={blockProposer.error.message || error.message} />
+    if (blockProposer.error || error) return <ErrorMessage message={blockProposer.error && blockProposer.error.message ? (blockProposer.error.message || error.message) : null} />
 
     let chartData = [
         { name: 'Epoch Remaining', value: ((((data.epoch.lastBlockNumberForEpoch) - (blockProposer.data.blocks.blocks[0].number)) / data.epoch.epochSize) * 100), fill: "rgba(246, 247, 249, 1)" },
@@ -144,44 +158,40 @@ const Epoch = () => {
                     <Typography variant="body1" className={classes.box}>
                         Epoch
                     </Typography>
-                    <Grid item xs={6}>
-                        <div style={{ width: '100%', height: 357 }}>
-                            <ResponsiveContainer>
-                                <PieChart>
-                                    <Pie
-                                        data={chartData}
-                                        cx={95}
-                                        cy={80}
-                                        innerRadius={60}
-                                        outerRadius={70}
-                                        startAngle={90}
-                                        endAngle={-270}
-                                        strokeWidth={0}
-                                        paddingAngle={2}
-                                        dataKey="value"
-                                    />
+                    <Grid item xs={12} style={{ width: "100%", height: 357 }}>
+                        <ResponsiveContainer >
+                            <PieChart>
+                                <Pie
+                                    data={chartData}
+                                    cx={95}
+                                    cy={80}
+                                    innerRadius={60}
+                                    outerRadius={70}
+                                    startAngle={90}
+                                    endAngle={-270}
+                                    strokeWidth={0}
+                                    paddingAngle={2}
+                                    dataKey="value"
+                                />
 
-                                    {
-                                        chartData.map((entry: any, index: number) => <Cell key={`cell-${index}`} fill={entry.fill} />)
-                                    }
-                                    <Tooltip />
+                                {
+                                    chartData.map((entry: any, index: number) => <Cell key={`cell-${index}`} fill={entry.fill} />)
+                                }
+                                <Tooltip />
+                            </PieChart>
 
-
-                                </PieChart>
-
-                            </ResponsiveContainer>
-                        </div>
+                        </ResponsiveContainer>
                     </Grid>
 
-                    <Grid item xs={6} className={classes.epochData} >
+                    <Grid item xs={12} className={classes.epochData} >
                         {data.epoch && data.epoch.epochNumber ?
-                            <Typography variant="body1" noWrap >
+                            <Typography variant="body1"  >
                                 <span className={classes.currentEpochText}>{data.epoch.epochNumber}</span> th Epoch
                         </Typography> : null}
-                        <Typography variant="body1" gutterBottom noWrap>
+                        <Typography variant="body1" gutterBottom >
                             <EpochCountdown />
                         </Typography>
-                        <Typography variant="body2" noWrap>
+                        <Typography variant="body2" >
                             until Epoch Ends
                         </Typography>
                     </Grid>
@@ -189,7 +199,8 @@ const Epoch = () => {
                     <Grid item xs={5} className={classes.epochNumber}>
                         {blockProposer.data.blocks && blockProposer.data.blocks.blocks[0] && blockProposer.data.blocks.blocks[0].number && data.epoch && data.epoch.firstBlockNumberForEpoch ?
                             < Typography variant="body1" noWrap>
-                                {(blockProposer.data.blocks.blocks[0].number) - (data.epoch.firstBlockNumberForEpoch)}
+                                {(blockProposer.data.blocks.blocks[0].number) - (data.epoch.firstBlockNumberForEpoch) > 0 ?
+                                    (blockProposer.data.blocks.blocks[0].number) - (data.epoch.firstBlockNumberForEpoch) : 0}
                             </Typography> : null}
                         <Divider variant="middle" className={classes.divider} />
                         {data.epoch && data.epoch.epochSize ?
