@@ -9,9 +9,10 @@ import numbro from "numbro";
 import ComponentLoader from './misc/ComponentLoader';
 import NotAvailable from './misc/NotAvailable'
 import ErrorMessage from './misc/ErrorMessage';
-
 import { GET_CHAIN } from './query/Chain'
-
+import BigNumber from 'bignumber.js'
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   root: {
@@ -86,7 +87,7 @@ const useStyles = makeStyles({
   dollarValue: {
     color: "rgba(255, 255, 255, 1)",
     fontWeight: 300,
-    display: "inline-block",
+    display: "inline-flex",
 
   }
 
@@ -95,6 +96,8 @@ const useStyles = makeStyles({
 
 const ChartData = () => {
   const classes = useStyles();
+  const theme = useTheme();
+  const largeScreen = useMediaQuery(theme.breakpoints.up('lg'));
 
   const { loading, error, data } = useQuery(GET_CHAIN, {
     pollInterval: 5000,
@@ -102,7 +105,6 @@ const ChartData = () => {
 
   if (loading) return <ComponentLoader size="small" />
   if (error) return <ErrorMessage message={error.message} />
-
 
   return (
     <>
@@ -116,7 +118,10 @@ const ChartData = () => {
             </Typography>
             {data.chain && data.chain.latestHeight >= 0 ?
               <Typography variant="h4" className={classes.value}>
-                {numbro(data.chain.latestHeight).format("000,000")}
+                {largeScreen ?
+                  numbro(data.chain.latestHeight).format("000,000") :
+                  numbro(data.chain.latestHeight).format({ average: true, mantissa: 4 })
+                }
               </Typography>
               : <NotAvailable variant="body1" className={classes.value} />}
           </Card>
@@ -129,7 +134,8 @@ const ChartData = () => {
             </Typography>
             {data.chain && data.chain.txCount >= 0 ?
               <Typography variant="h4" className={classes.value}>
-                {numbro(data.chain.txCount).format("000,000")}
+                {largeScreen ? numbro(data.chain.txCount).format("000,000") :
+                  numbro(data.chain.txCount).format({ average: true, mantissa: 4 })}
               </Typography>
               : <NotAvailable variant="body1" className={classes.value} />}
           </Card>
@@ -154,10 +160,11 @@ const ChartData = () => {
             <Typography variant="body2" className={classes.label}>
               Market Cap
             </Typography>
-            {data.chain.tokenPrice && data.chain.tokenPrice.usdMarketCap >= 0 ?
+            {data.chain && data.chain.celoTotalSupply && data.chain.tokenPrice && data.chain.tokenPrice.usd >= 0 ?
               <><Typography variant="h6" className={classes.dollarSign}>$</Typography>
-                <Typography variant="h4" className={classes.dollarValue}>
-                  {numbro(data.chain.tokenPrice.usdMarketCap).format("0.00")}
+                <Typography variant="h4" className={classes.dollarValue} noWrap={false}>
+                  {largeScreen ? (new BigNumber((data.chain.tokenPrice.usd * data.chain.celoTotalSupply) / process.env.CELO).toFormat(2)) :
+                    numbro((new BigNumber((data.chain.tokenPrice.usd * data.chain.celoTotalSupply) / process.env.CELO).toFormat(2))).format({ average: true, mantissa: 4 })}
                 </Typography></>
               : <NotAvailable variant="body1" className={classes.value} />}
           </Card>
