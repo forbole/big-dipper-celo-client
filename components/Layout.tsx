@@ -149,6 +149,7 @@ const Layout = (props: { children: React.ReactNode }) => {
 					<Grid item md={4} >
 						{""}
 					</Grid>
+
 					<Hidden smDown>
 						<Grid item md={5} className={classes.searchBar}>
 							<SearchBar />
