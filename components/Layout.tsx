@@ -151,12 +151,14 @@ const Layout = (props: { children: React.ReactNode }) => {
 					<Grid item md={4} >
 						{""}
 					</Grid>
+
 					<Hidden smDown>
 						<Grid item md={5} className={classes.searchBar}>
 							<SearchBar />
 						</Grid>
 					</Hidden>
-					<Hidden smUp>
+
+					<Hidden mdUp>
 						<Grid item xs={5} className={classes.celoIcon}>
 							<IconButton
 								color="inherit"
@@ -181,7 +183,7 @@ const Layout = (props: { children: React.ReactNode }) => {
 						</IconButton>
 					</Grid>
 
-					<Hidden smUp>
+					<Hidden mdUp>
 						<Grid item xs={12} className={classes.searchBar}>
 							<SearchBar />
 						</Grid>
