@@ -5,12 +5,14 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import MiddleEllipsis from './misc/MiddleEllipsis'
+import MiddleEllipsis from './misc/MiddleEllipsis';
 import ComponentLoader from './misc/ComponentLoader';
 import ErrorMessage from './misc/ErrorMessage';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import getConfig from 'next/config'
+import getConfig from 'next/config';
+import { GET_ELECTION } from "./query/Election";
+import NotAvailable from './misc/NotAvailable';
 
 
 
@@ -60,22 +62,19 @@ const useStyles = makeStyles({
 
 
 
-type ValidatorsGroupsProps = { epochNumber: number };
 
-
-const ValidatorsGroups = ({ epochNumber }: ValidatorsGroupsProps) => {
+const ValidatorsGroups = () => {
     const classes = useStyles();
     const theme = useTheme();
     const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
 
-    // const { loading, error, data } = useQuery(GET_BLOCK, {
-    //     variables: { pageSize, page },
-    //     pollInterval: 5000,
-    // });
+    const { loading, error, data } = useQuery(GET_ELECTION, {
+        pollInterval: 5000,
+    });
 
-    // if (loading) return <ComponentLoader />
-    // if (error) return <ErrorMessage message={error.message} />
+    if (loading) return <ComponentLoader />
+    if (error) return <ErrorMessage message={error.message} />
 
     return (<>
         <Grid container spacing={2} className={classes.rootMain}>
@@ -92,9 +91,10 @@ const ValidatorsGroups = ({ epochNumber }: ValidatorsGroupsProps) => {
                                 <Typography variant="body1" className={classes.infoData} noWrap>
                                     Validators
                                 </Typography>
-                                <Typography variant="h4" noWrap >
-                                    100/155
-                                </Typography>
+                                {data.election && data.election.electedValidators && data.election.registeredValidators ?
+                                    < Typography variant="h4" noWrap >
+                                        {data.election.electedValidators} / {data.election.registeredValidators}
+                                    </Typography> : <NotAvailable variant="body2" />}
                                 <Typography variant="body2" color="textSecondary" gutterBottom noWrap>
                                     Elected / Registered
                                 </Typography>
@@ -104,9 +104,10 @@ const ValidatorsGroups = ({ epochNumber }: ValidatorsGroupsProps) => {
                                 <Typography variant="body1" className={classes.infoData} noWrap>
                                     Groups
                                 </Typography>
-                                <Typography variant="h4" noWrap >
-                                    67/68
-                                </Typography>
+                                {data.election && data.election.electedValidatorGroups && data.election.registeredValidatorGroups ?
+                                    <Typography variant="h4" noWrap >
+                                        {data.election.electedValidatorGroups} / {data.election.registeredValidatorGroups}
+                                    </Typography> : <NotAvailable variant="body2" />}
                                 <Typography variant="body2" color="textSecondary" gutterBottom className={classes.valueData} noWrap>
                                     Elected / Registered
                                 </Typography>
