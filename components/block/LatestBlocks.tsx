@@ -187,9 +187,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
     <Grid container spacing={2}>
       <Grid item xs={12}>
         {displayCard ? (
-          <Hidden smUp>
             <PriceCard />
-          </Hidden>
         ) : null}
         <Paper className={classes.root}>
           <Typography variant="body1" className={classes.box}>

@@ -13,6 +13,7 @@ import numbro from "numbro";
 import ComponentLoader from './misc/ComponentLoader';
 import ErrorMessage from './misc/ErrorMessage';
 import BigNumber from 'bignumber.js'
+import Hidden from "@material-ui/core/Hidden";
 
 const useStyles = makeStyles(({ spacing }) => {
   return {
@@ -24,9 +25,7 @@ const useStyles = makeStyles(({ spacing }) => {
       borderRadius: 4,
       width: "13rem",
     },
-    price: {
-      marginRight: "-1.7rem",
-    },
+
     largeCard: {
       display: "flex",
       padding: "1rem",
@@ -35,10 +34,7 @@ const useStyles = makeStyles(({ spacing }) => {
       borderRadius: 4,
       marginBottom: "1rem",
     },
-    setFontSize: {
-      marginRight: "-1.7rem",
-      fontSize: "1.0625rem",
-    },
+
   };
 });
 
@@ -54,32 +50,34 @@ const PriceCard = () => {
   if (chainData.error) return <ErrorMessage message={chainData.error.message} />
 
   return (
-    <Card className={cx(classes.largeCard)} elevation={0}>
-      <Grid container>
-        <Grid item xs={5}>
-          <Typography align="left" variant="body1">
-            CELO Price
+    <Hidden smUp>
+      <Card className={cx(classes.largeCard)} elevation={0}>
+        <Grid container>
+          <Grid item xs={6}>
+            <Typography align="left" variant="body1">
+              CELO Price
               </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          {chainData.data && chainData.data.chain && chainData.data.chain.tokenPrice && chainData.data.chain.tokenPrice.usd >= 0 ?
-            <Typography align="right" className={classes.setFontSize}>
-              $ {numbro(chainData.data.chain.tokenPrice.usd).format("0.00")}
-            </Typography> : <NotAvailable variant="body2" />}
-        </Grid>
-        <Grid item xs={5} >
-          <Typography align="left" variant="body1">
-            Market Cap
+          </Grid>
+          <Grid item xs={6}>
+            {chainData.data && chainData.data.chain && chainData.data.chain.tokenPrice && chainData.data.chain.tokenPrice.usd >= 0 ?
+              <Typography align="right" variant="body1">
+                $ {numbro(chainData.data.chain.tokenPrice.usd).format("0.00")}
+              </Typography> : <NotAvailable variant="body2" />}
+          </Grid>
+          <Grid item xs={6} >
+            <Typography align="left" variant="body1">
+              Market Cap
               </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            {chainData.data && chainData.data.chain && chainData.data.chain.celoTotalSupply && chainData.data.chain.tokenPrice && chainData.data.chain.tokenPrice.usd >= 0 ?
+              <Typography align="right" variant="body1">
+                $ {(new BigNumber((chainData.data.chain.tokenPrice.usd * chainData.data.chain.celoTotalSupply) / process.env.CELO).toFormat(2))}
+              </Typography> : <NotAvailable variant="body2" />}
+          </Grid>
         </Grid>
-        <Grid item xs={6}>
-          {chainData.data && chainData.data.chain && chainData.data.chain.celoTotalSupply && chainData.data.chain.tokenPrice && chainData.data.chain.tokenPrice.usd >= 0 ?
-            <Typography align="right" className={classes.setFontSize}>
-              $ {(new BigNumber((chainData.data.chain.tokenPrice.usd * chainData.data.chain.celoTotalSupply) / process.env.CELO).toFormat(2))}
-            </Typography> : <NotAvailable variant="body2" />}
-        </Grid>
-      </Grid>
-    </Card>
+      </Card>
+    </Hidden>
   );
 }
 
