@@ -5,14 +5,14 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import MiddleEllipsis from './misc/MiddleEllipsis';
-import ComponentLoader from './misc/ComponentLoader';
-import ErrorMessage from './misc/ErrorMessage';
+import MiddleEllipsis from '../misc/MiddleEllipsis';
+import ComponentLoader from '../misc/ComponentLoader';
+import ErrorMessage from '../misc/ErrorMessage';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import getConfig from 'next/config';
-import { GET_ELECTION } from "./query/Election";
-import NotAvailable from './misc/NotAvailable';
+import { GET_ELECTION } from "../query/Election";
+import NotAvailable from '../misc/NotAvailable';
 
 
 

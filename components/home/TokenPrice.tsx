@@ -14,16 +14,16 @@ import {
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 import BigNumber from 'bignumber.js'
-import ComponentLoader from './misc/ComponentLoader';
-import ErrorMessage from './misc/ErrorMessage';
+import ComponentLoader from '../misc/ComponentLoader';
+import ErrorMessage from '../misc/ErrorMessage';
 import { useTheme } from '@material-ui/core/styles';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 import Card from "@material-ui/core/Card";
-import { GET_COIN_HISTORY_BY_DATES } from './query/Coin'
-import { GET_CHAIN } from './query/Chain'
-import NotAvailable from './misc/NotAvailable'
+import { GET_COIN_HISTORY_BY_DATES } from '../query/Coin'
+import { GET_CHAIN } from '../query/Chain'
+import NotAvailable from '../misc/NotAvailable'
 
 
 

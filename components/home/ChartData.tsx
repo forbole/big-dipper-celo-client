@@ -6,10 +6,10 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { useQuery } from "@apollo/client";
 import numbro from "numbro";
-import ComponentLoader from './misc/ComponentLoader';
-import NotAvailable from './misc/NotAvailable'
-import ErrorMessage from './misc/ErrorMessage';
-import { GET_CHAIN } from './query/Chain'
+import ComponentLoader from '../misc/ComponentLoader';
+import NotAvailable from '../misc/NotAvailable'
+import ErrorMessage from '../misc/ErrorMessage';
+import { GET_CHAIN } from '../query/Chain'
 import BigNumber from 'bignumber.js'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
