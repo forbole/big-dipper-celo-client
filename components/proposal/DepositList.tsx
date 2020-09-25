@@ -20,6 +20,8 @@ import { GET_PROPOSAL } from '../query/Proposal';
 import { GET_TX_DETAILS } from '../query/Transaction';
 import { useQuery } from "@apollo/client";
 import BigNumber from 'bignumber.js'
+import getConfig from 'next/config'
+import TablePagination from '@material-ui/core/TablePagination';
 
 interface Column {
   id: "depositor" | "amount" | "time";
@@ -84,10 +86,21 @@ type DepositListProps = { proposal: string };
 
 const DepositList = ({ proposal }: DepositListProps) => {
   const classes = useStyles();
-  const proposalNumber = parseInt(proposal)
+  const proposalNumber = parseInt(proposal);
+  const { publicRuntimeConfig } = getConfig()
   let hashValue: string = "";
 
   const [hash, setHash] = React.useState("");
+  const [page, setPage] = React.useState(0);
+  const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXsmall)
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPageSize(+event.target.value);
+  };
 
   const { loading, error, data } = useQuery(GET_PROPOSAL, {
     variables: { proposalNumber },
@@ -141,8 +154,7 @@ const DepositList = ({ proposal }: DepositListProps) => {
             </TableHead>
             <TableBody>
 
-              {Object.keys(data.proposal.upvoteList).map(function (row: any, index: number) {
-                // hashValue = data.proposal.upvoteList[row].transactionHash
+              {Object.keys(data.proposal.upvoteList).slice(page * pageSize, page * pageSize + pageSize).map(function (row: any, index: number) {
                 return (
                   <TableRow key={index}>
                     <TableCell
@@ -216,7 +228,21 @@ const DepositList = ({ proposal }: DepositListProps) => {
             </TableBody>
           </Table>
         </TableContainer>
-
+        <TablePagination
+          rowsPerPageOptions={[publicRuntimeConfig.rowXsmall, publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge]}
+          component="div"
+          count={Object.keys(data.proposal.upvoteList).length}
+          rowsPerPage={pageSize}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+          backIconButtonProps={{
+            'aria-label': 'Previous',
+          }}
+          nextIconButtonProps={{
+            'aria-label': 'Next',
+          }}
+        />
       </Paper>
     </Grid>
   );
