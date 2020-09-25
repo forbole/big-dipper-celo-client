@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+* Fixed copy method to copy each address seperately
+* Fixed collapse to open every collapse element individually
+* Query and display Validator Votes List data 
+
+## v0.1.3
+
 * [#69] Hidden Search Bar and Network Selection
 * [#68] Added transaction contract input parameters in TransactionDetails
 * Hidden Validator Votes
