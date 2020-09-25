@@ -44,7 +44,7 @@ const columns: Column[] = [
   { id: "groupName", label: "Group Name", align: "left" },
   { id: "votesAvailable", label: "Votes Available", align: "left" },
   { id: "electedTotal", label: "Elected/Total", align: "left" },
-  { id: "lockedcGLD", label: "Locked cGLD", align: "right" },
+  { id: "lockedCELO", label: "Locked CELO", align: "right" },
   { id: "groupShare", label: "Group Share", align: "right" },
   { id: "voterRewards", label: "Voter Rewards", align: "right" },
   { id: "groupScore", label: "Group Score", align: "right" },
