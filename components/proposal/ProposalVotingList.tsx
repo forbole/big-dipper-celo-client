@@ -311,7 +311,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
                         variant="subtitle1"
                         className={classes.headerLabel}
                     >
-                        (~81M of ~186M cGLD)
+                        (~81M of ~186M CELO)
           </Typography>
                 </Grid>
                 <Grid item xs={12}>

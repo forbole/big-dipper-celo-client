@@ -100,7 +100,7 @@ const LockGoldDialog = () => {
             </InputLabel>
             <OutlinedInput
                 id="id-lock-gold-dialog"
-                endAdornment={<InputAdornment position="end">cGLD</InputAdornment>}
+                endAdornment={<InputAdornment position="end">CELO</InputAdornment>}
                 labelWidth={295}
             />
         </FormControl>
@@ -209,7 +209,7 @@ const LockGold = () => {
                                     noWrap
                                     className={classes.alignRight}
                                 >
-                                    Max {"14.99217479 cGLD"}
+                                    Max {"14.99217479 CELO"}
                                 </Typography>
                             </Grid>
 

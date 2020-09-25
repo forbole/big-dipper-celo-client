@@ -312,7 +312,7 @@ const TransactionDetails = ({ hash }: TxDetailsProps) => {
             </Typography>
             {data.transaction && data.transaction.feeCurrency ?
               <Typography variant="body2" component="h2">
-                {data.transaction.feeCurrency} + "cGLD"
+                {data.transaction.feeCurrency} + "CELO"
             </Typography>
               : <NotAvailable variant="body2" />}
             <Divider variant="middle" className={classes.divider} />

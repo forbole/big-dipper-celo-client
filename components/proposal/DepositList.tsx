@@ -127,7 +127,7 @@ const DepositList = ({ proposal }: DepositListProps) => {
             variant="subtitle1"
             className={classes.headerLabel}
           >
-            Deposit (200 cGLD)
+            Deposit (200 CELO)
           </Typography>
 
           <Divider variant="middle" className={classes.divider} />
