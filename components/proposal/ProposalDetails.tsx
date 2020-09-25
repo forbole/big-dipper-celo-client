@@ -72,6 +72,12 @@ const useStyles = makeStyles(() => {
       overflowWrap: 'anywhere',
       display: "flex",
       textAlign: "right"
+    },
+
+    markdownFile: {
+      '& a': {
+        color: 'rgba(58, 211, 158, 1)'
+      }
     }
   };
 });
@@ -194,11 +200,12 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) =>
               Description
             </Typography>
 
-            <Typography variant="body2"  >
+            <Typography variant="body2" className={classes.markdownFile}>
               {proposalDetails ?
                 <MarkdownView
                   markdown={proposalDetails}
-                  options={{ tables: true, emoji: true }}
+                  options={{ tables: true, emoji: true, simplifiedAutoLink: true, smoothLivePreview: true, openLinksInNewWindow: true, }}
+                  flavor="vanilla"
                 />
                 : <NotAvailable variant="body2" />}
             </Typography>
