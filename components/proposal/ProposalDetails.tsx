@@ -20,6 +20,7 @@ import ComponentLoader from '../misc/ComponentLoader'
 import ErrorMessage from '../misc/ErrorMessage';
 import { GET_PROPOSAL } from '../query/Proposal'
 import BigNumber from 'bignumber.js'
+import MarkdownView from 'react-showdown';
 
 const useStyles = makeStyles(() => {
   return {
@@ -75,11 +76,12 @@ const useStyles = makeStyles(() => {
   };
 });
 
+type ProposalDetailsProps = { proposal: string, proposalDetails: string };
 
-type ProposalDetailsProps = { proposal: string };
+const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) => {
 
-const ProposalDetails = ({ proposal }: ProposalDetailsProps) => {
-
+  const getProposal = proposalDetails.split("\n")
+  const proposalTitle = getProposal[0].replace('#', ' ')
   const proposalNumber = parseInt(proposal)
   const prevProposal: number = proposalNumber - 1;
   const nextProposal: number = proposalNumber + 1;
@@ -89,6 +91,7 @@ const ProposalDetails = ({ proposal }: ProposalDetailsProps) => {
   });
 
   const classes = useStyles();
+
   if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
 
@@ -171,35 +174,13 @@ const ProposalDetails = ({ proposal }: ProposalDetailsProps) => {
             <Divider variant="middle" className={classes.divider} />
           </Grid>
 
-          <Grid item xs={6} className={classes.item}>
-            <Typography variant="body2">
-              Type
-            </Typography>
-          </Grid>
-          <Grid item xs={6} >
-            <Typography variant="body2" className={classes.alignRight}>
-              {/* {data &&
-              data.block &&
-              data.block.miner &&
-              data.block.miner.name ? (
-                <Link href="#" color="secondary">
-                  {data.block.miner.name}
-                </Link>
-              ) : <NotAvailable variant="body2" />} */}
-            </Typography>
-          </Grid>
-
-          <Grid item xs={12}>
-            <Divider variant="middle" className={classes.divider} />
-          </Grid>
-
           <Grid item xs={12} className={classes.item}>
             <Typography variant="body2"  >
               Title
             </Typography>
             <Typography variant="body2"  >
-              {data.proposal && data.proposal.proposalTitle
-                ? data.proposal.proposalTitle
+              {proposalTitle ?
+                proposalTitle
                 : <NotAvailable variant="body2" />}
             </Typography>
           </Grid>
@@ -214,8 +195,11 @@ const ProposalDetails = ({ proposal }: ProposalDetailsProps) => {
             </Typography>
 
             <Typography variant="body2"  >
-              {data.proposal && data.proposal.proposalOverview
-                ? data.proposal.proposalOverview
+              {proposalDetails ?
+                <MarkdownView
+                  markdown={proposalDetails}
+                  options={{ tables: true, emoji: true }}
+                />
                 : <NotAvailable variant="body2" />}
             </Typography>
           </Grid>

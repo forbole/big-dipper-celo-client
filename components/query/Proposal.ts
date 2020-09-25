@@ -22,10 +22,6 @@ export const GET_PROPOSALS = gql`
         signature
         transactionHash
         transactionIndex
-        proposalTitle
-        proposalAuthor
-        proposalStatus
-        proposalOverview
         status
         upvoteList
       }
@@ -49,10 +45,6 @@ export const GET_PROPOSAL = gql`
         signature
         transactionHash
         transactionIndex
-        proposalTitle
-        proposalAuthor
-        proposalStatus
-        proposalOverview
         upvoteList
         votes
         totalVotesList

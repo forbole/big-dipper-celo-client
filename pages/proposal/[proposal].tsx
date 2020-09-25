@@ -18,11 +18,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function Proposal() {
+export default function Proposal(proposalDetails: string) {
   const classes = useStyles();
   const router = useRouter();
   const proposalNumber: string = router.query.proposal as string;
-
   return (
     <Layout>
       <Grid container spacing={2} className={classes.root}>
@@ -30,7 +29,7 @@ export default function Proposal() {
           <MarketCard />
         </Grid>
         <Grid item xs={12} >
-          <ProposalDetails proposal={proposalNumber} />
+          <ProposalDetails proposal={proposalNumber} proposalDetails={proposalDetails.proposalDetails} />
         </Grid>
         <Grid item xs={12} >
           <ProposalVotingList proposal={proposalNumber} />
@@ -41,4 +40,11 @@ export default function Proposal() {
       </Grid>
     </Layout>
   );
+}
+
+Proposal.getInitialProps = async (ctx: any) => {
+  const { query } = ctx;
+  const response = await fetch(`https://raw.githubusercontent.com/celo-org/celo-proposals/master/CGPs/000${query.proposal}.md`)
+  const proposalDetails = await response.text();
+  return { proposalDetails }
 }
