@@ -136,7 +136,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
     const { publicRuntimeConfig } = getConfig()
     const proposalNumber = parseInt(proposal)
 
-    const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
+    const [page, setPage] = React.useState(0);
     const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXsmall)
     const [value, setValue] = React.useState(0);
 
@@ -146,7 +146,6 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPageSize(+event.target.value);
-        setPage(publicRuntimeConfig.setPage);
     };
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -183,7 +182,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {Object.keys(data.proposal.totalVotesList[voteType.voteType]).map((row: any, index: number) => {
+                        {Object.keys(data.proposal.totalVotesList[voteType.voteType]).slice(page * pageSize, page * pageSize + pageSize).map((row: any, index: number) => {
                             return (
                                 <TableRow key={index}>
                                     <TableCell
@@ -220,9 +219,9 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
                                         className={classes.tableCell}
                                     >
                                         {data.proposal.totalVotesList[voteType.voteType][row] && data.proposal.totalVotesList[voteType.voteType][row].returnValues && data.proposal.totalVotesList[voteType.voteType][row].returnValues.weight ?
-                                           <Typography variant="body2" noWrap>                                           
-                                              {  new BigNumber((data.proposal.totalVotesList[voteType.voteType][row].returnValues.weight / process.env.CELO)).toFormat()}
-                                        </Typography> : null}
+                                            <Typography variant="body2" noWrap>
+                                                {new BigNumber((data.proposal.totalVotesList[voteType.voteType][row].returnValues.weight / process.env.CELO)).toFormat()}
+                                            </Typography> : null}
                                     </TableCell>
 
                                 </TableRow>
@@ -233,7 +232,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
                 </Table>
             </TableContainer>
             <TablePagination
-                rowsPerPageOptions={[publicRuntimeConfig.rowXsmall, publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge,]}
+                rowsPerPageOptions={[publicRuntimeConfig.rowXsmall, publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge]}
                 component="div"
                 count={Object.keys(data.proposal.totalVotesList[voteType.voteType]).length}
                 rowsPerPage={pageSize}
@@ -242,7 +241,6 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
                 onChangeRowsPerPage={handleChangeRowsPerPage}
                 backIconButtonProps={{
                     'aria-label': 'Previous',
-                    'disabled': page === 1,
                 }}
                 nextIconButtonProps={{
                     'aria-label': 'Next',
