@@ -4,7 +4,7 @@
 
 * Fixed copy method to copy each address seperately
 * Fixed collapse to open every collapse element individually
-* Query and display Validator Votes List data 
+* Added query to display Validator Votes List data 
 
 ## v0.1.3
 
