@@ -19,8 +19,6 @@ import {
     DisconnectedDeviceDuringOperation
 } from "@ledgerhq/errors";
 
-import ControlButtons from './ControlButtons';
-
 const useStyles = makeStyles({
     root: {
         justifyContent: 'center'
