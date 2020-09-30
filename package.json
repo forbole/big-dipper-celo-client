@@ -17,6 +17,7 @@
     "@devexpress/dx-react-chart": "^2.7.0",
     "@devexpress/dx-react-chart-material-ui": "^2.7.0",
     "@devexpress/dx-react-core": "^2.7.0",
+    "@ledgerhq/errors": "^5.25.0",
     "@ledgerhq/hw-app-eth": "^5.25.1",
     "@ledgerhq/hw-transport-u2f": "^5.22.0",
     "@ledgerhq/hw-transport-webusb": "^5.25.0",
