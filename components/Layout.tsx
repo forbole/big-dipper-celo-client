@@ -23,6 +23,8 @@ import Container from '@material-ui/core/Container';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
+import SignInMessage from './ledger/Login'
+import Dialog from "@material-ui/core/Dialog";
 
 
 const drawerWidth = 220;
@@ -170,15 +172,7 @@ const Layout = (props: { children: React.ReactNode }) => {
 						<NetworkDropdown />
 					</Grid>
 					<Grid item xs={1} md={1} className={classes.login}>
-						<IconButton
-							// color="inherit"
-							aria-label="Login"
-							onClick={handleDrawerOpen}
-							//edge="start"
-							className={classes.loginButton}
-						>
-							<img src="/images/connect-ledger.svg" />
-						</IconButton>
+						<SignInMessage />
 					</Grid>
 
 					<Hidden mdUp>
