@@ -21,9 +21,20 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Box from '@material-ui/core/Box';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import { GET_VALIDATOR_GROUPS } from '../query/ValidatorGroup';
+import { GET_ACCOUNT_DETAILS } from '../query/Account';
+import { useQuery } from "@apollo/client";
+import ComponentLoader from '../misc/ComponentLoader';
+import NotAvailable from '../misc/NotAvailable'
+import ErrorMessage from '../misc/ErrorMessage';
+import getConfig from 'next/config';
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+import Alert from "@material-ui/lab/Alert";
+import BigNumber from 'bignumber.js'
 
 interface Column {
-  id: "dropdown" | "groupName" | "votesAvailable" | "electedTotal" | "lockedCELO" | "groupShare" | "voterRewards" | "uptime" | "attestation";
+  id: "dropdown" | "groupName" | "votesAvailable" | "electedTotal" | "lockedcGLD" | "groupShare" | "voterRewards" | "groupScore" | "attestation";
   label: string;
   align: 'left' | 'right';
 }
@@ -36,23 +47,10 @@ const columns: Column[] = [
   { id: "lockedCELO", label: "Locked CELO", align: "right" },
   { id: "groupShare", label: "Group Share", align: "right" },
   { id: "voterRewards", label: "Voter Rewards", align: "right" },
-  { id: "uptime", label: "Uptime", align: "right" },
+  { id: "groupScore", label: "Group Score", align: "right" },
   { id: "attestation", label: "Attestation", align: "right" },
 ];
 
-
-function createData(dropdown: string, groupName: string, votesAvailable: string, electedTotal: string, lockedCELO: string, groupShare: string, voterRewards: string, uptime: string, attestation: string) {
-  return { dropdown, groupName, votesAvailable, electedTotal, lockedCELO, groupShare, voterRewards, uptime, attestation };
-}
-
-const rows = [
-  createData("", "Michelle Clark", "0.9% 38.8% of 2.4%", " 1 | 2", "2000", "10%", "999.89CELO", "99.9%", "10.9%"),
-  createData("", "Rachel Hugh", "0.9% 38.8% of 2.4%", "2 | 3", "31232", "12%", "999.89CELO", "99.9%", "10.9%"),
-  createData("", "Natasha", "0.9% 38.8% of 2.4%", "1 | 2", "243244", "12%", "999.89CELO", "99.9%", "10.9%"),
-  createData("", "Rith Jackson", "0.9% 38.8% of 2.4%", "0 | 2", "234217", "21%", "999.89CELO", "99.9%", "10.9%"),
-  createData("", "Kelly Mendex", "65894856 CELO", "0 | 2", "12378421", "23%", "999.89CELO", "99.9%", "10.9%"),
-  createData("", "Marilym Ford", "2478 CELO", "0 | 2", "237243", "22%", "999.89CELO", "99.9%", "10.9%"),
-];
 
 const useStyles = makeStyles(() => {
   return {
@@ -135,24 +133,49 @@ const useStyles = makeStyles(() => {
       textAlign: "right",
     },
 
+    alertMessage: {
+      background: "#3AD39E",
+      color: "rgba(61, 66, 71, 1)",
+    },
+
   };
 });
 
 const ValidatorVotesList = () => {
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState("");
+  const [copy, setCopy] = React.useState(false);
+  const { publicRuntimeConfig } = getConfig()
 
-  // const handleClick = () => {
-  //   return navigator.clipboard
-  //     .writeText(document.getElementById("group-info-address").innerText)
-  //     .then(() => setOpen(true))
-  //     .catch((err) => {
-  //       console.log("Something went wrong", err);
-  //     });
-  // };
+  const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
+  const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowMedium)
 
-  return (
+  const { loading, error, data } = useQuery(GET_VALIDATOR_GROUPS, {
+    variables: { pageSize, page },
+  });
+
+
+  const copyText = (id: number) => {
+    console.log(id)
+    let rawInputForm = document.getElementById(`groupInfoAddress${id}`) as HTMLInputElement
+    return navigator.clipboard
+      .writeText(rawInputForm.innerHTML)
+      .then(() => setCopy(true))
+      .catch((err) => {
+        console.log("Something went wrong", err);
+      })
+  };
+
+  const closeAlert = (event?: React.SyntheticEvent, reason?: string) => {
+    setCopy(false);
+  };
+
+
+  if (loading) return <ComponentLoader />
+  if (error) return <ErrorMessage message={error.message} />
+
+  return (<>
     <Grid container justify="center" className={classes.container}>
       <Paper className={classes.paper}>
         <TableContainer>
@@ -162,10 +185,6 @@ const ValidatorVotesList = () => {
             className={classes.headerLabel}
           >
             Validator Votes
-
-             <Link href="/blocks" className={classes.link} color="textPrimary">
-              {"view more"}
-            </Link>
           </Typography>
           <Table size="medium">
             <TableHead>
@@ -190,14 +209,14 @@ const ValidatorVotesList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row: any, index: number) => {
+              {data.validatorGroups.validatorGroups.map((row: any, index: number) => {
                 return (<>
                   <TableRow key={index}>
                     <TableCell component="th"
                       scope="row"
                       padding="none">
-                      <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-                        {open ? <KeyboardArrowDownIcon fontSize="small" className={classes.arrowIcon} /> : <KeyboardArrowRightIcon fontSize="small" className={classes.arrowIcon} />}
+                      <IconButton aria-label="expand row" size="small" id={`panel${index}`} onClick={() => !(open === `panel${index}`) ? setOpen(`panel${index}`) : setOpen("")}>
+                        {(open === `panel${index}`) ? <KeyboardArrowDownIcon fontSize="small" className={classes.arrowIcon} /> : <KeyboardArrowRightIcon fontSize="small" className={classes.arrowIcon} />}
                       </IconButton>
                     </TableCell>
                     <TableCell
@@ -206,58 +225,62 @@ const ValidatorVotesList = () => {
                       padding="checkbox"
                       align="left"
                       className={classes.tableCell}
-                    >
+                    > {row.name || row.address ?
                       <Link
                         href="/validatorGroup/[validatorGroupDetails]/"
                         as={`/validatorGroup/${'NanValdezG'}`}
                         color="secondary">
                         <Typography variant="body2" noWrap>
 
-                          {row.groupName}
+                          {row.name || row.address}
                         </Typography>
-                      </Link>
+                      </Link> : <NotAvailable variant="body2" />}
                     </TableCell>
                     <TableCell
                       align="left"
                       padding="checkbox"
                       className={classes.tableCell}
                     >
-                      <Typography variant="caption" noWrap>
-                        {row.votesAvailable}
-                        <LinearProgress variant="determinate" value={81}
-                          classes={{
-                            colorPrimary: classes.progress,
-                            barColorPrimary: classes.progressBar,
-                          }}
-                        />
-                      </Typography>
+                      {row.votesAvailable ?
+                        <Typography variant="caption" noWrap>
+                          {new BigNumber(((row.votes / process.env.CELO) / (row.votesAvailable / process.env.CELO)) * 100).toFormat(2)} %
+                          <LinearProgress variant="determinate" value={new BigNumber(((row.votes / process.env.CELO) / (row.votesAvailable / process.env.CELO)) * 100).toFormat(2)}
+                            classes={{
+                              colorPrimary: classes.progress,
+                              barColorPrimary: classes.progressBar,
+                            }}
+                          />
+                        </Typography> : <NotAvailable variant="body2" />}
                     </TableCell>
                     <TableCell
                       align="left"
                       padding="checkbox"
                       className={classes.tableCell}
                     >
-                      <Typography variant="body2" noWrap>
-                        {row.electedTotal}
-                      </Typography>
+                      {row.members ?
+                        <Typography variant="body2" noWrap>
+                          {} / {row.members.length}
+                        </Typography> : <NotAvailable variant="body2" />}
                     </TableCell>
                     <TableCell
                       align="right"
                       padding="checkbox"
                       className={classes.tableCell}
                     >
-                      <Typography variant="body2" noWrap>
-                        {row.lockedCELO}
-                      </Typography>
+                      {row.lockedGoldAmount ?
+                        <Typography variant="body2" noWrap>
+                          {new BigNumber(row.lockedGoldAmount / process.env.CELO).toFormat(0)}
+                        </Typography> : <NotAvailable variant="body2" />}
                     </TableCell>
                     <TableCell
                       align="right"
                       padding="checkbox"
                       className={classes.tableCell}
                     >
-                      <Typography variant="body2" noWrap>
-                        {row.groupShare}
-                      </Typography>
+                      {row.commission ?
+                        <Typography variant="body2" noWrap>
+                          {row.commission * 100} %
+                        </Typography> : <NotAvailable variant="body2" />}
                     </TableCell>
 
                     <TableCell
@@ -293,68 +316,62 @@ const ValidatorVotesList = () => {
 
                   <TableRow>
                     <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                      <Collapse in={open} timeout="auto" unmountOnExit>
+                      <Collapse in={open === `panel${index}`} timeout="auto" unmountOnExit key={`panel${index}`}>
                         <Grid container >
-                          <Grid item xs={8} className={classes.groupInfo}>
-                            <Typography variant="caption" className={classes.groupInfoNum}> #1</Typography>
-                            <Link
-                              href="/account/[account]/"
-                              as={`/account/${10}`}
-                              color="secondary">
-                              <Typography variant="caption" >
-                                Vincent Lynch
-                              </Typography>
-                            </Link>
-                            <FiberManualRecordIcon className={classes.dotIcon} />
-                          </Grid>
-                          <Grid item xs={8} className={classes.groupInfoAddress}>
-                            <Typography variant="caption" color="textSecondary" > <span id="group-info-address"  >{'0x0f66….1571'}</span></Typography>
-                            <IconButton
-                              aria-label="copy"
-                              size="small"
-                            //onClick={handleClick}
-                            >
-                              <img src="/images/copy.svg" />
-                            </IconButton>
-                          </Grid>
-
-                          <Grid item xs={8} className={classes.groupInfo}>
-                            <Typography variant="caption" className={classes.groupInfoNum}> #2</Typography>
-                            <Link
-                              href="/account/[account]/"
-                              as={`/account/${10}`}
-                              color="secondary">
-                              <Typography variant="caption" >
-                                Michelle Clark
-                              </Typography>
-                            </Link>
-                          </Grid>
-                          <Grid item xs={8} className={classes.groupInfoAddress}>
-                            <Typography variant="caption" color="textSecondary"  > <span id="group-info-address"  >{'0x0f66….1571'}</span></Typography>
-                            <IconButton
-                              aria-label="copy"
-                              size="small"
-                            //onClick={handleClick}
-                            >
-                              <img src="/images/copy.svg" />
-                            </IconButton>
-                          </Grid>
-
+                          {row.members.map((memberRow: any, index: number) => {
+                            return (<>
+                              <Grid item xs={8} className={classes.groupInfo} key={index}>
+                                {memberRow.name || memberRow.address ?
+                                  <> < Typography variant="caption" className={classes.groupInfoNum}> #{index + 1}</Typography>
+                                    <Link
+                                      href="/account/[account]/"
+                                      as={`/account/${10}`}
+                                      color="secondary">
+                                      <Typography variant="caption" >
+                                        {memberRow.name || memberRow.address}
+                                      </Typography>
+                                    </Link>
+                                    <FiberManualRecordIcon className={classes.dotIcon} />
+                                  </> :
+                                  <NotAvailable variant="caption" />}
+                              </Grid>
+                              <Grid item xs={8} className={classes.groupInfoAddress}>
+                                {memberRow.address ?
+                                  <>
+                                    <Typography variant="caption" color="textSecondary" id={`groupInfoAddress${index}`}>{memberRow.address}</Typography>
+                                    <IconButton
+                                      aria-label="copy"
+                                      size="small"
+                                      onClick={() => copyText(index)}
+                                    >
+                                      <img src="/images/copy.svg" />
+                                    </IconButton>
+                                  </> : null}
+                              </Grid>
+                            </>)
+                          })}
                         </Grid>
-
                       </Collapse>
                     </TableCell>
                   </TableRow>
                 </>
-
-
                 );
               })}
             </TableBody>
           </Table>
         </TableContainer>
       </Paper>
-    </Grid>
+    </Grid >
+    <Snackbar open={copy} autoHideDuration={6000} onClose={closeAlert}>
+      <Alert
+        onClose={closeAlert}
+        severity="success"
+        className={classes.alertMessage}
+      >
+        <Typography variant="body1">Copied!</Typography>
+      </Alert>
+    </Snackbar>
+  </>
   );
 }
 
