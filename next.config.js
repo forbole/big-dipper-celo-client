@@ -3,7 +3,6 @@ module.exports = {
         uriGQL: "https://server.celo.bigdipper.live/graphql",
         uriAccount: "https://celo.bigdipper.live/account",
         CELO: 1e18
-
     },
 
     publicRuntimeConfig: {
