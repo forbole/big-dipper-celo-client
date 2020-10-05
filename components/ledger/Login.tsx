@@ -12,12 +12,6 @@ import ControlButtons from "./ControlButtons";
 import IconButton from '@material-ui/core/IconButton';
 import LedgerCelo from './LedgerCelo'
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Alert from '@material-ui/lab/Alert';
-import {
-    deserializeError,
-    DisconnectedDevice,
-    DisconnectedDeviceDuringOperation
-} from "@ledgerhq/errors";
 
 const useStyles = makeStyles({
 
@@ -49,51 +43,58 @@ const useStyles = makeStyles({
 
 });
 
-
-
 const Login = () => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState('');
     const [loading, setLoading] = React.useState(false);
-    const [loggedIn, setLoggedIn] = React.useState(false);
     const [retry, setRetry] = React.useState(false);
+    const [currentUser, setCurrentUser] = React.useState('' || null);
 
-
+    useEffect(() => {
+        let localUser = localStorage.getItem('currentUserAddress');
+        return () => {
+            // @ts-ignore
+            setCurrentUser(localUser)
+        };
+    });
 
     const handleLogin = async () => {
-        if (!loggedIn) {
+        if (!currentUser) {
             setLoading(true);
             setOpen(true);
+            setErrorMessage("Connecting...")
+            setRetry(false)
             try {
                 await LedgerCelo.connect()
                 if (await LedgerCelo.connect() === true) {
                     setErrorMessage("Please accept the connection in your Ledger device")
                     let userAddress = await LedgerCelo.getAddress()
+                    localStorage.setItem('currentUserAddress', userAddress)
+                    setCurrentUser(userAddress)
                     try {
                         let ver = await LedgerCelo.getCeloAppVersion()
                     }
                     catch (e) {
                         setErrorMessage(e.message)
-                        console.log(e.message)
                     }
                     setOpen(false);
-                    setLoggedIn(true);
                 }
 
             }
             catch (e) {
                 setErrorMessage(LedgerCelo.checkLedgerErrors(e.message))
-                setRetry(true)
+                setRetry(true);
             }
 
         }
-        else {
+        else if (currentUser) {
             try {
                 LedgerCelo.disconnect();
-                setLoggedIn(false)
+                localStorage.removeItem('currentUserAddress')
+                setCurrentUser(null)
                 setOpen(false);
-
+                setRetry(false);
             }
             catch (e) {
                 setErrorMessage(e.message)
@@ -114,7 +115,7 @@ const Login = () => {
                 onClick={handleLogin}
                 className={classes.loginButton}
             >
-                {!loggedIn ? <img src="/images/connect-ledger.svg" /> : <img src="/images/logout.svg" />}
+                {currentUser === null ? <img src="/images/connect-ledger.svg" /> : <img src="/images/logout.svg" />}
 
             </IconButton>
 
@@ -155,9 +156,9 @@ const Login = () => {
                                     {errorMessage}
                                 </Typography>
                             </Grid>
-                            <Grid item xs={12} >
-                                {retry ? <ControlButtons retry={true} /> : null}
-                            </Grid>
+                            {retry ? <Grid item xs={12} >
+                                <ControlButtons showRetry={true} handleClick={handleLogin} handleClose={handleClose} />
+                            </Grid> : null}
                         </DialogContentText>
                     </Grid>
                 </DialogContent>
