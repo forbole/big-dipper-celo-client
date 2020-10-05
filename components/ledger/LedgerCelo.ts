@@ -93,7 +93,7 @@ class LedgerCelo extends Component {
 
                 return address;
             } else {
-                throw new Error("LedgerCelo not initialized yet.");
+                this.checkLedgerErrors("LedgerCelo not initialized yet.");
             }
         } catch (error) {
             this.checkLedgerErrors(error)
