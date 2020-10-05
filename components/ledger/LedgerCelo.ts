@@ -91,7 +91,6 @@ class LedgerCelo extends Component {
                 );
                 this.address = address;
 
-                localStorage.setItem('userLedgerAddress', this.address)
                 return address;
             } else {
                 throw new Error("LedgerCelo not initialized yet.");

@@ -5,7 +5,6 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
 
-
 const useStyles = makeStyles({
     controlButtonLabel: {
         display: "flex",
@@ -27,32 +26,27 @@ const useStyles = makeStyles({
 
 });
 
+type ControlButtonsProps = { showRetry?: boolean, handleClick?: any, handleClose?: any };
 
-const ControlButtons = () => {
+
+const ControlButtons = ({ showRetry, handleClick, handleClose }: ControlButtonsProps) => {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
-
-const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
+ 
     return (
         <Grid container spacing={1} >
             <Grid item xs={6} alignItems="center">
                 <div className={classes.root}>
-                <Button
-                    variant="outlined"
-                    color="secondary"
-                    className={classes.controlButtonLabel}
-                    //fullWidth={true}
-                    onClick={handleClose}
-                >
-                    <Typography variant="body2" noWrap>
-                        Cancel
-            </Typography>
-                </Button>
+                    <Button
+                        variant="outlined"
+                        color="secondary"
+                        className={classes.controlButtonLabel}
+                        //fullWidth={true}
+                        onClick={handleClose}
+                    >
+                        <Typography variant="body2" noWrap>
+                            Cancel
+                        </Typography>
+                    </Button>
                 </div>
             </Grid>
             <Grid item xs={6} className={classes.root}>
@@ -61,11 +55,11 @@ const handleClickOpen = () => {
                     color="secondary"
                     className={classes.controlButtonLabel}
                     //fullWidth={true}
-                    onClick={handleClose}
+                    onClick={handleClick}
                 >
                     <Typography variant="body2" noWrap color="textPrimary">
-                        Confirm
-            </Typography>
+                        {!showRetry ? "Confirm" : "Retry"}
+                    </Typography>
                 </Button>
             </Grid>
         </Grid>
