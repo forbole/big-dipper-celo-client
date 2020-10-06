@@ -185,6 +185,9 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
           <Grid item xs={6}>
             <UnlockGold pageAddress={address} showButton={true} />
           </Grid>
+          <Grid item xs={6}>
+            <UnlockGold />
+          </Grid>
 
           <Grid item xs={6}>
             <LockGold pageAddress={address} showButton={true} />
