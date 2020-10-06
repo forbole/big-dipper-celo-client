@@ -95,6 +95,9 @@ const LockGoldDialog = () => {
                 id="id-lock-gold-dialog"
                 endAdornment={<InputAdornment position="end">CELO</InputAdornment>}
                 labelWidth={295}
+                defaultValue="0"
+                required={true}
+                className={classes.outlinedInput}
             />
         </FormControl>
     );
@@ -105,14 +108,16 @@ const TokenDropdown = () => {
     const name = 'Michelle Clark';
     const name_2 = 'Ada Adams';
     return (
-        <FormControl fullWidth size="medium">
+        <FormControl fullWidth={true} size="medium">
             <Select
                 defaultValue=""
                 id="grouped-select"
                 color="primary"
                 className={classes.select}
                 disableUnderline={true}
-                fullWidth={true}>
+                fullWidth={true}
+
+            >
                 <ListSubheader>Accounts:</ListSubheader>
                 <Divider className={classes.divider} />
 
@@ -145,6 +150,15 @@ const TokenDropdown = () => {
 
 const LockGold = (): JSX.Element => {
     const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleLock = () => {
+        setOpen(true);
+    };
 
     return (
         <>

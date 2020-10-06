@@ -95,6 +95,8 @@ const UnlockGoldDialog = () => {
                 id="unlock-gold-dialog"
                 endAdornment={<InputAdornment position="end">CELO</InputAdornment>}
                 labelWidth={295}
+                defaultValue="0"
+                className={classes.outlinedInput}
             />
         </FormControl>
     );
@@ -144,7 +146,15 @@ const TokenDropdown = () => {
 
 const UnlockGold = (): JSX.Element => {
     const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
 
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleUnlock = () => {
+        setOpen(true);
+    };
     return (
         <>
             <DialogTitle id="ledger-unlock-gold-title" className={classes.dialogTitle}>
