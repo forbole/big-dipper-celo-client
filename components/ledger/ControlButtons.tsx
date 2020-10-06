@@ -23,6 +23,9 @@ const useStyles = makeStyles({
         padding: "0 1rem",
         display: "flex",
     },
+    confirmButton: {
+        color: "rgba(255, 255, 255, 1)"
+    }
 
 });
 
@@ -31,7 +34,7 @@ type ControlButtonsProps = { showRetry?: boolean, handleClick?: any, handleClose
 
 const ControlButtons = ({ showRetry, handleClick, handleClose }: ControlButtonsProps) => {
     const classes = useStyles();
- 
+
     return (
         <Grid container spacing={1} >
             <Grid item xs={6} alignItems="center">
@@ -57,7 +60,7 @@ const ControlButtons = ({ showRetry, handleClick, handleClose }: ControlButtonsP
                     //fullWidth={true}
                     onClick={handleClick}
                 >
-                    <Typography variant="body2" noWrap color="textPrimary">
+                    <Typography variant="body2" noWrap className={classes.confirmButton}>
                         {!showRetry ? "Confirm" : "Retry"}
                     </Typography>
                 </Button>
