@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import {
 	createStyles,
@@ -80,12 +80,6 @@ const useStyles = makeStyles((theme: Theme) =>
 			paddingLeft: "0.5rem",
 			marginTop: "0.3rem"
 		},
-		loginButton: {
-			background: "rgba(153, 153, 153, 1)",
-			borderRadius: 5,
-			padding: "0.1rem",
-			verticalAlign: "middle",
-		},
 
 		login: {
 			marginTop: "0.8rem",
@@ -115,6 +109,15 @@ const useStyles = makeStyles((theme: Theme) =>
 			marginTop: "-0.325rem",
 			marginLeft: "0.5rem"
 		},
+
+		networkDropdown: {
+			[theme.breakpoints.up('lg')]: {
+				float: "left"
+			},
+			[theme.breakpoints.down('md')]: {
+				float: "right"
+			},
+		}
 
 
 	}),
@@ -150,7 +153,7 @@ const Layout = (props: { children: React.ReactNode }) => {
 				className={clsx(classes.appBar)}
 			>
 				<Grid container spacing={1} className={classes.toolbarItems} >
-					<Grid item md={4} >
+					<Grid item md={3} lg={4} >
 						{""}
 					</Grid>
 
@@ -161,7 +164,7 @@ const Layout = (props: { children: React.ReactNode }) => {
 					</Hidden>
 
 					<Hidden mdUp>
-						<Grid item xs={5} className={classes.celoIcon}>
+						<Grid item xs={3} className={classes.celoIcon}>
 							<IconButton
 								color="inherit"
 								aria-label="Celo Dashboard"
@@ -170,10 +173,11 @@ const Layout = (props: { children: React.ReactNode }) => {
 							</IconButton>
 						</Grid>
 					</Hidden>
-					<Grid item xs={5} md={2}>
+					<Grid item xs={3} sm={5} md={2} className={classes.networkDropdown}>
 						<NetworkDropdown />
 					</Grid>
-					<Grid item xs={1} md={1} className={classes.login}>
+
+					<Grid item xs={5} sm={3} md={2} lg={1} className={classes.login}>
 						<SignInMessage />
 					</Grid>
 

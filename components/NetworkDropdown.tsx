@@ -23,12 +23,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
     formControl: {
       minWidth: "9.75rem",
-      float: "right",
       background: "rgba(255, 255, 255, 1)",
       padding: "0rem",
       borderRadius: 5,
       position: 'relative',
-      display: "flex"
+      marginLeft: "1rem"
     },
     celoIcon: {
       width: "1.25rem",
