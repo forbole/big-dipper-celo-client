@@ -1,103 +1,132 @@
-import { InputLabel, Select } from '@material-ui/core';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Divider from '@material-ui/core/Divider';
-import FormControl from '@material-ui/core/FormControl';
-import Grid from '@material-ui/core/Grid';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import MenuItem from '@material-ui/core/MenuItem';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import React from 'react';
+import { Select, InputLabel, Theme, createStyles, makeStyles, Button, Dialog, TextField } from "@material-ui/core";
+import MenuItem from "@material-ui/core/MenuItem";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControl from "@material-ui/core/FormControl";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import React from "react";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Divider from "@material-ui/core/Divider";
+import ControlButtons from '../../ControlButtons'
 
-import ControlButtons from '../../ControlButtons';
 
-const useStyles = makeStyles({
-    root: {
-        justifyContent: 'center'
-    },
-    title: {
-        display: 'block',
-        textAlign: 'center',
-        paddingTop: '0.5rem'
-    },
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            justifyContent: "center",
+        },
+        title: {
+            display: "block",
+            textAlign: "center",
+            paddingTop: "0.5rem",
+        },
 
-    dialogTitle: {
-        padding: '1rem 1rem 0rem 1rem'
-    },
+        dialogTitle: {
+            padding: "1rem 1rem 0rem 1rem",
+        },
 
-    dialogContent: {
-        display: 'flex'
-    },
-    divider: {
-        backgroundColor: 'rgba(232, 232, 232, 1)'
-    },
+        dialogContent: {
+            display: "flex",
+        },
+        divider: {
+            backgroundColor: "rgba(232, 232, 232, 1)",
+        },
 
-    dialog: {
-        paddingBottom: '1rem'
-    },
+        dialog: {
+            paddingBottom: '1rem'
+        },
 
-    item: {
-        justifyContent: 'center'
-    },
 
-    wrapText: {
-        wordWrap: 'break-word',
-        wordBreak: 'break-all'
-    },
+        item: {
+            justifyContent: "center",
+        },
 
-    centerContent: {
-        display: 'flex',
-        justifyContent: 'center'
-    },
+        wrapText: {
+            wordWrap: 'break-word',
+            wordBreak: 'break-all'
 
-    select: {
-        justifyContent: 'center',
-        border: 'solid rgba(255, 255, 255, 0.6) ',
-        borderWidth: '0.09rem',
-        borderRadius: 4
-    },
+        },
 
-    leftPadding: {
-        paddingLeft: '1rem'
-    },
+        centerContent: {
+            display: "flex",
+            justifyContent: "center",
+        },
 
-    alignLeft: {
-        display: 'flex',
-        overflow: 'auto',
-        paddingTop: '0.5rem',
-        paddingBottom: '0.2rem'
-    },
-    alignRight: {
-        display: 'block',
-        float: 'right',
-        paddingTop: '0.5rem',
-        paddingBottom: '0.5rem'
-    },
 
-    bottomPadding: {
-        paddingBottom: '1rem'
-    }
-});
+        select: {
+            justifyContent: "center",
+            border: "solid 1px rgba(153, 153, 153, 1)",
+            borderWidth: "0.09rem",
+            borderRadius: 4,
+        },
+
+        leftPadding: {
+            paddingLeft: "1rem",
+        },
+
+        alignLeft: {
+            display: "flex",
+            overflow: "auto",
+            paddingTop: "0.5rem",
+            paddingBottom: "0.2rem",
+        },
+        alignRight: {
+            display: "block",
+            float: "right",
+            paddingTop: "0.5rem",
+            paddingBottom: "0.5rem",
+        },
+
+        bottomPadding: {
+            paddingBottom: "1rem"
+        },
+
+        centerButtons: {
+            justifyContent: "center",
+            flexWrap: "wrap",
+            padding: "0.1rem",
+            textTransform: "none",
+        },
+        buttonUnlock: {
+            justifyContent: "center",
+            [theme.breakpoints.down('xs')]: {
+                width: "7.5rem",
+            },
+            width: "9.5rem",
+            padding: "0.5rem",
+            textTransform: "none",
+            border: "solid thin",
+            margin: "0.3rem 0 0.2rem 1rem",
+        },
+
+        outlinedInput: {
+            borderRadius: 5,
+            border: "solid 1px rgba(153, 153, 153, 1)",
+            padding: "0.25rem 1rem",
+        },
+
+        unlockGold: {
+            justifyContent: "center",
+        }
+    })
+);
 
 const UnlockGoldDialog = () => {
     return (
         <FormControl variant="outlined" fullWidth size="small">
-            <InputLabel htmlFor="unlock-gold-dialog">
-                <Typography variant="body2" color="textSecondary">
-                    Insert Amount
-                </Typography>
-            </InputLabel>
-            <OutlinedInput
-                id="unlock-gold-dialog"
-                endAdornment={<InputAdornment position="end">CELO</InputAdornment>}
-                labelWidth={295}
+            <TextField id="lock-gold-dialog" label=""
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment position="end">CELO</InputAdornment>
+                    ),
+                    disableUnderline: true
+                }}
                 defaultValue="0"
-                className={classes.outlinedInput}
-            />
+                className={classes.outlinedInput} />
         </FormControl>
     );
 };

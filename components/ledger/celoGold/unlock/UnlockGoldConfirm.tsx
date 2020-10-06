@@ -80,13 +80,9 @@ const UnlockGoldConfirm = (): JSX.Element => {
                         </IconButton>
                     </Grid>
                     <Grid item xs={10}>
-                        <Typography
-                            variant="h6"
-                            color="textPrimary"
-                            noWrap
-                            className={classes.title}>
-                            Unlock Celo Gold
-                        </Typography>
+                        <Typography variant="h6" color="textPrimary" noWrap className={classes.title}>
+                            Unlock CELO
+              </Typography>
                     </Grid>
                     <Grid item xs={1}>
                         <IconButton
