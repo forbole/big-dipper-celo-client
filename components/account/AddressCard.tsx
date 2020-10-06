@@ -64,11 +64,16 @@ const useStyles = makeStyles((theme: Theme) =>
       borderWidth: "0.375rem"
     },
 
-    iconButtonRight: {
+    closeDialog: {
       padding: "0",
       marginLeft: "0.5rem",
       float: "right",
     },
+
+    icon: {
+      "&:hover, &.Mui-focusVisible": { backgroundColor: "rgba(58, 211, 158, 0.5)" },
+      padding: "0rem 0.5rem"
+    }
   })
 );
 
@@ -117,7 +122,7 @@ const AddressCard = ({ address }: AddressCardProps) => {
             <Grid item xs={12}>
               <IconButton
                 aria-label="Close"
-                className={classes.iconButtonRight}
+                className={classes.closeDialog}
                 onClick={closeQR}
               >
                 <img src="/images/cross.svg" color="textPrimary" />
@@ -158,32 +163,31 @@ const AddressCard = ({ address }: AddressCardProps) => {
       <Card>
         <CardContent>
           <Grid container spacing={1} className={classes.card}>
-            <Grid item xs={10} >
+            <Grid item xs={2} md={1}>
               <Typography variant="body1" gutterBottom>
                 Address
             </Typography>
             </Grid>
-            <Grid item xs={1}>
+            <Grid item xs={2}>
               <IconButton
                 aria-label="copy"
                 size="small"
                 onClick={copyText}
+                className={classes.icon}
               >
                 <img src="/images/copy.svg" />
               </IconButton>
-
-            </Grid>
-            <Grid item xs={1}>
               <IconButton
                 aria-label="qrCode"
                 size="small"
                 onClick={showQR}
+                className={classes.icon}
               >
                 <img src="/images/qr-code.svg" />
               </IconButton>
               <ShowQRCode />
-
             </Grid>
+
             <Grid item xs={12} className={classes.address} >
               <div >
                 <Typography variant="body2" align="left" id="accountAddress" >
