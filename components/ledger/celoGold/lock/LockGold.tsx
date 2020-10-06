@@ -4,7 +4,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import ControlButtons from '../../ControlButtons'
+import TextField from '@material-ui/core/TextField';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -105,12 +106,15 @@ const useStyles = makeStyles((theme: Theme) =>
         },
 
         outlinedInput: {
-            border: "solid 1px rgba(153, 153, 153, 1)"
+            borderRadius: 5,
+            border: "solid 1px rgba(153, 153, 153, 1)",
+            padding: "0.25rem 1rem",
         },
 
         lockGold: {
             justifyContent: "center",
-        }
+        },
+
     })
 );
 
@@ -119,16 +123,16 @@ const LockGoldDialog = () => {
 
     return (
         <FormControl variant="outlined" fullWidth size="small">
-            <InputLabel htmlFor="lock-gold-dialog" >
-            </InputLabel>
-            <OutlinedInput
-                id="id-lock-gold-dialog"
-                endAdornment={<InputAdornment position="end">CELO</InputAdornment>}
-                labelWidth={295}
+            <TextField id="lock-gold-dialog" label=""
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment position="end">CELO</InputAdornment>
+                    ),
+                    disableUnderline: true
+                }}
                 defaultValue="0"
-                required={true}
-                className={classes.outlinedInput}
-            />
+                className={classes.outlinedInput} />
+
         </FormControl>
     );
 }
@@ -186,6 +190,15 @@ const LockGold = () => {
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+    const [currentUser, setCurrentUser] = React.useState('' || null);
+
+    useEffect(() => {
+        let localUser = localStorage.getItem('currentUserAddress');
+        return () => {
+            // @ts-ignore
+            setCurrentUser(localUser)
+        };
+    });
 
     const handleClose = () => {
         setOpen(false);
@@ -223,7 +236,7 @@ const LockGold = () => {
                     <Grid container className={classes.item}>
                         <Grid item xs={12}>
                             <Typography variant="h6" color="textPrimary" noWrap className={classes.title}>
-                                Lock Celo Gold
+                                Lock CELO
               </Typography>
                         </Grid>
                     </Grid>
