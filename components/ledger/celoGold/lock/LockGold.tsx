@@ -11,7 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import ControlButtons from '../../ControlButtons';
 
@@ -96,9 +96,8 @@ const LockGoldDialog = () => {
                 endAdornment={<InputAdornment position="end">CELO</InputAdornment>}
                 labelWidth={295}
                 defaultValue="0"
-                required={true}
-                className={classes.outlinedInput}
-            />
+                className={classes.outlinedInput} />
+
         </FormControl>
     );
 };
@@ -151,6 +150,15 @@ const TokenDropdown = () => {
 const LockGold = (): JSX.Element => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+    const [currentUser, setCurrentUser] = React.useState('' || null);
+
+    useEffect(() => {
+        let localUser = localStorage.getItem('currentUserAddress');
+        return () => {
+            // @ts-ignore
+            setCurrentUser(localUser)
+        };
+    });
 
     const handleClose = () => {
         setOpen(false);
