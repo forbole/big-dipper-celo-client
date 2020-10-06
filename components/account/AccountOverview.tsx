@@ -14,6 +14,8 @@ import NotAvailable from '../misc/NotAvailable';
 import { GET_ACCOUNT_DETAILS } from '../query/Account';
 import { GET_CHAIN } from '../query/Chain';
 import { GET_VALIDATOR } from '../query/Validator';
+import LockGold from '../ledger/celoGold/lock/LockGold';
+import UnlockGold from '../ledger/celoGold/unlock/UnlockGold';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -165,36 +167,20 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                         )}
                     </Grid>
 
-                    <Grid item xs={12}>
-                        <Divider variant="middle" className={classes.divider} />
-                    </Grid>
+          <Grid item xs={12}>
+            <Divider variant="middle" className={classes.divider} />
+          </Grid>
+          <Grid item xs={6}>
+            <UnlockGold />
+          </Grid>
 
-                    <Grid container spacing={2}>
-                        <Grid item xs={6} className={classes.centerContent}>
-                            <div className={classes.centerButtons}>
-                                <Button
-                                    variant="outlined"
-                                    color="secondary"
-                                    className={classes.buttonUnlock}>
-                                    <Typography variant="body1">Unlock CELO</Typography>
-                                </Button>
-                            </div>
-                        </Grid>
-                        <Grid item xs={6} className={classes.centerContent}>
-                            <div className={classes.centerButtons}>
-                                <Button
-                                    variant="outlined"
-                                    color="secondary"
-                                    className={classes.buttonLock}>
-                                    <Typography variant="body1">Lock CELO</Typography>
-                                </Button>
-                            </div>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Card>
-        </span>
-    );
-};
+          <Grid item xs={6}>
+            <LockGold />
+          </Grid>
+        </Grid>
+      </Card>
+    </span >
+  );
+}
 
 export default AccountOverview;
