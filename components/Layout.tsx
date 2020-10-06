@@ -84,7 +84,10 @@ const useStyles = makeStyles((theme: Theme) =>
 		login: {
 			marginTop: "0.8rem",
 			// marginLeft: "-1rem",
-			textAlign: "center",
+			[theme.breakpoints.up('sm')]: {
+				textAlign: "center",
+			},
+
 
 		},
 		toolbarItems: {

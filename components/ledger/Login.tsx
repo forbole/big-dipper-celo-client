@@ -40,6 +40,15 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: "0.1rem",
             verticalAlign: "middle",
             "&:hover, &.Mui-focusVisible": { backgroundColor: "rgba(58, 211, 158, 0.5)" },
+            justifyContent: "center",
+            alignText: "center"
+        },
+        logoutButton: {
+            background: "rgba(153, 153, 153, 1)",
+            borderRadius: 5,
+            padding: "0.1rem",
+            verticalAlign: "middle",
+            "&:hover, &.Mui-focusVisible": { backgroundColor: "rgba(58, 211, 158, 0.5)" },
             [theme.breakpoints.up('lg')]: {
                 marginRight: "2rem",
             },
@@ -57,7 +66,7 @@ const useStyles = makeStyles((theme: Theme) =>
             },
             [theme.breakpoints.down('sm')]: {
                 marginRight: "1rem",
-                marginLeft: "4.5rem"
+                marginLeft: "5rem"
             },
         }
     }),
@@ -147,7 +156,7 @@ const Login = () => {
             <IconButton
                 aria-label="Login"
                 onClick={handleLogin}
-                className={classes.loginButton}
+                className={currentUser === null ? classes.loginButton : classes.logoutButton}
             >
                 {currentUser === null ? <img src="/images/connect-ledger.svg" /> : <img src="/images/logout.svg" />}
 

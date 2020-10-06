@@ -168,7 +168,7 @@ const AddressCard = ({ address }: AddressCardProps) => {
                 Address
             </Typography>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={3} sm={2}>
               <IconButton
                 aria-label="copy"
                 size="small"
