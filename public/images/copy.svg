@@ -10,6 +10,6 @@
         <mask id="mask-2" fill="white">
             <use xlink:href="#path-1"></use>
         </mask>
-        <use id="Path_89" fill="rgba(255, 255, 255, 0.8)" xlink:href="#path-1"></use>
+        <use id="Path_89" fill="rgba(153, 153, 153, 1)" xlink:href="#path-1"></use>
     </g>
 </svg>
