@@ -38,7 +38,9 @@ import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
 import MiddleEllipsis from '../misc/MiddleEllipsis'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import BigNumber from 'bignumber.js'
+import BigNumber from 'bignumber.js';
+import LockGold from '../ledger/celoGold/lock/LockGold';
+import UnlockGold from '../ledger/celoGold/unlock/UnlockGold';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -97,6 +99,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       justifyContent: "center",
     },
+
   })
 );
 
@@ -165,30 +168,12 @@ const AccountOverview = ({ address }: AccountOverviewProps) => {
           <Grid item xs={12}>
             <Divider variant="middle" className={classes.divider} />
           </Grid>
+          <Grid item xs={6}>
+            <UnlockGold />
+          </Grid>
 
-          <Grid container spacing={2} >
-            <Grid item xs={6} className={classes.centerContent} >
-              <div className={classes.centerButtons}>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  className={classes.buttonUnlock}
-                >
-                  <Typography variant="body1">Unlock CELO</Typography>
-                </Button>
-              </div>
-            </Grid>
-            <Grid item xs={6} className={classes.centerContent} >
-              <div className={classes.centerButtons}>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  className={classes.buttonLock}
-                >
-                  <Typography variant="body1">Lock CELO</Typography>
-                </Button>
-              </div>
-            </Grid>
+          <Grid item xs={6}>
+            <LockGold />
           </Grid>
         </Grid>
       </Card>
