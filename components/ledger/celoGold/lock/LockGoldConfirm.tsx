@@ -94,7 +94,7 @@ const LockGoldConfirm = () => {
                     </Grid>
                     <Grid item xs={10}>
                         <Typography variant="h6" color="textPrimary" noWrap className={classes.title}>
-                            Lock Celo Gold
+                            Lock CELO
               </Typography>
                     </Grid>
                     <Grid item xs={1}>
