@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -12,36 +12,57 @@ import ControlButtons from "./ControlButtons";
 import IconButton from '@material-ui/core/IconButton';
 import LedgerCelo from './LedgerCelo'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Link from "../Link";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            justifyContent: "center",
+        },
 
-    root: {
-        justifyContent: "center",
-    },
+        title: {
+            display: "block",
+            textAlign: "center",
+            paddingTop: "0.3rem",
+        },
 
-    title: {
-        display: "block",
-        textAlign: "center",
-        paddingTop: "0.3rem",
-    },
+        message: {
+            margin: "0 0.5rem 0.5rem 0.5rem",
+        },
+        errorMessage: {
+            color: "red",
+            textAlign: "center",
+            paddingBottom: "1rem"
+        },
+        loginButton: {
+            background: "rgba(153, 153, 153, 1)",
+            borderRadius: 5,
+            padding: "0.1rem",
+            verticalAlign: "middle",
+            "&:hover, &.Mui-focusVisible": { backgroundColor: "rgba(58, 211, 158, 0.5)" },
+            [theme.breakpoints.up('lg')]: {
+                marginRight: "2rem",
+            },
+        },
+        loggedIn: {
+            background: "rgba(153, 153, 153, 1)",
+            borderRadius: 5,
+            padding: "0.1rem",
+            verticalAlign: "middle",
+            "&:hover, &.Mui-focusVisible": { backgroundColor: "rgba(58, 211, 158, 0.5)" },
+            display: "inline-flex",
+            [theme.breakpoints.up('md')]: {
+                marginRight: "1rem",
+                marginLeft: "-0.5rem"
+            },
+            [theme.breakpoints.down('sm')]: {
+                marginRight: "1rem",
+                marginLeft: "4.5rem"
+            },
+        }
+    }),
+);
 
-    message: {
-        margin: "0 0.5rem 0.5rem 0.5rem",
-    },
-    errorMessage: {
-        color: "red",
-        textAlign: "center",
-        paddingBottom: "1rem"
-    },
-    loginButton: {
-        background: "rgba(153, 153, 153, 1)",
-        borderRadius: 5,
-        padding: "0.1rem",
-        verticalAlign: "middle",
-        "&:hover, &.Mui-focusVisible": { backgroundColor: "rgba(58, 211, 158, 0.5)" }
-    },
-
-});
 
 const Login = () => {
     const classes = useStyles();
@@ -110,6 +131,19 @@ const Login = () => {
 
     return (
         <>
+            {currentUser != null ?
+                <Link
+                    href="/account/[account]/"
+                    as={`../account/${currentUser}`}
+                    color="secondary">
+                    <IconButton
+                        aria-label="Login"
+                        className={classes.loggedIn}
+                    >
+                        <img src="/images/user-login.svg" />
+
+                    </IconButton>
+                </Link> : null}
             <IconButton
                 aria-label="Login"
                 onClick={handleLogin}

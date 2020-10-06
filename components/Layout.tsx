@@ -113,8 +113,19 @@ const useStyles = makeStyles((theme: Theme) =>
 
         listItemTitle: {
             paddingTop: '0.5rem'
-        }
-    })
+        },
+    
+		networkDropdown: {
+			[theme.breakpoints.up('lg')]: {
+				float: "left"
+			},
+			[theme.breakpoints.down('md')]: {
+				float: "right"
+			},
+		}
+
+
+	}),
 );
 
 const Layout = (props: { children: React.ReactNode }): JSX.Element => {
