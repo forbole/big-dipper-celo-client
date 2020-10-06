@@ -1,4 +1,4 @@
-import { Select, InputLabel, Theme, createStyles, makeStyles, Button, Dialog } from "@material-ui/core";
+import { Select, InputLabel, Theme, createStyles, makeStyles, Button, Dialog, TextField } from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -104,7 +104,9 @@ const useStyles = makeStyles((theme: Theme) =>
         },
 
         outlinedInput: {
-            border: "solid 1px rgba(153, 153, 153, 1)"
+            borderRadius: 5,
+            border: "solid 1px rgba(153, 153, 153, 1)",
+            padding: "0.25rem 1rem",
         },
 
         unlockGold: {
@@ -118,15 +120,15 @@ const UnlockGoldDialog = () => {
 
     return (
         <FormControl variant="outlined" fullWidth size="small">
-            <InputLabel htmlFor="unlock-gold-dialog" >
-            </InputLabel>
-            <OutlinedInput
-                id="unlock-gold-dialog"
-                endAdornment={<InputAdornment position="end">CELO</InputAdornment>}
-                labelWidth={295}
+            <TextField id="lock-gold-dialog" label=""
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment position="end">CELO</InputAdornment>
+                    ),
+                    disableUnderline: true
+                }}
                 defaultValue="0"
-                className={classes.outlinedInput}
-            />
+                className={classes.outlinedInput} />
         </FormControl>
     );
 }
@@ -217,7 +219,7 @@ const UnlockGold = () => {
                     <Grid container className={classes.item}>
                         <Grid item xs={12}>
                             <Typography variant="h6" color="textPrimary" noWrap className={classes.title}>
-                                Unlock Celo Gold
+                                Unlock CELO
               </Typography>
                         </Grid>
                     </Grid>

@@ -94,7 +94,7 @@ const UnlockGoldConfirm = () => {
                     </Grid>
                     <Grid item xs={10}>
                         <Typography variant="h6" color="textPrimary" noWrap className={classes.title}>
-                            Unlock Celo Gold
+                            Unlock CELO
               </Typography>
                     </Grid>
                     <Grid item xs={1}>
