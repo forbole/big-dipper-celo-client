@@ -110,6 +110,9 @@ const AccountTransactions = ({ address }: TransactionsProps) => {
   if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
 
+  if (data.transactionsByAccount.totalCounts === 0) {
+    return null
+  }
   return (
 
     <Accordion defaultExpanded>
