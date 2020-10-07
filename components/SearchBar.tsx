@@ -21,11 +21,23 @@ const useStyles = makeStyles((theme: Theme) =>
     inputLabel: {
       height: "2rem",
       verticalAlign: "middle",
-      padding: "0px 1rem 1rem",
+      padding: "0px 1rem 1rem 1rem",
       fontSize: "14px",
       background: "rgba(255, 255, 255, 1)",
       width: "100%",
       display: "flex",
+      "&:hover": {
+        backgroundColor: "#fff"
+      },
+      "&:focused": {
+        backgroundColor: "#fff"
+      },
+      "&:focused:not)": {
+        backgroundColor: "#fff"
+      },
+      "&:hover:not": {
+        backgroundColor: "#fff"
+      }
     },
     container: {
       padding: "0rem",
@@ -59,6 +71,7 @@ const SearchBar = () => {
             <FilledInput
               className={classes.inputLabel}
               id="search-bar"
+              color="secondary"
               value={values.txSearch}
               fullWidth={true}
               disableUnderline={true}
