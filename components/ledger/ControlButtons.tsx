@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 
 
 const useStyles = makeStyles({
-    controlButtonLabel: {
+    controlButton: {
         display: "flex",
         textTransform: "none",
         borderRadius: 4,
@@ -14,8 +14,11 @@ const useStyles = makeStyles({
         minHeight: "2.5rem",
         minWidth: "8.4375rem",
         textAlign: "center",
+        '&:disabled': {
+            color: "#000",
+            backgroundColor: "rgba(167,227,208, 0.8)"
+        }
     },
-
 
     root: {
         justifyContent: "center",
@@ -25,14 +28,15 @@ const useStyles = makeStyles({
     },
     confirmButton: {
         color: "rgba(255, 255, 255, 1)"
-    }
+    },
+
 
 });
 
-type ControlButtonsProps = { showRetry?: boolean, handleClick?: any, handleClose?: any };
+type ControlButtonsProps = { showRetry?: boolean, handleClick?: any, handleClose?: any, showDisabled?: boolean };
 
 
-const ControlButtons = ({ showRetry, handleClick, handleClose }: ControlButtonsProps) => {
+const ControlButtons = ({ showRetry, handleClick, handleClose, showDisabled }: ControlButtonsProps) => {
     const classes = useStyles();
 
     return (
@@ -42,7 +46,7 @@ const ControlButtons = ({ showRetry, handleClick, handleClose }: ControlButtonsP
                     <Button
                         variant="outlined"
                         color="secondary"
-                        className={classes.controlButtonLabel}
+                        className={classes.controlButton}
                         //fullWidth={true}
                         onClick={handleClose}
                     >
@@ -56,9 +60,10 @@ const ControlButtons = ({ showRetry, handleClick, handleClose }: ControlButtonsP
                 <Button
                     variant="contained"
                     color="secondary"
-                    className={classes.controlButtonLabel}
+                    className={classes.controlButton}
                     //fullWidth={true}
                     onClick={handleClick}
+                    disabled={showDisabled}
                 >
                     <Typography variant="body2" noWrap className={classes.confirmButton}>
                         {!showRetry ? "Confirm" : "Retry"}
