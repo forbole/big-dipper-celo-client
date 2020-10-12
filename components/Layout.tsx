@@ -275,38 +275,6 @@ const Layout = (props: { children: React.ReactNode }) => {
 									<ListItemText primary={text} />
 								</ListItem>
 							))}
-							{/* <Divider />
-          {[
-            <Link href="/account" color="inherit">
-              <Typography variant="body1" color="textSecondary">
-                <ListItemIcon className={classes.icon}>
-                  <img src="/images/user-login.svg" />
-                </ListItemIcon>
-                {"Michelle Clark"}
-              </Typography>
-            </Link>,
-
-            <Link href="/blocks" color="inherit">
-              <Typography variant="body1" color="textSecondary">
-                <ListItemIcon className={classes.icon}>
-                  <img src="/images/logout.svg" />
-                </ListItemIcon>
-                {"Logout"}
-              </Typography>
-            </Link>,
-            <Link href="/transactions" color="inherit">
-              <Typography variant="body1" color="textSecondary" id="signin-ledger">
-                <ListItemIcon className={classes.icon}>
-                  <img src="/images/connect-ledger.svg" />
-                </ListItemIcon>
-                {"Sign In With Ledger"}
-              </Typography>{" "}
-            </Link>,
-          ].map((text, index) => (
-            <ListItem button key={index}>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))} */}
 						</List>
 
 					</Drawer>
