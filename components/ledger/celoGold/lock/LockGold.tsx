@@ -20,7 +20,7 @@ import { useQuery } from "@apollo/client";
 import ComponentLoader from '../../../misc/ComponentLoader';
 import NotAvailable from '../../../misc/NotAvailable'
 import ErrorMessage from '../../../misc/ErrorMessage';
-import LedgerCelo from './../../LedgerCelo'
+import Ledger from '../../Ledger'
 import Login from '../../Login'
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -167,28 +167,28 @@ const LockGold = () => {
         try {
             setLedgerLoading(true)
             setLedgerErrorMessage("Connecting...")
-            await LedgerCelo.connect()
-            if (await LedgerCelo.connect() === true) {
+            await Ledger.connect()
+            if (await Ledger.connect() === true) {
                 setLedgerErrorMessage("Please accept the connection in your Ledger device")
-                let userAddress = await LedgerCelo.getAddress()
+                let userAddress = await Ledger.getAddress()
                 localStorage.setItem('currentUserAddress', userAddress)
                 setCurrentUser(userAddress)
                 setLedgerErrorMessage("")
                 setConnected(true)
                 setLedgerLoading(false)
                 try {
-                    let ver = await LedgerCelo.getCeloAppVersion()
+                    let ver = await Ledger.getCeloAppVersion()
                 }
                 catch (e) {
                     setLedgerError(true)
-                    setLedgerErrorMessage(LedgerCelo.checkLedgerErrors(e.message))
+                    setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
                 }
             }
         }
         catch (e) {
             setLedgerError(true)
             setLedgerLoading(true)
-            setLedgerErrorMessage(LedgerCelo.checkLedgerErrors(e.message))
+            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
         }
 
 
@@ -200,11 +200,11 @@ const LockGold = () => {
         try {
             const from = currentUser
             const lockObject = { amount, from }
-            await LedgerCelo.lockCelo(lockObject)
+            await Ledger.lockCelo(lockObject)
         }
         catch (e) {
             setLedgerError(true)
-            setLedgerErrorMessage(LedgerCelo.checkLedgerErrors(e.message))
+            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
 
         }
 
