@@ -1,172 +1,261 @@
-import { InputLabel, Select } from '@material-ui/core';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Divider from '@material-ui/core/Divider';
-import FormControl from '@material-ui/core/FormControl';
-import Grid from '@material-ui/core/Grid';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import MenuItem from '@material-ui/core/MenuItem';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import React, { useEffect } from 'react';
+import { Select, InputLabel, Dialog, IconButton, Button, createStyles } from "@material-ui/core";
+import MenuItem from "@material-ui/core/MenuItem";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControl from "@material-ui/core/FormControl";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import React, { useEffect, useLayoutEffect } from "react";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Divider from "@material-ui/core/Divider";
+import ControlButtons from '../../ControlButtons'
+import TextField from '@material-ui/core/TextField';
+import LockGoldConfirm from './LockGoldConfirm'
+import { GET_ACCOUNT_DETAILS } from '../../../query/Account';
+import { useQuery } from "@apollo/client";
+import ComponentLoader from '../../../misc/ComponentLoader';
+import NotAvailable from '../../../misc/NotAvailable'
+import ErrorMessage from '../../../misc/ErrorMessage';
+import LedgerCelo from './../../LedgerCelo'
+import Login from '../../Login'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-import ControlButtons from '../../ControlButtons';
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            justifyContent: "center",
+        },
+        title: {
+            display: "block",
+            textAlign: "center",
+            paddingTop: "0.5rem",
+        },
 
-const useStyles = makeStyles({
-    root: {
-        justifyContent: 'center'
-    },
-    title: {
-        display: 'block',
-        textAlign: 'center',
-        paddingTop: '0.5rem'
-    },
+        dialogTitle: {
+            padding: "1rem 1rem 0rem 1rem",
+        },
 
-    dialogTitle: {
-        padding: '1rem 1rem 0rem 1rem'
-    },
+        dialogContent: {
+            display: "flex",
+        },
+        divider: {
+            backgroundColor: "rgba(232, 232, 232, 1)",
+        },
 
-    dialogContent: {
-        display: 'flex'
-    },
-    divider: {
-        backgroundColor: 'rgba(232, 232, 232, 1)'
-    },
+        dialog: {
+            paddingBottom: '1rem'
+        },
 
-    dialog: {
-        paddingBottom: '1rem'
-    },
 
-    item: {
-        justifyContent: 'center'
-    },
+        item: {
+            justifyContent: "center",
+        },
 
-    wrapText: {
-        wordWrap: 'break-word',
-        wordBreak: 'break-all'
-    },
+        wrapText: {
+            wordWrap: 'break-word',
+            wordBreak: 'break-all'
 
-    centerContent: {
-        display: 'flex',
-        justifyContent: 'center'
-    },
+        },
 
-    select: {
-        justifyContent: 'center',
-        border: 'solid rgba(255, 255, 255, 0.6) ',
-        borderWidth: '0.09rem',
-        borderRadius: 4
-    },
+        centerContent: {
+            display: "flex",
+            justifyContent: "center",
+        },
 
-    leftPadding: {
-        paddingLeft: '1rem'
-    },
 
-    alignLeft: {
-        display: 'flex',
-        overflow: 'auto',
-        paddingTop: '0.5rem',
-        paddingBottom: '0.2rem'
-    },
-    alignRight: {
-        display: 'block',
-        float: 'right',
-        paddingTop: '0.5rem',
-        paddingBottom: '0.5rem'
-    },
+        select: {
+            justifyContent: "center",
+            border: "solid 1px rgba(153, 153, 153, 1) ",
+            borderWidth: "0.09rem",
+            borderRadius: 4,
+        },
 
-    bottomPadding: {
-        paddingBottom: '1rem'
-    }
-});
+        leftPadding: {
+            paddingLeft: "1rem",
+        },
 
-const LockGoldDialog = () => {
-    return (
-        <FormControl variant="outlined" fullWidth size="small">
-            <InputLabel htmlFor="lock-gold-dialog">
-                <Typography variant="body2" color="textSecondary">
-                    Insert Amount
-                </Typography>
-            </InputLabel>
-            <OutlinedInput
-                id="id-lock-gold-dialog"
-                endAdornment={<InputAdornment position="end">CELO</InputAdornment>}
-                labelWidth={295}
-                defaultValue="0"
-                className={classes.outlinedInput} />
+        alignLeft: {
+            display: "flex",
+            overflow: "auto",
+            paddingTop: "0.5rem",
+            paddingBottom: "0.2rem",
+        },
+        alignRight: {
+            display: "block",
+            float: "right",
+            paddingTop: "0.5rem",
+            paddingBottom: "0.5rem",
+        },
 
-        </FormControl>
-    );
-};
+        bottomPadding: {
+            paddingBottom: "1rem"
+        },
 
-const TokenDropdown = () => {
-    const classes = useStyles();
-    const name = 'Michelle Clark';
-    const name_2 = 'Ada Adams';
-    return (
-        <FormControl fullWidth={true} size="medium">
-            <Select
-                defaultValue=""
-                id="grouped-select"
-                color="primary"
-                className={classes.select}
-                disableUnderline={true}
-                fullWidth={true}
+        centerButtons: {
+            justifyContent: "center",
+            flexWrap: "wrap",
+            padding: "0.1rem",
+            textTransform: "none",
+        },
+        buttonLock: {
+            justifyContent: "center",
+            [theme.breakpoints.down('xs')]: {
+                width: "7.5rem",
+            },
+            width: "9.5rem",
+            padding: "0.5rem",
+            textTransform: "none",
+            border: "solid thin",
+            margin: "0.3rem 1rem 0.2rem 0",
+        },
 
-            >
-                <ListSubheader>Accounts:</ListSubheader>
-                <Divider className={classes.divider} />
+        outlinedInput: {
+            borderRadius: 5,
+            border: "solid 1px rgba(153, 153, 153, 1)",
+            padding: "0.25rem 1rem",
+        },
 
-                <ListSubheader></ListSubheader>
-                <MenuItem value={1}>
-                    <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        className={classes.leftPadding}>
-                        {name}
-                    </Typography>
-                </MenuItem>
+        lockGold: {
+            justifyContent: "center",
+        },
 
-                <Divider variant="middle" className={classes.divider} />
+        errorMessage: {
+            color: "red",
+            textAlign: "center",
+            paddingBottom: "1rem"
+        },
 
-                <ListSubheader></ListSubheader>
+        circularProgress: {
+            textAlign: "center",
+            paddingBottom: "1rem"
+        }
 
-                <MenuItem value={2}>
-                    <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        className={classes.leftPadding}>
-                        {name_2}
-                    </Typography>
-                </MenuItem>
-            </Select>
-        </FormControl>
-    );
-};
+    })
+);
+
 
 const LockGold = (): JSX.Element => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const [currentUser, setCurrentUser] = React.useState('' || null);
+    const [connected, setConnected] = React.useState(false);
+    const [currentUser, setCurrentUser] = React.useState('');
+    const [nextDialog, setNextDialog] = React.useState(false);
+    const [amount, setAmount] = React.useState('');
+    const [dialogError, setDialogError] = React.useState(false);
+    const [dialogErrorMessage, setDialogErrorMessage] = React.useState('');
+    const address = currentUser;
+    const [ledgerError, setLedgerError] = React.useState(false);
+    const [ledgerErrorMessage, setLedgerErrorMessage] = React.useState('');
+    const [ledgerLoading, setLedgerLoading] = React.useState(false);
 
-    useEffect(() => {
-        let localUser = localStorage.getItem('currentUserAddress');
-        return () => {
-            // @ts-ignore
-            setCurrentUser(localUser)
-        };
-    });
 
     const handleClose = () => {
         setOpen(false);
     };
 
-    const handleLock = () => {
+    const handleLock = async () => {
+        setLedgerError(false)
+        setLedgerErrorMessage("")
         setOpen(true);
+
+        try {
+            setLedgerLoading(true)
+            setLedgerErrorMessage("Connecting...")
+            await LedgerCelo.connect()
+            if (await LedgerCelo.connect() === true) {
+                setLedgerErrorMessage("Please accept the connection in your Ledger device")
+                let userAddress = await LedgerCelo.getAddress()
+                localStorage.setItem('currentUserAddress', userAddress)
+                setCurrentUser(userAddress)
+                setLedgerErrorMessage("")
+                setConnected(true)
+                setLedgerLoading(false)
+                try {
+                    let ver = await LedgerCelo.getCeloAppVersion()
+                }
+                catch (e) {
+                    setLedgerError(true)
+                    setLedgerErrorMessage(LedgerCelo.checkLedgerErrors(e.message))
+                }
+            }
+        }
+        catch (e) {
+            setLedgerError(true)
+            setLedgerLoading(true)
+            setLedgerErrorMessage(LedgerCelo.checkLedgerErrors(e.message))
+        }
+
+
+
     };
+
+    const confirmLock = async () => {
+
+        try {
+            const from = currentUser
+            const lockObject = { amount, from }
+            await LedgerCelo.lockCelo(lockObject)
+        }
+        catch (e) {
+            setLedgerError(true)
+            setLedgerErrorMessage(LedgerCelo.checkLedgerErrors(e.message))
+
+        }
+
+    };
+
+    const checkForInputErrors = (e) => {
+        if (!(parseFloat(e.target.value) > 0)) {
+            setDialogError(true)
+            setDialogErrorMessage("Incorrect format! Please enter CELO amount to lock. ")
+        }
+
+        else {
+            setDialogError(false)
+            setDialogErrorMessage("")
+        }
+    };
+
+
+    useEffect(() => {
+        let localUser = localStorage.getItem('currentUserAddress');
+        let unlockCELOAmount = document.getElementById("lock-gold-amount") as HTMLInputElement
+        let unlockAmount = unlockCELOAmount ? unlockCELOAmount.value : "0";
+        //@ts-ignore
+        setCurrentUser(localUser)
+        setAmount(unlockAmount)
+    });
+
+
+    const lockGoldDialog = () => {
+        return (
+            <FormControl variant="outlined" fullWidth size="small">
+                <TextField id="lock-gold-amount"
+                    error={dialogError}
+                    helperText={dialogErrorMessage}
+                    onChange={(e) => checkForInputErrors(e)}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">CELO</InputAdornment>
+                        ),
+                        disableUnderline: true
+                    }}
+                    className={classes.outlinedInput} />
+
+            </FormControl>
+        );
+    }
+
+    const { loading, error, data } = useQuery(GET_ACCOUNT_DETAILS, {
+        variables: { address },
+    });
+
+    if (loading) return <ComponentLoader />
+    if (error) return <ErrorMessage message={error.message} />
 
     return (
         <>
