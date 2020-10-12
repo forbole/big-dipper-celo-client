@@ -190,15 +190,16 @@ const LockGold = ({ isOpen, pageAddress, showButton }: LockGoldProps) => {
                 }
                 catch (e) {
                     setLedgerError(true)
-                    setLedgerErrorMessage(LedgerCelo.checkLedgerErrors(e.message))
+                    setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
                 }
             }
         }
         catch (e) {
             setLedgerError(true)
             setLedgerLoading(true)
-            setLedgerErrorMessage(LedgerCelo.checkLedgerErrors(e.message))
+            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
         }
+
 
 
 
@@ -210,11 +211,11 @@ const LockGold = ({ isOpen, pageAddress, showButton }: LockGoldProps) => {
         try {
             const from = currentUser
             const lockObject = { amount, from }
-            await LedgerCelo.lockCelo(lockObject)
+            await Ledger.lockCelo(lockObject)
         }
         catch (e) {
             setLedgerError(true)
-            setLedgerErrorMessage(LedgerCelo.checkLedgerErrors(e.message))
+            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
 
         }
 

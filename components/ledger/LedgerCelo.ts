@@ -26,6 +26,8 @@ const getCeloLedgerTransport = () => {
 
 const MAINNET = "https://rc1-forno.celo-testnet.org";
 
+type LockCeloProps = { amount: string, from: string }
+
 class LedgerCelo extends Component {
 
     private address: string = '';
@@ -93,11 +95,30 @@ class LedgerCelo extends Component {
 
                 return address;
             } else {
-                this.checkLedgerErrors("LedgerCelo not initialized yet.");
+                // @ts-ignore
+                this.checkLedgerErrors("Ledger device is disconnected");
             }
         } catch (error) {
             this.checkLedgerErrors(error)
         }
+    }
+
+    async lockCelo({ amount, from }: LockCeloProps) {
+
+        if (!this.kit) {
+           this.checkLedgerErrors("Ledger device is disconnected");
+        }
+
+        const lockedCelo = await this.kit.contracts.getLockedGold();
+
+        console.log(`Lock ${amount} CELO for address ${this.address}`);
+
+        const receipt = await lockedCelo
+            .lock()
+            // @ts-ignore
+            .sendAndWaitForReceipt({ from, value: amount });
+            console.log(receipt)
+        return receipt;
     }
 
 }
