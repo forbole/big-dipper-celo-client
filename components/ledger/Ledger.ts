@@ -28,7 +28,7 @@ const MAINNET = "https://rc1-forno.celo-testnet.org";
 
 type LockCeloProps = { amount: string, from: string }
 
-class LedgerCelo extends Component {
+class Ledger extends Component {
 
     private address: string = '';
     private kit: any = null;
@@ -125,4 +125,4 @@ class LedgerCelo extends Component {
 
 
 
-export default new LedgerCelo(MAINNET);
+export default new Ledger(MAINNET);

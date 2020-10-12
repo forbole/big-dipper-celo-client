@@ -10,7 +10,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import ControlButtons from "./ControlButtons";
 import IconButton from '@material-ui/core/IconButton';
-import LedgerCelo from './LedgerCelo'
+import Ledger from './Ledger'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Link from "../Link";
 
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
         title: {
             display: "block",
             textAlign: "center",
-            paddingTop: "0.3rem",
+            padding: "1rem 0rem",
         },
 
         message: {
@@ -96,14 +96,14 @@ const Login = () => {
             setErrorMessage("Connecting...")
             setRetry(false)
             try {
-                await LedgerCelo.connect()
-                if (await LedgerCelo.connect() === true) {
+                await Ledger.connect()
+                if (await Ledger.connect() === true) {
                     setErrorMessage("Please accept the connection in your Ledger device")
-                    let userAddress = await LedgerCelo.getAddress()
+                    let userAddress = await Ledger.getAddress()
                     localStorage.setItem('currentUserAddress', userAddress)
                     setCurrentUser(userAddress)
                     try {
-                        let ver = await LedgerCelo.getCeloAppVersion()
+                        let ver = await Ledger.getCeloAppVersion()
                     }
                     catch (e) {
                         setErrorMessage(e.message)
@@ -113,14 +113,14 @@ const Login = () => {
 
             }
             catch (e) {
-                setErrorMessage(LedgerCelo.checkLedgerErrors(e.message))
+                setErrorMessage(Ledger.checkLedgerErrors(e.message))
                 setRetry(true);
             }
 
         }
         else if (currentUser) {
             try {
-                LedgerCelo.disconnect();
+                Ledger.disconnect();
                 localStorage.removeItem('currentUserAddress')
                 setCurrentUser(null)
                 setOpen(false);
