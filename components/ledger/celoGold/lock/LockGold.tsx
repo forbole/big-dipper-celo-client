@@ -20,7 +20,7 @@ import { useQuery } from "@apollo/client";
 import ComponentLoader from '../../../misc/ComponentLoader';
 import NotAvailable from '../../../misc/NotAvailable'
 import ErrorMessage from '../../../misc/ErrorMessage';
-import Ledger from '../../Ledger'
+import LedgerCelo from './../../LedgerCelo'
 import Login from '../../Login'
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -138,6 +138,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
+
 const LockGold = (): JSX.Element => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -165,28 +166,28 @@ const LockGold = (): JSX.Element => {
         try {
             setLedgerLoading(true)
             setLedgerErrorMessage("Connecting...")
-            await Ledger.connect()
-            if (await Ledger.connect() === true) {
+            await LedgerCelo.connect()
+            if (await LedgerCelo.connect() === true) {
                 setLedgerErrorMessage("Please accept the connection in your Ledger device")
-                let userAddress = await Ledger.getAddress()
+                let userAddress = await LedgerCelo.getAddress()
                 localStorage.setItem('currentUserAddress', userAddress)
                 setCurrentUser(userAddress)
                 setLedgerErrorMessage("")
                 setConnected(true)
                 setLedgerLoading(false)
                 try {
-                    let ver = await Ledger.getCeloAppVersion()
+                    let ver = await LedgerCelo.getCeloAppVersion()
                 }
                 catch (e) {
                     setLedgerError(true)
-                    setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
+                    setLedgerErrorMessage(LedgerCelo.checkLedgerErrors(e.message))
                 }
             }
         }
         catch (e) {
             setLedgerError(true)
             setLedgerLoading(true)
-            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
+            setLedgerErrorMessage(LedgerCelo.checkLedgerErrors(e.message))
         }
 
 
@@ -198,11 +199,11 @@ const LockGold = (): JSX.Element => {
         try {
             const from = currentUser
             const lockObject = { amount, from }
-            await Ledger.lockCelo(lockObject)
+            await LedgerCelo.lockCelo(lockObject)
         }
         catch (e) {
             setLedgerError(true)
-            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
+            setLedgerErrorMessage(LedgerCelo.checkLedgerErrors(e.message))
 
         }
 
@@ -268,51 +269,83 @@ const LockGold = (): JSX.Element => {
                             noWrap
                             className={classes.title}>
                             Lock Celo Gold
-                        </Typography>
+                            </Typography>
                     </Grid>
-                </Grid>
-            </DialogTitle>
+                    </Grid>
+                </DialogTitle>
 
-            <DialogContent>
-                <Grid container spacing={1}>
-                    <DialogContentText id="ledger-lock-gold-content" className={classes.dialog}>
-                        <Grid container className={classes.dialogContent}>
-                            <Grid item xs={12}>
-                                <Typography
-                                    variant="body2"
-                                    noWrap
-                                    className={classes.alignLeft}
-                                    align="left">
-                                    Account
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} className={classes.bottomPadding}>
-                                <TokenDropdown />
-                            </Grid>
+                <DialogContent >
+                    <Grid container spacing={1} >
+                        <DialogContentText id="ledger-lock-gold-content" className={classes.dialog}>
+                            <Grid container className={classes.dialogContent}>
+                                <Grid item xs={12}>
+                                    <Typography
+                                        variant="body2"
+                                        noWrap
+                                        className={classes.alignLeft}
+                                        align="left"
+                                    >
+                                        Account
+                </Typography>
+                                </Grid>
+                                <Grid item xs={12} className={classes.bottomPadding}>
+                                    <Typography
+                                        variant="body2"
+                                        noWrap
+                                        color="textPrimary"
+                                    >
+                                        {currentUser}
+                                    </Typography>
+                                </Grid>
 
-                            <Grid item xs={12}>
-                                <Typography
-                                    variant="body2"
-                                    noWrap
-                                    className={classes.alignLeft}
-                                    align="left">
-                                    Lock amount
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <LockGoldDialog />
-                            </Grid>
-                            <Grid item xs={12} className={classes.bottomPadding}>
-                                <Typography variant="body2" noWrap className={classes.alignRight}>
-                                    Max {'14.99217479 CELO'}
-                                </Typography>
-                            </Grid>
+                                <Grid item xs={12}>
+                                    <Typography
+                                        variant="body2"
+                                        noWrap
+                                        className={classes.alignLeft}
+                                        align="left"
+                                    >
+                                        Lock amount
+                </Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    {lockGoldDialog()}
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Typography
+                                        variant="body2"
+                                        noWrap
+                                        className={classes.alignRight}
+                                    >
+                                        Max {data.account && data.account.totalBalance && data.account.totalBalance.gold ?
+                                            data.account.totalBalance.gold
+                                            : 0} CELO
+                                    </Typography>
+                                </Grid>
 
-                            <ControlButtons />
-                        </Grid>
-                    </DialogContentText>
-                </Grid>
-            </DialogContent>
+                                {ledgerLoading ?
+                                    <Grid item xs={12} className={classes.circularProgress}>
+                                        <CircularProgress color="secondary" />
+                                    </Grid>
+                                    : null}
+
+                                {ledgerErrorMessage ?
+                                    <>
+                                        {/* <CircularProgress color="secondary" /> */}
+                                        <Grid item xs={12} className={classes.errorMessage}>
+                                            <Typography variant="body2">
+                                                {ledgerErrorMessage}
+                                            </Typography>
+                                        </Grid> </> : null}
+                                {!ledgerErrorMessage ?
+                                    <ControlButtons handleClick={confirmLock} handleClose={handleClose} showDisabled={dialogError || !connected} />
+                                    :
+                                    <ControlButtons showRetry={true} handleClick={handleLock} handleClose={handleClose} />}
+                            </Grid>
+                        </DialogContentText>
+                    </Grid>
+                </DialogContent>
+            { nextDialog ? <LockGoldConfirm isOpen={nextDialog} amount={amount} errorMessage={ledgerErrorMessage} /> : null}
         </>
     );
 };

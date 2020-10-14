@@ -11,6 +11,7 @@ import React, { Component } from 'react';
 import Web3 from "web3";
 
 
+
 const getCeloLedgerTransport = () => {
     // @ts-ignore
     if (window.USB) {
@@ -27,7 +28,7 @@ const getCeloLedgerTransport = () => {
 const MAINNET = "https://rc1-forno.celo-testnet.org";
 
 type LockCeloProps = { amount: string, from: string }
-
+type UnlockCeloProps = {amount: string, from: string}
 class Ledger extends Component {
 
     private address: string = '';
@@ -35,7 +36,8 @@ class Ledger extends Component {
     private eth: any = null;
     private wallet: any = null;
     private web3: any = null;
-    private isConnected: boolean = false;
+    public isConnected: boolean = false;
+    // public hasKit: boolean = false;
 
     checkLedgerErrors(errorMessage: string) {
         switch (errorMessage) {
@@ -44,7 +46,7 @@ class Ledger extends Component {
             case "Invalid channel":
                 return "Please unplug your Ledger device and connect again"
             case "Possible connection lost with the ledger. Check if still on and connected. Ledger device: UNKNOWN_ERROR (0x6804)":
-                return "Ledger device is disconnected"
+                return "Ledger device is disconnected. Please unlock your Ledger device, open Celo App and try again. "
             case "Ledger device: INS_NOT_SUPPORTED (0x6d00)":
                 return "Celo App is not open"
             default:
@@ -65,8 +67,8 @@ class Ledger extends Component {
         this.eth = eth;
         this.kit = kit;
         this.wallet = wallet;
+        this.isConnected = true
         console.log("Connected")
-        return this.isConnected = true
     }
 
     disconnect() {
@@ -74,13 +76,24 @@ class Ledger extends Component {
         this.kit = null;
         this.wallet = null;
         this.address = "";
-        console.log("disconnected")
-        return this.isConnected = false
+        this.isConnected = false
+        console.log("Disconnected")
     }
 
     async getCeloAppVersion() {
         const appConfig = await this.eth.getAppConfiguration();
         return appConfig.version;
+    }
+
+     isLedgerConnected() {
+        if(!this.kit){
+            this.isConnected = false;
+            return false
+        }
+        else{
+            this.isConnected = true;
+            return true
+        }
     }
 
     async getAddress(derivationPath: "0" | "1" | "2" | "3" | "4" = "0") {
@@ -111,7 +124,7 @@ class Ledger extends Component {
 
         const lockedCelo = await this.kit.contracts.getLockedGold();
 
-        console.log(`Lock ${amount} CELO for address ${this.address}`);
+        console.log(`Lock ${amount} CELO for address ${from}`);
 
         const receipt = await lockedCelo
             .lock()
@@ -119,7 +132,22 @@ class Ledger extends Component {
             .sendAndWaitForReceipt({ from, value: amount });
             console.log(receipt)
         return receipt;
-    }
+    };
+
+
+        async unlockCelo({ amount, from }: UnlockCeloProps) {
+        if (!this.kit) {
+            this.checkLedgerErrors("Ledger device is disconnected");
+        }
+console.log(from)
+        this.kit.defaultAccount = from;
+        const lockedCelo = await this.kit.contracts.getLockedGold();
+
+        console.log(`Unlock ${amount} CELO for address ${from}`);
+
+        const receipt = await lockedCelo.unlock(amount).sendAndWaitForReceipt();
+        return receipt;
+    };
 
 }
 

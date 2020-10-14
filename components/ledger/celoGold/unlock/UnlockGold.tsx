@@ -4,7 +4,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
-import React from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -12,7 +12,14 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import ControlButtons from '../../ControlButtons'
-
+import UnlockGoldConfirm from './UnlockGoldConfirm'
+import { GET_ACCOUNT_DETAILS } from '../../../query/Account';
+import { useQuery } from "@apollo/client";
+import ComponentLoader from '../../../misc/ComponentLoader';
+import NotAvailable from '../../../misc/NotAvailable'
+import ErrorMessage from '../../../misc/ErrorMessage';
+import Ledger from '../../Ledger'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -26,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
 
         dialogTitle: {
-            padding: "1rem 1rem 0rem 1rem",
+            padding: "1rem 1rem 1rem 1rem",
         },
 
         dialogContent: {
@@ -111,137 +118,265 @@ const useStyles = makeStyles((theme: Theme) =>
 
         unlockGold: {
             justifyContent: "center",
+        },
+
+        errorMessage: {
+            color: "red",
+            textAlign: "center",
+            paddingBottom: "1rem"
+        },
+
+        circularProgress: {
+            textAlign: "center",
+            paddingBottom: "1rem"
         }
     })
 );
 
-const UnlockGoldDialog = () => {
-    return (
-        <FormControl variant="outlined" fullWidth size="small">
-            <TextField id="lock-gold-dialog" label=""
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position="end">CELO</InputAdornment>
-                    ),
-                    disableUnderline: true
-                }}
-                defaultValue="0"
-                className={classes.outlinedInput} />
-        </FormControl>
-    );
-};
 
-const TokenDropdown = () => {
+
+type UnlockGoldProps = { isOpen?: boolean, currentAddressPage?: string };
+
+
+const UnlockGold = ({ isOpen, currentAddressPage }: UnlockGoldProps): JSX.Element => {
+
     const classes = useStyles();
-    const name = 'Michelle Clark';
-    const name_2 = 'Ada Adams';
-    return (
-        <FormControl fullWidth size="medium">
-            <Select
-                defaultValue=""
-                color="primary"
-                className={classes.select}
-                disableUnderline={true}
-                fullWidth={true}>
-                <ListSubheader>Accounts:</ListSubheader>
-                <Divider className={classes.divider} />
+    const [open, setOpen] = React.useState(isOpen);
+    const [connected, setConnected] = React.useState(false);
+    const [currentUser, setCurrentUser] = React.useState('');
+    const [nextDialog, setNextDialog] = React.useState(false);
+    const [amount, setAmount] = React.useState('')
+    const [dialogError, setDialogError] = React.useState(false);
+    const [dialogErrorMessage, setDialogErrorMessage] = React.useState("");
+    const [ledgerError, setLedgerError] = React.useState(false);
+    const [ledgerErrorMessage, setLedgerErrorMessage] = React.useState('');
+    const [ledgerLoading, setLedgerLoading] = React.useState(false);
+    const address = currentUser;
 
-                <ListSubheader></ListSubheader>
-                <MenuItem value={1}>
-                    <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        className={classes.leftPadding}>
-                        {name}
-                    </Typography>
-                </MenuItem>
-
-                <Divider variant="middle" className={classes.divider} />
-
-                <ListSubheader></ListSubheader>
-
-                <MenuItem value={2}>
-                    <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        className={classes.leftPadding}>
-                        {name_2}
-                    </Typography>
-                </MenuItem>
-            </Select>
-        </FormControl>
-    );
-};
-
-const UnlockGold = (): JSX.Element => {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
 
     const handleClose = () => {
         setOpen(false);
     };
 
-    const handleUnlock = () => {
+    const handleUnlock = async () => {
+        setLedgerError(false)
+        setLedgerErrorMessage("")
         setOpen(true);
+
+        try {
+            if (Ledger.isConnected === false) {
+                setLedgerLoading(true)
+                setLedgerErrorMessage("Connecting...")
+                await Ledger.connect()
+            }
+
+            if (Ledger.isConnected === true) {
+                setLedgerErrorMessage("Please accept the connection in your Ledger device. ")
+                let userAddress = await Ledger.getAddress()
+                localStorage.setItem('currentUserAddress', userAddress)
+                setCurrentUser(userAddress)
+                setLedgerErrorMessage("")
+                setConnected(true)
+                setLedgerLoading(false)
+                try {
+                    let ver = await Ledger.getCeloAppVersion()
+                }
+                catch (e) {
+                    setLedgerError(true)
+                    setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
+                }
+            }
+        }
+        catch (e) {
+            setLedgerError(true)
+            setLedgerLoading(true)
+            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
+        }
+
     };
-    return (
-        <>
-            <DialogTitle id="ledger-unlock-gold-title" className={classes.dialogTitle}>
-                <Grid container className={classes.item}>
-                    <Grid item xs={12}>
-                        <Typography
-                            variant="h6"
-                            color="textPrimary"
-                            noWrap
-                            className={classes.title}>
-                            Unlock Celo Gold
-                        </Typography>
+
+    const confirmUnlock = async () => {
+        // setOpen(false);
+        // setNextDialog(true)
+        try {
+            const from = currentUser
+            const unlockObject = { amount, from }
+            await Ledger.unlockCelo(unlockObject)
+        }
+        catch (e) {
+            setLedgerError(true)
+            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
+
+        }
+    };
+
+    const checkForInputErrors = (e) => {
+        if (!(parseFloat(e.target.value) > 0)) {
+            setDialogError(true)
+            setDialogErrorMessage("Incorrect format! Please enter CELO amount to unlock. ")
+        }
+
+        else {
+            setDialogError(false)
+            setDialogErrorMessage("")
+        }
+    };
+
+    useEffect(() => {
+        let localUser = localStorage.getItem('currentUserAddress');
+        let unlockCELOAmount = document.getElementById("unlock-gold-amount") as HTMLInputElement
+        let unlockAmount = unlockCELOAmount ? unlockCELOAmount.value : "0";
+        //@ts-ignore
+        setCurrentUser(localUser)
+        setAmount(unlockAmount)
+    });
+
+    const unlockGoldDialog = () => {
+        return (
+            <FormControl variant="outlined" fullWidth size="small">
+                <TextField id="unlock-gold-amount"
+                    error={dialogError}
+                    helperText={dialogErrorMessage}
+                    onChange={(e) => checkForInputErrors(e)}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">CELO</InputAdornment>
+                        ),
+                        disableUnderline: true,
+                    }}
+                    disabled={ledgerLoading}
+                    className={classes.outlinedInput} />
+            </FormControl>
+        );
+    }
+
+    const { loading, error, data } = useQuery(GET_ACCOUNT_DETAILS, {
+        variables: { address },
+    });
+
+
+    if (loading) return <ComponentLoader />
+    if (error) return <ErrorMessage message={error.message} />
+    if (currentAddressPage === currentUser) {
+        return (
+            <>
+                {/* {!isOpen ? */}
+                <Grid container spacing={2} className={classes.unlockGold}>
+                    <Grid item xs={6} className={classes.centerContent} >
+                        <div className={classes.centerButtons}>
+                            <Button
+                                variant="outlined"
+                                color="secondary"
+                                onClick={handleUnlock}
+                                className={classes.buttonUnlock}
+                            >
+                                <Typography variant="body1">Unlock CELO</Typography>
+                            </Button>
+                        </div>
                     </Grid>
                 </Grid>
-            </DialogTitle>
+                {/* : null} */}
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="ledger-dialog-unlock-gold"
+                    //fullWidth
+                    maxWidth="sm"
+                >
+                    <>
+                        <DialogTitle id="ledger-unlock-gold-title" className={classes.dialogTitle}>
+                            <Grid container className={classes.item}>
+                                <Grid item xs={12}>
+                                    <Typography variant="h6" color="textPrimary" noWrap className={classes.title}>
+                                        Unlock CELO
+              </Typography>
+                                </Grid>
+                            </Grid>
+                        </DialogTitle>
 
-            <DialogContent>
-                <Grid container spacing={1}>
-                    <DialogContentText id="ledger-unlock-gold-content" className={classes.dialog}>
-                        <Grid container className={classes.dialogContent}>
-                            <Grid item xs={12}>
-                                <Typography
-                                    variant="body2"
-                                    noWrap
-                                    className={classes.alignLeft}
-                                    align="left">
-                                    Account
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} className={classes.bottomPadding}>
-                                <TokenDropdown />
-                            </Grid>
+                        <DialogContent >
+                            <Grid container spacing={1} >
+                                <DialogContentText id="ledger-unlock-gold-content" className={classes.dialog}>
+                                    <Grid container className={classes.dialogContent}>
+                                        <Grid item xs={12}>
+                                            <Typography
+                                                variant="body2"
+                                                noWrap
+                                                className={classes.alignLeft}
+                                                align="left"
+                                            >
+                                                Account
+                </Typography>
+                                        </Grid>
+                                        <Grid item xs={12} className={classes.bottomPadding}>
+                                            <Typography
+                                                variant="body2"
+                                                noWrap
+                                                color="textPrimary"
+                                            >
+                                                {currentUser}
+                                            </Typography>
+                                        </Grid>
 
-                            <Grid item xs={12}>
-                                <Typography
-                                    variant="body2"
-                                    noWrap
-                                    className={classes.alignLeft}
-                                    align="left">
-                                    Unlock amount
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <UnlockGoldDialog />
-                            </Grid>
-                            <Grid item xs={12} className={classes.bottomPadding}>
-                                <Typography variant="body2" noWrap className={classes.alignRight}>
-                                    Max {'14.99217479 CELO'}
-                                </Typography>
-                            </Grid>
+                                        <Grid item xs={12}>
+                                            <Typography
+                                                variant="body2"
+                                                noWrap
+                                                className={classes.alignLeft}
+                                                align="left"
+                                            >
+                                                Unlock amount
+                </Typography>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            {unlockGoldDialog()}
 
-                            <ControlButtons />
-                        </Grid>
-                    </DialogContentText>
-                </Grid>
-            </DialogContent>
-        </>
-    );
+                                        </Grid>
+                                        <Grid item xs={12} className={classes.bottomPadding}>
+                                            < Typography
+                                                variant="body2"
+                                                noWrap
+                                                className={classes.alignRight}
+                                            > Max {data.account && data.account.totalBalance && data.account.totalBalance.lockedGold ?
+                                                data.account.totalBalance.lockedGold
+                                                : 0} CELO
+                                        </Typography>
+
+                                        </Grid>
+
+                                        {ledgerLoading ?
+                                            <Grid item xs={12} className={classes.circularProgress}>
+                                                <CircularProgress color="secondary" />
+                                            </Grid>
+                                            : null}
+
+                                        {ledgerErrorMessage ?
+                                            <>
+                                                <Grid item xs={12} className={classes.errorMessage}>
+                                                    <Typography variant="body2">
+                                                        {ledgerErrorMessage}
+                                                    </Typography>
+                                                </Grid> </> : null}
+
+                                        {!ledgerErrorMessage ?
+                                            <ControlButtons handleClick={confirmUnlock} handleClose={handleClose} showDisabled={dialogError || !connected} />
+                                            :
+                                            <ControlButtons showRetry={true} handleClick={handleUnlock} handleClose={handleClose} />}
+
+                                    </Grid>
+                                </DialogContentText>
+                            </Grid>
+                        </DialogContent>
+                    </>
+                </Dialog>
+                { nextDialog ? <UnlockGoldConfirm isOpen={nextDialog} amount={amount} /> : null}
+
+            </>
+        );
+    }
+    else {
+        return null
+    }
 };
 
 export default UnlockGold;
