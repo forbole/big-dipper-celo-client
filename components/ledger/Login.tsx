@@ -96,9 +96,12 @@ const Login = () => {
             setErrorMessage("Connecting...")
             setRetry(false)
             try {
-                await Ledger.connect()
-                if (await Ledger.connect() === true) {
-                    setErrorMessage("Please accept the connection in your Ledger device")
+                if (!Ledger.isLedgerConnected()) {
+                    await Ledger.connect()
+                }
+
+                if (Ledger.isLedgerConnected()) {
+                    setErrorMessage("Please accept the connection in your Ledger device. ")
                     let userAddress = await Ledger.getAddress()
                     localStorage.setItem('currentUserAddress', userAddress)
                     setCurrentUser(userAddress)
@@ -142,8 +145,8 @@ const Login = () => {
         <>
             {currentUser != null ?
                 <Link
-                    href="/account/[account]/"
-                    as={`../account/${currentUser}`}
+                    href={`/account/${currentUser}`}
+                    // as={`../account/${currentUser}`}
                     color="secondary">
                     <IconButton
                         aria-label="Login"
