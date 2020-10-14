@@ -95,6 +95,15 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingBottom: "1rem"
         },
 
+        accountAddress: {
+            paddingBottom: "1rem"
+        },
+
+        disabledAccountAddress: {
+            paddingBottom: "1rem",
+            color: "rgba(192,192,192, 1)"
+        },
+
         centerButtons: {
             justifyContent: "center",
             flexWrap: "wrap",
@@ -149,11 +158,10 @@ const LockGold = () => {
     const [amount, setAmount] = React.useState('');
     const [dialogError, setDialogError] = React.useState(false);
     const [dialogErrorMessage, setDialogErrorMessage] = React.useState('');
-    const address = currentUser;
     const [ledgerError, setLedgerError] = React.useState(false);
     const [ledgerErrorMessage, setLedgerErrorMessage] = React.useState('');
     const [ledgerLoading, setLedgerLoading] = React.useState(false);
-
+    const address = currentUser;
 
     const handleClose = () => {
         setOpen(false);
@@ -165,11 +173,15 @@ const LockGold = () => {
         setOpen(true);
 
         try {
-            setLedgerLoading(true)
-            setLedgerErrorMessage("Connecting...")
-            await Ledger.connect()
-            if (await Ledger.connect() === true) {
-                setLedgerErrorMessage("Please accept the connection in your Ledger device")
+            if (Ledger.isConnected === false) {
+                setLedgerLoading(true)
+                setLedgerErrorMessage("Connecting...")
+                await Ledger.connect()
+            }
+
+            if (Ledger.isConnected === true) {
+                setLedgerLoading(true)
+                setLedgerErrorMessage("Please accept the connection in your Ledger device. ")
                 let userAddress = await Ledger.getAddress()
                 localStorage.setItem('currentUserAddress', userAddress)
                 setCurrentUser(userAddress)
@@ -190,8 +202,6 @@ const LockGold = () => {
             setLedgerLoading(true)
             setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
         }
-
-
 
     };
 
@@ -246,6 +256,7 @@ const LockGold = () => {
                         ),
                         disableUnderline: true
                     }}
+                    disabled={ledgerLoading}
                     className={classes.outlinedInput} />
 
             </FormControl>
@@ -307,11 +318,12 @@ const LockGold = () => {
                                         Account
                 </Typography>
                                 </Grid>
-                                <Grid item xs={12} className={classes.bottomPadding}>
+                                <Grid item xs={12} >
                                     <Typography
                                         variant="body2"
                                         noWrap
                                         color="textPrimary"
+                                        className={ledgerLoading ? classes.disabledAccountAddress : classes.accountAddress}
                                     >
                                         {currentUser}
                                     </Typography>
@@ -350,7 +362,6 @@ const LockGold = () => {
 
                                 {ledgerErrorMessage ?
                                     <>
-                                        {/* <CircularProgress color="secondary" /> */}
                                         <Grid item xs={12} className={classes.errorMessage}>
                                             <Typography variant="body2">
                                                 {ledgerErrorMessage}
@@ -371,3 +382,4 @@ const LockGold = () => {
 };
 
 export default LockGold
+
