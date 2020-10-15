@@ -171,6 +171,7 @@ const UnlockGold = ({ isOpen, currentAddressPage }: UnlockGoldProps) => {
             }
 
             if (Ledger.isConnected === true) {
+                setLedgerLoading(true)
                 setLedgerErrorMessage("Please accept the connection in your Ledger device. ")
                 let userAddress = await Ledger.getAddress()
                 localStorage.setItem('currentUserAddress', userAddress)
