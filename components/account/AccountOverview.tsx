@@ -5,27 +5,6 @@ import Typography from "@material-ui/core/Typography";
 import Link from "../Link";
 import Card from "@material-ui/core/Card";
 import Divider from "@material-ui/core/Divider";
-import CardContent from "@material-ui/core/CardContent";
-import FileCopyIcon from "@material-ui/icons/FileCopy";
-import Container from "@material-ui/core/Container";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import Avatar from "@material-ui/core/Avatar";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import Button from "@material-ui/core/Button";
-import Chips from "../Chips";
-import AccountTransactions from "./Transactions";
-import Downtime from "./Downtime";
-import AddressCard from "./AddressCard";
-import AccountDetails from "./AccountDetails";
-import Hidden from "@material-ui/core/Hidden";
-import FilledInput from "@material-ui/core/FilledInput";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import SearchIcon from "@material-ui/icons/Search";
-import { useRouter } from "next/router";
-import gql from "@apollo/client";
 import { useQuery } from "@apollo/client";
 import ContentLoader from "react-content-loader";
 import numbro from "numbro";
@@ -41,6 +20,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import BigNumber from 'bignumber.js';
 import LockGold from '../ledger/celoGold/lock/LockGold';
 import UnlockGold from '../ledger/celoGold/unlock/UnlockGold';
+import Ledger from '../ledger/Ledger'
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -107,7 +87,6 @@ type AccountOverviewProps = { address: string };
 
 const AccountOverview = ({ address }: AccountOverviewProps) => {
   const classes = useStyles();
-
   const accountQuery = useQuery(GET_ACCOUNT_DETAILS, {
     variables: { address },
   });
@@ -169,7 +148,7 @@ const AccountOverview = ({ address }: AccountOverviewProps) => {
             <Divider variant="middle" className={classes.divider} />
           </Grid>
           <Grid item xs={6}>
-            <UnlockGold />
+            <UnlockGold currentAddressPage={address} />
           </Grid>
 
           <Grid item xs={6}>
