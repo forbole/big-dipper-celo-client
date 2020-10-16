@@ -137,9 +137,11 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
+type LockGoldProps = { isOpen?: boolean, currentAddressPage?: string };
 
 
-const LockGold = (): JSX.Element => {
+const LockGold = ({ isOpen, currentAddressPage }: LockGoldProps): JSX.Element => {
+
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [connected, setConnected] = React.useState(false);
@@ -256,98 +258,121 @@ const LockGold = (): JSX.Element => {
     });
 
     if (loading) return <ComponentLoader />
-    if (error) return <ErrorMessage message={error.message} />
-
-    return (
-        <>
-            <DialogTitle id="ledger-lock-gold-title" className={classes.dialogTitle}>
-                <Grid container className={classes.item}>
-                    <Grid item xs={12}>
-                        <Typography
-                            variant="h6"
-                            color="textPrimary"
-                            noWrap
-                            className={classes.title}>
-                            Lock Celo Gold
-                            </Typography>
+    if (error) return null
+    if (currentAddressPage === currentUser) {
+        return (
+            <>
+                <Grid container spacing={2} className={classes.lockGold} >
+                    <Grid item xs={6} className={classes.centerContent} >
+                        <div className={classes.centerButtons}>
+                            <Button
+                                variant="outlined"
+                                color="secondary"
+                                onClick={handleLock}
+                                className={classes.buttonLock}
+                            >
+                                <Typography variant="body1">Lock CELO</Typography>
+                            </Button>
+                        </div>
                     </Grid>
-                    </Grid>
-                </DialogTitle>
+                </Grid>
 
-                <DialogContent >
-                    <Grid container spacing={1} >
-                        <DialogContentText id="ledger-lock-gold-content" className={classes.dialog}>
-                            <Grid container className={classes.dialogContent}>
-                                <Grid item xs={12}>
-                                    <Typography
-                                        variant="body2"
-                                        noWrap
-                                        className={classes.alignLeft}
-                                        align="left"
-                                    >
-                                        Account
-                </Typography>
-                                </Grid>
-                                <Grid item xs={12} className={classes.bottomPadding}>
-                                    <Typography
-                                        variant="body2"
-                                        noWrap
-                                        color="textPrimary"
-                                    >
-                                        {currentUser}
-                                    </Typography>
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <Typography
-                                        variant="body2"
-                                        noWrap
-                                        className={classes.alignLeft}
-                                        align="left"
-                                    >
-                                        Lock amount
-                </Typography>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    {lockGoldDialog()}
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Typography
-                                        variant="body2"
-                                        noWrap
-                                        className={classes.alignRight}
-                                    >
-                                        Max {data.account && data.account.totalBalance && data.account.totalBalance.gold ?
-                                            data.account.totalBalance.gold
-                                            : 0} CELO
-                                    </Typography>
-                                </Grid>
-
-                                {ledgerLoading ?
-                                    <Grid item xs={12} className={classes.circularProgress}>
-                                        <CircularProgress color="secondary" />
-                                    </Grid>
-                                    : null}
-
-                                {ledgerErrorMessage ?
-                                    <>
-                                        {/* <CircularProgress color="secondary" /> */}
-                                        <Grid item xs={12} className={classes.errorMessage}>
-                                            <Typography variant="body2">
-                                                {ledgerErrorMessage}
-                                            </Typography>
-                                        </Grid> </> : null}
-                                {!ledgerErrorMessage ?
-                                    <ControlButtons handleClick={confirmLock} handleClose={handleClose} showDisabled={dialogError || !connected} />
-                                    :
-                                    <ControlButtons showRetry={true} handleClick={handleLock} handleClose={handleClose} />}
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="ledger-dialog"
+                    //fullWidth
+                    maxWidth="sm"
+                >
+                    <DialogTitle id="ledger-lock-gold-title" className={classes.dialogTitle}>
+                        <Grid container className={classes.item}>
+                            <Grid item xs={12}>
+                                <Typography variant="h6" color="textPrimary" noWrap className={classes.title}>
+                                    Lock CELO
+              </Typography>
                             </Grid>
-                        </DialogContentText>
-                    </Grid>
-                </DialogContent>
-            { nextDialog ? <LockGoldConfirm isOpen={nextDialog} amount={amount} errorMessage={ledgerErrorMessage} /> : null}
-        </>
-    );
+                        </Grid>
+                    </DialogTitle>
+
+                    <DialogContent >
+                        <Grid container spacing={1} >
+                            <DialogContentText id="ledger-lock-gold-content" className={classes.dialog}>
+                                <Grid container className={classes.dialogContent}>
+                                    <Grid item xs={12}>
+                                        <Typography
+                                            variant="body2"
+                                            noWrap
+                                            className={classes.alignLeft}
+                                            align="left"
+                                        >
+                                            Account
+                </Typography>
+                                    </Grid>
+                                    <Grid item xs={12} >
+                                        <Typography
+                                            variant="body2"
+                                            noWrap
+                                            color="textPrimary"
+                                            className={ledgerLoading ? classes.disabledAccountAddress : classes.accountAddress}
+                                        >
+                                            {currentUser}
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item xs={12}>
+                                        <Typography
+                                            variant="body2"
+                                            noWrap
+                                            className={classes.alignLeft}
+                                            align="left"
+                                        >
+                                            Lock amount
+                </Typography>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        {lockGoldDialog()}
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Typography
+                                            variant="body2"
+                                            noWrap
+                                            className={classes.alignRight}
+                                        >
+                                            Max {data.account && data.account.totalBalance && data.account.totalBalance.gold ?
+                                                data.account.totalBalance.gold
+                                                : 0} CELO
+                                    </Typography>
+                                    </Grid>
+
+                                    {ledgerLoading ?
+                                        <Grid item xs={12} className={classes.circularProgress}>
+                                            <CircularProgress color="secondary" />
+                                        </Grid>
+                                        : null}
+
+                                    {ledgerErrorMessage ?
+                                        <>
+                                            <Grid item xs={12} className={classes.errorMessage}>
+                                                <Typography variant="body2">
+                                                    {ledgerErrorMessage}
+                                                </Typography>
+                                            </Grid> </> : null}
+                                    {!ledgerErrorMessage ?
+                                        <ControlButtons handleClick={confirmLock} handleClose={handleClose} showDisabled={dialogError || !connected} />
+                                        :
+                                        <ControlButtons showRetry={true} handleClick={handleLock} handleClose={handleClose} />}
+                                </Grid>
+                            </DialogContentText>
+                        </Grid>
+                    </DialogContent>
+                </Dialog>
+                { nextDialog ? <LockGoldConfirm isOpen={nextDialog} amount={amount} /> : null}
+            </>
+        );
+    }
+    else {
+        return null
+    }
 };
 
 export default LockGold;
