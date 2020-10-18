@@ -16,7 +16,7 @@ import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import SearchBar from "../components/SearchBar";
 import NetworkDropdown from "../components/NetworkDropdown";
-import Link from "../components/Link";
+import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
 import Container from '@material-ui/core/Container';
