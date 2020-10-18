@@ -49,6 +49,8 @@ class Ledger extends Component {
                 return "Ledger device is disconnected. Please unlock your Ledger device, open Celo App and try again. "
             case "Ledger device: INS_NOT_SUPPORTED (0x6d00)":
                 return "Celo App is not open"
+            case "Ledger device: Condition of use not satisfied (denied by the user?) (0x6985)":
+                return "The connection was rejected by the user. "
             default:
                 return errorMessage
         }
@@ -97,7 +99,7 @@ class Ledger extends Component {
     }
 
     async getAddress(derivationPath: "0" | "1" | "2" | "3" | "4" = "0") {
-        try {
+        
             if (this.eth) {
                 const path = derivationPath;
                 const { address } = await this.eth.getAddress(
@@ -107,13 +109,8 @@ class Ledger extends Component {
                 this.address = address;
 
                 return address;
-            } else {
-                // @ts-ignore
-                this.checkLedgerErrors("Ledger device is disconnected");
-            }
-        } catch (error) {
-            this.checkLedgerErrors(error)
-        }
+            } 
+
     }
 
     async lockCelo({ amount, from }: LockCeloProps) {
@@ -126,12 +123,12 @@ class Ledger extends Component {
 
         console.log(`Lock ${amount} CELO for address ${from}`);
 
-        const receipt = await lockedCelo
+        const result = await lockedCelo
             .lock()
             // @ts-ignore
             .sendAndWaitForReceipt({ from, value: amount });
-            console.log(receipt)
-        return receipt;
+            console.log(result)
+        return result;
     };
 
 
@@ -139,14 +136,15 @@ class Ledger extends Component {
         if (!this.kit) {
             this.checkLedgerErrors("Ledger device is disconnected");
         }
-console.log(from)
         this.kit.defaultAccount = from;
         const lockedCelo = await this.kit.contracts.getLockedGold();
 
         console.log(`Unlock ${amount} CELO for address ${from}`);
 
-        const receipt = await lockedCelo.unlock(amount).sendAndWaitForReceipt();
-        return receipt;
+        const result = await lockedCelo.unlock(amount).sendAndWaitForReceipt();
+        console.log(result)
+
+        return result;
     };
 
 }
