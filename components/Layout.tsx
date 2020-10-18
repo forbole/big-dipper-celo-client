@@ -23,7 +23,7 @@ import Container from '@material-ui/core/Container';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
-import SignInMessage from './ledger/Login'
+import Login from './ledger/Login'
 import Dialog from "@material-ui/core/Dialog";
 
 
@@ -179,7 +179,7 @@ const Layout = (props: { children: React.ReactNode }) => {
 					</Grid>
 
 					<Grid item xs={5} sm={3} md={2} lg={1} className={classes.login}>
-						<SignInMessage />
+						<Login />
 					</Grid>
 
 					<Hidden mdUp>
