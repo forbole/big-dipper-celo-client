@@ -79,7 +79,7 @@ const Login = () => {
     const [errorMessage, setErrorMessage] = React.useState('');
     const [loading, setLoading] = React.useState(false);
     const [retry, setRetry] = React.useState(false);
-    const [currentUser, setCurrentUser] = React.useState('' || null);
+    const [currentUser, setCurrentUser] = React.useState(undefined);
 
     useEffect(() => {
         let localUser = localStorage.getItem('currentUserAddress');
@@ -90,28 +90,43 @@ const Login = () => {
     });
 
     const handleLogin = async () => {
-        if (!currentUser) {
+        if (!currentUser || (currentUser === 'undefined')) {
             setLoading(true);
             setOpen(true);
             setErrorMessage("Connecting...")
             setRetry(false)
             try {
                 if (!Ledger.isLedgerConnected()) {
-                    await Ledger.connect()
+                    try {
+                        await Ledger.connect()
+                    }
+                    catch (e) {
+                        setLoading(true);
+                        setErrorMessage(Ledger.checkLedgerErrors(e.message))
+                        setRetry(true)
+                    }
                 }
 
                 if (Ledger.isLedgerConnected()) {
                     setErrorMessage("Please accept the connection in your Ledger device. ")
-                    let userAddress = await Ledger.getAddress()
-                    localStorage.setItem('currentUserAddress', userAddress)
-                    setCurrentUser(userAddress)
+                    try {
+                        let userAddress = await Ledger.getAddress()
+                        localStorage.setItem('currentUserAddress', userAddress)
+                        setCurrentUser(userAddress)
+                        setOpen(false);
+                    }
+                    catch (e) {
+                        setLoading(true);
+                        setErrorMessage(Ledger.checkLedgerErrors(e.message))
+                        setRetry(true)
+                    }
+
                     try {
                         let ver = await Ledger.getCeloAppVersion()
                     }
                     catch (e) {
                         setErrorMessage(e.message)
                     }
-                    setOpen(false);
                 }
 
             }
@@ -125,7 +140,7 @@ const Login = () => {
             try {
                 Ledger.disconnect();
                 localStorage.removeItem('currentUserAddress')
-                setCurrentUser(null)
+                setCurrentUser(undefined)
                 setOpen(false);
                 setRetry(false);
             }
@@ -143,7 +158,8 @@ const Login = () => {
 
     return (
         <>
-            {currentUser != null ?
+            {(currentUser === null) || (currentUser === 'undefined') ?
+                null :
                 <Link
                     href={`/account/${currentUser}`}
                     // as={`../account/${currentUser}`}
@@ -155,13 +171,13 @@ const Login = () => {
                         <img src="/images/user-login.svg" />
 
                     </IconButton>
-                </Link> : null}
+                </Link>}
             <IconButton
                 aria-label="Login"
                 onClick={handleLogin}
-                className={currentUser === null ? classes.loginButton : classes.logoutButton}
+                className={(currentUser === null) || (currentUser === 'undefined') ? classes.loginButton : classes.logoutButton}
             >
-                {currentUser === null ? <img src="/images/connect-ledger.svg" /> : <img src="/images/logout.svg" />}
+                {currentUser === null || currentUser === 'undefined' ? <img src="/images/connect-ledger.svg" /> : <img src="/images/logout.svg" />}
 
             </IconButton>
 
