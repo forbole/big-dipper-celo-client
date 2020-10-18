@@ -92,6 +92,15 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingBottom: "1rem"
         },
 
+        accountAddress: {
+            paddingBottom: "1rem"
+        },
+
+        disabledAccountAddress: {
+            paddingBottom: "1rem",
+            color: "rgba(192,192,192, 1)"
+        },
+
         centerButtons: {
             justifyContent: "center",
             flexWrap: "wrap",
@@ -135,10 +144,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 
-type UnlockGoldProps = { isOpen?: boolean, currentAddressPage?: string };
+type UnlockGoldProps = { isOpen?: boolean, pageAddress?: string, showButton?: boolean };
 
 
-const UnlockGold = ({ isOpen, currentAddressPage }: UnlockGoldProps): JSX.Element => {
+const UnlockGold = ({ isOpen, pageAddress, showButton }: UnlockGoldProps): JSX.Element => {
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(isOpen);
@@ -151,7 +160,10 @@ const UnlockGold = ({ isOpen, currentAddressPage }: UnlockGoldProps): JSX.Elemen
     const [ledgerError, setLedgerError] = React.useState(false);
     const [ledgerErrorMessage, setLedgerErrorMessage] = React.useState('');
     const [ledgerLoading, setLedgerLoading] = React.useState(false);
+    const [showUnlockButton, setShowUnlockButton] = React.useState(showButton);
+    const [currentAddress, setCurrentAddress] = React.useState(pageAddress || '');
     const address = currentUser;
+
 
 
     const handleClose = () => {
@@ -159,12 +171,14 @@ const UnlockGold = ({ isOpen, currentAddressPage }: UnlockGoldProps): JSX.Elemen
     };
 
     const handleUnlock = async () => {
+        setOpen(true);
         setLedgerError(false)
         setLedgerErrorMessage("")
-        setOpen(true);
+
 
         try {
             if (Ledger.isConnected === false) {
+                setConnected(false)
                 setLedgerLoading(true)
                 setLedgerErrorMessage("Connecting...")
                 await Ledger.connect()
@@ -197,8 +211,8 @@ const UnlockGold = ({ isOpen, currentAddressPage }: UnlockGoldProps): JSX.Elemen
     };
 
     const confirmUnlock = async () => {
-        // setOpen(false);
-        // setNextDialog(true)
+        setOpen(false);
+        setNextDialog(true)
         try {
             const from = currentUser
             const unlockObject = { amount, from }
@@ -206,6 +220,7 @@ const UnlockGold = ({ isOpen, currentAddressPage }: UnlockGoldProps): JSX.Elemen
         }
         catch (e) {
             setLedgerError(true)
+            setLedgerLoading(true)
             setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
 
         }
@@ -230,8 +245,14 @@ const UnlockGold = ({ isOpen, currentAddressPage }: UnlockGoldProps): JSX.Elemen
         //@ts-ignore
         setCurrentUser(localUser)
         setAmount(unlockAmount)
+        if (Ledger.isConnected === true) {
+            setConnected(true)
+        }
+        if (Ledger.isConnected === false) {
+            setConnected(false)
+            setLedgerLoading(true)
+        }
     });
-
     const unlockGoldDialog = () => {
         return (
             <FormControl variant="outlined" fullWidth size="small">
@@ -255,28 +276,27 @@ const UnlockGold = ({ isOpen, currentAddressPage }: UnlockGoldProps): JSX.Elemen
         variables: { address },
     });
 
-
-    if (loading) return <ComponentLoader />
-    if (error) return <ErrorMessage message={error.message} />
-    if (currentAddressPage === currentUser) {
+    if (loading) return null
+    if (error) return null
+    if (currentAddress === currentUser) {
         return (
             <>
-                {/* {!isOpen ? */}
-                <Grid container spacing={2} className={classes.unlockGold}>
-                    <Grid item xs={6} className={classes.centerContent} >
-                        <div className={classes.centerButtons}>
-                            <Button
-                                variant="outlined"
-                                color="secondary"
-                                onClick={handleUnlock}
-                                className={classes.buttonUnlock}
-                            >
-                                <Typography variant="body1">Unlock CELO</Typography>
-                            </Button>
-                        </div>
+                {showUnlockButton === true ?
+                    <Grid container spacing={2} className={classes.unlockGold}>
+                        <Grid item xs={6} className={classes.centerContent} >
+                            <div className={classes.centerButtons}>
+                                <Button
+                                    variant="outlined"
+                                    color="secondary"
+                                    onClick={handleUnlock}
+                                    className={classes.buttonUnlock}
+                                >
+                                    <Typography variant="body1">Unlock CELO</Typography>
+                                </Button>
+                            </div>
+                        </Grid>
                     </Grid>
-                </Grid>
-                {/* : null} */}
+                    : null}
                 <Dialog
                     open={open}
                     onClose={handleClose}
@@ -309,11 +329,12 @@ const UnlockGold = ({ isOpen, currentAddressPage }: UnlockGoldProps): JSX.Elemen
                                                 Account
                 </Typography>
                                         </Grid>
-                                        <Grid item xs={12} className={classes.bottomPadding}>
+                                        <Grid item xs={12} >
                                             <Typography
                                                 variant="body2"
                                                 noWrap
                                                 color="textPrimary"
+                                                className={ledgerLoading ? classes.disabledAccountAddress : classes.accountAddress}
                                             >
                                                 {currentUser}
                                             </Typography>
@@ -359,8 +380,8 @@ const UnlockGold = ({ isOpen, currentAddressPage }: UnlockGoldProps): JSX.Elemen
                                                     </Typography>
                                                 </Grid> </> : null}
 
-                                        {!ledgerErrorMessage ?
-                                            <ControlButtons handleClick={confirmUnlock} handleClose={handleClose} showDisabled={dialogError || !connected} />
+                                        {(!ledgerErrorMessage && connected === true && !ledgerLoading) ?
+                                            <ControlButtons handleClick={confirmUnlock} handleClose={handleClose} showDisabled={dialogError} />
                                             :
                                             <ControlButtons showRetry={true} handleClick={handleUnlock} handleClose={handleClose} />}
 
@@ -370,7 +391,7 @@ const UnlockGold = ({ isOpen, currentAddressPage }: UnlockGoldProps): JSX.Elemen
                         </DialogContent>
                     </>
                 </Dialog>
-                { nextDialog ? <UnlockGoldConfirm isOpen={nextDialog} amount={amount} /> : null}
+                { nextDialog ? <UnlockGoldConfirm isOpen={nextDialog} amount={amount} pageAddress={currentAddress} /> : null}
 
             </>
         );

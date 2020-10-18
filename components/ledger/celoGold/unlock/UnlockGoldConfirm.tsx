@@ -1,12 +1,17 @@
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import React from 'react';
+import Grid from "@material-ui/core/Grid";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import React, { useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Typography from "@material-ui/core/Typography";
+import { Dialog } from "@material-ui/core";
+import UnlockGold from './UnlockGold'
+import UnlockGoldSuccess from './UnlockGoldSuccess'
+import ControlButtons from '../../ControlButtons'
+import Ledger from '../../Ledger'
 
 const useStyles = makeStyles({
     title: {
@@ -62,9 +67,18 @@ const useStyles = makeStyles({
     }
 });
 
-const UnlockGoldConfirm = (): JSX.Element => {
+type UnlockGoldConfirmProps = { isOpen: boolean, amount: string, pageAddress?: string };
+
+const UnlockGoldConfirm = ({ isOpen, amount, pageAddress }: UnlockGoldConfirmProps): JSX.Element => {
+
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(isOpen);
+    const [currentUser, setCurrentUser] = React.useState('' || null);
+    const [previousDialog, setPreviousDialog] = React.useState(false)
+    const [nextDialog, setNextDialog] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState('');
+    const [currentAddress, setCurrentAddress] = React.useState(pageAddress || '');
+
 
     const handleClose = () => {
         setOpen(false);
@@ -83,121 +97,127 @@ const UnlockGoldConfirm = (): JSX.Element => {
                         <Typography variant="h6" color="textPrimary" noWrap className={classes.title}>
                             Unlock CELO
               </Typography>
-                    </Grid>
-                    <Grid item xs={1}>
-                        <IconButton
-                            aria-label="Close"
-                            className={classes.iconButtonRight}
-                            onClick={handleClose}>
-                            <img src="/images/cross.svg" color="textPrimary" alt="Close" />
-                        </IconButton>
-                    </Grid>
-                </Grid>
-            </DialogTitle>
-
-            <DialogContent>
-                <Grid container spacing={1}>
-                    <DialogContentText
-                        id="ledger-unlock-gold-confirm-content"
-                        className={classes.dialog}>
-                        <Grid container className={classes.dialogContent}>
-                            <Grid item xs={12}>
-                                <Typography
-                                    variant="body2"
-                                    noWrap={false}
-                                    color="textPrimary"
-                                    gutterBottom>
-                                    You are going to unlock {'2'} CELO, it that is correct, please
-                                    sign in your ledger device.
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Divider className={classes.divider} />
-                            </Grid>
-                            <Grid container spacing={1} className={classes.item}>
-                                <Grid item xs={6}>
-                                    <Typography
-                                        variant="body2"
-                                        noWrap
-                                        className={classes.alignLeft}
-                                        align="left"
-                                        color="textPrimary">
-                                        Account
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <Typography
-                                        variant="body2"
-                                        noWrap
-                                        className={classes.alignRight}
-                                        align="right"
-                                        color="textPrimary">
-                                        {'Michelle Clark'}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Divider className={classes.divider} />
-                            </Grid>
-                            <Grid container spacing={1} className={classes.item}>
-                                <Grid item xs={6}>
-                                    <Typography
-                                        variant="body2"
-                                        noWrap
-                                        className={classes.alignLeft}
-                                        align="left"
-                                        color="textPrimary">
-                                        Unlock Amount
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <Typography
-                                        variant="body2"
-                                        noWrap
-                                        className={classes.alignRight}
-                                        align="right"
-                                        color="textPrimary">
-                                        {'2'} CELO
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Divider className={classes.divider} />
-                            </Grid>
-                            <Grid container spacing={1} className={classes.item}>
-                                <Grid item xs={6}>
-                                    <Typography
-                                        variant="body2"
-                                        noWrap
-                                        className={classes.alignLeft}
-                                        align="left"
-                                        color="textPrimary">
-                                        Tx Fee
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <Typography
-                                        variant="body2"
-                                        noWrap
-                                        className={classes.alignRight}
-                                        align="right"
-                                        color="textPrimary">
-                                        {'0.00001'} CELO
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Divider className={classes.divider} />
-                            </Grid>
-                            <Grid item xs={12} className={classes.unlockGoldMessage}>
-                                <Typography variant="h6" noWrap align="center" color="textPrimary">
-                                    Please sign in your ledger device...
-                                </Typography>
-                            </Grid>
                         </Grid>
-                    </DialogContentText>
-                </Grid>
-            </DialogContent>
+                        <Grid item xs={1}>
+                            <IconButton
+                                aria-label="Close"
+                                className={classes.iconButtonRight}
+                                onClick={handleClose}
+                            >
+                                <img src="/images/cross.svg" color="textPrimary" />
+                            </IconButton>
+                        </Grid>
+                    </Grid>
+                </DialogTitle>
+
+                <DialogContent className={classes.content} >
+                    <Grid container spacing={1} >
+                        <DialogContentText id="ledger-unlock-gold-confirm-content" className={classes.dialog}>
+                            <Grid container className={classes.dialogContent}>
+                                <Grid item xs={12}>
+                                    <Typography variant="body2" noWrap={false} color="textPrimary" gutterBottom>
+                                        You are going to unlock {amount} CELO, it that's correct, please
+                  sign in your ledger device.
+                </Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Divider className={classes.divider} />
+                                </Grid>
+                                <Grid container spacing={1} className={classes.item}>
+                                    <Grid item xs={6}>
+                                        <Typography
+                                            variant="body2"
+                                            noWrap
+                                            className={classes.alignLeft}
+                                            align="left"
+                                            color="textPrimary"
+                                        >
+                                            Account
+                  </Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography
+                                            variant="body2"
+                                            noWrap
+                                            className={classes.alignRight}
+                                            align="right"
+                                            color="textPrimary"
+                                        >
+                                            {currentUser}
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Divider className={classes.divider} />
+                                </Grid>
+                                <Grid container spacing={1} className={classes.item}>
+                                    <Grid item xs={6}>
+                                        <Typography
+                                            variant="body2"
+                                            noWrap
+                                            className={classes.alignLeft}
+                                            align="left"
+                                            color="textPrimary"
+                                        >
+                                            Unlock Amount
+                  </Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography
+                                            variant="body2"
+                                            noWrap
+                                            className={classes.alignRight}
+                                            align="right"
+                                            color="textPrimary"
+                                        >
+                                            {amount} CELO
+                  </Typography>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Divider className={classes.divider} />
+                                </Grid>
+                                <Grid container spacing={1} className={classes.item}>
+                                    <Grid item xs={6}>
+                                        <Typography
+                                            variant="body2"
+                                            noWrap
+                                            className={classes.alignLeft}
+                                            align="left"
+                                            color="textPrimary"
+                                        >
+                                            Tx Fee
+                  </Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography
+                                            variant="body2"
+                                            noWrap
+                                            className={classes.alignRight}
+                                            align="right"
+                                            color="textPrimary"
+                                        >
+                                            {"0.00001"} CELO
+                  </Typography>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Divider className={classes.divider} />
+                                </Grid>
+                                <Grid item xs={12} className={classes.unlockGoldMessage}>
+                                    <Typography variant="h6" noWrap align="center" color="textPrimary" >
+                                        Please sign in your ledger device...
+                </Typography>
+
+                                </Grid>
+                                {/* <ControlButtons handleClick={handdleNextDialog} handleClose={handleClose} /> */}
+
+                            </Grid>
+                        </DialogContentText>
+                    </Grid>
+                </DialogContent>
+            { previousDialog ? <UnlockGold isOpen={previousDialog} showButton={false} pageAddress={currentAddress} /> : null}
+            {nextDialog ? <UnlockGoldSuccess isOpen={nextDialog} /> : null}
         </>
     );
 };

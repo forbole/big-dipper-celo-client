@@ -18,13 +18,12 @@ const useStyles = makeStyles({
     },
 
     controlButton: {
-        justifyContent: 'center',
-        flexWrap: 'wrap',
-        paddingTop: '2rem',
-        textTransform: 'none',
+        justifyContent: "center",
+        flexWrap: "wrap",
+        paddingTop: "3rem",
+        textTransform: "none",
         borderRadius: 4,
-        width: '100%',
-        paddingBottom: '1rem'
+        width: "100%",
     },
     controlButtonLabel: {
         display: 'flex',
@@ -36,18 +35,26 @@ const useStyles = makeStyles({
     },
 
     icon: {
-        paddingBottom: '1rem',
-        paddingTop: '2.5rem'
+        paddingBottom: "1rem",
+        paddingTop: "3.5rem"
     },
 
     paddingBottom: {
-        paddingBottom: '1rem'
+        paddingBottom: "1rem"
+    },
+    
+    dialogContent:{
+        padding: "4.2rem"
     }
 });
 
-const UnlockGoldSuccess = (): JSX.Element => {
+type UnlockGoldSuccessProps = { isOpen: boolean };
+
+
+const UnlockGoldSuccess = ({ isOpen }: UnlockGoldSuccessProps): JSX.Element => {
+
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(isOpen);
 
     const handleClose = () => {
         setOpen(false);
