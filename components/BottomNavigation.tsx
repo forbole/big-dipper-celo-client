@@ -26,25 +26,25 @@ interface TabPanelProps {
     value: any;
 }
 
-function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
+// function TabPanel(props: TabPanelProps) {
+//     const { children, value, index, ...other } = props;
 
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`bottom-navigation-${index}`}
-            aria-labelledby={`bottom-navigation-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
+//     return (
+//         <div
+//             role="tabpanel"
+//             hidden={value !== index}
+//             id={`bottom-navigation-${index}`}
+//             aria-labelledby={`bottom-navigation-${index}`}
+//             {...other}
+//         >
+//             {value === index && (
+//                 <Box p={3}>
+//                     <Typography>{children}</Typography>
+//                 </Box>
+//             )}
+//         </div>
+//     );
+// }
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -65,12 +65,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export default function BottomNavigation() {
     const classes = useStyles();
-    const [value, setValue] = React.useState("");
+    const [value, setValue] = React.useState<number>(0);
     const trigger = useScrollTrigger();
 
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
-        setValue(newValue);
-    };
+    // const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+    //     setValue(newValue);
+    // };
 
     const theme = useTheme();
     const largeScreen = useMediaQuery(theme.breakpoints.up('md'));
