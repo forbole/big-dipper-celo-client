@@ -7,7 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import gql from "@apollo/client";
 import { useQuery } from "@apollo/client";
 import * as numbro from "numbro";
-import PriceCard from "../PriceCard";
 import Chips from "../../components/Chips";
 import Link from "../../components/Link";
 import getConfig from 'next/config'
@@ -27,7 +26,7 @@ const useStyles = makeStyles({
     //justifyContent: "center",
     //margin: "2%",
     borderRadius: 4,
-    background: "#43484C",
+    background: "rgba(255, 255, 255, 1)",
     alignItems: "center",
   },
   value: {

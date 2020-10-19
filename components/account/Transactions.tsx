@@ -72,7 +72,7 @@ const useStyles = makeStyles(({ spacing }) => {
     },
     divider: {
       margin: '0.5rem 0 0 0',
-      backgroundColor: "rgba(62, 67, 71, 1)",
+      backgroundColor: "rgba(232, 232, 232, 1)",
     },
     icon: {
       fill: "rgba(255, 255, 255, 0.6)",

@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { makeStyles, Theme, createStyles, withStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -11,6 +11,8 @@ import { Divider } from "@material-ui/core";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import Grid from "@material-ui/core/Grid";
 import Link from "./Link";
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,15 +20,15 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "inline-block",
       justifyContent: "center",
     },
-    networkContainer: {
-      paddingTop: "0.7rem",
-      marginLeft: "4rem",
-      marginBottom: "-1rem",
-    },
+
     formControl: {
-      minWidth: "4.7rem",
-      marginBottom: "2rem",
-      //marginRight: "-1rem",
+      minWidth: "9.75rem",
+      float: "right",
+      background: "rgba(255, 255, 255, 1)",
+      padding: "0rem",
+      borderRadius: 5,
+      position: 'relative',
+      display: "flex"
     },
     celoIcon: {
       width: "1.25rem",
@@ -35,28 +37,40 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     dotIcon: {
-      height: "0.375rem",
-      width: "0.375rem",
+      height: "0.8rem",
+      width: "0.8rem",
+      marginLeft: "0.5rem",
+      marginRight: "0.3rem",
+      marginTop: "0.25rem",
       verticalAlign: "middle",
-      //paddingRight: "0.3rem"
     },
     MuiSelectIcon: {
-      marginBottom: "1rem",
+      padding: "none",
+      height: "1rem"
     },
     icon: {
-      fill: "rgba(255, 255, 255, 0.8)",
-      marginTop: "0.1rem",
-      marginRight: "-0.2rem",
+      fill: "rgba(0, 0, 0, 1)",
+      fontWeight: 200,
+      marginRight: "0.5rem",
+      marginTop: "-0.4rem",
     },
     divider: {
-      backgroundColor: "rgba(62, 67, 71, 1)",
+      backgroundColor: "rgba(0, 0, 0, 0.16)",
+      margin: "0 1rem",
     },
     menuItem: {
-      marginTop: "-0.3rem",
-      marginBottom: "-0.3rem",
+      verticalAlign: "middle",
     },
+
+    inputLabel: {
+      padding: "0rem",
+      display: "inline-flex",
+      marginTop: "-0.9rem",
+    }
   })
 );
+
+
 
 const NetworkDropdown = () => {
   const classes = useStyles();
@@ -76,13 +90,12 @@ const NetworkDropdown = () => {
   };
 
   return (
-    <Grid container spacing={1} className={classes.networkContainer}>
+    <Grid container >
       <Grid item xs={12}>
-        <FormControl className={classes.formControl}>
-          <InputLabel id="network-selection-label">
+        <FormControl className={classes.formControl} margin="dense" size="small" >
+          <InputLabel id="network-selection-label" className={classes.inputLabel}>
             <FiberManualRecordIcon color="action" className={classes.dotIcon} />
-            <Typography align="center" variant="caption">
-              {" "}
+            <Typography align="center" variant="body2" color="textPrimary">
               Alfajores
             </Typography>
           </InputLabel>
@@ -95,6 +108,7 @@ const NetworkDropdown = () => {
             value={show}
             onChange={handleChange}
             disableUnderline={true}
+            IconComponent={KeyboardArrowDownIcon}
             className={classes.MuiSelectIcon}
             classes={{
               icon: classes.icon,

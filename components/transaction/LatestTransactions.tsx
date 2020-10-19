@@ -42,7 +42,6 @@ const useStyles = makeStyles({
   container: {
     borderRadius: 5,
     width: "100%",
-    //overflow: "hidden",
     height: "100%",
   },
 
@@ -60,7 +59,7 @@ const useStyles = makeStyles({
 
   box: {
     letterSpacing: "1px",
-    padding: "0.6rem",
+    padding: "0.6rem 0.6rem 1rem 0.6rem",
     display: "block",
     overflow: "hidden",
     whiteSpace: "nowrap",
@@ -73,13 +72,9 @@ const useStyles = makeStyles({
 
   txPadding: {
     display: "flex",
-    //overflow: 'auto',
     padding: "0 0 0 0.5rem",
   },
-  divider: {
-    margin: "0.5rem",
-    backgroundColor: "rgba(62, 67, 71, 1)",
-  },
+
   link: {
     float: "right",
   },
@@ -89,6 +84,16 @@ const useStyles = makeStyles({
     textOverflow: "clip ellipsis clip 0 3ch",
     minWidth: "1rem",
     maxWidth: "40rem",
+  },
+
+  chip: {
+    marginBottom: "0.5rem",
+  },
+
+  divider: {
+    backgroundColor: "rgba(232, 232, 232, 1)",
+    margin: "0 1rem",
+    display: "flex",
   },
 });
 
@@ -149,7 +154,6 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
               </Link>
             ) : null}
           </Typography>
-          <Divider variant="middle" className={classes.divider} />
           {data.transactions ?
             <TableContainer className={classes.container}>
               <Table stickyHeader aria-label="sticky table">
@@ -162,7 +166,9 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
                           <Grid
                             container
                             spacing={1}
-                            style={{ padding: "0.5rem 0" }}
+                            style={{
+                              padding: "0.2rem 0", background: "rgba(255, 255, 255, 1)"
+                            }}
                           >
                             <Grid item xs={8}>
                               <Typography
@@ -240,7 +246,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
                               </Typography>
                             </Grid>
 
-                            <Grid item xs={12} lg={9} >
+                            <Grid item xs={12} lg={9} className={classes.chip}>
                               {row.type && row.to && row.to.contract && row.to.contract.name ?
                                 <Chips type={row.type} contractName={row.to.contract.name} />
                                 :
@@ -258,7 +264,11 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
                                   : <NotAvailable variant="body2" />}
                               </Typography>
                             </Grid>
+                            <Grid item xs={12}>
+                              <Divider className={classes.divider} />
+                            </Grid>
                           </Grid>
+
                         </TableCell>
                       </TableRow>
                     );

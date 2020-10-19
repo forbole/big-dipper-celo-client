@@ -13,6 +13,7 @@ export const GET_CHAIN = gql`
         usdMarketCap
       }
       walletCount
+      celoTotalSupply
     }
   }
 `;

@@ -17,7 +17,7 @@ const useStyles = makeStyles(({ spacing }) => {
             display: "flex",
             padding: "1rem",
             justifyContent: "center",
-            background: "#43484C",
+            background: "rgba(255, 255, 255, 1)",
             borderRadius: 5,
         },
 

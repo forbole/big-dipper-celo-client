@@ -27,7 +27,7 @@ const useStyles = makeStyles({
     },
     divider: {
         marginTop: "0.5rem",
-        backgroundColor: "rgba(62, 67, 71, 1)",
+        backgroundColor: "rgba(232, 232, 232, 1)",
     },
 
     dialog: {

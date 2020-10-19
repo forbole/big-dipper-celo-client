@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
     divider: {
       margin: "0.5rem",
-      backgroundColor: "rgba(62, 67, 71, 1)",
+      backgroundColor: "rgba(232, 232, 232, 1)",
     },
 
     container: {

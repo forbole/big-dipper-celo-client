@@ -50,6 +50,10 @@ const useStyles = makeStyles({
     "&:hover": {
       textDecoration: "underline"
     }
+  },
+
+  logo: {
+    paddingLeft: "2rem"
   }
 
 });
@@ -59,12 +63,12 @@ const Footer = () => {
   return (
     <footer>
       <Grid container className={classes.root}>
-        <Grid item sm={11} md={9}>
-          <div><img src="/images/bigdipper-logo.svg" className={classes.bdLogo} /></div>
-          <div><Typography variant="body2" className={classes.text} align="left">
+        <Grid item xs={12} md={9} className={classes.logo}>
+          <img src="/images/bigdipper-logo.svg" className={classes.bdLogo} />
+          <Typography variant="body2" className={classes.text} align="left" color="textSecondary">
             Big Dipper for Celo, presented by <a href="https://forbole.com" className={classes.footerLink} target="_blank">Forbole</a>.
-            </Typography></div>
-          <div>
+            </Typography>
+
           <Link
             href="https://github.com/forbole/big-dipper-celo-client"
             target="_blank"
@@ -85,7 +89,7 @@ const Footer = () => {
             className={classes.socialMedia}
           >
             <img src="/images/social-media-twitter.svg" />
-          </Link></div>
+          </Link>
         </Grid>
       </Grid>
     </footer>

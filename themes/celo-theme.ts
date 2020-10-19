@@ -7,21 +7,21 @@ const theme = createMuiTheme({
   palette: {
     type: 'dark',
     primary: {
-      main: 'rgba(46, 51, 56, 1)',
+      main: 'rgba(246, 247, 249, 1)',
     },
     secondary: {
-      main: 'rgba(58, 211, 158, 1)',
+      main: 'rgba(8, 178, 122, 1)',
     },
     error: {
       main: red.A400,
     },
     background: {
-      paper: 'rgba(67, 72, 76, 1)',
-      default: 'rgba(46, 51, 56, 1)',
+      paper: 'rgba(255, 255, 255, 1)',
+      default: 'rgba(246, 247, 249, 1)',
     },
     text: {
-      primary: 'rgba(255, 255, 255, 0.8)',
-      secondary: 'rgba(255, 255, 255, 0.6)',
+      primary: 'rgba(0, 0, 0, 1)',
+      secondary: 'rgba(119, 119, 119, 1)',
 
     },
     action: {

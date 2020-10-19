@@ -1,10 +1,9 @@
 import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import Layout from "../../components/Layout";
 import Grid from "@material-ui/core/Grid";
 import ProposalDetails from "../../components/proposal/ProposalDetails";
 import { useRouter } from "next/router";
-import MarketCard from "../../components/MarketCard";
+import PriceCard from "../../components/PriceCard";
 import DepositList from "../../components/proposal/DepositList";
 import ProposalVotingList from "../../components/proposal/ProposalVotingList"
 
@@ -23,10 +22,9 @@ export default function Proposal(proposalDetails: string) {
   const router = useRouter();
   const proposalNumber: string = router.query.proposal as string;
   return (
-    <Layout>
-      <Grid container spacing={2} className={classes.root}>
+        <Grid container spacing={2} className={classes.root}>
         <Grid item xs={12} >
-          <MarketCard />
+        <PriceCard />
         </Grid>
         <Grid item xs={12} >
           <ProposalDetails proposal={proposalNumber} proposalDetails={proposalDetails.proposalDetails} />
@@ -38,7 +36,6 @@ export default function Proposal(proposalDetails: string) {
           <DepositList proposal={proposalNumber} />
         </Grid>
       </Grid>
-    </Layout>
   );
 }
 

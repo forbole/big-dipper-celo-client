@@ -69,10 +69,7 @@ const useStyles = makeStyles({
     float: "right",
     textAlign: "right",
   },
-  divider: {
-    padding: "0 1rem",
-    backgroundColor: "rgba(62, 67, 71, 1)",
-  },
+
 
   cell: {
     maxHeight: "1rem",
@@ -81,10 +78,12 @@ const useStyles = makeStyles({
   tableCell: {
     overflow: "auto",
     padding: "0.4rem",
+    border: "none"
   },
   table: {
-    background: "#4D5155",
     padding: "0.2rem",
+    border: "none"
+
   },
   inline: {
     paddingLeft: "0rem",
@@ -93,7 +92,7 @@ const useStyles = makeStyles({
     padding: "1rem",
     justifyContent: "center",
     marginBottom: "1rem",
-    background: "#43484C",
+    background: "rgba(255, 255, 255, 1)",
     alignItems: "center",
     borderRadius: 4,
     boxShadow: "0 2px 4px 0 rgba(138, 148, 159, 0.2)",
@@ -120,6 +119,8 @@ const useStyles = makeStyles({
     minWidth: "2rem",
     maxWidth: "15rem",
   },
+
+
 });
 
 moment.relativeTimeThreshold("s", 59);
@@ -186,9 +187,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
     <Grid container spacing={2}>
       <Grid item xs={12}>
         {displayCard ? (
-          <Hidden smUp>
-            <PriceCard size="large" />
-          </Hidden>
+            <PriceCard />
         ) : null}
         <Paper className={classes.root}>
           <Typography variant="body1" className={classes.box}>
@@ -199,8 +198,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
               </Link>
             ) : null}
           </Typography>
-          <Divider variant="middle" className={classes.divider} />
-          <TableContainer>
+          <TableContainer >
             <Paper className={classes.tableCell}>
               <Table>
                 <TableHead>
@@ -244,10 +242,10 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                       </TableRow>
                     )}
                 </TableHead>
-                <TableBody>
+                <TableBody >
                   {data.blocks.blocks.map((row: any, index: number) => {
                     return (
-                      <TableRow key={index}>
+                      <TableRow key={index} style={index % 2 ? { background: "rgba(248, 248, 248, 1)", border: "none" } : { background: "rgb(255,255,255)" }}>
                         <TableCell
                           component="th"
                           scope="row"
@@ -255,7 +253,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                           align="left"
                           className={classes.tableCell}
                         >
-                          <Typography variant="body2" color="secondary" noWrap>
+                          <Typography variant="body2" noWrap>
                             {/* <a href="block/[...block]" as={`block/${row.number}`}  onClick={handleClick} >
       {row.number}
     </a> */}
@@ -294,6 +292,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                                 display="inline"
                                 className={classes.textContent}
                                 noWrap
+
                               >
                                 <span>
                                   {
@@ -312,13 +311,11 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                           padding="checkbox"
                           className={classes.tableCell}
                         >
-                          <Typography variant="body2" noWrap>
-                            <Link href="#" color="secondary">
-                              {row.transactions &&
-                                row.transactions
-                                ? row.transactions.length
-                                : 0}
-                            </Link>
+                          <Typography variant="body2" noWrap color="secondary">
+                            {row.transactions &&
+                              row.transactions
+                              ? row.transactions.length
+                              : 0}
                           </Typography>
                         </TableCell>
                         {pagination ? (
@@ -328,7 +325,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                             className={classes.tableCell}
                           >
                             <div className={classes.truncareText}>
-                              <Typography variant="body2" noWrap>
+                              <Typography variant="body2" noWrap color="textSecondary">
                                 {numbro(row.gasUsed / 1000000000).format(
                                   "0.0000"
                                 )}{" "}
@@ -344,14 +341,14 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                             className={classes.tableCell}
                           >
                             <div className={classes.truncareText}>
-                              <Typography variant="body2" noWrap>
+                              <Typography variant="body2" noWrap color="textSecondary">
                                 {row.gasLimit ? row.gasLimit : "Not available"}
                               </Typography>
                             </div>
                           </TableCell>
                         ) : null}
-                        <TableCell align="right" padding="checkbox">
-                          <Typography variant="body2" noWrap>
+                        <TableCell align="right" padding="checkbox" className={classes.tableCell}>
+                          <Typography variant="body2" noWrap color="textSecondary">
                             {moment.unix(row.timestamp).fromNow()}
                           </Typography>
                         </TableCell>

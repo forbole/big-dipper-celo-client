@@ -48,7 +48,7 @@ const useStyles = makeStyles({
     },
     divider: {
         margin: "0.15rem 0rem",
-        backgroundColor: "rgba(62, 67, 71, 1)",
+        backgroundColor: "rgba(232, 232, 232, 1)",
     },
 
     dialog: {
@@ -90,7 +90,7 @@ const useStyles = makeStyles({
         fontWeight: 400,
     },
     voteYesButton: {
-        backgroundColor: "rgba(58, 211, 158, 1)",
+        backgroundColor: "rgba(8, 178, 122, 1)",
         textTransform: "none",
         width: '100%',
         color: '#fff',

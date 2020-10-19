@@ -39,14 +39,14 @@ const useStyles = makeStyles(() => {
         },
         divider: {
             margin: "0.15rem 0rem",
-            backgroundColor: "rgba(62, 67, 71, 1)",
+            backgroundColor: "rgba(232, 232, 232, 1)",
         },
         arrowIcon: {
             padding: "0.25rem",
             justifyContent: "center",
             border: "solid rgba(67, 72, 76, 1) ",
             borderRadius: 5,
-            backgroundColor: "rgba(77, 81, 85, 1)",
+            backgroundColor: "rgba(246, 247, 249, 1)",
             color: "rgba(255, 255, 255, 0.6)",
             height: "1.5rem",
             width: "1.5rem",

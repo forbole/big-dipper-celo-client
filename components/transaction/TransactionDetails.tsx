@@ -45,12 +45,13 @@ const useStyles = makeStyles(({ spacing, palette }) => {
     },
     divider: {
       margin: "0.5rem 0 0 0",
-      backgroundColor: "rgba(62, 67, 71, 1)",
+      backgroundColor: "rgba(232, 232, 232, 1)",
     },
     inputLabel: {
       wordWrap: "break-word",
       padding: "0.5rem",
       fontSize: "0.75rem",
+      backgroundColor: "rgba(246, 247, 249, 1)",
     },
     alignRight: {
       //display: 'block',
