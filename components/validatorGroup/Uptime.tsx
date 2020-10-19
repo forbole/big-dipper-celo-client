@@ -182,7 +182,7 @@ const CustomTooltip = () => {
                     </Grid>
                 </Grid>
             </CardContent>
-        </Card>
+        </Card >
     );
 };
 
