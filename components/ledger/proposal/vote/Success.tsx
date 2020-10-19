@@ -132,8 +132,7 @@ const Success = () => {
                         </Grid>
                         <Grid item xs={12} md={11}>
                             <Link
-                                href="transaction/[transaction]/"
-                                //as={`transaction/${data.block.parentHash}`}
+                                href={`transaction/${data.block.parentHash}`}
                                 color="secondary"
                             >
                                 <Typography variant="body2" className={classes.txHash} noWrap={false}>

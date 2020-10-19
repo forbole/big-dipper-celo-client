@@ -163,7 +163,10 @@ const ValidatorVotesList = () => {
           >
             Validator Votes
 
-             <Link href="/blocks" className={classes.link} color="textPrimary">
+             <Link href="/blocks"
+              className={classes.link}
+              color="textPrimary"
+            >
               {"view more"}
             </Link>
           </Typography>
@@ -208,9 +211,9 @@ const ValidatorVotesList = () => {
                       className={classes.tableCell}
                     >
                       <Link
-                        href="/validatorGroup/[validatorGroupDetails]/"
-                        as={`/validatorGroup/${'NanValdezG'}`}
-                        color="secondary">
+                        href={`/validatorGroup/${'NanValdezG'}`}
+                        color="secondary"
+                      >
                         <Typography variant="body2" noWrap>
 
                           {row.groupName}
@@ -298,9 +301,9 @@ const ValidatorVotesList = () => {
                           <Grid item xs={8} className={classes.groupInfo}>
                             <Typography variant="caption" className={classes.groupInfoNum}> #1</Typography>
                             <Link
-                              href="/account/[account]/"
-                              as={`/account/${10}`}
-                              color="secondary">
+                              href={`/account/${10}`}
+                              color="secondary"
+                            >
                               <Typography variant="caption" >
                                 Vincent Lynch
                               </Typography>
@@ -321,9 +324,9 @@ const ValidatorVotesList = () => {
                           <Grid item xs={8} className={classes.groupInfo}>
                             <Typography variant="caption" className={classes.groupInfoNum}> #2</Typography>
                             <Link
-                              href="/account/[account]/"
-                              as={`/account/${10}`}
-                              color="secondary">
+                              href={`/account/${10}`}
+                              color="secondary"
+                            >
                               <Typography variant="caption" >
                                 Michelle Clark
                               </Typography>

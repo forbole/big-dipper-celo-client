@@ -160,8 +160,7 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
 
           <Grid item xs={1}>
             <Link
-              href="/block/[block]/"
-              as={`/block/${prevBlock}`}
+              href={`/block/${prevBlock}`}
               color="secondary"
             >
               <IconButton
@@ -174,8 +173,7 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
           </Grid>
           <Grid item xs={1}>
             <Link
-              href="/block/[block]/"
-              as={`/block/${nextBlock}`}
+              href={`/block/${nextBlock}`}
               color="secondary"
             >
               {" "}
@@ -241,8 +239,7 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
                 data.block.miner &&
                 data.block.miner.name || data.block.miner.signer ? (
                   < Link
-                    href="/account/[account]/"
-                    as={`../account/${data.block.miner.signer}`}
+                    href={`/account/${data.block.miner.signer}`}
                     color="secondary"
                   >
                     {data.block.miner.name}
@@ -272,10 +269,8 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
             <Typography variant="body2" component="h2">
               {data.block && data.block.parentHash ? (
                 <Link
-                  href="/transaction/[transaction]/"
-                  as={`../transaction/${data.block.parentHash}`}
+                  href={`/transaction/${data.block.parentHash}`}
                   color="secondary"
-                //className={classes.leftInline}
                 >
                   {data.block.parentHash}
                 </Link>
@@ -342,7 +337,7 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
             <Grid item xs={12}>
               <StyledTabs
                 value={value}
-                textColor="primary"
+                // textColor="primary"
                 onChange={handleChange}
                 aria-label="Block Signers Tabs"
                 variant="fullWidth"
@@ -368,10 +363,10 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
                           <li key={index}>
                             <Typography variant="body2" gutterBottom >
                               <Link
-                                href="/validatorGroup/[validatorGroupDetails]/"
-                                as={row.validator && row.validator.validatorGroup && row.validator.validatorGroup.address ?
+                                href={row.validator && row.validator.validatorGroup && row.validator.validatorGroup.address ?
                                   `/validatorGroup/${row.validator.validatorGroup.address}` : ""}
-                                color="secondary">
+                                color="secondary"
+                              >
                                 {row.validator.name || row.signer}
                               </Link>
                             </Typography>
@@ -385,10 +380,10 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
                           <li key={index}>
                             <Typography variant="body2" gutterBottom >
                               <Link
-                                href="/validatorGroup/[validatorGroupDetails]/"
-                                as={row.validator && row.validator.validatorGroup && row.validator.validatorGroup.address ?
+                                href={row.validator && row.validator.validatorGroup && row.validator.validatorGroup.address ?
                                   `/validatorGroup/${row.validator.validatorGroup.address}` : ""}
-                                color="secondary">
+                                color="secondary"
+                              >
                                 {row.validator.name}
                               </Link>
                             </Typography>

@@ -150,13 +150,13 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
                 className={classes.link}
                 color="textPrimary"
               >
-                {"view more"}
+                view more
               </Link>
             ) : null}
           </Typography>
           {data.transactions ?
             <TableContainer className={classes.container}>
-              <Table stickyHeader aria-label="sticky table">
+              <Table stickyHeader aria-label="latest-transactions">
                 <TableHead></TableHead>
                 <TableBody>
                   {data.transactions.transactions.map((row: any, index: number) => {
@@ -178,8 +178,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
                               >
                                 Tx#
                             <Link
-                                  href="transaction/[transaction]/"
-                                  as={`transaction/${row.hash}`}
+                                  href={`transaction/${row.hash}`}
                                   color="secondary"
                                   className={classes.leftInline}
                                 >
@@ -210,16 +209,13 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
                                 From
                             {row.from && row.from.address ? (
                                   <Link
-                                    href="account/[account]/"
-                                    as={`account/${row.from.address}`}
+                                    href={`account/${row.from.address}`}
                                     color="secondary"
                                     className={classes.txPadding}
                                   >
-
                                     {row.from && row.from.address
                                       ? <MiddleEllipsis text={row.from.address} />
                                       : null}
-
                                   </Link>
                                 ) : null}
                               </Typography>
@@ -235,8 +231,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
                                 To
                             {row.to && row.to.address ? (
                                   <Link
-                                    href="account/[account]/"
-                                    as={`account/${row.to.address}`}
+                                    href={`account/${row.to.address}`}
                                     color="secondary"
                                     className={classes.txPadding}
                                   >
@@ -246,7 +241,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
                               </Typography>
                             </Grid>
 
-                            <Grid item xs={12} lg={9} className={classes.chip}>
+                            <Grid item xs={9} className={classes.chip}>
                               {row.type && row.to && row.to.contract && row.to.contract.name ?
                                 <Chips type={row.type} contractName={row.to.contract.name} />
                                 :
@@ -254,7 +249,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
                                   <Chips type={row.type} />
                                   : null)}
                             </Grid>
-                            <Grid item xs={12} lg={3}>
+                            <Grid item xs={3} >
                               <Typography
                                 variant="body2"
                                 className={classes.alignRight}

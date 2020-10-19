@@ -169,8 +169,7 @@ const AccountList = () => {
                         {row.address ?
                           <TableCell align="left" padding="checkbox" className={classes.tableCell}>
                             <Link
-                              href="/account/[account]/"
-                              as={`/account/${row.address}`}
+                              href={`/account/${row.address}`}
                               color="secondary"
                             >
                               <Typography variant="body2" noWrap>

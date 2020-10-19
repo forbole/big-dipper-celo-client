@@ -65,8 +65,7 @@ const ProposalDetails = () => {
             <Grid container className={classes.container}>
               <Grid item xs={1}>
                 <Link
-                  href="/proposal/[proposal]/"
-                  as={`/proposal/${10}`}
+                  href={`/proposal/${10}`}
                   color="textPrimary"
                 >
                   <Typography variant="body2" className={classes.value}>
@@ -78,8 +77,7 @@ const ProposalDetails = () => {
                 <Typography variant="body2" className={classes.value}>
                   Proposer{" "}
                   <Link
-                    href="/account/[account]/"
-                    as={`/account/${account}`}
+                    href={`/account/${account}`}
                     color="secondary"
                   >
                     Michelle Clark
@@ -109,8 +107,7 @@ const ProposalDetails = () => {
                 <Typography variant="body2" className={classes.value}>
                   Proposer{" "}
                   <Link
-                    href="/account/[account]/"
-                    as={`/account/${account}`}
+                    href={`/account/${account}`}
                     color="secondary"
                   >
                     Dan Stanley
@@ -140,8 +137,7 @@ const ProposalDetails = () => {
                 <Typography variant="body2" className={classes.value}>
                   Proposer{" "}
                   <Link
-                    href="/account/[account]/"
-                    as={`/account/${account}`}
+                    href={`/account/${account}`}
                     color="secondary"
                   >
                     Walter Water

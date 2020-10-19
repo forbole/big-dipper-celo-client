@@ -120,8 +120,7 @@ const GroupMember = () => {
                             #1
             </Typography>
                         <Link
-                            href="account/[account]/"
-                            as={`account/${1}`}
+                            href={`account/${1}`}
                             color="secondary"
                         >
                             <Typography variant="body1" >
@@ -159,8 +158,7 @@ const GroupMember = () => {
                             #2
             </Typography>
                         <Link
-                            href="account/[account]/"
-                            as={`account/${1}`}
+                            href={`account/${1}`}
                             color="secondary"
                         >
                             <Typography variant="body1" >

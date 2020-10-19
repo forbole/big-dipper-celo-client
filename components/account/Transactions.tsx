@@ -71,7 +71,8 @@ const useStyles = makeStyles(({ spacing }) => {
       padding: '0 0 0 0.5rem',
     },
     divider: {
-      margin: '0.5rem 0 0 0',
+      margin: '0 1rem',
+      display: "flex",
       backgroundColor: "rgba(232, 232, 232, 1)",
     },
     icon: {
@@ -125,24 +126,22 @@ const AccountTransactions = ({ address }: TransactionsProps) => {
       </AccordionSummary>
       <AccordionDetails className={classes.root}>
         <Grid container >
-          <Divider variant='middle' />
+          {/* <Divider variant='middle' className={classes.divider} /> */}
           <Grid item xs={12}>
             <TableContainer className={classes.container}>
-              <Table >
-                <TableHead>
-                </TableHead>
+              <Table stickyHeader aria-label="account-transactions">
+                <TableHead></TableHead>
                 <TableBody>
                   {data.transactionsByAccount.transactions.map((row: any, index: number) => {
                     return (
                       <TableRow key={index} >
                         <TableCell component="th" scope="row" padding="checkbox"  >
-                          <Grid container spacing={1} style={{ padding: '0.5rem 0' }}>
+                          <Grid container spacing={1} style={{ padding: '0.5rem 0', background: "rgba(255, 255, 255, 1)" }}>
                             <Grid item xs={8}>
 
                               <Typography variant="body2" className={classes.leftInline}>
                                 Tx#  <Link
-                                  href="/transaction/[transaction]/"
-                                  as={`../transaction/${row.hash}`}
+                                  href={`/transaction/${row.hash}`}
                                   color="secondary"
                                   className={classes.leftInline}
                                 >
@@ -163,8 +162,7 @@ const AccountTransactions = ({ address }: TransactionsProps) => {
                             <Grid item xs={5} md={4} >
                               <Typography variant="body2" className={classes.leftInline}>
                                 From   <Link
-                                  href="/account/[account]/"
-                                  as={`../account/${row.from.address}`}
+                                  href={`/account/${row.from.address}`}
                                   color="secondary"
                                   className={classes.txPadding}
                                 >
@@ -178,8 +176,7 @@ const AccountTransactions = ({ address }: TransactionsProps) => {
                             <Grid item xs={7} md={8}>
                               <Typography variant="body2" align='left' className={classes.rightInline}>
                                 To <Link
-                                  href="/account/[account]/"
-                                  as={`../account/${row.to.address}`}
+                                  href={`/account/${row.to.address}`}
                                   color="secondary"
                                   className={classes.txPadding}
                                 >
@@ -190,7 +187,7 @@ const AccountTransactions = ({ address }: TransactionsProps) => {
                               </Typography>
                             </Grid>
 
-                            <Grid item xs={12} lg={8}  >
+                            <Grid item xs={8} >
                               {row.type && row.to && row.to.contract && row.to.contract.name ?
                                 <Chips type={row.type} contractName={row.to.contract.name} />
                                 :
@@ -198,12 +195,15 @@ const AccountTransactions = ({ address }: TransactionsProps) => {
                                   <Chips type={row.type} />
                                   : null)}
                             </Grid>
-                            <Grid item xs={12} lg={4}>
+                            <Grid item xs={4} lg={4}>
                               <Typography variant="body2" className={classes.alignRight} >
                                 {row.gas
                                   ? row.gas + " CELO"
                                   : <NotAvailable variant="body2" />}
                               </Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <Divider className={classes.divider} />
                             </Grid>
                           </Grid>
                         </TableCell>

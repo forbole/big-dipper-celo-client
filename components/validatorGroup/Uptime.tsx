@@ -124,8 +124,7 @@ const CustomTooltip = () => {
                     <Grid item xs={7}>
                         <Typography color="textPrimary" variant="body2" align="right" >
                             <Link
-                                href="/account/[account]/"
-                                as={`/account/${1}`}
+                                href={`/account/${1}`}
                                 color="secondary"
                             >
                                 Nans Aguilars </Link>
@@ -141,8 +140,7 @@ const CustomTooltip = () => {
                     <Grid item xs={7}>
                         <Typography color="textPrimary" variant="body2" align="right" >
                             <Link
-                                href="/block/[block]/"
-                                as={`/block/${108144}`}
+                                href={`/block/${108144}`}
                                 color="secondary"
                             >
                                 108144 </Link>
@@ -181,7 +179,7 @@ const CustomTooltip = () => {
                     </Grid>
                 </Grid>
             </CardContent>
-        </Card>
+        </Card >
     );
 
 };
