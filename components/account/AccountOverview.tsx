@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import BigNumber from 'bignumber.js';
-import React from 'react';
+import React, { useEffect } from 'react';
 import ContentLoader from "react-content-loader";
 import numbro from "numbro";
 import ComponentLoader from '../misc/ComponentLoader';
@@ -82,6 +82,7 @@ type AccountOverviewProps = { address: string };
 
 const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
     const classes = useStyles();
+    const [currentUser, setCurrentUser] = React.useState('');
 
     const accountQuery = useQuery(GET_ACCOUNT_DETAILS, {
         variables: { address }
@@ -92,6 +93,13 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
     const validatorQuery = useQuery(GET_VALIDATOR, {
         variables: { address }
     });
+
+    useEffect(() => {
+        let localUser = localStorage.getItem('currentUserAddress');
+        //@ts-ignore
+        setCurrentUser(localUser)
+    });
+
 
     if (accountQuery.loading || chainQuery.loading) return <ComponentLoader />;
     if (accountQuery.error || chainQuery.error)
@@ -169,15 +177,17 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                         )}
                     </Grid>
 
-          <Grid item xs={12}>
-            <Divider variant="middle" className={classes.divider} />
-          </Grid>
+          {address === currentUser ?
+            <Grid item xs={12}>
+              <Divider variant="middle" className={classes.divider} />
+            </Grid> : null}
+
           <Grid item xs={6}>
-            <UnlockGold currentAddressPage={address} />
+            <UnlockGold pageAddress={address} showButton={true} />
           </Grid>
 
           <Grid item xs={6}>
-            <LockGold />
+            <LockGold pageAddress={address} showButton={true} />
           </Grid>
         </Grid>
       </Card>
