@@ -44,7 +44,9 @@ class Ledger extends Component {
             case "U2F: Timeout":
                 return "Connection timed out. Please try again."
             case "Invalid channel":
-                return "Please unplug your Ledger device and connect again"
+                return "Something went wrong! Please unplug your Ledger device and connect again. "
+            case "Ledger device: CLA_NOT_SUPPORTED (0x6e00)":
+                return "Something went wrong! Please unplug your Ledger device and connect again. "
             case "Possible connection lost with the ledger. Check if still on and connected. Ledger device: UNKNOWN_ERROR (0x6804)":
                 return "Ledger device is disconnected. Please unlock your Ledger device, open Celo App and try again. "
             case "Ledger device: INS_NOT_SUPPORTED (0x6d00)":
