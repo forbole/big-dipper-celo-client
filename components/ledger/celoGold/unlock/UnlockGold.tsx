@@ -156,15 +156,13 @@ const UnlockGold = ({ isOpen, pageAddress, showButton }: UnlockGoldProps) => {
     const [nextDialog, setNextDialog] = React.useState(false);
     const [amount, setAmount] = React.useState('')
     const [dialogError, setDialogError] = React.useState(false);
-    const [dialogErrorMessage, setDialogErrorMessage] = React.useState("");
+    const [dialogErrorMessage, setDialogErrorMessage] = React.useState('');
     const [ledgerError, setLedgerError] = React.useState(false);
     const [ledgerErrorMessage, setLedgerErrorMessage] = React.useState('');
     const [ledgerLoading, setLedgerLoading] = React.useState(false);
     const [showUnlockButton, setShowUnlockButton] = React.useState(showButton);
     const [currentAddress, setCurrentAddress] = React.useState(pageAddress || '');
     const address = currentUser;
-
-
 
     const handleClose = () => {
         setOpen(false);
@@ -174,7 +172,6 @@ const UnlockGold = ({ isOpen, pageAddress, showButton }: UnlockGoldProps) => {
         setOpen(true);
         setLedgerError(false)
         setLedgerErrorMessage("")
-
 
         try {
             if (Ledger.isConnected === false) {
@@ -195,6 +192,7 @@ const UnlockGold = ({ isOpen, pageAddress, showButton }: UnlockGoldProps) => {
                 setLedgerLoading(false)
                 try {
                     let ver = await Ledger.getCeloAppVersion()
+                    setDialogError(true)
                 }
                 catch (e) {
                     setLedgerError(true)
@@ -227,11 +225,14 @@ const UnlockGold = ({ isOpen, pageAddress, showButton }: UnlockGoldProps) => {
     };
 
     const checkForInputErrors = (e) => {
-        if (!(parseFloat(e.target.value) > 0)) {
+        if (e.target.value === '0') {
             setDialogError(true)
-            setDialogErrorMessage("Incorrect format! Please enter CELO amount to unlock. ")
+            setDialogErrorMessage("Value must be grater than 0! Please enter CELO amount to lock. ")
         }
-
+        else if (!(parseFloat(e.target.value) > 0)) {
+            setDialogError(true)
+            setDialogErrorMessage("Incorrect format! Please enter CELO amount to lock. ")
+        }
         else {
             setDialogError(false)
             setDialogErrorMessage("")
