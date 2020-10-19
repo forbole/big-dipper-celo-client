@@ -12,7 +12,7 @@ import ControlButtons from "./ControlButtons";
 import IconButton from '@material-ui/core/IconButton';
 import Ledger from './Ledger'
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Link from "../Link";
+import Link from 'next/link';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -125,7 +125,7 @@ const Login = () => {
                         let ver = await Ledger.getCeloAppVersion()
                     }
                     catch (e) {
-                        setErrorMessage(e.message)
+                        setErrorMessage(Ledger.checkLedgerErrors(e.message))
                     }
                 }
 
@@ -145,8 +145,7 @@ const Login = () => {
                 setRetry(false);
             }
             catch (e) {
-                setErrorMessage(e.message)
-
+                setErrorMessage(Ledger.checkLedgerErrors(e.message))
             }
         }
     };
@@ -162,8 +161,9 @@ const Login = () => {
                 null :
                 <Link
                     href={`/account/${currentUser}`}
-                    // as={`../account/${currentUser}`}
-                    color="secondary">
+                // as={`../account/${currentUser}`}
+                // color="secondary"
+                >
                     <IconButton
                         aria-label="Login"
                         className={classes.loggedIn}
