@@ -137,13 +137,13 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-type LockGoldProps = { isOpen?: boolean, currentAddressPage?: string };
+type LockGoldProps = { isOpen?: boolean, pageAddress?: string, showButton?: boolean };
 
 
-const LockGold = ({ isOpen, currentAddressPage }: LockGoldProps): JSX.Element => {
+const LockGold = ({ isOpen, pageAddress, showButton }: LockGoldProps) => {
 
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(isOpen);
     const [connected, setConnected] = React.useState(false);
     const [currentUser, setCurrentUser] = React.useState('');
     const [nextDialog, setNextDialog] = React.useState(false);
@@ -154,31 +154,40 @@ const LockGold = ({ isOpen, currentAddressPage }: LockGoldProps): JSX.Element =>
     const [ledgerError, setLedgerError] = React.useState(false);
     const [ledgerErrorMessage, setLedgerErrorMessage] = React.useState('');
     const [ledgerLoading, setLedgerLoading] = React.useState(false);
-
+    const [showLockButton, setShowLockButton] = React.useState(showButton);
+    const [currentAddress, setCurrentAddress] = React.useState(pageAddress || '');
+    const address = currentUser;
 
     const handleClose = () => {
         setOpen(false);
     };
 
     const handleLock = async () => {
+        setOpen(true);
         setLedgerError(false)
         setLedgerErrorMessage("")
-        setOpen(true);
 
         try {
-            setLedgerLoading(true)
-            setLedgerErrorMessage("Connecting...")
-            await LedgerCelo.connect()
-            if (await LedgerCelo.connect() === true) {
-                setLedgerErrorMessage("Please accept the connection in your Ledger device")
-                let userAddress = await LedgerCelo.getAddress()
+            if (Ledger.isConnected === false) {
+                setConnected(false)
+                setLedgerLoading(true)
+                setLedgerErrorMessage("Connecting...")
+                await Ledger.connect()
+            }
+
+            if (Ledger.isConnected === true) {
+                setLedgerLoading(true)
+                setLedgerErrorMessage("Please accept the connection in your Ledger device. ")
+                let userAddress = await Ledger.getAddress()
                 localStorage.setItem('currentUserAddress', userAddress)
                 setCurrentUser(userAddress)
                 setLedgerErrorMessage("")
                 setConnected(true)
                 setLedgerLoading(false)
                 try {
-                    let ver = await LedgerCelo.getCeloAppVersion()
+                    let ver = await Ledger.getCeloAppVersion()
+                    setDialogError(true)
+
                 }
                 catch (e) {
                     setLedgerError(true)
@@ -197,7 +206,8 @@ const LockGold = ({ isOpen, currentAddressPage }: LockGoldProps): JSX.Element =>
     };
 
     const confirmLock = async () => {
-
+        setOpen(false);
+        setNextDialog(true)
         try {
             const from = currentUser
             const lockObject = { amount, from }
@@ -212,11 +222,14 @@ const LockGold = ({ isOpen, currentAddressPage }: LockGoldProps): JSX.Element =>
     };
 
     const checkForInputErrors = (e) => {
-        if (!(parseFloat(e.target.value) > 0)) {
+        if (e.target.value === '0') {
+            setDialogError(true)
+            setDialogErrorMessage("Value must be grater than 0! Please enter CELO amount to lock. ")
+        }
+        else if (!(parseFloat(e.target.value) > 0)) {
             setDialogError(true)
             setDialogErrorMessage("Incorrect format! Please enter CELO amount to lock. ")
         }
-
         else {
             setDialogError(false)
             setDialogErrorMessage("")
@@ -226,11 +239,19 @@ const LockGold = ({ isOpen, currentAddressPage }: LockGoldProps): JSX.Element =>
 
     useEffect(() => {
         let localUser = localStorage.getItem('currentUserAddress');
-        let unlockCELOAmount = document.getElementById("lock-gold-amount") as HTMLInputElement
-        let unlockAmount = unlockCELOAmount ? unlockCELOAmount.value : "0";
+        let lockCELOAmount = document.getElementById("lock-gold-amount") as HTMLInputElement
+        let lockAmount = lockCELOAmount ? lockCELOAmount.value : "0";
+        console.log(lockAmount)
         //@ts-ignore
         setCurrentUser(localUser)
-        setAmount(unlockAmount)
+        setAmount(lockAmount)
+        if (Ledger.isConnected === true) {
+            setConnected(true)
+        }
+        if (Ledger.isConnected === false) {
+            setConnected(false)
+            setLedgerLoading(true)
+        }
     });
 
 
@@ -259,23 +280,25 @@ const LockGold = ({ isOpen, currentAddressPage }: LockGoldProps): JSX.Element =>
 
     if (loading) return <ComponentLoader />
     if (error) return null
-    if (currentAddressPage === currentUser) {
+    if (currentAddress === currentUser) {
         return (
             <>
-                <Grid container spacing={2} className={classes.lockGold} >
-                    <Grid item xs={6} className={classes.centerContent} >
-                        <div className={classes.centerButtons}>
-                            <Button
-                                variant="outlined"
-                                color="secondary"
-                                onClick={handleLock}
-                                className={classes.buttonLock}
-                            >
-                                <Typography variant="body1">Lock CELO</Typography>
-                            </Button>
-                        </div>
+                {showLockButton === true ?
+                    <Grid container spacing={2} className={classes.lockGold} >
+                        <Grid item xs={6} className={classes.centerContent} >
+                            <div className={classes.centerButtons}>
+                                <Button
+                                    variant="outlined"
+                                    color="secondary"
+                                    onClick={handleLock}
+                                    className={classes.buttonLock}
+                                >
+                                    <Typography variant="body1">Lock CELO</Typography>
+                                </Button>
+                            </div>
+                        </Grid>
                     </Grid>
-                </Grid>
+                    : null}
 
                 <Dialog
                     open={open}
@@ -357,8 +380,8 @@ const LockGold = ({ isOpen, currentAddressPage }: LockGoldProps): JSX.Element =>
                                                     {ledgerErrorMessage}
                                                 </Typography>
                                             </Grid> </> : null}
-                                    {!ledgerErrorMessage ?
-                                        <ControlButtons handleClick={confirmLock} handleClose={handleClose} showDisabled={dialogError || !connected} />
+                                    {(!ledgerErrorMessage && connected === true && !ledgerLoading) ?
+                                        <ControlButtons handleClick={confirmLock} handleClose={handleClose} showDisabled={dialogError} />
                                         :
                                         <ControlButtons showRetry={true} handleClick={handleLock} handleClose={handleClose} />}
                                 </Grid>
@@ -366,7 +389,7 @@ const LockGold = ({ isOpen, currentAddressPage }: LockGoldProps): JSX.Element =>
                         </Grid>
                     </DialogContent>
                 </Dialog>
-                { nextDialog ? <LockGoldConfirm isOpen={nextDialog} amount={amount} /> : null}
+                { nextDialog ? <LockGoldConfirm isOpen={nextDialog} amount={amount} pageAddress={currentAddress} /> : null}
             </>
         );
     }

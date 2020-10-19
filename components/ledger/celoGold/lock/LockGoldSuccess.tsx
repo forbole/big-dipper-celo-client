@@ -1,10 +1,11 @@
-import Button from '@material-ui/core/Button';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import React from 'react';
+import Button from "@material-ui/core/Button";
+import Link from 'next/link';
+import Grid from "@material-ui/core/Grid";
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import Typography from "@material-ui/core/Typography";
 
 import NavLink from '../../../NavLink';
 
@@ -45,7 +46,11 @@ const useStyles = makeStyles({
     }
 });
 
-const LockGoldSuccess = (): JSX.Element => {
+type LockGoldSuccessProps = { isOpen: boolean, pageAddress?: string };
+
+
+const LockGoldSuccess = ({ isOpen, pageAddress }: LockGoldSuccessProps): JSX.Element  => {
+
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
