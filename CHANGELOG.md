@@ -2,10 +2,21 @@
 
 ## [Unreleased]
 
+* Stored CELO base value in env variables
+* Fixed copy method to copy each address seperately
+* Fixed collapse to open every collapse element individually
+* Added query to display Validator Votes List data 
+* Added Ordering in Accounts query
+* Implemented proposal query and linked data with `Proposal` components 
+
+
+## v0.1.3
+
 * [#69] Hidden Search Bar and Network Selection
 * [#68] Added transaction contract input parameters in TransactionDetails
 * Hidden Validator Votes
 * [#74] Changed token name from cGLD to CELO 
+
 
 ## v0.1.2
 

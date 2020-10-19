@@ -17,25 +17,31 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function Proposal() {
+export default function Proposal(proposalDetails: string) {
   const classes = useStyles();
   const router = useRouter();
-  const { Proposal } = router.query;
-  // const pid = parseInt(router.query.block);
+  const proposalNumber: string = router.query.proposal as string;
   return (
         <Grid container spacing={2} className={classes.root}>
         <Grid item xs={12} >
         <PriceCard />
         </Grid>
         <Grid item xs={12} >
-          <ProposalDetails />
+          <ProposalDetails proposal={proposalNumber} proposalDetails={proposalDetails.proposalDetails} />
         </Grid>
         <Grid item xs={12} >
-          <ProposalVotingList />
+          <ProposalVotingList proposal={proposalNumber} />
         </Grid>
         <Grid item xs={12} >
-          <DepositList />
+          <DepositList proposal={proposalNumber} />
         </Grid>
       </Grid>
   );
+}
+
+Proposal.getInitialProps = async (ctx: any) => {
+  const { query } = ctx;
+  const response = await fetch(`https://raw.githubusercontent.com/celo-org/celo-proposals/master/CGPs/000${query.proposal}.md`)
+  const proposalDetails = await response.text();
+  return { proposalDetails }
 }

@@ -69,7 +69,7 @@ const Chips = ({ contractName, type, actionResult }: ChipsProps) => {
     <React.Fragment>
       {contractName ? <Chip size="small" label={contractName} style={{ backgroundColor: contractColors[contractName], borderRadius: 5, width: "7rem", marginRight: "0.5rem", marginLeft: "1rem", fontSize: "	0.875rem", }} /> : null}
       {type ? <Chip size="small" label={type} className={classes.contractType} /> : null}
-      {actionResult ? <Chip size="small" label={actionResult} style={{ backgroundColor: ledgerColors[actionResult], border: borderElement[actionResult], borderRadius: 5, width: "7rem", marginRight: "0.5rem", fontSize: "	0.875rem", }} /> : null}
+      {actionResult ? <Chip size="small" label={actionResult} style={{ backgroundColor: ledgerColors[actionResult], border: borderElement[actionResult], borderRadius: 5, width: "5rem", marginRight: "0.5rem", fontSize: "	0.875rem", }} /> : null}
     </React.Fragment>
   )
 }
