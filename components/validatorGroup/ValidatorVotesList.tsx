@@ -227,9 +227,9 @@ const ValidatorVotesList = () => {
                       className={classes.tableCell}
                     > {row.name || row.address ?
                       <Link
-                        href="/validatorGroup/[validatorGroupDetails]/"
-                        as={`/validatorGroup/${'NanValdezG'}`}
-                        color="secondary">
+                        href={`/validatorGroup/${'NanValdezG'}`}
+                        color="secondary"
+                      >
                         <Typography variant="body2" noWrap>
 
                           {row.name || row.address}

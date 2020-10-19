@@ -187,14 +187,14 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
     <Grid container spacing={2}>
       <Grid item xs={12}>
         {displayCard ? (
-            <PriceCard />
+          <PriceCard />
         ) : null}
         <Paper className={classes.root}>
           <Typography variant="body1" className={classes.box}>
             Latest Blocks{" "}
             {pagination === false ? (
               <Link href="/blocks" className={classes.link} color="textPrimary">
-                {"view more"}
+                view more
               </Link>
             ) : null}
           </Typography>
@@ -254,21 +254,8 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                           className={classes.tableCell}
                         >
                           <Typography variant="body2" noWrap>
-                            {/* <a href="block/[...block]" as={`block/${row.number}`}  onClick={handleClick} >
-      {row.number}
-    </a> */}
-                            {/* <a  onClick={() => Router.push(`/block/[block]`, `/block/${row.number}`)}> {row.number}</a> */}
-                            {/* <span onClick={() => Router.push(`/block/[block]`, `/block/${row.number}`)}>{row.number}</span> */}
-                            {/* <Link href="block/[...block]/" as={`block/${row.number}`} passHref>
-      <MyButton />
-    </Link> */}
-                            {/* <Post number={row.number}></Post> */}
-                            {/* <Link href={`block/?block=${row.number}`}><a>{row.number}</a></Link> */}
-
-                            {/* <Link href="block/[block]/" as={`block/${row.number}`} onClick={handleClick} passHref color="secondary"><a  >{row.number}</a></Link> */}
                             <Link
-                              href="/block/[block]/"
-                              as={`/block/${row.number}`}
+                              href={`/block/${row.number}`}
                               color="secondary"
                             >
                               {row.number}
@@ -283,8 +270,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
                         >
                           {row.miner && row.miner.signer ? (
                             <Link
-                              href="/account/[account]/"
-                              as={`/account/${row.miner.signer}`}
+                              href={`/account/${row.miner.signer}`}
                               color="secondary"
                             >
                               <Typography

@@ -113,8 +113,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) =>
 
           <Grid item xs={1}>
             <Link
-              href="/proposal/[proposal]/"
-              as={`/proposal/${prevProposal}`}
+              href={`/proposal/${prevProposal}`}
               color="secondary"
             >
               <IconButton
@@ -127,8 +126,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) =>
           </Grid>
           <Grid item xs={1}>
             <Link
-              href="/proposal/[proposal]/"
-              as={`/proposal/${nextProposal}`}
+              href={`/proposal/${nextProposal}`}
               color="secondary"
             >
               {" "}

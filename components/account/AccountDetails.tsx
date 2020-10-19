@@ -130,9 +130,11 @@ const AccountDetails = ({ address }: AccountDetailsProps) => {
                         </Grid>
                         <Grid item xs={8} className={classes.item} >
                             {accountQuery.data && accountQuery.data.account && accountQuery.data.account.accountSummary && accountQuery.data.account.accountSummary.metadataURL ?
-                                <Link href="/" target="_blank" color="secondary"> <Typography variant="body2" className={classes.alignRight} >
-                                    {accountQuery.data.account.accountSummary.metadataURL}
-                                </Typography> </Link> :
+                                <Link href="/" target="_blank" color="secondary">
+                                    <Typography variant="body2" className={classes.alignRight} >
+                                        {accountQuery.data.account.accountSummary.metadataURL}
+                                    </Typography>
+                                </Link> :
                                 < NotAvailable variant="body2" className={classes.alignRight} />}
                         </Grid>
 
@@ -241,11 +243,11 @@ const AccountDetails = ({ address }: AccountDetailsProps) => {
                             {data.validator && data.validator.affiliation ?
                                 <Typography variant="body2" className={classes.alignRight}  >
                                     <Link
-                                        href="/validatorGroup/[validatorGroupDetails]/"
-                                        as={`../validatorGroup/${data.validator.affiliation}`}
+                                        href={`/validatorGroup/${data.validator.affiliation}`}
                                         color="secondary"
                                     >
-                                        {data.validator.affiliation}</Link>
+                                        {data.validator.affiliation}
+                                    </Link>
                                 </Typography> :
                                 < NotAvailable variant="body2" className={classes.alignRight} />}
                         </Grid>
@@ -284,30 +286,29 @@ const AccountDetails = ({ address }: AccountDetailsProps) => {
                             <>
                                 <Grid item xs={7} className={classes.item} >
                                     <Link
-                                        href="/account/[account]/"
-                                        as={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.vote}`}
+                                        href={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.vote}`}
                                         color="secondary"
                                     >
                                         <Typography variant="body2" className={classes.alignRight}  >
                                             {accountQuery.data.account.accountSummary.authorizedSigners.vote}
                                         </Typography>
+
                                     </Link>
                                 </Grid>
                                 <Grid item xs={12} className={classes.item} >
                                     <Link
-                                        href="/account/[account]/"
-                                        as={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.validator}`}
+                                        href={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.validator}`}
                                         color="secondary"
                                     >
                                         <Typography variant="body2" className={classes.alignRight}  >
                                             {accountQuery.data.account.accountSummary.authorizedSigners.validator}
                                         </Typography>
+
                                     </Link>
                                 </Grid>
                                 <Grid item xs={12} className={classes.item} >
                                     <Link
-                                        href="/account/[account]/"
-                                        as={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.attestation}`}
+                                        href={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.attestation}`}
                                         color="secondary"
                                     >
                                         <Typography variant="body2" className={classes.alignRight}  >

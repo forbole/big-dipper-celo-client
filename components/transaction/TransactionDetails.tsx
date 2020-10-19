@@ -235,8 +235,7 @@ const TransactionDetails = ({ hash }: TxDetailsProps) => {
             {data.transaction && data.transaction.from ?
               <Typography variant="body2" component="h2">
                 <Link
-                  href="/account/[account]/"
-                  as={`/account/${data.transaction.from.address}`}
+                  href={`/account/${data.transaction.from.address}`}
                   color="secondary"
                 >
                   {data.transaction.from.address}
@@ -254,8 +253,7 @@ const TransactionDetails = ({ hash }: TxDetailsProps) => {
             {data.transaction && data.transaction.to ?
               <Typography variant="body2" component="h2">
                 <Link
-                  href="/account/[account]/"
-                  as={`/account/${data.transaction.to.address}`}
+                  href={`/account/${data.transaction.to.address}`}
                   color="secondary"
                 >
                   {data.transaction.to.address}
