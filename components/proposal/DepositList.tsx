@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import Link from "../Link";
 import {
@@ -13,6 +13,15 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Divider from "@material-ui/core/Divider";
+import NotAvailable from '../misc/NotAvailable'
+import ComponentLoader from '../misc/ComponentLoader'
+import ErrorMessage from '../misc/ErrorMessage';
+import { GET_PROPOSAL } from '../query/Proposal';
+import { GET_TX_DETAILS } from '../query/Transaction';
+import { useQuery } from "@apollo/client";
+import BigNumber from 'bignumber.js'
+import getConfig from 'next/config'
+import TablePagination from '@material-ui/core/TablePagination';
 
 interface Column {
   id: "depositor" | "amount" | "time";
@@ -26,25 +35,6 @@ const columns: Column[] = [
   { id: "time", label: "Time", align: "right" },
 ];
 
-
-function createData(depositor: string, amount: string, time: string) {
-  return { depositor, amount, time };
-}
-
-const rows = [
-  createData("Michelle Clark", "59.0096541 CELO", "April 22 2020"),
-  createData("Rachel Hugh", "22 CELO", "April 22 2020"),
-  createData("Natasha", "565646 CELO", "April 22 2020"),
-  createData("Rith Jackson", "24755 CELO", "April 22 2020"),
-  createData("Kelly Mendex", "65894856 CELO", "April 22 2020"),
-  createData("Marilym Ford", "2478 CELO", "April 22 2020"),
-  createData("Fionna Wells", "976.14755 CELO", "April 22 2020"),
-  createData("Sandra Jones", "18949.18115615 CELO", "April 22 2020"),
-  createData("Beverly", "78.145521 CELO", "April 22 2020"),
-  createData("Sonia Fone", "99.147 CELO", "April 22 2020"),
-  createData("1087144", "472.31111 CELO", "April 22 2020"),
-  createData("1087143", "887 CELO", "April 22 2020"),
-];
 
 const useStyles = makeStyles(() => {
   return {
@@ -76,7 +66,7 @@ const useStyles = makeStyles(() => {
       padding: "0.5rem",
     },
     table: {
-      background: "#4D5155",
+      background: "rgba(246, 247, 249, 1)",
       padding: "0",
     },
     paper: {
@@ -92,8 +82,41 @@ const useStyles = makeStyles(() => {
   };
 });
 
-const DepositList = () => {
+type DepositListProps = { proposal: string };
+
+const DepositList = ({ proposal }: DepositListProps) => {
   const classes = useStyles();
+  const proposalNumber = parseInt(proposal);
+  const { publicRuntimeConfig } = getConfig()
+  let hashValue: string = "";
+
+  const [hash, setHash] = React.useState("");
+  const [page, setPage] = React.useState(0);
+  const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXsmall)
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPageSize(+event.target.value);
+  };
+
+  const { loading, error, data } = useQuery(GET_PROPOSAL, {
+    variables: { proposalNumber },
+  });
+
+  const txDetails = useQuery(GET_TX_DETAILS, {
+    variables: { hash },
+  });
+
+  // useEffect(() => {
+  //   setHash(hashValue)
+  // })
+
+  if (loading) return <ComponentLoader />
+  if (error) return <ErrorMessage message={error.message} />
+
 
   return (
     <Grid container spacing={1} justify="center" className={classes.container}>
@@ -130,7 +153,8 @@ const DepositList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row: any, index: number) => {
+
+              {Object.keys(data.proposal.upvoteList).slice(page * pageSize, page * pageSize + pageSize).map(function (row: any, index: number) {
                 return (
                   <TableRow key={index}>
                     <TableCell
@@ -140,30 +164,38 @@ const DepositList = () => {
                       align="left"
                       className={classes.tableCell}
                     >
-                      <Link href="#" color="secondary">
+                      {data.proposal && data.proposal.upvoteList[row] && data.proposal.upvoteList[row].returnValues && data.proposal.upvoteList[row].returnValues.account ?
+                        <Link
+                          href="/account/[account]/"
+                          as={`/account/${data.proposal.upvoteList[row].returnValues.account}`}
+                          color="secondary"
+                        >
+                          <Typography variant="body2" noWrap>
+                            {" "}
+                            {data.proposal.upvoteList[row].returnValues.account}
+                          </Typography>
+                        </Link> : <NotAvailable variant="body2" />}
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      padding="checkbox"
+                      className={classes.tableCell}
+                    >
+                      {data.proposal && data.proposal.upvoteList[row] && data.proposal.upvoteList[row].returnValues && data.proposal.upvoteList[row].returnValues.upvotes ?
                         <Typography variant="body2" noWrap>
-                          {" "}
-                          {row.depositor}
-                        </Typography>
-                      </Link>
+                          {new BigNumber(data.proposal.upvoteList[row].returnValues.upvotes / process.env.CELO).toFormat()}
+                        </Typography> : <NotAvailable variant="body2" />}
                     </TableCell>
                     <TableCell
                       align="right"
                       padding="checkbox"
                       className={classes.tableCell}
                     >
-                      <Typography variant="body2" noWrap>
-                        {row.amount}
-                      </Typography>
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      padding="checkbox"
-                      className={classes.tableCell}
-                    >
-                      <Typography variant="body2" noWrap>
-                        {row.time}
-                      </Typography>
+
+                      {txDetails.data && txDetails.data.transaction && txDetails.data.transaction.timestamp ?
+                        <Typography variant="body2" noWrap>
+                          {new Date(parseInt(txDetails.data.transaction.timestamp) * 1000).toUTCString()}
+                        </Typography> : <NotAvailable variant="body2" />}
                     </TableCell>
                     {/* <TableCell
                         align="left"
@@ -190,11 +222,27 @@ const DepositList = () => {
                       </TableCell> */}
                   </TableRow>
                 );
-              })}
+
+              })
+              }
             </TableBody>
           </Table>
         </TableContainer>
-
+        <TablePagination
+          rowsPerPageOptions={[publicRuntimeConfig.rowXsmall, publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge]}
+          component="div"
+          count={Object.keys(data.proposal.upvoteList).length}
+          rowsPerPage={pageSize}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+          backIconButtonProps={{
+            'aria-label': 'Previous',
+          }}
+          nextIconButtonProps={{
+            'aria-label': 'Next',
+          }}
+        />
       </Paper>
     </Grid>
   );

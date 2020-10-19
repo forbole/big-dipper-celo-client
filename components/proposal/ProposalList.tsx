@@ -10,7 +10,12 @@ import * as numbro from "numbro";
 import PriceCard from "../PriceCard";
 import Chips from "../../components/Chips";
 import Link from "../../components/Link";
-
+import getConfig from 'next/config'
+import ComponentLoader from '../misc/ComponentLoader';
+import NotAvailable from '../misc/NotAvailable'
+import ErrorMessage from '../misc/ErrorMessage';
+import MiddleEllipsis from '../misc/MiddleEllipsis'
+import { GET_PROPOSALS } from '../query/Proposal'
 
 const useStyles = makeStyles({
   root: {
@@ -54,110 +59,85 @@ const useStyles = makeStyles({
 
 const ProposalDetails = () => {
   const classes = useStyles();
-  const account = "hiu43ruybr3ub3f";
+  const { publicRuntimeConfig } = getConfig()
+
+  const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
+  const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowMedium)
+
+  const field = "proposalNumber"
+
+  const { loading, error, data } = useQuery(GET_PROPOSALS, {
+    variables: { pageSize, page, field },
+  });
+
+
+
+  if (loading) return <ComponentLoader />
+  if (error) return <ErrorMessage message={error.message} />
+
   return (
     <div>
       <Grid container className={classes.container}>
         <Typography variant="body1" className={classes.proposalTitle}>
           Proposals
         </Typography>
-        <Grid item xs={12} className={classes.proposalCard}>
-          <Card className={classes.card} elevation={0}>
-            <Grid container className={classes.container}>
-              <Grid item xs={1}>
-                <Link
-                  href="/proposal/[proposal]/"
-                  as={`/proposal/${10}`}
-                  color="textPrimary"
-                >
-                  <Typography variant="body2" className={classes.value}>
-                    #10
-                </Typography>
-                </Link>
-              </Grid>
-              <Grid item xs={8} sm={9}>
-                <Typography variant="body2" className={classes.value}>
-                  Proposer{" "}
-                  <Link
-                    href="/account/[account]/"
-                    as={`/account/${account}`}
-                    color="secondary"
-                  >
-                    Michelle Clark
-                  </Link>
-                </Typography>
-              </Grid>
-              <Grid item xs={3} sm={2} className={classes.proposalButton}>
-                <Chips actionResult="Vote" />
-              </Grid>
-              <Grid item xs={11} sm={8} className={classes.proposalDescription}>
-                Don’t Burn Deposits for Rejected Governance Proposals Unless
-                Vetoed
-              </Grid>
+        {data.proposals.proposals.map((row: any, index: number) => {
+          return (
+            <Grid item xs={12} className={classes.proposalCard}>
+              <Card className={classes.card} elevation={0}>
+                <Grid container className={classes.container}>
+                  <Grid item xs={1}>
+                    {row.returnValues && row.returnValues.proposalId ?
+                      <Link
+                        href="/proposal/[proposal]/"
+                        as={`/proposal/${row.returnValues.proposalId}`}
+                        color="textPrimary"
+                      >
+                        <Typography variant="body2" className={classes.value}>
+                          #{row.returnValues.proposalId}
+                        </Typography>
+                      </Link> : null}
+                  </Grid>
+                  <Grid item xs={8} sm={9}>
+                    <Typography variant="body2" className={classes.value}>
+                      Proposer {row.returnValues && row.returnValues.proposer ?
+                        <Link
+                          href="/account/[account]/"
+                          as={`/account/${row.returnValues.proposer}`}
+                          color="secondary"
+                        > <MiddleEllipsis text={row.returnValues.proposer} />
+                        </Link> : null}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3} sm={2} className={classes.proposalButton}>
+                    {row.removed ?
+                      <Chips actionResult="Removed" />
+                      : null}
+                    {row.status === "Approved" ?
+                      <Chips actionResult="Passed" />
+                      : <Chips actionResult="Rejected" />}
+                    {row.status === "Vote" ?
+                      <Chips type="" contractName="" actionResult="Vote" />
+                      : null}
+                    {row.status === "Deposit" ?
+                      <Chips type="" contractName="" actionResult="Deposit" />
+                      : null}
+                  </Grid>
+                  <Grid item xs={11} sm={8} className={classes.proposalDescription}>
+                    {row.returnValues && row.returnValues.proposalId && row.proposalTitle ?
+                      <Link
+                        href="/proposal/[proposal]/"
+                        as={`/proposal/${row.returnValues.proposalId}`}
+                        color="textPrimary"
+                      >
+                        {row.proposalTitle}
+                      </Link> : null}
+                  </Grid>
+                </Grid>
+              </Card>
             </Grid>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} className={classes.proposalCard}>
-          <Card className={classes.card} elevation={0}>
-            <Grid container className={classes.container}>
-              <Grid item xs={1}>
-                <Typography variant="body2" className={classes.value}>
-                  #9
-                </Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <Typography variant="body2" className={classes.value}>
-                  Proposer{" "}
-                  <Link
-                    href="/account/[account]/"
-                    as={`/account/${account}`}
-                    color="secondary"
-                  >
-                    Dan Stanley
-                  </Link>
-                </Typography>
-              </Grid>
-              <Grid item xs={3} className={classes.proposalButton}>
-                <Chips actionResult="Deposit" />
-              </Grid>
-              <Grid item xs={12} className={classes.proposalDescription}>
-                Adjustment of blocks_per_year to come aligned with actual block
-                time
-              </Grid>
-            </Grid>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} className={classes.proposalCard}>
-          <Card className={classes.card} elevation={0}>
-            <Grid container className={classes.container}>
-              <Grid item xs={1}>
-                <Typography variant="body2" className={classes.value}>
-                  #8
-                </Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <Typography variant="body2" className={classes.value}>
-                  Proposer{" "}
-                  <Link
-                    href="/account/[account]/"
-                    as={`/account/${account}`}
-                    color="secondary"
-                  >
-                    Walter Water
-                  </Link>
-                </Typography>
-              </Grid>
-              <Grid item xs={3} className={classes.proposalButton}>
-                <Chips actionResult="Passed" />
-              </Grid>
-              <Grid item xs={12} className={classes.proposalDescription}>
-                Notification for Security Critical Hard Fork at Block 482100
-              </Grid>
-            </Grid>
-          </Card>
-        </Grid>
+          );
+        })}
       </Grid>
     </div>
   );

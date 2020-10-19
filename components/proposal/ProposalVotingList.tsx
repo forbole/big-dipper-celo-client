@@ -20,7 +20,12 @@ import {
     PieChart, Pie, Sector, Cell, Tooltip, Legend, Line
 } from 'recharts';
 import getConfig from 'next/config'
-
+import NotAvailable from '../misc/NotAvailable'
+import ComponentLoader from '../misc/ComponentLoader'
+import ErrorMessage from '../misc/ErrorMessage';
+import { GET_PROPOSAL } from '../query/Proposal';
+import { useQuery } from "@apollo/client";
+import BigNumber from 'bignumber.js'
 
 interface Column {
     id: "voter" | "answer" | "voting_power";
@@ -35,24 +40,6 @@ const columns: Column[] = [
 ];
 
 
-function createData(voter: string, answer: string, voting_power: string) {
-    return { voter, answer, voting_power };
-}
-
-const rows = [
-    createData("Michelle Clark", "Yes", "56.14575"),
-    createData("Rachel Hugh", "Yes", "548748.2545"),
-    createData("Natasha", "No", "565.0414561"),
-    createData("Rith Jackson", "Yes", "55.1212"),
-    createData("Kelly Mendex", "No", "11.02515"),
-    createData("Marilym Ford", "Yes", "563.14521141"),
-    createData("Fionna Wells", "Yes", "66.11422"),
-    createData("Sandra Jones", "No", "898.1471"),
-    createData("Beverly", "Yes", "87.152615"),
-    createData("Sonia Fone", "Yes", "8.14515165"),
-    createData("1087144", "No", "8.0514541"),
-    createData("1087143", "Yes", "97.15414"),
-];
 
 const useStyles = makeStyles(() => {
     return {
@@ -83,7 +70,7 @@ const useStyles = makeStyles(() => {
             padding: "0.5rem",
         },
         table: {
-            background: "#4D5155",
+            background: "rgba(246, 247, 249, 1)",
             padding: "0",
         },
         paper: {
@@ -102,7 +89,7 @@ const useStyles = makeStyles(() => {
             flexWrap: "wrap",
             fontSize: "1rem",
             textTransform: "none",
-            padding: "0 2rem 0 0 ",
+            padding: "0 0.5rem 0 0.5rem ",
         },
         pieChart: {
             alignContent: "center",
@@ -112,12 +99,46 @@ const useStyles = makeStyles(() => {
     };
 });
 
-const ProposalVotingList = () => {
+
+interface TabPanelProps {
+    children?: React.ReactNode;
+    index: any;
+    value: any;
+}
+
+function TabPanel(props: TabPanelProps) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`proposal-voting-tab-${index}`}
+            aria-labelledby={`proposal-voting-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Grid container>
+                    <Grid item xs={12}>
+                        <Typography>{children}</Typography>
+                    </Grid>
+                </Grid>
+            )}
+        </div>
+    );
+}
+
+type ProposalVotingListProps = { proposal: string };
+
+
+const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
     const classes = useStyles();
     const { publicRuntimeConfig } = getConfig()
+    const proposalNumber = parseInt(proposal)
 
-    const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
+    const [page, setPage] = React.useState(0);
     const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXsmall)
+    const [value, setValue] = React.useState(0);
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -125,25 +146,120 @@ const ProposalVotingList = () => {
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPageSize(+event.target.value);
-        setPage(publicRuntimeConfig.setPage);
     };
-
-    const [value, setValue] = React.useState(0);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
     };
 
 
-    const data = [
-        { name: 'Yes', value: 500 },
-        { name: 'No', value: 300 },
-        { name: 'No With Veto', value: 200 },
-        { name: 'Abstain', value: 50 },
-    ];
+    const { loading, error, data } = useQuery(GET_PROPOSAL, {
+        variables: { proposalNumber },
+    });
+
+    const RednderTabs = (voteType: any) => {
+        return (<>
+            <TableContainer>
+                <Table size="medium">
+                    <TableHead>
+                        <TableRow>
+                            {columns.map((column: any, index: number) => (
+                                <TableCell
+                                    key={index}
+                                    align={column.align}
+                                    className={classes.table}
+                                    padding="checkbox"
+                                >
+                                    <Typography
+                                        variant="body2"
+                                        noWrap
+                                        className={classes.tableCell}
+                                    >
+                                        {column.label}
+                                    </Typography>
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {Object.keys(data.proposal.totalVotesList[voteType.voteType]).slice(page * pageSize, page * pageSize + pageSize).map((row: any, index: number) => {
+                            return (
+                                <TableRow key={index}>
+                                    <TableCell
+                                        component="th"
+                                        scope="row"
+                                        padding="checkbox"
+                                        align="left"
+                                        className={classes.tableCell}
+                                    >
+                                        {data.proposal.totalVotesList[voteType.voteType][row] && data.proposal.totalVotesList[voteType.voteType][row].returnValues && data.proposal.totalVotesList[voteType.voteType][row].returnValues.account ?
+                                            <Link
+                                                href="/account/[account]/"
+                                                as={`/account/${data.proposal.totalVotesList[voteType.voteType][row].returnValues.account}`}
+                                                color="secondary"
+                                            >
+                                                <Typography variant="body2" noWrap>
+                                                    {data.proposal.totalVotesList[voteType.voteType][row].returnValues.account}
+                                                </Typography>
+                                            </Link> : null}
+                                    </TableCell>
+                                    <TableCell
+                                        align="right"
+                                        padding="checkbox"
+                                        className={classes.tableCell}
+                                    >
+                                        {data.proposal.totalVotesList[voteType.voteType][row] && data.proposal.totalVotesList[voteType.voteType][row].voteType ?
+                                            <Typography variant="body2" noWrap>
+                                                {data.proposal.totalVotesList[voteType.voteType][row].voteType}
+                                            </Typography> : null}
+                                    </TableCell>
+                                    <TableCell
+                                        align="right"
+                                        padding="checkbox"
+                                        className={classes.tableCell}
+                                    >
+                                        {data.proposal.totalVotesList[voteType.voteType][row] && data.proposal.totalVotesList[voteType.voteType][row].returnValues && data.proposal.totalVotesList[voteType.voteType][row].returnValues.weight ?
+                                            <Typography variant="body2" noWrap>
+                                                {new BigNumber((data.proposal.totalVotesList[voteType.voteType][row].returnValues.weight / process.env.CELO)).toFormat()}
+                                            </Typography> : null}
+                                    </TableCell>
+
+                                </TableRow>
+                            );
+                        })
+                        }
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <TablePagination
+                rowsPerPageOptions={[publicRuntimeConfig.rowXsmall, publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge]}
+                component="div"
+                count={Object.keys(data.proposal.totalVotesList[voteType.voteType]).length}
+                rowsPerPage={pageSize}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+                backIconButtonProps={{
+                    'aria-label': 'Previous',
+                }}
+                nextIconButtonProps={{
+                    'aria-label': 'Next',
+                }}
+            />
+        </>)
+    };
+
+
+    const chartData =
+        data && data.proposal && data.proposal.votes ? [
+            { name: 'Yes', value: data.proposal.votes.Yes },
+            { name: 'No', value: data.proposal.votes.No },
+            // { name: 'No With Veto', value: 200 },
+            { name: 'Abstain', value: data.proposal.votes.Abstain }
+        ] : null;
+
     const COLORS = ['rgba(40, 201, 137, 1)', // Yes
         'rgba(240, 40, 119, 1)', // No
-        'rgba(39, 113, 202, 1)', //No With Veto
         'rgba(230, 128, 49, 1)']; // Abstain
 
 
@@ -164,6 +280,10 @@ const ProposalVotingList = () => {
         }
     })(Tabs);
 
+
+    if (loading) return <ComponentLoader />
+    if (error) return <ErrorMessage message={error.message} />
+
     return (
         <Grid container justify="center" className={classes.container}>
             <Paper className={classes.paper}>
@@ -175,13 +295,15 @@ const ProposalVotingList = () => {
                     Voted (79.6%)
           </Typography>
                 <Grid item xs={12}>
-                    <Typography
-                        color="textPrimary"
-                        variant="subtitle1"
-                        className={classes.priceDisplay}
-                    >
-                        81,674,736.604642 CELO
-          </Typography>
+                    {data && data.proposal && data.proposal.votes ?
+                        <Typography
+                            color="textPrimary"
+                            variant="subtitle1"
+                            className={classes.priceDisplay}
+                        >
+                            {new BigNumber(data.proposal.votes.Total / process.env.CELO).toFormat()}
+
+                        </Typography> : <NotAvailable variant="body2" />}
                 </Grid>
                 <Grid item xs={12}>
                     <Typography
@@ -195,18 +317,18 @@ const ProposalVotingList = () => {
                 <Grid item xs={12}>
                     <PieChart width={350} height={220} className={classes.pieChart}>
                         <Pie
-                            data={data}
+                            data={chartData}
                             cx={120}
                             cy={120}
                             innerRadius={70}
                             outerRadius={80}
                             //fill="#8884d8"
                             strokeWidth={0}
-                            paddingAngle={2}
+                            paddingAngle={0.5}
                             dataKey="value"
                         >
                             {
-                                data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
+                                chartData.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
                             }
                         </Pie>
                         <Tooltip />
@@ -226,94 +348,26 @@ const ProposalVotingList = () => {
                             }
                         }}
                     >
-                        <Tab label="All(60)" className={classes.tabs} />
-                        <Tab label="Yes(43)" className={classes.tabs} />
-                        <Tab label="No With Veto(2)" className={classes.tabs} />
-                        <Tab label="No(18)" className={classes.tabs} />
-                        <Tab label="Abstain(1)" className={classes.tabs} />
+                        <Tab label={`All (${Object.keys(data.proposal.totalVotesList["All"]).length})`} className={classes.tabs} />
+                        <Tab label={`Yes (${Object.keys(data.proposal.totalVotesList["Yes"]).length})`} className={classes.tabs} />
+                        <Tab label={`No (${Object.keys(data.proposal.totalVotesList["No"]).length})`} className={classes.tabs} />
+                        <Tab label={`Abstain (${Object.keys(data.proposal.totalVotesList["Abstain"]).length})`} className={classes.tabs} />
                     </StyledTabs>
+                    <TabPanel value={value} index={0}>
+                        <RednderTabs voteType="All" />
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                        <RednderTabs voteType="Yes" />
+                    </TabPanel>
+                    <TabPanel value={value} index={2}>
+                        <RednderTabs voteType="No" />
+                    </TabPanel>
+                    <TabPanel value={value} index={3}>
+                        <RednderTabs voteType="Abstain" />
+                    </TabPanel>
                 </Grid>
-                <TableContainer>
-                    <Table size="medium">
-                        <TableHead>
-                            <TableRow>
-                                {columns.map((column: any, index: number) => (
-                                    <TableCell
-                                        key={index}
-                                        align={column.align}
-                                        className={classes.table}
-                                        padding="checkbox"
-                                    >
-                                        <Typography
-                                            variant="body2"
-                                            noWrap
-                                            className={classes.tableCell}
-                                        >
-                                            {column.label}
-                                        </Typography>
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {rows.map((row: any, index: number) => {
-                                return (
-                                    <TableRow key={index}>
-                                        <TableCell
-                                            component="th"
-                                            scope="row"
-                                            padding="checkbox"
-                                            align="left"
-                                            className={classes.tableCell}
-                                        >
-                                            <Link href="#" color="secondary">
-                                                <Typography variant="body2" noWrap>
-                                                    {" "}
-                                                    {row.voter}
-                                                </Typography>
-                                            </Link>
-                                        </TableCell>
-                                        <TableCell
-                                            align="right"
-                                            padding="checkbox"
-                                            className={classes.tableCell}
-                                        >
-                                            <Typography variant="body2" noWrap>
-                                                {row.answer}
-                                            </Typography>
-                                        </TableCell>
-                                        <TableCell
-                                            align="right"
-                                            padding="checkbox"
-                                            className={classes.tableCell}
-                                        >
-                                            <Typography variant="body2" noWrap>
-                                                {row.voting_power}
-                                            </Typography>
-                                        </TableCell>
 
-                                    </TableRow>
-                                );
-                            })}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[publicRuntimeConfig.rowXsmall, publicRuntimeConfig.rowSmall, publicRuntimeConfig.rowMedium, publicRuntimeConfig.rowLarge, publicRuntimeConfig.rowXlarge,]}
-                    component="div"
-                    count={rows.length}
-                    rowsPerPage={pageSize}
-                    page={page}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
-                    backIconButtonProps={{
-                        'aria-label': 'Previous',
-                        'disabled': page === 1,
-                    }}
-                    nextIconButtonProps={{
-                        'aria-label': 'Next',
-                    }}
-                />
+
             </Paper>
         </Grid>
     );
