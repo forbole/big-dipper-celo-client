@@ -60,11 +60,16 @@ const useStyles = makeStyles({
         paddingBottom: '0.5rem'
     },
     alignRight: {
-        display: 'block',
-        float: 'right',
-        paddingTop: '0.5rem',
-        paddingBottom: '0.5rem'
-    }
+        display: "block",
+        float: "right",
+        paddingTop: "0.5rem",
+        paddingBottom: "0.5rem",
+    },
+    errorMessage: {
+        color: "red",
+        textAlign: "center",
+        paddingBottom: "1rem"
+    },
 });
 
 type UnlockGoldConfirmProps = { isOpen: boolean, amount: string, pageAddress?: string };
@@ -73,12 +78,11 @@ const UnlockGoldConfirm = ({ isOpen, amount, pageAddress }: UnlockGoldConfirmPro
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(isOpen);
-    const [currentUser, setCurrentUser] = React.useState('' || null);
+    const [currentUser, setCurrentUser] = React.useState('');
     const [previousDialog, setPreviousDialog] = React.useState(false)
     const [nextDialog, setNextDialog] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState('');
-    const [currentAddress, setCurrentAddress] = React.useState(pageAddress || '');
-
+    const [currentAddress, setCurrentAddress] = React.useState(pageAddress || '')
 
     const handleClose = () => {
         setOpen(false);
@@ -210,8 +214,12 @@ const UnlockGoldConfirm = ({ isOpen, amount, pageAddress }: UnlockGoldConfirmPro
                 </Typography>
 
                                 </Grid>
-                                {/* <ControlButtons handleClick={handdleNextDialog} handleClose={handleClose} /> */}
-
+                                {errorMessage ?
+                                    <Grid item xs={12} className={classes.errorMessage}>
+                                        <Typography variant="body2">
+                                            {errorMessage}
+                                        </Typography>
+                                    </Grid> : null}
                             </Grid>
                         </DialogContentText>
                     </Grid>
