@@ -110,10 +110,6 @@ const DepositList = ({ proposal }: DepositListProps) => {
     variables: { hash },
   });
 
-  // useEffect(() => {
-  //   setHash(hashValue)
-  // })
-
   if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
 
@@ -166,8 +162,7 @@ const DepositList = ({ proposal }: DepositListProps) => {
                     >
                       {data.proposal && data.proposal.upvoteList[row] && data.proposal.upvoteList[row].returnValues && data.proposal.upvoteList[row].returnValues.account ?
                         <Link
-                          href="/account/[account]/"
-                          as={`/account/${data.proposal.upvoteList[row].returnValues.account}`}
+                          href={`/account/${data.proposal.upvoteList[row].returnValues.account}`}
                           color="secondary"
                         >
                           <Typography variant="body2" noWrap>

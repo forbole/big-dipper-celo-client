@@ -324,8 +324,7 @@ const ValidatorVotesList = () => {
                                 {memberRow.name || memberRow.address ?
                                   <> < Typography variant="caption" className={classes.groupInfoNum}> #{index + 1}</Typography>
                                     <Link
-                                      href="/account/[account]/"
-                                      as={`/account/${10}`}
+                                      href={`/account/${10}`}
                                       color="secondary">
                                       <Typography variant="caption" >
                                         {memberRow.name || memberRow.address}

@@ -56,7 +56,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ProposalDetails = () => {
+const ProposalList = () => {
   const classes = useStyles();
   const { publicRuntimeConfig } = getConfig()
 
@@ -88,8 +88,7 @@ const ProposalDetails = () => {
                   <Grid item xs={1}>
                     {row.returnValues && row.returnValues.proposalId ?
                       <Link
-                        href="/proposal/[proposal]/"
-                        as={`/proposal/${row.returnValues.proposalId}`}
+                        href={`/proposal/${row.returnValues.proposalId}`}
                         color="textPrimary"
                       >
                         <Typography variant="body2" className={classes.value}>
@@ -101,8 +100,7 @@ const ProposalDetails = () => {
                     <Typography variant="body2" className={classes.value}>
                       Proposer {row.returnValues && row.returnValues.proposer ?
                         <Link
-                          href="/account/[account]/"
-                          as={`/account/${row.returnValues.proposer}`}
+                          href={`/account/${row.returnValues.proposer}`}
                           color="secondary"
                         > <MiddleEllipsis text={row.returnValues.proposer} />
                         </Link> : null}
@@ -125,8 +123,7 @@ const ProposalDetails = () => {
                   <Grid item xs={11} sm={8} className={classes.proposalDescription}>
                     {row.returnValues && row.returnValues.proposalId && row.proposalTitle ?
                       <Link
-                        href="/proposal/[proposal]/"
-                        as={`/proposal/${row.returnValues.proposalId}`}
+                        href={`/proposal/${row.returnValues.proposalId}`}
                         color="textPrimary"
                       >
                         {row.proposalTitle}
@@ -142,4 +139,4 @@ const ProposalDetails = () => {
   );
 }
 
-export default ProposalDetails
+export default ProposalList

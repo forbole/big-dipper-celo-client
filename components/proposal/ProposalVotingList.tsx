@@ -194,8 +194,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
                                     >
                                         {data.proposal.totalVotesList[voteType.voteType][row] && data.proposal.totalVotesList[voteType.voteType][row].returnValues && data.proposal.totalVotesList[voteType.voteType][row].returnValues.account ?
                                             <Link
-                                                href="/account/[account]/"
-                                                as={`/account/${data.proposal.totalVotesList[voteType.voteType][row].returnValues.account}`}
+                                                href={`/account/${data.proposal.totalVotesList[voteType.voteType][row].returnValues.account}`}
                                                 color="secondary"
                                             >
                                                 <Typography variant="body2" noWrap>
