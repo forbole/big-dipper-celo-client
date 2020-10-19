@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Link from "../Link";
+import Link from 'next/link';
 import Card from "@material-ui/core/Card";
 import Divider from "@material-ui/core/Divider";
 import { useQuery } from "@apollo/client";
@@ -67,12 +67,14 @@ const useStyles = makeStyles((theme: Theme) =>
       whiteSpace: "nowrap",
     },
     divider: {
+      display: "flex",
+      // margin: "0 1rem",
       backgroundColor: "rgba(232, 232, 232, 1)",
     },
     centerButtons: {
       justifyContent: "center",
       flexWrap: "wrap",
-      padding: "0.1rem",
+      // padding: "0.1rem",
       textTransform: "none",
     },
     centerContent: {
@@ -87,6 +89,8 @@ type AccountOverviewProps = { address: string };
 
 const AccountOverview = ({ address }: AccountOverviewProps) => {
   const classes = useStyles();
+  const [currentUser, setCurrentUser] = React.useState('');
+
   const accountQuery = useQuery(GET_ACCOUNT_DETAILS, {
     variables: { address },
   });
@@ -98,6 +102,14 @@ const AccountOverview = ({ address }: AccountOverviewProps) => {
     variables: { address },
   });
 
+
+  useEffect(() => {
+    let localUser = localStorage.getItem('currentUserAddress');
+    //@ts-ignore
+    setCurrentUser(localUser)
+  });
+
+
   if (accountQuery.loading || chainQuery.loading) return <ComponentLoader />
   if (accountQuery.error || chainQuery.error) return <ErrorMessage message={accountQuery.error ? accountQuery.error.message : ' ' || (chainQuery.error ? chainQuery.error.message : ' ')} />
   return (
@@ -108,7 +120,9 @@ const AccountOverview = ({ address }: AccountOverviewProps) => {
             <Typography variant="body1" className={classes.box}>
               Overview
             </Typography>
-            <Divider variant="middle" className={classes.divider} />
+          </Grid>
+          <Grid item xs={12}>
+            <Divider className={classes.divider} />
           </Grid>
           {validatorQuery && validatorQuery.data && validatorQuery.data.validator && validatorQuery.data.validator.name ?
             <>
@@ -121,7 +135,7 @@ const AccountOverview = ({ address }: AccountOverviewProps) => {
                 <Typography variant="body2" className={classes.alignRight} > {validatorQuery.data.validator.name} </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Divider variant="middle" className={classes.divider} />
+                <Divider className={classes.divider} />
               </Grid>
             </> : null
           }
@@ -144,15 +158,17 @@ const AccountOverview = ({ address }: AccountOverviewProps) => {
               </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
           </Grid>
 
-          <Grid item xs={12}>
-            <Divider variant="middle" className={classes.divider} />
-          </Grid>
+          {address === currentUser ?
+            <Grid item xs={12}>
+              <Divider variant="middle" className={classes.divider} />
+            </Grid> : null}
+
           <Grid item xs={6}>
-            <UnlockGold currentAddressPage={address} />
+            <UnlockGold pageAddress={address} showButton={true} />
           </Grid>
 
           <Grid item xs={6}>
-            <LockGold />
+            <LockGold pageAddress={address} showButton={true} />
           </Grid>
         </Grid>
       </Card>
