@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,7 +14,7 @@ const useStyles = makeStyles({
     opacity: 1,
     justifyContent: "center",
     padding: '2rem 0',
-    position: 'absolute'
+    bottom: 0
   },
   text: {
     letterSpacing: "1px",
@@ -70,21 +69,21 @@ const Footer = () => {
             </Typography>
 
           <Link
-            href="https://github.com/forbole/big-dipper-celo-client"
+            href="www.github.com/forbole/big-dipper-celo-client"
             target="_blank"
             className={classes.socialMedia}
           >
             <img src="/images/social-media-github.svg" />
           </Link>
           <Link
-            href="https://medium.com/bigdipperlive"
+            href="www.medium.com/bigdipperlive"
             target="_blank"
             className={classes.socialMedia}
           >
             <img src="/images/social-media-medium.svg" />
           </Link>
           <Link
-            href="https://twitter.com/bigdipperlive"
+            href="www.twitter.com/bigdipperlive"
             target="_blank"
             className={classes.socialMedia}
           >

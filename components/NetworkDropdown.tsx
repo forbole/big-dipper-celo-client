@@ -126,7 +126,7 @@ const NetworkDropdown = () => {
             <Divider className={classes.divider} />
 
             <Link
-              href="https://baklava-blockscout.celo-testnet.org/"
+              href="www.baklava-blockscout.celo-testnet.org/"
               color="textPrimary"
             >
               <MenuItem className={classes.menuItem}>
@@ -140,7 +140,7 @@ const NetworkDropdown = () => {
             </Link>
             <Divider className={classes.divider} />
             <Link
-              href="https://integration-blockscout.celo-testnet.org/"
+              href="www.integration-blockscout.celo-testnet.org/"
               color="textPrimary"
             >
               <MenuItem className={classes.menuItem}>
