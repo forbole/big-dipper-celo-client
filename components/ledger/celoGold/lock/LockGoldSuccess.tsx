@@ -1,5 +1,5 @@
 import Button from "@material-ui/core/Button";
-import Link from "../../../Link";
+import Link from 'next/link';
 import Grid from "@material-ui/core/Grid";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
@@ -46,9 +46,10 @@ const useStyles = makeStyles({
 
 });
 
+type LockGoldSuccessProps = { isOpen: boolean, pageAddress?: string };
 
 
-const LockGoldSuccess = () => {
+const LockGoldSuccess = ({ isOpen, pageAddress }: LockGoldSuccessProps) => {
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
