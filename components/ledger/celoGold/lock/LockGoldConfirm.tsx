@@ -84,13 +84,14 @@ const LockGoldConfirm = ({ isOpen, amount, pageAddress }: LockGoldConfirmProps):
     const [nextDialog, setNextDialog] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState('');
     const [currentAddress, setCurrentAddress] = React.useState(pageAddress || '');
+    const [lockAmount, setLockAmount] = React.useState(amount);
+
 
     useEffect(() => {
         let localUser = localStorage.getItem('currentUserAddress');
         //@ts-ignore
         setCurrentUser(localUser)
     });
-
     const handleClose = () => {
         setOpen(false);
     };
@@ -148,7 +149,7 @@ const LockGoldConfirm = ({ isOpen, amount, pageAddress }: LockGoldConfirmProps):
                             <Grid container className={classes.dialogContent}>
                                 <Grid item xs={12}>
                                     <Typography variant="body2" noWrap={false} color="textPrimary" gutterBottom>
-                                        You are going to lock {amount} CELO, it that's correct, please
+                                        You are going to lock {lockAmount} CELO, it that's correct, please
                   sign in your ledger device.
                 </Typography>
                                 </Grid>
@@ -202,7 +203,7 @@ const LockGoldConfirm = ({ isOpen, amount, pageAddress }: LockGoldConfirmProps):
                                             align="right"
                                             color="textPrimary"
                                         >
-                                            {amount} CELO
+                                            {lockAmount} CELO
                   </Typography>
                                     </Grid>
                                 </Grid>

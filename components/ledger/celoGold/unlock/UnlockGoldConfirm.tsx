@@ -83,6 +83,8 @@ const UnlockGoldConfirm = ({ isOpen, amount, pageAddress }: UnlockGoldConfirmPro
     const [nextDialog, setNextDialog] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState('');
     const [currentAddress, setCurrentAddress] = React.useState(pageAddress || '')
+    const [unlockAmount, setUnlockAmount] = React.useState(amount);
+
 
     const handleClose = () => {
         setOpen(false);
@@ -120,7 +122,7 @@ const UnlockGoldConfirm = ({ isOpen, amount, pageAddress }: UnlockGoldConfirmPro
                             <Grid container className={classes.dialogContent}>
                                 <Grid item xs={12}>
                                     <Typography variant="body2" noWrap={false} color="textPrimary" gutterBottom>
-                                        You are going to unlock {amount} CELO, it that's correct, please
+                                        You are going to unlock {unlockAmount} CELO, it that's correct, please
                   sign in your ledger device.
                 </Typography>
                                 </Grid>
@@ -174,7 +176,7 @@ const UnlockGoldConfirm = ({ isOpen, amount, pageAddress }: UnlockGoldConfirmPro
                                             align="right"
                                             color="textPrimary"
                                         >
-                                            {amount} CELO
+                                            {unlockAmount} CELO
                   </Typography>
                                     </Grid>
                                 </Grid>
