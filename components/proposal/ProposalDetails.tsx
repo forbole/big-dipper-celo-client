@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import Link from "../Link";
 import { makeStyles } from "@material-ui/core/styles";
@@ -18,9 +18,12 @@ import LedgerButtons from "../ledger/LedgerButtons";
 import NotAvailable from '../misc/NotAvailable'
 import ComponentLoader from '../misc/ComponentLoader'
 import ErrorMessage from '../misc/ErrorMessage';
-import { GET_PROPOSAL } from '../query/Proposal'
-import BigNumber from 'bignumber.js'
+import { GET_PROPOSAL } from '../query/Proposal';
+import { GET_PROPOSALS } from '../query/Proposal';
+import BigNumber from 'bignumber.js';
 import MarkdownView from 'react-showdown';
+import getConfig from 'next/config';
+import Vote from "../ledger/proposal/vote/Vote"
 
 const useStyles = makeStyles(() => {
   return {
@@ -40,26 +43,33 @@ const useStyles = makeStyles(() => {
     arrowIcon: {
       padding: "0.25rem",
       justifyContent: "center",
-      border: "solid rgba(67, 72, 76, 1) ",
+      border: "solid 1px rgba(67, 72, 76, 1) ",
       borderRadius: 5,
-      backgroundColor: "rgba(77, 81, 85, 1)",
-      color: "rgba(255, 255, 255, 0.6)",
+      backgroundColor: "rgba(255, 255, 255, 0.6) ",
+      color: "rgba(77, 81, 85, 1)",
       height: "1.5rem",
       width: "1.5rem",
     },
     iconButtonRight: {
       padding: "0",
       float: "right",
+      "&:disabled": {
+        display: "none"
+      }
     },
     iconButtonLeft: {
       padding: "0",
       float: "left",
+      "&:disabled": {
+        display: "none"
+      }
     },
 
     centerContent: {
       display: "flex",
       margin: "1rem 0 -0.5rem 0",
-      justifyContent: "center",
+      // justifyContent: "center",
+      textAlign: "center"
     },
 
     MuiCardContentRootlastChild: {
@@ -91,12 +101,37 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) =>
   const proposalNumber = parseInt(proposal)
   const prevProposal: number = proposalNumber - 1;
   const nextProposal: number = proposalNumber + 1;
+  const [maxProposalNumber, setMaxProposalNumber] = React.useState(false);
+  const [minProposalNumber, setMinProposalNumber] = React.useState(false);
+
 
   const { loading, error, data } = useQuery(GET_PROPOSAL, {
     variables: { proposalNumber },
   });
 
+  const { publicRuntimeConfig } = getConfig()
+  const page = publicRuntimeConfig.setPage;
+  const pageSize = publicRuntimeConfig.rowMedium;
+  const field = "proposalNumber"
+
+  const totalProposals = useQuery(GET_PROPOSALS, {
+    variables: { page, pageSize, field },
+  });
+
   const classes = useStyles();
+  const totalNumOfProposals = totalProposals.data && totalProposals.data.proposals && totalProposals.data.proposals.proposals ? totalProposals.data.proposals.proposals.length : 0;
+  console.log(totalNumOfProposals)
+
+
+  useEffect(() => {
+    if (proposalNumber === totalNumOfProposals) {
+      setMaxProposalNumber(true)
+    }
+
+    if (proposalNumber === 1) {
+      setMinProposalNumber(true)
+    }
+  });
 
   if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
@@ -106,8 +141,8 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) =>
       <CardContent>
         <Grid container spacing={1} justify="center" className={classes.item}>
           <Grid item xs={10}>
-            <Typography color="textSecondary" variant="subtitle1" gutterBottom>
-              Proposals Details
+            <Typography variant="subtitle1" gutterBottom>
+              Proposal Details
             </Typography>
           </Grid>
 
@@ -119,6 +154,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) =>
               <IconButton
                 aria-label="Previous Proposal"
                 className={classes.iconButtonRight}
+                disabled={minProposalNumber}
               >
                 <ArrowBackIosIcon className={classes.arrowIcon} />
               </IconButton>
@@ -133,6 +169,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) =>
               <IconButton
                 aria-label="Next Proposal"
                 className={classes.iconButtonLeft}
+                disabled={maxProposalNumber}
               >
                 <ArrowForwardIosIcon className={classes.arrowIcon} />
               </IconButton>
@@ -169,7 +206,10 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) =>
           <Grid item xs={8} lg={6}  >
             <Typography variant="body2" className={classes.alignRight} >
               {data.proposal && data.proposal.returnValues && data.proposal.returnValues.proposer
-                ? data.proposal.returnValues.proposer
+                ?
+                <Link href={`/account/${data.proposal.returnValues.proposer}`} color="secondary">
+                  {data.proposal.returnValues.proposer}
+                </Link>
                 : <NotAvailable variant="body2" />}
             </Typography>
           </Grid>
@@ -294,7 +334,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) =>
           </Grid>
 
           <Grid item xs={12} className={classes.centerContent}>
-            <LedgerButtons option="Vote" />
+            <Vote />
           </Grid>
         </Grid>
       </CardContent>
