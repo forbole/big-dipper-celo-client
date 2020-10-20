@@ -120,8 +120,6 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) =>
 
   const classes = useStyles();
   const totalNumOfProposals = totalProposals.data && totalProposals.data.proposals && totalProposals.data.proposals.proposals ? totalProposals.data.proposals.proposals.length : 0;
-  console.log(totalNumOfProposals)
-
 
   useEffect(() => {
     if (proposalNumber === totalNumOfProposals) {
@@ -334,7 +332,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) =>
           </Grid>
 
           <Grid item xs={12} className={classes.centerContent}>
-            <Vote />
+            <Vote title={proposalTitle} proposalNumber={proposalNumber} />
           </Grid>
         </Grid>
       </CardContent>
