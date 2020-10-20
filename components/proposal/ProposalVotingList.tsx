@@ -68,10 +68,12 @@ const useStyles = makeStyles(() => {
         tableCell: {
             overflow: "auto",
             padding: "0.5rem",
+            border: "none"
         },
         table: {
             background: "rgba(246, 247, 249, 1)",
             padding: "0",
+            border: "none"
         },
         paper: {
             padding: "1rem",
@@ -184,7 +186,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
                     <TableBody>
                         {Object.keys(data.proposal.totalVotesList[voteType.voteType]).slice(page * pageSize, page * pageSize + pageSize).map((row: any, index: number) => {
                             return (
-                                <TableRow key={index}>
+                                <TableRow key={index} style={index % 2 ? { background: "rgba(248, 248, 248, 1)", border: "none" } : { background: "rgb(255,255,255)" }}>
                                     <TableCell
                                         component="th"
                                         scope="row"
@@ -272,8 +274,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
                     flexWrap: "wrap",
                 },
                 " & .Mui-selected": {
-                    color: "rgba(255, 255, 255, 0.8)",
-                    //marginBottom: "-0.5rem"
+                    color: "rgba(58, 211, 158, 1)",
                 }
             }
         }
@@ -338,7 +339,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
                 <Grid item xs={12}>
                     <StyledTabs
                         value={value}
-                        textColor="primary"
+                        // textColor="primary"
                         onChange={handleChange}
                         aria-label="Proposal Vote Tabs"
                         TabIndicatorProps={{

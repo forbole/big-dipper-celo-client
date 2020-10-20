@@ -64,9 +64,11 @@ const useStyles = makeStyles(() => {
     tableCell: {
       overflow: "auto",
       padding: "0.5rem",
+      border: "none"
     },
     table: {
       background: "rgba(246, 247, 249, 1)",
+      border: "none",
       padding: "0",
     },
     paper: {
@@ -119,14 +121,13 @@ const DepositList = ({ proposal }: DepositListProps) => {
       <Paper className={classes.paper}>
         <TableContainer>
           <Typography
-            color="textSecondary"
             variant="subtitle1"
             className={classes.headerLabel}
           >
             Deposit (200 CELO)
           </Typography>
 
-          <Divider variant="middle" className={classes.divider} />
+          {/* <Divider variant="middle" className={classes.divider} /> */}
           <Table size="medium">
             <TableHead>
               <TableRow>
@@ -152,7 +153,7 @@ const DepositList = ({ proposal }: DepositListProps) => {
 
               {Object.keys(data.proposal.upvoteList).slice(page * pageSize, page * pageSize + pageSize).map(function (row: any, index: number) {
                 return (
-                  <TableRow key={index}>
+                  <TableRow key={index} style={index % 2 ? { background: "rgba(248, 248, 248, 1)", border: "none" } : { background: "rgb(255,255,255)" }}>
                     <TableCell
                       component="th"
                       scope="row"
@@ -178,6 +179,7 @@ const DepositList = ({ proposal }: DepositListProps) => {
                     >
                       {data.proposal && data.proposal.upvoteList[row] && data.proposal.upvoteList[row].returnValues && data.proposal.upvoteList[row].returnValues.upvotes ?
                         <Typography variant="body2" noWrap>
+                          {/* @ts-ignore */}
                           {new BigNumber(data.proposal.upvoteList[row].returnValues.upvotes / process.env.CELO).toFormat()}
                         </Typography> : <NotAvailable variant="body2" />}
                     </TableCell>
