@@ -9,6 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import NotAvailable from '../../../misc/NotAvailable'
+import { Dialog } from "@material-ui/core";
 
 
 
@@ -42,7 +43,7 @@ const useStyles = makeStyles({
 
     wrapText: {
         wordWrap: 'break-word',
-        wordBreak: 'break-all' 
+        wordBreak: 'break-all'
 
     },
 
@@ -59,12 +60,13 @@ const useStyles = makeStyles({
     },
 });
 
+type ConfirmProps = { isOpen: boolean }
 
 
-const Confirm = () => {
- 
+const Confirm = ({ isOpen }: ConfirmProps) => {
+
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(isOpen);
 
 
     const handleClose = () => {
@@ -74,55 +76,61 @@ const Confirm = () => {
 
     return (
         <>
-
-            <DialogTitle id="ledger-dialog-title" className={classes.dialogTitle}>
-                <Grid container className={classes.item}>
-                    <Grid item xs={1}>
-                        <IconButton
-                            aria-label="Return"
-                            className={classes.iconButtonLeft}
-                        >
-                            <img src="/images/last.svg" color="textPrimary" />
-                        </IconButton>
-                    </Grid>
-                    <Grid item xs={10}>
-                        <Typography variant="h6" color="textPrimary" noWrap className={classes.title}>
-                            Vote
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="ledger-dialog"
+                //fullWidth
+                maxWidth="sm"
+            >
+                <DialogTitle id="ledger-dialog-title" className={classes.dialogTitle}>
+                    <Grid container className={classes.item}>
+                        <Grid item xs={1}>
+                            <IconButton
+                                aria-label="Return"
+                                className={classes.iconButtonLeft}
+                            >
+                                <img src="/images/last.svg" color="textPrimary" />
+                            </IconButton>
+                        </Grid>
+                        <Grid item xs={10}>
+                            <Typography variant="h6" color="textPrimary" noWrap className={classes.title}>
+                                Vote
               </Typography>
+                        </Grid>
+                        <Grid item xs={1}>
+                            <IconButton
+                                aria-label="Close"
+                                className={classes.iconButtonRight}
+                                onClick={handleClose}
+                            >
+                                <img src="/images/cross.svg" color="textPrimary" />
+                            </IconButton>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={1}>
-                        <IconButton
-                            aria-label="Close"
-                            className={classes.iconButtonRight}
-                            onClick={handleClose}
-                        >
-                            <img src="/images/cross.svg" color="textPrimary" />
-                        </IconButton>
-                    </Grid>
-                </Grid>
-            </DialogTitle>
+                </DialogTitle>
 
-            <DialogContent >
-                <Grid container spacing={1} >
-                    <DialogContentText id="ledger-vote" >
-                        <Grid container className={classes.dialogContent}>
+                <DialogContent >
+                    <Grid container spacing={1} >
+                        <DialogContentText id="ledger-vote" >
+                            <Grid container className={classes.dialogContent}>
 
-                            <Grid item xs={12}>
-                                <Typography color="textSecondary" variant="body2" gutterBottom align="left">
-                                    You’re going to vote for Yes, if that’s correct, please sign in your ledger device.
+                                <Grid item xs={12}>
+                                    <Typography color="textPrimary" variant="body2" gutterBottom align="left">
+                                        You’re going to vote for Yes, if that’s correct, please sign in your ledger device.
             </Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Divider variant="middle" className={classes.divider} />
-                            </Grid>
-                            <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" gutterBottom>
-                                    Proposal ID
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Divider className={classes.divider} />
+                                </Grid>
+                                <Grid item xs={6} className={classes.item}>
+                                    <Typography variant="body2" color="textPrimary" gutterBottom>
+                                        Proposal ID
             </Typography>
-                            </Grid>
-                            <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" align="right" gutterBottom>
-                                    10
+                                </Grid>
+                                <Grid item xs={6} className={classes.item}>
+                                    <Typography variant="body2" align="right" gutterBottom>
+                                        10
                 {/* {data.block && data.block.timestamp
                 ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
                 : <NotAvailable variant="body2" />}
@@ -131,59 +139,72 @@ const Confirm = () => {
                 ? moment.unix(data.block.timestamp).fromNow()
                 : null}
               ) */}
-                                </Typography>
-                                <Divider variant="middle" className={classes.divider} />
-                            </Grid>
-                            <Grid item xs={6} className={classes.item} >
-                                <Typography variant="body2" gutterBottom >
-                                    Proposer
-            </Typography>
-                            </Grid>
-                            <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" align="right" gutterBottom>
-                                    Michelle Clark
+                                    </Typography>
+                                </Grid>
+
+                                <Grid item xs={12}>
+                                    <Divider className={classes.divider} />
+                                </Grid>
+
+                                <Grid item xs={6} className={classes.item} >
+                                    <Typography variant="body2" color="textPrimary" gutterBottom >
+                                        Proposer
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={6} className={classes.item}>
+                                    <Typography variant="body2" align="right" gutterBottom>
+                                        Michelle Clark
                 {/* {data.block &&
               data.block.transactions &&
               data.block.transactions.transactionIndex
                 ? data.block.transactions.transactionIndex.length()
                 : <NotAvailable variant="body2" />} */}
-                                </Typography>
-                                <Divider variant="middle" className={classes.divider} />
-                            </Grid>
+                                    </Typography>
+                                </Grid>
 
-                            <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" gutterBottom>Type</Typography>
-                            </Grid>
-                            <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" align="right" gutterBottom>
-                                    Proposal
+                                <Grid item xs={12}>
+                                    <Divider className={classes.divider} />
+                                </Grid>
+
+                                <Grid item xs={6} className={classes.item}>
+                                    <Typography variant="body2" gutterBottom color="textPrimary" >Type</Typography>
+                                </Grid>
+                                <Grid item xs={6} className={classes.item}>
+                                    <Typography variant="body2" align="right" gutterBottom>
+                                        Proposal
                 {/* {data.block && data.block.size
                 ? data.block.size
                 : <NotAvailable variant="body2" />} */}
-                                </Typography>
-                                <Divider variant="middle" className={classes.divider} />
-                            </Grid>
+                                    </Typography>
+                                </Grid>
 
-                            <Grid item xs={12} className={classes.item}>
-                                <Typography variant="body2" gutterBottom>
-                                    Title
+                                <Grid item xs={12}>
+                                    <Divider className={classes.divider} />
+                                </Grid>
+
+                                <Grid item xs={12} className={classes.item}>
+                                    <Typography variant="body2" color="textPrimary" gutterBottom>
+                                        Title
             </Typography>
-                                <Typography variant="body2" gutterBottom >
-                                    Don’t Burn Deposits for Rejected Governance Proposals Unless Vetoed
+                                    <Typography variant="body2" gutterBottom >
+                                        Don’t Burn Deposits for Rejected Governance Proposals Unless Vetoed
                 {/* {data.block && data.block.hash
                 ? data.block.hash
                 : <NotAvailable variant="body2" />} */}
-                                </Typography>
-                                <Divider variant="middle" className={classes.divider} />
-                            </Grid>
+                                    </Typography>
+                                </Grid>
 
-                            <Grid item xs={12} className={classes.item}>
-                                <Typography variant="body2" gutterBottom>
-                                    Description
+                                <Grid item xs={12}>
+                                    <Divider className={classes.divider} />
+                                </Grid>
+
+                                <Grid item xs={12} className={classes.item}>
+                                    <Typography variant="body2" gutterBottom color="textPrimary">
+                                        Description
             </Typography>
 
-                                <Typography variant="body2"  className={classes.wrapText}>
-                                    Governance Working Group - Q1 2020 funding Community-spend proposal submitted by Gavin Birch (https://twitter.com/Ether_Gavin) of Figment Networks (https://figment.network) -=-=- Full proposal: https://ipfs.io/ipfs/QmSMGEoY2dfxADPfgoAsJxjjC6hwpSNx1dXAqePiCEMCbY
+                                    <Typography variant="body2" className={classes.wrapText}>
+                                        Governance Working Group - Q1 2020 funding Community-spend proposal submitted by Gavin Birch (https://twitter.com/Ether_Gavin) of Figment Networks (https://figment.network) -=-=- Full proposal: https://ipfs.io/ipfs/QmSMGEoY2dfxADPfgoAsJxjjC6hwpSNx1dXAqePiCEMCbY
                 {/* {data.block && data.block.parentHash ? (
                 <Link
                   href="transaction/[transaction]/"
@@ -194,23 +215,26 @@ const Confirm = () => {
                   {data.block.parentHash}
                 </Link>
               ) : <NotAvailable variant="body2" />} */}
-                                </Typography>
-                                <Divider variant="middle" className={classes.divider} />
-                            </Grid>
+                                    </Typography>
+                                </Grid>
 
+                                <Grid item xs={12}>
+                                    <Divider className={classes.divider} />
+                                </Grid>
 
-                            <Grid item xs={12} className={classes.centerContent}>
-                                <Typography variant="h6" >
-                                    Please sign in your ledger device…
+                                <Grid item xs={12} className={classes.centerContent}>
+                                    <Typography variant="h6" color="textPrimary" >
+                                        Please sign in your ledger device…
               </Typography>
-                            </Grid>
-                                        
+                                </Grid>
 
-             
-                        </Grid>
-                    </DialogContentText>
-                </Grid>
-            </DialogContent>
+
+
+                            </Grid>
+                        </DialogContentText>
+                    </Grid>
+                </DialogContent>
+            </Dialog>
         </>
     );
 };
