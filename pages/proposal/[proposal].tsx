@@ -22,20 +22,20 @@ export default function Proposal(proposalDetails: string) {
   const router = useRouter();
   const proposalNumber: string = router.query.proposal as string;
   return (
-        <Grid container spacing={2} className={classes.root}>
-        <Grid item xs={12} >
+    <Grid container spacing={2} className={classes.root}>
+      <Grid item xs={12} >
         <PriceCard />
-        </Grid>
-        <Grid item xs={12} >
-          <ProposalDetails proposal={proposalNumber} proposalDetails={proposalDetails.proposalDetails} />
-        </Grid>
-        <Grid item xs={12} >
-          <ProposalVotingList proposal={proposalNumber} />
-        </Grid>
-        <Grid item xs={12} >
-          <DepositList proposal={proposalNumber} />
-        </Grid>
       </Grid>
+      <Grid item xs={12} >
+        <ProposalDetails proposal={proposalNumber} proposalDetails={proposalDetails.proposalDetails} />
+      </Grid>
+      <Grid item xs={12} >
+        <ProposalVotingList proposal={proposalNumber} />
+      </Grid>
+      <Grid item xs={12} >
+        <DepositList proposal={proposalNumber} />
+      </Grid>
+    </Grid>
   );
 }
 
