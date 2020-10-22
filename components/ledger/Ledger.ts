@@ -3,6 +3,7 @@ import {
     LedgerWallet,
     newLedgerWalletWithSetup,
 } from "@celo/contractkit/lib/wallets/ledger-wallet";
+import { VoteValue } from "@celo/contractkit/lib/wrappers/Governance";
 import Eth from "@ledgerhq/hw-app-eth";
 import TransportU2F from "@ledgerhq/hw-transport-u2f";
 import TransportUSB from "@ledgerhq/hw-transport-webusb";
@@ -29,6 +30,8 @@ const MAINNET = "https://rc1-forno.celo-testnet.org";
 
 type LockCeloProps = { amount: string, from: string }
 type UnlockCeloProps = {amount: string, from: string}
+type VoteProposalProps = { proposalNumber: number, from: string,  vote: string} 
+
 class Ledger extends Component {
 
     private address: string = '';
@@ -134,7 +137,7 @@ class Ledger extends Component {
     };
 
 
-        async unlockCelo({ amount, from }: UnlockCeloProps) {
+    async unlockCelo({ amount, from }: UnlockCeloProps) {
         if (!this.kit) {
             this.checkLedgerErrors("Ledger device is disconnected");
         }
@@ -148,6 +151,19 @@ class Ledger extends Component {
 
         return result;
     };
+
+    async voteProposal({proposalNumber, from, vote}: VoteProposalProps) {
+        if (!this.kit) {
+            this.checkLedgerErrors("Ledger device is disconnected");
+        }
+        const gov = await this.kit.contracts.getGovernance();
+
+        console.log(`Vote proposal ID: ${proposalNumber}`);
+        const tx = await gov.vote(proposalNumber, vote);
+        // @ts-ignore
+        const result = await tx.sendAndWaitForReceipt({ from });
+        return result;
+    }
 
 }
 
