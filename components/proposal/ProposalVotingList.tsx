@@ -24,8 +24,10 @@ import NotAvailable from '../misc/NotAvailable'
 import ComponentLoader from '../misc/ComponentLoader'
 import ErrorMessage from '../misc/ErrorMessage';
 import { GET_PROPOSAL } from '../query/Proposal';
+import { GET_CHAIN } from '../query/Chain';
 import { useQuery } from "@apollo/client";
-import BigNumber from 'bignumber.js'
+import BigNumber from 'bignumber.js';
+import numbro from "numbro";
 
 interface Column {
     id: "voter" | "answer" | "voting_power";
@@ -137,7 +139,6 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
     const classes = useStyles();
     const { publicRuntimeConfig } = getConfig()
     const proposalNumber = parseInt(proposal)
-
     const [page, setPage] = React.useState(0);
     const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXsmall)
     const [value, setValue] = React.useState(0);
@@ -157,6 +158,10 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
 
     const { loading, error, data } = useQuery(GET_PROPOSAL, {
         variables: { proposalNumber },
+    });
+
+    const chainData = useQuery(GET_CHAIN, {
+        pollInterval: 5000,
     });
 
     const RednderTabs = (voteType: any) => {
@@ -311,8 +316,11 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
                         variant="subtitle1"
                         className={classes.headerLabel}
                     >
-                        (~81M of ~186M CELO)
-          </Typography>
+                        (~{numbro(new BigNumber((data.proposal.votes.Total) / process.env.CELO).toFormat()).format({ average: true, mantissa: 2 })} of ~
+                    {chainData && chainData.data && chainData.data.chain && chainData.data.chain.celoTotalSupply ?
+                            numbro(new BigNumber((chainData.data.chain.celoTotalSupply) / process.env.CELO).toFormat(2)).format({ average: true, mantissa: 2 }) : null} CELO)
+
+                    </Typography>
                 </Grid>
                 <Grid item xs={12}>
                     <PieChart width={350} height={220} className={classes.pieChart}>
