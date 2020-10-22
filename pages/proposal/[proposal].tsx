@@ -27,7 +27,7 @@ export default function Proposal(proposalDetails: string) {
         <PriceCard />
       </Grid>
       <Grid item xs={12} >
-        <ProposalDetails proposal={proposalNumber} proposalDetails={proposalDetails.proposalDetails} />
+        <ProposalDetails proposalNum={proposalNumber} proposalDetails={proposalDetails.proposalDetails} />
       </Grid>
       <Grid item xs={12} >
         <ProposalVotingList proposal={proposalNumber} />
@@ -41,7 +41,17 @@ export default function Proposal(proposalDetails: string) {
 
 Proposal.getInitialProps = async (ctx: any) => {
   const { query } = ctx;
-  const response = await fetch(`https://raw.githubusercontent.com/celo-org/celo-proposals/master/CGPs/000${query.proposal}.md`)
-  const proposalDetails = await response.text();
+  let response;
+  let proposalDetails;
+
+  if (query.proposal >= 10) {
+    response = await fetch(`https://raw.githubusercontent.com/celo-org/celo-proposals/master/CGPs/00${query.proposal}.md`)
+    proposalDetails = await response.text();
+  }
+  else {
+    response = await fetch(`https://raw.githubusercontent.com/celo-org/celo-proposals/master/CGPs/000${query.proposal}.md`)
+    proposalDetails = await response.text();
+  }
+
   return { proposalDetails }
 }

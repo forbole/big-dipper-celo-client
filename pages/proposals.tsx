@@ -43,15 +43,25 @@ Proposals.getInitialProps = async (ctx: any) => {
   let title: string[] = [];
   let proposalTitle: string[] = [];
   let counter = 0;
-
+  let getProposalTitle;
   for (let c = 10; c >= 0; c--) {
-    const response = await fetch(`https://raw.githubusercontent.com/celo-org/celo-proposals/master/CGPs/000${c}.md`).then((response) => response.text())
-      .then((text) => {
-        let getProposalTitle = text.split("\n")
-        proposalTitle[counter] = getProposalTitle[0].replace('#', ' ')
-        counter++;
-      })
+    if (c >= 10) {
+      const response = await fetch(`https://raw.githubusercontent.com/celo-org/celo-proposals/master/CGPs/00${c}.md`).then((response) => response.text())
+        .then((text) => {
+          getProposalTitle = text.split("\n")
+          proposalTitle[counter] = getProposalTitle[0].replace('#', ' ')
+          counter++;
+        })
+    }
+    else {
+      const response = await fetch(`https://raw.githubusercontent.com/celo-org/celo-proposals/master/CGPs/000${c}.md`).then((response) => response.text())
+        .then((text) => {
+          getProposalTitle = text.split("\n")
+          proposalTitle[counter] = getProposalTitle[0].replace('#', ' ')
+          counter++;
+        })
+    }
   };
-  
+
   return proposalTitle
 }
