@@ -20,6 +20,8 @@ import NotAvailable from '../../../misc/NotAvailable'
 import ErrorMessage from '../../../misc/ErrorMessage';
 import Ledger from '../../Ledger'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import BigNumber from 'bignumber.js';
+
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -227,11 +229,11 @@ const UnlockGold = ({ isOpen, pageAddress, showButton }: UnlockGoldProps): JSX.E
     const checkForInputErrors = (e) => {
         if (e.target.value === '0') {
             setDialogError(true)
-            setDialogErrorMessage("Value must be grater than 0! Please enter CELO amount to lock. ")
+            setDialogErrorMessage("Value must be grater than 0! Please enter CELO amount to unlock. ")
         }
         else if (!(parseFloat(e.target.value) > 0)) {
             setDialogError(true)
-            setDialogErrorMessage("Incorrect format! Please enter CELO amount to lock. ")
+            setDialogErrorMessage("Incorrect format! Please enter CELO amount to unlock. ")
         }
         else {
             setDialogError(false)
@@ -361,7 +363,7 @@ const UnlockGold = ({ isOpen, pageAddress, showButton }: UnlockGoldProps): JSX.E
                                                 noWrap
                                                 className={classes.alignRight}
                                             > Max {data.account && data.account.totalBalance && data.account.totalBalance.lockedGold ?
-                                                data.account.totalBalance.lockedGold
+                                                new BigNumber(data.account.totalBalance.lockedGold / process.env.CELO).toFormat(2)
                                                 : 0} CELO
                                         </Typography>
 
