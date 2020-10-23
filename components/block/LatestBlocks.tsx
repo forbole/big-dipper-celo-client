@@ -51,7 +51,6 @@ const columns_homepage: Column[] = [
 const useStyles = makeStyles({
   root: {
     width: "100%",
-    height: "100%",
     padding: "1.5%",
     borderRadius: 4,
     wordWrap: "break-word",
