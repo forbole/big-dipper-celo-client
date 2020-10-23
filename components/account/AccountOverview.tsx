@@ -20,7 +20,8 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import BigNumber from 'bignumber.js';
 import LockGold from '../ledger/celoGold/lock/LockGold';
 import UnlockGold from '../ledger/celoGold/unlock/UnlockGold';
-import Ledger from '../ledger/Ledger'
+import Ledger from '../ledger/Ledger';
+import LedgerDialog from '../ledger/LedgerDialog';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -154,7 +155,7 @@ const AccountOverview = ({ address }: AccountOverviewProps) => {
           <Grid item xs={12}  >
             {accountQuery.data.account && accountQuery.data.account.balance && chainQuery.data.chain && chainQuery.data.chain.tokenPrice && chainQuery.data.chain.tokenPrice.usd ?
               < Typography variant="body2" className={classes.alignRight}>
-                {new BigNumber(accountQuery.data.account.balance * chainQuery.data.chain.tokenPrice.usd).toFormat(2)} cUSD
+                {new BigNumber((accountQuery.data.account.balance / process.env.CELO) * chainQuery.data.chain.tokenPrice.usd).toFormat(2)} cUSD
               </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
           </Grid>
 
@@ -164,11 +165,11 @@ const AccountOverview = ({ address }: AccountOverviewProps) => {
             </Grid> : null}
 
           <Grid item xs={6}>
-            <UnlockGold pageAddress={address} showButton={true} />
+            <LedgerDialog buttonLabel="Unlock CELO" action="Unlock" />
           </Grid>
 
           <Grid item xs={6}>
-            <LockGold pageAddress={address} showButton={true} />
+            <LedgerDialog buttonLabel="Lock CELO" action="Lock" />
           </Grid>
         </Grid>
       </Card>
