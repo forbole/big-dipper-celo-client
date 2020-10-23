@@ -16,7 +16,6 @@ import Confirm from './Confirm'
 import ControlButtons from '../../ControlButtons'
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-
 const useStyles = makeStyles({
 	root: {
 		justifyContent: "center",
@@ -137,22 +136,28 @@ const useStyles = makeStyles({
 	},
 });
 
-type VoteProps = { title: string, proposalNumber: number }
+type VoteProps = { isOpen?: boolean, showButton?: boolean, proposalTit?: string, proposalDet?: string, proposalNum?: number, proposer?: string }
 
-const Vote = ({ title, proposalNumber }: VoteProps) => {
+const Vote = ({ isOpen, showButton, proposalTit, proposalDet, proposalNum, proposer }: VoteProps) => {
 
 	const classes = useStyles();
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = React.useState(isOpen);
 	const [currentUser, setCurrentUser] = React.useState('');
 	const [vote, setVote] = React.useState('');
 	const [connected, setConnected] = React.useState(false);
+	const [isLoading, setIsLoading] = React.useState(false);
 	const [nextDialog, setNextDialog] = React.useState(false);
 	const [amount, setAmount] = React.useState('');
+	const [proposalNumber, setProposalNumber] = React.useState(proposalNum);
+	const [proposalTitle, setProposalTitle] = React.useState(proposalTit);
+	const [proposalDetails, setProposalDetails] = React.useState(proposalDet);
+	const [proposalProposer, setProposalProposer] = React.useState(proposer);
 	const [dialogError, setDialogError] = React.useState(false);
 	const [dialogErrorMessage, setDialogErrorMessage] = React.useState('');
 	const [ledgerError, setLedgerError] = React.useState(false);
 	const [ledgerErrorMessage, setLedgerErrorMessage] = React.useState('');
 	const [ledgerLoading, setLedgerLoading] = React.useState(false);
+	const [showLockButton, setShowLockButton] = React.useState(showButton);
 
 
 	const handleOpen = async () => {
@@ -163,20 +168,39 @@ const Vote = ({ title, proposalNumber }: VoteProps) => {
 		try {
 			if (Ledger.isConnected === false) {
 				setConnected(false)
+				setIsLoading(true)
 				setLedgerLoading(true)
 				setLedgerErrorMessage("Connecting...")
-				await Ledger.connect()
+				try {
+					await Ledger.connect()
+				}
+				catch (e) {
+					setLedgerError(true)
+					setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
+					setIsLoading(false)
+				}
 			}
 
 			if (Ledger.isConnected === true) {
 				setLedgerLoading(true)
+				// setIsLoading(true)
 				setLedgerErrorMessage("Please accept the connection in your Ledger device. ")
-				let userAddress = await Ledger.getAddress()
-				localStorage.setItem('currentUserAddress', userAddress)
-				setCurrentUser(userAddress)
-				setLedgerErrorMessage("")
-				setConnected(true)
-				setLedgerLoading(false)
+				setIsLoading(true)
+				try {
+					let userAddress = await Ledger.getAddress()
+					localStorage.setItem('currentUserAddress', userAddress)
+					setCurrentUser(userAddress)
+					setLedgerErrorMessage("")
+					setConnected(true)
+					setIsLoading(false)
+					setLedgerLoading(false)
+				}
+				catch (e) {
+					setLedgerError(true)
+					setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
+					setIsLoading(false)
+				}
+
 				try {
 					let ver = await Ledger.getCeloAppVersion()
 					setDialogError(true)
@@ -191,6 +215,7 @@ const Vote = ({ title, proposalNumber }: VoteProps) => {
 		catch (e) {
 			setLedgerError(true)
 			setLedgerLoading(true)
+			setIsLoading(false)
 			setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
 		}
 	}
@@ -200,13 +225,11 @@ const Vote = ({ title, proposalNumber }: VoteProps) => {
 	};
 
 	const handleVoting = async (e) => {
-		console.log(e.target.textContent)
-		// setVote(e.target.textContent)
+		setVote(e.target.textContent)
 		setOpen(false);
 		setNextDialog(true)
 		try {
 			const from = currentUser;
-			const vote = e.target.textContent;
 			const voteProposal = { proposalNumber, from, vote }
 			await Ledger.voteProposal(voteProposal)
 		}
@@ -225,18 +248,20 @@ const Vote = ({ title, proposalNumber }: VoteProps) => {
 
 	return (
 		<>
-			<Grid container spacing={2}  >
-				<Grid item xs={12}  >
-					<Button
-						variant="contained"
-						color="secondary"
-						onClick={handleOpen}
-						className={classes.voteButton}
-					>
-						<Typography variant="body1">Vote</Typography>
-					</Button>
+			{showLockButton === true ?
+				<Grid container spacing={2}  >
+					<Grid item xs={12}  >
+						<Button
+							variant="contained"
+							color="secondary"
+							onClick={handleOpen}
+							className={classes.voteButton}
+						>
+							<Typography variant="body1">Vote</Typography>
+						</Button>
+					</Grid>
 				</Grid>
-			</Grid>
+				: null}
 			<Dialog
 				open={open}
 				onClose={handleClose}
@@ -284,7 +309,7 @@ const Vote = ({ title, proposalNumber }: VoteProps) => {
 										You’re going to vote for
                                     </Typography>
 									<Typography variant="body2" color="textPrimary" className={classes.paddingBottom}>
-										{title}
+										{proposalTitle}
 									</Typography>
 								</Grid>
 								<Grid item xs={12} className={classes.paddingBottom} >
@@ -315,15 +340,16 @@ const Vote = ({ title, proposalNumber }: VoteProps) => {
 												{ledgerErrorMessage}
 											</Typography>
 										</Grid> </> : null}
-								{(ledgerErrorMessage && connected === false && ledgerLoading) ?
-									<ControlButtons showRetry={true} handleClick={handleOpen} handleClose={handleClose} showDisabled={ledgerLoading} /> : null}
+								{(ledgerErrorMessage || !connected || ledgerLoading) ?
+									<ControlButtons showRetry={true} handleClick={handleOpen} handleClose={handleClose} showDisabled={isLoading} /> :
+									null}
 							</Grid>
 						</DialogContentText>
 
 					</Grid>
 				</DialogContent>
 			</Dialog>
-			{ nextDialog ? <Confirm isOpen={nextDialog} /> : null}
+			{ nextDialog ? <Confirm isOpen={nextDialog} voteSel={vote} proposalNum={proposalNumber} proposalTit={proposalTitle} proposer={proposer} proposalDet={proposalDetails} /> : null}
 
 		</>
 	);

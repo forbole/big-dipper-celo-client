@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import DialogContent from "@material-ui/core/DialogContent";
+import Dialog from "@material-ui/core/Dialog";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -73,9 +74,10 @@ const useStyles = makeStyles({
 
 });
 
+type SuccessProps = { isOpen: boolean }
 
 
-const Success = () => {
+const Success = ({ isOpen }: SuccessProps) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -86,83 +88,90 @@ const Success = () => {
     };
 
     return (<>
-
-        <DialogContent >
-            <Grid container spacing={1} className={classes.root}>
-                <DialogContentText id="ledger-validator-group-vote" >
-                    <Grid container className={classes.item}>
-                        <Grid
-                            item
-                            xs={12}
-                            alignItems="center"
-                            className={classes.icon}
-                        ><Typography
-                            noWrap
-                            align="center"
-                        >
-                                <img src="/images/success-icon.svg" />
-                            </Typography>
-                        </Grid>
-                        <Grid
-                            item
-                            xs={12}
-                            alignItems="center"
-                            className={classes.paddingBottom}
-                        >
-                            <Typography
-                                variant="body2"
+        <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="ledger-dialog"
+            //fullWidth
+            maxWidth="sm"
+        >
+            <DialogContent >
+                <Grid container spacing={1} className={classes.root}>
+                    <DialogContentText id="ledger-validator-group-vote" >
+                        <Grid container className={classes.item}>
+                            <Grid
+                                item
+                                xs={12}
+                                alignItems="center"
+                                className={classes.icon}
+                            ><Typography
                                 noWrap
                                 align="center"
-                                color="textPrimary"
                             >
-                                You have successfully voted for proposal 1
-                                                  </Typography>
-                        </Grid>
-
-
-                        <Grid item xs={12} md={11} >
-                            <Typography
-                                variant="body2"
-                                noWrap
-                                align="left"
-                                color="textPrimary"
-                            >
-                                TX Hash
-                  </Typography>
-                        </Grid>
-                        <Grid item xs={12} md={11}>
-                            <Link
-                                href={`transaction/${data.block.parentHash}`}
-                                color="secondary"
-                            >
-                                <Typography variant="body2" className={classes.txHash} noWrap={false}>
-                                    {
-                                        "0xfdef0a9988f84f8914ee000407393fccc1d039130260c7d501cc4b24e5bbe4f5"
-                                    }
+                                    <img src="/images/success-icon.svg" />
                                 </Typography>
-                            </Link>
-                        </Grid>
-
-                        <Grid item xs={12} md={10} className={classes.controlButton} alignItems="center">
-                            <Link href="/transactions">
-                                <Button
-                                    variant="outlined"
-                                    color="secondary"
-                                    className={classes.controlButtonLabel}
-                                    fullWidth={true}
-                                    onClick={handleClose}
-
+                            </Grid>
+                            <Grid
+                                item
+                                xs={12}
+                                alignItems="center"
+                                className={classes.paddingBottom}
+                            >
+                                <Typography
+                                    variant="body2"
+                                    noWrap
+                                    align="center"
+                                    color="textPrimary"
                                 >
-                                    <Typography variant="body2" noWrap>
-                                        View Proposal
+                                    You have successfully voted for proposal 1
+                                                  </Typography>
+                            </Grid>
+
+
+                            <Grid item xs={12} md={11} >
+                                <Typography
+                                    variant="body2"
+                                    noWrap
+                                    align="left"
+                                    color="textPrimary"
+                                >
+                                    TX Hash
+                  </Typography>
+                            </Grid>
+                            <Grid item xs={12} md={11}>
+                                <Link
+                                    href={`transaction/${data.block.parentHash}`}
+                                    color="secondary"
+                                >
+                                    <Typography variant="body2" className={classes.txHash} noWrap={false}>
+                                        {
+                                            "0xfdef0a9988f84f8914ee000407393fccc1d039130260c7d501cc4b24e5bbe4f5"
+                                        }
+                                    </Typography>
+                                </Link>
+                            </Grid>
+
+                            <Grid item xs={12} md={10} className={classes.controlButton} alignItems="center">
+                                <Link href="/transactions">
+                                    <Button
+                                        variant="outlined"
+                                        color="secondary"
+                                        className={classes.controlButtonLabel}
+                                        fullWidth={true}
+                                        onClick={handleClose}
+
+                                    >
+                                        <Typography variant="body2" noWrap>
+                                            View Proposal
                       </Typography>
-                                </Button>
-                            </Link>
+                                    </Button>
+                                </Link>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </DialogContentText>
-            </Grid>
-        </DialogContent>
+                    </DialogContentText>
+                </Grid>
+            </DialogContent>
+        </Dialog>
     </>
     );
 };
