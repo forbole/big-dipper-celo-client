@@ -154,7 +154,7 @@ const AccountOverview = ({ address }: AccountOverviewProps) => {
           <Grid item xs={12}  >
             {accountQuery.data.account && accountQuery.data.account.balance && chainQuery.data.chain && chainQuery.data.chain.tokenPrice && chainQuery.data.chain.tokenPrice.usd ?
               < Typography variant="body2" className={classes.alignRight}>
-                {new BigNumber(accountQuery.data.account.balance * chainQuery.data.chain.tokenPrice.usd).toFormat(4)} cUSD
+                {new BigNumber(accountQuery.data.account.balance * chainQuery.data.chain.tokenPrice.usd).toFormat(2)} cUSD
               </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
           </Grid>
 
