@@ -24,6 +24,7 @@ import BigNumber from 'bignumber.js';
 import MarkdownView from 'react-showdown';
 import getConfig from 'next/config';
 import Vote from "../ledger/proposal/vote/Vote"
+import Deposit from '../ledger/proposal/deposit/Deposit'
 
 const useStyles = makeStyles(() => {
   return {
@@ -92,17 +93,19 @@ const useStyles = makeStyles(() => {
   };
 });
 
-type ProposalDetailsProps = { proposal: string, proposalDetails: string };
+type ProposalDetailsProps = { proposalNum: string, proposalDetails: string };
 
-const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) => {
+const ProposalDetails = ({ proposalNum, proposalDetails }: ProposalDetailsProps) => {
 
   const getProposal = proposalDetails.split("\n")
   const proposalTitle = getProposal[0].replace('#', ' ')
-  const proposalNumber = parseInt(proposal)
+  const proposalNumber = parseInt(proposalNum)
   const prevProposal: number = proposalNumber - 1;
   const nextProposal: number = proposalNumber + 1;
   const [maxProposalNumber, setMaxProposalNumber] = React.useState(false);
   const [minProposalNumber, setMinProposalNumber] = React.useState(false);
+  const [currentUser, setCurrentUser] = React.useState('');
+  const [voted, setVoted] = React.useState(false);
 
 
   const { loading, error, data } = useQuery(GET_PROPOSAL, {
@@ -122,6 +125,10 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) =>
   const totalNumOfProposals = totalProposals.data && totalProposals.data.proposals && totalProposals.data.proposals.proposals ? totalProposals.data.proposals.proposals.length : 0;
 
   useEffect(() => {
+    let localUser = localStorage.getItem('currentUserAddress');
+    //@ts-ignore
+    setCurrentUser(localUser)
+
     if (proposalNumber === totalNumOfProposals) {
       setMaxProposalNumber(true)
     }
@@ -129,8 +136,17 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) =>
     if (proposalNumber === 1) {
       setMinProposalNumber(true)
     }
+    if (data && data.proposal && data.proposal.upvoteList) {
+      for (let c in data.proposal.upvoteList) {
+        if (data.proposal.upvoteList[c].returnValues.account === currentUser) {
+          setVoted(true)
+        }
+      }
+    }
+
   });
 
+  console.log(voted)
   if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
 
@@ -259,7 +275,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) =>
           <Grid item xs={8} lg={6}  >
             {data.proposal && data.proposal.returnValues && data.proposal.returnValues.deposit ?
               < Typography variant="body2" className={classes.alignRight} >
-                {new BigNumber(data.proposal.returnValues.deposit / process.env.CELO).toFormat()}
+                {new BigNumber((data.proposal.returnValues.deposit) / process.env.CELO).toFormat()}
               </Typography> : <NotAvailable variant="body2" />}
           </Grid>
 
@@ -332,7 +348,9 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) =>
           </Grid>
 
           <Grid item xs={12} className={classes.centerContent}>
-            <Vote title={proposalTitle} proposalNumber={proposalNumber} />
+            {voted ?
+              <Vote showButton={true} proposalTit={proposalTitle} proposalNum={proposalNumber} proposalDet={proposalDetails} proposer={data.proposal && data.proposal.returnValues && data.proposal.returnValues.proposer ? data.proposal.returnValues.proposer : ''} />
+              : <Deposit showButton={true} proposalTit={proposalTitle} proposalNum={proposalNumber} proposalDet={proposalDetails} proposer={data.proposal && data.proposal.returnValues && data.proposal.returnValues.proposer ? data.proposal.returnValues.proposer : ''} />}
           </Grid>
         </Grid>
       </CardContent>
