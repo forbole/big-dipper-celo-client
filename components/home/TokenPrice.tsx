@@ -270,7 +270,7 @@ const TokenPrice = () => {
                              </Typography>
                                 {chainData.data && chainData.data.chain && chainData.data.chain.celoTotalSupply && chainData.data.chain.tokenPrice && chainData.data.chain.tokenPrice.usd >= 0 ?
                                     <Typography variant="body1" className={classes.value} color="textPrimary" noWrap>
-                                        $ {(new BigNumber((chainData.data.chain.tokenPrice.usd * chainData.data.chain.celoTotalSupply) / process.env.CELO).toFormat(2))}
+                                        $ {(new BigNumber(chainData.data.chain.tokenPrice.usd * (chainData.data.chain.celoTotalSupply / process.env.CELO)).toFormat(2))}
                                     </Typography> : <NotAvailable variant="body2" />}
                             </Card>
                         </Grid>
