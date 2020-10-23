@@ -125,7 +125,7 @@ const LockGold = ({ isLoading, maxLock }: LockGoldProps) => {
                                     noWrap
                                     className={classes.alignRight}
                                 >
-                                    {maxLock} CELO
+                                    Max {new BigNumber(maxLock / process.env.CELO).toFormat(2)} CELO
                                 </Typography>
                             </Grid>
 
