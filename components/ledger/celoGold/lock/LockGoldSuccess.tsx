@@ -40,32 +40,24 @@ const useStyles = makeStyles({
         paddingTop: "2.5rem"
     },
 
-    paddingBottom: {
-        paddingBottom: "1rem"
-    }
-
 });
 
-type LockGoldSuccessProps = { isOpen: boolean, pageAddress?: string };
+// type LockGoldSuccessProps = { isOpen: boolean, pageAddress?: string };
 
 
-const LockGoldSuccess = ({ isOpen, pageAddress }: LockGoldSuccessProps) => {
-
+const LockGoldSuccess = () => {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
 
-
-    const handleClose = () => {
-        setOpen(false);
+    const handleTx = () => {
+        // setOpen(false);
     };
-
 
     return (
         <>
 
             <DialogContent >
                 <Grid container spacing={1} className={classes.root}>
-                    <DialogContentText id="ledger-validator-group-vote" >
+                    <DialogContentText id="ledger-lock-gold-success" >
                         <Grid container className={classes.item}>
                             <Grid
                                 item
@@ -102,7 +94,7 @@ const LockGoldSuccess = ({ isOpen, pageAddress }: LockGoldSuccessProps) => {
                                         color="secondary"
                                         className={classes.controlButtonLabel}
                                         fullWidth={true}
-                                        onClick={handleClose}
+                                        onClick={handleTx}
 
                                     >
                                         <Typography variant="body2" noWrap>
