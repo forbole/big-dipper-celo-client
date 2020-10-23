@@ -219,7 +219,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
                                     >
                                         {data.proposal.totalVotesList[voteType.voteType][row] && data.proposal.totalVotesList[voteType.voteType][row].returnValues && data.proposal.totalVotesList[voteType.voteType][row].returnValues.weight ?
                                             <Typography variant="body2" noWrap>
-                                                {new BigNumber((data.proposal.totalVotesList[voteType.voteType][row].returnValues.weight / process.env.CELO)).toFormat()}
+                                                {new BigNumber((data.proposal.totalVotesList[voteType.voteType][row].returnValues.weight / process.env.CELO)).toFormat(2)}
                                             </Typography> : null}
                                     </TableCell>
 
@@ -300,7 +300,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
                             variant="subtitle1"
                             className={classes.priceDisplay}
                         >
-                            {new BigNumber(data.proposal.votes.Total / process.env.CELO).toFormat()}
+                            {new BigNumber(data.proposal.votes.Total / process.env.CELO).toFormat(2)}
 
                         </Typography> : <NotAvailable variant="body2" />}
                 </Grid>

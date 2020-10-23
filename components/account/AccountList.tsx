@@ -182,13 +182,13 @@ const AccountList = () => {
                         <TableCell align="right" padding="checkbox" className={classes.tableCell}>
                           {row.balance ?
                             <Typography variant="body2" color="textSecondary" noWrap>
-                              {new BigNumber(row.balance).toFormat(4)} CELO
+                              {new BigNumber(row.balance / process.env.CELO).toFormat(2)} CELO
                               </Typography>
                             : <NotAvailable variant="body2" />}
                         </TableCell>
                         <TableCell align="right" padding="checkbox" className={classes.tableCell}>
                           {row.balance && totalSupply && totalSupply.data && totalSupply.data.chain && totalSupply.data.chain.cUSDTotalSupply ?
-                            <Typography variant="body2" color="textSecondary" noWrap>{numbro((row.balance / totalSupply.data.chain.cUSDTotalSupply) * 100).format("0.0000000")}</Typography>
+                            <Typography variant="body2" color="textSecondary" noWrap>{numbro((row.balance / totalSupply.data.chain.cUSDTotalSupply) * 100).format("0.00")} %</Typography>
                             : <NotAvailable variant="body2" />}
                         </TableCell>
                         <TableCell align="right" padding="checkbox" className={classes.tableCell}>

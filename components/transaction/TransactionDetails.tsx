@@ -24,8 +24,7 @@ import ComponentLoader from '../misc/ComponentLoader';
 import NotAvailable from '../misc/NotAvailable'
 import ErrorMessage from '../misc/ErrorMessage';
 import { GET_TX_DETAILS } from '../query/Transaction'
-
-
+import BigNumber from "bignumber.js";
 
 
 const useStyles = makeStyles(({ spacing, palette }) => {
@@ -311,8 +310,8 @@ const TransactionDetails = ({ hash }: TxDetailsProps) => {
             </Typography>
             {data.transaction && data.transaction.feeCurrency ?
               <Typography variant="body2" component="h2">
-                {data.transaction.feeCurrency} + "CELO"
-            </Typography>
+                {new BigNumber(data.transaction.feeCurrency / process.env.CELO).toFormat(2)} CELO
+              </Typography>
               : <NotAvailable variant="body2" />}
             <Divider variant="middle" className={classes.divider} />
           </Grid>

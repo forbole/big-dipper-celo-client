@@ -148,7 +148,7 @@ const AccountOverview = ({ address }: AccountOverviewProps) => {
 
           <Grid item xs={9} >
             {accountQuery.data.account && accountQuery.data.account.balance ? <Typography variant="body2" className={classes.alignRight} >
-              {new BigNumber(accountQuery.data.account.balance).toFormat(4)} CELO
+              {new BigNumber(accountQuery.data.account.balance / process.env.CELO).toFormat(2)} CELO
             </Typography> : < NotAvailable variant="body2" className={classes.alignRight} />}
           </Grid>
           <Grid item xs={12}  >

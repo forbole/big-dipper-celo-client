@@ -27,6 +27,7 @@ import MiddleEllipsis from '../misc/MiddleEllipsis'
 import moment from "moment";
 import numbro from "numbro";
 import getConfig from 'next/config'
+import BigNumber from "bignumber.js";
 
 
 const useStyles = makeStyles(({ spacing }) => {
@@ -197,8 +198,8 @@ const AccountTransactions = ({ address }: TransactionsProps) => {
                             </Grid>
                             <Grid item xs={4} lg={4}>
                               <Typography variant="body2" className={classes.alignRight} >
-                                {row.gas
-                                  ? row.gas + " CELO"
+                                {row.gas ?
+                                  new BigNumber(row.gas / process.env.CELO).toFormat(2) + " CELO"
                                   : <NotAvailable variant="body2" />}
                               </Typography>
                             </Grid>

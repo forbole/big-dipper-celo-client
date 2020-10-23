@@ -29,6 +29,9 @@ import ErrorMessage from '../misc/ErrorMessage';
 import { GET_TX } from '../query/Transaction'
 import getConfig from 'next/config'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import BigNumber from "bignumber.js";
+
+
 
 const useStyles = makeStyles({
   root: {
@@ -254,8 +257,8 @@ const LatestTransactions = ({ pagination }: LatestTxsProps) => {
                                 variant="body2"
                                 className={classes.alignRight}
                               >
-                                {row.value
-                                  ? row.value + " CELO"
+                                {row.value ?
+                                  new BigNumber(row.value / process.env.CELO).toFormat(2) + " CELO"
                                   : <NotAvailable variant="body2" />}
                               </Typography>
                             </Grid>

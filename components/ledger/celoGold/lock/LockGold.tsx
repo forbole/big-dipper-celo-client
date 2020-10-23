@@ -23,6 +23,7 @@ import ErrorMessage from '../../../misc/ErrorMessage';
 import Ledger from '../../Ledger'
 import Login from '../../Login'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import BigNumber from "bignumber.js";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -369,7 +370,7 @@ const LockGold = ({ isOpen, pageAddress, showButton }: LockGoldProps) => {
                                             className={classes.alignRight}
                                         >
                                             Max {data.account && data.account.totalBalance && data.account.totalBalance.gold ?
-                                                data.account.totalBalance.gold
+                                                new BigNumber(data.account.totalBalance.gold / process.env.CELO).toFormat(2)
                                                 : 0} CELO
                                     </Typography>
                                     </Grid>

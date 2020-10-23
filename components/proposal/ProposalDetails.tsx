@@ -221,7 +221,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) =>
           <Grid item xs={8} lg={6}  >
             {data.proposal && data.proposal.returnValues && data.proposal.returnValues.deposit ?
               < Typography variant="body2" className={classes.alignRight} >
-                {new BigNumber(data.proposal.returnValues.deposit / process.env.CELO).toFormat()}
+                {new BigNumber(data.proposal.returnValues.deposit / process.env.CELO).toFormat(2)}
               </Typography> : <NotAvailable variant="body2" />}
           </Grid>
 

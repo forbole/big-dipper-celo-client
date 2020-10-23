@@ -269,7 +269,7 @@ const ValidatorVotesList = () => {
                     >
                       {row.lockedGoldAmount ?
                         <Typography variant="body2" noWrap>
-                          {new BigNumber(row.lockedGoldAmount / process.env.CELO).toFormat(0)}
+                          {new BigNumber(row.lockedGoldAmount / process.env.CELO).toFormat(2)}
                         </Typography> : <NotAvailable variant="body2" />}
                     </TableCell>
                     <TableCell

@@ -196,12 +196,12 @@ const AccountDetails = ({ address }: AccountDetailsProps) => {
                         {accountQuery.data && accountQuery.data.account && accountQuery.data.account.lockedGold && accountQuery.data.account.lockedGold.total && accountQuery.data.account.lockedGold.nonvoting ?
                             <><Grid item xs={8} className={classes.item} >
                                 <Typography variant="body2" className={classes.alignRight}  >
-                                    {new BigNumber(accountQuery.data.account.lockedGold.total).toFormat(4)} CELO
+                                    {new BigNumber(accountQuery.data.account.lockedGold.total / process.env.CELO).toFormat(2)} CELO
                                 </Typography>
                             </Grid>
                                 <Grid item xs={12} className={classes.item} >
                                     <Typography variant="body2" className={classes.alignRight}  >
-                                        {new BigNumber(accountQuery.data.account.lockedGold.nonvoting).toFormat(4)} non-voting CELO
+                                        {new BigNumber(accountQuery.data.account.lockedGold.nonvoting / process.env.CELO).toFormat(2)} non-voting CELO
                                     </Typography>
                                 </Grid>
                             </>

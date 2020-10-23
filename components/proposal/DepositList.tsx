@@ -178,7 +178,7 @@ const DepositList = ({ proposal }: DepositListProps) => {
                     >
                       {data.proposal && data.proposal.upvoteList[row] && data.proposal.upvoteList[row].returnValues && data.proposal.upvoteList[row].returnValues.upvotes ?
                         <Typography variant="body2" noWrap>
-                          {new BigNumber(data.proposal.upvoteList[row].returnValues.upvotes / process.env.CELO).toFormat()}
+                          {new BigNumber(data.proposal.upvoteList[row].returnValues.upvotes / process.env.CELO).toFormat(2)}
                         </Typography> : <NotAvailable variant="body2" />}
                     </TableCell>
                     <TableCell
