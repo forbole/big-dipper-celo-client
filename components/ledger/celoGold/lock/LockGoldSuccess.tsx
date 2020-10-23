@@ -46,13 +46,12 @@ const useStyles = makeStyles({
     }
 });
 
-type LockGoldSuccessProps = { isOpen: boolean, pageAddress?: string };
-
+// type LockGoldSuccessProps = { isOpen: boolean, pageAddress?: string };
 
 const LockGoldSuccess = ({ isOpen, pageAddress }: LockGoldSuccessProps): JSX.Element  => {
 
+const LockGoldSuccess = () => {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
 
     const handleClose = () => {
         setOpen(false);
