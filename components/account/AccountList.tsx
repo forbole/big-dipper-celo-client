@@ -188,7 +188,9 @@ const AccountList = () => {
                         </TableCell>
                         <TableCell align="right" padding="checkbox" className={classes.tableCell}>
                           {row.balance && totalSupply && totalSupply.data && totalSupply.data.chain && totalSupply.data.chain.cUSDTotalSupply ?
-                            <Typography variant="body2" color="textSecondary" noWrap>{numbro((row.balance / totalSupply.data.chain.cUSDTotalSupply) * 100).format("0.00")} %</Typography>
+                            <Typography variant="body2" color="textSecondary" noWrap>
+                              {new BigNumber((row.balance / totalSupply.data.chain.celoTotalSupply) * 100).toFormat(2)} %
+                            </Typography>
                             : <NotAvailable variant="body2" />}
                         </TableCell>
                         <TableCell align="right" padding="checkbox" className={classes.tableCell}>
