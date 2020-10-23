@@ -12,9 +12,15 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: 5,
       backgroundColor: grey[500],
       fontSize: "	0.875rem",
-      width: "auto",
+      width: "5rem",
       textTransform: 'capitalize',
-      marginRight: "0.5rem"
+      marginRight: "0.5rem",
+      textOverflow: "ellipsis",
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      [theme.breakpoints.up('md')]: {
+        width: "auto",
+      },
     },
   })
 );
