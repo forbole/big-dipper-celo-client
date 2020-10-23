@@ -95,6 +95,7 @@ const DepositList = ({ proposal }: DepositListProps) => {
   const [hash, setHash] = React.useState("");
   const [page, setPage] = React.useState(0);
   const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXsmall)
+  let totalDeposited = 0;
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -112,6 +113,17 @@ const DepositList = ({ proposal }: DepositListProps) => {
     variables: { hash },
   });
 
+  const calculateTotalDeposited = () => {
+    if (data && data.proposal && data.proposal.upvoteList) {
+      for (let c in data.proposal.upvoteList) {
+        if (data.proposal.upvoteList && data.proposal.upvoteList[c].returnValues && data.proposal.upvoteList[c].returnValues.upvotes) {
+          totalDeposited = totalDeposited + (data.proposal.upvoteList[c].returnValues.upvotes / process.env.CELO)
+        }
+      }
+    }
+    return new BigNumber(totalDeposited).toFormat(2)
+  };
+
   if (loading) return <ComponentLoader />
   if (error) return <ErrorMessage message={error.message} />
 
@@ -124,7 +136,7 @@ const DepositList = ({ proposal }: DepositListProps) => {
             variant="subtitle1"
             className={classes.headerLabel}
           >
-            Deposit (200 CELO)
+            Deposit ({calculateTotalDeposited()} CELO)
           </Typography>
 
           {/* <Divider variant="middle" className={classes.divider} /> */}
