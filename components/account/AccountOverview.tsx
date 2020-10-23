@@ -17,7 +17,8 @@ import { GET_CHAIN } from '../query/Chain';
 import { GET_VALIDATOR } from '../query/Validator';
 import LockGold from '../ledger/celoGold/lock/LockGold';
 import UnlockGold from '../ledger/celoGold/unlock/UnlockGold';
-import Ledger from '../ledger/Ledger'
+import Ledger from '../ledger/Ledger';
+import LedgerDialog from '../ledger/LedgerDialog';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -183,14 +184,14 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
             </Grid> : null}
 
           <Grid item xs={6}>
-            <UnlockGold pageAddress={address} showButton={true} />
+            <LedgerDialog buttonLabel="Unlock CELO" action="Unlock" />
           </Grid>
           <Grid item xs={6}>
             <UnlockGold pageAddress={address} showButton={true} />
           </Grid>
 
           <Grid item xs={6}>
-            <LockGold pageAddress={address} showButton={true} />
+            <LedgerDialog buttonLabel="Lock CELO" action="Lock" />
           </Grid>
         </Grid>
       </Card>
