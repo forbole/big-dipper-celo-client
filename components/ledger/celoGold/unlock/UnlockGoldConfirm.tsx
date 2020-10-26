@@ -1,123 +1,119 @@
-import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Typography from "@material-ui/core/Typography";
-
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import React from 'react';
 
 const useStyles = makeStyles({
-
     title: {
-        display: "block",
-        textAlign: "center",
-        paddingTop: "0.5rem",
-        paddingBottom: "0.7rem",
+        display: 'block',
+        textAlign: 'center',
+        paddingTop: '0.5rem',
+        paddingBottom: '0.7rem'
     },
 
     dialogTitle: {
-        padding: "1rem 1rem 0rem 1rem",
+        padding: '1rem 1rem 0rem 1rem'
     },
 
     dialogContent: {
-        display: "flex",
+        display: 'flex'
     },
     divider: {
-        marginTop: "0.5rem",
-        backgroundColor: "rgba(232, 232, 232, 1)",
+        marginTop: '0.5rem',
+        backgroundColor: 'rgba(232, 232, 232, 1)'
     },
 
     dialog: {
         paddingBottom: '1rem'
     },
 
-
     item: {
-        justifyContent: "center",
+        justifyContent: 'center'
     },
 
-
     iconButtonRight: {
-        float: "right"
+        float: 'right'
     },
     iconButtonLeft: {
         float: 'left'
     },
 
     unlockGoldMessage: {
-        marginTop: "1rem",
-        marginBottom: "-0.8rem",
+        marginTop: '1rem',
+        marginBottom: '-0.8rem'
     },
 
     alignLeft: {
-        display: "flex",
-        overflow: "auto",
-        paddingTop: "0.5rem",
-        paddingBottom: "0.5rem",
+        display: 'flex',
+        overflow: 'auto',
+        paddingTop: '0.5rem',
+        paddingBottom: '0.5rem'
     },
     alignRight: {
-        display: "block",
-        float: "right",
-        paddingTop: "0.5rem",
-        paddingBottom: "0.5rem",
-    },
+        display: 'block',
+        float: 'right',
+        paddingTop: '0.5rem',
+        paddingBottom: '0.5rem'
+    }
 });
 
-
-
 const UnlockGoldConfirm = () => {
-
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-
 
     const handleClose = () => {
         setOpen(false);
     };
 
-
     return (
         <>
-
             <DialogTitle id="ledger-unlock-gold-confirm" className={classes.dialogTitle}>
                 <Grid container className={classes.item}>
                     <Grid item xs={1}>
-                        <IconButton
-                            aria-label="Return"
-                            className={classes.iconButtonLeft}
-                        >
+                        <IconButton aria-label="Return" className={classes.iconButtonLeft}>
                             <img src="/images/last.svg" color="textPrimary" />
                         </IconButton>
                     </Grid>
                     <Grid item xs={10}>
-                        <Typography variant="h6" color="textPrimary" noWrap className={classes.title}>
+                        <Typography
+                            variant="h6"
+                            color="textPrimary"
+                            noWrap
+                            className={classes.title}>
                             Unlock Celo Gold
-              </Typography>
+                        </Typography>
                     </Grid>
                     <Grid item xs={1}>
                         <IconButton
                             aria-label="Close"
                             className={classes.iconButtonRight}
-                            onClick={handleClose}
-                        >
+                            onClick={handleClose}>
                             <img src="/images/cross.svg" color="textPrimary" />
                         </IconButton>
                     </Grid>
                 </Grid>
             </DialogTitle>
 
-            <DialogContent >
-                <Grid container spacing={1} >
-                    <DialogContentText id="ledger-unlock-gold-confirm-content" className={classes.dialog}>
+            <DialogContent>
+                <Grid container spacing={1}>
+                    <DialogContentText
+                        id="ledger-unlock-gold-confirm-content"
+                        className={classes.dialog}>
                         <Grid container className={classes.dialogContent}>
                             <Grid item xs={12}>
-                                <Typography variant="body2" noWrap={false} color="textPrimary" gutterBottom>
-                                    You are going to unlock {"2"} CELO, it that's correct, please
-                  sign in your ledger device.
-                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    noWrap={false}
+                                    color="textPrimary"
+                                    gutterBottom>
+                                    You are going to unlock {'2'} CELO, it that's correct, please
+                                    sign in your ledger device.
+                                </Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Divider className={classes.divider} />
@@ -129,10 +125,9 @@ const UnlockGoldConfirm = () => {
                                         noWrap
                                         className={classes.alignLeft}
                                         align="left"
-                                        color="textPrimary"
-                                    >
+                                        color="textPrimary">
                                         Account
-                  </Typography>
+                                    </Typography>
                                 </Grid>
                                 <Grid item xs={6}>
                                     <Typography
@@ -140,9 +135,8 @@ const UnlockGoldConfirm = () => {
                                         noWrap
                                         className={classes.alignRight}
                                         align="right"
-                                        color="textPrimary"
-                                    >
-                                        {"Michelle Clark"}
+                                        color="textPrimary">
+                                        {'Michelle Clark'}
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -156,10 +150,9 @@ const UnlockGoldConfirm = () => {
                                         noWrap
                                         className={classes.alignLeft}
                                         align="left"
-                                        color="textPrimary"
-                                    >
+                                        color="textPrimary">
                                         Unlock Amount
-                  </Typography>
+                                    </Typography>
                                 </Grid>
                                 <Grid item xs={6}>
                                     <Typography
@@ -167,10 +160,9 @@ const UnlockGoldConfirm = () => {
                                         noWrap
                                         className={classes.alignRight}
                                         align="right"
-                                        color="textPrimary"
-                                    >
-                                        {"2"} CELO
-                  </Typography>
+                                        color="textPrimary">
+                                        {'2'} CELO
+                                    </Typography>
                                 </Grid>
                             </Grid>
                             <Grid item xs={12}>
@@ -183,10 +175,9 @@ const UnlockGoldConfirm = () => {
                                         noWrap
                                         className={classes.alignLeft}
                                         align="left"
-                                        color="textPrimary"
-                                    >
+                                        color="textPrimary">
                                         Tx Fee
-                  </Typography>
+                                    </Typography>
                                 </Grid>
                                 <Grid item xs={6}>
                                     <Typography
@@ -194,19 +185,18 @@ const UnlockGoldConfirm = () => {
                                         noWrap
                                         className={classes.alignRight}
                                         align="right"
-                                        color="textPrimary"
-                                    >
-                                        {"0.00001"} CELO
-                  </Typography>
+                                        color="textPrimary">
+                                        {'0.00001'} CELO
+                                    </Typography>
                                 </Grid>
                             </Grid>
                             <Grid item xs={12}>
                                 <Divider className={classes.divider} />
                             </Grid>
                             <Grid item xs={12} className={classes.unlockGoldMessage}>
-                                <Typography variant="h6" noWrap align="center" color="textPrimary" >
+                                <Typography variant="h6" noWrap align="center" color="textPrimary">
                                     Please sign in your ledger device...
-                </Typography>
+                                </Typography>
                             </Grid>
                         </Grid>
                     </DialogContentText>
@@ -216,4 +206,4 @@ const UnlockGoldConfirm = () => {
     );
 };
 
-export default UnlockGoldConfirm 
+export default UnlockGoldConfirm;

@@ -1,24 +1,21 @@
-import React from 'react';
-import {
-    makeStyles, Theme, createStyles,
-    useTheme,
-} from '@material-ui/core/styles';
+import { Slide, useScrollTrigger } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
+import Box from '@material-ui/core/Box';
+import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
-import PhoneIcon from '@material-ui/icons/Phone';
+import Tabs from '@material-ui/core/Tabs';
+import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import PersonPinIcon from '@material-ui/icons/PersonPin';
 import HelpIcon from '@material-ui/icons/Help';
+import PersonPinIcon from '@material-ui/icons/PersonPin';
+import PhoneIcon from '@material-ui/icons/Phone';
 import ShoppingBasket from '@material-ui/icons/ShoppingBasket';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import ThumbUp from '@material-ui/icons/ThumbUp';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Link from "../components/Link";
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useScrollTrigger, Slide } from '@material-ui/core';
+import React from 'react';
 
+import Link from '../components/Link';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -35,8 +32,7 @@ function TabPanel(props: TabPanelProps) {
             hidden={value !== index}
             id={`bottom-navigation-${index}`}
             aria-labelledby={`bottom-navigation-${index}`}
-            {...other}
-        >
+            {...other}>
             {value === index && (
                 <Box p={3}>
                     <Typography>{children}</Typography>
@@ -46,26 +42,24 @@ function TabPanel(props: TabPanelProps) {
     );
 }
 
-
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
         flexGrow: 1,
         width: '100%',
         backgroundColor: theme.palette.background.paper,
         bottom: 0,
-        position: "fixed"
+        position: 'fixed'
     },
 
     tabElement: {
-        margin: "-0.1rem",
-        display: "flex"
+        margin: '-0.1rem',
+        display: 'flex'
     }
-
 }));
 
 export default function BottomNavigation() {
     const classes = useStyles();
-    const [value, setValue] = React.useState("");
+    const [value, setValue] = React.useState('');
     const trigger = useScrollTrigger();
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
@@ -79,37 +73,56 @@ export default function BottomNavigation() {
         return (
             <div className={classes.root}>
                 <Slide appear={false} direction="up" in={!trigger}>
-                    <AppBar position="fixed" color="primary" style={{ top: "auto", bottom: 0 }}>
-                        <Tabs
-                            value={value}
-                            scrollButtons="off"
-                            aria-label="Celo Bottom Navigation"
-                        >
+                    <AppBar position="fixed" color="primary" style={{ top: 'auto', bottom: 0 }}>
+                        <Tabs value={value} scrollButtons="off" aria-label="Celo Bottom Navigation">
                             <Link href="/" color="inherit">
-                                <Tab icon={<img src="/images/home.svg" />} aria-label="Dashboard" className={classes.tabElement} />
+                                <Tab
+                                    icon={<img src="/images/home.svg" />}
+                                    aria-label="Dashboard"
+                                    className={classes.tabElement}
+                                />
                             </Link>
                             <Link href="/blocks" color="inherit">
-                                <Tab icon={<img src="/images/blocks.svg" />} aria-label="Blocks" className={classes.tabElement} />
+                                <Tab
+                                    icon={<img src="/images/blocks.svg" />}
+                                    aria-label="Blocks"
+                                    className={classes.tabElement}
+                                />
                             </Link>
                             <Link href="/transactions" color="inherit">
-                                <Tab icon={<img src="/images/txs.svg" />} aria-label="Transactions" className={classes.tabElement} />
+                                <Tab
+                                    icon={<img src="/images/txs.svg" />}
+                                    aria-label="Transactions"
+                                    className={classes.tabElement}
+                                />
                             </Link>
                             <Link href="/accounts" color="inherit">
-                                <Tab icon={<img src="/images/validators.svg" />} aria-label="Accounts" className={classes.tabElement} />
+                                <Tab
+                                    icon={<img src="/images/validators.svg" />}
+                                    aria-label="Accounts"
+                                    className={classes.tabElement}
+                                />
                             </Link>
                             <Link href="/proposals" color="inherit">
-                                <Tab icon={<img src="/images/proposal.svg" />} aria-label="Proposals" className={classes.tabElement} />
+                                <Tab
+                                    icon={<img src="/images/proposal.svg" />}
+                                    aria-label="Proposals"
+                                    className={classes.tabElement}
+                                />
                             </Link>
                             <Link href="/validatorVotes" color="inherit">
-                                <Tab icon={<img src="/images/vote.svg" />} aria-label="ValidatorVotes" className={classes.tabElement} />
+                                <Tab
+                                    icon={<img src="/images/vote.svg" />}
+                                    aria-label="ValidatorVotes"
+                                    className={classes.tabElement}
+                                />
                             </Link>
                         </Tabs>
                     </AppBar>
                 </Slide>
             </div>
         );
-    }
-    else {
-        return null
+    } else {
+        return null;
     }
 }

@@ -1,7 +1,7 @@
 module.exports = {
     env: {
-        uriGQL: "https://server.celo.bigdipper.live/graphql",
-        uriAccount: "https://celo.bigdipper.live/account",
+        uriGQL: 'https://server.celo.bigdipper.live/graphql',
+        uriAccount: 'https://celo.bigdipper.live/account',
         CELO: 1e18
     },
 
@@ -14,7 +14,6 @@ module.exports = {
         rowSmall: 15,
         rowMedium: 30,
         rowLarge: 50,
-        rowXlarge: 100,
-
-    },
-}
+        rowXlarge: 100
+    }
+};
