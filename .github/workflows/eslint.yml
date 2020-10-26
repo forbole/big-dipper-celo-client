@@ -24,3 +24,5 @@ jobs:
       
       # ESLint (JS/TS) Action by iCrawl
       - uses: iCrawl/action-eslint@v1
+        with:
+          custom-glob: .
