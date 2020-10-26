@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint --fix .",
+    "post-pr": "eslint --ext js,jsx,ts,tsx .",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "build-fragment": "node ./schemaQuery.js ",
     "build-possible-types": "node ./possibleTypesQuery.js"

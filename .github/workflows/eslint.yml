@@ -21,8 +21,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      
-      # ESLint (JS/TS) Action by iCrawl
-      - uses: iCrawl/action-eslint@v1
-        with:
-          custom-glob: .
+      - run: |
+        npm install
+        npm run post-pr
