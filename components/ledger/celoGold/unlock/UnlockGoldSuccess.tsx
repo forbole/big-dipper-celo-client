@@ -1,113 +1,96 @@
-import Button from "@material-ui/core/Button";
-import Link from "../../../Link";
-import Grid from "@material-ui/core/Grid";
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import Typography from "@material-ui/core/Typography";
-//import Link from "../../Ledger.tsx"; 
+import Button from '@material-ui/core/Button';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import React from 'react';
 
+import Link from '../../../Link';
+//import Link from "../../Ledger.tsx";
 
 const useStyles = makeStyles({
     root: {
-        justifyContent: "center",
+        justifyContent: 'center'
     },
 
     item: {
-        justifyContent: "center",
+        justifyContent: 'center'
     },
 
     controlButton: {
-        justifyContent: "center",
-        flexWrap: "wrap",
-        paddingTop: "2rem",
-        textTransform: "none",
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        paddingTop: '2rem',
+        textTransform: 'none',
         borderRadius: 4,
-        width: "100%",
-        paddingBottom: "1rem"
+        width: '100%',
+        paddingBottom: '1rem'
     },
     controlButtonLabel: {
-        display: "flex",
-        textTransform: "none",
+        display: 'flex',
+        textTransform: 'none',
         borderRadius: 4,
-        justifyContent: "center",
-        minHeight: "2.5rem",
-        textAlign: "center",
+        justifyContent: 'center',
+        minHeight: '2.5rem',
+        textAlign: 'center'
     },
 
     icon: {
-        paddingBottom: "1rem",
-        paddingTop: "2.5rem"
+        paddingBottom: '1rem',
+        paddingTop: '2.5rem'
     },
 
     paddingBottom: {
-        paddingBottom: "1rem"
+        paddingBottom: '1rem'
     }
-
 });
 
-
-
 const UnlockGoldSuccess = () => {
-
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-
 
     const handleClose = () => {
         setOpen(false);
     };
 
-
     return (
         <>
-
-            <DialogContent >
+            <DialogContent>
                 <Grid container spacing={1} className={classes.root}>
-                    <DialogContentText id="ledger-validator-group-vote" >
+                    <DialogContentText id="ledger-validator-group-vote">
                         <Grid container className={classes.item}>
-                            <Grid
-                                item
-                                xs={12}
-                                alignItems="center"
-                                className={classes.icon}
-                            ><Typography
-                                noWrap
-                                align="center"
-                            >
+                            <Grid item xs={12} alignItems="center" className={classes.icon}>
+                                <Typography noWrap align="center">
                                     <img src="/images/success-icon.svg" />
                                 </Typography>
                             </Grid>
-                            <Grid
-                                item
-                                xs={12}
-                                alignItems="center"
-                            >
+                            <Grid item xs={12} alignItems="center">
                                 <Typography
                                     variant="body2"
                                     noWrap
                                     align="center"
-                                    color="textPrimary"
-                                >
+                                    color="textPrimary">
                                     Unlocked Successfully
-                                                  </Typography>
+                                </Typography>
                             </Grid>
 
-
-                            <Grid item xs={12} md={10} className={classes.controlButton} alignItems="center">
+                            <Grid
+                                item
+                                xs={12}
+                                md={10}
+                                className={classes.controlButton}
+                                alignItems="center">
                                 <Link href="/transactions">
                                     <Button
                                         variant="outlined"
                                         color="secondary"
                                         className={classes.controlButtonLabel}
                                         fullWidth={true}
-                                        onClick={handleClose}
-
-                                    >
+                                        onClick={handleClose}>
                                         <Typography variant="body2" noWrap>
                                             View Transactions
-                      </Typography>
+                                        </Typography>
                                     </Button>
                                 </Link>
                             </Grid>
@@ -115,9 +98,8 @@ const UnlockGoldSuccess = () => {
                     </DialogContentText>
                 </Grid>
             </DialogContent>
-
         </>
     );
 };
 
-export default UnlockGoldSuccess
+export default UnlockGoldSuccess;

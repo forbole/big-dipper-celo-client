@@ -1,120 +1,114 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Typography from "@material-ui/core/Typography";
-//import Link from "../../Ledger.tsx"; 
-import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import NotAvailable from '../../../misc/NotAvailable'
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Divider from '@material-ui/core/Divider';
+//import Link from "../../Ledger.tsx";
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import React from 'react';
 
-
-
+import NotAvailable from '../../../misc/NotAvailable';
 
 const useStyles = makeStyles({
     root: {
-        justifyContent: "center",
+        justifyContent: 'center'
     },
     title: {
-        display: "block",
-        textAlign: "center",
-        paddingTop: "0.5rem",
-        paddingBottom: "0.5rem"
+        display: 'block',
+        textAlign: 'center',
+        paddingTop: '0.5rem',
+        paddingBottom: '0.5rem'
     },
 
     dialogTitle: {
-        padding: "1rem 1rem 0rem 1rem",
+        padding: '1rem 1rem 0rem 1rem'
     },
 
     dialogContent: {
-        display: "flex",
+        display: 'flex'
     },
     divider: {
-        margin: "0.8125rem 0rem",
-        backgroundColor: "rgba(232, 232, 232, 1)",
+        margin: '0.8125rem 0rem',
+        backgroundColor: 'rgba(232, 232, 232, 1)'
     },
 
     dialog: {
         paddingBottom: '1rem'
     },
 
-
     item: {
-        justifyContent: "center",
+        justifyContent: 'center'
     },
 
     wrapText: {
         wordWrap: 'break-word',
         wordBreak: 'break-all'
-
     },
 
     centerContent: {
-        display: "flex",
-        justifyContent: "center",
+        display: 'flex',
+        justifyContent: 'center'
     },
     iconButtonRight: {
-        float: "right"
+        float: 'right'
     },
     iconButtonLeft: {
-        float: "left"
-    },
+        float: 'left'
+    }
 });
 
-
-
 const Confirm = () => {
-
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-
 
     const handleClose = () => {
         setOpen(false);
     };
 
-
     return (
         <>
-
             <DialogTitle id="ledger-dialog-title" className={classes.dialogTitle}>
                 <Grid container className={classes.item}>
                     <Grid item xs={1}>
-                        <IconButton
-                            aria-label="Return"
-                            className={classes.iconButtonLeft}
-                        >
+                        <IconButton aria-label="Return" className={classes.iconButtonLeft}>
                             <img src="/images/last.svg" color="textPrimary" />
                         </IconButton>
                     </Grid>
                     <Grid item xs={10}>
-                        <Typography variant="h6" color="textPrimary" noWrap className={classes.title} >
+                        <Typography
+                            variant="h6"
+                            color="textPrimary"
+                            noWrap
+                            className={classes.title}>
                             Deposit
-              </Typography>
+                        </Typography>
                     </Grid>
                     <Grid item xs={1}>
                         <IconButton
                             aria-label="Close"
                             className={classes.iconButtonRight}
-                            onClick={handleClose}
-                        >
+                            onClick={handleClose}>
                             <img src="/images/cross.svg" color="textPrimary" />
                         </IconButton>
                     </Grid>
                 </Grid>
             </DialogTitle>
 
-            <DialogContent >
-                <Grid container spacing={1} >
+            <DialogContent>
+                <Grid container spacing={1}>
                     <DialogContentText id="ledger-vote" className={classes.dialog}>
                         <Grid container className={classes.dialogContent}>
-
                             <Grid item xs={12}>
-                                <Typography color="textPrimary" variant="body2" gutterBottom align="left">
-                                    You’re going to deposit 1 CELO to Proposal 10, if that’s correct, please sign in your ledger device.
-            </Typography>
+                                <Typography
+                                    color="textPrimary"
+                                    variant="body2"
+                                    gutterBottom
+                                    align="left">
+                                    You’re going to deposit 1 CELO to Proposal 10, if that’s
+                                    correct, please sign in your ledger device.
+                                </Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Divider variant="middle" className={classes.divider} />
@@ -122,12 +116,16 @@ const Confirm = () => {
                             <Grid item xs={6} className={classes.item}>
                                 <Typography variant="body2" gutterBottom color="textPrimary">
                                     Proposal ID
-            </Typography>
+                                </Typography>
                             </Grid>
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" align="right" gutterBottom color="textPrimary">
+                                <Typography
+                                    variant="body2"
+                                    align="right"
+                                    gutterBottom
+                                    color="textPrimary">
                                     10
-                {/* {data.block && data.block.timestamp
+                                    {/* {data.block && data.block.timestamp
                 ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
                 : <NotAvailable variant="body2" />}
               (
@@ -138,15 +136,19 @@ const Confirm = () => {
                                 </Typography>
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
-                            <Grid item xs={6} className={classes.item} >
+                            <Grid item xs={6} className={classes.item}>
                                 <Typography variant="body2" gutterBottom color="textPrimary">
                                     Proposer
-            </Typography>
+                                </Typography>
                             </Grid>
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" align="right" gutterBottom color="textPrimary">
+                                <Typography
+                                    variant="body2"
+                                    align="right"
+                                    gutterBottom
+                                    color="textPrimary">
                                     Michelle Clark
-                {/* {data.block &&
+                                    {/* {data.block &&
               data.block.transactions &&
               data.block.transactions.transactionIndex
                 ? data.block.transactions.transactionIndex.length()
@@ -156,12 +158,18 @@ const Confirm = () => {
                             </Grid>
 
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" gutterBottom color="textPrimary">Type</Typography>
+                                <Typography variant="body2" gutterBottom color="textPrimary">
+                                    Type
+                                </Typography>
                             </Grid>
                             <Grid item xs={6} className={classes.item}>
-                                <Typography variant="body2" align="right" gutterBottom color="textPrimary">
+                                <Typography
+                                    variant="body2"
+                                    align="right"
+                                    gutterBottom
+                                    color="textPrimary">
                                     Proposal
-                {/* {data.block && data.block.size
+                                    {/* {data.block && data.block.size
                 ? data.block.size
                 : <NotAvailable variant="body2" />} */}
                                 </Typography>
@@ -171,10 +179,11 @@ const Confirm = () => {
                             <Grid item xs={12} className={classes.item}>
                                 <Typography variant="body2" gutterBottom color="textPrimary">
                                     Title
-            </Typography>
+                                </Typography>
                                 <Typography variant="body2" gutterBottom color="textPrimary">
-                                    Don’t Burn Deposits for Rejected Governance Proposals Unless Vetoed
-                {/* {data.block && data.block.hash
+                                    Don’t Burn Deposits for Rejected Governance Proposals Unless
+                                    Vetoed
+                                    {/* {data.block && data.block.hash
                 ? data.block.hash
                 : <NotAvailable variant="body2" />} */}
                                 </Typography>
@@ -184,11 +193,18 @@ const Confirm = () => {
                             <Grid item xs={12} className={classes.item}>
                                 <Typography variant="body2" gutterBottom color="textPrimary">
                                     Description
-            </Typography>
+                                </Typography>
 
-                                <Typography variant="body2" className={classes.wrapText} color="textPrimary">
-                                    Governance Working Group - Q1 2020 funding Community-spend proposal submitted by Gavin Birch (https://twitter.com/Ether_Gavin) of Figment Networks (https://figment.network) -=-=- Full proposal: https://ipfs.io/ipfs/QmSMGEoY2dfxADPfgoAsJxjjC6hwpSNx1dXAqePiCEMCbY
-                {/* {data.block && data.block.parentHash ? (
+                                <Typography
+                                    variant="body2"
+                                    className={classes.wrapText}
+                                    color="textPrimary">
+                                    Governance Working Group - Q1 2020 funding Community-spend
+                                    proposal submitted by Gavin Birch
+                                    (https://twitter.com/Ether_Gavin) of Figment Networks
+                                    (https://figment.network) -=-=- Full proposal:
+                                    https://ipfs.io/ipfs/QmSMGEoY2dfxADPfgoAsJxjjC6hwpSNx1dXAqePiCEMCbY
+                                    {/* {data.block && data.block.parentHash ? (
                 <Link
                   href="transaction/[transaction]/"
                   as={`transaction/${data.block.parentHash}`}
@@ -202,15 +218,11 @@ const Confirm = () => {
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
 
-
                             <Grid item xs={12} className={classes.centerContent}>
                                 <Typography variant="h6" color="textPrimary">
                                     Please sign in your ledger device…
-              </Typography>
+                                </Typography>
                             </Grid>
-
-
-
                         </Grid>
                     </DialogContentText>
                 </Grid>
@@ -219,4 +231,4 @@ const Confirm = () => {
     );
 };
 
-export default Confirm
+export default Confirm;
