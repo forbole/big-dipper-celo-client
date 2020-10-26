@@ -29,6 +29,5 @@ jobs:
         uses: actions/setup-node@v1
         with:
             node-version: ${{ matrix.node-version }}
-      - run: |
-        npm install
-        npm run post-pr
+      - run: npm install
+      - run: npm run post-pr

@@ -1,22 +1,20 @@
 import { useQuery } from '@apollo/client';
 import Card from '@material-ui/core/Card';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import BigNumber from 'bignumber.js';
 import cx from 'clsx';
 import numbro from 'numbro';
 import React from 'react';
 
-import Link from '../components/Link';
 import ComponentLoader from './misc/ComponentLoader';
 import ErrorMessage from './misc/ErrorMessage';
 import NotAvailable from './misc/NotAvailable';
 import { GET_CHAIN } from './query/Chain';
 
-const useStyles = makeStyles(({ spacing }) => {
+const useStyles = makeStyles(() => {
     return {
         smallCard: {
             display: 'flex',
@@ -85,7 +83,7 @@ const PriceCard = () => {
                                 {new BigNumber(
                                     (chainData.data.chain.tokenPrice.usd *
                                         chainData.data.chain.celoTotalSupply) /
-                                        process.env.CELO
+                                        (parseInt(process.env.CELO) || 1000000000000000000) // eslint-disable-line no-use-before-define
                                 ).toFormat(2)}
                             </Typography>
                         ) : (
