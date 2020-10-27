@@ -7,15 +7,15 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import Snackbar from '@material-ui/core/Snackbar';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const QRCode = require('qrcode.react');
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
             padding: '0 0 1rem 0',
@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type AddressCardProps = { address: string };
 
-const AddressCard = ({ address }: AddressCardProps) => {
+const AddressCard = ({ address }: AddressCardProps): JSX.Element => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [openQR, setOpenQR] = React.useState(false);
@@ -87,7 +87,7 @@ const AddressCard = ({ address }: AddressCardProps) => {
             });
     };
 
-    const closeAlert = (event?: React.SyntheticEvent, reason?: string) => {
+    const closeAlert = () => {
         setOpen(false);
     };
 
@@ -113,7 +113,7 @@ const AddressCard = ({ address }: AddressCardProps) => {
                                 aria-label="Close"
                                 className={classes.iconButtonRight}
                                 onClick={closeQR}>
-                                <img src="/images/cross.svg" color="textPrimary" />
+                                <img src="/images/cross.svg" color="textPrimary" alt="Close" />
                             </IconButton>
                         </Grid>
                         <Grid item xs={12} className={classes.item}>
@@ -156,13 +156,13 @@ const AddressCard = ({ address }: AddressCardProps) => {
                             </Typography>
                         </Grid>
                         <Grid item xs={1}>
-                            <IconButton aria-label="copy" size="small" onClick={copyText}>
-                                <img src="/images/copy.svg" />
+                            <IconButton aria-label="Copy" size="small" onClick={copyText}>
+                                <img src="/images/copy.svg" alt="Copy" />
                             </IconButton>
                         </Grid>
                         <Grid item xs={1}>
                             <IconButton aria-label="qrCode" size="small" onClick={showQR}>
-                                <img src="/images/qr-code.svg" />
+                                <img src="/images/qr-code.svg" alt="Show QR" />
                             </IconButton>
                             <ShowQRCode />
                         </Grid>

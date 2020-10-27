@@ -85,13 +85,11 @@ const useStyles = makeStyles({
     }
 });
 
-const Revoke = () => {
+const Revoke = (): JSX.Element => {
     const name = 'Dan Stanley';
     const name_2 = 'Andrea Colemans';
 
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
-
     return (
         <>
             <DialogTitle

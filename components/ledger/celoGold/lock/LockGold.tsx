@@ -143,9 +143,8 @@ const TokenDropdown = () => {
     );
 };
 
-const LockGold = () => {
+const LockGold = (): JSX.Element => {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
 
     return (
         <>

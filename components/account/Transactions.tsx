@@ -4,8 +4,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,12 +13,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import moment from 'moment';
 import getConfig from 'next/config';
 import numbro from 'numbro';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Chips from '../Chips';
 import Link from '../Link';
@@ -29,7 +27,7 @@ import MiddleEllipsis from '../misc/MiddleEllipsis';
 import NotAvailable from '../misc/NotAvailable';
 import { GET_ACCOUNT_TX } from '../query/Transaction';
 
-const useStyles = makeStyles(({ spacing }) => {
+const useStyles = makeStyles(() => {
     return {
         root: {
             borderRadius: 5,
@@ -85,7 +83,7 @@ moment.relativeTimeThreshold('ss', 3);
 
 type TransactionsProps = { address: string };
 
-const AccountTransactions = ({ address }: TransactionsProps) => {
+const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
     const classes = useStyles();
     const { publicRuntimeConfig } = getConfig();
 

@@ -1,18 +1,11 @@
 import { Slide, useScrollTrigger } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
-import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import HelpIcon from '@material-ui/icons/Help';
-import PersonPinIcon from '@material-ui/icons/PersonPin';
-import PhoneIcon from '@material-ui/icons/Phone';
-import ShoppingBasket from '@material-ui/icons/ShoppingBasket';
-import ThumbDown from '@material-ui/icons/ThumbDown';
-import ThumbUp from '@material-ui/icons/ThumbUp';
 import React from 'react';
 
 import Link from '../components/Link';
@@ -57,12 +50,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-export default function BottomNavigation() {
+export default function BottomNavigation(): JSX.Element {
     const classes = useStyles();
     const [value, setValue] = React.useState('');
     const trigger = useScrollTrigger();
 
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+    const handleChange = (event: React.ChangeEvent<{ value: unknown }>, newValue: string) => {
         setValue(newValue);
     };
 
@@ -77,42 +70,42 @@ export default function BottomNavigation() {
                         <Tabs value={value} scrollButtons="off" aria-label="Celo Bottom Navigation">
                             <Link href="/" color="inherit">
                                 <Tab
-                                    icon={<img src="/images/home.svg" />}
+                                    icon={<img src="/images/home.svg" alt="Dashboard" />}
                                     aria-label="Dashboard"
                                     className={classes.tabElement}
                                 />
                             </Link>
                             <Link href="/blocks" color="inherit">
                                 <Tab
-                                    icon={<img src="/images/blocks.svg" />}
+                                    icon={<img src="/images/blocks.svg" alt="Blocks" />}
                                     aria-label="Blocks"
                                     className={classes.tabElement}
                                 />
                             </Link>
                             <Link href="/transactions" color="inherit">
                                 <Tab
-                                    icon={<img src="/images/txs.svg" />}
+                                    icon={<img src="/images/txs.svg" alt="Transactions" />}
                                     aria-label="Transactions"
                                     className={classes.tabElement}
                                 />
                             </Link>
                             <Link href="/accounts" color="inherit">
                                 <Tab
-                                    icon={<img src="/images/validators.svg" />}
+                                    icon={<img src="/images/validators.svg" alt="Accounts" />}
                                     aria-label="Accounts"
                                     className={classes.tabElement}
                                 />
                             </Link>
                             <Link href="/proposals" color="inherit">
                                 <Tab
-                                    icon={<img src="/images/proposal.svg" />}
+                                    icon={<img src="/images/proposal.svg" alt="Proposals" />}
                                     aria-label="Proposals"
                                     className={classes.tabElement}
                                 />
                             </Link>
                             <Link href="/validatorVotes" color="inherit">
                                 <Tab
-                                    icon={<img src="/images/vote.svg" />}
+                                    icon={<img src="/images/vote.svg" alt="Validator Votes" />}
                                     aria-label="ValidatorVotes"
                                     className={classes.tabElement}
                                 />
@@ -123,6 +116,6 @@ export default function BottomNavigation() {
             </div>
         );
     } else {
-        return null;
+        return null as any;
     }
 }

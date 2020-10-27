@@ -1,4 +1,3 @@
-import gql from '@apollo/client';
 import { useQuery } from '@apollo/client';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -10,13 +9,9 @@ import Typography from '@material-ui/core/Typography';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import BigNumber from 'bignumber.js';
-import moment from 'moment';
-import { useRouter } from 'next/router';
 import React from 'react';
-import ContentLoader from 'react-content-loader';
 import MarkdownView from 'react-showdown';
 
-import LedgerButtons from '../ledger/LedgerButtons';
 import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
@@ -85,7 +80,7 @@ const useStyles = makeStyles(() => {
 
 type ProposalDetailsProps = { proposal: string; proposalDetails: string };
 
-const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) => {
+const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): JSX.Element => {
     const getProposal = proposalDetails.split('\n');
     const proposalTitle = getProposal[0].replace('#', ' ');
     const proposalNumber = parseInt(proposal);
@@ -312,7 +307,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps) =>
                     </Grid>
 
                     <Grid item xs={12} className={classes.centerContent}>
-                        <LedgerButtons option="Vote" />
+                        {/* <LedgerButtons option="Vote" /> */}
                     </Grid>
                 </Grid>
             </CardContent>

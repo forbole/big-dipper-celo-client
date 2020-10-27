@@ -62,7 +62,7 @@ const useStyles = makeStyles({
     }
 });
 
-const LockGoldConfirm = () => {
+const LockGoldConfirm = (): JSX.Element => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -76,7 +76,7 @@ const LockGoldConfirm = () => {
                 <Grid container className={classes.item}>
                     <Grid item xs={1}>
                         <IconButton aria-label="Return" className={classes.iconButtonLeft}>
-                            <img src="/images/last.svg" color="textPrimary" />
+                            <img src="/images/last.svg" color="textPrimary" alt="Return" />
                         </IconButton>
                     </Grid>
                     <Grid item xs={10}>
@@ -93,7 +93,7 @@ const LockGoldConfirm = () => {
                             aria-label="Close"
                             className={classes.iconButtonRight}
                             onClick={handleClose}>
-                            <img src="/images/cross.svg" color="textPrimary" />
+                            <img src="/images/cross.svg" color="textPrimary" alt="Close" />
                         </IconButton>
                     </Grid>
                 </Grid>
@@ -111,8 +111,8 @@ const LockGoldConfirm = () => {
                                     noWrap={false}
                                     color="textPrimary"
                                     gutterBottom>
-                                    You are going to lock {'2'} CELO, it that's correct, please sign
-                                    in your ledger device.
+                                    You are going to lock {'2'} CELO, it that is correct, please
+                                    sign in your ledger device.
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>

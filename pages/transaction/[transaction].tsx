@@ -1,5 +1,5 @@
 import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -7,7 +7,7 @@ import InputCard from '../../components/transaction/InputCard';
 import InputParameters from '../../components/transaction/InputParameters';
 import TransactionDetails from '../../components/transaction/TransactionDetails';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
             display: 'flex',
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export default function Transaction() {
+export default function Transaction(): JSX.Element {
     const classes = useStyles();
     const router = useRouter();
     const transactionHash: string = router.query.transaction as string;

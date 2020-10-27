@@ -2,18 +2,13 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { curveCardinal } from 'd3-shape';
-import React, { PureComponent } from 'react';
+import React from 'react';
 import {
-    Area,
-    AreaChart,
     Bar,
     BarChart,
     CartesianGrid,
-    Cell,
-    Label,
     Legend,
     ResponsiveContainer,
     Tooltip,
@@ -185,7 +180,7 @@ const CustomTooltip = () => {
     );
 };
 
-const Uptime = () => {
+const Uptime = (): JSX.Element => {
     const classes = useStyles();
 
     return (

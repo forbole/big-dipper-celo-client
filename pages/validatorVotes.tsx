@@ -1,12 +1,12 @@
 import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { useRouter } from 'next/router';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
+// import { useRouter } from 'next/router';
 import React from 'react';
 
 import PriceCard from '../components/PriceCard';
 import ValidatorVotesList from '../components/validatorGroup/ValidatorVotesList';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
             display: 'flex',
@@ -15,10 +15,10 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export default function ValidatorVotes() {
+export default function ValidatorVotes(): JSX.Element {
     const classes = useStyles();
-    const router = useRouter();
-    const { ValidatorVotesQuery } = router.query;
+    // const router = useRouter();
+    // const { ValidatorVotesQuery } = router.query;
 
     return (
         <Grid container spacing={2} className={classes.root}>

@@ -1,11 +1,11 @@
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
             paddingBottom: '0.5rem'
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const TokenOverview = () => {
+const TokenOverview = (): JSX.Element => {
     const classes = useStyles();
 
     return (

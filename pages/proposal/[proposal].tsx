@@ -1,5 +1,5 @@
 import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -8,7 +8,7 @@ import DepositList from '../../components/proposal/DepositList';
 import ProposalDetails from '../../components/proposal/ProposalDetails';
 import ProposalVotingList from '../../components/proposal/ProposalVotingList';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
             display: 'flex',
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export default function Proposal(proposalDetails: string) {
+export default function Proposal(proposalDetails: string): JSX.Element {
     const classes = useStyles();
     const router = useRouter();
     const proposalNumber: string = router.query.proposal as string;

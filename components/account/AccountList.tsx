@@ -1,8 +1,7 @@
 import { useQuery } from '@apollo/client';
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,12 +11,10 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import BigNumber from 'bignumber.js';
-import cx from 'clsx';
 import getConfig from 'next/config';
 import numbro from 'numbro';
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import theme from '../../themes/celo-theme';
 import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
@@ -39,14 +36,6 @@ const columns: Column[] = [
     { id: 'percentage', label: 'Percentage', align: 'right' },
     { id: 'txsCount', label: 'Txs Count', align: 'right' }
 ];
-
-interface Data {
-    rank: string;
-    address: string;
-    balance: string;
-    percentage: string;
-    txsCount: string;
-}
 
 const useStyles = makeStyles(({ spacing }) => {
     return {
@@ -101,7 +90,7 @@ const useStyles = makeStyles(({ spacing }) => {
     };
 });
 
-const AccountList = () => {
+const AccountList = (): JSX.Element => {
     const classes = useStyles();
     const { publicRuntimeConfig } = getConfig();
 

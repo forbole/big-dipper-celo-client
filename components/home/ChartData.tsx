@@ -90,7 +90,7 @@ const useStyles = makeStyles({
     }
 });
 
-const ChartData = () => {
+const ChartData = (): JSX.Element => {
     const classes = useStyles();
     const theme = useTheme();
     const largeScreen = useMediaQuery(theme.breakpoints.up('lg'));

@@ -7,15 +7,13 @@ import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import Paper from '@material-ui/core/Paper';
 import { createStyles, makeStyles, Theme, withStyles } from '@material-ui/core/styles';
-import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import BigNumber from 'bignumber.js';
 import numbro from 'numbro';
-import React, { useState } from 'react';
+import React from 'react';
 import {
     CartesianGrid,
-    Legend,
     Line,
     LineChart,
     ResponsiveContainer,
@@ -143,7 +141,7 @@ function formatDate(date: any) {
     return [day, month, year].join('-');
 }
 
-const TokenPrice = () => {
+const TokenPrice = (): JSX.Element => {
     const classes = useStyles();
 
     const currentDay = new Date();
@@ -232,7 +230,16 @@ const TokenPrice = () => {
     if (coinHistoryByDates.loading || chainData.loading) return <ComponentLoader />;
     if (coinHistoryByDates.error || chainData.error)
         return (
-            <ErrorMessage message={coinHistoryByDates.error.message || chainData.error.message} />
+            <ErrorMessage
+                message={
+                    (coinHistoryByDates.error && coinHistoryByDates.error.message
+                        ? coinHistoryByDates.error.message
+                        : (null as any)) ||
+                    (chainData.error && chainData.error.message
+                        ? chainData.error.message
+                        : (null as any))
+                }
+            />
         );
 
     return (

@@ -1,6 +1,5 @@
 import { useQuery } from '@apollo/client';
-import Typography from '@material-ui/core/Typography';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
@@ -8,7 +7,7 @@ import { GET_BLOCK } from '../query/Block';
 import { GET_CHAIN } from '../query/Chain';
 import { GET_EPOCH } from '../query/Epoch';
 
-const EpochCountdown = () => {
+const EpochCountdown = (): JSX.Element => {
     const pageSize = 1;
     const page = 1;
     const blockProposer = useQuery(GET_BLOCK, {
@@ -31,7 +30,13 @@ const EpochCountdown = () => {
         return (
             <ErrorMessage
                 message={
-                    blockProposer.error.message || averageBlockTime.error.message || error.message
+                    (blockProposer.error && blockProposer.error.message
+                        ? blockProposer.error.message
+                        : (null as any)) ||
+                    (averageBlockTime.error && averageBlockTime.error.message
+                        ? averageBlockTime.error.message
+                        : (null as any)) ||
+                    (error && error.message ? error.message : (null as any))
                 }
             />
         );
@@ -55,8 +60,6 @@ const EpochCountdown = () => {
             : null;
     const blockNow = currentBlock;
     let remainingTime = (lastBlockInEpoch - blockNow) * averageTimeOfBlock;
-    const remainingTime2 =
-        data.epoch.lastBlockNumberForEpoch - blockProposer.data.blocks.blocks[0].number;
 
     const x = setInterval(function () {
         const hours = Math.floor((remainingTime % (60 * 60 * 24)) / (60 * 60));

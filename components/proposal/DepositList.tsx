@@ -13,7 +13,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import BigNumber from 'bignumber.js';
 import getConfig from 'next/config';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
@@ -81,7 +81,7 @@ const useStyles = makeStyles(() => {
 
 type DepositListProps = { proposal: string };
 
-const DepositList = ({ proposal }: DepositListProps) => {
+const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
     const classes = useStyles();
     const proposalNumber = parseInt(proposal);
     const { publicRuntimeConfig } = getConfig();

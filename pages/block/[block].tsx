@@ -1,11 +1,11 @@
 import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
 import React from 'react';
 
 import BlockDetails from '../../components/block/BlockDetails';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
             display: 'flex',
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export default function Block() {
+export default function Block(): JSX.Element {
     const classes = useStyles();
     const router = useRouter();
     const blockNumber: string = router.query.block as string;

@@ -61,7 +61,7 @@ const useStyles = makeStyles({
     }
 });
 
-const Success = () => {
+const Success = (): JSX.Element => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -77,7 +77,7 @@ const Success = () => {
                         <Grid container className={classes.item}>
                             <Grid item xs={12} alignItems="center" className={classes.item}>
                                 <Typography noWrap align="center">
-                                    <img src="/images/success-icon.svg" />
+                                    <img src="/images/success-icon.svg" alt="Success" />
                                 </Typography>
                             </Grid>
                             <Grid

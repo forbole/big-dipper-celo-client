@@ -2,11 +2,11 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { curveCardinal } from 'd3-shape';
-import React, { PureComponent } from 'react';
+import React from 'react';
 import {
     Area,
     AreaChart,
@@ -17,16 +17,6 @@ import {
     YAxis
 } from 'recharts';
 
-import Link from '../Link';
-
-const dataY = [
-    { value: 2000000 },
-    { value: 4000000 },
-    { value: 6000000 },
-    { value: 80000000 },
-    { value: 6000000 },
-    { value: 120000000 }
-];
 const data = [
     {
         name: 'Apr 10',
@@ -70,7 +60,7 @@ const useStyles = makeStyles(() => {
     };
 });
 
-const CoinBalanceHistory = () => {
+const CoinBalanceHistory = (): JSX.Element => {
     const classes = useStyles();
 
     return (

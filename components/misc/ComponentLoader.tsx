@@ -3,7 +3,7 @@ import React from 'react';
 
 type ComponentLoaderProps = { size?: string };
 
-const ComponentLoader = ({ size }: ComponentLoaderProps) => {
+const ComponentLoader = ({ size }: ComponentLoaderProps): JSX.Element => {
     if (size === 'small') {
         return (
             <>

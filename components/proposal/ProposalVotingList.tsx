@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client';
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -16,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import BigNumber from 'bignumber.js';
 import getConfig from 'next/config';
 import React from 'react';
-import { Cell, Legend, Line, Pie, PieChart, Sector, Tooltip } from 'recharts';
+import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts';
 
 import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
@@ -121,7 +120,7 @@ function TabPanel(props: TabPanelProps) {
 
 type ProposalVotingListProps = { proposal: string };
 
-const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
+const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element => {
     const classes = useStyles();
     const { publicRuntimeConfig } = getConfig();
     const proposalNumber = parseInt(proposal);
@@ -138,7 +137,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps) => {
         setPageSize(+event.target.value);
     };
 
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    const handleChange = (event: React.ChangeEvent<{ value: unknown }>, newValue: number) => {
         setValue(newValue);
     };
 

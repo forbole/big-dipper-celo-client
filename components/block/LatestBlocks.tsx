@@ -1,7 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Divider } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import Hidden from '@material-ui/core/Hidden';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTheme } from '@material-ui/core/styles';
@@ -16,7 +14,6 @@ import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import moment from 'moment';
 import getConfig from 'next/config';
-import { useRouter } from 'next/router';
 import numbro from 'numbro';
 import React, { useEffect } from 'react';
 
@@ -122,7 +119,7 @@ moment.relativeTimeThreshold('ss', 3);
 
 type LatestBlocksProps = { pagination?: boolean; displayCard?: boolean };
 
-const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps) => {
+const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Element => {
     const classes = useStyles();
     const theme = useTheme();
     const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));

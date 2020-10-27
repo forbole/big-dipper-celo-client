@@ -11,7 +11,7 @@ type NotAvailableProps = {
     color?: 'textPrimary' | 'textSecondary';
 };
 
-const NotAvailable = ({ wrap, variant, className, color }: NotAvailableProps) => {
+const NotAvailable = ({ wrap, variant, className, color }: NotAvailableProps): JSX.Element => {
     if (wrap) {
         return (
             <Typography variant={variant} className={className} color={color || 'textPrimary'}>

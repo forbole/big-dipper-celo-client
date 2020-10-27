@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 /* eslint-disable jsx-a11y/anchor-has-content */
 import MuiLink, { LinkProps as MuiLinkProps } from '@material-ui/core/Link';
 import clsx from 'clsx';

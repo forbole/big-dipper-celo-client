@@ -1,9 +1,10 @@
-import { ApolloClient, ApolloProvider, HttpLink, useQuery } from '@apollo/client';
-import { gql } from '@apollo/client';
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { ApolloClient, ApolloProvider, HttpLink } from '@apollo/client';
 import { InMemoryCache } from '@apollo/client/cache';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
-import App, { Container } from 'next/app';
+import App from 'next/app';
 import Head from 'next/head';
 import React from 'react';
 
@@ -25,13 +26,11 @@ const client = new ApolloClient({
     }
 });
 
-interface AppProps {}
-
 interface AppState {
     theme: string;
 }
 
-export default class TSApp extends App<AppProps, AppState> {
+export default class TSApp extends App<AppState> {
     componentDidMount() {
         // Remove the server-side injected CSS.
         const jssStyles = document.querySelector('#jss-server-side');

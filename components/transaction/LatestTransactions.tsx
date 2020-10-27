@@ -3,7 +3,7 @@ import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 // import Link from 'next/link'
-import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,10 +12,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import moment from 'moment';
 import getConfig from 'next/config';
-import Router from 'next/router';
 import React, { useEffect } from 'react';
 
 import Chips from '../Chips';
@@ -98,7 +96,7 @@ moment.relativeTimeThreshold('ss', 3);
 
 type LatestTxsProps = { pagination: boolean };
 
-const LatestTransactions = ({ pagination }: LatestTxsProps) => {
+const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
     const classes = useStyles();
     const { publicRuntimeConfig } = getConfig();
 

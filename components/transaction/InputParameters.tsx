@@ -3,7 +3,6 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -12,15 +11,13 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
-import NotAvailable from '../misc/NotAvailable';
 import { GET_TX_DETAILS } from '../query/Transaction';
 
-const useStyles = makeStyles(({ spacing, palette }) => {
+const useStyles = makeStyles(() => {
     return {
         root: {
             width: '100%',
@@ -37,7 +34,7 @@ const useStyles = makeStyles(({ spacing, palette }) => {
 
 type InputParametersProps = { hash: string };
 
-const InputParameters = ({ hash }: InputParametersProps) => {
+const InputParameters = ({ hash }: InputParametersProps): JSX.Element => {
     const classes = useStyles();
 
     const { loading, error, data } = useQuery(GET_TX_DETAILS, {

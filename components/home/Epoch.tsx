@@ -1,32 +1,14 @@
 import { useQuery } from '@apollo/client';
-import { Divider } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
+import { Divider, Theme } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import getConfig from 'next/config';
-import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
-import {
-    CartesianGrid,
-    Cell,
-    Legend,
-    Line,
-    Pie,
-    PieChart,
-    ResponsiveContainer,
-    Sector,
-    Tooltip,
-    XAxis,
-    YAxis
-} from 'recharts';
+import React from 'react';
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
-import MiddleEllipsis from '../misc/MiddleEllipsis';
 import { GET_BLOCK } from '../query/Block';
 import { GET_EPOCH } from '../query/Epoch';
 import EpochCountdown from './EpochCountdown';
@@ -124,10 +106,8 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const Epoch = () => {
+const Epoch = (): JSX.Element => {
     const classes = useStyles();
-    const theme = useTheme();
-    const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
     const pageSize = 1;
     const page = 1;
 
@@ -145,9 +125,9 @@ const Epoch = () => {
         return (
             <ErrorMessage
                 message={
-                    blockProposer.error && blockProposer.error.message
-                        ? blockProposer.error.message || error.message
-                        : null
+                    (blockProposer.error && blockProposer.error.message
+                        ? blockProposer.error.message
+                        : (null as any)) || (error && error.message ? error.message : (null as any))
                 }
             />
         );
@@ -249,6 +229,7 @@ const Epoch = () => {
                                 <img
                                     src={`https://ui-avatars.com/api/?rounded=true&size=40&name=${blockProposer.data.blocks.blocks[0].miner.name}&color=rgba(8, 178, 122, 1)&background=fff`}
                                     className={classes.roundIcon}
+                                    alt="Block Proposer"
                                 />
                                 {blockProposer.data.blocks.blocks[0].miner.name ? (
                                     <Typography

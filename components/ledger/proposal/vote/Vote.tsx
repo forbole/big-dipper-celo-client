@@ -118,13 +118,11 @@ const useStyles = makeStyles({
     }
 });
 
-const Vote = () => {
+const Vote = (): JSX.Element => {
     const name = 'Dan Stanley';
     const name_2 = 'Andrea Colemans';
 
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
-
     return (
         <>
             <DialogTitle id="ledger-dialog-vote-title" className={classes.dialogTitle}>

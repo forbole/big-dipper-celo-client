@@ -11,9 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import moment from 'moment';
-import { useRouter } from 'next/router';
 import React from 'react';
-import ContentLoader from 'react-content-loader';
 
 import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
@@ -98,7 +96,7 @@ function TabPanel(props: TabPanelProps) {
 }
 type BlockDetailsProps = { blockNumber: string };
 
-const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
+const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -110,7 +108,7 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
         variables: { number }
     });
 
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    const handleChange = (event: React.ChangeEvent<{ value: unknown }>, newValue: number) => {
         setValue(newValue);
     };
 
@@ -345,14 +343,24 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps) => {
                                 }}>
                                 <Tab
                                     label="Signed Block"
-                                    icon={<img src="/images/up.svg" className="all-signers-icon" />}
+                                    icon={
+                                        <img
+                                            src="/images/up.svg"
+                                            className="all-signers-icon"
+                                            alt="Signed Block"
+                                        />
+                                    }
                                     className={classes.tabs}
                                     wrapped={false}
                                 />
                                 <Tab
                                     label="Missed Block"
                                     icon={
-                                        <img src="/images/down.svg" className="all-signers-icon" />
+                                        <img
+                                            src="/images/down.svg"
+                                            className="all-signers-icon"
+                                            alt="Missed Block"
+                                        />
                                     }
                                     className={classes.tabs}
                                     wrapped={false}

@@ -1,4 +1,3 @@
-import gql from '@apollo/client';
 import { useQuery } from '@apollo/client';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -13,19 +12,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import moment from 'moment';
-import { useRouter } from 'next/router';
-import * as numbro from 'numbro';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Chips from '../Chips';
-import Layout from '../Layout';
 import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import NotAvailable from '../misc/NotAvailable';
 import { GET_TX_DETAILS } from '../query/Transaction';
 
-const useStyles = makeStyles(({ spacing, palette }) => {
+const useStyles = makeStyles(() => {
     return {
         root: {
             width: '100%',
@@ -100,7 +96,7 @@ function Alert(props: AlertProps) {
 
 type TxDetailsProps = { hash: string };
 
-const TransactionDetails = ({ hash }: TxDetailsProps) => {
+const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
     const classes = useStyles();
 
     const { loading, error, data } = useQuery(GET_TX_DETAILS, {
@@ -318,7 +314,7 @@ const TransactionDetails = ({ hash }: TxDetailsProps) => {
                         </Typography>
                         {data.transaction && data.transaction.feeCurrency ? (
                             <Typography variant="body2" component="h2">
-                                {data.transaction.feeCurrency} + "CELO"
+                                {data.transaction.feeCurrency} + CELO
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" />
@@ -398,7 +394,7 @@ const TransactionDetails = ({ hash }: TxDetailsProps) => {
                                     size="small"
                                     className={classes.alignRight}
                                     onClick={copyText}>
-                                    <img src="/images/copy.svg" />
+                                    <img src="/images/copy.svg" alt="Copy" />
                                 </IconButton>
                             </Grid>
                             <Grid item xs={12} className={classes.alignLeft}>

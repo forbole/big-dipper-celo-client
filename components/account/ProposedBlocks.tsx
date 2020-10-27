@@ -2,13 +2,9 @@ import { useQuery } from '@apollo/client';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
-import Card from '@material-ui/core/Card';
-import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import Hidden from '@material-ui/core/Hidden';
-import Paper from '@material-ui/core/Paper';
-import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -18,11 +14,8 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import cx from 'clsx';
 import moment from 'moment';
 import getConfig from 'next/config';
-import { useRouter } from 'next/router';
-import numbro from 'numbro';
 import React from 'react';
 
 import Link from '../Link';
@@ -59,7 +52,7 @@ const columns: Column[] = [
     }
 ];
 
-const useStyles = makeStyles(({ spacing }) => {
+const useStyles = makeStyles(() => {
     return {
         root: {
             width: '100%',
@@ -103,7 +96,7 @@ const useStyles = makeStyles(({ spacing }) => {
 
 type ProposedBlocksProps = { address: string };
 
-const ProposedBlocks = ({ address }: ProposedBlocksProps) => {
+const ProposedBlocks = ({ address }: ProposedBlocksProps): JSX.Element => {
     const classes = useStyles();
 
     const { publicRuntimeConfig } = getConfig();
@@ -186,7 +179,7 @@ const ProposedBlocks = ({ address }: ProposedBlocksProps) => {
                                                     align="left"
                                                     className={classes.tableCell}>
                                                     {row.number ? (
-                                                        <Link href="#" color="secondary">
+                                                        <Link href="/" color="secondary">
                                                             <Typography variant="body2" noWrap>
                                                                 {' '}
                                                                 {row.number}
@@ -205,7 +198,7 @@ const ProposedBlocks = ({ address }: ProposedBlocksProps) => {
                                                     (row.miner &&
                                                         row.miner.signerAccount &&
                                                         row.miner.signerAccount.address) ? (
-                                                        <Link href="#" color="secondary">
+                                                        <Link href="/" color="secondary">
                                                             <Typography variant="body2" noWrap>
                                                                 {row.miner.name || (
                                                                     <MiddleEllipsis
