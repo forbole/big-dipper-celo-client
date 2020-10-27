@@ -10,8 +10,10 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Alert from '@material-ui/lab/Alert';
-import QRCode from 'qrcode.react';
 import React from 'react';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const QRCode = require('qrcode.react');
 
 const useStyles = makeStyles(() =>
     createStyles({
