@@ -21,7 +21,7 @@ import {
     yellow
 } from '@material-ui/core/colors';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import React, { ReactElement } from 'react';
+import React from 'react';
 
 import theme from '../themes/celo-theme';
 
@@ -63,6 +63,7 @@ interface ContractColorsInterface {
     Attestations: string;
     Accounts: string;
     Reserve: string;
+    [key: string]: string;
 }
 
 interface LedgerColorsInterface {
@@ -74,14 +75,16 @@ interface LedgerColorsInterface {
     Deposit: string;
     Vote: string;
     Pending: string;
+    [key: string]: string;
 }
 
 interface BorderElementInterface {
     Deposit: string;
     Vote: string;
+    [key: string]: string;
 }
 
-const Chips = ({ contractName, type, actionResult }: ChipsProps): ReactElement => {
+const Chips = ({ contractName, type, actionResult }: ChipsProps): JSX.Element => {
     const classes = useStyles();
 
     const contractColors: ContractColorsInterface = {
