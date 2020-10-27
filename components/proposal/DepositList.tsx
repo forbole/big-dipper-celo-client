@@ -193,7 +193,7 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                                                         {new BigNumber(
                                                             data.proposal.upvoteList[row]
                                                                 .returnValues.upvotes /
-                                                            CELO_FRACTION 
+                                                                CELO_FRACTION
                                                         ).toFormat()}
                                                     </Typography>
                                                 ) : (

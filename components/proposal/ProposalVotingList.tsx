@@ -137,7 +137,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
         setPageSize(+event.target.value);
     };
 
-    const handleChange = (event: React.ChangeEvent<{ value: unknown }>, newValue: number) => {
+    const handleChange = (event: unknown, newValue: number) => {
         setValue(newValue);
     };
 
@@ -239,7 +239,8 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                                                         {new BigNumber(
                                                             data.proposal.totalVotesList[
                                                                 voteType.voteType
-                                                            ][row].returnValues.weight / CELO_FRACTION
+                                                            ][row].returnValues.weight /
+                                                                CELO_FRACTION
                                                         ).toFormat()}
                                                     </Typography>
                                                 ) : null}
@@ -283,7 +284,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                   // { name: 'No With Veto', value: 200 },
                   { name: 'Abstain', value: data.proposal.votes.Abstain }
               ]
-            : null;
+            : [];
 
     const COLORS = [
         'rgba(40, 201, 137, 1)', // Yes
