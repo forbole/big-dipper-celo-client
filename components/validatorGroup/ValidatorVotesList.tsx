@@ -171,6 +171,8 @@ const ValidatorVotesList = (): JSX.Element => {
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
 
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+
     return (
         <>
             <Grid container justify="center" className={classes.container}>
@@ -259,23 +261,21 @@ const ValidatorVotesList = (): JSX.Element => {
                                                         className={classes.tableCell}>
                                                         {row.votes && row.votesAvailable ? (
                                                             <Typography variant="caption" noWrap>
-                                                                {new BigNumber(
-                                                                    (row.votes /
-                                                                        process.env.CELO /
-                                                                        (row.votesAvailable /
-                                                                            process.env.CELO)) *
-                                                                        100
-                                                                ).toFormat(2)}{' '}
+                                                                {process.env.CELO_FRACTION
+                                                                    ? // eslint-disable-next-line prettier/prettier
+                                                                    new BigNumber(row.votes / CELO_FRACTION / row.votesAvailable / CELO_FRACTION * 100).toFormat(2) : null}
                                                                 %
                                                                 <LinearProgress
                                                                     variant="determinate"
-                                                                    value={new BigNumber(
-                                                                        (row.votes /
-                                                                            process.env.CELO /
-                                                                            (row.votesAvailable /
-                                                                                process.env.CELO)) *
-                                                                            100
-                                                                    ).toFormat(2)}
+                                                                    value={parseFloat(
+                                                                        new BigNumber(
+                                                                            (row.votes /
+                                                                                CELO_FRACTION /
+                                                                                (row.votesAvailable /
+                                                                                    CELO_FRACTION)) *
+                                                                                100
+                                                                        ).toFormat(2)
+                                                                    )}
                                                                     classes={{
                                                                         colorPrimary:
                                                                             classes.progress,
@@ -308,7 +308,7 @@ const ValidatorVotesList = (): JSX.Element => {
                                                             <Typography variant="body2" noWrap>
                                                                 {new BigNumber(
                                                                     row.lockedGoldAmount /
-                                                                        process.env.CELO
+                                                                        CELO_FRACTION
                                                                 ).toFormat(0)}
                                                             </Typography>
                                                         ) : (

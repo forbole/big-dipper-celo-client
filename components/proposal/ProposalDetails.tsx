@@ -96,6 +96,8 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
 
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+
     return (
         <Card className={classes.root}>
             <CardContent>
@@ -222,7 +224,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                         data.proposal.returnValues.deposit ? (
                             <Typography variant="body2" className={classes.alignRight}>
                                 {new BigNumber(
-                                    data.proposal.returnValues.deposit / process.env.CELO
+                                    data.proposal.returnValues.deposit / CELO_FRACTION 
                                 ).toFormat()}
                             </Typography>
                         ) : (
