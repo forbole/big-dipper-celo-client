@@ -108,7 +108,7 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
         variables: { number }
     });
 
-    const handleChange = (event: React.ChangeEvent<{ value: unknown }>, newValue: number) => {
+    const handleChange = (event: unknown, newValue: number) => {
         setValue(newValue);
     };
 
