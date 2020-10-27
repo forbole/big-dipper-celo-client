@@ -21,6 +21,7 @@ import ErrorMessage from '../../../misc/ErrorMessage';
 import Ledger from '../../Ledger'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import BigNumber from 'bignumber.js';
+import { LedgerFormControl } from '../../LedgerDialog'
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -146,137 +147,41 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 
-type UnlockGoldProps = { isOpen?: boolean, pageAddress?: string, showButton?: boolean };
+type UnlockGoldProps = { isLoading?: boolean, maxUnlock: string };
 
 
 const UnlockGold = ({ isOpen, pageAddress, showButton }: UnlockGoldProps): JSX.Element => {
 
     const classes = useStyles();
-    const [open, setOpen] = React.useState(isOpen);
-    const [connected, setConnected] = React.useState(false);
     const [currentUser, setCurrentUser] = React.useState('');
-    const [nextDialog, setNextDialog] = React.useState(false);
-    const [amount, setAmount] = React.useState('')
-    const [dialogError, setDialogError] = React.useState(false);
-    const [dialogErrorMessage, setDialogErrorMessage] = React.useState('');
-    const [ledgerError, setLedgerError] = React.useState(false);
-    const [ledgerErrorMessage, setLedgerErrorMessage] = React.useState('');
-    const [ledgerLoading, setLedgerLoading] = React.useState(false);
-    const [showUnlockButton, setShowUnlockButton] = React.useState(showButton);
-    const [currentAddress, setCurrentAddress] = React.useState(pageAddress || '');
-    const address = currentUser;
 
-    const handleClose = () => {
-        setOpen(false);
-    };
 
-    const handleUnlock = async () => {
-        setOpen(true);
-        setLedgerError(false)
-        setLedgerErrorMessage("")
+    // const handleClose = () => {
+    //     setOpen(false);
+    // };
 
-        try {
-            if (Ledger.isConnected === false) {
-                setConnected(false)
-                setLedgerLoading(true)
-                setLedgerErrorMessage("Connecting...")
-                await Ledger.connect()
-            }
+    // const confirmUnlock = async () => {
+    //     setOpen(false);
+    //     setNextDialog(true)
+    //     try {
+    //         const from = currentUser
+    //         const unlockObject = { amount, from }
+    //         await Ledger.unlockCelo(unlockObject)
+    //     }
+    //     catch (e) {
+    //         setLedgerError(true)
+    //         setLedgerLoading(true)
+    //         setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
 
-            if (Ledger.isConnected === true) {
-                setLedgerLoading(true)
-                setLedgerErrorMessage("Please accept the connection in your Ledger device. ")
-                let userAddress = await Ledger.getAddress()
-                localStorage.setItem('currentUserAddress', userAddress)
-                setCurrentUser(userAddress)
-                setLedgerErrorMessage("")
-                setConnected(true)
-                setLedgerLoading(false)
-                try {
-                    let ver = await Ledger.getCeloAppVersion()
-                    setDialogError(true)
-                }
-                catch (e) {
-                    setLedgerError(true)
-                    setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
-                }
-            }
-        }
-        catch (e) {
-            setLedgerError(true)
-            setLedgerLoading(true)
-            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
-        }
+    //     }
+    // };
 
-    };
-
-    const confirmUnlock = async () => {
-        setOpen(false);
-        setNextDialog(true)
-        try {
-            const from = currentUser
-            const unlockObject = { amount, from }
-            await Ledger.unlockCelo(unlockObject)
-        }
-        catch (e) {
-            setLedgerError(true)
-            setLedgerLoading(true)
-            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message))
-
-        }
-    };
-
-    const checkForInputErrors = (e) => {
-        if (e.target.value === '0') {
-            setDialogError(true)
-            setDialogErrorMessage("Value must be grater than 0! Please enter CELO amount to unlock. ")
-        }
-        else if (!(parseFloat(e.target.value) > 0)) {
-            setDialogError(true)
-            setDialogErrorMessage("Incorrect format! Please enter CELO amount to unlock. ")
-        }
-        else {
-            setDialogError(false)
-            setDialogErrorMessage("")
-        }
-    };
 
     useEffect(() => {
         let localUser = localStorage.getItem('currentUserAddress');
-        let unlockCELOAmount = document.getElementById("unlock-gold-amount") as HTMLInputElement
-        let unlockAmount = unlockCELOAmount ? unlockCELOAmount.value : "0";
         //@ts-ignore
         setCurrentUser(localUser)
-        setAmount(unlockAmount)
-        if (Ledger.isConnected === true) {
-            setConnected(true)
-        }
-        if (Ledger.isConnected === false) {
-            setConnected(false)
-            setLedgerLoading(true)
-        }
-    });
-    const unlockGoldDialog = () => {
-        return (
-            <FormControl variant="outlined" fullWidth size="small">
-                <TextField id="unlock-gold-amount"
-                    error={dialogError}
-                    helperText={dialogErrorMessage}
-                    onChange={(e) => checkForInputErrors(e)}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">CELO</InputAdornment>
-                        ),
-                        disableUnderline: true,
-                    }}
-                    disabled={ledgerLoading}
-                    className={classes.outlinedInput} />
-            </FormControl>
-        );
-    }
 
-    const { loading, error, data } = useQuery(GET_ACCOUNT_DETAILS, {
-        variables: { address },
     });
 
     if (loading) return null as any
@@ -294,102 +199,29 @@ const UnlockGold = ({ isOpen, pageAddress, showButton }: UnlockGoldProps): JSX.E
                                     onClick={handleUnlock}
                                     className={classes.buttonUnlock}
                                 >
-                                    <Typography variant="body1">Unlock CELO</Typography>
-                                </Button>
-                            </div>
-                        </Grid>
-                    </Grid>
-                    : null}
-                <Dialog
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="ledger-dialog-unlock-gold"
-                    //fullWidth
-                    maxWidth="sm"
-                >
-                    <>
-                        <DialogTitle id="ledger-unlock-gold-title" className={classes.dialogTitle}>
-                            <Grid container className={classes.item}>
-                                <Grid item xs={12}>
-                                    <Typography variant="h6" color="textPrimary" noWrap className={classes.title}>
-                                        Unlock CELO
-              </Typography>
-                                </Grid>
+                                    Account
+                </Typography>
                             </Grid>
-                        </DialogTitle>
+                            <Grid item xs={12} >
+                                <Typography
+                                    variant="body2"
+                                    noWrap
+                                    color="textPrimary"
+                                    className={isLoading ? classes.disabledAccountAddress : classes.accountAddress}
+                                >
+                                    {currentUser}
+                                </Typography>
+                            </Grid>
 
-                        <DialogContent >
-                            <Grid container spacing={1} >
-                                <DialogContentText id="ledger-unlock-gold-content" className={classes.dialog}>
-                                    <Grid container className={classes.dialogContent}>
-                                        <Grid item xs={12}>
-                                            <Typography
-                                                variant="body2"
-                                                noWrap
-                                                className={classes.alignLeft}
-                                                align="left"
-                                            >
-                                                Account
+                            <Grid item xs={12}>
+                                <Typography
+                                    variant="body2"
+                                    noWrap
+                                    className={classes.alignLeft}
+                                    align="left"
+                                >
+                                    Unlock amount
                 </Typography>
-                                        </Grid>
-                                        <Grid item xs={12} >
-                                            <Typography
-                                                variant="body2"
-                                                noWrap
-                                                color="textPrimary"
-                                                className={ledgerLoading ? classes.disabledAccountAddress : classes.accountAddress}
-                                            >
-                                                {currentUser}
-                                            </Typography>
-                                        </Grid>
-
-                                        <Grid item xs={12}>
-                                            <Typography
-                                                variant="body2"
-                                                noWrap
-                                                className={classes.alignLeft}
-                                                align="left"
-                                            >
-                                                Unlock amount
-                </Typography>
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            {unlockGoldDialog()}
-
-                                        </Grid>
-                                        <Grid item xs={12} className={classes.bottomPadding}>
-                                            < Typography
-                                                variant="body2"
-                                                noWrap
-                                                className={classes.alignRight}
-                                            > Max {data.account && data.account.totalBalance && data.account.totalBalance.lockedGold ?
-                                                new BigNumber(data.account.totalBalance.lockedGold / process.env.CELO).toFormat(2)
-                                                : 0} CELO
-                                        </Typography>
-
-                                        </Grid>
-
-                                        {ledgerLoading ?
-                                            <Grid item xs={12} className={classes.circularProgress}>
-                                                <CircularProgress color="secondary" />
-                                            </Grid>
-                                            : null}
-
-                                        {ledgerErrorMessage ?
-                                            <>
-                                                <Grid item xs={12} className={classes.errorMessage}>
-                                                    <Typography variant="body2">
-                                                        {ledgerErrorMessage}
-                                                    </Typography>
-                                                </Grid> </> : null}
-
-                                        {(!ledgerErrorMessage && connected === true && !ledgerLoading) ?
-                                            <ControlButtons handleClick={confirmUnlock} handleClose={handleClose} showDisabled={dialogError} />
-                                            :
-                                            <ControlButtons showRetry={true} handleClick={handleUnlock} handleClose={handleClose} />}
-
-                                    </Grid>
-                                </DialogContentText>
                             </Grid>
                         </DialogContent>
                     </>

@@ -203,7 +203,7 @@ const UnlockGoldConfirm = ({ isOpen, amount, pageAddress }: UnlockGoldConfirmPro
                                             align="right"
                                             color="textPrimary"
                                         >
-                                            {"0.00001"} CELO
+                                            {"UNKNOWN"} CELO
                   </Typography>
                                     </Grid>
                                 </Grid>
@@ -216,12 +216,7 @@ const UnlockGoldConfirm = ({ isOpen, amount, pageAddress }: UnlockGoldConfirmPro
                 </Typography>
 
                                 </Grid>
-                                {errorMessage ?
-                                    <Grid item xs={12} className={classes.errorMessage}>
-                                        <Typography variant="body2">
-                                            {errorMessage}
-                                        </Typography>
-                                    </Grid> : null}
+                               
                             </Grid>
                         </DialogContentText>
                     </Grid>
