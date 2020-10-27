@@ -199,7 +199,6 @@ const LedgerDialog = ({ buttonLabel, action }: LedgerDialogProps) => {
         variables: { address },
     });
 
-
     const dialogTab = (tabNum: number) => {
 
         switch (action) {
@@ -215,17 +214,18 @@ const LedgerDialog = ({ buttonLabel, action }: LedgerDialogProps) => {
                     default:
                         return null
                 }
-            // case "Unlock":
-            //     switch (tabNum) {
-            //         case 0:
-            //             return <UnlockGold isLoading={isLoading} />
-            //         case 1:
-            //             return <UnlockGoldConfirm amount={amount} />
-            //         case 2:
-            //             return <UnlockGoldSuccess />
-            //         default:
-            //             return null
-            //     }
+            case "Unlock":
+                switch (tabNum) {
+                    case 0:
+                        return <UnlockGold isLoading={isLoading}
+                            maxUnlock={AccountDetails && AccountDetails.data && AccountDetails.data.account && AccountDetails.data.account.totalBalance && AccountDetails.data.account.totalBalance.lockedGold ? AccountDetails.data.account.totalBalance.lockedGold : '0'} />
+                    case 1:
+                        return <UnlockGoldConfirm amount={amount} />
+                    case 2:
+                        return <UnlockGoldSuccess />
+                    default:
+                        return null
+                }
             // case "Deposit":
             //     switch (tabNum) {
             //         case 0:

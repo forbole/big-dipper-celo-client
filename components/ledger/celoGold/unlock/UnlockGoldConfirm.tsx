@@ -116,40 +116,6 @@ const UnlockGoldConfirm = ({ isOpen, amount, pageAddress }: UnlockGoldConfirmPro
 
     return (
         <>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="ledger-dialog-unlock-gold-confirm"
-                //fullWidth
-                maxWidth="sm"
-            >
-                <DialogTitle id="ledger-unlock-gold-confirm" className={classes.dialogTitle}>
-                    <Grid container className={classes.item}>
-                        <Grid item xs={1}>
-                            <IconButton
-                                aria-label="Return"
-                                className={classes.iconButtonLeft}
-                                onClick={handlePreviousDialog}
-                            >
-                                <img src="/images/last.svg" color="textPrimary" />
-                            </IconButton>
-                        </Grid>
-                        <Grid item xs={10}>
-                            <Typography variant="h6" color="textPrimary" noWrap className={classes.title}>
-                                Unlock CELO
-              </Typography>
-                        </Grid>
-                        <Grid item xs={1}>
-                            <IconButton
-                                aria-label="Close"
-                                className={classes.iconButtonRight}
-                                onClick={handleClose}
-                            >
-                                <img src="/images/cross.svg" color="textPrimary" />
-                            </IconButton>
-                        </Grid>
-                    </Grid>
-                </DialogTitle>
 
                 <DialogContent className={classes.content} >
                     <Grid container spacing={1} >
@@ -238,7 +204,7 @@ const UnlockGoldConfirm = ({ isOpen, amount, pageAddress }: UnlockGoldConfirmPro
                                             align="right"
                                             color="textPrimary"
                                         >
-                                            {"0.00001"} CELO
+                                            {"UNKNOWN"} CELO
                   </Typography>
                                     </Grid>
                                 </Grid>
@@ -251,19 +217,12 @@ const UnlockGoldConfirm = ({ isOpen, amount, pageAddress }: UnlockGoldConfirmPro
                 </Typography>
 
                                 </Grid>
-                                {errorMessage ?
-                                    <Grid item xs={12} className={classes.errorMessage}>
-                                        <Typography variant="body2">
-                                            {errorMessage}
-                                        </Typography>
-                                    </Grid> : null}
+                               
                             </Grid>
                         </DialogContentText>
                     </Grid>
                 </DialogContent>
-            </Dialog>
-            { previousDialog ? <UnlockGold isOpen={previousDialog} showButton={false} pageAddress={currentAddress} /> : null}
-            {nextDialog ? <UnlockGoldSuccess isOpen={nextDialog} /> : null}
+            
         </>
     );
 };
