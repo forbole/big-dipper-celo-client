@@ -163,6 +163,8 @@ const TokenPrice = (): JSX.Element => {
         setDateTo(formatDateTo);
     };
 
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+
     const SelectDate = () => {
         return (
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -302,7 +304,7 @@ const TokenPrice = (): JSX.Element => {
                                             {new BigNumber(
                                                 (chainData.data.chain.tokenPrice.usd *
                                                     chainData.data.chain.celoTotalSupply) /
-                                                    process.env.CELO
+                                                    CELO_FRACTION
                                             ).toFormat(2)}
                                         </Typography>
                                     ) : (

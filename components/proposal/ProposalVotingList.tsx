@@ -144,6 +144,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
     const { loading, error, data } = useQuery(GET_PROPOSAL, {
         variables: { proposalNumber }
     });
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const RednderTabs = (voteType: any) => {
         return (
@@ -238,8 +239,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                                                         {new BigNumber(
                                                             data.proposal.totalVotesList[
                                                                 voteType.voteType
-                                                            ][row].returnValues.weight /
-                                                                process.env.CELO
+                                                            ][row].returnValues.weight / CELO_FRACTION
                                                         ).toFormat()}
                                                     </Typography>
                                                 ) : null}
@@ -322,7 +322,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                             color="textPrimary"
                             variant="subtitle1"
                             className={classes.priceDisplay}>
-                            {new BigNumber(data.proposal.votes.Total / process.env.CELO).toFormat()}
+                            {new BigNumber(data.proposal.votes.Total / CELO_FRACTION).toFormat(2)}
                         </Typography>
                     ) : (
                         <NotAvailable variant="body2" />

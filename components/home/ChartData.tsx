@@ -102,6 +102,8 @@ const ChartData = (): JSX.Element => {
     if (loading) return <ComponentLoader size="small" />;
     if (error) return <ErrorMessage message={error.message} />;
 
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+
     return (
         <>
             <Grid container spacing={1}>
@@ -187,13 +189,13 @@ const ChartData = (): JSX.Element => {
                                         ? new BigNumber(
                                               (data.chain.tokenPrice.usd *
                                                   data.chain.celoTotalSupply) /
-                                                  process.env.CELO
+                                                  CELO_FRACTION
                                           ).toFormat(2)
                                         : numbro(
                                               new BigNumber(
                                                   (data.chain.tokenPrice.usd *
                                                       data.chain.celoTotalSupply) /
-                                                      process.env.CELO
+                                                      CELO_FRACTION
                                               ).toFormat(2)
                                           ).format({ average: true, mantissa: 4 })}
                                 </Typography>

@@ -43,6 +43,8 @@ const PriceCard = (): JSX.Element => {
         pollInterval: 5000
     });
 
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+
     if (chainData.loading) return <ComponentLoader />;
     if (chainData.error) return <ErrorMessage message={chainData.error.message} />;
 
@@ -83,7 +85,7 @@ const PriceCard = (): JSX.Element => {
                                 {new BigNumber(
                                     (chainData.data.chain.tokenPrice.usd *
                                         chainData.data.chain.celoTotalSupply) /
-                                        (parseInt(process.env.CELO) || 1000000000000000000) // eslint-disable-line no-use-before-define
+                                        CELO_FRACTION
                                 ).toFormat(2)}
                             </Typography>
                         ) : (

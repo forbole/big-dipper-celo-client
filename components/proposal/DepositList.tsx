@@ -111,6 +111,8 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
     //   setHash(hashValue)
     // })
 
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
 
@@ -191,7 +193,7 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                                                         {new BigNumber(
                                                             data.proposal.upvoteList[row]
                                                                 .returnValues.upvotes /
-                                                                process.env.CELO
+                                                            CELO_FRACTION 
                                                         ).toFormat()}
                                                     </Typography>
                                                 ) : (
