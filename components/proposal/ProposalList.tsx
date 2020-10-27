@@ -1,12 +1,9 @@
-import gql from '@apollo/client';
 import { useQuery } from '@apollo/client';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import cx from 'clsx';
 import getConfig from 'next/config';
-import * as numbro from 'numbro';
 import React from 'react';
 
 import Chips from '../../components/Chips';
@@ -14,7 +11,6 @@ import Link from '../../components/Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import MiddleEllipsis from '../misc/MiddleEllipsis';
-import NotAvailable from '../misc/NotAvailable';
 import { GET_PROPOSALS } from '../query/Proposal';
 
 const useStyles = makeStyles({
@@ -57,7 +53,7 @@ const useStyles = makeStyles({
     }
 });
 
-const ProposalDetails = () => {
+const ProposalDetails = (): JSX.Element => {
     const classes = useStyles();
     const { publicRuntimeConfig } = getConfig();
 
@@ -81,7 +77,7 @@ const ProposalDetails = () => {
                 </Typography>
                 {data.proposals.proposals.map((row: any, index: number) => {
                     return (
-                        <Grid item xs={12} className={classes.proposalCard}>
+                        <Grid item xs={12} className={classes.proposalCard} key={index}>
                             <Card className={classes.card} elevation={0}>
                                 <Grid container className={classes.container}>
                                     <Grid item xs={1}>

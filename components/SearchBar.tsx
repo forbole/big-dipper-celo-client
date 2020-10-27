@@ -37,7 +37,7 @@ interface State {
     txSearch: string;
 }
 
-const SearchBar = () => {
+const SearchBar = (): JSX.Element => {
     const classes = useStyles();
     const [values, setValues] = React.useState<State>({
         txSearch: ''

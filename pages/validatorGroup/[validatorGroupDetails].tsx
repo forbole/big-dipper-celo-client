@@ -1,15 +1,14 @@
 import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { useRouter } from 'next/router';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
+// import { useRouter } from 'next/router';
 import React from 'react';
 
 import AddressCard from '../../components/account/AddressCard';
-import ProposalDetails from '../../components/proposal/ProposalDetails';
 import GroupMember from '../../components/validatorGroup/GroupMember';
 import Overview from '../../components/validatorGroup/Overview';
 import Uptime from '../../components/validatorGroup/Uptime';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
             display: 'flex',
@@ -18,10 +17,10 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export default function validatorGroupDetails() {
+export default function validatorGroupDetails(): JSX.Element {
     const classes = useStyles();
-    const router = useRouter();
-    const { ValidatorGroupDet } = router.query;
+    // const router = useRouter();
+    // const { ValidatorGroupDet } = router.query;
     return (
         <Grid container spacing={2} className={classes.root}>
             <Grid item xs={12}>

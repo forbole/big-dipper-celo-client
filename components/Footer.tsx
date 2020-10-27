@@ -1,9 +1,6 @@
-import { Divider } from '@material-ui/core';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
-import { createStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
@@ -57,25 +54,29 @@ const useStyles = makeStyles({
     }
 });
 
-const Footer = () => {
+const Footer = (): JSX.Element => {
     const classes = useStyles();
     return (
         <footer>
             <Grid container className={classes.root}>
                 <Grid item xs={12} md={9} className={classes.logo}>
-                    <img src="/images/bigdipper-logo.svg" className={classes.bdLogo} />
+                    <img
+                        src="/images/bigdipper-logo.svg"
+                        className={classes.bdLogo}
+                        alt="Big Dipper"
+                    />
                     <Typography
                         variant="body2"
                         className={classes.text}
                         align="left"
                         color="textSecondary">
                         Big Dipper for Celo, presented by{' '}
-                        <a
+                        <Link
                             href="https://forbole.com"
                             className={classes.footerLink}
                             target="_blank">
                             Forbole
-                        </a>
+                        </Link>
                         .
                     </Typography>
 
@@ -83,19 +84,19 @@ const Footer = () => {
                         href="https://github.com/forbole/big-dipper-celo-client"
                         target="_blank"
                         className={classes.socialMedia}>
-                        <img src="/images/social-media-github.svg" />
+                        <img src="/images/social-media-github.svg" alt="Big Dipper Github" />
                     </Link>
                     <Link
                         href="https://medium.com/bigdipperlive"
                         target="_blank"
                         className={classes.socialMedia}>
-                        <img src="/images/social-media-medium.svg" />
+                        <img src="/images/social-media-medium.svg" alt="Big Dipper Medium" />
                     </Link>
                     <Link
                         href="https://twitter.com/bigdipperlive"
                         target="_blank"
                         className={classes.socialMedia}>
-                        <img src="/images/social-media-twitter.svg" />
+                        <img src="/images/social-media-twitter.svg" alt="Big Dipper Twitter" />
                     </Link>
                 </Grid>
             </Grid>

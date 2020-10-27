@@ -1,5 +1,4 @@
 import { InputLabel, Select } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -10,7 +9,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import React from 'react';
 
 import ControlButtons from '../../ControlButtons';
@@ -134,7 +132,7 @@ const DepositDropdown = () => {
     );
 };
 
-const Deposit = () => {
+const Deposit = (): JSX.Element => {
     const classes = useStyles();
 
     return (

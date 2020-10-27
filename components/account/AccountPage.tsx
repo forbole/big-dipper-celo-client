@@ -1,11 +1,7 @@
 import { useQuery } from '@apollo/client';
 import Grid from '@material-ui/core/Grid';
-import Hidden from '@material-ui/core/Hidden';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { useRouter } from 'next/router';
-import numbro from 'numbro';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import React from 'react';
-import ContentLoader from 'react-content-loader';
 
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
@@ -13,12 +9,11 @@ import { GET_VALIDATOR } from '../query/Validator';
 import AccountDetails from './AccountDetails';
 import AccountOverview from './AccountOverview';
 import AddressCard from './AddressCard';
-import CoinBalanceHistory from './CoinBalanceHistory';
 import Downtime from './Downtime';
 import ProposedBlocks from './ProposedBlocks';
 import AccountTransactions from './Transactions';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
             display: 'flex',
@@ -46,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type AccountPageProps = { address: string };
 
-const AccountPage = ({ address }: AccountPageProps) => {
+const AccountPage = ({ address }: AccountPageProps): JSX.Element => {
     const classes = useStyles();
 
     const { loading, error, data } = useQuery(GET_VALIDATOR, {
@@ -55,6 +50,9 @@ const AccountPage = ({ address }: AccountPageProps) => {
     });
 
     const isValidator = data && data.validator ? true : false;
+
+    if (loading) return <ComponentLoader />;
+    if (error) return <ErrorMessage message={error.message} />;
 
     return (
         <>

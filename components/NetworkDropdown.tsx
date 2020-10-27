@@ -1,12 +1,11 @@
 import { Divider } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
-import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import { createStyles, makeStyles, Theme, withStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
@@ -14,7 +13,7 @@ import React from 'react';
 
 import Link from './Link';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
             display: 'inline-block',
@@ -70,7 +69,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const NetworkDropdown = () => {
+const NetworkDropdown = (): JSX.Element => {
     const classes = useStyles();
     const [show, setShow] = React.useState<string | number>('');
     const [open, setOpen] = React.useState(false);
@@ -111,7 +110,7 @@ const NetworkDropdown = () => {
                         classes={{
                             icon: classes.icon
                         }}>
-                        <Link href="#" color="textPrimary">
+                        <Link href="/" color="textPrimary">
                             <MenuItem className={classes.menuItem}>
                                 <Avatar
                                     alt="Celo Alfajores"

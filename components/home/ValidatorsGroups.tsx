@@ -2,16 +2,11 @@ import { useQuery } from '@apollo/client';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
-import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import getConfig from 'next/config';
-import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
-import MiddleEllipsis from '../misc/MiddleEllipsis';
 import NotAvailable from '../misc/NotAvailable';
 import { GET_ELECTION } from '../query/Election';
 
@@ -54,10 +49,8 @@ const useStyles = makeStyles({
     }
 });
 
-const ValidatorsGroups = () => {
+const ValidatorsGroups = (): JSX.Element => {
     const classes = useStyles();
-    const theme = useTheme();
-    const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
     const { loading, error, data } = useQuery(GET_ELECTION, {
         pollInterval: 5000
@@ -77,7 +70,7 @@ const ValidatorsGroups = () => {
                         <Grid container spacing={1} className={classes.rootMain}>
                             <Grid item xs={12} className={classes.data}>
                                 <Grid item xs={6} className={classes.validatorData}>
-                                    <img src="/images/validator-icon.svg" />
+                                    <img src="/images/validator-icon.svg" alt="Validators" />
                                     <Typography variant="body1" className={classes.infoData} noWrap>
                                         Validators
                                     </Typography>
@@ -100,7 +93,7 @@ const ValidatorsGroups = () => {
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={6} className={classes.groupsData}>
-                                    <img src="/images/groups.svg" />
+                                    <img src="/images/groups.svg" alt="Groups" />
                                     <Typography variant="body1" className={classes.infoData} noWrap>
                                         Groups
                                     </Typography>

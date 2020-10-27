@@ -4,7 +4,6 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -41,7 +40,7 @@ const columns: Column[] = [
     { id: 'time', label: 'Time' }
 ];
 
-const useStyles = makeStyles(({ spacing }) => {
+const useStyles = makeStyles(() => {
     return {
         root: {
             width: '100%',
@@ -80,7 +79,7 @@ const useStyles = makeStyles(({ spacing }) => {
 
 type DowntimeProps = { address: string };
 
-const Downtime = ({ address }: DowntimeProps) => {
+const Downtime = ({ address }: DowntimeProps): JSX.Element => {
     const classes = useStyles();
     const { publicRuntimeConfig } = getConfig();
 
@@ -159,7 +158,9 @@ const Downtime = ({ address }: DowntimeProps) => {
                                                     align="left"
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
-                                                    <Link href="#" color="secondary">
+                                                    <Link
+                                                        href={`/block/${row.number}`}
+                                                        color="secondary">
                                                         <Typography variant="body2" noWrap>
                                                             {' '}
                                                             {row.number}
@@ -171,7 +172,7 @@ const Downtime = ({ address }: DowntimeProps) => {
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
                                                     {row.miner && row.miner.name ? (
-                                                        <Link href="#" color="secondary">
+                                                        <Link href="/" color="secondary">
                                                             <Typography variant="body2" noWrap>
                                                                 {row.miner.name}
                                                             </Typography>

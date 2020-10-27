@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -108,7 +109,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const Layout = (props: { children: React.ReactNode }) => {
+const Layout = (props: { children: React.ReactNode }): JSX.Element => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -141,8 +142,8 @@ const Layout = (props: { children: React.ReactNode }) => {
 
                     <Hidden mdUp>
                         <Grid item xs={5} className={classes.celoIcon}>
-                            <IconButton color="inherit" aria-label="Celo Dashboard" edge="start">
-                                <img src="/images/celo-logo.svg" />
+                            <IconButton color="inherit" aria-label="Celo" edge="start">
+                                <img src="/images/celo-logo.svg" alt="Celo" />
                             </IconButton>
                         </Grid>
                     </Hidden>
@@ -156,7 +157,7 @@ const Layout = (props: { children: React.ReactNode }) => {
                             onClick={handleDrawerOpen}
                             //edge="start"
                             className={classes.loginButton}>
-                            <img src="/images/connect-ledger.svg" />
+                            <img src="/images/connect-ledger.svg" alt="Login" />
                         </IconButton>
                     </Grid>
 
@@ -188,16 +189,16 @@ const Layout = (props: { children: React.ReactNode }) => {
                                 onClick={handleDrawerOpen}
                                 edge="start"
                                 className={clsx(classes.menuButton)}>
-                                {<img src="/images/celo-icon.svg" />}
+                                {<img src="/images/celo-icon.svg" alt="Open Celo Drawer" />}
                             </IconButton>
                         ) : (
                             <IconButton
                                 color="inherit"
-                                aria-label="Open Celo Drawer"
+                                aria-label="Close Celo Drawer"
                                 onClick={handleDrawerClose}
                                 edge="start"
                                 className={clsx(classes.menuButton)}>
-                                {<img src="/images/celo-logo.svg" />}
+                                {<img src="/images/celo-logo.svg" alt="Close Celo Drawer" />}
                             </IconButton>
                         )}
                         <Divider />
@@ -207,7 +208,7 @@ const Layout = (props: { children: React.ReactNode }) => {
                                 <Link href="/" color="inherit">
                                     <Typography variant="body1" color="textSecondary">
                                         <ListItemIcon className={classes.icon}>
-                                            <img src="/images/home.svg" />
+                                            <img src="/images/home.svg" alt="Dashboard" />
                                         </ListItemIcon>
                                         {'Dashboard'}
                                     </Typography>{' '}
@@ -215,7 +216,7 @@ const Layout = (props: { children: React.ReactNode }) => {
                                 <Link href="/blocks" color="inherit">
                                     <Typography variant="body1" color="textSecondary">
                                         <ListItemIcon className={classes.icon}>
-                                            <img src="/images/blocks.svg" />
+                                            <img src="/images/blocks.svg" alt="Blocks" />
                                         </ListItemIcon>
                                         {'Blocks'}
                                     </Typography>{' '}
@@ -223,7 +224,7 @@ const Layout = (props: { children: React.ReactNode }) => {
                                 <Link href="/transactions" color="inherit">
                                     <Typography variant="body1" color="textSecondary">
                                         <ListItemIcon className={classes.icon}>
-                                            <img src="/images/txs.svg" />
+                                            <img src="/images/txs.svg" alt="Transactions" />
                                         </ListItemIcon>
                                         {'Transactions'}
                                     </Typography>{' '}
@@ -231,7 +232,7 @@ const Layout = (props: { children: React.ReactNode }) => {
                                 <Link href="/accounts" color="inherit">
                                     <Typography variant="body1" color="textSecondary">
                                         <ListItemIcon className={classes.icon}>
-                                            <img src="/images/validators.svg" />
+                                            <img src="/images/validators.svg" alt="Accounts" />
                                         </ListItemIcon>
                                         {'Accounts'}
                                     </Typography>{' '}
@@ -239,7 +240,7 @@ const Layout = (props: { children: React.ReactNode }) => {
                                 <Link href="/proposals" color="inherit">
                                     <Typography variant="body1" color="textSecondary">
                                         <ListItemIcon className={classes.icon}>
-                                            <img src="/images/proposal.svg" />
+                                            <img src="/images/proposal.svg" alt="Proposals" />
                                         </ListItemIcon>
                                         {'Proposals'}
                                     </Typography>{' '}
@@ -247,7 +248,7 @@ const Layout = (props: { children: React.ReactNode }) => {
                                 <Link href="/validatorVotes" color="inherit">
                                     <Typography variant="body1" color="textSecondary">
                                         <ListItemIcon className={classes.icon}>
-                                            <img src="/images/vote.svg" />
+                                            <img src="/images/vote.svg" alt="Validator Votes" />
                                         </ListItemIcon>
                                         {'Validator Votes'}
                                     </Typography>{' '}
@@ -257,38 +258,6 @@ const Layout = (props: { children: React.ReactNode }) => {
                                     <ListItemText primary={text} />
                                 </ListItem>
                             ))}
-                            {/* <Divider />
-          {[
-            <Link href="/account" color="inherit">
-              <Typography variant="body1" color="textSecondary">
-                <ListItemIcon className={classes.icon}>
-                  <img src="/images/user-login.svg" />
-                </ListItemIcon>
-                {"Michelle Clark"}
-              </Typography>
-            </Link>,
-
-            <Link href="/blocks" color="inherit">
-              <Typography variant="body1" color="textSecondary">
-                <ListItemIcon className={classes.icon}>
-                  <img src="/images/logout.svg" />
-                </ListItemIcon>
-                {"Logout"}
-              </Typography>
-            </Link>,
-            <Link href="/transactions" color="inherit">
-              <Typography variant="body1" color="textSecondary" id="signin-ledger">
-                <ListItemIcon className={classes.icon}>
-                  <img src="/images/connect-ledger.svg" />
-                </ListItemIcon>
-                {"Sign In With Ledger"}
-              </Typography>{" "}
-            </Link>,
-          ].map((text, index) => (
-            <ListItem button key={index}>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))} */}
                         </List>
                     </Drawer>
                 </>

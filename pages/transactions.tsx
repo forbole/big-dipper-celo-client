@@ -1,10 +1,10 @@
 import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 
 import LatestTransactions from '../components/transaction/LatestTransactions';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
             display: 'flex',
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export default function Transactions() {
+export default function Transactions(): JSX.Element {
     const classes = useStyles();
     return (
         <Grid container spacing={2} className={classes.root}>

@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
 import Link from '../../../Link';
-//import Link from "../../Ledger.tsx";
 
 const useStyles = makeStyles({
     root: {
@@ -46,7 +45,7 @@ const useStyles = makeStyles({
     }
 });
 
-const UnlockGoldSuccess = () => {
+const UnlockGoldSuccess = (): JSX.Element => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -62,7 +61,7 @@ const UnlockGoldSuccess = () => {
                         <Grid container className={classes.item}>
                             <Grid item xs={12} alignItems="center" className={classes.icon}>
                                 <Typography noWrap align="center">
-                                    <img src="/images/success-icon.svg" />
+                                    <img src="/images/success-icon.svg" alt="Success" />
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} alignItems="center">

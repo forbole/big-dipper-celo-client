@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     }
 });
 
-const ControlButtons = () => {
+const ControlButtons = (): JSX.Element => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -55,7 +55,7 @@ const ControlButtons = () => {
                     color="secondary"
                     className={classes.controlButtonLabel}
                     //fullWidth={true}
-                    onClick={handleClose}>
+                    onClick={handleClickOpen}>
                     <Typography variant="body2" noWrap color="textPrimary">
                         Confirm
                     </Typography>

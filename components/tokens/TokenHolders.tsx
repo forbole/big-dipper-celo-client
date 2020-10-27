@@ -3,8 +3,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -17,14 +16,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import getConfig from 'next/config';
 import React from 'react';
 
-import Chips from '../Chips';
 import Link from '../Link';
-
-interface Data {
-    address: string;
-    value: string;
-    percentage: string;
-}
 
 function createData(address: string, value: string, percentage: string) {
     return { address, value, percentage };
@@ -40,7 +32,7 @@ const rows = [
     createData(' 0x21a641c9745c40ee037c037c69299ca718c3', '24023412.22 cUSD', '0.1478%')
 ];
 
-const useStyles = makeStyles(({ spacing }) => {
+const useStyles = makeStyles(() => {
     return {
         root: {
             borderRadius: 5,
@@ -106,7 +98,7 @@ const useStyles = makeStyles(({ spacing }) => {
     };
 });
 
-const TokenHolders = () => {
+const TokenHolders = (): JSX.Element => {
     const classes = useStyles();
 
     const { publicRuntimeConfig } = getConfig();
@@ -151,7 +143,7 @@ const TokenHolders = () => {
                                                         spacing={1}
                                                         style={{ padding: '0.5rem 0' }}>
                                                         <Grid item xs={12}>
-                                                            <Link href="#" color="secondary">
+                                                            <Link href="/" color="secondary">
                                                                 <Typography
                                                                     variant="body2"
                                                                     className={

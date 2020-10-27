@@ -1,5 +1,5 @@
 import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 
 import LatestBlocks from '../components/block/LatestBlocks';
@@ -7,11 +7,9 @@ import ChartData from '../components/home/ChartData';
 import Epoch from '../components/home/Epoch';
 import TokenPrice from '../components/home/TokenPrice';
 import ValidatorsGroups from '../components/home/ValidatorsGroups';
-import Layout from '../components/Layout';
-import Ledger from '../components/ledger/Ledger';
 import LatestTransactions from '../components/transaction/LatestTransactions';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
             display: 'flex',
@@ -20,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export default function Index() {
+export default function Index(): JSX.Element {
     const classes = useStyles();
     return (
         <Grid container className={classes.root} spacing={2}>

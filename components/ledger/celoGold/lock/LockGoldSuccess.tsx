@@ -45,7 +45,7 @@ const useStyles = makeStyles({
     }
 });
 
-const LockGoldSuccess = () => {
+const LockGoldSuccess = (): JSX.Element => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -61,7 +61,7 @@ const LockGoldSuccess = () => {
                         <Grid container className={classes.item}>
                             <Grid item xs={12} alignItems="center" className={classes.icon}>
                                 <Typography noWrap align="center">
-                                    <img src="/images/success-icon.svg" />
+                                    <img src="/images/success-icon.svg" alt="Success" />
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} alignItems="center">

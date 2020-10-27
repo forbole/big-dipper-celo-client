@@ -1,7 +1,5 @@
 import { useQuery } from '@apollo/client';
-import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -18,8 +16,6 @@ import Typography from '@material-ui/core/Typography';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import Alert from '@material-ui/lab/Alert';
 import BigNumber from 'bignumber.js';
 import getConfig from 'next/config';
@@ -29,7 +25,6 @@ import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import NotAvailable from '../misc/NotAvailable';
-import { GET_ACCOUNT_DETAILS } from '../query/Account';
 import { GET_VALIDATOR_GROUPS } from '../query/ValidatorGroup';
 
 interface Column {
@@ -38,7 +33,7 @@ interface Column {
         | 'groupName'
         | 'votesAvailable'
         | 'electedTotal'
-        | 'lockedcGLD'
+        | 'lockedCELO'
         | 'groupShare'
         | 'voterRewards'
         | 'groupScore'
@@ -144,7 +139,7 @@ const useStyles = makeStyles(() => {
     };
 });
 
-const ValidatorVotesList = () => {
+const ValidatorVotesList = (): JSX.Element => {
     const classes = useStyles();
 
     const [open, setOpen] = React.useState('');
@@ -169,7 +164,7 @@ const ValidatorVotesList = () => {
             });
     };
 
-    const closeAlert = (event?: React.SyntheticEvent, reason?: string) => {
+    const closeAlert = () => {
         setCopy(false);
     };
 
@@ -262,7 +257,7 @@ const ValidatorVotesList = () => {
                                                         align="left"
                                                         padding="checkbox"
                                                         className={classes.tableCell}>
-                                                        {row.votesAvailable ? (
+                                                        {row.votes && row.votesAvailable ? (
                                                             <Typography variant="caption" noWrap>
                                                                 {new BigNumber(
                                                                     (row.votes /
@@ -442,7 +437,10 @@ const ValidatorVotesList = () => {
                                                                                                         index
                                                                                                     )
                                                                                                 }>
-                                                                                                <img src="/images/copy.svg" />
+                                                                                                <img
+                                                                                                    src="/images/copy.svg"
+                                                                                                    alt="Copy"
+                                                                                                />
                                                                                             </IconButton>
                                                                                         </>
                                                                                     ) : null}

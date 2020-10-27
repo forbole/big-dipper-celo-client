@@ -1,22 +1,10 @@
-import gql from '@apollo/client';
-import { useQuery } from '@apollo/client';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import moment from 'moment';
-import { useRouter } from 'next/router';
 import React from 'react';
-import ContentLoader from 'react-content-loader';
-
-import LedgerButtons from '../ledger/LedgerButtons';
-import Link from '../Link';
-import NotAvailable from '../misc/NotAvailable';
 
 const useStyles = makeStyles(() => {
     return {
@@ -67,7 +55,7 @@ const useStyles = makeStyles(() => {
     };
 });
 
-const Overview = () => {
+const Overview = (): JSX.Element => {
     const classes = useStyles();
     return (
         <Card className={classes.root}>
@@ -192,7 +180,7 @@ const Overview = () => {
                     </Grid>
 
                     <Grid item xs={12} className={classes.centerContent}>
-                        <LedgerButtons option="ValidatorGroupVote" />
+                        {/* <LedgerButtons option="ValidatorGroupVote" /> */}
                     </Grid>
                 </Grid>
             </CardContent>

@@ -3,7 +3,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 type AppProps = { text: string };
 
-const MiddleEllipsis = ({ text }: AppProps) => {
+const MiddleEllipsis = ({ text }: AppProps): JSX.Element => {
     const theme = useTheme();
     const xs = useMediaQuery(theme.breakpoints.up('xs') && theme.breakpoints.down('sm'));
     const sm = useMediaQuery(theme.breakpoints.up('sm') && theme.breakpoints.down('md'));

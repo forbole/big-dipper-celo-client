@@ -1,16 +1,13 @@
-import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 
 import Transactions from '../components/account/Transactions';
-import Link from '../components/Link';
 import Overview from '../components/tokens/Overview';
 import ProfileSummary from '../components/tokens/ProfileSummary';
 import TokenHolders from '../components/tokens/TokenHolders';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
             justifyContent: 'center'
@@ -18,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export default function Tokens() {
+export default function Tokens(): JSX.Element {
     const classes = useStyles();
 
     return (

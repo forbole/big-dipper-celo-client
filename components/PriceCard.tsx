@@ -36,7 +36,7 @@ const useStyles = makeStyles(() => {
     };
 });
 
-const PriceCard = () => {
+const PriceCard = (): JSX.Element => {
     const classes = useStyles();
 
     const chainData = useQuery(GET_CHAIN, {

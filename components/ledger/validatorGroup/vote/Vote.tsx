@@ -87,7 +87,7 @@ const useStyles = makeStyles({
     }
 });
 
-const Vote = () => {
+const Vote = (): JSX.Element => {
     const name = 'Dan Stanley';
     const name_2 = 'Andrea Colemans';
 

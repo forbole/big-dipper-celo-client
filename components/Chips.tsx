@@ -20,13 +20,12 @@ import {
     teal,
     yellow
 } from '@material-ui/core/colors';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import React from 'react';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
+import React, { ReactElement } from 'react';
 
 import theme from '../themes/celo-theme';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         contractType: {
             borderRadius: 5,
@@ -41,10 +40,51 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type ChipsProps = { contractName?: string; type?: string; actionResult?: string };
 
-const Chips = ({ contractName, type, actionResult }: ChipsProps) => {
+interface ContractColorsInterface {
+    Random: string;
+    EpochRewards: string;
+    DowntimeSlasher: string;
+    Registry: string;
+    BlockchainParameters: string;
+    LockedGold: string;
+    Freezer: string;
+    Exchange: string;
+    Election: string;
+    GasPriceMinimum: string;
+    StableToken: string;
+    FeeCurrencyWhitelist: string;
+    TransferWhitelist: string;
+    Validators: string;
+    SortedOracles: string;
+    Governance: string;
+    GoldToken: string;
+    DoubleSigningSlasher: string;
+    Escrow: string;
+    Attestations: string;
+    Accounts: string;
+    Reserve: string;
+}
+
+interface LedgerColorsInterface {
+    Success: string;
+    Passed: string;
+    Create: string;
+    Rejected: string;
+    Removed: string;
+    Deposit: string;
+    Vote: string;
+    Pending: string;
+}
+
+interface BorderElementInterface {
+    Deposit: string;
+    Vote: string;
+}
+
+const Chips = ({ contractName, type, actionResult }: ChipsProps): ReactElement => {
     const classes = useStyles();
 
-    const contractColors: any = {
+    const contractColors: ContractColorsInterface = {
         Random: lightGreen['A700'],
         EpochRewards: green[700],
         DowntimeSlasher: blue[700],
@@ -69,7 +109,7 @@ const Chips = ({ contractName, type, actionResult }: ChipsProps) => {
         Reserve: lightBlue[700]
     };
 
-    const ledgerColors: any = {
+    const ledgerColors: LedgerColorsInterface = {
         Success: green[500],
         Passed: green['A700'],
         Create: lightGreen[700],
@@ -80,7 +120,7 @@ const Chips = ({ contractName, type, actionResult }: ChipsProps) => {
         Pending: teal[400]
     };
 
-    const borderElement: any = {
+    const borderElement: BorderElementInterface = {
         Deposit: 'solid 1px rgba(255, 255, 255, 0.6)',
         Vote: 'solid 1px rgba(255, 255, 255, 0.6)'
     };

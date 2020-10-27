@@ -1,5 +1,5 @@
 import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 
 import LatestBlocks from '../components/block/LatestBlocks';
@@ -13,7 +13,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-export default function Blocks() {
+export default function Blocks(): JSX.Element {
     const classes = useStyles();
     return (
         <Grid container spacing={2} className={classes.root}>

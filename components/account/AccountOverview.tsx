@@ -1,44 +1,19 @@
-import gql from '@apollo/client';
 import { useQuery } from '@apollo/client';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
-import FilledInput from '@material-ui/core/FilledInput';
-import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
-import Hidden from '@material-ui/core/Hidden';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import InputLabel from '@material-ui/core/InputLabel';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import SearchIcon from '@material-ui/icons/Search';
 import BigNumber from 'bignumber.js';
-import { useRouter } from 'next/router';
-import numbro from 'numbro';
 import React from 'react';
-import ContentLoader from 'react-content-loader';
 
-import Chips from '../Chips';
-import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
-import MiddleEllipsis from '../misc/MiddleEllipsis';
 import NotAvailable from '../misc/NotAvailable';
 import { GET_ACCOUNT_DETAILS } from '../query/Account';
 import { GET_CHAIN } from '../query/Chain';
 import { GET_VALIDATOR } from '../query/Validator';
-import AccountDetails from './AccountDetails';
-import AddressCard from './AddressCard';
-import Downtime from './Downtime';
-import AccountTransactions from './Transactions';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -101,7 +76,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type AccountOverviewProps = { address: string };
 
-const AccountOverview = ({ address }: AccountOverviewProps) => {
+const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
     const classes = useStyles();
 
     const accountQuery = useQuery(GET_ACCOUNT_DETAILS, {

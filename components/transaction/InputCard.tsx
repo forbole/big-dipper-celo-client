@@ -1,17 +1,15 @@
 import { useQuery } from '@apollo/client';
 import Card from '@material-ui/core/Card';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
-import NotAvailable from '../misc/NotAvailable';
 import { GET_TX_DETAILS } from '../query/Transaction';
 
-const useStyles = makeStyles(({ spacing }) => {
+const useStyles = makeStyles(() => {
     return {
         card: {
             display: 'flex',
@@ -24,7 +22,7 @@ const useStyles = makeStyles(({ spacing }) => {
 });
 type InputCardProps = { hash: string };
 
-const InputCard = ({ hash }: InputCardProps) => {
+const InputCard = ({ hash }: InputCardProps): JSX.Element => {
     const classes = useStyles();
     const callData: any = [];
 

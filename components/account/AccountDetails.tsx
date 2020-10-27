@@ -4,22 +4,20 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BigNumber from 'bignumber.js';
-import numbro from 'numbro';
 import React from 'react';
 
 import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
-import MiddleEllipsis from '../misc/MiddleEllipsis';
 import NotAvailable from '../misc/NotAvailable';
 import { GET_ACCOUNT_DETAILS } from '../query/Account';
 import { GET_VALIDATOR } from '../query/Validator';
 
-const useStyles = makeStyles(({ spacing }) => {
+const useStyles = makeStyles(() => {
     return {
         root: {
             width: '100%',
@@ -65,7 +63,7 @@ const useStyles = makeStyles(({ spacing }) => {
 
 type AccountDetailsProps = { address: string };
 
-const AccountDetails = ({ address }: AccountDetailsProps) => {
+const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
     const classes = useStyles();
 
     const { loading, error, data } = useQuery(GET_VALIDATOR, {
@@ -355,7 +353,7 @@ const AccountDetails = ({ address }: AccountDetailsProps) => {
             </Accordion>
         );
     else {
-        return null;
+        return null as any;
     }
 };
 
