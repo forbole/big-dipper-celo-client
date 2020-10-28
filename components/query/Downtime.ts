@@ -19,6 +19,7 @@ export const DOWNTIME = gql`
                 miner {
                     name
                     signer
+                    address
                 }
             }
         }

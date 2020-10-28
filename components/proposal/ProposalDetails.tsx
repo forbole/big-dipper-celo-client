@@ -12,10 +12,10 @@ import BigNumber from 'bignumber.js';
 import React from 'react';
 import MarkdownView from 'react-showdown';
 
-import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import NotAvailable from '../misc/NotAvailable';
+import NavLink from '../NavLink';
 import { GET_PROPOSAL } from '../query/Proposal';
 
 const useStyles = makeStyles(() => {
@@ -109,29 +109,28 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                     </Grid>
 
                     <Grid item xs={1}>
-                        <Link
-                            href="/proposal/[proposal]/"
-                            as={`/proposal/${prevProposal}`}
-                            color="secondary">
-                            <IconButton
-                                aria-label="Previous Proposal"
-                                className={classes.iconButtonRight}>
-                                <ArrowBackIosIcon className={classes.arrowIcon} />
-                            </IconButton>
-                        </Link>
+                        <NavLink
+                            href={`/proposal/${prevProposal}`}
+                            name={
+                                <IconButton
+                                    aria-label="Previous Proposal"
+                                    className={classes.iconButtonRight}>
+                                    <ArrowBackIosIcon className={classes.arrowIcon} />
+                                </IconButton>
+                            }
+                        />
                     </Grid>
                     <Grid item xs={1}>
-                        <Link
-                            href="/proposal/[proposal]/"
-                            as={`/proposal/${nextProposal}`}
-                            color="secondary">
-                            {' '}
-                            <IconButton
-                                aria-label="Next Proposal"
-                                className={classes.iconButtonLeft}>
-                                <ArrowForwardIosIcon className={classes.arrowIcon} />
-                            </IconButton>
-                        </Link>
+                        <NavLink
+                            href={`/proposal/${nextProposal}`}
+                            name={
+                                <IconButton
+                                    aria-label="Next Proposal"
+                                    className={classes.iconButtonLeft}>
+                                    <ArrowForwardIosIcon className={classes.arrowIcon} />
+                                </IconButton>
+                            }
+                        />
                     </Grid>
 
                     <Grid item xs={12}>

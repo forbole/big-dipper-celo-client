@@ -16,7 +16,7 @@ import {
     YAxis
 } from 'recharts';
 
-import Link from '../Link';
+import NavLink from '../NavLink';
 
 const data = [
     {
@@ -123,11 +123,14 @@ const CustomTooltip = () => {
                         </Typography>
                     </Grid>
                     <Grid item xs={7}>
-                        <Typography color="textPrimary" variant="body2" align="right">
-                            <Link href="/account/[account]/" as={`/account/${1}`} color="secondary">
-                                Nans Aguilars{' '}
-                            </Link>
-                        </Typography>
+                        <NavLink
+                            href={`/account/${1}`}
+                            name={
+                                <Typography color="textPrimary" variant="body2" align="right">
+                                    Nans Aguilars
+                                </Typography>
+                            }
+                        />
                     </Grid>
 
                     <Grid item xs={5}>
@@ -137,11 +140,14 @@ const CustomTooltip = () => {
                     </Grid>
 
                     <Grid item xs={7}>
-                        <Typography color="textPrimary" variant="body2" align="right">
-                            <Link href="/block/[block]/" as={`/block/${108144}`} color="secondary">
-                                108144{' '}
-                            </Link>
-                        </Typography>
+                        <NavLink
+                            href={`/block/${108144}`}
+                            name={
+                                <Typography color="textPrimary" variant="body2" align="right">
+                                    108144
+                                </Typography>
+                            }
+                        />
                     </Grid>
 
                     <Grid item xs={5}>

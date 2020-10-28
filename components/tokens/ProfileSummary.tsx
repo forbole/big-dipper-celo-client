@@ -5,7 +5,7 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
-import Link from '../Link';
+import NavLink from '../NavLink';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -77,9 +77,11 @@ const ProfileSummary = (): JSX.Element => {
                         gutterBottom
                         className={classes.alignRight}
                         noWrap={false}>
-                        <Link href="/" color="secondary" className={classes.contract}>
-                            0xa561131a1c8ac25925fb848bca45a74af61e5a38{' '}
-                        </Link>
+                        <NavLink
+                            href="/"
+                            name="0xa561131a1c8ac25925fb848bca45a74af61e5a38"
+                            className={classes.contract}
+                        />
                     </Typography>
                 </Grid>
 

@@ -15,10 +15,10 @@ import moment from 'moment';
 import React from 'react';
 
 import Chips from '../Chips';
-import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import NotAvailable from '../misc/NotAvailable';
+import NavLink from '../NavLink';
 import { GET_TX_DETAILS } from '../query/Transaction';
 
 const useStyles = makeStyles(() => {
@@ -225,14 +225,15 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                         </Typography>
 
                         {data.transaction && data.transaction.from ? (
-                            <Typography variant="body2" component="h2">
-                                <Link
-                                    href="/account/[account]/"
-                                    as={`/account/${data.transaction.from.address}`}
-                                    color="secondary">
-                                    {data.transaction.from.address}
-                                </Link>
-                            </Typography>
+                            <NavLink
+                                href={`/account/${data.transaction.from.address}`}
+                                name={
+                                    <Typography variant="body2" component="h2">
+                                        {' '}
+                                        {data.transaction.from.address}
+                                    </Typography>
+                                }
+                            />
                         ) : (
                             <NotAvailable variant="body2" />
                         )}
@@ -245,14 +246,15 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                             To
                         </Typography>
                         {data.transaction && data.transaction.to ? (
-                            <Typography variant="body2" component="h2">
-                                <Link
-                                    href="/account/[account]/"
-                                    as={`/account/${data.transaction.to.address}`}
-                                    color="secondary">
-                                    {data.transaction.to.address}
-                                </Link>
-                            </Typography>
+                            <NavLink
+                                href={`/account/${data.transaction.to.address}`}
+                                name={
+                                    <Typography variant="body2" component="h2">
+                                        {' '}
+                                        {data.transaction.to.address}
+                                    </Typography>
+                                }
+                            />
                         ) : (
                             <NotAvailable variant="body2" />
                         )}
@@ -280,14 +282,14 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                             Block Height
                         </Typography>
                         {data.transaction && data.transaction.blockNumber ? (
-                            <Typography variant="body2" component="h2">
-                                <Link
-                                    href={`/block/${data.transaction.blockNumber}`}
-                                    color="secondary">
-                                    {' '}
-                                    {data.transaction.blockNumber}
-                                </Link>
-                            </Typography>
+                            <NavLink
+                                href={`/block/${data.transaction.blockNumber}`}
+                                name={
+                                    <Typography variant="body2" component="h2">
+                                        {data.transaction.blockNumber}
+                                    </Typography>
+                                }
+                            />
                         ) : (
                             <NotAvailable variant="body2" />
                         )}

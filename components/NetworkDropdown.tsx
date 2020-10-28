@@ -11,7 +11,7 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import React from 'react';
 
-import Link from './Link';
+import NavLink from './NavLink';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -110,43 +110,54 @@ const NetworkDropdown = (): JSX.Element => {
                         classes={{
                             icon: classes.icon
                         }}>
-                        <Link href="/" color="textPrimary">
-                            <MenuItem className={classes.menuItem}>
-                                <Avatar
-                                    alt="Celo Alfajores"
-                                    src="/images/celo-icon.svg"
-                                    className={classes.celoIcon}
-                                />
-                                <Typography variant="body2">Celo Alfajores</Typography>
-                            </MenuItem>
-                        </Link>
+                        <NavLink
+                            href="/"
+                            name={
+                                <MenuItem className={classes.menuItem}>
+                                    <Avatar
+                                        alt="Celo Alfajores"
+                                        src="/images/celo-icon.svg"
+                                        className={classes.celoIcon}
+                                    />
+                                    <Typography variant="body2">Celo Alfajores</Typography>
+                                </MenuItem>
+                            }
+                            textSecondary
+                        />
+
                         <Divider className={classes.divider} />
 
-                        <Link
+                        <NavLink
                             href="https://baklava-blockscout.celo-testnet.org/"
-                            color="textPrimary">
-                            <MenuItem className={classes.menuItem}>
-                                <Avatar
-                                    alt="Celo Baklava"
-                                    src="/images/celo-icon.svg"
-                                    className={classes.celoIcon}
-                                />
-                                <Typography variant="body2">Celo Baklava</Typography>
-                            </MenuItem>
-                        </Link>
+                            name={
+                                <MenuItem className={classes.menuItem}>
+                                    <Avatar
+                                        alt="Celo Baklava"
+                                        src="/images/celo-icon.svg"
+                                        className={classes.celoIcon}
+                                    />
+                                    <Typography variant="body2">Celo Baklava</Typography>
+                                </MenuItem>
+                            }
+                            textSecondary
+                        />
+
                         <Divider className={classes.divider} />
-                        <Link
+
+                        <NavLink
                             href="https://integration-blockscout.celo-testnet.org/"
-                            color="textPrimary">
-                            <MenuItem className={classes.menuItem}>
-                                <Avatar
-                                    alt="Celo Integration"
-                                    src="/images/celo-icon.svg"
-                                    className={classes.celoIcon}
-                                />
-                                <Typography variant="body2">Celo Integration</Typography>
-                            </MenuItem>
-                        </Link>
+                            name={
+                                <MenuItem className={classes.menuItem}>
+                                    <Avatar
+                                        alt="Celo Integration"
+                                        src="/images/celo-icon.svg"
+                                        className={classes.celoIcon}
+                                    />
+                                    <Typography variant="body2">Celo Integration</Typography>
+                                </MenuItem>
+                            }
+                            textSecondary
+                        />
                     </Select>
                 </FormControl>
             </Grid>

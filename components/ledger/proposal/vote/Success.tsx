@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
-import Link from '../../../Link';
+import NavLink from '../../../NavLink';
 
 const useStyles = makeStyles({
     root: {
@@ -108,19 +108,19 @@ const Success = (): JSX.Element => {
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} md={11}>
-                                <Link
-                                    href="transaction/[transaction]/"
-                                    //as={`transaction/${data.block.parentHash}`}
-                                    color="secondary">
-                                    <Typography
-                                        variant="body2"
-                                        className={classes.txHash}
-                                        noWrap={false}>
-                                        {
-                                            '0xfdef0a9988f84f8914ee000407393fccc1d039130260c7d501cc4b24e5bbe4f5'
-                                        }
-                                    </Typography>
-                                </Link>
+                                <NavLink
+                                    href="/transactions"
+                                    name={
+                                        <Typography
+                                            variant="body2"
+                                            className={classes.txHash}
+                                            noWrap={false}>
+                                            {
+                                                '0xfdef0a9988f84f8914ee000407393fccc1d039130260c7d501cc4b24e5bbe4f5'
+                                            }
+                                        </Typography>
+                                    }
+                                />
                             </Grid>
 
                             <Grid
@@ -129,18 +129,21 @@ const Success = (): JSX.Element => {
                                 md={10}
                                 className={classes.controlButton}
                                 alignItems="center">
-                                <Link href="/transactions">
-                                    <Button
-                                        variant="outlined"
-                                        color="secondary"
-                                        className={classes.controlButtonLabel}
-                                        fullWidth={true}
-                                        onClick={handleClose}>
-                                        <Typography variant="body2" noWrap>
-                                            View Proposal
-                                        </Typography>
-                                    </Button>
-                                </Link>
+                                <NavLink
+                                    href="/transactions"
+                                    name={
+                                        <Button
+                                            variant="outlined"
+                                            color="secondary"
+                                            className={classes.controlButtonLabel}
+                                            fullWidth={true}
+                                            onClick={handleClose}>
+                                            <Typography variant="body2" noWrap>
+                                                View Proposal
+                                            </Typography>
+                                        </Button>
+                                    }
+                                />
                             </Grid>
                         </Grid>
                     </DialogContentText>

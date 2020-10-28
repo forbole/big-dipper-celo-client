@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import React from 'react';
 
-import Link from '../Link';
+import NavLink from '../NavLink';
 
 const useStyles = makeStyles(() => {
     return {
@@ -109,11 +109,15 @@ const GroupMember = (): JSX.Element => {
                         <Typography variant="body2" className={classes.memberNumber}>
                             #1
                         </Typography>
-                        <Link href="account/[account]/" as={`account/${1}`} color="secondary">
-                            <Typography variant="body1">
-                                Vincent Lynch <FiberManualRecordIcon className={classes.dotIcon} />
-                            </Typography>
-                        </Link>
+                        <NavLink
+                            href={`account/${1}`}
+                            name={
+                                <Typography variant="body1">
+                                    Vincent Lynch{' '}
+                                    <FiberManualRecordIcon className={classes.dotIcon} />
+                                </Typography>
+                            }
+                        />
                     </Grid>
 
                     <Grid item xs={6}>
@@ -140,9 +144,10 @@ const GroupMember = (): JSX.Element => {
                         <Typography variant="body2" className={classes.memberNumber}>
                             #2
                         </Typography>
-                        <Link href="account/[account]/" as={`account/${1}`} color="secondary">
-                            <Typography variant="body1">Michelle Clark</Typography>
-                        </Link>
+                        <NavLink
+                            href={`account/${1}`}
+                            name={<Typography variant="body1">Michelle Clark</Typography>}
+                        />
                     </Grid>
 
                     <Grid item xs={6}>

@@ -18,11 +18,11 @@ import moment from 'moment';
 import getConfig from 'next/config';
 import React from 'react';
 
-import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import MiddleEllipsis from '../misc/MiddleEllipsis';
 import NotAvailable from '../misc/NotAvailable';
+import NavLink from '../NavLink';
 import { GET_ACCOUNT_DETAILS } from '../query/Account';
 import { DOWNTIME } from '../query/Downtime';
 
@@ -158,25 +158,30 @@ const Downtime = ({ address }: DowntimeProps): JSX.Element => {
                                                     align="left"
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
-                                                    <Link
+                                                    <NavLink
                                                         href={`/block/${row.number}`}
-                                                        color="secondary">
-                                                        <Typography variant="body2" noWrap>
-                                                            {' '}
-                                                            {row.number}
-                                                        </Typography>
-                                                    </Link>
+                                                        name={
+                                                            <Typography variant="body2" noWrap>
+                                                                {row.number}
+                                                            </Typography>
+                                                        }
+                                                    />
                                                 </TableCell>
                                                 <TableCell
                                                     align="left"
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
-                                                    {row.miner && row.miner.name ? (
-                                                        <Link href="/" color="secondary">
-                                                            <Typography variant="body2" noWrap>
-                                                                {row.miner.name}
-                                                            </Typography>
-                                                        </Link>
+                                                    {row.miner &&
+                                                    row.miner.name &&
+                                                    row.miner.address ? (
+                                                        <NavLink
+                                                            href={`/account/${row.miner.address}`}
+                                                            name={
+                                                                <Typography variant="body2" noWrap>
+                                                                    {row.miner.name}
+                                                                </Typography>
+                                                            }
+                                                        />
                                                     ) : (
                                                         <NotAvailable variant="body2" />
                                                     )}

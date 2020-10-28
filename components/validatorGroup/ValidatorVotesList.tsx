@@ -21,10 +21,10 @@ import BigNumber from 'bignumber.js';
 import getConfig from 'next/config';
 import React from 'react';
 
-import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import NotAvailable from '../misc/NotAvailable';
+import NavLink from '../NavLink';
 import { GET_VALIDATOR_GROUPS } from '../query/ValidatorGroup';
 
 interface Column {
@@ -243,14 +243,16 @@ const ValidatorVotesList = (): JSX.Element => {
                                                         className={classes.tableCell}>
                                                         {' '}
                                                         {row.name || row.address ? (
-                                                            <Link
-                                                                href="/validatorGroup/[validatorGroupDetails]/"
-                                                                as={`/validatorGroup/${'NanValdezG'}`}
-                                                                color="secondary">
-                                                                <Typography variant="body2" noWrap>
-                                                                    {row.name || row.address}
-                                                                </Typography>
-                                                            </Link>
+                                                            <NavLink
+                                                                href={`/validatorGroup/${'NanValdezG'}`}
+                                                                name={
+                                                                    <Typography
+                                                                        variant="body2"
+                                                                        noWrap>
+                                                                        {row.name || row.address}
+                                                                    </Typography>
+                                                                }
+                                                            />
                                                         ) : (
                                                             <NotAvailable variant="body2" />
                                                         )}
@@ -394,15 +396,15 @@ const ValidatorVotesList = (): JSX.Element => {
                                                                                                 {index +
                                                                                                     1}
                                                                                             </Typography>
-                                                                                            <Link
-                                                                                                href="/account/[account]/"
-                                                                                                as={`/account/${10}`}
-                                                                                                color="secondary">
-                                                                                                <Typography variant="caption">
-                                                                                                    {memberRow.name ||
-                                                                                                        memberRow.address}
-                                                                                                </Typography>
-                                                                                            </Link>
+                                                                                            <NavLink
+                                                                                                href={`/account/${10}`}
+                                                                                                name={
+                                                                                                    <Typography variant="caption">
+                                                                                                        {memberRow.name ||
+                                                                                                            memberRow.address}
+                                                                                                    </Typography>
+                                                                                                }
+                                                                                            />
                                                                                             <FiberManualRecordIcon
                                                                                                 className={
                                                                                                     classes.dotIcon

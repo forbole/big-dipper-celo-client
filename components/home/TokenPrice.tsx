@@ -355,7 +355,7 @@ const TokenPrice = (): JSX.Element => {
                                         tick={{
                                             stroke: 'rgba(119, 119, 119, 1)',
                                             fontSize: 10,
-                                            fontWeight: 150
+                                            fontWeight: 100
                                         }}
                                     />
                                     <YAxis
@@ -365,7 +365,7 @@ const TokenPrice = (): JSX.Element => {
                                         tick={{
                                             stroke: 'rgba(119, 119, 119, 1)',
                                             fontSize: 10,
-                                            fontWeight: 150
+                                            fontWeight: 100
                                         }}
                                     />
                                     <YAxis
@@ -376,7 +376,7 @@ const TokenPrice = (): JSX.Element => {
                                         tick={{
                                             stroke: 'rgba(119, 119, 119, 1)',
                                             fontSize: 10,
-                                            fontWeight: 150
+                                            fontWeight: 100
                                         }}
                                     />
                                     <Tooltip />
