@@ -17,7 +17,9 @@ const useStyles = makeStyles(() =>
     })
 );
 
-export default function Proposal(proposalDetails: string): JSX.Element {
+type proposalProps = { proposalDetails: string };
+
+export default function Proposal({ proposalDetails }: proposalProps): JSX.Element {
     const classes = useStyles();
     const router = useRouter();
     const proposalNumber: string = router.query.proposal as string;
@@ -27,10 +29,7 @@ export default function Proposal(proposalDetails: string): JSX.Element {
                 <PriceCard />
             </Grid>
             <Grid item xs={12}>
-                <ProposalDetails
-                    proposal={proposalNumber}
-                    proposalDetails={proposalDetails.proposalDetails}
-                />
+                <ProposalDetails proposal={proposalNumber} proposalDetails={proposalDetails} />
             </Grid>
             <Grid item xs={12}>
                 <ProposalVotingList proposal={proposalNumber} />
