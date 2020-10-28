@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import React from 'react';
 
-import Link from '../components/Link';
+import NavLink from './NavLink';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -68,48 +68,67 @@ export default function BottomNavigation(): JSX.Element {
                 <Slide appear={false} direction="up" in={!trigger}>
                     <AppBar position="fixed" color="primary" style={{ top: 'auto', bottom: 0 }}>
                         <Tabs value={value} scrollButtons="off" aria-label="Celo Bottom Navigation">
-                            <Link href="/" color="inherit">
-                                <Tab
-                                    icon={<img src="/images/home.svg" alt="Dashboard" />}
-                                    aria-label="Dashboard"
-                                    className={classes.tabElement}
-                                />
-                            </Link>
-                            <Link href="/blocks" color="inherit">
-                                <Tab
-                                    icon={<img src="/images/blocks.svg" alt="Blocks" />}
-                                    aria-label="Blocks"
-                                    className={classes.tabElement}
-                                />
-                            </Link>
-                            <Link href="/transactions" color="inherit">
-                                <Tab
-                                    icon={<img src="/images/txs.svg" alt="Transactions" />}
-                                    aria-label="Transactions"
-                                    className={classes.tabElement}
-                                />
-                            </Link>
-                            <Link href="/accounts" color="inherit">
-                                <Tab
-                                    icon={<img src="/images/validators.svg" alt="Accounts" />}
-                                    aria-label="Accounts"
-                                    className={classes.tabElement}
-                                />
-                            </Link>
-                            <Link href="/proposals" color="inherit">
-                                <Tab
-                                    icon={<img src="/images/proposal.svg" alt="Proposals" />}
-                                    aria-label="Proposals"
-                                    className={classes.tabElement}
-                                />
-                            </Link>
-                            <Link href="/validatorVotes" color="inherit">
-                                <Tab
-                                    icon={<img src="/images/vote.svg" alt="Validator Votes" />}
-                                    aria-label="ValidatorVotes"
-                                    className={classes.tabElement}
-                                />
-                            </Link>
+                            <NavLink
+                                href="/"
+                                name={
+                                    <Tab
+                                        icon={<img src="/images/home.svg" alt="Dashboard" />}
+                                        aria-label="Dashboard"
+                                        className={classes.tabElement}
+                                    />
+                                }
+                            />
+                            <NavLink
+                                href="/blocks"
+                                name={
+                                    <Tab
+                                        icon={<img src="/images/blocks.svg" alt="Blocks" />}
+                                        aria-label="Blocks"
+                                        className={classes.tabElement}
+                                    />
+                                }
+                            />
+                            <NavLink
+                                href="/transactions"
+                                name={
+                                    <Tab
+                                        icon={<img src="/images/txs.svg" alt="Transactions" />}
+                                        aria-label="Transactions"
+                                        className={classes.tabElement}
+                                    />
+                                }
+                            />
+
+                            <NavLink
+                                href="/accounts"
+                                name={
+                                    <Tab
+                                        icon={<img src="/images/validators.svg" alt="Accounts" />}
+                                        aria-label="Accounts"
+                                        className={classes.tabElement}
+                                    />
+                                }
+                            />
+                            <NavLink
+                                href="/proposals"
+                                name={
+                                    <Tab
+                                        icon={<img src="/images/proposal.svg" alt="Proposals" />}
+                                        aria-label="Proposals"
+                                        className={classes.tabElement}
+                                    />
+                                }
+                            />
+                            <NavLink
+                                href="/validatorVotes"
+                                name={
+                                    <Tab
+                                        icon={<img src="/images/vote.svg" alt="Validator Votes" />}
+                                        aria-label="ValidatorVotes"
+                                        className={classes.tabElement}
+                                    />
+                                }
+                            />
                         </Tabs>
                     </AppBar>
                 </Slide>

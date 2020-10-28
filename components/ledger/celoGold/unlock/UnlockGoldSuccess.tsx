@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
-import Link from '../../../Link';
+import NavLink from '../../../NavLink';
 
 const useStyles = makeStyles({
     root: {
@@ -80,18 +80,21 @@ const UnlockGoldSuccess = (): JSX.Element => {
                                 md={10}
                                 className={classes.controlButton}
                                 alignItems="center">
-                                <Link href="/transactions">
-                                    <Button
-                                        variant="outlined"
-                                        color="secondary"
-                                        className={classes.controlButtonLabel}
-                                        fullWidth={true}
-                                        onClick={handleClose}>
-                                        <Typography variant="body2" noWrap>
-                                            View Transactions
-                                        </Typography>
-                                    </Button>
-                                </Link>
+                                <NavLink
+                                    href="/transactions"
+                                    name={
+                                        <Button
+                                            variant="outlined"
+                                            color="secondary"
+                                            className={classes.controlButtonLabel}
+                                            fullWidth={true}
+                                            onClick={handleClose}>
+                                            <Typography variant="body2" noWrap>
+                                                View Transactions
+                                            </Typography>
+                                        </Button>
+                                    }
+                                />
                             </Grid>
                         </Grid>
                     </DialogContentText>

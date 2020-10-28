@@ -17,10 +17,10 @@ import getConfig from 'next/config';
 import React from 'react';
 import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts';
 
-import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import NotAvailable from '../misc/NotAvailable';
+import NavLink from '../NavLink';
 import { GET_PROPOSAL } from '../query/Proposal';
 
 interface Column {
@@ -188,22 +188,22 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                                                     .returnValues &&
                                                 data.proposal.totalVotesList[voteType.voteType][row]
                                                     .returnValues.account ? (
-                                                    <Link
-                                                        href="/account/[account]/"
-                                                        as={`/account/${
+                                                    <NavLink
+                                                        href={`/account/${
                                                             data.proposal.totalVotesList[
                                                                 voteType.voteType
                                                             ][row].returnValues.account
                                                         }`}
-                                                        color="secondary">
-                                                        <Typography variant="body2" noWrap>
-                                                            {
-                                                                data.proposal.totalVotesList[
-                                                                    voteType.voteType
-                                                                ][row].returnValues.account
-                                                            }
-                                                        </Typography>
-                                                    </Link>
+                                                        name={
+                                                            <Typography variant="body2" noWrap>
+                                                                {
+                                                                    data.proposal.totalVotesList[
+                                                                        voteType.voteType
+                                                                    ][row].returnValues.account
+                                                                }
+                                                            </Typography>
+                                                        }
+                                                    />
                                                 ) : null}
                                             </TableCell>
                                             <TableCell

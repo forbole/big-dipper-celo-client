@@ -2,7 +2,6 @@ import { useQuery } from '@apollo/client';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-// import Link from 'next/link'
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -17,11 +16,11 @@ import getConfig from 'next/config';
 import React, { useEffect } from 'react';
 
 import Chips from '../Chips';
-import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import MiddleEllipsis from '../misc/MiddleEllipsis';
 import NotAvailable from '../misc/NotAvailable';
+import NavLink from '../NavLink';
 import { GET_TX } from '../query/Transaction';
 
 const useStyles = makeStyles({
@@ -134,12 +133,12 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                         <Typography variant="body1" className={classes.box}>
                             Latest Transactions{' '}
                             {pagination === false ? (
-                                <Link
+                                <NavLink
                                     href="/transactions"
+                                    name="view more"
                                     className={classes.link}
-                                    color="textPrimary">
-                                    {'view more'}
-                                </Link>
+                                    textSecondary
+                                />
                             ) : null}
                         </Typography>
                         {data.transactions ? (
@@ -171,19 +170,23 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                         }
                                                                         noWrap>
                                                                         Tx#
-                                                                        <Link
-                                                                            href="transaction/[transaction]/"
-                                                                            as={`transaction/${row.hash}`}
-                                                                            color="secondary"
+                                                                        <NavLink
+                                                                            href={`transaction/${row.hash}`}
                                                                             className={
                                                                                 classes.leftInline
-                                                                            }>
-                                                                            {row.hash ? (
-                                                                                <MiddleEllipsis
-                                                                                    text={row.hash}
-                                                                                />
-                                                                            ) : null}
-                                                                        </Link>
+                                                                            }
+                                                                            name={
+                                                                                row.hash ? (
+                                                                                    <MiddleEllipsis
+                                                                                        text={
+                                                                                            row.hash
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    ''
+                                                                                )
+                                                                            }
+                                                                        />
                                                                     </Typography>
                                                                 </Grid>
                                                                 <Grid item xs={4}>
@@ -213,23 +216,27 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                         From
                                                                         {row.from &&
                                                                         row.from.address ? (
-                                                                            <Link
-                                                                                href="account/[account]/"
-                                                                                as={`account/${row.from.address}`}
-                                                                                color="secondary"
+                                                                            <NavLink
+                                                                                href={`account/${row.from.address}`}
                                                                                 className={
                                                                                     classes.txPadding
-                                                                                }>
-                                                                                {row.from &&
-                                                                                row.from.address ? (
-                                                                                    <MiddleEllipsis
-                                                                                        text={
-                                                                                            row.from
-                                                                                                .address
-                                                                                        }
-                                                                                    />
-                                                                                ) : null}
-                                                                            </Link>
+                                                                                }
+                                                                                name={
+                                                                                    row.from &&
+                                                                                    row.from
+                                                                                        .address ? (
+                                                                                        <MiddleEllipsis
+                                                                                            text={
+                                                                                                row
+                                                                                                    .from
+                                                                                                    .address
+                                                                                            }
+                                                                                        />
+                                                                                    ) : (
+                                                                                        ''
+                                                                                    )
+                                                                                }
+                                                                            />
                                                                         ) : null}
                                                                     </Typography>
                                                                 </Grid>
@@ -245,20 +252,20 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                         To
                                                                         {row.to &&
                                                                         row.to.address ? (
-                                                                            <Link
-                                                                                href="account/[account]/"
-                                                                                as={`account/${row.to.address}`}
-                                                                                color="secondary"
+                                                                            <NavLink
+                                                                                href={`account/${row.to.address}`}
                                                                                 className={
                                                                                     classes.txPadding
-                                                                                }>
-                                                                                <MiddleEllipsis
-                                                                                    text={
-                                                                                        row.to
-                                                                                            .address
-                                                                                    }
-                                                                                />
-                                                                            </Link>
+                                                                                }
+                                                                                name={
+                                                                                    <MiddleEllipsis
+                                                                                        text={
+                                                                                            row.to
+                                                                                                .address
+                                                                                        }
+                                                                                    />
+                                                                                }
+                                                                            />
                                                                         ) : (
                                                                             ''
                                                                         )}
@@ -285,17 +292,17 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                     ) : null}
                                                                 </Grid>
                                                                 <Grid item xs={12} lg={3}>
-                                                                    <Typography
-                                                                        variant="body2"
-                                                                        className={
-                                                                            classes.alignRight
-                                                                        }>
-                                                                        {row.value ? (
-                                                                            row.value + ' CELO'
-                                                                        ) : (
-                                                                            <NotAvailable variant="body2" />
-                                                                        )}
-                                                                    </Typography>
+                                                                    {row.value ? (
+                                                                        <Typography
+                                                                            variant="body2"
+                                                                            className={
+                                                                                classes.alignRight
+                                                                            }>
+                                                                            {row.value + ' CELO'}
+                                                                        </Typography>
+                                                                    ) : (
+                                                                        <NotAvailable variant="body2" />
+                                                                    )}
                                                                 </Grid>
                                                                 <Grid item xs={12}>
                                                                     <Divider

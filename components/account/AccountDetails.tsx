@@ -10,10 +10,10 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BigNumber from 'bignumber.js';
 import React from 'react';
 
-import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import NotAvailable from '../misc/NotAvailable';
+import NavLink from '../NavLink';
 import { GET_ACCOUNT_DETAILS } from '../query/Account';
 import { GET_VALIDATOR } from '../query/Validator';
 
@@ -122,12 +122,20 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                 accountQuery.data.account &&
                                 accountQuery.data.account.accountSummary &&
                                 accountQuery.data.account.accountSummary.metadataURL ? (
-                                    <Link href="/" target="_blank" color="secondary">
-                                        {' '}
-                                        <Typography variant="body2" className={classes.alignRight}>
-                                            {accountQuery.data.account.accountSummary.metadataURL}
-                                        </Typography>{' '}
-                                    </Link>
+                                    <NavLink
+                                        href="/"
+                                        name={
+                                            <Typography
+                                                variant="body2"
+                                                className={classes.alignRight}>
+                                                {
+                                                    accountQuery.data.account.accountSummary
+                                                        .metadataURL
+                                                }
+                                            </Typography>
+                                        }
+                                        textSecondary
+                                    />
                                 ) : (
                                     <NotAvailable variant="body2" className={classes.alignRight} />
                                 )}
@@ -248,14 +256,17 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
 
                             <Grid item xs={8} className={classes.item}>
                                 {data.validator && data.validator.affiliation ? (
-                                    <Typography variant="body2" className={classes.alignRight}>
-                                        <Link
-                                            href="/validatorGroup/[validatorGroupDetails]/"
-                                            as={`../validatorGroup/${data.validator.affiliation}`}
-                                            color="secondary">
-                                            {data.validator.affiliation}
-                                        </Link>
-                                    </Typography>
+                                    <NavLink
+                                        href={`/validatorGroup/${data.validator.affiliation}`}
+                                        name={
+                                            <Typography
+                                                variant="body2"
+                                                className={classes.alignRight}>
+                                                {data.validator.affiliation}
+                                            </Typography>
+                                        }
+                                        textSecondary
+                                    />
                                 ) : (
                                     <NotAvailable variant="body2" className={classes.alignRight} />
                                 )}
@@ -295,50 +306,50 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                             accountQuery.data.account.accountSummary.authorizedSigners ? (
                                 <>
                                     <Grid item xs={7} className={classes.item}>
-                                        <Link
-                                            href="/account/[account]/"
-                                            as={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.vote}`}
-                                            color="secondary">
-                                            <Typography
-                                                variant="body2"
-                                                className={classes.alignRight}>
-                                                {
-                                                    accountQuery.data.account.accountSummary
-                                                        .authorizedSigners.vote
-                                                }
-                                            </Typography>
-                                        </Link>
+                                        <NavLink
+                                            href={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.vote}`}
+                                            name={
+                                                <Typography
+                                                    variant="body2"
+                                                    className={classes.alignRight}>
+                                                    {
+                                                        accountQuery.data.account.accountSummary
+                                                            .authorizedSigners.vote
+                                                    }
+                                                </Typography>
+                                            }
+                                        />
                                     </Grid>
                                     <Grid item xs={12} className={classes.item}>
-                                        <Link
-                                            href="/account/[account]/"
-                                            as={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.validator}`}
-                                            color="secondary">
-                                            <Typography
-                                                variant="body2"
-                                                className={classes.alignRight}>
-                                                {
-                                                    accountQuery.data.account.accountSummary
-                                                        .authorizedSigners.validator
-                                                }
-                                            </Typography>
-                                        </Link>
+                                        <NavLink
+                                            href={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.validator}`}
+                                            name={
+                                                <Typography
+                                                    variant="body2"
+                                                    className={classes.alignRight}>
+                                                    {
+                                                        accountQuery.data.account.accountSummary
+                                                            .authorizedSigners.validator
+                                                    }
+                                                </Typography>
+                                            }
+                                        />
                                     </Grid>
                                     <Grid item xs={12} className={classes.item}>
-                                        <Link
-                                            href="/account/[account]/"
-                                            as={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.attestation}`}
-                                            color="secondary">
-                                            <Typography
-                                                variant="body2"
-                                                className={classes.alignRight}>
-                                                {
-                                                    accountQuery.data.account.accountSummary
-                                                        .authorizedSigners.attestation
-                                                }
-                                            </Typography>
-                                        </Link>
-                                    </Grid>{' '}
+                                        <NavLink
+                                            href={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.attestation}`}
+                                            name={
+                                                <Typography
+                                                    variant="body2"
+                                                    className={classes.alignRight}>
+                                                    {
+                                                        accountQuery.data.account.accountSummary
+                                                            .authorizedSigners.attestation
+                                                    }
+                                                </Typography>
+                                            }
+                                        />
+                                    </Grid>
                                 </>
                             ) : (
                                 <>

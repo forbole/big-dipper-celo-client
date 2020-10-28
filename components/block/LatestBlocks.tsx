@@ -17,10 +17,10 @@ import getConfig from 'next/config';
 import numbro from 'numbro';
 import React, { useEffect } from 'react';
 
-import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import MiddleEllipsis from '../misc/MiddleEllipsis';
+import NavLink from '../NavLink';
 import PriceCard from '../PriceCard';
 import { GET_BLOCK } from '../query/Block';
 
@@ -129,18 +129,6 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
     const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
     const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowSmall);
 
-    // {
-    //   props.pagination === false ?
-    //     useEffect(() => {
-    //       if (largeScreen) {
-    //         setPageSize(publicRuntimeConfig.rowSmall)
-    //       }
-    //       else {
-    //         setPageSize(publicRuntimeConfig.rowXxsmall)
-    //       }
-    //     }) : null
-    // }
-
     useEffect(() => {
         if (pagination === false) {
             if (largeScreen) {
@@ -177,9 +165,12 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                         <Typography variant="body1" className={classes.box}>
                             Latest Blocks{' '}
                             {pagination === false ? (
-                                <Link href="/blocks" className={classes.link} color="textPrimary">
-                                    {'view more'}
-                                </Link>
+                                <NavLink
+                                    href="/blocks"
+                                    name="view more"
+                                    className={classes.link}
+                                    textSecondary
+                                />
                             ) : null}
                         </Typography>
                         <TableContainer>
@@ -242,26 +233,14 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                         padding="checkbox"
                                                         align="left"
                                                         className={classes.tableCell}>
-                                                        <Typography variant="body2" noWrap>
-                                                            {/* <a href="block/[...block]" as={`block/${row.number}`}  onClick={handleClick} >
-      {row.number}
-    </a> */}
-                                                            {/* <a  onClick={() => Router.push(`/block/[block]`, `/block/${row.number}`)}> {row.number}</a> */}
-                                                            {/* <span onClick={() => Router.push(`/block/[block]`, `/block/${row.number}`)}>{row.number}</span> */}
-                                                            {/* <Link href="block/[...block]/" as={`block/${row.number}`} passHref>
-      <MyButton />
-    </Link> */}
-                                                            {/* <Post number={row.number}></Post> */}
-                                                            {/* <Link href={`block/?block=${row.number}`}><a>{row.number}</a></Link> */}
-
-                                                            {/* <Link href="block/[block]/" as={`block/${row.number}`} onClick={handleClick} passHref color="secondary"><a  >{row.number}</a></Link> */}
-                                                            <Link
-                                                                href="/block/[block]/"
-                                                                as={`/block/${row.number}`}
-                                                                color="secondary">
-                                                                {row.number}
-                                                            </Link>
-                                                        </Typography>
+                                                        <NavLink
+                                                            href={`/block/${row.number}`}
+                                                            name={
+                                                                <Typography variant="body2" noWrap>
+                                                                    {row.number}
+                                                                </Typography>
+                                                            }
+                                                        />
                                                     </TableCell>
 
                                                     <TableCell
@@ -269,31 +248,35 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                         padding="checkbox"
                                                         className={classes.tableCell}>
                                                         {row.miner && row.miner.signer ? (
-                                                            <Link
-                                                                href="/account/[account]/"
-                                                                as={`/account/${row.miner.signer}`}
-                                                                color="secondary">
-                                                                <Typography
-                                                                    variant="body2"
-                                                                    display="inline"
-                                                                    className={classes.textContent}
-                                                                    noWrap>
-                                                                    <span>
-                                                                        {(row.miner &&
-                                                                            row.miner.name) ||
-                                                                        (row.miner &&
-                                                                            row.miner.signer) ? (
-                                                                            <MiddleEllipsis
-                                                                                text={
-                                                                                    row.miner
-                                                                                        .name ||
-                                                                                    row.miner.signer
-                                                                                }
-                                                                            />
-                                                                        ) : null}
-                                                                    </span>
-                                                                </Typography>
-                                                            </Link>
+                                                            <NavLink
+                                                                href={`/account/${row.miner.signer}`}
+                                                                name={
+                                                                    <Typography
+                                                                        variant="body2"
+                                                                        display="inline"
+                                                                        className={
+                                                                            classes.textContent
+                                                                        }
+                                                                        noWrap>
+                                                                        <span>
+                                                                            {(row.miner &&
+                                                                                row.miner.name) ||
+                                                                            (row.miner &&
+                                                                                row.miner
+                                                                                    .signer) ? (
+                                                                                <MiddleEllipsis
+                                                                                    text={
+                                                                                        row.miner
+                                                                                            .name ||
+                                                                                        row.miner
+                                                                                            .signer
+                                                                                    }
+                                                                                />
+                                                                            ) : null}
+                                                                        </span>
+                                                                    </Typography>
+                                                                }
+                                                            />
                                                         ) : null}
                                                     </TableCell>
 

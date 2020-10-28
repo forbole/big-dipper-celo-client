@@ -16,7 +16,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import getConfig from 'next/config';
 import React from 'react';
 
-import Link from '../Link';
+import NavLink from '../NavLink';
 
 function createData(address: string, value: string, percentage: string) {
     return { address, value, percentage };
@@ -143,15 +143,18 @@ const TokenHolders = (): JSX.Element => {
                                                         spacing={1}
                                                         style={{ padding: '0.5rem 0' }}>
                                                         <Grid item xs={12}>
-                                                            <Link href="/" color="secondary">
-                                                                <Typography
-                                                                    variant="body2"
-                                                                    className={
-                                                                        classes.truncateAlignRight
-                                                                    }>
-                                                                    {row.address}
-                                                                </Typography>{' '}
-                                                            </Link>
+                                                            <NavLink
+                                                                href="/"
+                                                                name={
+                                                                    <Typography
+                                                                        variant="body2"
+                                                                        className={
+                                                                            classes.truncateAlignRight
+                                                                        }>
+                                                                        {row.address}
+                                                                    </Typography>
+                                                                }
+                                                            />
                                                         </Grid>
                                                         <Grid item xs={12}>
                                                             <Typography

@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
 import theme from '../themes/celo-theme';
+import NavLink from './NavLink';
 
 const useStyles = makeStyles({
     root: {
@@ -80,24 +81,25 @@ const Footer = (): JSX.Element => {
                         .
                     </Typography>
 
-                    <Link
+                    <NavLink
                         href="https://github.com/forbole/big-dipper-celo-client"
-                        target="_blank"
-                        className={classes.socialMedia}>
-                        <img src="/images/social-media-github.svg" alt="Big Dipper Github" />
-                    </Link>
-                    <Link
+                        name={<img src="/images/social-media-github.svg" alt="Big Dipper Github" />}
+                        className={classes.socialMedia}
+                    />
+
+                    <NavLink
                         href="https://medium.com/bigdipperlive"
-                        target="_blank"
-                        className={classes.socialMedia}>
-                        <img src="/images/social-media-medium.svg" alt="Big Dipper Medium" />
-                    </Link>
-                    <Link
+                        className={classes.socialMedia}
+                        name={<img src="/images/social-media-medium.svg" alt="Big Dipper Medium" />}
+                    />
+
+                    <NavLink
                         href="https://twitter.com/bigdipperlive"
-                        target="_blank"
-                        className={classes.socialMedia}>
-                        <img src="/images/social-media-twitter.svg" alt="Big Dipper Twitter" />
-                    </Link>
+                        className={classes.socialMedia}
+                        name={
+                            <img src="/images/social-media-twitter.svg" alt="Big Dipper Twitter" />
+                        }
+                    />
                 </Grid>
             </Grid>
         </footer>

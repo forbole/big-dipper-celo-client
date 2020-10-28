@@ -15,10 +15,10 @@ import BigNumber from 'bignumber.js';
 import getConfig from 'next/config';
 import React from 'react';
 
-import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import NotAvailable from '../misc/NotAvailable';
+import NavLink from '../NavLink';
 import { GET_PROPOSAL } from '../query/Proposal';
 import { GET_TX_DETAILS } from '../query/Transaction';
 
@@ -164,18 +164,18 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                                                 data.proposal.upvoteList[row].returnValues &&
                                                 data.proposal.upvoteList[row].returnValues
                                                     .account ? (
-                                                    <Link
-                                                        href="/account/[account]/"
-                                                        as={`/account/${data.proposal.upvoteList[row].returnValues.account}`}
-                                                        color="secondary">
-                                                        <Typography variant="body2" noWrap>
-                                                            {' '}
-                                                            {
-                                                                data.proposal.upvoteList[row]
-                                                                    .returnValues.account
-                                                            }
-                                                        </Typography>
-                                                    </Link>
+                                                    <NavLink
+                                                        href={`/account/${data.proposal.upvoteList[row].returnValues.account}`}
+                                                        name={
+                                                            <Typography variant="body2" noWrap>
+                                                                {' '}
+                                                                {
+                                                                    data.proposal.upvoteList[row]
+                                                                        .returnValues.account
+                                                                }
+                                                            </Typography>
+                                                        }
+                                                    />
                                                 ) : (
                                                     <NotAvailable variant="body2" />
                                                 )}

@@ -17,9 +17,9 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import clsx from 'clsx';
 import React from 'react';
 
-import Link from '../components/Link';
 import NetworkDropdown from '../components/NetworkDropdown';
 import SearchBar from '../components/SearchBar';
+import NavLink from './NavLink';
 
 const drawerWidth = 220;
 
@@ -70,8 +70,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         icon: {
             paddingRight: '2rem',
-            paddingLeft: '0.5rem',
-            marginTop: '0.3rem'
+            paddingLeft: '0.5rem'
+            // marginTop: '0.3rem'
         },
         loginButton: {
             background: 'rgba(153, 153, 153, 1)',
@@ -105,6 +105,14 @@ const useStyles = makeStyles((theme: Theme) =>
             textAlign: 'left',
             marginTop: '-0.325rem',
             marginLeft: '0.5rem'
+        },
+
+        listItem: {
+            display: 'inline-flex'
+        },
+
+        listItemTitle: {
+            paddingTop: '0.5rem'
         }
     })
 );
@@ -205,54 +213,108 @@ const Layout = (props: { children: React.ReactNode }): JSX.Element => {
 
                         <List>
                             {[
-                                <Link href="/" color="inherit">
-                                    <Typography variant="body1" color="textSecondary">
-                                        <ListItemIcon className={classes.icon}>
-                                            <img src="/images/home.svg" alt="Dashboard" />
-                                        </ListItemIcon>
-                                        {'Dashboard'}
-                                    </Typography>{' '}
-                                </Link>,
-                                <Link href="/blocks" color="inherit">
-                                    <Typography variant="body1" color="textSecondary">
-                                        <ListItemIcon className={classes.icon}>
-                                            <img src="/images/blocks.svg" alt="Blocks" />
-                                        </ListItemIcon>
-                                        {'Blocks'}
-                                    </Typography>{' '}
-                                </Link>,
-                                <Link href="/transactions" color="inherit">
-                                    <Typography variant="body1" color="textSecondary">
-                                        <ListItemIcon className={classes.icon}>
-                                            <img src="/images/txs.svg" alt="Transactions" />
-                                        </ListItemIcon>
-                                        {'Transactions'}
-                                    </Typography>{' '}
-                                </Link>,
-                                <Link href="/accounts" color="inherit">
-                                    <Typography variant="body1" color="textSecondary">
-                                        <ListItemIcon className={classes.icon}>
-                                            <img src="/images/validators.svg" alt="Accounts" />
-                                        </ListItemIcon>
-                                        {'Accounts'}
-                                    </Typography>{' '}
-                                </Link>,
-                                <Link href="/proposals" color="inherit">
-                                    <Typography variant="body1" color="textSecondary">
-                                        <ListItemIcon className={classes.icon}>
-                                            <img src="/images/proposal.svg" alt="Proposals" />
-                                        </ListItemIcon>
-                                        {'Proposals'}
-                                    </Typography>{' '}
-                                </Link>,
-                                <Link href="/validatorVotes" color="inherit">
-                                    <Typography variant="body1" color="textSecondary">
-                                        <ListItemIcon className={classes.icon}>
-                                            <img src="/images/vote.svg" alt="Validator Votes" />
-                                        </ListItemIcon>
-                                        {'Validator Votes'}
-                                    </Typography>{' '}
-                                </Link>
+                                <NavLink
+                                    href="/"
+                                    name={
+                                        <>
+                                            <ListItemIcon className={classes.icon}>
+                                                <img src="/images/home.svg" alt="Dashboard" />
+                                            </ListItemIcon>
+                                            <Typography
+                                                variant="body1"
+                                                color="textSecondary"
+                                                className={classes.listItemTitle}>
+                                                Dashboard
+                                            </Typography>
+                                        </>
+                                    }
+                                    className={classes.listItem}
+                                />,
+                                <NavLink
+                                    href="/blocks"
+                                    name={
+                                        <>
+                                            <ListItemIcon className={classes.icon}>
+                                                <img src="/images/blocks.svg" alt="Blocks" />
+                                            </ListItemIcon>
+                                            <Typography
+                                                variant="body1"
+                                                color="textSecondary"
+                                                className={classes.listItemTitle}>
+                                                Blocks
+                                            </Typography>
+                                        </>
+                                    }
+                                    className={classes.listItem}
+                                />,
+                                <NavLink
+                                    href="/transactions"
+                                    name={
+                                        <>
+                                            <ListItemIcon className={classes.icon}>
+                                                <img src="/images/txs.svg" alt="Transactions" />
+                                            </ListItemIcon>
+                                            <Typography
+                                                variant="body1"
+                                                color="textSecondary"
+                                                className={classes.listItemTitle}>
+                                                Transactions
+                                            </Typography>
+                                        </>
+                                    }
+                                    className={classes.listItem}
+                                />,
+                                <NavLink
+                                    href="/accounts"
+                                    name={
+                                        <>
+                                            <ListItemIcon className={classes.icon}>
+                                                <img src="/images/validators.svg" alt="Accounts" />
+                                            </ListItemIcon>
+                                            <Typography
+                                                variant="body1"
+                                                color="textSecondary"
+                                                className={classes.listItemTitle}>
+                                                Accounts
+                                            </Typography>
+                                        </>
+                                    }
+                                    className={classes.listItem}
+                                />,
+                                <NavLink
+                                    href="/proposals"
+                                    name={
+                                        <>
+                                            <ListItemIcon className={classes.icon}>
+                                                <img src="/images/proposal.svg" alt="Proposals" />
+                                            </ListItemIcon>
+                                            <Typography
+                                                variant="body1"
+                                                color="textSecondary"
+                                                className={classes.listItemTitle}>
+                                                Proposals
+                                            </Typography>
+                                        </>
+                                    }
+                                    className={classes.listItem}
+                                />,
+                                <NavLink
+                                    href="/validatorVotes"
+                                    name={
+                                        <>
+                                            <ListItemIcon className={classes.icon}>
+                                                <img src="/images/vote.svg" alt="Validator Votes" />
+                                            </ListItemIcon>
+                                            <Typography
+                                                variant="body1"
+                                                color="textSecondary"
+                                                className={classes.listItemTitle}>
+                                                Validator Votes
+                                            </Typography>
+                                        </>
+                                    }
+                                    className={classes.listItem}
+                                />
                             ].map((text, index) => (
                                 <ListItem button key={index}>
                                     <ListItemText primary={text} />

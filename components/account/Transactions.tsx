@@ -20,11 +20,11 @@ import numbro from 'numbro';
 import React from 'react';
 
 import Chips from '../Chips';
-import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import MiddleEllipsis from '../misc/MiddleEllipsis';
 import NotAvailable from '../misc/NotAvailable';
+import NavLink from '../NavLink';
 import { GET_ACCOUNT_TX } from '../query/Transaction';
 
 const useStyles = makeStyles(() => {
@@ -106,191 +106,209 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
 
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
-
-    return (
-        <Accordion defaultExpanded>
-            <AccordionSummary
-                expandIcon={<ExpandMoreIcon className={classes.icon} />}
-                aria-controls="accountTransactionsPanel"
-                id="accountTransactionsPanel">
-                <Typography variant="body1">
-                    {' '}
-                    Transactions ({numbro(data.transactionsByAccount.totalCounts).format('0,000')})
-                </Typography>
-            </AccordionSummary>
-            <AccordionDetails className={classes.root}>
-                <Grid container>
-                    <Divider variant="middle" />
-                    <Grid item xs={12}>
-                        <TableContainer className={classes.container}>
-                            <Table>
-                                <TableHead></TableHead>
-                                <TableBody>
-                                    {data.transactionsByAccount.transactions.map(
-                                        (row: any, index: number) => {
-                                            return (
-                                                <TableRow key={index}>
-                                                    <TableCell
-                                                        component="th"
-                                                        scope="row"
-                                                        padding="checkbox">
-                                                        <Grid
-                                                            container
-                                                            spacing={1}
-                                                            style={{ padding: '0.5rem 0' }}>
-                                                            <Grid item xs={8}>
-                                                                <Typography
-                                                                    variant="body2"
-                                                                    className={classes.leftInline}>
-                                                                    Tx#{' '}
-                                                                    <Link
-                                                                        href="/transaction/[transaction]/"
-                                                                        as={`../transaction/${row.hash}`}
-                                                                        color="secondary"
+    if (data && data.transactionsByAccount && data.transactionsByAccount.totalCounts > 0) {
+        return (
+            <Accordion defaultExpanded>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon className={classes.icon} />}
+                    aria-controls="accountTransactionsPanel"
+                    id="accountTransactionsPanel">
+                    <Typography variant="body1">
+                        {' '}
+                        Transactions (
+                        {numbro(data.transactionsByAccount.totalCounts).format('0,000')})
+                    </Typography>
+                </AccordionSummary>
+                <AccordionDetails className={classes.root}>
+                    <Grid container>
+                        <Divider variant="middle" />
+                        <Grid item xs={12}>
+                            <TableContainer className={classes.container}>
+                                <Table>
+                                    <TableHead></TableHead>
+                                    <TableBody>
+                                        {data.transactionsByAccount.transactions.map(
+                                            (row: any, index: number) => {
+                                                return (
+                                                    <TableRow key={index}>
+                                                        <TableCell
+                                                            component="th"
+                                                            scope="row"
+                                                            padding="checkbox">
+                                                            <Grid
+                                                                container
+                                                                spacing={1}
+                                                                style={{ padding: '0.5rem 0' }}>
+                                                                <Grid item xs={8}>
+                                                                    <Typography
+                                                                        variant="body2"
                                                                         className={
                                                                             classes.leftInline
                                                                         }>
-                                                                        {row.hash ? (
-                                                                            <MiddleEllipsis
-                                                                                text={row.hash}
-                                                                            />
-                                                                        ) : (
-                                                                            <NotAvailable variant="body2" />
-                                                                        )}
-                                                                    </Link>
-                                                                </Typography>
-                                                            </Grid>
-                                                            <Grid item xs={4}>
-                                                                <Typography
-                                                                    variant="body2"
-                                                                    className={classes.alignRight}>
-                                                                    {row.timestamp ? (
-                                                                        moment
-                                                                            .unix(row.timestamp)
-                                                                            .fromNow()
-                                                                    ) : (
-                                                                        <NotAvailable variant="body2" />
-                                                                    )}
-                                                                </Typography>
-                                                            </Grid>
-
-                                                            <Grid item xs={5} md={4}>
-                                                                <Typography
-                                                                    variant="body2"
-                                                                    className={classes.leftInline}>
-                                                                    From{' '}
-                                                                    <Link
-                                                                        href="/account/[account]/"
-                                                                        as={`../account/${row.from.address}`}
-                                                                        color="secondary"
+                                                                        Tx#
+                                                                        <NavLink
+                                                                            href={`/transaction/${row.hash}`}
+                                                                            className={
+                                                                                classes.leftInline
+                                                                            }
+                                                                            name={
+                                                                                row.hash ? (
+                                                                                    <MiddleEllipsis
+                                                                                        text={
+                                                                                            row.hash
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    <NotAvailable variant="body2" />
+                                                                                )
+                                                                            }
+                                                                        />
+                                                                    </Typography>
+                                                                </Grid>
+                                                                <Grid item xs={4}>
+                                                                    <Typography
+                                                                        variant="body2"
                                                                         className={
-                                                                            classes.txPadding
+                                                                            classes.alignRight
                                                                         }>
-                                                                        {row.from &&
-                                                                        row.from.address ? (
-                                                                            <MiddleEllipsis
-                                                                                text={
-                                                                                    row.from.address
-                                                                                }
-                                                                            />
+                                                                        {row.timestamp ? (
+                                                                            moment
+                                                                                .unix(row.timestamp)
+                                                                                .fromNow()
                                                                         ) : (
                                                                             <NotAvailable variant="body2" />
                                                                         )}
-                                                                    </Link>
-                                                                </Typography>
-                                                            </Grid>
+                                                                    </Typography>
+                                                                </Grid>
 
-                                                            <Grid item xs={7} md={8}>
-                                                                <Typography
-                                                                    variant="body2"
-                                                                    align="left"
-                                                                    className={classes.rightInline}>
-                                                                    To{' '}
-                                                                    <Link
-                                                                        href="/account/[account]/"
-                                                                        as={`../account/${row.to.address}`}
-                                                                        color="secondary"
+                                                                <Grid item xs={5} md={4}>
+                                                                    <Typography
+                                                                        variant="body2"
                                                                         className={
-                                                                            classes.txPadding
+                                                                            classes.leftInline
                                                                         }>
-                                                                        {row.to &&
-                                                                        row.to.address ? (
-                                                                            <MiddleEllipsis
-                                                                                text={
-                                                                                    row.to.address
-                                                                                }
-                                                                            />
+                                                                        From
+                                                                        <NavLink
+                                                                            href={`/account/${row.from.address}`}
+                                                                            className={
+                                                                                classes.txPadding
+                                                                            }
+                                                                            name={
+                                                                                row.from &&
+                                                                                row.from.address ? (
+                                                                                    <MiddleEllipsis
+                                                                                        text={
+                                                                                            row.from
+                                                                                                .address
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    <NotAvailable variant="body2" />
+                                                                                )
+                                                                            }
+                                                                        />
+                                                                    </Typography>
+                                                                </Grid>
+
+                                                                <Grid item xs={7} md={8}>
+                                                                    <Typography
+                                                                        variant="body2"
+                                                                        align="left"
+                                                                        className={
+                                                                            classes.rightInline
+                                                                        }>
+                                                                        To
+                                                                        <NavLink
+                                                                            href={`/account/${row.to.address}`}
+                                                                            className={
+                                                                                classes.txPadding
+                                                                            }
+                                                                            name={
+                                                                                row.to &&
+                                                                                row.to.address ? (
+                                                                                    <MiddleEllipsis
+                                                                                        text={
+                                                                                            row.to
+                                                                                                .address
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    <NotAvailable variant="body2" />
+                                                                                )
+                                                                            }
+                                                                        />
+                                                                    </Typography>
+                                                                </Grid>
+
+                                                                <Grid item xs={12} lg={8}>
+                                                                    {row.type &&
+                                                                    row.to &&
+                                                                    row.to.contract &&
+                                                                    row.to.contract.name ? (
+                                                                        <Chips
+                                                                            type={row.type}
+                                                                            contractName={
+                                                                                row.to.contract.name
+                                                                            }
+                                                                        />
+                                                                    ) : row.type ? (
+                                                                        <Chips type={row.type} />
+                                                                    ) : null}
+                                                                </Grid>
+                                                                <Grid item xs={12} lg={4}>
+                                                                    <Typography
+                                                                        variant="body2"
+                                                                        className={
+                                                                            classes.alignRight
+                                                                        }>
+                                                                        {row.gas ? (
+                                                                            row.gas + ' CELO'
                                                                         ) : (
                                                                             <NotAvailable variant="body2" />
                                                                         )}
-                                                                    </Link>
-                                                                </Typography>
+                                                                    </Typography>
+                                                                </Grid>
                                                             </Grid>
-
-                                                            <Grid item xs={12} lg={8}>
-                                                                {row.type &&
-                                                                row.to &&
-                                                                row.to.contract &&
-                                                                row.to.contract.name ? (
-                                                                    <Chips
-                                                                        type={row.type}
-                                                                        contractName={
-                                                                            row.to.contract.name
-                                                                        }
-                                                                    />
-                                                                ) : row.type ? (
-                                                                    <Chips type={row.type} />
-                                                                ) : null}
-                                                            </Grid>
-                                                            <Grid item xs={12} lg={4}>
-                                                                <Typography
-                                                                    variant="body2"
-                                                                    className={classes.alignRight}>
-                                                                    {row.gas ? (
-                                                                        row.gas + ' CELO'
-                                                                    ) : (
-                                                                        <NotAvailable variant="body2" />
-                                                                    )}
-                                                                </Typography>
-                                                            </Grid>
-                                                        </Grid>
-                                                    </TableCell>
-                                                </TableRow>
-                                            );
-                                        }
-                                    )}
-                                </TableBody>
-                            </Table>
-                            <TablePagination
-                                className="account-txs"
-                                rowsPerPageOptions={[
-                                    publicRuntimeConfig.rowXxsmall,
-                                    publicRuntimeConfig.rowXsmall,
-                                    publicRuntimeConfig.rowSmall,
-                                    publicRuntimeConfig.rowMedium,
-                                    publicRuntimeConfig.rowLarge,
-                                    publicRuntimeConfig.rowXlarge
-                                ]}
-                                component="div"
-                                count={data.transactionsByAccount.totalCounts}
-                                rowsPerPage={pageSize}
-                                page={page}
-                                onChangePage={handleChangePage}
-                                onChangeRowsPerPage={handleChangeRowsPerPage}
-                                backIconButtonProps={{
-                                    'aria-label': 'Previous',
-                                    disabled: page === 1
-                                }}
-                                nextIconButtonProps={{
-                                    'aria-label': 'Next'
-                                }}
-                            />
-                        </TableContainer>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                );
+                                            }
+                                        )}
+                                    </TableBody>
+                                </Table>
+                                <TablePagination
+                                    className="account-txs"
+                                    rowsPerPageOptions={[
+                                        publicRuntimeConfig.rowXxsmall,
+                                        publicRuntimeConfig.rowXsmall,
+                                        publicRuntimeConfig.rowSmall,
+                                        publicRuntimeConfig.rowMedium,
+                                        publicRuntimeConfig.rowLarge,
+                                        publicRuntimeConfig.rowXlarge
+                                    ]}
+                                    component="div"
+                                    count={data.transactionsByAccount.totalCounts}
+                                    rowsPerPage={pageSize}
+                                    page={page}
+                                    onChangePage={handleChangePage}
+                                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                                    backIconButtonProps={{
+                                        'aria-label': 'Previous',
+                                        disabled: page === 1
+                                    }}
+                                    nextIconButtonProps={{
+                                        'aria-label': 'Next'
+                                    }}
+                                />
+                            </TableContainer>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </AccordionDetails>
-        </Accordion>
-    );
+                </AccordionDetails>
+            </Accordion>
+        );
+    } else {
+        return null as any;
+    }
 };
 
 export default AccountTransactions;

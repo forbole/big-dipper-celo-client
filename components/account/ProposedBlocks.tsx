@@ -18,11 +18,11 @@ import moment from 'moment';
 import getConfig from 'next/config';
 import React from 'react';
 
-import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import MiddleEllipsis from '../misc/MiddleEllipsis';
 import NotAvailable from '../misc/NotAvailable';
+import NavLink from '../NavLink';
 import { GET_ACCOUNT_DETAILS } from '../query/Account';
 import { GET_PROPOSED_BLOCKS } from '../query/Block';
 
@@ -179,12 +179,14 @@ const ProposedBlocks = ({ address }: ProposedBlocksProps): JSX.Element => {
                                                     align="left"
                                                     className={classes.tableCell}>
                                                     {row.number ? (
-                                                        <Link href="/" color="secondary">
-                                                            <Typography variant="body2" noWrap>
-                                                                {' '}
-                                                                {row.number}
-                                                            </Typography>
-                                                        </Link>
+                                                        <NavLink
+                                                            href={`/block/${row.number}`}
+                                                            name={
+                                                                <Typography variant="body2" noWrap>
+                                                                    {row.number}
+                                                                </Typography>
+                                                            }
+                                                        />
                                                     ) : (
                                                         ''
                                                     )}
@@ -198,18 +200,22 @@ const ProposedBlocks = ({ address }: ProposedBlocksProps): JSX.Element => {
                                                     (row.miner &&
                                                         row.miner.signerAccount &&
                                                         row.miner.signerAccount.address) ? (
-                                                        <Link href="/" color="secondary">
-                                                            <Typography variant="body2" noWrap>
-                                                                {row.miner.name || (
-                                                                    <MiddleEllipsis
-                                                                        text={
-                                                                            row.miner.signerAccount
-                                                                                .address
-                                                                        }
-                                                                    />
-                                                                )}
-                                                            </Typography>
-                                                        </Link>
+                                                        <NavLink
+                                                            href={`/account/${row.miner.signerAccount.address}`}
+                                                            name={
+                                                                <Typography variant="body2" noWrap>
+                                                                    {row.miner.name || (
+                                                                        <MiddleEllipsis
+                                                                            text={
+                                                                                row.miner
+                                                                                    .signerAccount
+                                                                                    .address
+                                                                            }
+                                                                        />
+                                                                    )}
+                                                                </Typography>
+                                                            }
+                                                        />
                                                     ) : (
                                                         <NotAvailable variant="body2" />
                                                     )}

@@ -7,10 +7,10 @@ import getConfig from 'next/config';
 import React from 'react';
 
 import Chips from '../../components/Chips';
-import Link from '../../components/Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import MiddleEllipsis from '../misc/MiddleEllipsis';
+import NavLink from '../NavLink';
 import { GET_PROPOSALS } from '../query/Proposal';
 
 const useStyles = makeStyles({
@@ -82,31 +82,30 @@ const ProposalDetails = (): JSX.Element => {
                                 <Grid container className={classes.container}>
                                     <Grid item xs={1}>
                                         {row.returnValues && row.returnValues.proposalId ? (
-                                            <Link
-                                                href="/proposal/[proposal]/"
-                                                as={`/proposal/${row.returnValues.proposalId}`}
-                                                color="textPrimary">
-                                                <Typography
-                                                    variant="body2"
-                                                    className={classes.value}>
-                                                    #{row.returnValues.proposalId}
-                                                </Typography>
-                                            </Link>
+                                            <NavLink
+                                                href={`/proposal/${row.returnValues.proposalId}`}
+                                                name={
+                                                    <Typography
+                                                        variant="body2"
+                                                        className={classes.value}>
+                                                        #{row.returnValues.proposalId}
+                                                    </Typography>
+                                                }
+                                            />
                                         ) : null}
                                     </Grid>
                                     <Grid item xs={8} sm={9}>
                                         <Typography variant="body2" className={classes.value}>
                                             Proposer{' '}
                                             {row.returnValues && row.returnValues.proposer ? (
-                                                <Link
-                                                    href="/account/[account]/"
-                                                    as={`/account/${row.returnValues.proposer}`}
-                                                    color="secondary">
-                                                    {' '}
-                                                    <MiddleEllipsis
-                                                        text={row.returnValues.proposer}
-                                                    />
-                                                </Link>
+                                                <NavLink
+                                                    href={`/proposal/${row.returnValues.proposer}`}
+                                                    name={
+                                                        <MiddleEllipsis
+                                                            text={row.returnValues.proposer}
+                                                        />
+                                                    }
+                                                />
                                             ) : null}
                                         </Typography>
                                     </Grid>
@@ -132,12 +131,11 @@ const ProposalDetails = (): JSX.Element => {
                                         {row.returnValues &&
                                         row.returnValues.proposalId &&
                                         row.proposalTitle ? (
-                                            <Link
-                                                href="/proposal/[proposal]/"
-                                                as={`/proposal/${row.returnValues.proposalId}`}
-                                                color="textPrimary">
-                                                {row.proposalTitle}
-                                            </Link>
+                                            <NavLink
+                                                href={`/proposal/${row.returnValues.proposalId}`}
+                                                name={row.proposalTitle}
+                                                textSecondary
+                                            />
                                         ) : null}
                                     </Grid>
                                 </Grid>

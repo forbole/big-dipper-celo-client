@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
-import Link from '../../../Link';
+import NavLink from '../../../NavLink';
 
 const useStyles = makeStyles({
     root: {
@@ -72,8 +72,9 @@ const Success = (): JSX.Element => {
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
-                                <Link href="/transactions">
-                                    <div className={classes.controlButton}>
+                                <NavLink
+                                    href="/transactions"
+                                    name={
                                         <Button
                                             variant="outlined"
                                             color="secondary"
@@ -84,8 +85,9 @@ const Success = (): JSX.Element => {
                                                 View Transactions
                                             </Typography>
                                         </Button>
-                                    </div>
-                                </Link>
+                                    }
+                                    className={classes.controlButton}
+                                />
                             </Grid>
                         </Grid>
                     </DialogContentText>

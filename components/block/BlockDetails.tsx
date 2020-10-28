@@ -13,10 +13,10 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import moment from 'moment';
 import React from 'react';
 
-import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import NotAvailable from '../misc/NotAvailable';
+import NavLink from '../NavLink';
 import { GET_BLOCK_DETAILS } from '../query/Block';
 
 const useStyles = makeStyles(() => {
@@ -150,21 +150,28 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                     </Grid>
 
                     <Grid item xs={1}>
-                        <Link href="/block/[block]/" as={`/block/${prevBlock}`} color="secondary">
-                            <IconButton
-                                aria-label="Previous Block"
-                                className={classes.iconButtonRight}>
-                                <ArrowBackIosIcon className={classes.arrowIcon} />
-                            </IconButton>
-                        </Link>
+                        <NavLink
+                            href={`/block/${prevBlock}`}
+                            name={
+                                <IconButton
+                                    aria-label="Previous Block"
+                                    className={classes.iconButtonRight}>
+                                    <ArrowBackIosIcon className={classes.arrowIcon} />
+                                </IconButton>
+                            }
+                        />
                     </Grid>
                     <Grid item xs={1}>
-                        <Link href="/block/[block]/" as={`/block/${nextBlock}`} color="secondary">
-                            {' '}
-                            <IconButton aria-label="Next Block" className={classes.iconButtonLeft}>
-                                <ArrowForwardIosIcon className={classes.arrowIcon} />
-                            </IconButton>
-                        </Link>
+                        <NavLink
+                            href={`/block/${nextBlock}`}
+                            name={
+                                <IconButton
+                                    aria-label="Next Block"
+                                    className={classes.iconButtonLeft}>
+                                    <ArrowForwardIosIcon className={classes.arrowIcon} />
+                                </IconButton>
+                            }
+                        />
                     </Grid>
 
                     <Grid item xs={12}>
@@ -217,12 +224,10 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                         <Typography variant="body2" component="h2">
                             {(data && data.block && data.block.miner && data.block.miner.name) ||
                             data.block.miner.signer ? (
-                                <Link
-                                    href="/account/[account]/"
-                                    as={`../account/${data.block.miner.signer}`}
-                                    color="secondary">
-                                    {data.block.miner.name}
-                                </Link>
+                                <NavLink
+                                    href={`/account/${data.block.miner.signer}`}
+                                    name={data.block.miner.name}
+                                />
                             ) : (
                                 <NotAvailable variant="body2" color="textSecondary" />
                             )}
@@ -251,14 +256,10 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
 
                         <Typography variant="body2" component="h2">
                             {data.block && data.block.parentHash ? (
-                                <Link
-                                    href="/transaction/[transaction]/"
-                                    as={`../transaction/${data.block.parentHash}`}
-                                    color="secondary"
-                                    //className={classes.leftInline}
-                                >
-                                    {data.block.parentHash}
-                                </Link>
+                                <NavLink
+                                    href={`/transaction/${data.block.parentHash}`}
+                                    name={data.block.parentHash}
+                                />
                             ) : (
                                 <NotAvailable variant="body2" color="textSecondary" />
                             )}
@@ -374,21 +375,23 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                                             return (
                                                 <TabPanel value={value} index={0}>
                                                     <li key={index}>
-                                                        <Typography variant="body2" gutterBottom>
-                                                            <Link
-                                                                href="/validatorGroup/[validatorGroupDetails]/"
-                                                                as={
-                                                                    row.validator &&
-                                                                    row.validator.validatorGroup &&
-                                                                    row.validator.validatorGroup
-                                                                        .address
-                                                                        ? `/validatorGroup/${row.validator.validatorGroup.address}`
-                                                                        : ''
-                                                                }
-                                                                color="secondary">
-                                                                {row.validator.name || row.signer}
-                                                            </Link>
-                                                        </Typography>
+                                                        {row.validator &&
+                                                        row.validator.validatorGroup &&
+                                                        row.validator.validatorGroup.address ? (
+                                                            <Typography
+                                                                variant="body2"
+                                                                gutterBottom>
+                                                                <NavLink
+                                                                    href={`/validatorGroup/${row.validator.validatorGroup.address}`}
+                                                                    name={
+                                                                        row.validator.name ||
+                                                                        row.signer
+                                                                    }
+                                                                />
+                                                            </Typography>
+                                                        ) : (
+                                                            ''
+                                                        )}
                                                     </li>
                                                 </TabPanel>
                                             );
@@ -396,21 +399,20 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                                             return (
                                                 <TabPanel value={value} index={1}>
                                                     <li key={index}>
-                                                        <Typography variant="body2" gutterBottom>
-                                                            <Link
-                                                                href="/validatorGroup/[validatorGroupDetails]/"
-                                                                as={
-                                                                    row.validator &&
-                                                                    row.validator.validatorGroup &&
-                                                                    row.validator.validatorGroup
-                                                                        .address
-                                                                        ? `/validatorGroup/${row.validator.validatorGroup.address}`
-                                                                        : ''
-                                                                }
-                                                                color="secondary">
-                                                                {row.validator.name}
-                                                            </Link>
-                                                        </Typography>
+                                                        {row.validator &&
+                                                        row.validator.validatorGroup &&
+                                                        row.validator.validatorGroup.address ? (
+                                                            <Typography
+                                                                variant="body2"
+                                                                gutterBottom>
+                                                                <NavLink
+                                                                    href={`/validatorGroup/${row.validator.validatorGroup.address}`}
+                                                                    name={row.validator.name}
+                                                                />
+                                                            </Typography>
+                                                        ) : (
+                                                            ''
+                                                        )}
                                                     </li>
                                                 </TabPanel>
                                             );

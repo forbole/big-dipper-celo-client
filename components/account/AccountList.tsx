@@ -15,11 +15,11 @@ import getConfig from 'next/config';
 import numbro from 'numbro';
 import React from 'react';
 
-import Link from '../Link';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import MiddleEllipsis from '../misc/MiddleEllipsis';
 import NotAvailable from '../misc/NotAvailable';
+import NavLink from '../NavLink';
 import { GET_ACCOUNTS } from '../query/Account';
 import { GET_TOTAL_SUPPLY } from '../query/Chain';
 
@@ -176,16 +176,16 @@ const AccountList = (): JSX.Element => {
                                                         align="left"
                                                         padding="checkbox"
                                                         className={classes.tableCell}>
-                                                        <Link
-                                                            href="/account/[account]/"
-                                                            as={`/account/${row.address}`}
-                                                            color="secondary">
-                                                            <Typography variant="body2" noWrap>
-                                                                <MiddleEllipsis
-                                                                    text={row.address}
-                                                                />
-                                                            </Typography>
-                                                        </Link>
+                                                        <NavLink
+                                                            href={`/account/${row.address}`}
+                                                            name={
+                                                                <Typography variant="body2" noWrap>
+                                                                    <MiddleEllipsis
+                                                                        text={row.address}
+                                                                    />
+                                                                </Typography>
+                                                            }
+                                                        />
                                                     </TableCell>
                                                 ) : (
                                                     <NotAvailable variant="body2" />
