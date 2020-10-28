@@ -96,7 +96,7 @@ const CoinBalanceHistory = (): JSX.Element => {
                                     tick={{
                                         stroke: 'rgba(255, 255, 255, 0.6)',
                                         fontSize: 10,
-                                        fontWeight: 150
+                                        fontWeight: 100
                                     }}
                                 />
                                 <YAxis
@@ -105,7 +105,7 @@ const CoinBalanceHistory = (): JSX.Element => {
                                     tick={{
                                         stroke: 'rgba(255, 255, 255, 0.6)',
                                         fontSize: 10,
-                                        fontWeight: 150
+                                        fontWeight: 100
                                     }}
                                 />
                                 <Tooltip />
