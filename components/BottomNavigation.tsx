@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 
     tabElement: {
-        margin: '-0.1rem',
+        margin: '-0.5rem',
         display: 'flex'
     }
 }));
@@ -90,12 +90,12 @@ export default function BottomNavigation(): JSX.Element {
                                                     <img src="/images/home.svg" alt="Dashboard" />
                                                 }
                                                 aria-label="Dashboard"
-                                                className={classes.tabElement}
                                             />
                                         }
                                     />
                                 }
                                 {...bottomNav(0)}
+                                className={classes.tabElement}
                             />
 
                             <Tab
@@ -106,12 +106,12 @@ export default function BottomNavigation(): JSX.Element {
                                             <Tab
                                                 icon={<img src="/images/blocks.svg" alt="Blocks" />}
                                                 aria-label="Blocks"
-                                                className={classes.tabElement}
                                             />
                                         }
                                     />
                                 }
                                 {...bottomNav(1)}
+                                className={classes.tabElement}
                             />
 
                             <Tab
@@ -124,12 +124,12 @@ export default function BottomNavigation(): JSX.Element {
                                                     <img src="/images/txs.svg" alt="Transactions" />
                                                 }
                                                 aria-label="Transactions"
-                                                className={classes.tabElement}
                                             />
                                         }
                                     />
                                 }
                                 {...bottomNav(2)}
+                                className={classes.tabElement}
                             />
 
                             <Tab
@@ -145,12 +145,12 @@ export default function BottomNavigation(): JSX.Element {
                                                     />
                                                 }
                                                 aria-label="Accounts"
-                                                className={classes.tabElement}
                                             />
                                         }
                                     />
                                 }
                                 {...bottomNav(3)}
+                                className={classes.tabElement}
                             />
 
                             <Tab
@@ -166,12 +166,12 @@ export default function BottomNavigation(): JSX.Element {
                                                     />
                                                 }
                                                 aria-label="Proposals"
-                                                className={classes.tabElement}
                                             />
                                         }
                                     />
                                 }
                                 {...bottomNav(4)}
+                                className={classes.tabElement}
                             />
 
                             <Tab
@@ -187,12 +187,12 @@ export default function BottomNavigation(): JSX.Element {
                                                     />
                                                 }
                                                 aria-label="ValidatorVotes"
-                                                className={classes.tabElement}
                                             />
                                         }
                                     />
                                 }
                                 {...bottomNav(5)}
+                                className={classes.tabElement}
                             />
                         </Tabs>
                     </AppBar>
