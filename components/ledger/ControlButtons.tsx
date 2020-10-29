@@ -1,42 +1,48 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import React from 'react';
 
 const useStyles = makeStyles({
     controlButton: {
-        display: "flex",
-        textTransform: "none",
+        display: 'flex',
+        textTransform: 'none',
         borderRadius: 4,
-        justifyContent: "center",
-        minHeight: "2.5rem",
-        minWidth: "8.4375rem",
-        textAlign: "center",
+        justifyContent: 'center',
+        minHeight: '2.5rem',
+        minWidth: '8.4375rem',
+        textAlign: 'center',
         '&:disabled': {
-            color: "#000",
-            backgroundColor: "rgba(167,227,208, 0.8)"
+            color: '#000',
+            backgroundColor: 'rgba(167,227,208, 0.8)'
         }
     },
 
     root: {
-        justifyContent: "center",
-        textAlign: "center",
-        padding: "0 1rem",
-        display: "flex",
+        justifyContent: 'center',
+        textAlign: 'center',
+        padding: '0 1rem',
+        display: 'flex'
     },
     confirmButton: {
-        color: "rgba(255, 255, 255, 1)"
-    },
-
-
+        color: 'rgba(255, 255, 255, 1)'
+    }
 });
 
-type ControlButtonsProps = { showRetry?: boolean, handleClick?: any, handleClose?: any, showDisabled?: boolean };
+type ControlButtonsProps = {
+    showRetry?: boolean;
+    handleClick?: any;
+    handleClose?: any;
+    showDisabled?: boolean;
+};
 
-
-const ControlButtons = ({ showRetry, handleClick, handleClose }: ControlButtonsProps): JSX.Element => {
+const ControlButtons = ({
+    showRetry,
+    handleClick,
+    handleClose,
+    showDisabled
+}: ControlButtonsProps): JSX.Element => {
     const classes = useStyles();
 
     return (
@@ -48,8 +54,7 @@ const ControlButtons = ({ showRetry, handleClick, handleClose }: ControlButtonsP
                         color="secondary"
                         className={classes.controlButton}
                         //fullWidth={true}
-                        onClick={handleClose}
-                    >
+                        onClick={handleClose}>
                         <Typography variant="body2" noWrap>
                             Cancel
                         </Typography>
@@ -63,10 +68,9 @@ const ControlButtons = ({ showRetry, handleClick, handleClose }: ControlButtonsP
                     className={classes.controlButton}
                     //fullWidth={true}
                     onClick={handleClick}
-                    disabled={showDisabled}
-                >
+                    disabled={showDisabled}>
                     <Typography variant="body2" noWrap className={classes.confirmButton}>
-                        {!showRetry ? "Confirm" : "Retry"}
+                        {!showRetry ? 'Confirm' : 'Retry'}
                     </Typography>
                 </Button>
             </Grid>
