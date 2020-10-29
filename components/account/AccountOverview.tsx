@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
@@ -7,18 +6,14 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import BigNumber from 'bignumber.js';
 import React, { useEffect } from 'react';
-import ContentLoader from "react-content-loader";
-import numbro from "numbro";
+
+import LedgerDialog from '../ledger/LedgerDialog';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import NotAvailable from '../misc/NotAvailable';
 import { GET_ACCOUNT_DETAILS } from '../query/Account';
 import { GET_CHAIN } from '../query/Chain';
 import { GET_VALIDATOR } from '../query/Validator';
-import LockGold from '../ledger/celoGold/lock/LockGold';
-import UnlockGold from '../ledger/celoGold/unlock/UnlockGold';
-import Ledger from '../ledger/Ledger';
-import LedgerDialog from '../ledger/LedgerDialog';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -96,11 +91,10 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
     });
 
     useEffect(() => {
-        let localUser = localStorage.getItem('currentUserAddress');
-        //@ts-ignore
-        setCurrentUser(localUser)
+        const localUser = localStorage.getItem('currentUserAddress');
+        const getLocalUser = localUser ? localUser : '';
+        setCurrentUser(getLocalUser);
     });
-
 
     if (accountQuery.loading || chainQuery.loading) return <ComponentLoader />;
     if (accountQuery.error || chainQuery.error)
@@ -178,25 +172,23 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                         )}
                     </Grid>
 
-          {address === currentUser ?
-            <Grid item xs={12}>
-              <Divider variant="middle" className={classes.divider} />
-            </Grid> : null}
+                    {address === currentUser ? (
+                        <Grid item xs={12}>
+                            <Divider variant="middle" className={classes.divider} />
+                        </Grid>
+                    ) : null}
 
-          <Grid item xs={6}>
-            <LedgerDialog buttonLabel="Unlock CELO" action="Unlock" />
-          </Grid>
-          <Grid item xs={6}>
-            <UnlockGold pageAddress={address} showButton={true} />
-          </Grid>
+                    <Grid item xs={6}>
+                        <LedgerDialog buttonLabel="Unlock CELO" action="UnlockCelo" />
+                    </Grid>
 
-          <Grid item xs={6}>
-            <LedgerDialog buttonLabel="Lock CELO" action="Lock" />
-          </Grid>
-        </Grid>
-      </Card>
-    </span >
-  );
-}
+                    <Grid item xs={6}>
+                        <LedgerDialog buttonLabel="Lock CELO" action="LockCelo" />
+                    </Grid>
+                </Grid>
+            </Card>
+        </span>
+    );
+};
 
 export default AccountOverview;
