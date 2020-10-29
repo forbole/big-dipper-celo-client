@@ -4,9 +4,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Link from 'next/link';
 import React from 'react';
-
-import NavLink from '../../../NavLink';
 
 const useStyles = makeStyles({
     root: {
@@ -18,12 +17,13 @@ const useStyles = makeStyles({
     },
 
     controlButton: {
-        justifyContent: "center",
-        flexWrap: "wrap",
-        paddingTop: "3rem",
-        textTransform: "none",
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        paddingTop: '2rem',
+        textTransform: 'none',
         borderRadius: 4,
-        width: "100%",
+        width: '100%',
+        paddingBottom: '1rem'
     },
     controlButtonLabel: {
         display: 'flex',
@@ -35,40 +35,27 @@ const useStyles = makeStyles({
     },
 
     icon: {
-        paddingBottom: "1rem",
-        paddingTop: "3.5rem"
-    },
-
-    paddingBottom: {
-        paddingBottom: "1rem"
-    },
-    
-    dialogContent:{
-        padding: "4.2rem"
+        paddingBottom: '1rem',
+        paddingTop: '2.5rem'
     }
 });
 
-type UnlockGoldSuccessProps = { isOpen: boolean };
-
-
-const UnlockGoldSuccess = ({ isOpen }: UnlockGoldSuccessProps): JSX.Element => {
-
+const UnlockGoldSuccess = () => {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(isOpen);
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleTx = () => {
+        // setOpen(false);
     };
 
     return (
         <>
             <DialogContent>
                 <Grid container spacing={1} className={classes.root}>
-                    <DialogContentText id="ledger-validator-group-vote">
+                    <DialogContentText id="ledger-unlock-gold-success">
                         <Grid container className={classes.item}>
                             <Grid item xs={12} alignItems="center" className={classes.icon}>
                                 <Typography noWrap align="center">
-                                    <img src="/images/success-icon.svg" alt="Success" />
+                                    <img src="/images/success-icon.svg" alt="Unlock Success" />
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} alignItems="center">
@@ -84,24 +71,22 @@ const UnlockGoldSuccess = ({ isOpen }: UnlockGoldSuccessProps): JSX.Element => {
                             <Grid
                                 item
                                 xs={12}
-                                md={10}
+                                md={11}
+                                lg={8}
                                 className={classes.controlButton}
                                 alignItems="center">
-                                <NavLink
-                                    href="/transactions"
-                                    name={
-                                        <Button
-                                            variant="outlined"
-                                            color="secondary"
-                                            className={classes.controlButtonLabel}
-                                            fullWidth={true}
-                                            onClick={handleClose}>
-                                            <Typography variant="body2" noWrap>
-                                                View Transactions
-                                            </Typography>
-                                        </Button>
-                                    }
-                                />
+                                <Link href="/transactions">
+                                    <Button
+                                        variant="outlined"
+                                        color="secondary"
+                                        className={classes.controlButtonLabel}
+                                        fullWidth={true}
+                                        onClick={handleTx}>
+                                        <Typography variant="body2" noWrap>
+                                            View Transactions
+                                        </Typography>
+                                    </Button>
+                                </Link>
                             </Grid>
                         </Grid>
                     </DialogContentText>

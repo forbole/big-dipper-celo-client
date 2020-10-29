@@ -1,29 +1,13 @@
-import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Typography from "@material-ui/core/Typography";
-import LockGold from './LockGold'
-import LockGoldSuccess from './LockGoldSuccess'
-import Dialog from "@material-ui/core/Dialog";
-import Ledger from '../../Ledger'
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import React, { useEffect } from 'react';
+
 
 const useStyles = makeStyles({
-    title: {
-        display: 'block',
-        textAlign: 'center',
-        paddingTop: '0.5rem',
-        paddingBottom: '0.7rem'
-    },
-
-    dialogTitle: {
-        padding: '1rem 1rem 0rem 1rem'
-    },
-
     dialogContent: {
         display: 'flex'
     },
@@ -40,13 +24,6 @@ const useStyles = makeStyles({
         justifyContent: 'center'
     },
 
-    iconButtonRight: {
-        float: 'right'
-    },
-    iconButtonLeft: {
-        float: 'left'
-    },
-
     lockGoldMessage: {
         marginTop: '1rem',
         marginBottom: '-0.8rem'
@@ -59,40 +36,40 @@ const useStyles = makeStyles({
         paddingBottom: '0.5rem'
     },
     alignRight: {
-        display: "block",
-        float: "right",
-        paddingTop: "0.5rem",
-        paddingBottom: "0.5rem",
-    },
-
+        display: 'block',
+        float: 'right',
+        paddingTop: '0.5rem',
+        paddingBottom: '0.5rem'
+    }
 });
 
 type LockGoldConfirmProps = { amount: string };
 
-
-const LockGoldConfirm = ({ isOpen, amount, pageAddress }: LockGoldConfirmProps): JSX.Element => {
-
+const LockGoldConfirm = ({ amount }: LockGoldConfirmProps): JSX.Element => {
     const classes = useStyles();
     const [currentUser, setCurrentUser] = React.useState('');
     const [lockAmount, setLockAmount] = React.useState(amount);
 
-
     useEffect(() => {
-        let localUser = localStorage.getItem('currentUserAddress');
-        //@ts-ignore
-        setCurrentUser(localUser)
+        const localUser = localStorage.getItem('currentUserAddress');
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        setCurrentUser(localUser);
     });
 
     return (
         <>
-            <DialogContent >
-                <Grid container spacing={1} >
+            <DialogContent>
+                <Grid container spacing={1}>
                     <DialogContentText id="ledger-lock-gold-confirm" className={classes.dialog}>
                         <Grid container className={classes.dialogContent}>
                             <Grid item xs={12}>
-                                <Typography variant="body2" noWrap={false} color="textPrimary" gutterBottom>
-                                    You are going to lock {lockAmount} CELO, it that's correct, please
-                                    sign in your ledger device.
+                                <Typography
+                                    variant="body2"
+                                    noWrap={false}
+                                    color="textPrimary"
+                                    gutterBottom>
+                                    You are going to lock {lockAmount} CELO, it that's correct,
+                                    please sign in your ledger device.
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
@@ -105,8 +82,7 @@ const LockGoldConfirm = ({ isOpen, amount, pageAddress }: LockGoldConfirmProps):
                                         noWrap
                                         className={classes.alignLeft}
                                         align="left"
-                                        color="textPrimary"
-                                    >
+                                        color="textPrimary">
                                         Account
                                     </Typography>
                                 </Grid>
@@ -116,8 +92,7 @@ const LockGoldConfirm = ({ isOpen, amount, pageAddress }: LockGoldConfirmProps):
                                         noWrap
                                         className={classes.alignRight}
                                         align="right"
-                                        color="textPrimary"
-                                    >
+                                        color="textPrimary">
                                         {currentUser}
                                     </Typography>
                                 </Grid>
@@ -132,8 +107,7 @@ const LockGoldConfirm = ({ isOpen, amount, pageAddress }: LockGoldConfirmProps):
                                         noWrap
                                         className={classes.alignLeft}
                                         align="left"
-                                        color="textPrimary"
-                                    >
+                                        color="textPrimary">
                                         Lock Amount
                                     </Typography>
                                 </Grid>
@@ -143,8 +117,7 @@ const LockGoldConfirm = ({ isOpen, amount, pageAddress }: LockGoldConfirmProps):
                                         noWrap
                                         className={classes.alignRight}
                                         align="right"
-                                        color="textPrimary"
-                                    >
+                                        color="textPrimary">
                                         {lockAmount} CELO
                                     </Typography>
                                 </Grid>
@@ -159,8 +132,7 @@ const LockGoldConfirm = ({ isOpen, amount, pageAddress }: LockGoldConfirmProps):
                                         noWrap
                                         className={classes.alignLeft}
                                         align="left"
-                                        color="textPrimary"
-                                    >
+                                        color="textPrimary">
                                         Tx Fee
                                     </Typography>
                                 </Grid>
@@ -170,9 +142,8 @@ const LockGoldConfirm = ({ isOpen, amount, pageAddress }: LockGoldConfirmProps):
                                         noWrap
                                         className={classes.alignRight}
                                         align="right"
-                                        color="textPrimary"
-                                    >
-                                        {"UNKNOWN"} CELO
+                                        color="textPrimary">
+                                        {'UNKNOWN'} CELO
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -180,15 +151,14 @@ const LockGoldConfirm = ({ isOpen, amount, pageAddress }: LockGoldConfirmProps):
                                 <Divider className={classes.divider} />
                             </Grid>
                             <Grid item xs={12} className={classes.lockGoldMessage}>
-                                <Typography variant="h6" noWrap align="center" color="textPrimary" >
+                                <Typography variant="h6" noWrap align="center" color="textPrimary">
                                     Please sign in your ledger device...
-                </Typography>
+                                </Typography>
                             </Grid>
                         </Grid>
                     </DialogContentText>
                 </Grid>
             </DialogContent>
-
         </>
     );
 };
