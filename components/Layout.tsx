@@ -17,8 +17,9 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import clsx from 'clsx';
 import React from 'react';
 
-import NetworkDropdown from '../components/NetworkDropdown';
-import SearchBar from '../components/SearchBar';
+// import NetworkDropdown from '../components/NetworkDropdown';
+// import SearchBar from '../components/SearchBar';
+import Login from './ledger/Login';
 import NavLink from './NavLink';
 
 const drawerWidth = 220;
@@ -82,8 +83,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
         login: {
             marginTop: '0.8rem',
-            // marginLeft: "-1rem",
-            textAlign: 'center'
+            // textAlign: 'center',
+            [theme.breakpoints.down('md')]: {
+                marginRight: '2rem'
+            }
         },
         toolbarItems: {
             verticalAlign: 'middle',
@@ -114,17 +117,16 @@ const useStyles = makeStyles((theme: Theme) =>
         listItemTitle: {
             paddingTop: '0.5rem'
         },
-    
-		networkDropdown: {
-			[theme.breakpoints.up('lg')]: {
-				float: "left"
-			},
-			[theme.breakpoints.down('md')]: {
-				float: "right"
-			},
-		}
 
-	}),
+        networkDropdown: {
+            [theme.breakpoints.up('lg')]: {
+                float: 'left'
+            },
+            [theme.breakpoints.down('md')]: {
+                float: 'right'
+            }
+        }
+    })
 );
 
 const Layout = (props: { children: React.ReactNode }): JSX.Element => {
@@ -146,42 +148,39 @@ const Layout = (props: { children: React.ReactNode }): JSX.Element => {
         <div className={classes.root}>
             <AppBar position="fixed" className={clsx(classes.appBar)}>
                 <Grid container spacing={1} className={classes.toolbarItems}>
-                    <Grid item md={4}>
+                    <Grid item md={3} lg={4}>
                         {''}
                     </Grid>
 
-                    <Hidden smDown>
+                    {/* <Hidden smDown>
                         <Grid item md={5} className={classes.searchBar}>
                             <SearchBar />
                         </Grid>
-                    </Hidden>
+                    </Hidden> */}
 
                     <Hidden mdUp>
-                        <Grid item xs={5} className={classes.celoIcon}>
-                            <IconButton color="inherit" aria-label="Celo" edge="start">
-                                <img src="/images/celo-logo.svg" alt="Celo" />
+                        <Grid item xs={3} className={classes.celoIcon}>
+                            <IconButton color="inherit" aria-label="Celo Dashboard" edge="start">
+                                <img src="/images/celo-logo.svg" alt="Celo Dashboard" />
                             </IconButton>
                         </Grid>
                     </Hidden>
-                    <Grid item xs={5} md={2}>
+                    {/* <Grid item xs={3} sm={5} md={2} className={classes.networkDropdown}>
                         <NetworkDropdown />
-                    </Grid>
-                    <Grid item xs={1} md={1} className={classes.login}>
-                        <IconButton
-                            // color="inherit"
-                            aria-label="Login"
-                            onClick={handleDrawerOpen}
-                            //edge="start"
-                            className={classes.loginButton}>
-                            <img src="/images/connect-ledger.svg" alt="Login" />
-                        </IconButton>
+                    </Grid> */}
+
+                    {/* <Grid item xs={5} sm={3} md={2} lg={1} className={classes.login}>
+                        <Login />
+                    </Grid> */}
+                    <Grid item xs={12} className={classes.login}>
+                        <Login />
                     </Grid>
 
-                    <Hidden mdUp>
+                    {/* <Hidden mdUp>
                         <Grid item xs={12} className={classes.searchBar}>
                             <SearchBar />
                         </Grid>
-                    </Hidden>
+                    </Hidden> */}
                 </Grid>
             </AppBar>
             {largeScreen ? (
