@@ -40,8 +40,7 @@ const useStyles = makeStyles({
     }
 });
 
-
-const LockGoldSuccess = () => {
+const LockGoldSuccess = (): JSX.Element => {
     const classes = useStyles();
 
     const handleTx = () => {

@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React, { useEffect } from 'react';
 
-
 const useStyles = makeStyles({
     dialogContent: {
         display: 'flex'
@@ -52,8 +51,8 @@ const LockGoldConfirm = ({ amount }: LockGoldConfirmProps): JSX.Element => {
 
     useEffect(() => {
         const localUser = localStorage.getItem('currentUserAddress');
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        setCurrentUser(localUser);
+        const getLocalUser = localUser ? localUser : '';
+        setCurrentUser(getLocalUser);
     });
 
     return (
@@ -68,7 +67,7 @@ const LockGoldConfirm = ({ amount }: LockGoldConfirmProps): JSX.Element => {
                                     noWrap={false}
                                     color="textPrimary"
                                     gutterBottom>
-                                    You are going to lock {lockAmount} CELO, it that's correct,
+                                    You are going to lock {lockAmount} CELO, it that is correct,
                                     please sign in your ledger device.
                                 </Typography>
                             </Grid>

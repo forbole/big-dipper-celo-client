@@ -86,6 +86,9 @@ const useStyles = makeStyles((theme: Theme) =>
             // textAlign: 'center',
             [theme.breakpoints.down('md')]: {
                 marginRight: '2rem'
+            },
+            [theme.breakpoints.down('xs')]: {
+                marginRight: '0rem'
             }
         },
         toolbarItems: {
@@ -172,7 +175,7 @@ const Layout = (props: { children: React.ReactNode }): JSX.Element => {
                     {/* <Grid item xs={5} sm={3} md={2} lg={1} className={classes.login}>
                         <Login />
                     </Grid> */}
-                    <Grid item xs={12} className={classes.login}>
+                    <Grid item xs={8} sm={12} className={classes.login}>
                         <Login />
                     </Grid>
 

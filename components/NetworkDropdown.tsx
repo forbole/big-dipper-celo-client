@@ -28,8 +28,7 @@ const useStyles = makeStyles(() =>
             borderRadius: 5,
             position: 'relative',
             display: 'flex',
-            marginLeft: "1rem"
-
+            marginLeft: '1rem'
         },
         celoIcon: {
             width: '1.25rem',

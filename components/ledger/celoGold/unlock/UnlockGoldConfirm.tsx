@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React, { useEffect } from 'react';
 
-
 const useStyles = makeStyles({
     dialogContent: {
         display: 'flex'
@@ -68,7 +67,7 @@ const UnlockGoldConfirm = ({ amount }: UnlockGoldConfirmProps): JSX.Element => {
                                     noWrap={false}
                                     color="textPrimary"
                                     gutterBottom>
-                                    You are going to unlock {unlockAmount} CELO, it that's correct,
+                                    You are going to unlock {unlockAmount} CELO, it that is correct,
                                     please sign in your ledger device.
                                 </Typography>
                             </Grid>

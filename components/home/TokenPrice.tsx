@@ -230,7 +230,8 @@ const TokenPrice = (): JSX.Element => {
     });
 
     if (coinHistoryByDates.loading) return <ComponentLoader />;
-    if (coinHistoryByDates.error) return (
+    if (coinHistoryByDates.error)
+        return (
             <ErrorMessage
                 message={
                     (coinHistoryByDates.error && coinHistoryByDates.error.message

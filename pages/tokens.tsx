@@ -1,6 +1,7 @@
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import React from 'react';
+
 import Transactions from '../components/account/Transactions';
 import Overview from '../components/tokens/Overview';
 import ProfileSummary from '../components/tokens/ProfileSummary';

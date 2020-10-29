@@ -1,20 +1,18 @@
 import { Slide, useScrollTrigger } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
-import Box from '@material-ui/core/Box';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
-import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import React from 'react';
 
 import NavLink from './NavLink';
 
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: any;
-    value: any;
-}
+// interface TabPanelProps {
+//     children?: React.ReactNode;
+//     index: any;
+//     value: any;
+// }
 
 // function TabPanel(props: TabPanelProps) {
 //     const { children, value, index, ...other } = props;
@@ -61,7 +59,6 @@ interface TabPanelProps {
 //         </div>
 //     );
 // }
-
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
