@@ -5,14 +5,18 @@ import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
 const useStyles = makeStyles({
-    controlButtonLabel: {
+    controlButton: {
         display: 'flex',
         textTransform: 'none',
         borderRadius: 4,
         justifyContent: 'center',
         minHeight: '2.5rem',
         minWidth: '8.4375rem',
-        textAlign: 'center'
+        textAlign: 'center',
+        '&:disabled': {
+            color: '#000',
+            backgroundColor: 'rgba(167,227,208, 0.8)'
+        }
     },
 
     root: {
@@ -20,19 +24,27 @@ const useStyles = makeStyles({
         textAlign: 'center',
         padding: '0 1rem',
         display: 'flex'
+    },
+    confirmButton: {
+        color: 'rgba(255, 255, 255, 1)'
     }
 });
 
-const ControlButtons = (): JSX.Element => {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+type ControlButtonsProps = {
+    showRetry?: boolean;
+    handleClick?: any;
+    handleClose?: any;
+    showDisabled?: boolean;
+};
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
+const ControlButtons = ({
+    showRetry,
+    handleClick,
+    handleClose,
+    showDisabled
+}: ControlButtonsProps): JSX.Element => {
+    const classes = useStyles();
+
     return (
         <Grid container spacing={1}>
             <Grid item xs={6} alignItems="center">
@@ -40,7 +52,7 @@ const ControlButtons = (): JSX.Element => {
                     <Button
                         variant="outlined"
                         color="secondary"
-                        className={classes.controlButtonLabel}
+                        className={classes.controlButton}
                         //fullWidth={true}
                         onClick={handleClose}>
                         <Typography variant="body2" noWrap>
@@ -53,11 +65,12 @@ const ControlButtons = (): JSX.Element => {
                 <Button
                     variant="contained"
                     color="secondary"
-                    className={classes.controlButtonLabel}
+                    className={classes.controlButton}
                     //fullWidth={true}
-                    onClick={handleClickOpen}>
-                    <Typography variant="body2" noWrap color="textPrimary">
-                        Confirm
+                    onClick={handleClick}
+                    disabled={showDisabled}>
+                    <Typography variant="body2" noWrap className={classes.confirmButton}>
+                        {!showRetry ? 'Confirm' : 'Retry'}
                     </Typography>
                 </Button>
             </Grid>

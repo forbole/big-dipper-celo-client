@@ -1,13 +1,13 @@
 import { useQuery } from '@apollo/client';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import BigNumber from 'bignumber.js';
-import React from 'react';
+import React, { useEffect } from 'react';
 
+import LedgerDialog from '../ledger/LedgerDialog';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import NotAvailable from '../misc/NotAvailable';
@@ -78,6 +78,7 @@ type AccountOverviewProps = { address: string };
 
 const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
     const classes = useStyles();
+    const [currentUser, setCurrentUser] = React.useState('');
 
     const accountQuery = useQuery(GET_ACCOUNT_DETAILS, {
         variables: { address }
@@ -87,6 +88,12 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
 
     const validatorQuery = useQuery(GET_VALIDATOR, {
         variables: { address }
+    });
+
+    useEffect(() => {
+        const localUser = localStorage.getItem('currentUserAddress');
+        const getLocalUser = localUser ? localUser : '';
+        setCurrentUser(getLocalUser);
     });
 
     if (accountQuery.loading || chainQuery.loading) return <ComponentLoader />;
@@ -165,31 +172,18 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                         )}
                     </Grid>
 
-                    <Grid item xs={12}>
-                        <Divider variant="middle" className={classes.divider} />
+                    {address === currentUser ? (
+                        <Grid item xs={12}>
+                            <Divider variant="middle" className={classes.divider} />
+                        </Grid>
+                    ) : null}
+
+                    <Grid item xs={6}>
+                        <LedgerDialog buttonLabel="Unlock CELO" action="UnlockCelo" />
                     </Grid>
 
-                    <Grid container spacing={2}>
-                        <Grid item xs={6} className={classes.centerContent}>
-                            <div className={classes.centerButtons}>
-                                <Button
-                                    variant="outlined"
-                                    color="secondary"
-                                    className={classes.buttonUnlock}>
-                                    <Typography variant="body1">Unlock CELO</Typography>
-                                </Button>
-                            </div>
-                        </Grid>
-                        <Grid item xs={6} className={classes.centerContent}>
-                            <div className={classes.centerButtons}>
-                                <Button
-                                    variant="outlined"
-                                    color="secondary"
-                                    className={classes.buttonLock}>
-                                    <Typography variant="body1">Lock CELO</Typography>
-                                </Button>
-                            </div>
-                        </Grid>
+                    <Grid item xs={6}>
+                        <LedgerDialog buttonLabel="Lock CELO" action="LockCelo" />
                     </Grid>
                 </Grid>
             </Card>

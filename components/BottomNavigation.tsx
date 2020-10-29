@@ -1,14 +1,38 @@
 import { Slide, useScrollTrigger } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
-import Box from '@material-ui/core/Box';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
-import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import React from 'react';
 
 import NavLink from './NavLink';
+
+// interface TabPanelProps {
+//     children?: React.ReactNode;
+//     index: any;
+//     value: any;
+// }
+
+// function TabPanel(props: TabPanelProps) {
+//     const { children, value, index, ...other } = props;
+
+//     return (
+//         <div
+//             role="tabpanel"
+//             hidden={value !== index}
+//             id={`bottom-navigation-${index}`}
+//             aria-labelledby={`bottom-navigation-${index}`}
+//             {...other}
+//         >
+//             {value === index && (
+//                 <Box p={3}>
+//                     <Typography>{children}</Typography>
+//                 </Box>
+//             )}
+//         </div>
+//     );
+// }
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -16,24 +40,25 @@ interface TabPanelProps {
     value: any;
 }
 
-function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
+// function TabPanel(props: TabPanelProps) {
+//     const { children, value, index, ...other } = props;
 
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`bottom-navigation-${index}`}
-            aria-labelledby={`bottom-navigation-${index}`}
-            {...other}>
-            {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
+//     return (
+//         <div
+//             role="tabpanel"
+//             hidden={value !== index}
+//             id={`bottom-navigation-${index}`}
+//             aria-labelledby={`bottom-navigation-${index}`}
+//             {...other}
+//         >
+//             {value === index && (
+//                 <Box p={3}>
+//                     <Typography>{children}</Typography>
+//                 </Box>
+//             )}
+//         </div>
+//     );
+// }
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {

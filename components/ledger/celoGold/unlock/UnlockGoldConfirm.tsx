@@ -1,25 +1,12 @@
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const useStyles = makeStyles({
-    title: {
-        display: 'block',
-        textAlign: 'center',
-        paddingTop: '0.5rem',
-        paddingBottom: '0.7rem'
-    },
-
-    dialogTitle: {
-        padding: '1rem 1rem 0rem 1rem'
-    },
-
     dialogContent: {
         display: 'flex'
     },
@@ -34,13 +21,6 @@ const useStyles = makeStyles({
 
     item: {
         justifyContent: 'center'
-    },
-
-    iconButtonRight: {
-        float: 'right'
-    },
-    iconButtonLeft: {
-        float: 'left'
     },
 
     unlockGoldMessage: {
@@ -62,48 +42,24 @@ const useStyles = makeStyles({
     }
 });
 
-const UnlockGoldConfirm = (): JSX.Element => {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+type UnlockGoldConfirmProps = { amount: string };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+const UnlockGoldConfirm = ({ amount }: UnlockGoldConfirmProps): JSX.Element => {
+    const classes = useStyles();
+    const [currentUser, setCurrentUser] = React.useState('');
+    const [unlockAmount, setUnlockAmount] = React.useState(amount);
+
+    useEffect(() => {
+        const localUser = localStorage.getItem('currentUserAddress');
+        const getLocalUser = localUser ? localUser : '';
+        setCurrentUser(getLocalUser);
+    });
 
     return (
         <>
-            <DialogTitle id="ledger-unlock-gold-confirm" className={classes.dialogTitle}>
-                <Grid container className={classes.item}>
-                    <Grid item xs={1}>
-                        <IconButton aria-label="Return" className={classes.iconButtonLeft}>
-                            <img src="/images/last.svg" color="textPrimary" alt="Return" />
-                        </IconButton>
-                    </Grid>
-                    <Grid item xs={10}>
-                        <Typography
-                            variant="h6"
-                            color="textPrimary"
-                            noWrap
-                            className={classes.title}>
-                            Unlock Celo Gold
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={1}>
-                        <IconButton
-                            aria-label="Close"
-                            className={classes.iconButtonRight}
-                            onClick={handleClose}>
-                            <img src="/images/cross.svg" color="textPrimary" alt="Close" />
-                        </IconButton>
-                    </Grid>
-                </Grid>
-            </DialogTitle>
-
             <DialogContent>
                 <Grid container spacing={1}>
-                    <DialogContentText
-                        id="ledger-unlock-gold-confirm-content"
-                        className={classes.dialog}>
+                    <DialogContentText id="ledger-unlock-gold-confirm" className={classes.dialog}>
                         <Grid container className={classes.dialogContent}>
                             <Grid item xs={12}>
                                 <Typography
@@ -111,8 +67,8 @@ const UnlockGoldConfirm = (): JSX.Element => {
                                     noWrap={false}
                                     color="textPrimary"
                                     gutterBottom>
-                                    You are going to unlock {'2'} CELO, it that is correct, please
-                                    sign in your ledger device.
+                                    You are going to unlock {unlockAmount} CELO, it that is correct,
+                                    please sign in your ledger device.
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
@@ -136,7 +92,7 @@ const UnlockGoldConfirm = (): JSX.Element => {
                                         className={classes.alignRight}
                                         align="right"
                                         color="textPrimary">
-                                        {'Michelle Clark'}
+                                        {currentUser}
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -161,7 +117,7 @@ const UnlockGoldConfirm = (): JSX.Element => {
                                         className={classes.alignRight}
                                         align="right"
                                         color="textPrimary">
-                                        {'2'} CELO
+                                        {unlockAmount} CELO
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -186,7 +142,7 @@ const UnlockGoldConfirm = (): JSX.Element => {
                                         className={classes.alignRight}
                                         align="right"
                                         color="textPrimary">
-                                        {'0.00001'} CELO
+                                        {'UNKNOWN'} CELO
                                     </Typography>
                                 </Grid>
                             </Grid>

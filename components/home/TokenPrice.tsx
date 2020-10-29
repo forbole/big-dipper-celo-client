@@ -229,8 +229,8 @@ const TokenPrice = (): JSX.Element => {
         pollInterval: 5000
     });
 
-    if (coinHistoryByDates.loading || chainData.loading) return <ComponentLoader />;
-    if (coinHistoryByDates.error || chainData.error)
+    if (coinHistoryByDates.loading) return <ComponentLoader />;
+    if (coinHistoryByDates.error)
         return (
             <ErrorMessage
                 message={
@@ -337,7 +337,7 @@ const TokenPrice = (): JSX.Element => {
                                         coinHistoryByDates.data.coinHistoryByDates &&
                                         coinHistoryByDates.data.coinHistoryByDates.prices
                                             ? coinHistoryByDates.data.coinHistoryByDates.prices
-                                            : null
+                                            : 0
                                     }
                                     margin={{
                                         top: 20,

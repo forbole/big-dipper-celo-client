@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { ServerStyleSheets } from '@material-ui/core/styles';
-import Document, { Head, Main, NextScript } from 'next/document';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 import React from 'react';
 
 import theme from '../themes/celo-theme';
@@ -8,7 +8,7 @@ import theme from '../themes/celo-theme';
 export default class TSDocument extends Document {
     render() {
         return (
-            <html lang="en">
+            <Html lang="en">
                 <Head>
                     {/* PWA primary color */}
                     <link
@@ -93,7 +93,7 @@ export default class TSDocument extends Document {
                     <Main />
                     <NextScript />
                 </body>
-            </html>
+            </Html>
         );
     }
 }

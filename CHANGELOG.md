@@ -8,7 +8,7 @@
 * Added query to display Validator Votes List data 
 * Added Ordering in Accounts query
 * Implemented proposal query and linked data with `Proposal` components 
-
+* Implemented Ledger Integration: Login/Logout, Lock/Unlock CELO
 
 ## v0.1.3
 
