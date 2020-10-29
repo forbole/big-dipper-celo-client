@@ -43,9 +43,20 @@ export default function Proposal({ proposalDetails }: proposalProps): JSX.Elemen
 
 Proposal.getInitialProps = async (ctx: any) => {
     const { query } = ctx;
-    const response = await fetch(
-        `https://raw.githubusercontent.com/celo-org/celo-proposals/master/CGPs/000${query.proposal}.md`
-    );
-    const proposalDetails = await response.text();
+    let response;
+    let proposalDetails;
+
+    if (query.proposal >= 10) {
+        response = await fetch(
+            `https://raw.githubusercontent.com/celo-org/celo-proposals/master/CGPs/00${query.proposal}.md`
+        );
+        proposalDetails = await response.text();
+    } else {
+        response = await fetch(
+            `https://raw.githubusercontent.com/celo-org/celo-proposals/master/CGPs/000${query.proposal}.md`
+        );
+        proposalDetails = await response.text();
+    }
+
     return { proposalDetails };
 };

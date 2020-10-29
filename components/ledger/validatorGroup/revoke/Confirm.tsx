@@ -1,10 +1,8 @@
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
 //import Link from "..//Ledger.tsx";
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
@@ -57,7 +55,9 @@ const useStyles = makeStyles({
     }
 });
 
-const Confirm = (): JSX.Element => {
+type ConfirmProps = { revokeAmount: string };
+
+const Confirm = ({ revokeAmount }: ConfirmProps): JSX.Element => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -67,33 +67,6 @@ const Confirm = (): JSX.Element => {
 
     return (
         <>
-            <DialogTitle id="ledger-dialog-title" className={classes.dialogTitle}>
-                <Grid container className={classes.item}>
-                    <Grid item xs={1}>
-                        <IconButton aria-label="Return" className={classes.iconButtonLeft}>
-                            <img src="/images/last.svg" color="textPrimary" alt="Return" />
-                        </IconButton>
-                    </Grid>
-                    <Grid item xs={10}>
-                        <Typography
-                            variant="h6"
-                            color="textPrimary"
-                            noWrap
-                            className={classes.title}>
-                            Revoke the vote
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={1}>
-                        <IconButton
-                            aria-label="Close"
-                            className={classes.iconButtonRight}
-                            onClick={handleClose}>
-                            <img src="/images/cross.svg" color="textPrimary" alt="Close" />
-                        </IconButton>
-                    </Grid>
-                </Grid>
-            </DialogTitle>
-
             <DialogContent>
                 <Grid container spacing={1}>
                     <DialogContentText id="ledger-vote" className={classes.dialog}>
@@ -104,8 +77,8 @@ const Confirm = (): JSX.Element => {
                                     variant="body2"
                                     gutterBottom
                                     align="left">
-                                    You’re going to revoke 1 Locked CELO to Emma Garrett, if that’s
-                                    correct, please sign in your ledger device.
+                                    You’re going to revoke {revokeAmount} Locked CELO to Emma
+                                    Garrett, if that’s correct, please sign in your ledger device.
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
@@ -123,14 +96,6 @@ const Confirm = (): JSX.Element => {
                                     align="right"
                                     gutterBottom>
                                     Michelle Clark
-                                    {/* {data.block && data.block.timestamp
-                ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
-                : <NotAvailable variant="body2" />}
-              (
-              {data && data.block && data.block.timestamp
-                ? moment.unix(data.block.timestamp).fromNow()
-                : null}
-              ) */}
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>

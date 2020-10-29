@@ -1,17 +1,11 @@
-import { InputLabel, Select } from '@material-ui/core';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Divider from '@material-ui/core/Divider';
-import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
-import MenuItem from '@material-ui/core/MenuItem';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import ControlButtons from '../../ControlButtons';
+import { LedgerFormControl } from '../../LedgerDialog';
 
 const useStyles = makeStyles({
     root: {
@@ -60,99 +54,65 @@ const useStyles = makeStyles({
         margin: '0.5rem 0.5rem 0.5rem 0'
     },
 
-    paddingBottom: {
+    label: {
+        paddingBottom: '0.2rem'
+    },
+
+    voteButton: {
+        textTransform: 'none',
+        borderRadius: 4,
+        minHeight: '2.5rem',
+        width: '19.4375rem',
+        color: 'rgba(255, 255, 255, 1)'
+    },
+
+    errorMessage: {
+        color: 'red',
+        textAlign: 'center',
         paddingBottom: '1rem'
     },
 
-    label: {
-        paddingBottom: '0.2rem'
+    circularProgress: {
+        textAlign: 'center',
+        paddingBottom: '1rem',
+        paddingTop: '2rem'
+    },
+    accountAddress: {
+        paddingBottom: '1rem'
+    },
+
+    disabledAccountAddress: {
+        paddingBottom: '1rem',
+        color: 'rgba(192,192,192, 1)'
+    },
+    outlinedInput: {
+        borderRadius: 5,
+        border: 'solid 1px rgba(153, 153, 153, 1)',
+        padding: '0.25rem 1rem'
+    },
+
+    controls: {
+        paddingTop: '1rem'
     }
 });
 
-const DepositDropdown = () => {
+type DepositProps = { isLoading?: boolean; maxDeposit?: string };
+
+const Deposit = ({ isLoading, maxDeposit }: DepositProps): JSX.Element => {
     const classes = useStyles();
-    const name = 'Dan Stanley';
-    const name_2 = 'Andrea Colemans';
-    return (
-        <div>
-            <Typography variant="body2" noWrap color="textPrimary" className={classes.label}>
-                Account
-            </Typography>
-            <FormControl
-                //fullWidth={true}
-                size="medium"
-                className={classes.formControl}>
-                <Select
-                    defaultValue=""
-                    id="deposit-dropdown"
-                    color="primary"
-                    className={classes.depositSelect}
-                    disableUnderline
-                    //fullWidth={true}
-                >
-                    <MenuItem value={name} className={classes.menu}>
-                        <Typography variant="body2">{name}</Typography>
-                        <Typography variant="body2" color="textSecondary" noWrap={false}>
-                            {'0xB177242c85d34cc72e1cc0301eb6f08770ED8a6B'}
-                        </Typography>
-                    </MenuItem>
+    const [currentUser, setCurrentUser] = React.useState('');
 
-                    <Divider variant="middle" className={classes.divider} />
-
-                    <MenuItem value={name_2} className={classes.menu}>
-                        <Typography variant="body2">{name_2}</Typography>
-                        <Typography variant="body2" color="textSecondary" gutterBottom>
-                            {'0x456f41406B32c45D59E539e4BBA3D7898c3584dA'}
-                        </Typography>
-                    </MenuItem>
-                </Select>
-            </FormControl>
-
-            <div>
-                <Typography variant="body2" noWrap color="textPrimary" className={classes.label}>
-                    Amount
-                </Typography>
-                <FormControl
-                    variant="outlined"
-                    fullWidth
-                    size="small"
-                    className={classes.formControl}>
-                    <InputLabel htmlFor="proposal-deposit-label">
-                        <Typography variant="body2" color="textSecondary">
-                            Insert amount
-                        </Typography>
-                    </InputLabel>
-                    <OutlinedInput
-                        id="id-deposit-dialog"
-                        // endAdornment={<InputAdornment position="end">CELO</InputAdornment>}
-                    />
-                </FormControl>
-            </div>
-        </div>
-    );
-};
-
-const Deposit = (): JSX.Element => {
-    const classes = useStyles();
+    useEffect(() => {
+        const localUser = localStorage.getItem('currentUserAddress');
+        const getLocalUser = localUser ? localUser : '';
+        setCurrentUser(getLocalUser);
+    });
 
     return (
         <>
-            <DialogTitle id="ledger-proposal-deposit-title" className={classes.dialogTitle}>
-                <Grid container className={classes.item}>
-                    <Grid item xs={12}>
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            className={classes.title}
-                            color="textPrimary">
-                            Deposit
-                        </Typography>
-                    </Grid>
-                </Grid>
-            </DialogTitle>
             <DialogContent>
                 <Grid container spacing={1}>
-                    <DialogContentText id="ledger-proposal-deposit">
+                    <DialogContentText id="ledger-proposal-deposit" component="span">
                         <Grid container>
                             <Grid item xs={12} className={classes.message}>
                                 <Typography variant="body2" color="textPrimary" gutterBottom>
@@ -160,11 +120,41 @@ const Deposit = (): JSX.Element => {
                                     proposal active period is finished.
                                 </Typography>
                             </Grid>
-                            <Grid item xs={12} className={classes.paddingBottom}>
-                                <DepositDropdown />
+                            <Grid item xs={12}>
+                                <Typography
+                                    variant="body2"
+                                    color="textPrimary"
+                                    noWrap
+                                    gutterBottom
+                                    align="left">
+                                    Account
+                                </Typography>
                             </Grid>
-                            <Grid item xs={12} className={classes.paddingBottom}>
-                                <ControlButtons />
+                            <Grid item xs={12}>
+                                <Typography
+                                    variant="body2"
+                                    noWrap
+                                    color="textPrimary"
+                                    className={
+                                        isLoading
+                                            ? classes.disabledAccountAddress
+                                            : classes.accountAddress
+                                    }>
+                                    {currentUser}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography
+                                    variant="body2"
+                                    noWrap
+                                    color="textPrimary"
+                                    align="left"
+                                    gutterBottom>
+                                    Deposit amount
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <LedgerFormControl action="Deposit" />
                             </Grid>
                         </Grid>
                     </DialogContentText>

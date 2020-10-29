@@ -21,22 +21,7 @@ const useStyles = makeStyles({
         textAlign: 'center',
         paddingTop: '0.5rem'
     },
-    depositSelect: {
-        justifyContent: 'center',
-        border: 'solid rgba(255, 255, 255, 0.6) ',
-        borderWidth: '0.09rem',
-        borderRadius: 4,
-        paddingLeft: '0.5rem'
-        //minWidth: "18.4375rem",
-    },
 
-    formControl: {
-        paddingBottom: '1rem',
-        //width: "18.4375rem",
-        overflow: 'hidden',
-        textOverflow: 'clip',
-        display: 'flex'
-    },
     dialogTitle: {
         padding: '1rem 1rem 0rem 1rem'
     },
@@ -71,11 +56,6 @@ const useStyles = makeStyles({
         fontWeight: 400
     },
 
-    menu: {
-        display: 'block',
-        width: '100%',
-        overflow: 'hidden'
-    },
     message: {
         margin: '0.5rem 0.5rem 0 0.5rem'
     },
@@ -83,30 +63,35 @@ const useStyles = makeStyles({
         backgroundColor: 'rgba(240, 65, 85, 1)',
         textTransform: 'none',
         width: '100%',
-        color: '#fff',
-        fontWeight: 400
+        color: 'rgba(255,255,255,1)',
+        fontWeight: 400,
+        '&:disabled': {
+            backgroundColor: 'rgba(65,65,65, 0.6)'
+        },
+        '&:hover, &.Mui-focusVisible': { backgroundColor: 'rgba(58, 211, 158, 0.5)' }
     },
     voteYesButton: {
         backgroundColor: 'rgba(8, 178, 122, 1)',
         textTransform: 'none',
         width: '100%',
-        color: '#fff',
-        fontWeight: 400
+        color: 'rgba(255,255,255,1)',
+        fontWeight: 400,
+        '&:disabled': {
+            backgroundColor: 'rgba(65,65,65, 0.6)'
+        },
+        '&:hover, &.Mui-focusVisible': { backgroundColor: 'rgba(58, 211, 158, 0.5)' }
     },
 
-    voteNoWithVetoButton: {
-        backgroundColor: 'rgba(250, 149, 30, 1)',
-        textTransform: 'none',
-        width: '100%',
-        color: '#fff',
-        fontWeight: 400
-    },
     voteAbstainButton: {
         backgroundColor: 'rgba(55, 148, 240, 1)',
         textTransform: 'none',
         width: '100%',
-        color: '#fff',
-        fontWeight: 400
+        color: 'rgba(255,255,255,1)',
+        fontWeight: 400,
+        '&:disabled': {
+            backgroundColor: 'rgba(65,65,65, 0.6)'
+        },
+        '&:hover, &.Mui-focusVisible': { backgroundColor: 'rgba(58, 211, 158, 0.5)' }
     },
 
     paddingBottom: {
@@ -115,97 +100,70 @@ const useStyles = makeStyles({
 
     address: {
         overflow: 'hidden'
+    },
+    voteButton: {
+        textTransform: 'none',
+        borderRadius: 4,
+        minHeight: '2.5rem',
+        width: '19.4375rem',
+        color: 'rgba(255, 255, 255, 1)'
+    },
+
+    errorMessage: {
+        color: 'red',
+        textAlign: 'center',
+        paddingBottom: '1rem'
+    },
+
+    circularProgress: {
+        textAlign: 'center',
+        paddingBottom: '1rem',
+        paddingTop: '2rem'
+    },
+    accountAddress: {
+        paddingBottom: '1rem'
+    },
+
+    disabledAccountAddress: {
+        paddingBottom: '1rem',
+        color: 'rgba(192,192,192, 1)'
     }
 });
 
-const Vote = (): JSX.Element => {
-    const name = 'Dan Stanley';
-    const name_2 = 'Andrea Colemans';
+type VoteProps = {
+    amount: string;
+    proposalNumber: string;
+    proposer: string;
+    proposalTitle: string;
+    proposalDescription: string;
+};
 
+const Vote = (): JSX.Element => {
     const classes = useStyles();
     return (
         <>
-            <DialogTitle id="ledger-dialog-vote-title" className={classes.dialogTitle}>
-                <Grid container className={classes.item}>
-                    <Grid item xs={12}>
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            className={classes.title}
-                            color="textPrimary">
-                            Vote
-                        </Typography>
-                    </Grid>
-                </Grid>
-            </DialogTitle>
             <DialogContent>
                 <Grid container spacing={1}>
                     <DialogContentText id="ledger-vote" className={classes.dialog}>
                         <Grid container className={classes.dialogContent}>
-                            {/* {DepositDropdown()}
-                </Grid> */}
-
                             <Grid item xs={12} className={classes.message}>
-                                <div>
-                                    <Typography
-                                        variant="body2"
-                                        noWrap
-                                        color="textPrimary"
-                                        gutterBottom>
-                                        Account
-                                    </Typography>
-                                    <Grid item xs={12}>
-                                        <FormControl
-                                            //fullWidth={true}
-                                            size="medium"
-                                            className={classes.formControl}>
-                                            <Select
-                                                defaultValue=""
-                                                id="deposit-dropdown"
-                                                color="secondary"
-                                                className={classes.depositSelect}
-                                                disableUnderline
-                                                fullWidth={true}
-                                                IconComponent={KeyboardArrowDownIcon}
-                                                classes={{
-                                                    icon: classes.icon
-                                                }}>
-                                                <MenuItem value={name} className={classes.menu}>
-                                                    <Typography variant="body2">{name}</Typography>
-                                                    <Typography
-                                                        variant="body2"
-                                                        color="textSecondary"
-                                                        //noWrap={false}
-                                                        //className={classes.dropdownItem}
-                                                        className={classes.address}>
-                                                        {
-                                                            '0xB177242c85d34cc72e1cc0301eb6f08770ED8a6B'
-                                                        }
-                                                    </Typography>
-                                                </MenuItem>
-
-                                                <Divider
-                                                    variant="middle"
-                                                    className={classes.divider}
-                                                />
-
-                                                <MenuItem value={name_2} className={classes.menu}>
-                                                    <Typography variant="body2">
-                                                        {name_2}
-                                                    </Typography>
-                                                    <Typography
-                                                        variant="body2"
-                                                        color="textSecondary"
-                                                        gutterBottom>
-                                                        {
-                                                            '0x456f41406B32c45D59E539e4BBA3D7898c3584dA'
-                                                        }
-                                                    </Typography>
-                                                </MenuItem>
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>
-                                </div>
+                                <Typography variant="body2" noWrap color="textPrimary" gutterBottom>
+                                    Account
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} className={classes.message}>
+                                <Typography
+                                    variant="body2"
+                                    noWrap
+                                    color="textPrimary"
+                                    gutterBottom
+                                    className={
+                                        connected
+                                            ? classes.accountAddress
+                                            : classes.disabledAccountAddress
+                                    }>
+                                    {currentUser}
+                                </Typography>
                             </Grid>
 
                             <Grid item xs={12} className={classes.message}>
@@ -216,29 +174,33 @@ const Vote = (): JSX.Element => {
                                     variant="body2"
                                     color="textPrimary"
                                     className={classes.paddingBottom}>
-                                    Don’t Burn Deposits for Rejected Governance Proposals Unless
-                                    Vetoed
+                                    {proposalTitle}
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} className={classes.paddingBottom}>
-                                <Button variant="contained" className={classes.voteYesButton}>
+                                <Button
+                                    variant="contained"
+                                    className={classes.voteYesButton}
+                                    onClick={(e) => handleVoting(e)}
+                                    disabled={!connected}>
                                     Yes
-                                </Button>
-                            </Grid>
-                            <Grid item xs={12} className={classes.paddingBottom}>
-                                <Button variant="contained" className={classes.voteNoButton}>
-                                    No
                                 </Button>
                             </Grid>
                             <Grid item xs={12} className={classes.paddingBottom}>
                                 <Button
                                     variant="contained"
-                                    className={classes.voteNoWithVetoButton}>
-                                    No With Veto
+                                    className={classes.voteNoButton}
+                                    onClick={(e) => handleVoting(e)}
+                                    disabled={!connected}>
+                                    No
                                 </Button>
                             </Grid>
                             <Grid item xs={12}>
-                                <Button variant="contained" className={classes.voteAbstainButton}>
+                                <Button
+                                    variant="contained"
+                                    className={classes.voteAbstainButton}
+                                    onClick={(e) => handleVoting(e)}
+                                    disabled={!connected}>
                                     Abstain
                                 </Button>
                             </Grid>

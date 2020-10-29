@@ -9,14 +9,17 @@ import Typography from '@material-ui/core/Typography';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import BigNumber from 'bignumber.js';
-import React from 'react';
+import getConfig from 'next/config';
+import React, { useEffect } from 'react';
 import MarkdownView from 'react-showdown';
 
+import LedgerDialog from '../ledger/LedgerDialog';
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import NotAvailable from '../misc/NotAvailable';
 import NavLink from '../NavLink';
 import { GET_PROPOSAL } from '../query/Proposal';
+import { GET_PROPOSALS } from '../query/Proposal';
 
 const useStyles = makeStyles(() => {
     return {
@@ -36,26 +39,33 @@ const useStyles = makeStyles(() => {
         arrowIcon: {
             padding: '0.25rem',
             justifyContent: 'center',
-            border: 'solid rgba(67, 72, 76, 1) ',
+            border: 'solid 1px rgba(67, 72, 76, 1) ',
             borderRadius: 5,
-            backgroundColor: 'rgba(77, 81, 85, 1)',
-            color: 'rgba(255, 255, 255, 0.6)',
+            backgroundColor: 'rgba(255, 255, 255, 0.6) ',
+            color: 'rgba(77, 81, 85, 1)',
             height: '1.5rem',
             width: '1.5rem'
         },
         iconButtonRight: {
             padding: '0',
-            float: 'right'
+            float: 'right',
+            '&:disabled': {
+                display: 'none'
+            }
         },
         iconButtonLeft: {
             padding: '0',
-            float: 'left'
+            float: 'left',
+            '&:disabled': {
+                display: 'none'
+            }
         },
 
         centerContent: {
             display: 'flex',
             margin: '1rem 0 -0.5rem 0',
-            justifyContent: 'center'
+            // justifyContent: "center",
+            textAlign: 'center'
         },
 
         MuiCardContentRootlastChild: {
@@ -77,7 +87,6 @@ const useStyles = makeStyles(() => {
         }
     };
 });
-
 type ProposalDetailsProps = { proposal: string; proposalDetails: string };
 
 const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): JSX.Element => {
@@ -86,12 +95,52 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
     const proposalNumber = parseInt(proposal);
     const prevProposal: number = proposalNumber - 1;
     const nextProposal: number = proposalNumber + 1;
+    const [maxProposalNumber, setMaxProposalNumber] = React.useState(false);
+    const [minProposalNumber, setMinProposalNumber] = React.useState(false);
+    const [currentUser, setCurrentUser] = React.useState('');
+    const [voted, setVoted] = React.useState(false);
 
     const { loading, error, data } = useQuery(GET_PROPOSAL, {
         variables: { proposalNumber }
     });
 
+    const { publicRuntimeConfig } = getConfig();
+    const page = publicRuntimeConfig.setPage;
+    const pageSize = publicRuntimeConfig.rowMedium;
+    const field = 'proposalNumber';
+
+    const totalProposals = useQuery(GET_PROPOSALS, {
+        variables: { page, pageSize, field }
+    });
+
     const classes = useStyles();
+    const totalNumOfProposals =
+        totalProposals.data &&
+        totalProposals.data.proposals &&
+        totalProposals.data.proposals.proposals
+            ? totalProposals.data.proposals.proposals.length
+            : 0;
+
+    useEffect(() => {
+        const localUser = localStorage.getItem('currentUserAddress');
+        const getLocalUser = localUser ? localUser : '';
+        setCurrentUser(getLocalUser);
+
+        if (proposalNumber === totalNumOfProposals) {
+            setMaxProposalNumber(true);
+        }
+
+        if (proposalNumber === 1) {
+            setMinProposalNumber(true);
+        }
+        if (data && data.proposal && data.proposal.upvoteList) {
+            for (const c in data.proposal.upvoteList) {
+                if (data.proposal.upvoteList[c].returnValues.account === currentUser) {
+                    setVoted(true);
+                }
+            }
+        }
+    });
 
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
@@ -114,7 +163,8 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                             name={
                                 <IconButton
                                     aria-label="Previous Proposal"
-                                    className={classes.iconButtonRight}>
+                                    className={classes.iconButtonRight}
+                                    disabled={minProposalNumber}>
                                     <ArrowBackIosIcon className={classes.arrowIcon} />
                                 </IconButton>
                             }
@@ -126,7 +176,8 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                             name={
                                 <IconButton
                                     aria-label="Next Proposal"
-                                    className={classes.iconButtonLeft}>
+                                    className={classes.iconButtonLeft}
+                                    disabled={maxProposalNumber}>
                                     <ArrowForwardIosIcon className={classes.arrowIcon} />
                                 </IconButton>
                             }
@@ -143,15 +194,15 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                        <Typography variant="body2" className={classes.alignRight}>
-                            {data.proposal &&
-                            data.proposal.returnValues &&
-                            data.proposal.returnValues.proposalId ? (
-                                data.proposal.returnValues.proposalId
-                            ) : (
-                                <NotAvailable variant="body2" />
-                            )}
-                        </Typography>
+                        {data.proposal &&
+                        data.proposal.returnValues &&
+                        data.proposal.returnValues.proposalId ? (
+                            <Typography variant="body2" className={classes.alignRight}>
+                                {data.proposal.returnValues.proposalId}
+                            </Typography>
+                        ) : (
+                            <NotAvailable variant="body2" />
+                        )}
                     </Grid>
 
                     <Grid item xs={12}>
@@ -162,15 +213,20 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                         <Typography variant="body2">Proposer</Typography>
                     </Grid>
                     <Grid item xs={8} lg={6}>
-                        <Typography variant="body2" className={classes.alignRight}>
-                            {data.proposal &&
-                            data.proposal.returnValues &&
-                            data.proposal.returnValues.proposer ? (
-                                data.proposal.returnValues.proposer
-                            ) : (
-                                <NotAvailable variant="body2" />
-                            )}
-                        </Typography>
+                        {data.proposal &&
+                        data.proposal.returnValues &&
+                        data.proposal.returnValues.proposer ? (
+                            <NavLink
+                                href={`/account/${data.proposal.returnValues.proposer}`}
+                                name={
+                                    <Typography variant="body2" className={classes.alignRight}>
+                                        {data.proposal.returnValues.proposer}
+                                    </Typography>
+                                }
+                            />
+                        ) : (
+                            <NotAvailable variant="body2" />
+                        )}
                     </Grid>
 
                     <Grid item xs={12}>
@@ -190,9 +246,8 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
 
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Description</Typography>
-
-                        <Typography variant="body2" className={classes.markdownFile}>
-                            {proposalDetails ? (
+                        {proposalDetails ? (
+                            <Typography variant="body2" className={classes.markdownFile}>
                                 <MarkdownView
                                     markdown={proposalDetails}
                                     options={{
@@ -204,10 +259,10 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                                     }}
                                     flavor="vanilla"
                                 />
-                            ) : (
-                                <NotAvailable variant="body2" />
-                            )}
-                        </Typography>
+                            </Typography>
+                        ) : (
+                            <NotAvailable variant="body2" />
+                        )}
                     </Grid>
 
                     <Grid item xs={12}>
@@ -308,7 +363,37 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                     </Grid>
 
                     <Grid item xs={12} className={classes.centerContent}>
-                        {/* <LedgerButtons option="Vote" /> */}
+                        {!voted ? (
+                            <LedgerDialog
+                                action="ProposalDeposit"
+                                buttonLabel="Deposit"
+                                proposalTitle={proposalTitle}
+                                proposalNumber={proposalNumber}
+                                proposer={
+                                    data.proposal &&
+                                    data.proposal.returnValues &&
+                                    data.proposal.returnValues.proposer
+                                        ? data.proposal.returnValues.proposer
+                                        : ''
+                                }
+                                proposalDescription={proposalDetails}
+                            />
+                        ) : (
+                            <LedgerDialog
+                                action="ProposalVote"
+                                buttonLabel="Vote"
+                                proposalTitle={proposalTitle}
+                                proposalNumber={proposalNumber}
+                                proposer={
+                                    data.proposal &&
+                                    data.proposal.returnValues &&
+                                    data.proposal.returnValues.proposer
+                                        ? data.proposal.returnValues.proposer
+                                        : ''
+                                }
+                                proposalDescription={proposalDetails}
+                            />
+                        )}
                     </Grid>
                 </Grid>
             </CardContent>

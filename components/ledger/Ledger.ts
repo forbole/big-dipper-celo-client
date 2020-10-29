@@ -27,6 +27,7 @@ const MAINNET = 'https://rc1-forno.celo-testnet.org';
 
 type LockCeloProps = { amount: string; from: string };
 type UnlockCeloProps = { amount: string; from: string };
+type VoteProposalProps = { proposalNumber: number, from: string,  vote: string} 
 class Ledger extends Component {
     private address = '';
     private kit: any = null;
@@ -54,6 +55,7 @@ class Ledger extends Component {
                 return errorMessage;
         }
     }
+    
 
     async connect() {
         const web3 = new Web3(MAINNET);
@@ -130,6 +132,19 @@ class Ledger extends Component {
         const result = await lockedCelo.unlock(amount).sendAndWaitForReceipt();
         console.log(result);
 
+        return result;
+    }
+
+     async voteProposal({proposalNumber, from, vote}: VoteProposalProps) {
+        if (!this.kit) {
+            this.checkLedgerErrors("Ledger device is disconnected");
+        }
+        const gov = await this.kit.contracts.getGovernance();
+
+        console.log(`Vote proposal ID: ${proposalNumber}`);
+        const tx = await gov.vote(proposalNumber, vote);
+     
+        const result = await tx.sendAndWaitForReceipt({ from });
         return result;
     }
 }

@@ -20,6 +20,9 @@ import UnlockGoldConfirm from './celoGold/unlock/UnlockGoldConfirm';
 import UnlockGoldSuccess from './celoGold/unlock/UnlockGoldSuccess';
 import ControlButtons from './ControlButtons';
 import Ledger from './Ledger';
+import Confirm from './proposal/deposit/Confirm';
+import Deposit from './proposal/deposit/Deposit';
+import Success from './proposal/deposit/Success';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -153,9 +156,23 @@ export const LedgerFormControl = ({ action }: LedgerFormControlProps): JSX.Eleme
     );
 };
 
-type LedgerDialogProps = { buttonLabel: string; action: string };
+type LedgerDialogProps = {
+    buttonLabel: string;
+    action: string;
+    proposalNumber?: number;
+    proposer?: string;
+    proposalTitle?: string;
+    proposalDescription?: string;
+};
 
-const LedgerDialog = ({ buttonLabel, action }: LedgerDialogProps): JSX.Element => {
+const LedgerDialog = ({
+    buttonLabel,
+    action,
+    proposalNumber,
+    proposer,
+    proposalTitle,
+    proposalDescription
+}: LedgerDialogProps): JSX.Element => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [connected, setConnected] = React.useState(false);
@@ -169,6 +186,12 @@ const LedgerDialog = ({ buttonLabel, action }: LedgerDialogProps): JSX.Element =
     // const [dialogErrorMessage, setDialogErrorMessage] = useGlobalState('dialogErrorMessage');
     const [tabNumber, setTabNumber] = React.useState(0);
     const [showControlButtons, setShowControlButtons] = React.useState(false);
+    const [getProposalNumber, setProposalNumber] = React.useState(proposalNumber || 0);
+    const [getProposer, setProposer] = React.useState(proposer || '');
+    const [getProposalTitle, setProposalTitle] = React.useState(proposalTitle || '');
+    const [getProposalDescription, setProposalDescription] = React.useState(
+        proposalDescription || ''
+    );
 
     const address = currentUser;
 
@@ -226,17 +249,25 @@ const LedgerDialog = ({ buttonLabel, action }: LedgerDialogProps): JSX.Element =
                     default:
                         return null;
                 }
-            // case "ProposalDeposit":
-            //     switch (tabNum) {
-            //         case 0:
-            //             return <Deposit isLoading={isLoading} />
-            //         case 1:
-            //             return <Confirm amount={amount} />
-            //         case 2:
-            //             return <Success />
-            //         default:
-            //             return null
-            //     }
+            case 'ProposalDeposit':
+                switch (tabNum) {
+                    case 0:
+                        return <Deposit isLoading={isLoading} />;
+                    case 1:
+                        return (
+                            <Confirm
+                                amount={amount}
+                                proposalNumber={getProposalNumber}
+                                proposer={getProposer}
+                                proposalTitle={getProposalTitle}
+                                proposalDescription={getProposalDescription}
+                            />
+                        );
+                    case 2:
+                        return <Success />;
+                    default:
+                        return null;
+                }
             // case "ProposalVote":
             //     switch (tabNum) {
             //         case 0:
@@ -302,6 +333,36 @@ const LedgerDialog = ({ buttonLabel, action }: LedgerDialogProps): JSX.Element =
         }
     };
 
+    const handleProposalDeposit = async () => {
+        // try {
+        //     setLedgerLoading(true);
+        //     const from = currentUser;
+        //     const unlockObject = { amount, from };
+        //     await Ledger.unlockCelo(unlockObject);
+        //     setLedgerLoading(false);
+        // } catch (e) {
+        //     setLedgerError(true);
+        //     setLedgerLoading(true);
+        //     setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
+        // }
+    };
+
+    const handleProposalVote = async () => {
+        try {
+            setLedgerLoading(true);
+            const from = currentUser;
+            const vote = '';
+            const proposalNumber = getProposalNumber;
+            const voteObject = { proposalNumber, from, vote };
+            await Ledger.voteProposal(voteObject);
+            setLedgerLoading(false);
+        } catch (e) {
+            setLedgerError(true);
+            setLedgerLoading(true);
+            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
+        }
+    };
+
     const actionHandler = () => {
         setTabNumber(tabNumber + 1);
 
@@ -317,6 +378,20 @@ const LedgerDialog = ({ buttonLabel, action }: LedgerDialogProps): JSX.Element =
                 switch (tabNumber) {
                     case 0:
                         return handleUnlock();
+                    default:
+                        return null;
+                }
+            case 'ProposalDeposit':
+                switch (tabNumber) {
+                    case 0:
+                        return handleProposalDeposit();
+                    default:
+                        return null;
+                }
+            case 'ProposalVote':
+                switch (tabNumber) {
+                    case 0:
+                        return handleProposalVote();
                     default:
                         return null;
                 }
