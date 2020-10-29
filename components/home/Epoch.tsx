@@ -136,18 +136,35 @@ const Epoch = (): JSX.Element => {
         {
             name: 'Epoch Remaining',
             value:
-                ((data.epoch.lastBlockNumberForEpoch - blockProposer.data.blocks.blocks[0].number) /
-                    data.epoch.epochSize) *
-                100,
+                data.epoch &&
+                data.epoch.lastBlockNumberForEpoch &&
+                data.epoch.epochSize &&
+                blockProposer.data &&
+                blockProposer.data.blocks &&
+                blockProposer.data.blocks.blocks[0] &&
+                blockProposer.data.blocks.blocks[0].number
+                    ? ((data.epoch.lastBlockNumberForEpoch -
+                          blockProposer.data.blocks.blocks[0].number) /
+                          data.epoch.epochSize) *
+                      100
+                    : 0,
             fill: 'rgba(246, 247, 249, 1)'
         },
         {
             name: 'Epoch Completed',
             value:
-                ((blockProposer.data.blocks.blocks[0].number -
-                    data.epoch.firstBlockNumberForEpoch) /
-                    data.epoch.epochSize) *
-                100,
+                data.epoch &&
+                data.epoch.firstBlockNumberForEpoch &&
+                data.epoch.epochSize &&
+                blockProposer.data &&
+                blockProposer.data.blocks &&
+                blockProposer.data.blocks.blocks[0] &&
+                blockProposer.data.blocks.blocks[0].number
+                    ? ((blockProposer.data.blocks.blocks[0].number -
+                          data.epoch.firstBlockNumberForEpoch) /
+                          data.epoch.epochSize) *
+                      100
+                    : 0,
             fill: 'rgba(28, 134, 252, 1)'
         }
     ];
