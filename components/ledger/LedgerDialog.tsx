@@ -8,7 +8,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createGlobalState } from 'react-hooks-global-state';
 
 import { GET_ACCOUNT_DETAILS } from '../query/Account';
@@ -20,9 +20,12 @@ import UnlockGoldConfirm from './celoGold/unlock/UnlockGoldConfirm';
 import UnlockGoldSuccess from './celoGold/unlock/UnlockGoldSuccess';
 import ControlButtons from './ControlButtons';
 import Ledger from './Ledger';
-import Confirm from './proposal/deposit/Confirm';
+import DepositConfirm from './proposal/deposit/Confirm';
 import Deposit from './proposal/deposit/Deposit';
-import Success from './proposal/deposit/Success';
+import DepositSuccess from './proposal/deposit/Success';
+import VoteConfirm from './proposal/vote/Confirm';
+import VoteSuccess from './proposal/vote/Success';
+import Vote from './proposal/vote/Vote';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -103,11 +106,46 @@ const useStyles = makeStyles((theme: Theme) =>
             textAlign: 'center',
             paddingTop: '0.5rem',
             paddingBottom: '0.7rem'
+        },
+
+        voteNoButton: {
+            backgroundColor: 'rgba(240, 65, 85, 1)',
+            textTransform: 'none',
+            width: '100%',
+            color: 'rgba(255,255,255,1)',
+            fontWeight: 400,
+            '&:disabled': {
+                backgroundColor: 'rgba(65,65,65, 0.6)'
+            },
+            '&:hover, &.Mui-focusVisible': { backgroundColor: 'rgba(58, 211, 158, 0.5)' }
+        },
+        voteYesButton: {
+            backgroundColor: 'rgba(8, 178, 122, 1)',
+            textTransform: 'none',
+            width: '100%',
+            color: 'rgba(255,255,255,1)',
+            fontWeight: 400,
+            '&:disabled': {
+                backgroundColor: 'rgba(65,65,65, 0.6)'
+            },
+            '&:hover, &.Mui-focusVisible': { backgroundColor: 'rgba(58, 211, 158, 0.5)' }
+        },
+
+        voteAbstainButton: {
+            backgroundColor: 'rgba(55, 148, 240, 1)',
+            textTransform: 'none',
+            width: '100%',
+            color: 'rgba(255,255,255,1)',
+            fontWeight: 400,
+            '&:disabled': {
+                backgroundColor: 'rgba(65,65,65, 0.6)'
+            },
+            '&:hover, &.Mui-focusVisible': { backgroundColor: 'rgba(58, 211, 158, 0.5)' }
         }
     })
 );
 
-const initialState = { dialogError: false, dialogErrorMessage: '', userAmount: '0' };
+const initialState = { dialogError: false, dialogErrorMessage: '', userAmount: '0', userVote: '' };
 const { useGlobalState } = createGlobalState(initialState);
 
 type LedgerFormControlProps = { action: string };
@@ -192,118 +230,13 @@ const LedgerDialog = ({
     const [getProposalDescription, setProposalDescription] = React.useState(
         proposalDescription || ''
     );
+    const [vote, setVote] = React.useState('');
 
     const address = currentUser;
 
     const AccountDetails = useQuery(GET_ACCOUNT_DETAILS, {
         variables: { address }
     });
-
-    const dialogTab = (tabNum: number) => {
-        switch (action) {
-            case 'LockCelo':
-                switch (tabNum) {
-                    case 0:
-                        return (
-                            <LockGold
-                                isLoading={isLoading}
-                                maxLock={
-                                    AccountDetails &&
-                                    AccountDetails.data &&
-                                    AccountDetails.data.account &&
-                                    AccountDetails.data.account.totalBalance &&
-                                    AccountDetails.data.account.totalBalance.gold
-                                        ? AccountDetails.data.account.totalBalance.gold
-                                        : '0'
-                                }
-                            />
-                        );
-                    case 1:
-                        return <LockGoldConfirm amount={amount} />;
-                    case 2:
-                        return <LockGoldSuccess />;
-                    default:
-                        return null;
-                }
-            case 'UnlockCelo':
-                switch (tabNum) {
-                    case 0:
-                        return (
-                            <UnlockGold
-                                isLoading={isLoading}
-                                maxUnlock={
-                                    AccountDetails &&
-                                    AccountDetails.data &&
-                                    AccountDetails.data.account &&
-                                    AccountDetails.data.account.totalBalance &&
-                                    AccountDetails.data.account.totalBalance.lockedGold
-                                        ? AccountDetails.data.account.totalBalance.lockedGold
-                                        : '0'
-                                }
-                            />
-                        );
-                    case 1:
-                        return <UnlockGoldConfirm amount={amount} />;
-                    case 2:
-                        return <UnlockGoldSuccess />;
-                    default:
-                        return null;
-                }
-            case 'ProposalDeposit':
-                switch (tabNum) {
-                    case 0:
-                        return <Deposit isLoading={isLoading} />;
-                    case 1:
-                        return (
-                            <Confirm
-                                amount={amount}
-                                proposalNumber={getProposalNumber}
-                                proposer={getProposer}
-                                proposalTitle={getProposalTitle}
-                                proposalDescription={getProposalDescription}
-                            />
-                        );
-                    case 2:
-                        return <Success />;
-                    default:
-                        return null;
-                }
-            // case "ProposalVote":
-            //     switch (tabNum) {
-            //         case 0:
-            //             return <Deposit isLoading={isLoading} />
-            //         case 1:
-            //             return <Confirm amount={amount} />
-            //         case 2:
-            //             return <Success />
-            //         default:
-            //             return null
-            //     }
-
-            // case "ValidatorGroupVote":
-            //     switch (tabNum) {
-            //         case 0:
-            //             return <Deposit isLoading={isLoading} />
-            //         case 1:
-            //             return <Confirm amount={amount} />
-            //         case 2:
-            //             return <Success />
-            //         default:
-            //             return null
-            //     }
-            // case "ValidatorGroupRevoke":
-            //     switch (tabNum) {
-            //         case 0:
-            //             return <Revoke isLoading={isLoading} />
-            //         case 1:
-            //             return <Confirm amount={amount} />
-            //         case 2:
-            //             return <Success />
-            //         default:
-            //             return null
-            //     }
-        }
-    };
 
     const handleLock = async () => {
         try {
@@ -363,7 +296,7 @@ const LedgerDialog = ({
         }
     };
 
-    const actionHandler = () => {
+    const actionHandler = (e) => {
         setTabNumber(tabNumber + 1);
 
         switch (action) {
@@ -372,29 +305,155 @@ const LedgerDialog = ({
                     case 0:
                         return handleLock();
                     default:
-                        return null;
+                        return null as any;
                 }
+                break;
             case 'UnlockCelo':
                 switch (tabNumber) {
                     case 0:
                         return handleUnlock();
                     default:
-                        return null;
+                        return null as any;
                 }
+                break;
             case 'ProposalDeposit':
                 switch (tabNumber) {
                     case 0:
                         return handleProposalDeposit();
                     default:
-                        return null;
+                        return null as any;
                 }
+                break;
             case 'ProposalVote':
+                setVote(e);
                 switch (tabNumber) {
                     case 0:
                         return handleProposalVote();
                     default:
+                        return null as any;
+                }
+                break;
+        }
+    };
+
+    const dialogTab = (tabNum: number) => {
+        switch (action) {
+            case 'LockCelo':
+                switch (tabNum) {
+                    case 0:
+                        return (
+                            <LockGold
+                                isLoading={isLoading}
+                                maxLock={
+                                    AccountDetails &&
+                                    AccountDetails.data &&
+                                    AccountDetails.data.account &&
+                                    AccountDetails.data.account.totalBalance &&
+                                    AccountDetails.data.account.totalBalance.gold
+                                        ? AccountDetails.data.account.totalBalance.gold
+                                        : '0'
+                                }
+                            />
+                        );
+                    case 1:
+                        return <LockGoldConfirm amount={amount} />;
+                    case 2:
+                        return <LockGoldSuccess />;
+                    default:
                         return null;
                 }
+            case 'UnlockCelo':
+                switch (tabNum) {
+                    case 0:
+                        return (
+                            <UnlockGold
+                                isLoading={isLoading}
+                                maxUnlock={
+                                    AccountDetails &&
+                                    AccountDetails.data &&
+                                    AccountDetails.data.account &&
+                                    AccountDetails.data.account.totalBalance &&
+                                    AccountDetails.data.account.totalBalance.lockedGold
+                                        ? AccountDetails.data.account.totalBalance.lockedGold
+                                        : '0'
+                                }
+                            />
+                        );
+                    case 1:
+                        return <UnlockGoldConfirm amount={amount} />;
+                    case 2:
+                        return <UnlockGoldSuccess />;
+                    default:
+                        return null;
+                }
+            case 'ProposalDeposit':
+                switch (tabNum) {
+                    case 0:
+                        return <Deposit isLoading={isLoading} />;
+                    case 1:
+                        return (
+                            <DepositConfirm
+                                amount={amount}
+                                proposalNumber={getProposalNumber}
+                                proposer={getProposer}
+                                proposalTitle={getProposalTitle}
+                                proposalDescription={getProposalDescription}
+                            />
+                        );
+                    case 2:
+                        return <DepositSuccess />;
+                    default:
+                        return null;
+                }
+            case 'ProposalVote':
+                switch (tabNum) {
+                    case 0:
+                        return (
+                            <Vote
+                                isLoading={isLoading}
+                                ledgerLoading={ledgerLoading}
+                                proposalTitle={getProposalTitle}
+                                voteHandler={actionHandler}
+                            />
+                        );
+                    case 1:
+                        return (
+                            <VoteConfirm
+                                vote={vote}
+                                proposalNumber={getProposalNumber}
+                                proposer={getProposer}
+                                proposalTitle={getProposalTitle}
+                                proposalDescription={getProposalDescription}
+                            />
+                        );
+                    case 2:
+                        return <VoteSuccess />;
+                    default:
+                        return null;
+                }
+
+            // case "ValidatorGroupVote":
+            //     switch (tabNum) {
+            //         case 0:
+            //             return <Deposit isLoading={isLoading} />
+            //         case 1:
+            //             return <Confirm amount={amount} />
+            //         case 2:
+            //             return <Success />
+            //         default:
+            //             return null
+            //     }
+            // case "ValidatorGroupRevoke":
+            //     switch (tabNum) {
+            //         case 0:
+            //             return <Revoke isLoading={isLoading} />
+            //         case 1:
+            //             return <Confirm amount={amount} />
+            //         case 2:
+            //             return <Success />
+            //         default:
+            //             return null
+            //     }
         }
     };
 
@@ -425,6 +484,7 @@ const LedgerDialog = ({
                 } catch (e) {
                     setLedgerError(true);
                     setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
+                    setLedgerLoading(true);
                     setIsLoading(false);
                 }
             }
@@ -476,7 +536,9 @@ const LedgerDialog = ({
             setLedgerLoading(true);
         }
 
-        if (tabNumber === 0) {
+        if (ledgerLoading) {
+            setShowControlButtons(true);
+        } else if (tabNumber === 0 && action != 'ProposalVote') {
             setShowControlButtons(true);
         } else {
             setShowControlButtons(false);

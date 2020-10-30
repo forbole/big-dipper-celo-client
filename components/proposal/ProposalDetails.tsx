@@ -363,7 +363,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                     </Grid>
 
                     <Grid item xs={12} className={classes.centerContent}>
-                        {!voted ? (
+                        {voted ? (
                             <LedgerDialog
                                 action="ProposalDeposit"
                                 buttonLabel="Deposit"

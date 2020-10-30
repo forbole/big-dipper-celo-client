@@ -1,16 +1,11 @@
-import { Select } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Divider from '@material-ui/core/Divider';
-import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
-import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import React from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
+import { createGlobalState } from 'react-hooks-global-state';
 
 const useStyles = makeStyles({
     root: {
@@ -131,82 +126,87 @@ const useStyles = makeStyles({
 });
 
 type VoteProps = {
-    amount: string;
-    proposalNumber: string;
-    proposer: string;
+    isLoading: boolean;
+    ledgerLoading: boolean;
     proposalTitle: string;
-    proposalDescription: string;
+    voteHandler: Promise<void>;
 };
 
-const Vote = (): JSX.Element => {
+const Vote = ({ isLoading, ledgerLoading, proposalTitle, voteHandler }: VoteProps): JSX.Element => {
     const classes = useStyles();
+    const [currentUser, setCurrentUser] = React.useState('');
+
+    useEffect(() => {
+        const localUser = localStorage.getItem('currentUserAddress');
+        const getLocalUser = localUser ? localUser : '';
+        setCurrentUser(getLocalUser);
+    });
+
     return (
         <>
             <DialogContent>
-                <Grid container spacing={1}>
-                    <DialogContentText id="ledger-vote" className={classes.dialog}>
-                        <Grid container className={classes.dialogContent}>
-                            <Grid item xs={12} className={classes.message}>
-                                <Typography variant="body2" noWrap color="textPrimary" gutterBottom>
-                                    Account
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} className={classes.message}>
-                                <Typography
-                                    variant="body2"
-                                    noWrap
-                                    color="textPrimary"
-                                    gutterBottom
-                                    className={
-                                        connected
-                                            ? classes.accountAddress
-                                            : classes.disabledAccountAddress
-                                    }>
-                                    {currentUser}
-                                </Typography>
-                            </Grid>
-
-                            <Grid item xs={12} className={classes.message}>
-                                <Typography variant="body1" color="textPrimary" gutterBottom>
-                                    You’re going to vote for
-                                </Typography>
-                                <Typography
-                                    variant="body2"
-                                    color="textPrimary"
-                                    className={classes.paddingBottom}>
-                                    {proposalTitle}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} className={classes.paddingBottom}>
-                                <Button
-                                    variant="contained"
-                                    className={classes.voteYesButton}
-                                    onClick={(e) => handleVoting(e)}
-                                    disabled={!connected}>
-                                    Yes
-                                </Button>
-                            </Grid>
-                            <Grid item xs={12} className={classes.paddingBottom}>
-                                <Button
-                                    variant="contained"
-                                    className={classes.voteNoButton}
-                                    onClick={(e) => handleVoting(e)}
-                                    disabled={!connected}>
-                                    No
-                                </Button>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Button
-                                    variant="contained"
-                                    className={classes.voteAbstainButton}
-                                    onClick={(e) => handleVoting(e)}
-                                    disabled={!connected}>
-                                    Abstain
-                                </Button>
-                            </Grid>
+                <DialogContentText id="ledger-vote" className={classes.dialog}>
+                    <Grid container className={classes.dialogContent}>
+                        <Grid item xs={12} className={classes.message}>
+                            <Typography variant="body2" noWrap color="textPrimary" gutterBottom>
+                                Account
+                            </Typography>
                         </Grid>
-                    </DialogContentText>
-                </Grid>
+                        <Grid item xs={12} className={classes.message}>
+                            <Typography
+                                variant="body2"
+                                noWrap
+                                color="textPrimary"
+                                gutterBottom
+                                className={
+                                    !isLoading && !ledgerLoading
+                                        ? classes.accountAddress
+                                        : classes.disabledAccountAddress
+                                }>
+                                {currentUser}
+                            </Typography>
+                        </Grid>
+
+                        <Grid item xs={12} className={classes.message}>
+                            <Typography variant="body1" color="textPrimary" gutterBottom>
+                                You’re going to vote for
+                            </Typography>
+                            <Typography
+                                variant="body2"
+                                color="textPrimary"
+                                className={classes.paddingBottom}>
+                                {proposalTitle}
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12} className={classes.paddingBottom}>
+                            <Button
+                                variant="contained"
+                                className={classes.voteYesButton}
+                                onClick={(e) => voteHandler(e.target.textContent)}
+                                disabled={isLoading || ledgerLoading}>
+                                Yes
+                            </Button>
+                        </Grid>
+                        <Grid item xs={12} className={classes.paddingBottom}>
+                            <Button
+                                variant="contained"
+                                className={classes.voteNoButton}
+                                onClick={(e) => voteHandler(e.target.textContent)}
+                                disabled={isLoading || ledgerLoading}>
+                                No
+                            </Button>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button
+                                variant="contained"
+                                className={classes.voteAbstainButton}
+                                onClick={(e) => voteHandler(e.target.textContent)}
+                                disabled={isLoading || ledgerLoading}>
+                                Abstain
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </DialogContentText>
             </DialogContent>
         </>
     );

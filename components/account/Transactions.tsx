@@ -189,26 +189,26 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                         className={
                                                                             classes.leftInline
                                                                         }>
-                                                                        From
-                                                                        <NavLink
-                                                                            href={`/account/${row.from.address}`}
-                                                                            className={
-                                                                                classes.txPadding
-                                                                            }
-                                                                            name={
-                                                                                row.from &&
-                                                                                row.from.address ? (
+                                                                        From{'  '}
+                                                                        {row.from &&
+                                                                        row.from.address ? (
+                                                                            <NavLink
+                                                                                href={`/account/${row.from.address}`}
+                                                                                className={
+                                                                                    classes.txPadding
+                                                                                }
+                                                                                name={
                                                                                     <MiddleEllipsis
                                                                                         text={
                                                                                             row.from
                                                                                                 .address
                                                                                         }
                                                                                     />
-                                                                                ) : (
-                                                                                    <NotAvailable variant="body2" />
-                                                                                )
-                                                                            }
-                                                                        />
+                                                                                }
+                                                                            />
+                                                                        ) : (
+                                                                            <NotAvailable variant="body2" />
+                                                                        )}
                                                                     </Typography>
                                                                 </Grid>
 
