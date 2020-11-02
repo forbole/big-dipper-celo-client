@@ -68,10 +68,10 @@ const Confirm = ({
     proposalDescription
 }: ConfirmProps): JSX.Element => {
     const classes = useStyles();
- 
+
     return (
         <>
-             <DialogContent>
+            <DialogContent>
                 <Grid container spacing={1}>
                     <DialogContentText id="ledger-vote">
                         <Grid container className={classes.dialogContent}>
@@ -95,7 +95,7 @@ const Confirm = ({
                             </Grid>
                             <Grid item xs={9} className={classes.item}>
                                 <Typography variant="body2" align="right" gutterBottom>
-                                  {proposalNumber}
+                                    {proposalNumber}
                                 </Typography>
                             </Grid>
 
@@ -110,7 +110,7 @@ const Confirm = ({
                             </Grid>
                             <Grid item xs={9} className={classes.item}>
                                 <Typography variant="body2" align="right" gutterBottom>
-                                   {proposer}
+                                    {proposer}
                                 </Typography>
                             </Grid>
 
@@ -132,7 +132,6 @@ const Confirm = ({
                             <Grid item xs={12}>
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
-                            
 
                             <Grid item xs={12} className={classes.item}>
                                 <Typography variant="body2" gutterBottom>
@@ -152,7 +151,10 @@ const Confirm = ({
                                     Description
                                 </Typography>
 
-                                <Typography variant="body2" className={classes.wrapText}>
+                                <Typography
+                                    variant="body2"
+                                    color="textPrimary"
+                                    className={classes.wrapText}>
                                     <MarkdownView
                                         markdown={proposalDescription}
                                         options={{
