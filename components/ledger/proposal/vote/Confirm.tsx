@@ -175,7 +175,7 @@ const Confirm = ({
 
                             <Grid item xs={12} className={classes.centerContent}>
                                 <Typography variant="h6">
-                                    Please sign in your Ledger device…
+                                    Please sign in your Ledger device...
                                 </Typography>
                             </Grid>
                         </Grid>
