@@ -51,7 +51,7 @@ const useStyles = makeStyles({
 
 const ValidatorsGroups = (): JSX.Element => {
     const classes = useStyles();
- 
+
     const { loading, error, data } = useQuery(GET_ELECTION, {
         pollInterval: 5000
     });
