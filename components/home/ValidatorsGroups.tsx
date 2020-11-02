@@ -16,7 +16,7 @@ const useStyles = makeStyles({
         height: '100%',
         padding: '1.5%',
         borderRadius: 4,
-        paddingBottom: '3.57rem'
+        paddingBottom: '3.9rem'
     },
     box: {
         letterSpacing: '1px',
@@ -51,7 +51,7 @@ const useStyles = makeStyles({
 
 const ValidatorsGroups = (): JSX.Element => {
     const classes = useStyles();
-
+ 
     const { loading, error, data } = useQuery(GET_ELECTION, {
         pollInterval: 5000
     });
