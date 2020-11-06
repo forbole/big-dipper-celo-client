@@ -91,3 +91,15 @@ export const GET_PROPOSED_BLOCKS = gql`
         }
     }
 `;
+
+export const BLOCK_SUBSCRIPTION = gql`
+    subscription addBlock {
+        blockAdded {
+            number
+            miner {
+                address
+                name
+            }
+        }
+    }
+`;
