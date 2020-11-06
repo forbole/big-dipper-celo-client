@@ -174,7 +174,9 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                         {row.timestamp ? (
                                                                             moment
                                                                                 .unix(row.timestamp)
-                                                                                .fromNow()
+                                                                                .format(
+                                                                                    'Do MMMM YYYY, h:mm:ss a'
+                                                                                )
                                                                         ) : (
                                                                             <NotAvailable variant="body2" />
                                                                         )}
