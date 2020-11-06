@@ -183,7 +183,9 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                             )}
                             (
                             {data && data.transaction && data.transaction.timestamp
-                                ? moment.unix(data.transaction.timestamp).fromNow()
+                                ? moment
+                                      .unix(data.transaction.timestamp)
+                                      .format('Do MMMM YYYY, h:mm:ss a')
                                 : null}
                             )
                         </Typography>

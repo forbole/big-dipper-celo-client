@@ -226,7 +226,9 @@ const Downtime = ({ address }: DowntimeProps): JSX.Element => {
                                                 <TableCell align="left" padding="checkbox">
                                                     {row.timestamp ? (
                                                         <Typography variant="body2" noWrap>
-                                                            {moment.unix(row.timestamp).fromNow()}
+                                                            {moment
+                                                                .unix(row.timestamp)
+                                                                .format('Do MMMM YYYY, h:mm:ss a')}
                                                         </Typography>
                                                     ) : (
                                                         <NotAvailable variant="body2" />

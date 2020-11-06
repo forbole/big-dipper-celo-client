@@ -189,7 +189,9 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                             )}
                             (
                             {data && data.block && data.block.timestamp
-                                ? moment.unix(data.block.timestamp).fromNow()
+                                ? moment
+                                      .unix(data.block.timestamp)
+                                      .format('Do MMMM YYYY, h:mm:ss a')
                                 : null}
                             )
                         </Typography>
