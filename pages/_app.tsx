@@ -1,12 +1,18 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { ApolloClient, ApolloProvider, HttpLink } from '@apollo/client';
+import { ApolloClient, ApolloProvider } from '@apollo/client';
+import { HttpLink, split } from '@apollo/client';
 import { InMemoryCache } from '@apollo/client/cache';
+import { onError } from '@apollo/client/link/error';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { getMainDefinition } from '@apollo/client/utilities';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
-// import App from 'next/app';
+import { ApolloLink } from 'apollo-link';
 import Head from 'next/head';
 import React, { useEffect } from 'react';
+// import * as ws from 'ws';
+import WebSocket from 'ws';
 
 import BottomNavigation from '../components/BottomNavigation';
 import Footer from '../components/Footer';
@@ -14,11 +20,48 @@ import Layout from '../components/Layout';
 import possibleTypes from '../possibleTypes.json';
 import DarkTheme from '../themes/celo-theme';
 
+const wsLink = process.browser
+    ? new WebSocketLink({
+          // only instantiate in the browser
+          uri: `wss://server.celo.bigdipper.live/graphql`,
+          options: {
+              reconnect: true,
+              lazy: true
+          }
+      })
+    : (null as any);
+
+const httplink = new HttpLink({
+    uri: 'https://server.celo.bigdipper.live/graphql',
+    credentials: 'same-origin'
+});
+
+interface DefinintionProps {
+    kind: string;
+    operation?: string;
+}
+
+const link = process.browser
+    ? split(
+          //only create the split in the browser
+          // split based on operation type
+          ({ query }) => {
+              const { kind, operation }: DefinintionProps = getMainDefinition(query);
+              return kind === 'OperationDefinition' && operation === 'subscription';
+          },
+          wsLink,
+          httplink
+      )
+    : httplink;
+
+const ssrMode = typeof window === 'undefined';
+
 const cache = new InMemoryCache({ possibleTypes });
 
 const client = new ApolloClient({
+    ssrMode,
     cache,
-    link: new HttpLink({ uri: process.env.uriGQL }),
+    link,
     defaultOptions: {
         watchQuery: {
             fetchPolicy: 'cache-and-network'
@@ -39,25 +82,26 @@ export default function App(props: any) {
 
     return (
         <React.Fragment>
-            <ApolloProvider client={client}>
-                <Head>
-                    <title>Big Dipper For Celo</title>
-                    <meta
-                        name="viewport"
-                        content="minimum-scale=1, initial-scale=1, width=device-width"
-                    />
-                    <link rel="icon" href="/favicon.ico" />
-                </Head>
-                <ThemeProvider theme={DarkTheme}>
-                    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                    <CssBaseline />
+            <Head>
+                <title>Big Dipper For Celo</title>
+                <meta
+                    name="viewport"
+                    content="minimum-scale=1, initial-scale=1, width=device-width"
+                />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <ThemeProvider theme={DarkTheme}>
+                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                <CssBaseline />
+                <ApolloProvider client={client}>
                     <Layout>
                         <Component {...pageProps} style={{ display: 'flex' }} />
                     </Layout>
-                    <Footer />
-                    <BottomNavigation />
-                </ThemeProvider>
-            </ApolloProvider>
+                </ApolloProvider>
+
+                <Footer />
+                <BottomNavigation />
+            </ThemeProvider>
         </React.Fragment>
     );
 }
