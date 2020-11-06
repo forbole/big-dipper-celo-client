@@ -128,47 +128,53 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
     // if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
 
-    if (data && data.transactions)
-        return (
-            <>
-                <Grid container className={classes.container}>
-                    <Grid item xs={12}>
-                        <Paper className={classes.root}>
-                            <Typography variant="body1" className={classes.box}>
-                                Latest Transactions{' '}
-                                {pagination === false ? (
-                                    <NavLink
-                                        href="/transactions"
-                                        name="view more"
-                                        className={classes.link}
-                                        textSecondary
-                                    />
-                                ) : null}
-                            </Typography>
-                            {data && data.transactions ? (
-                                <TableContainer className={classes.container}>
-                                    <Table stickyHeader aria-label="sticky table">
-                                        <TableHead></TableHead>
-                                        <TableBody>
-                                            {data.transactions.transactions.map(
-                                                (row: any, index: number) => {
-                                                    return (
-                                                        <TableRow key={index}>
-                                                            <TableCell
-                                                                component="th"
-                                                                scope="row"
-                                                                padding="checkbox">
-                                                                <Grid
-                                                                    container
-                                                                    spacing={1}
-                                                                    style={{
-                                                                        padding: '0.2rem 0',
-                                                                        background:
-                                                                            'rgba(255, 255, 255, 1)'
-                                                                    }}>
-                                                                    <Grid item xs={5}>
-                                                                        <Typography
-                                                                            variant="body2"
+    return (
+        <>
+            <Grid container className={classes.container}>
+                <Grid item xs={12}>
+                    <Paper className={classes.root}>
+                        <Typography variant="body1" className={classes.box}>
+                            Latest Transactions{' '}
+                            {pagination === false ? (
+                                <NavLink
+                                    href="/transactions"
+                                    name="view more"
+                                    className={classes.link}
+                                    textSecondary
+                                />
+                            ) : null}
+                        </Typography>
+                        {data && data.transactions ? (
+                            <TableContainer className={classes.container}>
+                                <Table stickyHeader aria-label="sticky table">
+                                    <TableHead></TableHead>
+                                    <TableBody>
+                                        {data.transactions.transactions.map(
+                                            (row: any, index: number) => {
+                                                return (
+                                                    <TableRow key={index}>
+                                                        <TableCell
+                                                            component="th"
+                                                            scope="row"
+                                                            padding="checkbox">
+                                                            <Grid
+                                                                container
+                                                                spacing={1}
+                                                                style={{
+                                                                    padding: '0.2rem 0',
+                                                                    background:
+                                                                        'rgba(255, 255, 255, 1)'
+                                                                }}>
+                                                                <Grid item xs={8}>
+                                                                    <Typography
+                                                                        variant="body2"
+                                                                        className={
+                                                                            classes.leftInline
+                                                                        }
+                                                                        noWrap>
+                                                                        Tx#
+                                                                        <NavLink
+                                                                            href={`transaction/${row.hash}`}
                                                                             className={
                                                                                 classes.leftInline
                                                                             }
@@ -349,44 +355,43 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                         </TableBody>
                                     </Table>
 
-                                    {pagination === true ? (
-                                        <TablePagination
-                                            className="pagination"
-                                            rowsPerPageOptions={[
-                                                publicRuntimeConfig.rowXxsmall,
-                                                publicRuntimeConfig.rowXsmall,
-                                                publicRuntimeConfig.rowSmall,
-                                                publicRuntimeConfig.rowMedium,
-                                                publicRuntimeConfig.rowLarge,
-                                                publicRuntimeConfig.rowXlarge
-                                            ]}
-                                            component="div"
-                                            count={
-                                                data &&
-                                                data.transactions &&
-                                                data.transactions.totalCounts
-                                                    ? data.transactions.totalCounts
-                                                    : 0
-                                            }
-                                            rowsPerPage={pageSize}
-                                            page={page}
-                                            onChangePage={handleChangePage}
-                                            onChangeRowsPerPage={handleChangeRowsPerPage}
-                                            backIconButtonProps={{
-                                                'aria-label': 'Previous',
-                                                disabled: page === 1
-                                            }}
-                                            nextIconButtonProps={{
-                                                'aria-label': 'Next'
-                                            }}
-                                        />
-                                    ) : null}
-                                </TableContainer>
-                            ) : (
-                                ''
-                            )}
-                        </Paper>
-                    </Grid>
+                                {pagination === true ? (
+                                    <TablePagination
+                                        className="pagination"
+                                        rowsPerPageOptions={[
+                                            publicRuntimeConfig.rowXxsmall,
+                                            publicRuntimeConfig.rowXsmall,
+                                            publicRuntimeConfig.rowSmall,
+                                            publicRuntimeConfig.rowMedium,
+                                            publicRuntimeConfig.rowLarge,
+                                            publicRuntimeConfig.rowXlarge
+                                        ]}
+                                        component="div"
+                                        count={
+                                            data &&
+                                            data.transactions &&
+                                            data.transactions.totalCounts
+                                                ? data.transactions.totalCounts
+                                                : 0
+                                        }
+                                        rowsPerPage={pageSize}
+                                        page={page}
+                                        onChangePage={handleChangePage}
+                                        onChangeRowsPerPage={handleChangeRowsPerPage}
+                                        backIconButtonProps={{
+                                            'aria-label': 'Previous',
+                                            disabled: page === 1
+                                        }}
+                                        nextIconButtonProps={{
+                                            'aria-label': 'Next'
+                                        }}
+                                    />
+                                ) : null}
+                            </TableContainer>
+                        ) : (
+                            ''
+                        )}
+                    </Paper>
                 </Grid>
             </>
         );

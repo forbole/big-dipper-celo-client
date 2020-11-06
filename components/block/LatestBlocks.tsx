@@ -352,16 +352,10 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                               <Typography
                                                                   variant="body2"
                                                                   noWrap
-                                                                  color={
-                                                                      pagination
-                                                                          ? 'textSecondary'
-                                                                          : 'textPrimary'
-                                                                  }>
+                                                                  color="textSecondary">
                                                                   {moment
                                                                       .unix(row.timestamp)
-                                                                      .format(
-                                                                          'Do MMMM YYYY, h:mm:ss a'
-                                                                      )}
+                                                                      .fromNow()}
                                                               </Typography>
                                                           </TableCell>
                                                       </TableRow>
