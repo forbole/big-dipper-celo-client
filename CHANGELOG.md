@@ -9,6 +9,7 @@
 * Added Ordering in Accounts query
 * Implemented proposal query and linked data with `Proposal` components 
 * Implemented Ledger Integration: Login/Logout, Lock/Unlock CELO
+* Removed unused _id from query
 
 ## v0.1.3
 

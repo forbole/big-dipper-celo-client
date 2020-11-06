@@ -7,7 +7,6 @@ export const GET_TX = gql`
             transactions {
                 type
                 from {
-                    _id
                     address
                     balance
                 }
@@ -70,7 +69,6 @@ export const GET_ACCOUNT_TX = gql`
                 gas
                 type
                 from {
-                    _id
                     address
                     balance
                 }
