@@ -118,7 +118,7 @@ const ChartData = (): JSX.Element => {
                                     ? numbro(data.chain.latestHeight).format('000,000')
                                     : numbro(data.chain.latestHeight).format({
                                           average: true,
-                                          mantissa: 4
+                                          mantissa: 2
                                       })}
                             </Typography>
                         ) : (
@@ -138,7 +138,7 @@ const ChartData = (): JSX.Element => {
                                     ? numbro(data.chain.txCount).format('000,000')
                                     : numbro(data.chain.txCount).format({
                                           average: true,
-                                          mantissa: 4
+                                          mantissa: 2
                                       })}
                             </Typography>
                         ) : (
@@ -197,7 +197,7 @@ const ChartData = (): JSX.Element => {
                                                       data.chain.celoTotalSupply) /
                                                       CELO_FRACTION
                                               ).toFormat(2)
-                                          ).format({ average: true, mantissa: 4 })}
+                                          ).format({ average: true, mantissa: 2 })}
                                 </Typography>
                             </>
                         ) : (
