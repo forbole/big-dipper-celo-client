@@ -9,7 +9,6 @@ export const GET_PROPOSALS = gql`
             totalCounts
             hasMore
             proposals {
-                _id
                 proposalNumber
                 address
                 blockHash
@@ -32,7 +31,6 @@ export const GET_PROPOSALS = gql`
 export const GET_PROPOSAL = gql`
     query Proposal($proposalNumber: Int) {
         proposal(proposalNumber: $proposalNumber) {
-            _id
             proposalNumber
             address
             blockHash

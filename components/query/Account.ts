@@ -6,7 +6,6 @@ export const GET_ACCOUNTS = gql`
             page
             totalCounts
             accounts {
-                _id
                 address
                 balance
                 txCount
