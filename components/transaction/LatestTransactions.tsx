@@ -122,7 +122,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
         pollInterval: 5000
     });
 
-    if (loading) return <ComponentLoader />;
+    // if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
 
     return (
@@ -141,7 +141,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                 />
                             ) : null}
                         </Typography>
-                        {data.transactions ? (
+                        {data && data.transactions ? (
                             <TableContainer className={classes.container}>
                                 <Table stickyHeader aria-label="sticky table">
                                     <TableHead></TableHead>
@@ -330,7 +330,13 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                             publicRuntimeConfig.rowXlarge
                                         ]}
                                         component="div"
-                                        count={data.transactions.totalCounts}
+                                        count={
+                                            data &&
+                                            data.transactions &&
+                                            data.transactions.totalCounts
+                                                ? data.transactions.totalCounts
+                                                : 0
+                                        }
                                         rowsPerPage={pageSize}
                                         page={page}
                                         onChangePage={handleChangePage}
