@@ -153,8 +153,6 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
         pollInterval: 5000
     });
 
-
-
     // if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
 
