@@ -158,7 +158,7 @@ export const LedgerFormControl = ({ action }: LedgerFormControlProps): JSX.Eleme
     const [ledgerLoading, setLedgerLoading] = React.useState(false);
     const [userAmount, setUserAmount] = useGlobalState('userAmount');
 
-    const checkForInputErrors = (e) => {
+    const checkForInputErrors = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         if (e.target.value === '0') {
             setDialogError(true);
             setDialogErrorMessage(
@@ -296,7 +296,7 @@ const LedgerDialog = ({
         }
     };
 
-    const actionHandler = (e) => {
+    const actionHandler = (e: React.SetStateAction<string>) => {
         setTabNumber(tabNumber + 1);
 
         switch (action) {
@@ -457,7 +457,7 @@ const LedgerDialog = ({
         }
     };
 
-    const handlePreviousDialog = (e) => {
+    const handlePreviousDialog = () => {
         if (tabNumber > 0) {
             setTabNumber(tabNumber - 1);
         }

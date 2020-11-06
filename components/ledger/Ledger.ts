@@ -8,7 +8,19 @@ import Eth from '@ledgerhq/hw-app-eth';
 import TransportU2F from '@ledgerhq/hw-transport-u2f';
 import TransportUSB from '@ledgerhq/hw-transport-webusb';
 import { Component } from 'react';
-import Web3 from 'web3';
+// import Web3 from 'web3';
+const Web3 = require('web3');
+
+
+
+
+declare global {
+    interface Window {
+        USB:any;
+        u2f:any;
+    }
+}
+
 
 const getCeloLedgerTransport = () => {
     if (window.USB) {
@@ -55,14 +67,12 @@ class Ledger extends Component {
                 return errorMessage;
         }
     }
-    
-
     async connect() {
         const web3 = new Web3(MAINNET);
         const transport = await getCeloLedgerTransport();
         const eth = new Eth(transport);
         const wallet = await newLedgerWalletWithSetup(eth.transport);
-        const kit = newKitFromWeb3(web3, wallet);
+        const kit: ContractKit = newKitFromWeb3(web3, wallet);
 
         this.web3 = web3;
         this.eth = eth;
