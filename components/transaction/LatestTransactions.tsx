@@ -82,7 +82,7 @@ const useStyles = makeStyles({
     },
 
     chip: {
-        marginBottom: '0.3rem'
+        marginLeft: '1rem'
     },
 
     divider: {
@@ -92,8 +92,8 @@ const useStyles = makeStyles({
     }
 });
 
-moment.relativeTimeThreshold('s', 59);
-moment.relativeTimeThreshold('ss', 3);
+// moment.relativeTimeThreshold('s', 59);
+// moment.relativeTimeThreshold('ss', 3);
 
 type LatestTxsProps = { pagination: boolean };
 
@@ -210,7 +210,12 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                                         'Do MMMM YYYY, h:mm:ss a'
                                                                                     )
                                                                             ) : (
-                                                                                <NotAvailable variant="body2" />
+                                                                                <NotAvailable
+                                                                                    className={
+                                                                                        classes.alignRight
+                                                                                    }
+                                                                                    variant="body2"
+                                                                                />
                                                                             )}
                                                                         </Typography>
                                                                     </Grid>
@@ -289,11 +294,19 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                                 className={
                                                                                     classes.alignRight
                                                                                 }>
-                                                                                {row.value +
+                                                                                {new BigNumber(
+                                                                                    row.value /
+                                                                                        CELO_FRACTION
+                                                                                ).toFormat(2) +
                                                                                     ' CELO'}
                                                                             </Typography>
                                                                         ) : (
-                                                                            <NotAvailable variant="body2" />
+                                                                            <NotAvailable
+                                                                                className={
+                                                                                    classes.alignRight
+                                                                                }
+                                                                                variant="body2"
+                                                                            />
                                                                         )}
                                                                     </Grid>
 
