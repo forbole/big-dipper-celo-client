@@ -1,17 +1,18 @@
-import { useQuery } from '@apollo/client';
+import { useQuery, useSubscription } from '@apollo/client';
 import { Divider, Theme } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
+import Countdown, { CountdownRenderProps } from 'react-countdown';
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
-import { GET_BLOCK } from '../query/Block';
+import { BLOCK_SUBSCRIPTION } from '../query/Block';
+import { GET_CHAIN } from '../query/Chain';
 import { GET_EPOCH } from '../query/Epoch';
-import EpochCountdown from './EpochCountdown';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -110,18 +111,28 @@ const Epoch = (): JSX.Element => {
     const classes = useStyles();
     const pageSize = 1;
     const page = 1;
+    const [hasEnded, setHasEnded] = React.useState(false);
 
-    const blockProposer = useQuery(GET_BLOCK, {
-        variables: { pageSize, page },
-        pollInterval: 5000
-    });
+    const blockProposer = useSubscription(BLOCK_SUBSCRIPTION);
 
-    const { loading, error, data } = useQuery(GET_EPOCH, {
-        pollInterval: 5001
-    });
+    const averageBlockTime = useQuery(GET_CHAIN);
+    const { loading, error, data } = useQuery(GET_EPOCH);
 
-    if (blockProposer.loading || loading) return <ComponentLoader />;
-    if (blockProposer.error || error)
+    const lastBlockInEpoch =
+        data && data.epoch && data.epoch.lastBlockNumberForEpoch
+            ? data.epoch.lastBlockNumberForEpoch
+            : 0;
+
+    const averageTimeOfBlock =
+        averageBlockTime &&
+        averageBlockTime.data &&
+        averageBlockTime.data.chain &&
+        averageBlockTime.data.chain.averageBlockTime
+            ? averageBlockTime.data.chain.averageBlockTime
+            : 0;
+
+    // if (loading) return <ComponentLoader />;
+    if (error)
         return (
             <ErrorMessage
                 message={
@@ -136,15 +147,14 @@ const Epoch = (): JSX.Element => {
         {
             name: 'Epoch Remaining',
             value:
+                data &&
                 data.epoch &&
                 data.epoch.lastBlockNumberForEpoch &&
                 data.epoch.epochSize &&
                 blockProposer.data &&
-                blockProposer.data.blocks &&
-                blockProposer.data.blocks.blocks[0] &&
-                blockProposer.data.blocks.blocks[0].number
-                    ? ((data.epoch.lastBlockNumberForEpoch -
-                          blockProposer.data.blocks.blocks[0].number) /
+                blockProposer.data.blockAdded &&
+                blockProposer.data.blockAdded.number
+                    ? ((data.epoch.lastBlockNumberForEpoch - blockProposer.data.blockAdded.number) /
                           data.epoch.epochSize) *
                       100
                     : 0,
@@ -153,14 +163,14 @@ const Epoch = (): JSX.Element => {
         {
             name: 'Epoch Completed',
             value:
+                data &&
                 data.epoch &&
                 data.epoch.firstBlockNumberForEpoch &&
                 data.epoch.epochSize &&
                 blockProposer.data &&
-                blockProposer.data.blocks &&
-                blockProposer.data.blocks.blocks[0] &&
-                blockProposer.data.blocks.blocks[0].number
-                    ? ((blockProposer.data.blocks.blocks[0].number -
+                blockProposer.data.blockAdded &&
+                blockProposer.data.blockAdded.number
+                    ? ((blockProposer.data.blockAdded.number -
                           data.epoch.firstBlockNumberForEpoch) /
                           data.epoch.epochSize) *
                       100
@@ -168,6 +178,39 @@ const Epoch = (): JSX.Element => {
             fill: 'rgba(28, 134, 252, 1)'
         }
     ];
+
+    const EpochEnded = () => <span>This Epoch has ended!</span>;
+
+    const renderer = ({
+        hours,
+        minutes,
+        seconds,
+        completed
+    }: CountdownRenderProps): JSX.Element => {
+        if (completed) {
+            // Render a completed state
+            setHasEnded(true);
+            return <EpochEnded />;
+        } else {
+            // Render a countdown
+            return (
+                <>
+                    <span id="hours" style={{ color: 'rgba(28, 134, 252, 1)' }}>
+                        {hours}
+                    </span>
+                    <span> h </span>
+                    <span id="minutes" style={{ color: 'rgba(28, 134, 252, 1)' }}>
+                        {minutes}
+                    </span>
+                    <span> m </span>
+                    <span id="seconds" style={{ color: 'rgba(28, 134, 252, 1)' }}>
+                        {seconds}
+                    </span>
+                    <span> s </span>
+                </>
+            );
+        }
+    };
 
     return (
         <>
@@ -202,7 +245,7 @@ const Epoch = (): JSX.Element => {
                         </Grid>
 
                         <Grid item xs={12} className={classes.epochData}>
-                            {data.epoch && data.epoch.epochNumber ? (
+                            {data && data.epoch && data.epoch.epochNumber ? (
                                 <Typography variant="body1">
                                     <span className={classes.currentEpochText}>
                                         {data.epoch.epochNumber}
@@ -211,56 +254,77 @@ const Epoch = (): JSX.Element => {
                                 </Typography>
                             ) : null}
                             <Typography variant="body1" gutterBottom>
-                                <EpochCountdown />
+                                {blockProposer &&
+                                blockProposer.data &&
+                                blockProposer.data.blockAdded &&
+                                blockProposer.data.blockAdded.number ? (
+                                    <Countdown
+                                        date={
+                                            Date.now() +
+                                            (lastBlockInEpoch -
+                                                blockProposer.data.blockAdded.number) *
+                                                averageTimeOfBlock *
+                                                1000
+                                        }
+                                        intervalDelay={1}
+                                        precision={3}
+                                        renderer={renderer}
+                                    />
+                                ) : null}
                             </Typography>
-                            <Typography variant="body2">until Epoch Ends</Typography>
+                            {!hasEnded ? (
+                                <Typography variant="body2">until Epoch Ends</Typography>
+                            ) : null}
                         </Grid>
 
                         <Grid item xs={5} className={classes.epochNumber}>
-                            {blockProposer.data.blocks &&
-                            blockProposer.data.blocks.blocks[0] &&
-                            blockProposer.data.blocks.blocks[0].number &&
+                            {blockProposer &&
+                            blockProposer.data &&
+                            blockProposer.data.blockAdded &&
+                            blockProposer.data.blockAdded.number &&
+                            data &&
                             data.epoch &&
                             data.epoch.firstBlockNumberForEpoch ? (
                                 <Typography variant="body1" noWrap>
-                                    {blockProposer.data.blocks.blocks[0].number -
+                                    {blockProposer.data.blockAdded.number -
                                         data.epoch.firstBlockNumberForEpoch >
                                     0
-                                        ? blockProposer.data.blocks.blocks[0].number -
+                                        ? blockProposer.data.blockAdded.number -
                                           data.epoch.firstBlockNumberForEpoch
                                         : 0}
                                 </Typography>
                             ) : null}
                             <Divider variant="middle" className={classes.divider} />
-                            {data.epoch && data.epoch.epochSize ? (
+                            {data && data.epoch && data.epoch.epochSize ? (
                                 <Typography variant="body1" noWrap>
                                     {data.epoch.epochSize}
                                 </Typography>
                             ) : null}
                         </Grid>
-                        {blockProposer.data.blocks &&
-                        blockProposer.data.blocks.blocks[0] &&
-                        blockProposer.data.blocks.blocks[0].miner &&
-                        blockProposer.data.blocks.blocks[0].miner ? (
+                        {blockProposer &&
+                        blockProposer.data &&
+                        blockProposer.data.blockAdded &&
+                        blockProposer.data.blockAdded.number &&
+                        blockProposer.data.blockAdded.miner ? (
                             <Grid item xs={12} className={classes.blockProposer}>
                                 <img
-                                    src={`https://ui-avatars.com/api/?rounded=true&size=40&name=${blockProposer.data.blocks.blocks[0].miner.name}&color=rgba(8, 178, 122, 1)&background=fff`}
+                                    src={`https://ui-avatars.com/api/?rounded=true&size=40&name=${blockProposer.data.blockAdded.miner.name}&color=rgba(8, 178, 122, 1)&background=fff`}
                                     className={classes.roundIcon}
                                     alt="Block Proposer"
                                 />
-                                {blockProposer.data.blocks.blocks[0].miner.name ? (
+                                {blockProposer.data.blockAdded.miner.name ? (
                                     <Typography
                                         variant="body2"
                                         color="textPrimary"
                                         className={classes.blockProposerName}>
-                                        {blockProposer.data.blocks.blocks[0].miner.name}
+                                        {blockProposer.data.blockAdded.miner.name}
                                     </Typography>
                                 ) : (
                                     <Typography
                                         variant="body2"
                                         color="textPrimary"
                                         className={classes.blockProposerAddress}>
-                                        {blockProposer.data.blocks.blocks[0].miner.signer}
+                                        {blockProposer.data.blockAdded.miner.signer}
                                     </Typography>
                                 )}
                             </Grid>
