@@ -11,6 +11,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
+import { BigNumber } from 'bignumber.js';
 import moment from 'moment';
 import getConfig from 'next/config';
 import React, { useEffect } from 'react';
@@ -30,7 +31,7 @@ const useStyles = makeStyles({
         padding: '1.5%',
         borderRadius: 5,
         wordWrap: 'break-word',
-        margin: 'none'
+        margin: '0'
     },
     container: {
         borderRadius: 5,
@@ -81,7 +82,7 @@ const useStyles = makeStyles({
     },
 
     chip: {
-        marginBottom: '0.3rem'
+        marginLeft: '1rem'
     },
 
     divider: {
@@ -102,6 +103,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
 
     const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
     const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowSmall);
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     useEffect(() => {
         if (pagination === false) {
@@ -208,7 +210,12 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                                         'Do MMMM YYYY, h:mm:ss a'
                                                                                     )
                                                                             ) : (
-                                                                                <NotAvailable variant="body2" />
+                                                                                <NotAvailable
+                                                                                    className={
+                                                                                        classes.alignRight
+                                                                                    }
+                                                                                    variant="body2"
+                                                                                />
                                                                             )}
                                                                         </Typography>
                                                                     </Grid>
@@ -287,11 +294,19 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                                 className={
                                                                                     classes.alignRight
                                                                                 }>
-                                                                                {row.value +
+                                                                                {new BigNumber(
+                                                                                    row.value /
+                                                                                        CELO_FRACTION
+                                                                                ).toFormat(2) +
                                                                                     ' CELO'}
                                                                             </Typography>
                                                                         ) : (
-                                                                            <NotAvailable variant="body2" />
+                                                                            <NotAvailable
+                                                                                className={
+                                                                                    classes.alignRight
+                                                                                }
+                                                                                variant="body2"
+                                                                            />
                                                                         )}
                                                                     </Grid>
 

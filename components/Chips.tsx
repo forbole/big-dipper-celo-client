@@ -139,7 +139,6 @@ const Chips = ({ contractName, type, actionResult }: ChipsProps): JSX.Element =>
                         borderRadius: 5,
                         width: '7rem',
                         marginRight: '0.5rem',
-                        marginLeft: '1rem',
                         fontSize: '	0.875rem'
                     }}
                 />
