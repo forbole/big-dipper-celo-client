@@ -92,8 +92,8 @@ const useStyles = makeStyles({
     }
 });
 
-// moment.relativeTimeThreshold('s', 59);
-// moment.relativeTimeThreshold('ss', 3);
+moment.relativeTimeThreshold('s', 59);
+moment.relativeTimeThreshold('ss', 3);
 
 type LatestTxsProps = { pagination: boolean };
 
