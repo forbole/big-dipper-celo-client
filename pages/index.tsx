@@ -29,7 +29,7 @@ export default function Index(): JSX.Element {
                 <TokenPrice />
             </Grid>
             <Grid item xs={12} md={6} lg={3}>
-                {/* <Epoch /> */}
+                <Epoch />
             </Grid>
             <Grid item xs={12} md={6} lg={3}>
                 <ValidatorsGroups />
