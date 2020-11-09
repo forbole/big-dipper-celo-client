@@ -12,6 +12,7 @@
 * Removed unused _id from query
 * [#57] Updated timestamp display to `Do MMMM YYYY, h:mm:ss` format  
 * Updated numbro mantissa value to 2 on small screens
+* Updated Chips margin in LatestTransactions
 
 ## v0.1.3
 
