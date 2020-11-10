@@ -90,6 +90,8 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
         variables: { address }
     });
 
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+
     useEffect(() => {
         const localUser = localStorage.getItem('currentUserAddress');
         const getLocalUser = localUser ? localUser : '';
@@ -148,7 +150,10 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                     <Grid item xs={9}>
                         {accountQuery.data.account && accountQuery.data.account.balance ? (
                             <Typography variant="body2" className={classes.alignRight}>
-                                {new BigNumber(accountQuery.data.account.balance).toFormat(4)} CELO
+                                {new BigNumber(
+                                    accountQuery.data.account.balance / CELO_FRACTION
+                                ).toFormat(2)}{' '}
+                                CELO
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
@@ -162,9 +167,9 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                         chainQuery.data.chain.tokenPrice.usd ? (
                             <Typography variant="body2" className={classes.alignRight}>
                                 {new BigNumber(
-                                    accountQuery.data.account.balance *
+                                    (accountQuery.data.account.balance / CELO_FRACTION) *
                                         chainQuery.data.chain.tokenPrice.usd
-                                ).toFormat(4)}{' '}
+                                ).toFormat(2)}{' '}
                                 cUSD
                             </Typography>
                         ) : (

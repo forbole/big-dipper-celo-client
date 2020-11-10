@@ -14,6 +14,7 @@
 * Updated numbro mantissa value to 2 on small screens
 * Updated Chips margin in LatestTransactions
 * [#32] Updated Epoch Countdown
+* Updated Big Number `toFormat()` value to 2
 
 ## v0.1.3
 
