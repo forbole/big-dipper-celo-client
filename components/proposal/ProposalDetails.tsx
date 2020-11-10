@@ -224,7 +224,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                             <Typography variant="body2" className={classes.alignRight}>
                                 {new BigNumber(
                                     data.proposal.returnValues.deposit / CELO_FRACTION
-                                ).toFormat()}
+                                ).toFormat(2)}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" />

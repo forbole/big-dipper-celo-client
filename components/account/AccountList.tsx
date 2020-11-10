@@ -113,6 +113,8 @@ const AccountList = (): JSX.Element => {
 
     const totalSupply = useQuery(GET_TOTAL_SUPPLY, {});
 
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
 
@@ -199,7 +201,9 @@ const AccountList = (): JSX.Element => {
                                                             variant="body2"
                                                             color="textSecondary"
                                                             noWrap>
-                                                            {new BigNumber(row.balance).toFormat(4)}{' '}
+                                                            {new BigNumber(
+                                                                row.balance / CELO_FRACTION
+                                                            ).toFormat(2)}
                                                             CELO
                                                         </Typography>
                                                     ) : (
@@ -224,7 +228,7 @@ const AccountList = (): JSX.Element => {
                                                                     totalSupply.data.chain
                                                                         .cUSDTotalSupply) *
                                                                     100
-                                                            ).format('0.0000000')}
+                                                            ).format('0.00')}
                                                         </Typography>
                                                     ) : (
                                                         <NotAvailable variant="body2" />

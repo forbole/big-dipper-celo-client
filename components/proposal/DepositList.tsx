@@ -194,7 +194,7 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                                                             data.proposal.upvoteList[row]
                                                                 .returnValues.upvotes /
                                                                 CELO_FRACTION
-                                                        ).toFormat()}
+                                                        ).toFormat(2)}
                                                     </Typography>
                                                 ) : (
                                                     <NotAvailable variant="body2" />

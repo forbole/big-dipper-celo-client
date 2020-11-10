@@ -241,7 +241,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                                                                 voteType.voteType
                                                             ][row].returnValues.weight /
                                                                 CELO_FRACTION
-                                                        ).toFormat()}
+                                                        ).toFormat(2)}
                                                     </Typography>
                                                 ) : null}
                                             </TableCell>

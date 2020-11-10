@@ -75,6 +75,7 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
         variables: { address },
         pollInterval: 5000
     });
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
@@ -205,16 +206,18 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                     <Grid item xs={8} className={classes.item}>
                                         <Typography variant="body2" className={classes.alignRight}>
                                             {new BigNumber(
-                                                accountQuery.data.account.lockedGold.total
-                                            ).toFormat(4)}{' '}
+                                                accountQuery.data.account.lockedGold.total /
+                                                    CELO_FRACTION
+                                            ).toFormat(2)}
                                             CELO
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={12} className={classes.item}>
                                         <Typography variant="body2" className={classes.alignRight}>
                                             {new BigNumber(
-                                                accountQuery.data.account.lockedGold.nonvoting
-                                            ).toFormat(4)}{' '}
+                                                accountQuery.data.account.lockedGold.nonvoting /
+                                                    CELO_FRACTION
+                                            ).toFormat(2)}
                                             non-voting CELO
                                         </Typography>
                                     </Grid>
