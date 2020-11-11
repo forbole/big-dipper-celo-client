@@ -26,6 +26,9 @@ import DepositSuccess from './proposal/deposit/Success';
 import VoteConfirm from './proposal/vote/Confirm';
 import VoteSuccess from './proposal/vote/Success';
 import Vote from './proposal/vote/Vote';
+import ConfirmVoteValidatorGroup from './validatorGroup/vote/Confirm';
+import SuccessVoteValidatorGroup from './validatorGroup/vote/Success';
+import VoteValidatorGroup from './validatorGroup/vote/Vote';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -201,6 +204,7 @@ type LedgerDialogProps = {
     proposer?: string;
     proposalTitle?: string;
     proposalDescription?: string;
+    validatorGroup?: string 
 };
 
 const LedgerDialog = ({
@@ -209,7 +213,8 @@ const LedgerDialog = ({
     proposalNumber,
     proposer,
     proposalTitle,
-    proposalDescription
+    proposalDescription,
+    validatorGroup
 }: LedgerDialogProps): JSX.Element => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);

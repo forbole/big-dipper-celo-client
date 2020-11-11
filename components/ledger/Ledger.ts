@@ -8,7 +8,7 @@ import Eth from '@ledgerhq/hw-app-eth';
 import TransportU2F from '@ledgerhq/hw-transport-u2f';
 import TransportUSB from '@ledgerhq/hw-transport-webusb';
 import { Component } from 'react';
-// import Web3 from 'web3';
+import BigNumber from 'bignumber.js';
 const Web3 = require('web3');
 
 
@@ -40,6 +40,8 @@ const MAINNET = 'https://rc1-forno.celo-testnet.org';
 type LockCeloProps = { amount: string; from: string };
 type UnlockCeloProps = { amount: string; from: string };
 type VoteProposalProps = { proposalNumber: number, from: string,  vote: string} 
+type VoteValidatorGroup = { amount: string; from: string; group: string }
+
 class Ledger extends Component {
     private address = '';
     private kit: any = null;
@@ -145,7 +147,7 @@ class Ledger extends Component {
         return result;
     }
 
-     async voteProposal({proposalNumber, from, vote}: VoteProposalProps) {
+   async voteProposal({proposalNumber, from, vote}: VoteProposalProps) {
         if (!this.kit) {
             this.checkLedgerErrors("Ledger device is disconnected");
         }
@@ -155,6 +157,25 @@ class Ledger extends Component {
         const tx = await gov.vote(proposalNumber, vote);
      
         const result = await tx.sendAndWaitForReceipt({ from });
+        return result;
+    }
+
+
+    async voteValidatorGroup({amount, from, group}:VoteValidatorGroup) {
+        if (!this.kit) {
+            this.checkLedgerErrors('Ledger device is disconnected');
+        }
+        this.kit.defaultAccount = from;
+        const election = await this.kit.contracts.getElection();
+
+        console.log(`Voting ${amount} CELO for '${group}' Validator Group `);
+
+        const voteElection = await election.vote(group, new BigNumber(amount));
+
+        const result = await voteElection.sendAndWaitForReceipt({ from });
+       
+        console.log(result);
+
         return result;
     }
 }
