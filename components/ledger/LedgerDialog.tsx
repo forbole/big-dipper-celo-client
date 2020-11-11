@@ -20,12 +20,9 @@ import UnlockGoldConfirm from './celoGold/unlock/UnlockGoldConfirm';
 import UnlockGoldSuccess from './celoGold/unlock/UnlockGoldSuccess';
 import ControlButtons from './ControlButtons';
 import Ledger from './Ledger';
-import DepositConfirm from './proposal/deposit/Confirm';
-import Deposit from './proposal/deposit/Deposit';
-import DepositSuccess from './proposal/deposit/Success';
-import VoteConfirm from './proposal/vote/Confirm';
-import VoteSuccess from './proposal/vote/Success';
-import Vote from './proposal/vote/Vote';
+import ConfirmRevokeValidatorGroup from './validatorGroup/revoke/Confirm';
+import RevokeValidatorGroup from './validatorGroup/revoke/Revoke';
+import SuccessRevokeValidatorGroup from './validatorGroup/revoke/Success';
 import ConfirmVoteValidatorGroup from './validatorGroup/vote/Confirm';
 import SuccessVoteValidatorGroup from './validatorGroup/vote/Success';
 import VoteValidatorGroup from './validatorGroup/vote/Vote';
@@ -204,7 +201,7 @@ type LedgerDialogProps = {
     proposer?: string;
     proposalTitle?: string;
     proposalDescription?: string;
-    validatorGroup?: string 
+    validatorGroup?: string;
 };
 
 const LedgerDialog = ({
@@ -436,29 +433,130 @@ const LedgerDialog = ({
                     default:
                         return null;
                 }
+            case 'Validator Group Revoke':
+                switch (tabNum) {
+                    case 0:
+                        return (
+                            <RevokeValidatorGroup
+                                isLoading={isLoading}
+                                maxLockedCelo={
+                                    AccountDetails &&
+                                    AccountDetails.data &&
+                                    AccountDetails.data.account &&
+                                    AccountDetails.data.account.totalBalance &&
+                                    AccountDetails.data.account.totalBalance.lockedGold
+                                        ? AccountDetails.data.account.totalBalance.lockedGold
+                                        : '0'
+                                }
+                                validatorGroup={validatorGroup}
+                            />
+                        );
+                    case 1:
+                        return (
+                            <ConfirmRevokeValidatorGroup
+                                revokeAmount={amount}
+                                validatorGroup={validatorGroup}
+                            />
+                        );
+                    case 2:
+                        return <SuccessRevokeValidatorGroup />;
+                    default:
+                        return null;
+                }
+        }
+    };
 
-            // case "ValidatorGroupVote":
-            //     switch (tabNum) {
-            //         case 0:
-            //             return <Deposit isLoading={isLoading} />
-            //         case 1:
-            //             return <Confirm amount={amount} />
-            //         case 2:
-            //             return <Success />
-            //         default:
-            //             return null
-            //     }
-            // case "ValidatorGroupRevoke":
-            //     switch (tabNum) {
-            //         case 0:
-            //             return <Revoke isLoading={isLoading} />
-            //         case 1:
-            //             return <Confirm amount={amount} />
-            //         case 2:
-            //             return <Success />
-            //         default:
-            //             return null
-            //     }
+    const handleLock = async () => {
+        try {
+            setLedgerLoading(true);
+            const from = currentUser;
+            const lockObject = { amount, from };
+            await Ledger.lockCelo(lockObject);
+            setLedgerLoading(false);
+        } catch (e) {
+            setLedgerError(true);
+            setLedgerLoading(true);
+            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
+        }
+    };
+
+    const handleUnlock = async () => {
+        try {
+            setLedgerLoading(true);
+            const from = currentUser;
+            const unlockObject = { amount, from };
+            await Ledger.unlockCelo(unlockObject);
+            setLedgerLoading(false);
+        } catch (e) {
+            setLedgerError(true);
+            setLedgerLoading(true);
+            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
+        }
+    };
+
+    const handleValidatorGroupVote = async () => {
+        try {
+            setLedgerLoading(true);
+            const from = currentUser;
+            const group = validatorGroup ? validatorGroup : '';
+            const unlockObject = { amount, from, group };
+            await Ledger.voteValidatorGroup(unlockObject);
+            setLedgerLoading(false);
+        } catch (e) {
+            setLedgerError(true);
+            setLedgerLoading(true);
+            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
+        }
+    };
+
+    const handleRevokeValidatorGroupVote = async () => {
+        try {
+            setLedgerLoading(true);
+            //still need to obtain the address of the validator/validator group
+            const account = '';
+            const group = validatorGroup ? validatorGroup : '';
+            const unlockObject = { amount, account, group };
+            await Ledger.revokeValidatorGroupVote(unlockObject);
+            setLedgerLoading(false);
+        } catch (e) {
+            setLedgerError(true);
+            setLedgerLoading(true);
+            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
+        }
+    };
+
+    const actionHandler = () => {
+        setTabNumber(tabNumber + 1);
+
+        switch (action) {
+            case 'LockCelo':
+                switch (tabNumber) {
+                    case 0:
+                        return handleLock();
+                    default:
+                        return null;
+                }
+            case 'UnlockCelo':
+                switch (tabNumber) {
+                    case 0:
+                        return handleUnlock();
+                    default:
+                        return null;
+                }
+            case 'Validator Group Vote':
+                switch (tabNumber) {
+                    case 0:
+                        return handleValidatorGroupVote();
+                    default:
+                        return null;
+                }
+            case 'Validator Group Revoke':
+                switch (tabNumber) {
+                    case 0:
+                        return handleRevokeValidatorGroupVote();
+                    default:
+                        return null;
+                }
         }
     };
 
