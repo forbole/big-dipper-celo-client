@@ -39,8 +39,8 @@ const MAINNET = 'https://rc1-forno.celo-testnet.org';
 
 type LockCeloProps = { amount: string; from: string };
 type UnlockCeloProps = { amount: string; from: string };
-type VoteProposalProps = { proposalNumber: number, from: string,  vote: string} 
-type VoteValidatorGroup = { amount: string; from: string; group: string }
+type VoteValidatorGroupProps = { amount: string; from: string; group: string }
+type RevokeValidatorGroupVoteProps = { amount: string; account: string; group: string}
 
 class Ledger extends Component {
     private address = '';
@@ -147,33 +147,29 @@ class Ledger extends Component {
         return result;
     }
 
-   async voteProposal({proposalNumber, from, vote}: VoteProposalProps) {
-        if (!this.kit) {
-            this.checkLedgerErrors("Ledger device is disconnected");
-        }
-        const gov = await this.kit.contracts.getGovernance();
-
-        console.log(`Vote proposal ID: ${proposalNumber}`);
-        const tx = await gov.vote(proposalNumber, vote);
-     
-        const result = await tx.sendAndWaitForReceipt({ from });
-        return result;
-    }
-
-
-    async voteValidatorGroup({amount, from, group}:VoteValidatorGroup) {
+    async voteValidatorGroup({amount, from, group}:VoteValidatorGroupProps) {
         if (!this.kit) {
             this.checkLedgerErrors('Ledger device is disconnected');
         }
         this.kit.defaultAccount = from;
         const election = await this.kit.contracts.getElection();
-
-        console.log(`Voting ${amount} CELO for '${group}' Validator Group `);
-
         const voteElection = await election.vote(group, new BigNumber(amount));
-
         const result = await voteElection.sendAndWaitForReceipt({ from });
        
+        console.log(result);
+
+        return result;
+    }
+
+
+        async revokeValidatorGroupVote({amount, account, group}:RevokeValidatorGroupVoteProps) {
+        if (!this.kit) {
+            this.checkLedgerErrors('Ledger device is disconnected');
+        }
+        const election = await this.kit.contracts.getElection();
+        const revokeVotes = await election.revokeActive(account, group, new BigNumber(amount));
+        const result = await revokeVotes.sendAndWaitForReceipt({ from: account });
+
         console.log(result);
 
         return result;
