@@ -46,7 +46,7 @@ const useStyles = makeStyles({
     }
 });
 
-type VoteValGroupConfirmProps = { lockAmount: string; validatorGroup: string };
+type VoteValGroupConfirmProps = { lockAmount: string; validatorGroup?: string };
 
 const Confirm = ({ lockAmount, validatorGroup }: VoteValGroupConfirmProps): JSX.Element => {
     const classes = useStyles();
