@@ -38,7 +38,6 @@ type VoteValGroupProps = { isLoading?: boolean; maxLockedCelo?: string; validato
 
 const Vote = ({ isLoading, maxLockedCelo, validatorGroup }: VoteValGroupProps): JSX.Element => {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
     const [currentUser, setCurrentUser] = React.useState<string>('');
 
     useEffect(() => {
