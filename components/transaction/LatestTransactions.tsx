@@ -220,7 +220,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                         </Typography>
                                                                     </Grid>
 
-                                                                    <Grid item xs={5} md={5}>
+                                                                    <Grid item xs={4} md={5}>
                                                                         <Typography
                                                                             variant="body2"
                                                                             className={
@@ -233,7 +233,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                                 <NavLink
                                                                                     href={`account/${row.from.address}`}
                                                                                     className={
-                                                                                        classes.txPadding
+                                                                                        classes.leftInline
                                                                                     }
                                                                                     name={
                                                                                         row.from &&
@@ -255,7 +255,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                         </Typography>
                                                                     </Grid>
 
-                                                                    <Grid item xs={4} md={4}>
+                                                                    <Grid item xs={4} md={5}>
                                                                         <Typography
                                                                             variant="body2"
                                                                             align="left"
@@ -269,7 +269,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                                 <NavLink
                                                                                     href={`account/${row.to.address}`}
                                                                                     className={
-                                                                                        classes.txPadding
+                                                                                        classes.leftInline
                                                                                     }
                                                                                     name={
                                                                                         <MiddleEllipsis
@@ -287,7 +287,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                         </Typography>
                                                                     </Grid>
 
-                                                                    <Grid item xs={3} sm={3} lg={3}>
+                                                                    <Grid item xs={4} md={2}>
                                                                         {row.value ? (
                                                                             <Typography
                                                                                 variant="body1"
@@ -313,7 +313,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                     <Grid
                                                                         item
                                                                         xs={12}
-                                                                        lg={9}
+                                                                        md={9}
                                                                         className={classes.chip}>
                                                                         {row.type &&
                                                                         row.to &&
