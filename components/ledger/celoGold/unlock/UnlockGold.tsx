@@ -71,7 +71,7 @@ const UnlockGold = ({ isLoading, maxUnlock }: UnlockGoldProps): JSX.Element => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography
-                                    variant="body2"
+                                    variant="body1"
                                     noWrap
                                     color="textPrimary"
                                     className={
