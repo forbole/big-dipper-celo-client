@@ -15,6 +15,7 @@
 * Updated Chips margin in LatestTransactions
 * [#32] Updated Epoch Countdown
 * Updated Big Number `toFormat()` value to 2
+* Implemented Ledger Integration: Vote/Deposit Tokens for Proposal
 
 ## v0.1.3
 
