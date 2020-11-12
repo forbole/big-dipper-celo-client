@@ -60,11 +60,13 @@ const useStyles = makeStyles(() => {
         },
         tableCell: {
             overflow: 'auto',
-            padding: '0.5rem'
+            padding: '0.5rem',
+            border: 'none'
         },
         table: {
             background: 'rgba(246, 247, 249, 1)',
-            padding: '0'
+            padding: '0',
+            border: 'none'
         },
         paper: {
             padding: '1rem',
@@ -90,6 +92,7 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
     const [hash, setHash] = React.useState('');
     const [page, setPage] = React.useState(0);
     const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXsmall);
+    let totalDeposited = 0;
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -111,6 +114,23 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
     //   setHash(hashValue)
     // })
 
+    const calculateTotalDeposited = () => {
+        if (data && data.proposal && data.proposal.upvoteList) {
+            for (const c in data.proposal.upvoteList) {
+                if (
+                    data.proposal.upvoteList &&
+                    data.proposal.upvoteList[c].returnValues &&
+                    data.proposal.upvoteList[c].returnValues.upvotes
+                ) {
+                    totalDeposited =
+                        totalDeposited +
+                        data.proposal.upvoteList[c].returnValues.upvotes / process.env.CELO;
+                }
+            }
+        }
+        return new BigNumber(totalDeposited).toFormat(2);
+    };
+
     const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     if (loading) return <ComponentLoader />;
@@ -124,10 +144,10 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                         color="textSecondary"
                         variant="subtitle1"
                         className={classes.headerLabel}>
-                        Deposit (200 CELO)
+                        Deposit ({calculateTotalDeposited()} CELO)
                     </Typography>
 
-                    <Divider variant="middle" className={classes.divider} />
+                    {/* <Divider variant="middle" className={classes.divider} /> */}
                     <Table size="medium">
                         <TableHead>
                             <TableRow>
@@ -152,7 +172,16 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                                 .slice(page * pageSize, page * pageSize + pageSize)
                                 .map(function (row: any, index: number) {
                                     return (
-                                        <TableRow key={index}>
+                                        <TableRow
+                                            key={index}
+                                            style={
+                                                index % 2
+                                                    ? {
+                                                          background: 'rgba(248, 248, 248, 1)',
+                                                          border: 'none'
+                                                      }
+                                                    : { background: 'rgb(255,255,255)' }
+                                            }>
                                             <TableCell
                                                 component="th"
                                                 scope="row"
@@ -168,7 +197,6 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                                                         href={`/account/${data.proposal.upvoteList[row].returnValues.account}`}
                                                         name={
                                                             <Typography variant="body2" noWrap>
-                                                                {' '}
                                                                 {
                                                                     data.proposal.upvoteList[row]
                                                                         .returnValues.account

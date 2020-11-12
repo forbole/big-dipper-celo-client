@@ -14,6 +14,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 import BigNumber from 'bignumber.js';
 import getConfig from 'next/config';
+import numbro from 'numbro';
 import React from 'react';
 import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts';
 
@@ -21,8 +22,8 @@ import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import NotAvailable from '../misc/NotAvailable';
 import NavLink from '../NavLink';
+import { GET_CHAIN } from '../query/Chain';
 import { GET_PROPOSAL } from '../query/Proposal';
-
 interface Column {
     id: 'voter' | 'answer' | 'voting_power';
     label: string;
@@ -59,11 +60,13 @@ const useStyles = makeStyles(() => {
         },
         tableCell: {
             overflow: 'auto',
-            padding: '0.5rem'
+            padding: '0.5rem',
+            border: 'none'
         },
         table: {
             background: 'rgba(246, 247, 249, 1)',
-            padding: '0'
+            padding: '0',
+            border: 'none'
         },
         paper: {
             padding: '1rem',
@@ -144,6 +147,11 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
     const { loading, error, data } = useQuery(GET_PROPOSAL, {
         variables: { proposalNumber }
     });
+
+    const chainData = useQuery(GET_CHAIN, {
+        pollInterval: 5000
+    });
+
     const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const RednderTabs = (voteType: any) => {
@@ -174,7 +182,16 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                                 .slice(page * pageSize, page * pageSize + pageSize)
                                 .map((row: any, index: number) => {
                                     return (
-                                        <TableRow key={index}>
+                                        <TableRow
+                                            key={index}
+                                            style={
+                                                index % 2
+                                                    ? {
+                                                          background: 'rgba(248, 248, 248, 1)',
+                                                          border: 'none'
+                                                      }
+                                                    : { background: 'rgb(255,255,255)' }
+                                            }>
                                             <TableCell
                                                 component="th"
                                                 scope="row"
@@ -301,7 +318,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                     flexWrap: 'wrap'
                 },
                 ' & .Mui-selected': {
-                    color: 'rgba(255, 255, 255, 0.8)'
+                    color: 'rgba(58, 211, 158, 1)'
                     //marginBottom: "-0.5rem"
                 }
             }
@@ -334,7 +351,22 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                         color="textSecondary"
                         variant="subtitle1"
                         className={classes.headerLabel}>
-                        (~81M of ~186M CELO)
+                        (~
+                        {numbro(
+                            new BigNumber(data.proposal.votes.Total / process.env.CELO).toFormat()
+                        ).format({ average: true, mantissa: 2 })}{' '}
+                        of ~
+                        {chainData &&
+                        chainData.data &&
+                        chainData.data.chain &&
+                        chainData.data.chain.celoTotalSupply
+                            ? numbro(
+                                  new BigNumber(
+                                      chainData.data.chain.celoTotalSupply / process.env.CELO
+                                  ).toFormat(2)
+                              ).format({ average: true, mantissa: 2 })
+                            : null}{' '}
+                        CELO)
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
@@ -368,7 +400,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                 <Grid item xs={12}>
                     <StyledTabs
                         value={value}
-                        textColor="primary"
+                        //textColor="primary"
                         onChange={handleChange}
                         aria-label="Proposal Vote Tabs"
                         TabIndicatorProps={{

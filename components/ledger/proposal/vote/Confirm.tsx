@@ -1,13 +1,11 @@
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
-//import Link from "../../Ledger.tsx";
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
+import MarkdownView from 'react-showdown';
 
 const useStyles = makeStyles({
     root: {
@@ -54,43 +52,25 @@ const useStyles = makeStyles({
     }
 });
 
-const Confirm = (): JSX.Element => {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+type ConfirmProps = {
+    vote: string;
+    proposalNumber: number;
+    proposer: string;
+    proposalTitle: string;
+    proposalDescription: string;
+};
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+const Confirm = ({
+    vote,
+    proposalNumber,
+    proposer,
+    proposalTitle,
+    proposalDescription
+}: ConfirmProps): JSX.Element => {
+    const classes = useStyles();
 
     return (
         <>
-            <DialogTitle id="ledger-dialog-title" className={classes.dialogTitle}>
-                <Grid container className={classes.item}>
-                    <Grid item xs={1}>
-                        <IconButton aria-label="Return" className={classes.iconButtonLeft}>
-                            <img src="/images/last.svg" color="textPrimary" alt="Return" />
-                        </IconButton>
-                    </Grid>
-                    <Grid item xs={10}>
-                        <Typography
-                            variant="h6"
-                            color="textPrimary"
-                            noWrap
-                            className={classes.title}>
-                            Vote
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={1}>
-                        <IconButton
-                            aria-label="Close"
-                            className={classes.iconButtonRight}
-                            onClick={handleClose}>
-                            <img src="/images/cross.svg" color="textPrimary" alt="Close" />
-                        </IconButton>
-                    </Grid>
-                </Grid>
-            </DialogTitle>
-
             <DialogContent>
                 <Grid container spacing={1}>
                     <DialogContentText id="ledger-vote">
@@ -101,46 +81,40 @@ const Confirm = (): JSX.Element => {
                                     variant="body2"
                                     gutterBottom
                                     align="left">
-                                    You’re going to vote for Yes, if that’s correct, please sign in
-                                    your ledger device.
+                                    You’re going to vote {vote}, if that’s correct, please sign in
+                                    your Ledger device.
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
-                            <Grid item xs={6} className={classes.item}>
+                            <Grid item xs={3} className={classes.item}>
                                 <Typography variant="body2" gutterBottom>
                                     Proposal ID
                                 </Typography>
                             </Grid>
-                            <Grid item xs={6} className={classes.item}>
+                            <Grid item xs={9} className={classes.item}>
                                 <Typography variant="body2" align="right" gutterBottom>
-                                    10
-                                    {/* {data.block && data.block.timestamp
-                ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
-                : <NotAvailable variant="body2" />}
-              (
-              {data && data.block && data.block.timestamp
-                ? moment.unix(data.block.timestamp).fromNow()
-                : null}
-              ) */}
+                                    {proposalNumber}
                                 </Typography>
+                            </Grid>
+
+                            <Grid item xs={12}>
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
-                            <Grid item xs={6} className={classes.item}>
+
+                            <Grid item xs={3} className={classes.item}>
                                 <Typography variant="body2" gutterBottom>
                                     Proposer
                                 </Typography>
                             </Grid>
-                            <Grid item xs={6} className={classes.item}>
+                            <Grid item xs={9} className={classes.item}>
                                 <Typography variant="body2" align="right" gutterBottom>
-                                    Michelle Clark
-                                    {/* {data.block &&
-              data.block.transactions &&
-              data.block.transactions.transactionIndex
-                ? data.block.transactions.transactionIndex.length()
-                : <NotAvailable variant="body2" />} */}
+                                    {proposer}
                                 </Typography>
+                            </Grid>
+
+                            <Grid item xs={12}>
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
 
@@ -152,10 +126,10 @@ const Confirm = (): JSX.Element => {
                             <Grid item xs={6} className={classes.item}>
                                 <Typography variant="body2" align="right" gutterBottom>
                                     Proposal
-                                    {/* {data.block && data.block.size
-                ? data.block.size
-                : <NotAvailable variant="body2" />} */}
                                 </Typography>
+                            </Grid>
+
+                            <Grid item xs={12}>
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
 
@@ -164,12 +138,11 @@ const Confirm = (): JSX.Element => {
                                     Title
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
-                                    Don’t Burn Deposits for Rejected Governance Proposals Unless
-                                    Vetoed
-                                    {/* {data.block && data.block.hash
-                ? data.block.hash
-                : <NotAvailable variant="body2" />} */}
+                                    {proposalTitle}
                                 </Typography>
+                            </Grid>
+
+                            <Grid item xs={12}>
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
 
@@ -178,29 +151,31 @@ const Confirm = (): JSX.Element => {
                                     Description
                                 </Typography>
 
-                                <Typography variant="body2" className={classes.wrapText}>
-                                    Governance Working Group - Q1 2020 funding Community-spend
-                                    proposal submitted by Gavin Birch
-                                    (https://twitter.com/Ether_Gavin) of Figment Networks
-                                    (https://figment.network) -=-=- Full proposal:
-                                    https://ipfs.io/ipfs/QmSMGEoY2dfxADPfgoAsJxjjC6hwpSNx1dXAqePiCEMCbY
-                                    {/* {data.block && data.block.parentHash ? (
-                <Link
-                  href="transaction/[transaction]/"
-                  as={`transaction/${data.block.parentHash}`}
-                  color="secondary"
-                  //className={classes.leftInline}
-                >
-                  {data.block.parentHash}
-                </Link>
-              ) : <NotAvailable variant="body2" />} */}
+                                <Typography
+                                    variant="body2"
+                                    color="textPrimary"
+                                    className={classes.wrapText}>
+                                    <MarkdownView
+                                        markdown={proposalDescription}
+                                        options={{
+                                            tables: true,
+                                            emoji: true,
+                                            simplifiedAutoLink: true,
+                                            smoothLivePreview: true,
+                                            openLinksInNewWindow: true
+                                        }}
+                                        flavor="vanilla"
+                                    />
                                 </Typography>
+                            </Grid>
+
+                            <Grid item xs={12}>
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
 
                             <Grid item xs={12} className={classes.centerContent}>
                                 <Typography variant="h6">
-                                    Please sign in your ledger device…
+                                    Please sign in your Ledger device...
                                 </Typography>
                             </Grid>
                         </Grid>

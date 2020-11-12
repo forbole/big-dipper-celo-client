@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import getConfig from 'next/config';
 import React from 'react';
@@ -13,47 +13,60 @@ import MiddleEllipsis from '../misc/MiddleEllipsis';
 import NavLink from '../NavLink';
 import { GET_PROPOSALS } from '../query/Proposal';
 
-const useStyles = makeStyles({
-    root: {
-        display: 'flex',
-        padding: '1.5%'
-    },
-    card: {
-        display: 'block',
-        //justifyContent: "center",
-        //margin: "2%",
-        borderRadius: 4,
-        background: 'rgba(255, 255, 255, 1)',
-        alignItems: 'center'
-    },
-    value: {
-        padding: '0.5rem 1rem',
-        textAlign: 'left'
-    },
-    label: {
-        display: 'flex',
-        padding: '0.4rem 0.75rem 0.1rem 0.75rem'
-    },
-    container: {
-        marginTop: '1.5%'
-    },
-    proposalDescription: {
-        padding: '0rem 0 1rem 3rem'
-    },
-    proposalButton: {
-        padding: '0.5rem 1rem 0 0',
-        textAlign: 'right'
-    },
-    proposalCard: {
-        marginBottom: '0.5rem'
-    },
-    proposalTitle: {
-        padding: '0 0 0.5rem 0.8rem',
-        marginTop: '-0.5rem'
-    }
-});
+const useStyles = makeStyles(() =>
+    createStyles({
+        root: {
+            display: 'flex',
+            padding: '1.5%'
+        },
+        card: {
+            display: 'block',
+            //justifyContent: "center",
+            //margin: "2%",
+            borderRadius: 4,
+            background: 'rgba(255, 255, 255, 1)',
+            alignItems: 'center'
+        },
+        value: {
+            padding: '0.5rem 1rem',
+            textAlign: 'left'
+        },
+        label: {
+            display: 'flex',
+            padding: '0.4rem 0.75rem 0.1rem 0.75rem'
+        },
+        container: {
+            marginTop: '1.5%'
+        },
+        proposalDescription: {
+            padding: '0rem 0 1rem 3rem'
+        },
+        proposalButton: {
+            padding: '0.5rem 1rem 0 0',
+            textAlign: 'right'
+        },
+        proposalCard: {
+            marginBottom: '0.5rem'
+        },
+        proposalTitle: {
+            padding: '0 0 0.5rem 0.8rem',
+            marginTop: '-0.5rem'
+        },
+        proposer: {
+            paddingTop: '0.5rem',
+            textAlign: 'left'
+        },
 
-const ProposalDetails = (): JSX.Element => {
+        proposalNum: {
+            display: 'flex',
+            marginTop: '0.5rem'
+        }
+    })
+);
+
+type ProposalListProps = { title: string };
+
+const ProposalList = ({ title }: ProposalListProps): JSX.Element => {
     const classes = useStyles();
     const { publicRuntimeConfig } = getConfig();
 
@@ -80,7 +93,7 @@ const ProposalDetails = (): JSX.Element => {
                         <Grid item xs={12} className={classes.proposalCard} key={index}>
                             <Card className={classes.card} elevation={0}>
                                 <Grid container className={classes.container}>
-                                    <Grid item xs={1}>
+                                    <Grid item xs={8} sm={10} className={classes.proposalNum}>
                                         {row.returnValues && row.returnValues.proposalId ? (
                                             <NavLink
                                                 href={`/proposal/${row.returnValues.proposalId}`}
@@ -93,9 +106,9 @@ const ProposalDetails = (): JSX.Element => {
                                                 }
                                             />
                                         ) : null}
-                                    </Grid>
-                                    <Grid item xs={8} sm={9}>
-                                        <Typography variant="body2" className={classes.value}>
+                                        {/* </Grid> */}
+                                        {/* <Grid item xs={8} sm={9}> */}
+                                        <Typography variant="body2" className={classes.proposer}>
                                             Proposer{' '}
                                             {row.returnValues && row.returnValues.proposer ? (
                                                 <NavLink
@@ -130,10 +143,10 @@ const ProposalDetails = (): JSX.Element => {
                                         className={classes.proposalDescription}>
                                         {row.returnValues &&
                                         row.returnValues.proposalId &&
-                                        row.proposalTitle ? (
+                                        title ? (
                                             <NavLink
                                                 href={`/proposal/${row.returnValues.proposalId}`}
-                                                name={row.proposalTitle}
+                                                name={title[index]}
                                                 textSecondary
                                             />
                                         ) : null}
@@ -148,4 +161,4 @@ const ProposalDetails = (): JSX.Element => {
     );
 };
 
-export default ProposalDetails;
+export default ProposalList;
