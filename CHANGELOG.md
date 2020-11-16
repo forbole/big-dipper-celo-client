@@ -19,7 +19,7 @@
 * Changed color of visited links
 * Updated `LatestTransactions` Grid size
 * Updated font size of currentUser to body1 in `LockGold` and `UnlockGold`
-* Removed `publicRuntimeConfig` and replaced it with `process.env` global variables
+* [#80] Removed `publicRuntimeConfig` and replaced it with global variables stored in `process.env` 
 
 
 ## v0.1.3
