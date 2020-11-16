@@ -17,6 +17,7 @@
 * Updated Big Number `toFormat()` value to 2
 * Implemented Ledger Integration: Vote/Deposit Tokens for Proposal 
 * Changed color of visited links
+* Updated `LatestTransactions` Grid size
 
 ## v0.1.3
 
