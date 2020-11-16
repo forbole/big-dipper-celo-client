@@ -299,7 +299,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                               <Typography
                                                                   variant="body2"
                                                                   noWrap
-                                                                  color="secondary">
+                                                                  color="textPrimary">
                                                                   {row.transactions &&
                                                                   row.transactions
                                                                       ? row.transactions.length
