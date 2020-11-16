@@ -117,7 +117,7 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                         <Typography variant="body1" className={classes.box}>
                             Overview
                         </Typography>
-                        <Divider variant="middle" className={classes.divider} />
+                        <Divider className={classes.divider} />
                     </Grid>
                     {validatorQuery &&
                     validatorQuery.data &&
@@ -136,7 +136,7 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
-                                <Divider variant="middle" className={classes.divider} />
+                                <Divider className={classes.divider} />
                             </Grid>
                         </>
                     ) : null}
