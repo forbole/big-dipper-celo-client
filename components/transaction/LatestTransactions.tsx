@@ -91,7 +91,6 @@ const useStyles = makeStyles({
     }
 });
 
-
 type LatestTxsProps = { pagination: boolean };
 
 const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
