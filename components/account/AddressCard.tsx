@@ -66,6 +66,12 @@ const useStyles = makeStyles(() =>
             padding: '0',
             marginLeft: '0.5rem',
             float: 'right'
+        },
+
+        addressButtons: {
+            display: 'inline-flex',
+            marginBottom: '0.3rem',
+            marginLeft: '0.5rem'
         }
     })
 );
@@ -83,7 +89,7 @@ const AddressCard = ({ address }: AddressCardProps): JSX.Element => {
             .writeText(rawInputForm.innerHTML)
             .then(() => setOpen(true))
             .catch((err) => {
-                console.log('Something went wrong', err);
+                console.log('Something went wrong! Please try again! ', err);
             });
     };
 
@@ -149,22 +155,20 @@ const AddressCard = ({ address }: AddressCardProps): JSX.Element => {
         <>
             <Card>
                 <CardContent>
-                    <Grid container spacing={1} className={classes.card}>
-                        <Grid item xs={10}>
+                    <Grid container spacing={1}>
+                        <Grid item xs={12} className={classes.card}>
                             <Typography variant="body1" gutterBottom>
                                 Address
                             </Typography>
-                        </Grid>
-                        <Grid item xs={1}>
-                            <IconButton aria-label="Copy" size="small" onClick={copyText}>
-                                <img src="/images/copy.svg" alt="Copy" />
-                            </IconButton>
-                        </Grid>
-                        <Grid item xs={1}>
-                            <IconButton aria-label="qrCode" size="small" onClick={showQR}>
-                                <img src="/images/qr-code.svg" alt="Show QR" />
-                            </IconButton>
-                            <ShowQRCode />
+                            <Grid item xs={10} className={classes.addressButtons}>
+                                <IconButton aria-label="Copy" size="small" onClick={copyText}>
+                                    <img src="/images/copy.svg" alt="Copy" />
+                                </IconButton>
+                                <IconButton aria-label="qrCode" size="small" onClick={showQR}>
+                                    <img src="/images/qr-code.svg" alt="Show QR" />
+                                </IconButton>
+                                <ShowQRCode />
+                            </Grid>
                         </Grid>
                         <Grid item xs={12} className={classes.address}>
                             <div>
