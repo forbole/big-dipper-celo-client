@@ -5,11 +5,19 @@ import styled from 'styled-components';
 
 const PrimaryLink = styled.a`
     color: rgba(8, 178, 122, 1);
+    &:visited {
+        color: rgba(8, 178, 122, 1) !important;
+        text-decoration: none !important;
+    }
     text-decoration: none;
 `;
 
 const SecondaryLink = styled.a`
     color: rgba(65, 65, 65, 1);
+    &:visited {
+        color: rgba(65, 65, 65, 1) !important;
+        text-decoration: none !important;
+    }
     text-decoration: none;
 `;
 interface NavLinkInterface {
