@@ -12,7 +12,6 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import BigNumber from 'bignumber.js';
-import getConfig from 'next/config';
 import React from 'react';
 
 import ComponentLoader from '../misc/ComponentLoader';
@@ -84,22 +83,32 @@ const useStyles = makeStyles(() => {
 type DepositListProps = { proposal: string };
 
 const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
-    const classes = useStyles();
-    const proposalNumber = parseInt(proposal);
-    const { publicRuntimeConfig } = getConfig();
-    const hashValue = '';
+    const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
+    const ROWXXSMALL = process.env.ROWXXSMALL ? parseInt(process.env.ROWXXSMALL) : 5;
+    const ROWXSMALL = process.env.ROWXSMALL ? parseInt(process.env.ROWXSMALL) : 10;
+    const ROWSMALL = process.env.ROWSMALL ? parseInt(process.env.ROWSMALL) : 15;
+    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
+    const ROWLARGE = process.env.ROWLARGE ? parseInt(process.env.ROWLARGE) : 50;
+    const ROWXLARGE = process.env.ROWXLARGE ? parseInt(process.env.ROWXLARGE) : 100;
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
+    const [pageNumber, setPageNumber] = React.useState(SETPAGE);
+    const [pageSize, setPageSize] = React.useState(ROWXSMALL);
     const [hash, setHash] = React.useState('');
-    const [page, setPage] = React.useState(0);
-    const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXsmall);
+
+    const classes = useStyles();
+    const page = pageNumber + 1;
+    const proposalNumber = parseInt(proposal);
+    const hashValue = '';
     let totalDeposited = 0;
 
     const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
+        setPageNumber(newPage);
     };
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPageSize(+event.target.value);
+        setPageNumber(SETPAGE);
     };
 
     const { loading, error, data } = useQuery(GET_PROPOSAL, {
@@ -109,10 +118,6 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
     const txDetails = useQuery(GET_TX_DETAILS, {
         variables: { hash }
     });
-
-    // useEffect(() => {
-    //   setHash(hashValue)
-    // })
 
     const calculateTotalDeposited = () => {
         if (data && data.proposal && data.proposal.upvoteList) {
@@ -124,14 +129,12 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                 ) {
                     totalDeposited =
                         totalDeposited +
-                        data.proposal.upvoteList[c].returnValues.upvotes / process.env.CELO;
+                        data.proposal.upvoteList[c].returnValues.upvotes / CELO_FRACTION;
                 }
             }
         }
         return new BigNumber(totalDeposited).toFormat(2);
     };
-
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
@@ -277,20 +280,22 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                 </TableContainer>
                 <TablePagination
                     rowsPerPageOptions={[
-                        publicRuntimeConfig.rowXsmall,
-                        publicRuntimeConfig.rowSmall,
-                        publicRuntimeConfig.rowMedium,
-                        publicRuntimeConfig.rowLarge,
-                        publicRuntimeConfig.rowXlarge
+                        ROWXXSMALL,
+                        ROWXSMALL,
+                        ROWSMALL,
+                        ROWMEDIUM,
+                        ROWLARGE,
+                        ROWXLARGE
                     ]}
                     component="div"
                     count={Object.keys(data.proposal.upvoteList).length}
                     rowsPerPage={pageSize}
-                    page={page}
+                    page={pageNumber}
                     onChangePage={handleChangePage}
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                     backIconButtonProps={{
-                        'aria-label': 'Previous'
+                        'aria-label': 'Previous',
+                        disabled: pageNumber === 0
                     }}
                     nextIconButtonProps={{
                         'aria-label': 'Next'

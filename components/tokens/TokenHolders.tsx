@@ -99,20 +99,26 @@ const useStyles = makeStyles(() => {
 });
 
 const TokenHolders = (): JSX.Element => {
+    const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
+    const ROWXXSMALL = process.env.ROWXXSMALL ? parseInt(process.env.ROWXXSMALL) : 5;
+    const ROWXSMALL = process.env.ROWXSMALL ? parseInt(process.env.ROWXSMALL) : 10;
+    const ROWSMALL = process.env.ROWSMALL ? parseInt(process.env.ROWSMALL) : 15;
+    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
+    const ROWLARGE = process.env.ROWLARGE ? parseInt(process.env.ROWLARGE) : 50;
+    const ROWXLARGE = process.env.ROWXLARGE ? parseInt(process.env.ROWXLARGE) : 100;
+
     const classes = useStyles();
 
-    const { publicRuntimeConfig } = getConfig();
-
-    const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
-    const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXxsmall);
+    const [pageNumber, setPageNumber] = React.useState(SETPAGE);
+    const [pageSize, setPageSize] = React.useState(ROWXXSMALL);
 
     const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
+        setPageNumber(newPage);
     };
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPageSize(+event.target.value);
-        setPage(publicRuntimeConfig.setPage);
+        setPageNumber(SETPAGE);
     };
 
     return (
@@ -182,22 +188,22 @@ const TokenHolders = (): JSX.Element => {
                         </TableContainer>
                         <TablePagination
                             rowsPerPageOptions={[
-                                publicRuntimeConfig.rowXxsmall,
-                                publicRuntimeConfig.rowXsmall,
-                                publicRuntimeConfig.rowSmall,
-                                publicRuntimeConfig.rowMedium,
-                                publicRuntimeConfig.rowLarge,
-                                publicRuntimeConfig.rowXlarge
+                                ROWXXSMALL,
+                                ROWXSMALL,
+                                ROWSMALL,
+                                ROWMEDIUM,
+                                ROWLARGE,
+                                ROWXLARGE
                             ]}
                             component="div"
                             count={rows.length}
                             rowsPerPage={pageSize}
-                            page={page}
+                            page={pageNumber}
                             onChangePage={handleChangePage}
                             onChangeRowsPerPage={handleChangeRowsPerPage}
                             backIconButtonProps={{
                                 'aria-label': 'Previous',
-                                disabled: page === 1
+                                disabled: pageNumber === 0
                             }}
                             nextIconButtonProps={{
                                 'aria-label': 'Next'

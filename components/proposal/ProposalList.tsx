@@ -68,11 +68,8 @@ type ProposalListProps = { title: string };
 
 const ProposalList = ({ title }: ProposalListProps): JSX.Element => {
     const classes = useStyles();
-    const { publicRuntimeConfig } = getConfig();
-
-    const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
-    const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowMedium);
-
+    const page = process.env.SETPAGE ? parseInt(process.env.SETPAGE) + 1 : 1;
+    const pageSize = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
     const field = 'proposalNumber';
 
     const { loading, error, data } = useQuery(GET_PROPOSALS, {
@@ -106,8 +103,6 @@ const ProposalList = ({ title }: ProposalListProps): JSX.Element => {
                                                 }
                                             />
                                         ) : null}
-                                        {/* </Grid> */}
-                                        {/* <Grid item xs={8} sm={9}> */}
                                         <Typography variant="body2" className={classes.proposer}>
                                             Proposer{' '}
                                             {row.returnValues && row.returnValues.proposer ? (

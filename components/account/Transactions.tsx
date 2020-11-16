@@ -15,7 +15,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import moment from 'moment';
-import getConfig from 'next/config';
 import numbro from 'numbro';
 import React from 'react';
 
@@ -74,29 +73,39 @@ const useStyles = makeStyles(() => {
         },
         icon: {
             fill: 'rgba(255, 255, 255, 0.6)'
+        },
+
+        chip: {
+            marginLeft: '1rem',
+            marginRight: '-1rem'
         }
     };
 });
 
-moment.relativeTimeThreshold('s', 59);
-moment.relativeTimeThreshold('ss', 3);
-
 type TransactionsProps = { address: string };
 
 const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
-    const classes = useStyles();
-    const { publicRuntimeConfig } = getConfig();
+    const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
+    const ROWXXSMALL = process.env.ROWXXSMALL ? parseInt(process.env.ROWXXSMALL) : 5;
+    const ROWXSMALL = process.env.ROWXSMALL ? parseInt(process.env.ROWXSMALL) : 10;
+    const ROWSMALL = process.env.ROWSMALL ? parseInt(process.env.ROWSMALL) : 15;
+    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
+    const ROWLARGE = process.env.ROWLARGE ? parseInt(process.env.ROWLARGE) : 50;
+    const ROWXLARGE = process.env.ROWXLARGE ? parseInt(process.env.ROWXLARGE) : 100;
 
-    const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
-    const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXxsmall);
+    const [pageNumber, setPageNumber] = React.useState(SETPAGE);
+    const [pageSize, setPageSize] = React.useState(ROWXXSMALL);
+    const page = pageNumber + 1;
+
+    const classes = useStyles();
 
     const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
+        setPageNumber(newPage);
     };
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPageSize(+event.target.value);
-        setPage(publicRuntimeConfig.setPage);
+        setPageNumber(SETPAGE);
     };
 
     const { loading, error, data } = useQuery(GET_ACCOUNT_TX, {
@@ -242,7 +251,11 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                     </Typography>
                                                                 </Grid>
 
-                                                                <Grid item xs={12} lg={8}>
+                                                                <Grid
+                                                                    item
+                                                                    xs={12}
+                                                                    lg={8}
+                                                                    className={classes.chip}>
                                                                     {row.type &&
                                                                     row.to &&
                                                                     row.to.contract &&
@@ -281,22 +294,22 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                 <TablePagination
                                     className="account-txs"
                                     rowsPerPageOptions={[
-                                        publicRuntimeConfig.rowXxsmall,
-                                        publicRuntimeConfig.rowXsmall,
-                                        publicRuntimeConfig.rowSmall,
-                                        publicRuntimeConfig.rowMedium,
-                                        publicRuntimeConfig.rowLarge,
-                                        publicRuntimeConfig.rowXlarge
+                                        ROWXXSMALL,
+                                        ROWXSMALL,
+                                        ROWSMALL,
+                                        ROWMEDIUM,
+                                        ROWLARGE,
+                                        ROWXLARGE
                                     ]}
                                     component="div"
                                     count={data.transactionsByAccount.totalCounts}
                                     rowsPerPage={pageSize}
-                                    page={page}
+                                    page={pageNumber}
                                     onChangePage={handleChangePage}
                                     onChangeRowsPerPage={handleChangeRowsPerPage}
                                     backIconButtonProps={{
                                         'aria-label': 'Previous',
-                                        disabled: page === 1
+                                        disabled: pageNumber === 0
                                     }}
                                     nextIconButtonProps={{
                                         'aria-label': 'Next'
