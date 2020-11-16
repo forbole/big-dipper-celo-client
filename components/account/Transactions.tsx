@@ -68,8 +68,9 @@ const useStyles = makeStyles(() => {
             padding: '0 0 0 0.5rem'
         },
         divider: {
-            margin: '0.5rem 0 0 0',
-            backgroundColor: 'rgba(232, 232, 232, 1)'
+            backgroundColor: 'rgba(232, 232, 232, 1)',
+            margin: '0 1rem',
+            display: 'flex'
         },
         icon: {
             fill: 'rgba(255, 255, 255, 0.6)'
@@ -130,10 +131,9 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                 </AccordionSummary>
                 <AccordionDetails className={classes.root}>
                     <Grid container>
-                        <Divider variant="middle" />
                         <Grid item xs={12}>
                             <TableContainer className={classes.container}>
-                                <Table>
+                                <Table stickyHeader>
                                     <TableHead></TableHead>
                                     <TableBody>
                                         {data.transactionsByAccount.transactions.map(
@@ -147,7 +147,11 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                             <Grid
                                                                 container
                                                                 spacing={1}
-                                                                style={{ padding: '0.5rem 0' }}>
+                                                                style={{
+                                                                    padding: '0.5rem 0',
+                                                                    background:
+                                                                        'rgba(255, 255, 255, 1)'
+                                                                }}>
                                                                 <Grid item xs={8}>
                                                                     <Typography
                                                                         variant="body2"
@@ -282,6 +286,11 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                             <NotAvailable variant="body2" />
                                                                         )}
                                                                     </Typography>
+                                                                </Grid>
+                                                                <Grid item xs={12}>
+                                                                    <Divider
+                                                                        className={classes.divider}
+                                                                    />
                                                                 </Grid>
                                                             </Grid>
                                                         </TableCell>
