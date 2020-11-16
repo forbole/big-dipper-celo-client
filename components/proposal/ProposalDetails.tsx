@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import BigNumber from 'bignumber.js';
-import getConfig from 'next/config';
 import React, { useEffect } from 'react';
 import MarkdownView from 'react-showdown';
 
@@ -90,6 +89,10 @@ const useStyles = makeStyles(() => {
 type ProposalDetailsProps = { proposal: string; proposalDetails: string };
 
 const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): JSX.Element => {
+    const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
+    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+
     const getProposal = proposalDetails.split('\n');
     const proposalTitle = getProposal[0].replace('#', ' ');
     const proposalNumber = parseInt(proposal);
@@ -99,15 +102,13 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
     const [minProposalNumber, setMinProposalNumber] = React.useState(false);
     const [currentUser, setCurrentUser] = React.useState('');
     const [voted, setVoted] = React.useState(false);
+    const page = SETPAGE + 1;
+    const pageSize = ROWMEDIUM;
+    const field = 'proposalNumber';
 
     const { loading, error, data } = useQuery(GET_PROPOSAL, {
         variables: { proposalNumber }
     });
-
-    const { publicRuntimeConfig } = getConfig();
-    const page = publicRuntimeConfig.setPage;
-    const pageSize = publicRuntimeConfig.rowMedium;
-    const field = 'proposalNumber';
 
     const totalProposals = useQuery(GET_PROPOSALS, {
         variables: { page, pageSize, field }
@@ -144,8 +145,6 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
 
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
-
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     return (
         <Card className={classes.root}>

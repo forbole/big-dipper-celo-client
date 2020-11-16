@@ -18,7 +18,6 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import Alert from '@material-ui/lab/Alert';
 import BigNumber from 'bignumber.js';
-import getConfig from 'next/config';
 import React from 'react';
 
 import ComponentLoader from '../misc/ComponentLoader';
@@ -140,14 +139,15 @@ const useStyles = makeStyles(() => {
 });
 
 const ValidatorVotesList = (): JSX.Element => {
+    const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
+    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
     const classes = useStyles();
 
     const [open, setOpen] = React.useState('');
     const [copy, setCopy] = React.useState(false);
-    const { publicRuntimeConfig } = getConfig();
-
-    const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
-    const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowMedium);
+    const [pageNumber, setPageNumber] = React.useState(SETPAGE);
+    const [pageSize, setPageSize] = React.useState(ROWMEDIUM);
+    const page = pageNumber + 1;
 
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUPS, {
         variables: { pageSize, page }

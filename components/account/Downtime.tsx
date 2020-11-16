@@ -15,7 +15,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import moment from 'moment';
-import getConfig from 'next/config';
 import React from 'react';
 
 import ComponentLoader from '../misc/ComponentLoader';
@@ -80,19 +79,26 @@ const useStyles = makeStyles(() => {
 type DowntimeProps = { address: string };
 
 const Downtime = ({ address }: DowntimeProps): JSX.Element => {
-    const classes = useStyles();
-    const { publicRuntimeConfig } = getConfig();
+    const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
+    const ROWXXSMALL = process.env.ROWXXSMALL ? parseInt(process.env.ROWXXSMALL) : 5;
+    const ROWXSMALL = process.env.ROWXSMALL ? parseInt(process.env.ROWXSMALL) : 10;
+    const ROWSMALL = process.env.ROWSMALL ? parseInt(process.env.ROWSMALL) : 15;
+    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
+    const ROWLARGE = process.env.ROWLARGE ? parseInt(process.env.ROWLARGE) : 50;
+    const ROWXLARGE = process.env.ROWXLARGE ? parseInt(process.env.ROWXLARGE) : 100;
 
-    const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
-    const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXsmall);
+    const classes = useStyles();
+    const [pageNumber, setPageNumber] = React.useState(SETPAGE);
+    const [pageSize, setPageSize] = React.useState(ROWXSMALL);
+    const page = pageNumber + 1;
 
     const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
+        setPageNumber(newPage);
     };
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPageSize(+event.target.value);
-        setPage(publicRuntimeConfig.setPage);
+        setPageNumber(SETPAGE);
     };
 
     const accountQuery = useQuery(GET_ACCOUNT_DETAILS, {
@@ -242,21 +248,22 @@ const Downtime = ({ address }: DowntimeProps): JSX.Element => {
                         </TableContainer>
                         <TablePagination
                             rowsPerPageOptions={[
-                                publicRuntimeConfig.rowXsmall,
-                                publicRuntimeConfig.rowSmall,
-                                publicRuntimeConfig.rowMedium,
-                                publicRuntimeConfig.rowLarge,
-                                publicRuntimeConfig.rowXlarge
+                                ROWXXSMALL,
+                                ROWXSMALL,
+                                ROWSMALL,
+                                ROWMEDIUM,
+                                ROWLARGE,
+                                ROWXLARGE
                             ]}
                             component="div"
                             count={data.downtime.totalCounts}
                             rowsPerPage={pageSize}
-                            page={page}
+                            page={pageNumber}
                             onChangePage={handleChangePage}
                             onChangeRowsPerPage={handleChangeRowsPerPage}
                             backIconButtonProps={{
                                 'aria-label': 'Previous',
-                                disabled: page === 1
+                                disabled: pageNumber === 0
                             }}
                             nextIconButtonProps={{
                                 'aria-label': 'Next'

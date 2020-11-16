@@ -125,11 +125,19 @@ type ProposalVotingListProps = { proposal: string };
 
 const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element => {
     const classes = useStyles();
-    const { publicRuntimeConfig } = getConfig();
     const proposalNumber = parseInt(proposal);
 
-    const [page, setPage] = React.useState(0);
-    const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowXsmall);
+    const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
+    const ROWXXSMALL = process.env.ROWXXSMALL ? parseInt(process.env.ROWXXSMALL) : 5;
+    const ROWXSMALL = process.env.ROWXSMALL ? parseInt(process.env.ROWXSMALL) : 10;
+    const ROWSMALL = process.env.ROWSMALL ? parseInt(process.env.ROWSMALL) : 15;
+    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
+    const ROWLARGE = process.env.ROWLARGE ? parseInt(process.env.ROWLARGE) : 50;
+    const ROWXLARGE = process.env.ROWXLARGE ? parseInt(process.env.ROWXLARGE) : 100;
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+
+    const [page, setPage] = React.useState(SETPAGE);
+    const [pageSize, setPageSize] = React.useState(ROWXSMALL);
     const [value, setValue] = React.useState(0);
 
     const handleChangePage = (event: unknown, newPage: number) => {
@@ -138,6 +146,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPageSize(+event.target.value);
+        setPage(SETPAGE);
     };
 
     const handleChange = (event: unknown, newValue: number) => {
@@ -151,9 +160,6 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
     const chainData = useQuery(GET_CHAIN, {
         pollInterval: 5000
     });
-
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
-
     const RednderTabs = (voteType: any) => {
         return (
             <>
@@ -270,11 +276,12 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                 </TableContainer>
                 <TablePagination
                     rowsPerPageOptions={[
-                        publicRuntimeConfig.rowXsmall,
-                        publicRuntimeConfig.rowSmall,
-                        publicRuntimeConfig.rowMedium,
-                        publicRuntimeConfig.rowLarge,
-                        publicRuntimeConfig.rowXlarge
+                        ROWXXSMALL,
+                        ROWXSMALL,
+                        ROWSMALL,
+                        ROWMEDIUM,
+                        ROWLARGE,
+                        ROWXLARGE
                     ]}
                     component="div"
                     count={Object.keys(data.proposal.totalVotesList[voteType.voteType]).length}
@@ -283,7 +290,8 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                     onChangePage={handleChangePage}
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                     backIconButtonProps={{
-                        'aria-label': 'Previous'
+                        'aria-label': 'Previous',
+                        disabled: page === 0
                     }}
                     nextIconButtonProps={{
                         'aria-label': 'Next'
@@ -353,7 +361,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                         className={classes.headerLabel}>
                         (~
                         {numbro(
-                            new BigNumber(data.proposal.votes.Total / process.env.CELO).toFormat()
+                            new BigNumber(data.proposal.votes.Total / CELO_FRACTION).toFormat()
                         ).format({ average: true, mantissa: 2 })}{' '}
                         of ~
                         {chainData &&
@@ -362,7 +370,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                         chainData.data.chain.celoTotalSupply
                             ? numbro(
                                   new BigNumber(
-                                      chainData.data.chain.celoTotalSupply / process.env.CELO
+                                      chainData.data.chain.celoTotalSupply / CELO_FRACTION
                                   ).toFormat(2)
                               ).format({ average: true, mantissa: 2 })
                             : null}{' '}
