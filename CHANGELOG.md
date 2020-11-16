@@ -18,6 +18,7 @@
 * Implemented Ledger Integration: Vote/Deposit Tokens for Proposal 
 * Changed color of visited links
 * Updated `LatestTransactions` Grid size
+* Updated font size of currentUser to body1 in `LockGold` and `UnlockGold`
 
 ## v0.1.3
 
