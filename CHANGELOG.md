@@ -16,6 +16,7 @@
 * [#32] Updated Epoch Countdown
 * Updated Big Number `toFormat()` value to 2
 * Implemented Ledger Integration: Vote/Deposit Tokens for Proposal 
+* Changed color of visited links
 
 ## v0.1.3
 
