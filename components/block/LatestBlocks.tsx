@@ -113,7 +113,6 @@ const useStyles = makeStyles({
     }
 });
 
-
 type LatestBlocksProps = { pagination?: boolean; displayCard?: boolean };
 
 const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Element => {
