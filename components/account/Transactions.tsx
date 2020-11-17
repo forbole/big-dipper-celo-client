@@ -300,14 +300,6 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                     {row.type ? (
                                                                         <Chips type={row.type} />
                                                                     ) : null}
-
-                                                                    {row.actionResult ? (
-                                                                        <Chips
-                                                                            actionResult={
-                                                                                row.actionResult
-                                                                            }
-                                                                        />
-                                                                    ) : null}
                                                                 </Grid>
 
                                                                 <Grid item xs={12}>
