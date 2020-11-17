@@ -348,10 +348,10 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                     {data && data.transaction && data.transaction.input ? (
                         <>
                             {' '}
-                            <Grid item xs={3} md={1} className={classes.item}>
+                            <Grid item xs={2} md={1} className={classes.item}>
                                 <Typography variant="body2">Raw Input</Typography>
                             </Grid>
-                            <Grid item xs={2} md={6} className={classes.alignRight}>
+                            <Grid item xs={3} md={6} className={classes.alignRight}>
                                 <Chip
                                     label="Hex"
                                     size="small"
@@ -366,7 +366,7 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                                     onClick={handleClickUTF8}
                                 />
                             </Grid>
-                            <Grid item xs={4} md={5}>
+                            <Grid item xs={7} md={5}>
                                 <IconButton
                                     aria-label="copy"
                                     size="small"
