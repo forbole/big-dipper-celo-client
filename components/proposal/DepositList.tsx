@@ -12,6 +12,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import BigNumber from 'bignumber.js';
+import moment from 'moment';
 import React from 'react';
 
 import ComponentLoader from '../misc/ComponentLoader';
@@ -144,7 +145,7 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
             <Paper className={classes.paper}>
                 <TableContainer>
                     <Typography
-                        color="textSecondary"
+                        color="textPrimary"
                         variant="subtitle1"
                         className={classes.headerLabel}>
                         Deposit ({calculateTotalDeposited()} CELO)
@@ -220,7 +221,10 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                                                 data.proposal.upvoteList[row].returnValues &&
                                                 data.proposal.upvoteList[row].returnValues
                                                     .upvotes ? (
-                                                    <Typography variant="body2" noWrap>
+                                                    <Typography
+                                                        variant="body2"
+                                                        noWrap
+                                                        color="textPrimary">
                                                         {new BigNumber(
                                                             data.proposal.upvoteList[row]
                                                                 .returnValues.upvotes /
@@ -238,12 +242,15 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                                                 {txDetails.data &&
                                                 txDetails.data.transaction &&
                                                 txDetails.data.transaction.timestamp ? (
-                                                    <Typography variant="body2" noWrap>
-                                                        {new Date(
-                                                            parseInt(
+                                                    <Typography
+                                                        variant="body2"
+                                                        noWrap
+                                                        color="textPrimary">
+                                                        {moment
+                                                            .unix(
                                                                 txDetails.data.transaction.timestamp
-                                                            ) * 1000
-                                                        ).toUTCString()}
+                                                            )
+                                                            .format('Do MMMM YYYY, h:mm:ss a')}
                                                     </Typography>
                                                 ) : (
                                                     <NotAvailable variant="body2" />
