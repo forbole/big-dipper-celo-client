@@ -11,7 +11,6 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import BigNumber from 'bignumber.js';
-import getConfig from 'next/config';
 import numbro from 'numbro';
 import React from 'react';
 
@@ -92,19 +91,26 @@ const useStyles = makeStyles(({ spacing }) => {
 
 const AccountList = (): JSX.Element => {
     const classes = useStyles();
-    const { publicRuntimeConfig } = getConfig();
 
-    const [page, setPage] = React.useState(publicRuntimeConfig.setPage);
-    const [pageSize, setPageSize] = React.useState(publicRuntimeConfig.rowMedium);
+    const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
+    const ROWSMALL = process.env.ROWSMALL ? parseInt(process.env.ROWSMALL) : 15;
+    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
+    const ROWLARGE = process.env.ROWLARGE ? parseInt(process.env.ROWLARGE) : 50;
+    const ROWXLARGE = process.env.ROWXLARGE ? parseInt(process.env.ROWXLARGE) : 100;
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
+    const [pageNumber, setPageNumber] = React.useState(SETPAGE);
+    const [pageSize, setPageSize] = React.useState(ROWMEDIUM);
+    const page = pageNumber + 1;
     const field = 'balance';
-    const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
+
+    const handleChangePage = (event: any, newPage: number) => {
+        setPageNumber(newPage);
     };
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPageSize(+event.target.value);
-        setPage(publicRuntimeConfig.setPage);
+        setPageNumber(SETPAGE);
     };
 
     const { loading, error, data } = useQuery(GET_ACCOUNTS, {
@@ -112,8 +118,6 @@ const AccountList = (): JSX.Element => {
     });
 
     const totalSupply = useQuery(GET_TOTAL_SUPPLY, {});
-
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
@@ -169,8 +173,7 @@ const AccountList = (): JSX.Element => {
                                                         variant="body2"
                                                         color="textPrimary"
                                                         noWrap>
-                                                        {' '}
-                                                        {index + 1}
+                                                        {pageSize * pageNumber + index + 1}
                                                     </Typography>
                                                 </TableCell>
                                                 {row.address ? (
@@ -203,7 +206,7 @@ const AccountList = (): JSX.Element => {
                                                             noWrap>
                                                             {new BigNumber(
                                                                 row.balance / CELO_FRACTION
-                                                            ).toFormat(2)}
+                                                            ).toFormat(2)}{' '}
                                                             CELO
                                                         </Typography>
                                                     ) : (
@@ -228,7 +231,8 @@ const AccountList = (): JSX.Element => {
                                                                     totalSupply.data.chain
                                                                         .cUSDTotalSupply) *
                                                                     100
-                                                            ).format('0.00')}
+                                                            ).format('0.00')}{' '}
+                                                            {'%'}
                                                         </Typography>
                                                     ) : (
                                                         <NotAvailable variant="body2" />
@@ -262,21 +266,16 @@ const AccountList = (): JSX.Element => {
                         </Paper>
                     </TableContainer>
                     <TablePagination
-                        rowsPerPageOptions={[
-                            publicRuntimeConfig.rowSmall,
-                            publicRuntimeConfig.rowMedium,
-                            publicRuntimeConfig.rowLarge,
-                            publicRuntimeConfig.rowXlarge
-                        ]}
+                        rowsPerPageOptions={[ROWSMALL, ROWMEDIUM, ROWLARGE, ROWXLARGE]}
                         component="div"
                         count={data.accounts.totalCounts}
                         rowsPerPage={pageSize}
-                        page={page}
+                        page={pageNumber}
                         onChangePage={handleChangePage}
                         onChangeRowsPerPage={handleChangeRowsPerPage}
                         backIconButtonProps={{
                             'aria-label': 'Previous',
-                            disabled: page === 1
+                            disabled: pageNumber === 0
                         }}
                         nextIconButtonProps={{
                             'aria-label': 'Next'
