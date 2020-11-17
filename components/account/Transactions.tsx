@@ -14,6 +14,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import numbro from 'numbro';
 import React from 'react';
@@ -73,7 +74,7 @@ const useStyles = makeStyles(() => {
             display: 'flex'
         },
         icon: {
-            fill: 'rgba(255, 255, 255, 0.6)'
+            fill: 'rgba(144, 144, 144, 1)'
         },
 
         chip: {
@@ -93,6 +94,7 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
     const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
     const ROWLARGE = process.env.ROWLARGE ? parseInt(process.env.ROWLARGE) : 50;
     const ROWXLARGE = process.env.ROWXLARGE ? parseInt(process.env.ROWXLARGE) : 100;
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const [pageNumber, setPageNumber] = React.useState(SETPAGE);
     const [pageSize, setPageSize] = React.useState(ROWXXSMALL);
@@ -152,7 +154,7 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                     background:
                                                                         'rgba(255, 255, 255, 1)'
                                                                 }}>
-                                                                <Grid item xs={8}>
+                                                                <Grid item xs={5}>
                                                                     <Typography
                                                                         variant="body2"
                                                                         className={
@@ -178,9 +180,11 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                         />
                                                                     </Typography>
                                                                 </Grid>
-                                                                <Grid item xs={4}>
+                                                                <Grid item xs={7}>
                                                                     <Typography
                                                                         variant="body2"
+                                                                        color="textSecondary"
+                                                                        noWrap
                                                                         className={
                                                                             classes.alignRight
                                                                         }>
@@ -191,12 +195,17 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                                     'Do MMMM YYYY, h:mm:ss a'
                                                                                 )
                                                                         ) : (
-                                                                            <NotAvailable variant="body2" />
+                                                                            <NotAvailable
+                                                                                className={
+                                                                                    classes.alignRight
+                                                                                }
+                                                                                variant="body2"
+                                                                            />
                                                                         )}
                                                                     </Typography>
                                                                 </Grid>
 
-                                                                <Grid item xs={5} md={4}>
+                                                                <Grid item xs={4} md={5}>
                                                                     <Typography
                                                                         variant="body2"
                                                                         className={
@@ -225,7 +234,7 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                     </Typography>
                                                                 </Grid>
 
-                                                                <Grid item xs={7} md={8}>
+                                                                <Grid item xs={4} md={5}>
                                                                     <Typography
                                                                         variant="body2"
                                                                         align="left"
@@ -255,38 +264,52 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                     </Typography>
                                                                 </Grid>
 
+                                                                <Grid item xs={4} md={2}>
+                                                                    {row.gas ? (
+                                                                        <Typography
+                                                                            variant="body1"
+                                                                            className={
+                                                                                classes.alignRight
+                                                                            }>
+                                                                            {new BigNumber(
+                                                                                row.gas /
+                                                                                    CELO_FRACTION
+                                                                            ).toFormat(2)}{' '}
+                                                                            CELO
+                                                                        </Typography>
+                                                                    ) : (
+                                                                        <NotAvailable variant="body2" />
+                                                                    )}
+                                                                </Grid>
+
                                                                 <Grid
                                                                     item
                                                                     xs={12}
-                                                                    lg={8}
+                                                                    md={9}
                                                                     className={classes.chip}>
-                                                                    {row.type &&
-                                                                    row.to &&
+                                                                    {row.to &&
                                                                     row.to.contract &&
                                                                     row.to.contract.name ? (
                                                                         <Chips
-                                                                            type={row.type}
                                                                             contractName={
                                                                                 row.to.contract.name
                                                                             }
                                                                         />
-                                                                    ) : row.type ? (
+                                                                    ) : null}
+
+                                                                    {row.type ? (
                                                                         <Chips type={row.type} />
                                                                     ) : null}
+
+                                                                    {row.actionResult ? (
+                                                                        <Chips
+                                                                            actionResult={
+                                                                                row.actionResult
+                                                                            }
+                                                                        />
+                                                                    ) : null}
                                                                 </Grid>
-                                                                <Grid item xs={12} lg={4}>
-                                                                    <Typography
-                                                                        variant="body2"
-                                                                        className={
-                                                                            classes.alignRight
-                                                                        }>
-                                                                        {row.gas ? (
-                                                                            row.gas + ' CELO'
-                                                                        ) : (
-                                                                            <NotAvailable variant="body2" />
-                                                                        )}
-                                                                    </Typography>
-                                                                </Grid>
+
                                                                 <Grid item xs={12}>
                                                                     <Divider
                                                                         className={classes.divider}

@@ -56,7 +56,7 @@ const useStyles = makeStyles(() => {
             float: 'left'
         },
         icon: {
-            fill: 'rgba(255, 255, 255, 0.6)'
+            fill: 'rgba(144, 144, 144, 1)'
         }
     };
 });
@@ -257,7 +257,7 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                             <Grid item xs={9} className={classes.item}>
                                 {data.validator && data.validator.score ? (
                                     <Typography variant="body2" className={classes.alignRight}>
-                                        {data.validator.score}%
+                                        {data.validator.score} %
                                     </Typography>
                                 ) : (
                                     <NotAvailable variant="body2" className={classes.alignRight} />

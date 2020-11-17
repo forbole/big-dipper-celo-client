@@ -87,7 +87,7 @@ const useStyles = makeStyles(() => {
         },
 
         icon: {
-            fill: 'rgba(255, 255, 255, 0.6)'
+            fill: 'rgba(144, 144, 144, 1)'
         }
     };
 });
