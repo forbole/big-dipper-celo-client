@@ -46,6 +46,7 @@ export const GET_TX_DETAILS = gql`
             gatewayFee
             gas
             hash
+            type
             input
             timestamp
             gas
