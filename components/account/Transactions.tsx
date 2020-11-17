@@ -41,7 +41,8 @@ const useStyles = makeStyles(() => {
 
         leftInline: {
             display: 'flex',
-            padding: '0 0 0 1rem'
+            padding: '0 0 0 1rem',
+            overflow: 'auto'
         },
         rightInline: {
             display: 'flex',
@@ -65,7 +66,7 @@ const useStyles = makeStyles(() => {
 
         txPadding: {
             display: 'flex',
-            overflow: 'hidden',
+            overflow: 'auto',
             padding: '0 0 0 0.5rem'
         },
         divider: {
