@@ -150,7 +150,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                             </Typography>
                             {data && data.transactions ? (
                                 <TableContainer className={classes.container}>
-                                    <Table stickyHeader aria-label="sticky table">
+                                    <Table stickyHeader>
                                         <TableHead></TableHead>
                                         <TableBody>
                                             {data.transactions.transactions.map(

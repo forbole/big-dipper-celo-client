@@ -27,7 +27,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         alignRight: {
             display: 'block',
-            float: 'right'
+            float: 'right',
+            fontWeight: 300
         },
         buttonUnlock: {
             justifyContent: 'center',
@@ -70,6 +71,13 @@ const useStyles = makeStyles((theme: Theme) =>
         centerContent: {
             display: 'flex',
             justifyContent: 'center'
+        },
+
+        validatorName: {
+            display: 'block',
+            float: 'right',
+            color: 'rgba(46,137,90, 1)',
+            fontWeight: 500
         }
     })
 );
@@ -117,26 +125,26 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                         <Typography variant="body1" className={classes.box}>
                             Overview
                         </Typography>
-                        <Divider variant="middle" className={classes.divider} />
+                        <Divider className={classes.divider} />
                     </Grid>
                     {validatorQuery &&
                     validatorQuery.data &&
                     validatorQuery.data.validator &&
                     validatorQuery.data.validator.name ? (
                         <>
-                            <Grid item xs={6}>
+                            <Grid item xs={3}>
                                 <Typography variant="body2" className={classes.alignLeft}>
                                     Moniker
                                 </Typography>
                             </Grid>
-                            <Grid item xs={6}>
-                                <Typography variant="body2" className={classes.alignRight}>
+                            <Grid item xs={9}>
+                                <Typography variant="body1" className={classes.validatorName}>
                                     {' '}
                                     {validatorQuery.data.validator.name}{' '}
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
-                                <Divider variant="middle" className={classes.divider} />
+                                <Divider className={classes.divider} />
                             </Grid>
                         </>
                     ) : null}
@@ -149,23 +157,23 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
 
                     <Grid item xs={9}>
                         {accountQuery.data.account && accountQuery.data.account.balance ? (
-                            <Typography variant="body2" className={classes.alignRight}>
+                            <Typography variant="h5" className={classes.alignRight}>
                                 {new BigNumber(
                                     accountQuery.data.account.balance / CELO_FRACTION
                                 ).toFormat(2)}{' '}
                                 CELO
                             </Typography>
                         ) : (
-                            <NotAvailable variant="body2" className={classes.alignRight} />
+                            <NotAvailable variant="h5" className={classes.alignRight} />
                         )}
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} style={{ marginTop: '-0.5rem' }}>
                         {accountQuery.data.account &&
                         accountQuery.data.account.balance &&
                         chainQuery.data.chain &&
                         chainQuery.data.chain.tokenPrice &&
                         chainQuery.data.chain.tokenPrice.usd ? (
-                            <Typography variant="body2" className={classes.alignRight}>
+                            <Typography variant="h6" className={classes.alignRight}>
                                 {new BigNumber(
                                     (accountQuery.data.account.balance / CELO_FRACTION) *
                                         chainQuery.data.chain.tokenPrice.usd
@@ -173,7 +181,7 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                                 cUSD
                             </Typography>
                         ) : (
-                            <NotAvailable variant="body2" className={classes.alignRight} />
+                            <NotAvailable variant="h5" className={classes.alignRight} />
                         )}
                     </Grid>
 

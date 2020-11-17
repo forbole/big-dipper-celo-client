@@ -2,7 +2,6 @@ import { useQuery } from '@apollo/client';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -61,17 +60,15 @@ const useStyles = makeStyles(() => {
         },
         tableCell: {
             overflow: 'auto',
-            padding: '0.5rem'
+            padding: '0.5rem',
+            border: 'none'
         },
         table: {
-            background: 'rgba(246, 247, 249, 1)',
-            padding: '0'
-        },
-        divider: {
-            backgroundColor: 'rgba(232, 232, 232, 1)'
+            padding: '0.2rem',
+            border: 'none'
         },
         icon: {
-            fill: 'rgba(255, 255, 255, 0.6)'
+            fill: 'rgba(144, 144, 144, 1)'
         }
     };
 });
@@ -132,7 +129,6 @@ const Downtime = ({ address }: DowntimeProps): JSX.Element => {
             </AccordionSummary>
             <AccordionDetails className={classes.root}>
                 <Grid container className={classes.tableCell}>
-                    <Divider variant="middle" className={classes.divider} />
                     <Grid item xs={12}>
                         <TableContainer className={classes.container}>
                             <Table>
@@ -157,7 +153,18 @@ const Downtime = ({ address }: DowntimeProps): JSX.Element => {
                                 <TableBody>
                                     {data.downtime.blocks.map((row: any, index: number) => {
                                         return (
-                                            <TableRow key={index}>
+                                            <TableRow
+                                                key={index}
+                                                style={
+                                                    index % 2
+                                                        ? {
+                                                              background: 'rgba(248, 248, 248, 1)',
+                                                              border: 'none'
+                                                          }
+                                                        : {
+                                                              background: 'rgb(255,255,255)'
+                                                          }
+                                                }>
                                                 <TableCell
                                                     component="th"
                                                     scope="row"
@@ -229,7 +236,10 @@ const Downtime = ({ address }: DowntimeProps): JSX.Element => {
                                                         <NotAvailable variant="body2" />
                                                     )}
                                                 </TableCell>
-                                                <TableCell align="left" padding="checkbox">
+                                                <TableCell
+                                                    align="left"
+                                                    padding="checkbox"
+                                                    className={classes.tableCell}>
                                                     {row.timestamp ? (
                                                         <Typography variant="body2" noWrap>
                                                             {moment

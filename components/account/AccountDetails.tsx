@@ -56,7 +56,7 @@ const useStyles = makeStyles(() => {
             float: 'left'
         },
         icon: {
-            fill: 'rgba(255, 255, 255, 0.6)'
+            fill: 'rgba(144, 144, 144, 1)'
         }
     };
 });
@@ -135,7 +135,6 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                                 }
                                             </Typography>
                                         }
-                                        textSecondary
                                     />
                                 ) : (
                                     <NotAvailable variant="body2" className={classes.alignRight} />
@@ -143,7 +142,7 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                             </Grid>
 
                             <Grid item xs={12}>
-                                <Divider variant="middle" className={classes.divider} />
+                                <Divider className={classes.divider} />
                             </Grid>
 
                             <Grid item xs={4} className={classes.item}>
@@ -158,7 +157,7 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                             </Grid>
 
                             <Grid item xs={12}>
-                                <Divider variant="middle" className={classes.divider} />
+                                <Divider className={classes.divider} />
                             </Grid>
 
                             {/* <Grid item xs={6} className={classes.item}>
@@ -200,25 +199,16 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                             {accountQuery.data &&
                             accountQuery.data.account &&
                             accountQuery.data.account.lockedGold &&
-                            accountQuery.data.account.lockedGold.total &&
-                            accountQuery.data.account.lockedGold.nonvoting ? (
+                            accountQuery.data.account.lockedGold.total ? (
                                 <>
                                     <Grid item xs={8} className={classes.item}>
                                         <Typography variant="body2" className={classes.alignRight}>
                                             {new BigNumber(
-                                                accountQuery.data.account.lockedGold.total /
-                                                    CELO_FRACTION
-                                            ).toFormat(2)}
+                                                new BigNumber(
+                                                    accountQuery.data.account.lockedGold.total
+                                                ) / CELO_FRACTION
+                                            ).toFormat(2)}{' '}
                                             CELO
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs={12} className={classes.item}>
-                                        <Typography variant="body2" className={classes.alignRight}>
-                                            {new BigNumber(
-                                                accountQuery.data.account.lockedGold.nonvoting /
-                                                    CELO_FRACTION
-                                            ).toFormat(2)}
-                                            non-voting CELO
                                         </Typography>
                                     </Grid>
                                 </>
@@ -226,6 +216,33 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                 <Grid item xs={8} className={classes.item}>
                                     <NotAvailable variant="body2" className={classes.alignRight} />
                                 </Grid>
+                            )}
+
+                            {accountQuery.data &&
+                            accountQuery.data.account &&
+                            accountQuery.data.account.lockedGold &&
+                            accountQuery.data.account.lockedGold.nonvoting ? (
+                                <>
+                                    <Grid item xs={12} className={classes.item}>
+                                        <Typography variant="body2" className={classes.alignRight}>
+                                            {new BigNumber(
+                                                new BigNumber(
+                                                    accountQuery.data.account.lockedGold.nonvoting
+                                                ) / CELO_FRACTION
+                                            ).toFormat(2)}{' '}
+                                            non-voting CELO
+                                        </Typography>
+                                    </Grid>
+                                </>
+                            ) : (
+                                <>
+                                    <Grid item xs={8} className={classes.item}>
+                                        <NotAvailable
+                                            variant="body2"
+                                            className={classes.alignRight}
+                                        />
+                                    </Grid>
+                                </>
                             )}
 
                             <Grid item xs={12}>
@@ -240,7 +257,7 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                             <Grid item xs={9} className={classes.item}>
                                 {data.validator && data.validator.score ? (
                                     <Typography variant="body2" className={classes.alignRight}>
-                                        {data.validator.score}%
+                                        {new BigNumber(data.validator.score).toFormat(2)} %
                                     </Typography>
                                 ) : (
                                     <NotAvailable variant="body2" className={classes.alignRight} />
@@ -268,7 +285,6 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                                 {data.validator.affiliation}
                                             </Typography>
                                         }
-                                        textSecondary
                                     />
                                 ) : (
                                     <NotAvailable variant="body2" className={classes.alignRight} />
@@ -279,17 +295,24 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
 
-                            <Grid item xs={6} className={classes.item}>
+                            <Grid item xs={4} className={classes.item}>
                                 <Typography variant="body2" className={classes.alignLeft}>
                                     Validator Signer
                                 </Typography>
                             </Grid>
 
-                            <Grid item xs={6} className={classes.item}>
+                            <Grid item xs={8} className={classes.item}>
                                 {data.validator && data.validator.signer ? (
-                                    <Typography variant="body2" className={classes.alignRight}>
-                                        {data.validator.signer}
-                                    </Typography>
+                                    <NavLink
+                                        href={`/validatorGroup/${data.validator.signer}`}
+                                        name={
+                                            <Typography
+                                                variant="body2"
+                                                className={classes.alignRight}>
+                                                {data.validator.signer}
+                                            </Typography>
+                                        }
+                                    />
                                 ) : (
                                     <NotAvailable variant="body2" className={classes.alignRight} />
                                 )}
@@ -299,7 +322,7 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
 
-                            <Grid item xs={5} className={classes.item}>
+                            <Grid item xs={4} className={classes.item}>
                                 <Typography variant="body2">All Signers</Typography>
                             </Grid>
 
@@ -308,7 +331,7 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                             accountQuery.data.account.accountSummary &&
                             accountQuery.data.account.accountSummary.authorizedSigners ? (
                                 <>
-                                    <Grid item xs={7} className={classes.item}>
+                                    <Grid item xs={8} className={classes.item}>
                                         <NavLink
                                             href={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.vote}`}
                                             name={
