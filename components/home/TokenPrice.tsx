@@ -6,8 +6,9 @@ import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import Paper from '@material-ui/core/Paper';
-import { createStyles, makeStyles, Theme, withStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme, useTheme, withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import BigNumber from 'bignumber.js';
 import numbro from 'numbro';
@@ -152,6 +153,9 @@ const TokenPrice = (): JSX.Element => {
     const [dateFrom, setDateFrom] = React.useState<Date | string | null>(formatDate(oneWeekBefore));
 
     const [dateTo, setDateTo] = React.useState<Date | string | null>(formatDate(new Date()));
+
+    const theme = useTheme();
+    const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const handleDateFromChange = (date: Date | string | null) => {
         const formatDateFrom = formatDate(date);
@@ -327,80 +331,78 @@ const TokenPrice = (): JSX.Element => {
                             </Grid>
                         </Hidden>
 
-                        <div style={{ width: '100%', height: 290 }}>
-                            <ResponsiveContainer>
-                                <LineChart
-                                    width={500}
-                                    height={250}
-                                    data={
-                                        coinHistoryByDates.data &&
-                                        coinHistoryByDates.data.coinHistoryByDates &&
-                                        coinHistoryByDates.data.coinHistoryByDates.prices
-                                            ? coinHistoryByDates.data.coinHistoryByDates.prices
-                                            : 0
-                                    }
-                                    margin={{
-                                        top: 20,
-                                        right: 0,
-                                        left: 0,
-                                        bottom: 0
-                                    }}>
-                                    <CartesianGrid
-                                        strokeDasharray="3 3"
-                                        strokeWidth={1}
-                                        opacity={0.3}
-                                    />
-                                    <XAxis
-                                        dataKey="Time"
-                                        tick={{
-                                            stroke: 'rgba(119, 119, 119, 1)',
-                                            fontSize: 10,
-                                            fontWeight: 100
-                                        }}
-                                    />
-                                    <YAxis
-                                        yAxisId="left"
-                                        tickSize={0}
-                                        tickMargin={10}
-                                        tick={{
-                                            stroke: 'rgba(119, 119, 119, 1)',
-                                            fontSize: 10,
-                                            fontWeight: 100
-                                        }}
-                                    />
-                                    <YAxis
-                                        yAxisId="right"
-                                        orientation="right"
-                                        tickSize={0}
-                                        tickMargin={10}
-                                        tick={{
-                                            stroke: 'rgba(119, 119, 119, 1)',
-                                            fontSize: 10,
-                                            fontWeight: 100
-                                        }}
-                                    />
-                                    <Tooltip />
-                                    <Line
-                                        yAxisId="left"
-                                        type="monotone"
-                                        dataKey="CELO"
-                                        stroke="rgba(102, 227, 157, 1)"
-                                        activeDot={{ stroke: 'rgba(102, 128, 113, 1)', r: 3 }}
-                                        strokeWidth={2}
-                                        dot={false}
-                                    />
-                                    <Line
-                                        yAxisId="right"
-                                        type="monotone"
-                                        dataKey="Market_Cap"
-                                        stroke="rgba(255, 177, 52, 1)"
-                                        activeDot={{ stroke: 'rgba(250, 123, 108, 1)', r: 0 }}
-                                        strokeWidth={2}
-                                        dot={false}
-                                    />
-                                </LineChart>
-                            </ResponsiveContainer>
-                        </div>
+                        <ResponsiveContainer width="100%" height={smallScreen ? 200 : 290}>
+                            <LineChart
+                                width={500}
+                                height={250}
+                                data={
+                                    coinHistoryByDates.data &&
+                                    coinHistoryByDates.data.coinHistoryByDates &&
+                                    coinHistoryByDates.data.coinHistoryByDates.prices
+                                        ? coinHistoryByDates.data.coinHistoryByDates.prices
+                                        : 0
+                                }
+                                margin={{
+                                    top: 20,
+                                    right: 0,
+                                    left: 0,
+                                    bottom: 0
+                                }}>
+                                <CartesianGrid
+                                    strokeDasharray="3 3"
+                                    strokeWidth={1}
+                                    opacity={0.3}
+                                />
+                                <XAxis
+                                    dataKey="Time"
+                                    tick={{
+                                        stroke: 'rgba(119, 119, 119, 1)',
+                                        fontSize: 10,
+                                        fontWeight: 100
+                                    }}
+                                />
+                                <YAxis
+                                    yAxisId="left"
+                                    tickSize={0}
+                                    tickMargin={10}
+                                    tick={{
+                                        stroke: 'rgba(119, 119, 119, 1)',
+                                        fontSize: 10,
+                                        fontWeight: 100
+                                    }}
+                                />
+                                <YAxis
+                                    yAxisId="right"
+                                    orientation="right"
+                                    tickSize={0}
+                                    tickMargin={10}
+                                    tick={{
+                                        stroke: 'rgba(119, 119, 119, 1)',
+                                        fontSize: 10,
+                                        fontWeight: 100
+                                    }}
+                                />
+                                <Tooltip />
+                                <Line
+                                    yAxisId="left"
+                                    type="monotone"
+                                    dataKey="CELO"
+                                    stroke="rgba(102, 227, 157, 1)"
+                                    activeDot={{ stroke: 'rgba(102, 128, 113, 1)', r: 3 }}
+                                    strokeWidth={2}
+                                    dot={false}
+                                />
+                                <Line
+                                    yAxisId="right"
+                                    type="monotone"
+                                    dataKey="Market_Cap"
+                                    stroke="rgba(255, 177, 52, 1)"
+                                    activeDot={{ stroke: 'rgba(250, 123, 108, 1)', r: 0 }}
+                                    strokeWidth={2}
+                                    dot={false}
+                                />
+                            </LineChart>
+                        </ResponsiveContainer>
                     </Paper>
                 </Grid>
             </Grid>
