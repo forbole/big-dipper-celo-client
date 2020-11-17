@@ -47,7 +47,7 @@ const useStyles = makeStyles(() => {
             backgroundColor: 'rgba(246, 247, 249, 1)'
         },
         alignRight: {
-            //display: 'block',
+            display: 'inline-flex',
             float: 'right',
             paddingRight: '1rem'
         },
@@ -65,27 +65,38 @@ const useStyles = makeStyles(() => {
 
         hex: {
             borderRadius: 5,
-            backgroundColor: 'rgba(61, 66, 71, 1)',
-            border: 'solid 0.5px rgba(255, 255, 255, 0.8)',
+            backgroundColor: 'rgba(255, 255, 255, 1)',
+            border: 'solid 0.5px rgba(121, 121, 121, 0.8)',
             padding: '0.1rem',
             fontSize: '0.7rem',
             width: '3rem',
-            height: '1rem'
+            height: '1rem',
+            color: 'rgba(121, 121, 121, 1)',
+            marginRight: '1rem',
+            '&:hover': { backgroundColor: 'rgba(58, 211, 158, 0.5)' },
+            '&:focus': { backgroundColor: 'rgba(58, 211, 158, 0.5)' }
         },
 
         uft8: {
             borderRadius: 4,
-            backgroundColor: 'rgba(61, 66, 71, 1)',
+            backgroundColor: 'rgba(255, 255, 255, 1)',
             opacity: 5,
-            border: 'solid 0.5px rgba(255, 255, 255, 0.8)',
+            border: 'solid 0.5px rgba(121, 121, 121, 0.8)',
             //borderWidth: "0.5px",
             //padding: "0.1rem",
             fontSize: '0.6rem',
             width: '3.2rem',
-            height: '1rem'
+            height: '1rem',
+            color: 'rgba(121, 121, 121, 1)',
+            '&:hover': { backgroundColor: 'rgba(58, 211, 158, 0.5)' },
+            '&:focus': { backgroundColor: 'rgba(58, 211, 158, 0.5)' }
         },
         alertMessage: {
             background: '#3AD39E'
+        },
+        copyButton: {
+            float: 'right',
+            paddingRight: '1rem'
         }
     };
 });
@@ -152,19 +163,15 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
             <CardContent>
                 <Grid container spacing={2} className={classes.item}>
                     <Grid item xs={12}>
-                        <Typography color="textSecondary" variant="subtitle1" paragraph>
+                        <Typography color="textPrimary" variant="subtitle1" paragraph>
                             Transaction Details
                         </Typography>
                     </Grid>
                     <Divider />
                     <Grid item xs={12} className={classes.item}>
-                        <Typography variant="body2" component="h2">
-                            Hash
-                        </Typography>
+                        <Typography variant="body2">Hash</Typography>
                         {data.transaction && data.transaction.hash ? (
-                            <Typography variant="body2" component="h2">
-                                {data.transaction.hash}
-                            </Typography>
+                            <Typography variant="body2">{data.transaction.hash}</Typography>
                         ) : (
                             <NotAvailable variant="body2" />
                         )}
@@ -172,10 +179,8 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                     </Grid>
 
                     <Grid item xs={12} className={classes.item}>
-                        <Typography variant="body2" component="h2">
-                            Time
-                        </Typography>
-                        <Typography variant="body2" component="h2">
+                        <Typography variant="body2">Time</Typography>
+                        <Typography variant="body2">
                             {data && data.transaction && data.transaction.timestamp ? (
                                 new Date(parseInt(data.transaction.timestamp) * 1000).toUTCString()
                             ) : (
@@ -193,25 +198,23 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                     </Grid>
 
                     <Grid item xs={12} className={classes.item}>
-                        <Typography variant="body2" component="h2">
-                            Tx Type
-                        </Typography>
-                        <Typography variant="body2" component="h2">
-                            {(data.transaction &&
-                                data.transaction.value &&
-                                data.transaction.value === 0) ||
-                            (data.transaction && data.transaction.value && data.transaction.value)
-                                ? 'Contract Call'
-                                : 'Token Transfer'}
-                        </Typography>
+                        <Typography variant="body2">Tx Type</Typography>
+                        {data.transaction && data.transaction.type ? (
+                            <Typography variant="body2">
+                                {data.transaction.type.charAt(0).toUpperCase() +
+                                    data.transaction.type.slice(1)}
+                            </Typography>
+                        ) : (
+                            <NotAvailable variant="body2" />
+                        )}
                         <Divider variant="middle" className={classes.divider} />
                     </Grid>
 
                     <Grid item xs={12} className={classes.item}>
-                        <Typography variant="body2" component="h2" gutterBottom>
+                        <Typography variant="body2" gutterBottom>
                             Status
                         </Typography>
-                        <Typography variant="body2" component="h2">
+                        <Typography variant="body2">
                             {data.transaction && data.transaction.pending ? (
                                 <Chips actionResult="Pending" />
                             ) : (
@@ -222,15 +225,13 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                     </Grid>
 
                     <Grid item xs={12} className={classes.item}>
-                        <Typography variant="body2" component="h2">
-                            From
-                        </Typography>
+                        <Typography variant="body2">From</Typography>
 
                         {data.transaction && data.transaction.from ? (
                             <NavLink
                                 href={`/account/${data.transaction.from.address}`}
                                 name={
-                                    <Typography variant="body2" component="h2">
+                                    <Typography variant="body2">
                                         {' '}
                                         {data.transaction.from.address}
                                     </Typography>
@@ -244,14 +245,12 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                     </Grid>
 
                     <Grid item xs={12} className={classes.item}>
-                        <Typography variant="body2" component="h2">
-                            To
-                        </Typography>
+                        <Typography variant="body2">To</Typography>
                         {data.transaction && data.transaction.to ? (
                             <NavLink
                                 href={`/account/${data.transaction.to.address}`}
                                 name={
-                                    <Typography variant="body2" component="h2">
+                                    <Typography variant="body2">
                                         {' '}
                                         {data.transaction.to.address}
                                     </Typography>
@@ -265,14 +264,10 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                     </Grid>
 
                     <Grid item xs={12} className={classes.item}>
-                        <Typography variant="body2" component="h2">
-                            Value
-                        </Typography>
+                        <Typography variant="body2">Value</Typography>
 
                         {data.transaction && data.transaction.value ? (
-                            <Typography variant="body2" component="h2">
-                                {data.transaction.value}
-                            </Typography>
+                            <Typography variant="body2">{data.transaction.value}</Typography>
                         ) : (
                             <NotAvailable variant="body2" />
                         )}
@@ -280,14 +275,12 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                     </Grid>
 
                     <Grid item xs={12} className={classes.item}>
-                        <Typography variant="body2" component="h2">
-                            Block Height
-                        </Typography>
+                        <Typography variant="body2">Block Height</Typography>
                         {data.transaction && data.transaction.blockNumber ? (
                             <NavLink
                                 href={`/block/${data.transaction.blockNumber}`}
                                 name={
-                                    <Typography variant="body2" component="h2">
+                                    <Typography variant="body2">
                                         {data.transaction.blockNumber}
                                     </Typography>
                                 }
@@ -299,13 +292,9 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                     </Grid>
 
                     <Grid item xs={12} className={classes.item}>
-                        <Typography variant="body2" component="h2">
-                            Nonce
-                        </Typography>
+                        <Typography variant="body2">Nonce</Typography>
                         {data.transaction && data.transaction.nonce ? (
-                            <Typography variant="body2" component="h2">
-                                {data.transaction.nonce}
-                            </Typography>
+                            <Typography variant="body2">{data.transaction.nonce}</Typography>
                         ) : (
                             <NotAvailable variant="body2" />
                         )}
@@ -313,11 +302,9 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                     </Grid>
 
                     <Grid item xs={12} className={classes.item}>
-                        <Typography variant="body2" component="h2">
-                            Transaction Fee
-                        </Typography>
+                        <Typography variant="body2">Transaction Fee</Typography>
                         {data.transaction && data.transaction.feeCurrency ? (
-                            <Typography variant="body2" component="h2">
+                            <Typography variant="body2">
                                 {data.transaction.feeCurrency} + CELO
                             </Typography>
                         ) : (
@@ -327,11 +314,9 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                     </Grid>
 
                     <Grid item xs={12} className={classes.item}>
-                        <Typography variant="body2" component="h2">
-                            Fee Receipient
-                        </Typography>
+                        <Typography variant="body2">Fee Receipient</Typography>
                         {data.transaction && data.transaction.gatewayFeeRecipient ? (
-                            <Typography variant="body2" component="h2">
+                            <Typography variant="body2">
                                 {data.transaction.gatewayFeeRecipient}
                             </Typography>
                         ) : (
@@ -341,13 +326,9 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                     </Grid>
 
                     <Grid item xs={12} className={classes.item}>
-                        <Typography variant="body2" component="h2">
-                            Gate Fee
-                        </Typography>
+                        <Typography variant="body2">Gate Fee</Typography>
                         {data.transaction && data.transaction.gatewayFee ? (
-                            <Typography variant="body2" component="h2">
-                                {data.transaction.gatewayFee}
-                            </Typography>
+                            <Typography variant="body2">{data.transaction.gatewayFee}</Typography>
                         ) : (
                             <NotAvailable variant="body2" />
                         )}
@@ -356,13 +337,9 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                     </Grid>
 
                     <Grid item xs={12} className={classes.item}>
-                        <Typography variant="body2" component="h2">
-                            Transaction Speed
-                        </Typography>
+                        <Typography variant="body2">Transaction Speed</Typography>
                         {data.transaction && data.transaction.speed ? (
-                            <Typography variant="body2" component="h2">
-                                {data.transaction.speed}
-                            </Typography>
+                            <Typography variant="body2">{data.transaction.speed}</Typography>
                         ) : (
                             <NotAvailable variant="body2" />
                         )}
@@ -372,19 +349,16 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                         <>
                             {' '}
                             <Grid item xs={3} md={1} className={classes.item}>
-                                <Typography variant="body2" component="h2">
-                                    Raw Input
-                                </Typography>
+                                <Typography variant="body2">Raw Input</Typography>
                             </Grid>
-                            <Grid item xs={2} md={1} className={classes.alignRight}>
+                            <Grid item xs={2} md={6} className={classes.alignRight}>
                                 <Chip
                                     label="Hex"
                                     size="small"
                                     className={classes.hex}
                                     onClick={handleClickHex}
                                 />
-                            </Grid>
-                            <Grid item xs={3} md={1}>
+
                                 <Chip
                                     label="UTF-8"
                                     size="small"
@@ -392,11 +366,11 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                                     onClick={handleClickUTF8}
                                 />
                             </Grid>
-                            <Grid item xs={4} md={9} className={classes.alignRight}>
+                            <Grid item xs={4} md={5}>
                                 <IconButton
                                     aria-label="copy"
                                     size="small"
-                                    className={classes.alignRight}
+                                    className={classes.copyButton}
                                     onClick={copyText}>
                                     <img src="/images/copy.svg" alt="Copy" />
                                 </IconButton>
@@ -420,13 +394,9 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                     ) : null}
 
                     <Grid item xs={12} className={classes.item}>
-                        <Typography variant="body2" component="h2">
-                            Gas Used
-                        </Typography>
+                        <Typography variant="body2">Gas Used</Typography>
                         {data.transaction && data.transaction.gas ? (
-                            <Typography variant="body2" component="h2">
-                                {data.transaction.gas}
-                            </Typography>
+                            <Typography variant="body2">{data.transaction.gas}</Typography>
                         ) : (
                             <NotAvailable variant="body2" />
                         )}
