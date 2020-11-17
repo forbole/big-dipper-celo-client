@@ -113,14 +113,17 @@ const Chips = ({ contractName, type, actionResult }: ChipsProps): JSX.Element =>
     };
 
     const ledgerColors: LedgerColorsInterface = {
-        Success: green[500],
+        //Used for Proposal Status
         Passed: green['A700'],
         Create: lightGreen[700],
         Rejected: red[800],
         Removed: orange[600],
         Deposit: theme.palette.background.paper,
         Vote: theme.palette.background.paper,
-        Pending: teal[400]
+
+        //used for Transactions Status
+        Pending: teal[400],
+        Success: green[500]
     };
 
     const borderElement: BorderElementInterface = {

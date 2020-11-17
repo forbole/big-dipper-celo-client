@@ -3,7 +3,6 @@ import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import getConfig from 'next/config';
 import React from 'react';
 
 import Chips from '../../components/Chips';
@@ -121,14 +120,18 @@ const ProposalList = ({ title }: ProposalListProps): JSX.Element => {
                                         {row.removed ? <Chips actionResult="Removed" /> : null}
                                         {row.status === 'Approved' ? (
                                             <Chips actionResult="Passed" />
-                                        ) : (
+                                        ) : null}
+                                        {row.status === 'Rejected' ? (
                                             <Chips actionResult="Rejected" />
-                                        )}
+                                        ) : null}
                                         {row.status === 'Vote' ? (
-                                            <Chips type="" contractName="" actionResult="Vote" />
+                                            <Chips actionResult="Vote" />
                                         ) : null}
                                         {row.status === 'Deposit' ? (
-                                            <Chips type="" contractName="" actionResult="Deposit" />
+                                            <Chips actionResult="Deposit" />
+                                        ) : null}
+                                        {row.status === 'Create' ? (
+                                            <Chips actionResult="Create" />
                                         ) : null}
                                     </Grid>
                                     <Grid
