@@ -28,6 +28,11 @@ const useStyles = makeStyles(() => {
 
         item: {
             padding: '0 0 1rem 0.5rem'
+        },
+        tableCell: {
+            overflow: 'auto',
+            padding: '0.4rem',
+            border: 'none'
         }
     };
 });
@@ -48,7 +53,7 @@ const InputParameters = ({ hash }: InputParametersProps): JSX.Element => {
             <CardContent>
                 <Grid container spacing={2} className={classes.item}>
                     <Grid item xs={12}>
-                        <Typography color="textSecondary" variant="subtitle1">
+                        <Typography color="textPrimary" variant="subtitle1">
                             Input
                         </Typography>
                     </Grid>
@@ -66,17 +71,31 @@ const InputParameters = ({ hash }: InputParametersProps): JSX.Element => {
                             <TableBody>
                                 {data.transaction.decodedInput.params.map((row: any) => (
                                     <TableRow key={data.transaction.blockNumber}>
-                                        <TableCell component="th" scope="row">
+                                        <TableCell
+                                            component="th"
+                                            scope="row"
+                                            padding="checkbox"
+                                            className={classes.tableCell}>
                                             <Typography color="textPrimary" variant="body2">
                                                 {row.name}
                                             </Typography>
                                         </TableCell>
-                                        <TableCell align="left">
+                                        <TableCell
+                                            component="th"
+                                            scope="row"
+                                            padding="checkbox"
+                                            align="left"
+                                            className={classes.tableCell}>
                                             <Typography color="textPrimary" variant="body2">
                                                 {row.type}
                                             </Typography>
                                         </TableCell>
-                                        <TableCell align="right">
+                                        <TableCell
+                                            component="th"
+                                            scope="row"
+                                            padding="checkbox"
+                                            align="right"
+                                            className={classes.tableCell}>
                                             <Typography color="textSecondary" variant="body2">
                                                 {row.value}
                                             </Typography>
