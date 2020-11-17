@@ -20,7 +20,7 @@
 * Updated `LatestTransactions` Grid size
 * Updated font size of currentUser to body1 in `LockGold` and `UnlockGold`
 * [#80] Removed `publicRuntimeConfig` and replaced it with global variables stored in `process.env` 
-* [#121] Fixed the account list ranking
+* [#121] Fixed the account list ranking 
 
 ## v0.1.3
 
