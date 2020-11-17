@@ -36,14 +36,13 @@ const useStyles = makeStyles(() => {
             backgroundColor: 'rgba(232, 232, 232, 1)'
         },
         arrowIcon: {
-            padding: '0.25rem',
+            padding: '0.25rem 0.25rem 0.25rem 0.5rem',
             justifyContent: 'center',
-            border: 'solid 1px rgba(67, 72, 76, 1) ',
             borderRadius: 5,
-            backgroundColor: 'rgba(255, 255, 255, 0.6) ',
+            backgroundColor: 'rgba(246, 247, 249, 1) ',
             color: 'rgba(77, 81, 85, 1)',
-            height: '1.5rem',
-            width: '1.5rem'
+            '&:hover': { backgroundColor: 'rgba(58, 211, 158, 0.5)' },
+            '&:focus': { backgroundColor: 'rgba(58, 211, 158, 0.5)' }
         },
         iconButtonRight: {
             padding: '0',
@@ -151,7 +150,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
             <CardContent>
                 <Grid container spacing={1} justify="center" className={classes.item}>
                     <Grid item xs={10}>
-                        <Typography color="textSecondary" variant="subtitle1" gutterBottom>
+                        <Typography color="textPrimary" variant="subtitle1" gutterBottom>
                             Proposals Details
                         </Typography>
                     </Grid>
