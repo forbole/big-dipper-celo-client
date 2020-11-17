@@ -23,6 +23,7 @@
 * [#121] Fixed the account list ranking 
 * Applied changes to account page (moved copy and QRCode buttons to the left, added black border to QR Code, changed table and border color, fixed NAN value of non-voting CELO, increased font size of balance and set moniker name to green color )
 * [#126] Updated Table Cell text color to primary in LatestBlocks 
+* [#123] Capitalised and split the Chip label
 
 ## v0.1.3
 
