@@ -257,7 +257,7 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                             <Grid item xs={9} className={classes.item}>
                                 {data.validator && data.validator.score ? (
                                     <Typography variant="body2" className={classes.alignRight}>
-                                        {data.validator.score} %
+                                        {new BigNumber(data.validator.score).toFormat(2)} %
                                     </Typography>
                                 ) : (
                                     <NotAvailable variant="body2" className={classes.alignRight} />
@@ -295,13 +295,13 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
 
-                            <Grid item xs={6} className={classes.item}>
+                            <Grid item xs={4} className={classes.item}>
                                 <Typography variant="body2" className={classes.alignLeft}>
                                     Validator Signer
                                 </Typography>
                             </Grid>
 
-                            <Grid item xs={6} className={classes.item}>
+                            <Grid item xs={8} className={classes.item}>
                                 {data.validator && data.validator.signer ? (
                                     <NavLink
                                         href={`/validatorGroup/${data.validator.signer}`}
@@ -322,7 +322,7 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                 <Divider variant="middle" className={classes.divider} />
                             </Grid>
 
-                            <Grid item xs={5} className={classes.item}>
+                            <Grid item xs={4} className={classes.item}>
                                 <Typography variant="body2">All Signers</Typography>
                             </Grid>
 
@@ -331,7 +331,7 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                             accountQuery.data.account.accountSummary &&
                             accountQuery.data.account.accountSummary.authorizedSigners ? (
                                 <>
-                                    <Grid item xs={7} className={classes.item}>
+                                    <Grid item xs={8} className={classes.item}>
                                         <NavLink
                                             href={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.vote}`}
                                             name={
