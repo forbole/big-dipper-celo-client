@@ -318,18 +318,18 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                         xs={12}
                                                                         md={9}
                                                                         className={classes.chip}>
-                                                                        {row.type &&
-                                                                        row.to &&
+                                                                        {row.to &&
                                                                         row.to.contract &&
                                                                         row.to.contract.name ? (
                                                                             <Chips
-                                                                                type={row.type}
                                                                                 contractName={
                                                                                     row.to.contract
                                                                                         .name
                                                                                 }
                                                                             />
-                                                                        ) : row.type ? (
+                                                                        ) : null}
+
+                                                                        {row.type ? (
                                                                             <Chips
                                                                                 type={row.type}
                                                                             />

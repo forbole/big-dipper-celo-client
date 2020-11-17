@@ -113,14 +113,17 @@ const Chips = ({ contractName, type, actionResult }: ChipsProps): JSX.Element =>
     };
 
     const ledgerColors: LedgerColorsInterface = {
-        Success: green[500],
+        //Used for Proposal Status
         Passed: green['A700'],
         Create: lightGreen[700],
         Rejected: red[800],
         Removed: orange[600],
         Deposit: theme.palette.background.paper,
         Vote: theme.palette.background.paper,
-        Pending: teal[400]
+
+        //used for Transactions Status
+        Pending: teal[400],
+        Success: green[500]
     };
 
     const borderElement: BorderElementInterface = {
@@ -133,28 +136,36 @@ const Chips = ({ contractName, type, actionResult }: ChipsProps): JSX.Element =>
             {contractName ? (
                 <Chip
                     size="small"
-                    label={contractName}
+                    label={contractName.split(/(?=[A-Z])/).join(' ')}
                     style={{
                         backgroundColor: contractColors[contractName],
                         borderRadius: 5,
                         width: '7rem',
                         marginRight: '0.5rem',
-                        fontSize: '	0.875rem'
+                        fontSize: '	0.875rem',
+                        textTransform: 'capitalize'
                     }}
                 />
             ) : null}
-            {type ? <Chip size="small" label={type} className={classes.contractType} /> : null}
+            {type ? (
+                <Chip
+                    size="small"
+                    label={type.split(/(?=[A-Z])/).join(' ')}
+                    className={classes.contractType}
+                />
+            ) : null}
             {actionResult ? (
                 <Chip
                     size="small"
-                    label={actionResult}
+                    label={actionResult.split(/(?=[A-Z])/).join(' ')}
                     style={{
                         backgroundColor: ledgerColors[actionResult],
                         border: borderElement[actionResult],
                         borderRadius: 5,
                         width: '5rem',
                         marginRight: '0.5rem',
-                        fontSize: '	0.875rem'
+                        fontSize: '	0.875rem',
+                        textTransform: 'capitalize'
                     }}
                 />
             ) : null}
