@@ -318,7 +318,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                                       <Typography
                                                                           variant="body2"
                                                                           noWrap
-                                                                          color="textSecondary">
+                                                                          color="textPrimary">
                                                                           {numbro(
                                                                               row.gasUsed /
                                                                                   1000000000
@@ -340,7 +340,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                                       <Typography
                                                                           variant="body2"
                                                                           noWrap
-                                                                          color="textSecondary">
+                                                                          color="textPrimary">
                                                                           {row.gasLimit
                                                                               ? row.gasLimit
                                                                               : 'Not available'}
@@ -355,11 +355,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                               <Typography
                                                                   variant="body2"
                                                                   noWrap
-                                                                  color={
-                                                                      pagination
-                                                                          ? 'textSecondary'
-                                                                          : 'textPrimary'
-                                                                  }>
+                                                                  color="textPrimary">
                                                                   {moment
                                                                       .unix(row.timestamp)
                                                                       .format(
