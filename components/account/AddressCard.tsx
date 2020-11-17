@@ -58,7 +58,7 @@ const useStyles = makeStyles(() =>
         },
 
         qrCode: {
-            border: 'solid #fff',
+            border: 'solid rgba(0,0,0,1)',
             borderWidth: '0.375rem'
         },
 
