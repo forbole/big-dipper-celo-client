@@ -100,6 +100,7 @@ const ProposalList = ({ title }: ProposalListProps): JSX.Element => {
                                                         #{row.returnValues.proposalId}
                                                     </Typography>
                                                 }
+                                                textSecondary
                                             />
                                         ) : null}
                                         <Typography variant="body2" className={classes.proposer}>
