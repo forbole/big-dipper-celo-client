@@ -25,6 +25,7 @@
 * [#126] Updated Table Cell text color to primary in LatestBlocks 
 * [#123] Capitalised and split the Chip label
 * [#128] Changed the Raw Input button color and adjusted the Grid size in `TransactionDetails` 
+* [#129] Updated the height of TokenPrice Chart on small screens
 
 ## v0.1.3
 
