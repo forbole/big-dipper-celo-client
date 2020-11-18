@@ -1,10 +1,19 @@
+import { useQuery } from '@apollo/client';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import BigNumber from 'bignumber.js';
 import React from 'react';
+
+import LedgerDialog from '../ledger/LedgerDialog';
+import ComponentLoader from '../misc/ComponentLoader';
+import ErrorMessage from '../misc/ErrorMessage';
+import NotAvailable from '../misc/NotAvailable';
+import { GET_ACCOUNT_DETAILS } from '../query/Account';
+import { GET_VALIDATOR_GROUP } from '../query/ValidatorGroup';
 
 const useStyles = makeStyles(() => {
     return {
@@ -25,7 +34,7 @@ const useStyles = makeStyles(() => {
             justifyContent: 'center',
             border: 'solid rgba(67, 72, 76, 1) ',
             borderRadius: 5,
-            backgroundColor: 'rgba(246, 247, 249, 1)',
+            backgroundColor: 'rgba(77, 81, 85, 1)',
             color: 'rgba(255, 255, 255, 0.6)',
             height: '1.5rem',
             width: '1.5rem'
@@ -51,60 +60,78 @@ const useStyles = makeStyles(() => {
 
         cardItem: {
             padding: '1rem'
+        },
+
+        alignRight: {
+            float: 'right'
         }
     };
 });
 
-const Overview = (): JSX.Element => {
+type OverviewProps = { address: string };
+
+const Overview = ({ address }: OverviewProps): JSX.Element => {
     const classes = useStyles();
+
+    const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
+        variables: { address }
+    });
+
+    const accountData = useQuery(GET_ACCOUNT_DETAILS, {
+        variables: { address }
+    });
+
+    if (loading) return <ComponentLoader />;
+    if (error) return <ErrorMessage message={error.message} />;
+
     return (
         <Card className={classes.root}>
             <CardContent>
                 <Grid container spacing={1} justify="center" className={classes.item}>
                     <Grid item xs={12}>
-                        <Typography color="textSecondary" variant="subtitle1" gutterBottom>
+                        <Typography color="textPrimary" variant="subtitle1" gutterBottom>
                             Overview
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <Divider variant="middle" className={classes.divider} />
+                        <Divider className={classes.divider} />
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
                         <Typography variant="body2">Group Name</Typography>
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
-                        <Typography variant="body2" align="right">
-                            Nan Valdez G
-                            {/* {data.block && data.block.timestamp
-                ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
-                : <NotAvailable variant="body2" />}
-              (
-              {data && data.block && data.block.timestamp
-                ? moment.unix(data.block.timestamp).fromNow()
-                : null}
-              ) */}
-                        </Typography>
+                        {data.validatorGroup && data.validatorGroup.name ? (
+                            <Typography variant="body2" align="right">
+                                {data.validatorGroup.name}
+                            </Typography>
+                        ) : (
+                            <NotAvailable variant="body2" className={classes.alignRight} />
+                        )}
                     </Grid>
                     <Grid item xs={12}>
-                        <Divider variant="middle" className={classes.divider} />
+                        <Divider className={classes.divider} />
                     </Grid>
 
                     <Grid item xs={6} className={classes.item}>
                         <Typography variant="body2">Locked CELO</Typography>
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
-                        <Typography variant="body2" align="right">
-                            2,000 CELO
-                            {/* {data.block &&
-              data.block.transactions &&
-              data.block.transactions.transactionIndex
-                ? data.block.transactions.transactionIndex.length()
-                : <NotAvailable variant="body2" />} */}
-                        </Typography>
+                        {accountData.data &&
+                        accountData.data.account.totalBalance &&
+                        accountData.data.account.totalBalance.lockedGold ? (
+                            <Typography variant="body2" align="right">
+                                {new BigNumber(
+                                    accountData.data.account.totalBalance.lockedGold
+                                ).toFormat(2)}{' '}
+                                CELO
+                            </Typography>
+                        ) : (
+                            <NotAvailable variant="body2" className={classes.alignRight} />
+                        )}
                     </Grid>
 
                     <Grid item xs={12}>
-                        <Divider variant="middle" className={classes.divider} />
+                        <Divider className={classes.divider} />
                     </Grid>
 
                     <Grid item xs={6} className={classes.item}>
@@ -113,13 +140,12 @@ const Overview = (): JSX.Element => {
                     <Grid item xs={6} className={classes.item}>
                         <Typography variant="body2" align="right">
                             10%
-                            {/* {data.block && data.block.hash
-                ? data.block.hash
-                : <NotAvailable variant="body2" />} */}
                         </Typography>
                     </Grid>
 
-                    <Divider variant="middle" className={classes.divider} />
+                    <Grid item xs={12}>
+                        <Divider className={classes.divider} />
+                    </Grid>
 
                     <Grid item xs={6} className={classes.item}>
                         <Typography variant="body2">Uptime</Typography>
@@ -127,37 +153,28 @@ const Overview = (): JSX.Element => {
                     <Grid item xs={6} className={classes.item}>
                         <Typography variant="body2" align="right">
                             100%
-                            {/* {data.block && data.block.parentHash ? (
-                <Link
-                  href="transaction/[transaction]/"
-                  as={`transaction/${data.block.parentHash}`}
-                  color="secondary"
-                  //className={classes.leftInline}
-                >
-                  {data.block.parentHash}
-                </Link>
-              ) : <NotAvailable variant="body2" />} */}
                         </Typography>
                     </Grid>
 
                     <Grid item xs={12}>
-                        <Divider variant="middle" className={classes.divider} />
+                        <Divider className={classes.divider} />
                     </Grid>
 
                     <Grid item xs={6} className={classes.item}>
                         <Typography variant="body2">Attestation</Typography>
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
-                        <Typography variant="body2" align="right">
-                            10.9%
-                            {/* {data.block && data.block.totalDifficulty
-                ? data.block.totalDifficulty
-                : <NotAvailable variant="body2" />} */}
-                        </Typography>
+                        {accountData.data && accountData.data.account.attestation ? (
+                            <Typography variant="body2" align="right">
+                                {accountData.data.account.attestation}
+                            </Typography>
+                        ) : (
+                            <NotAvailable variant="body2" className={classes.alignRight} />
+                        )}
                     </Grid>
 
-                    <Grid item xs={12}>
-                        <Divider variant="middle" className={classes.divider} />
+                    {/* <Grid item xs={12}>
+                        <Divider className={classes.divider} />
                     </Grid>
 
                     <Grid item xs={12} className={classes.item}>
@@ -167,20 +184,15 @@ const Overview = (): JSX.Element => {
                             auctor. Curabitur elementum nunc a leo imperdiet, nec elementum diam
                             elementum. Etiam elementum euismod commodo. Proin eleifend eget quam ut
                             efficitur. Mauris a accumsan mauris.
-                            {/* {data.block &&
-              data.block.transactions &&
-              data.block.transactions.nonce
-                ? data.block.transactions.nonce
-                : <NotAvailable variant="body2" />} */}
                         </Typography>
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item xs={12}>
-                        <Divider variant="middle" className={classes.divider} />
+                        <Divider className={classes.divider} />
                     </Grid>
 
                     <Grid item xs={12} className={classes.centerContent}>
-                        {/* <LedgerButtons option="ValidatorGroupVote" /> */}
+                        <LedgerDialog action="ValidatorGroupVote" buttonLabel="Vote" />
                     </Grid>
                 </Grid>
             </CardContent>
