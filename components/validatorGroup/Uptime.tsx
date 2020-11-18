@@ -2,8 +2,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import React from 'react';
 import {
     Bar,
@@ -35,7 +36,7 @@ const data = [
         Voted: 90
     },
     {
-        Voted: 99
+        Missed: 99
     },
     {
         Voted: 96
@@ -72,8 +73,8 @@ const data = [
     }
 ];
 
-const useStyles = makeStyles(() => {
-    return {
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
         root: {
             width: '100%',
             padding: '0 1rem',
@@ -82,6 +83,9 @@ const useStyles = makeStyles(() => {
         },
         container: {
             justifyContent: 'center',
+            [theme.breakpoints.down('sm')]: {
+                justifyContent: 'start'
+            },
             display: 'flex'
         },
         divider: {
@@ -90,7 +94,10 @@ const useStyles = makeStyles(() => {
         },
         power: {
             align: 'left',
-            marginLeft: '-3rem'
+            marginLeft: '-10rem',
+            [theme.breakpoints.down('sm')]: {
+                paddingLeft: '7rem'
+            }
         },
 
         customTooltip: {
@@ -99,7 +106,6 @@ const useStyles = makeStyles(() => {
         },
 
         rootTooltip: {
-            background: 'rgba(46, 51, 56, 1)',
             opacity: 5,
             width: '19.125rem',
             height: '7.9rem'
@@ -108,9 +114,8 @@ const useStyles = makeStyles(() => {
         cardContent: {
             padding: '0.625rem'
         }
-    };
-});
-
+    })
+);
 const CustomTooltip = () => {
     const classes = useStyles();
     return (
@@ -188,7 +193,8 @@ const CustomTooltip = () => {
 
 const Uptime = (): JSX.Element => {
     const classes = useStyles();
-
+    const theme = useTheme();
+    const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     return (
         <Card className={classes.root}>
             <CardContent>
@@ -215,23 +221,24 @@ const Uptime = (): JSX.Element => {
                         <Divider variant="middle" className={classes.divider} />
                     </Grid>
                     <Grid item xs={12} lg={10}>
-                        <ResponsiveContainer aspect={1.0 / 0.7}>
+                        <ResponsiveContainer width="100%" height={smallScreen ? 200 : 250}>
                             <BarChart
                                 // width={350}
                                 // height={250}
                                 data={data}
                                 margin={{
                                     top: 0,
-                                    right: 0,
-                                    left: -10,
+                                    right: smallScreen ? 0 : 350,
+                                    left: smallScreen ? 0 : 100,
                                     bottom: 5
                                 }}
-                                barGap="0"
-                                barCategoryGap="2%">
+                                barGap="-5"
+                                barCategoryGap="1%"
+                                stackOffset="expand">
                                 <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
                                 <XAxis
                                     tick={{
-                                        stroke: 'rgba(255, 255, 255, 0.6)',
+                                        stroke: 'rgba(119, 119, 119, 1)',
                                         fontSize: 10,
                                         fontWeight: 200
                                     }}
@@ -239,16 +246,17 @@ const Uptime = (): JSX.Element => {
                                     label={{
                                         value: 'Blocks',
                                         position: 'insideBottomLeft',
-                                        fill: 'rgba(255, 255, 255, 0.6)',
+                                        fill: 'rgba(119, 119, 119, 1)',
                                         fontWeight: 'normal',
-                                        textAnchor: 'start'
+                                        textAnchor: 'start',
+                                        dy: 5
                                     }}
                                 />
                                 <YAxis
                                     tickSize={0}
                                     tickMargin={10}
                                     tick={{
-                                        stroke: 'rgba(255, 255, 255, 0.6)',
+                                        stroke: 'rgba(119, 119, 119, 1)',
                                         fontSize: 10,
                                         fontWeight: 200
                                     }}
@@ -256,15 +264,16 @@ const Uptime = (): JSX.Element => {
                                         value: 'Votes available',
                                         angle: -270,
                                         position: 'center',
-                                        fill: 'rgba(255, 255, 255, 0.6)',
-                                        fontWeight: 'normal'
+                                        fill: 'rgba(119, 119, 119, 1)',
+                                        fontWeight: 'normal',
+                                        dx: -15
                                     }}
                                 />
                                 <Tooltip content={<CustomTooltip />} />
                                 <Legend align="left" verticalAlign="top" height={50} width={200} />
                                 <Bar
                                     dataKey="Voted"
-                                    fill="rgba(8, 178, 122, 1)"
+                                    fill="rgba(58, 211, 158, 1)"
                                     barSize={6}
                                     fillOpacity={1}
                                 />
