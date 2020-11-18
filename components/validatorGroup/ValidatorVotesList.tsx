@@ -179,7 +179,7 @@ const ValidatorVotesList = (): JSX.Element => {
                 <Paper className={classes.paper}>
                     <TableContainer>
                         <Typography
-                            color="textSecondary"
+                            color="textPrimary"
                             variant="subtitle1"
                             className={classes.headerLabel}>
                             Validator Votes
