@@ -8,7 +8,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import { createGlobalState } from 'react-hooks-global-state';
 
 import { GET_ACCOUNT_DETAILS } from '../query/Account';
@@ -20,13 +20,18 @@ import UnlockGoldConfirm from './celoGold/unlock/UnlockGoldConfirm';
 import UnlockGoldSuccess from './celoGold/unlock/UnlockGoldSuccess';
 import ControlButtons from './ControlButtons';
 import Ledger from './Ledger';
+import DepositConfirm from './proposal/deposit/Confirm';
+import Deposit from './proposal/deposit/Deposit';
+import DepositSuccess from './proposal/deposit/Success';
+import VoteConfirm from './proposal/vote/Confirm';
+import VoteSuccess from './proposal/vote/Success';
+import Vote from './proposal/vote/Vote';
 import ConfirmRevokeValidatorGroup from './validatorGroup/revoke/Confirm';
 import RevokeValidatorGroup from './validatorGroup/revoke/Revoke';
 import SuccessRevokeValidatorGroup from './validatorGroup/revoke/Success';
 import ConfirmVoteValidatorGroup from './validatorGroup/vote/Confirm';
 import SuccessVoteValidatorGroup from './validatorGroup/vote/Success';
 import VoteValidatorGroup from './validatorGroup/vote/Vote';
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -240,104 +245,6 @@ const LedgerDialog = ({
         variables: { address }
     });
 
-    const handleLock = async () => {
-        try {
-            setLedgerLoading(true);
-            const from = currentUser;
-            const lockObject = { amount, from };
-            await Ledger.lockCelo(lockObject);
-            setLedgerLoading(false);
-        } catch (e) {
-            setLedgerError(true);
-            setLedgerLoading(true);
-            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
-        }
-    };
-
-    const handleUnlock = async () => {
-        try {
-            setLedgerLoading(true);
-            const from = currentUser;
-            const unlockObject = { amount, from };
-            await Ledger.unlockCelo(unlockObject);
-            setLedgerLoading(false);
-        } catch (e) {
-            setLedgerError(true);
-            setLedgerLoading(true);
-            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
-        }
-    };
-
-    const handleProposalDeposit = async () => {
-        // try {
-        //     setLedgerLoading(true);
-        //     const from = currentUser;
-        //     const unlockObject = { amount, from };
-        //     await Ledger.unlockCelo(unlockObject);
-        //     setLedgerLoading(false);
-        // } catch (e) {
-        //     setLedgerError(true);
-        //     setLedgerLoading(true);
-        //     setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
-        // }
-    };
-
-    const handleProposalVote = async () => {
-        try {
-            setLedgerLoading(true);
-            const from = currentUser;
-            const vote = '';
-            const proposalNumber = getProposalNumber;
-            const voteObject = { proposalNumber, from, vote };
-            await Ledger.voteProposal(voteObject);
-            setLedgerLoading(false);
-        } catch (e) {
-            setLedgerError(true);
-            setLedgerLoading(true);
-            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
-        }
-    };
-
-    const actionHandler = (e: React.SetStateAction<string>) => {
-        setTabNumber(tabNumber + 1);
-
-        switch (action) {
-            case 'LockCelo':
-                switch (tabNumber) {
-                    case 0:
-                        return handleLock();
-                    default:
-                        return null as any;
-                }
-                break;
-            case 'UnlockCelo':
-                switch (tabNumber) {
-                    case 0:
-                        return handleUnlock();
-                    default:
-                        return null as any;
-                }
-                break;
-            case 'ProposalDeposit':
-                switch (tabNumber) {
-                    case 0:
-                        return handleProposalDeposit();
-                    default:
-                        return null as any;
-                }
-                break;
-            case 'ProposalVote':
-                setVote(e);
-                switch (tabNumber) {
-                    case 0:
-                        return handleProposalVote();
-                    default:
-                        return null as any;
-                }
-                break;
-        }
-    };
-
     const dialogTab = (tabNum: number) => {
         switch (action) {
             case 'LockCelo':
@@ -433,7 +340,37 @@ const LedgerDialog = ({
                     default:
                         return null;
                 }
-            case 'Validator Group Revoke':
+            case 'ValidatorGroupVote':
+                switch (tabNum) {
+                    case 0:
+                        return (
+                            <VoteValidatorGroup
+                                isLoading={isLoading}
+                                maxLockedCelo={
+                                    AccountDetails &&
+                                    AccountDetails.data &&
+                                    AccountDetails.data.account &&
+                                    AccountDetails.data.account.totalBalance &&
+                                    AccountDetails.data.account.totalBalance.lockedGold
+                                        ? AccountDetails.data.account.totalBalance.lockedGold
+                                        : '0'
+                                }
+                                validatorGroup={validatorGroup}
+                            />
+                        );
+                    case 1:
+                        return (
+                            <ConfirmVoteValidatorGroup
+                                lockAmount={amount}
+                                validatorGroup={validatorGroup}
+                            />
+                        );
+                    case 2:
+                        return <SuccessVoteValidatorGroup />;
+                    default:
+                        return null;
+                }
+            case 'ValidatorGroupRevoke':
                 switch (tabNum) {
                     case 0:
                         return (
@@ -494,6 +431,36 @@ const LedgerDialog = ({
         }
     };
 
+    const handleProposalDeposit = async () => {
+        // try {
+        //     setLedgerLoading(true);
+        //     const from = currentUser;
+        //     const unlockObject = { amount, from };
+        //     await Ledger.unlockCelo(unlockObject);
+        //     setLedgerLoading(false);
+        // } catch (e) {
+        //     setLedgerError(true);
+        //     setLedgerLoading(true);
+        //     setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
+        // }
+    };
+
+    const handleProposalVote = async () => {
+        try {
+            setLedgerLoading(true);
+            const from = currentUser;
+            const vote = '';
+            const proposalNumber = getProposalNumber;
+            const voteObject = { proposalNumber, from, vote };
+            await Ledger.voteProposal(voteObject);
+            setLedgerLoading(false);
+        } catch (e) {
+            setLedgerError(true);
+            setLedgerLoading(true);
+            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
+        }
+    };
+
     const handleValidatorGroupVote = async () => {
         try {
             setLedgerLoading(true);
@@ -525,7 +492,7 @@ const LedgerDialog = ({
         }
     };
 
-    const actionHandler = () => {
+    const actionHandler = (e: React.SetStateAction<string>) => {
         setTabNumber(tabNumber + 1);
 
         switch (action) {
@@ -534,28 +501,45 @@ const LedgerDialog = ({
                     case 0:
                         return handleLock();
                     default:
-                        return null;
+                        return null as any;
                 }
             case 'UnlockCelo':
                 switch (tabNumber) {
                     case 0:
                         return handleUnlock();
                     default:
-                        return null;
+                        return null as any;
                 }
+            case 'ProposalDeposit':
+                switch (tabNumber) {
+                    case 0:
+                        return handleProposalDeposit();
+                    default:
+                        return null as any;
+                }
+                break;
+            case 'ProposalVote':
+                setVote(e);
+                switch (tabNumber) {
+                    case 0:
+                        return handleProposalVote();
+                    default:
+                        return null as any;
+                }
+                break;
             case 'Validator Group Vote':
                 switch (tabNumber) {
                     case 0:
                         return handleValidatorGroupVote();
                     default:
-                        return null;
+                        return null as any;
                 }
             case 'Validator Group Revoke':
                 switch (tabNumber) {
                     case 0:
                         return handleRevokeValidatorGroupVote();
                     default:
-                        return null;
+                        return null as any;
                 }
         }
     };

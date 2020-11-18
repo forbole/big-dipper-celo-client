@@ -9,10 +9,7 @@ import TransportU2F from '@ledgerhq/hw-transport-u2f';
 import TransportUSB from '@ledgerhq/hw-transport-webusb';
 import { Component } from 'react';
 import BigNumber from 'bignumber.js';
-const Web3 = require('web3');
-
-
-
+import Web3 from 'web3';
 
 declare global {
     interface Window {
@@ -39,6 +36,7 @@ const MAINNET = 'https://rc1-forno.celo-testnet.org';
 
 type LockCeloProps = { amount: string; from: string };
 type UnlockCeloProps = { amount: string; from: string };
+type VoteProposalProps = { proposalNumber: number, from: string,  vote: string} 
 type VoteValidatorGroupProps = { amount: string; from: string; group: string }
 type RevokeValidatorGroupVoteProps = { amount: string; account: string; group: string}
 
@@ -124,11 +122,9 @@ class Ledger extends Component {
         }
 
         const lockedCelo = await this.kit.contracts.getLockedGold();
-
-        console.log(`Lock ${amount} CELO for address ${from}`);
-
         const result = await lockedCelo.lock().sendAndWaitForReceipt({ from, value: amount });
         console.log(result);
+
         return result;
     }
 
@@ -138,10 +134,19 @@ class Ledger extends Component {
         }
         this.kit.defaultAccount = from;
         const lockedCelo = await this.kit.contracts.getLockedGold();
-
-        console.log(`Unlock ${amount} CELO for address ${from}`);
-
         const result = await lockedCelo.unlock(amount).sendAndWaitForReceipt();
+        console.log(result);
+
+        return result;
+    }
+
+        async voteProposal({proposalNumber, from, vote}: VoteProposalProps) {
+        if (!this.kit) {
+            this.checkLedgerErrors("Ledger device is disconnected");
+        }
+        const gov = await this.kit.contracts.getGovernance();
+        const tx = await gov.vote(proposalNumber, vote);
+        const result = await tx.sendAndWaitForReceipt({ from });
         console.log(result);
 
         return result;
@@ -155,7 +160,6 @@ class Ledger extends Component {
         const election = await this.kit.contracts.getElection();
         const voteElection = await election.vote(group, new BigNumber(amount));
         const result = await voteElection.sendAndWaitForReceipt({ from });
-       
         console.log(result);
 
         return result;
@@ -169,7 +173,6 @@ class Ledger extends Component {
         const election = await this.kit.contracts.getElection();
         const revokeVotes = await election.revokeActive(account, group, new BigNumber(amount));
         const result = await revokeVotes.sendAndWaitForReceipt({ from: account });
-
         console.log(result);
 
         return result;
