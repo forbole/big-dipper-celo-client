@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         buttonLabel: {
             justifyContent: 'center',
-            [theme.breakpoints.down('xs')]: {
+            [theme.breakpoints.down('sm')]: {
                 width: '7.5rem'
             },
             width: '9.5rem',
@@ -641,6 +641,7 @@ const LedgerDialog = ({
                             variant="outlined"
                             color="secondary"
                             onClick={handleClick}
+                            style={{ width: action === 'ValidatorGroupVote' ? '21rem' : '7.5rem' }}
                             className={classes.buttonLabel}>
                             <Typography variant="body1">{buttonLabel}</Typography>
                         </Button>
