@@ -1,6 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 import AddressCard from '../../components/account/AddressCard';
@@ -19,18 +19,19 @@ const useStyles = makeStyles(() =>
 
 export default function validatorGroupDetails(): JSX.Element {
     const classes = useStyles();
-    // const router = useRouter();
-    // const { ValidatorGroupDet } = router.query;
+    const router = useRouter();
+    const validatorGroup: string = router.query.validatorGroupDetails as string;
+
     return (
         <Grid container spacing={2} className={classes.root}>
             <Grid item xs={12}>
-                <AddressCard address="" />
+                <AddressCard address={validatorGroup} />
             </Grid>
             <Grid item xs={12}>
-                <Overview />
+                <Overview address={validatorGroup} />
             </Grid>
             <Grid item xs={12}>
-                <GroupMember />
+                <GroupMember address={validatorGroup} />
             </Grid>
             <Grid item xs={12}>
                 <Uptime />
