@@ -11,6 +11,20 @@ export const GET_VALIDATOR_GROUPS = gql`
                 members {
                     address
                     name
+                    score
+                    attestationCompleted
+                    attestationRequested
+                }
+                membersAccount {
+                    address
+                    balance
+                    totalBalance {
+                        gold
+                        lockedGold
+                        usd
+                        total
+                        pending
+                    }
                 }
                 membersUpdated
                 name
@@ -20,34 +34,58 @@ export const GET_VALIDATOR_GROUPS = gql`
                 lockedGoldAmount
                 votes
                 votesAvailable
+                electedValidators
+                rewards
             }
         }
     }
 `;
 
 export const GET_VALIDATOR_GROUP = gql`
-    query validatorGroup($address: String, $name: String) {
-        validatorGroup(address: $address, name: $name) {
-            name
+    query validatorGroup($valGroupAddress: String!) {
+        validatorGroup(valGroupAddress: $valGroupAddress) {
+            _id
             address
-            validatorGroups {
+            affiliates
+            commission
+            lastSlashed
+            members {
+                _id
                 address
-                affiliates
-                commission
-                lastSlashed
-                members {
-                    address
-                    name
-                }
-                membersUpdated
                 name
-                nextCommission
-                nextCommissionBlock
-                slashingMultiplier
-                lockedGoldAmount
-                votes
-                votesAvailable
+                affiliation
+                blsPublicKey
+                ecdsaPublicKey
+                score
+                signerAccount {
+                    address
+                }
+                signer
+                attestationCompleted
+                attestationRequested
             }
+            membersAccount {
+                address
+                balance
+                lockedGold
+                totalBalance {
+                    gold
+                    lockedGold
+                    usd
+                    total
+                    pending
+                }
+            }
+            membersUpdated
+            name
+            votes
+            votesAvailable
+            lockedGoldAmount
+            nextCommission
+            nextCommissionBlock
+            slashingMultiplier
+            electedValidators
+            rewards
         }
     }
 `;
