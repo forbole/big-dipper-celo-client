@@ -27,6 +27,7 @@
 * [#128] Changed the Raw Input button color and adjusted the Grid size in `TransactionDetails` 
 * [#129] Updated the height of TokenPrice Chart on small screens
 * [#131] Update the colour of headings to primary (black)
+* [#118] Added Ledger Integration: Vote/Revoke Votes for Validator Group
 
 ## v0.1.3
 
