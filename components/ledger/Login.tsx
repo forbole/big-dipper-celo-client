@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
             verticalAlign: 'middle',
             '&:hover, &.Mui-focusVisible': { backgroundColor: 'rgba(58, 211, 158, 0.5)' },
             justifyContent: 'center',
-            alignText: 'center',
+            alignText: 'center'
         },
         logoutButton: {
             background: 'rgba(153, 153, 153, 1)',
