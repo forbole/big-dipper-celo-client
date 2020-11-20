@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import BigNumber from 'bignumber.js';
+import numbro from 'numbro';
 import React from 'react';
 
 import ComponentLoader from '../misc/ComponentLoader';
@@ -86,7 +87,8 @@ const useStyles = makeStyles(() => {
             marginTop: '0.3rem'
         },
         alignRight: {
-            alignItems: 'right'
+            alignItems: 'right',
+            float: 'right'
         },
         membersInfo: {
             paddingLeft: '1.5rem'
@@ -103,6 +105,12 @@ const GroupMember = ({ address }: GroupMemberProps): JSX.Element => {
         variables: { address }
     });
 
+    const validatorGroupMembers =
+        data && data.validatorGroup && data.validatorGroup.members
+            ? data.validatorGroup.members
+            : [];
+
+    console.log(validatorGroupMembers);
     const accountData = useQuery(GET_ACCOUNT_DETAILS, {
         variables: { address }
     });
@@ -143,7 +151,7 @@ const GroupMember = ({ address }: GroupMemberProps): JSX.Element => {
                                           </Typography>
                                           {row.name ? (
                                               <NavLink
-                                                  href={`account/${1}`}
+                                                  href={`/account/${row.address}`}
                                                   name={
                                                       <Typography variant="body1">
                                                           {row.name}{' '}
@@ -172,7 +180,10 @@ const GroupMember = ({ address }: GroupMemberProps): JSX.Element => {
                                                   ).toFormat(2)}
                                               </Typography>
                                           ) : (
-                                              <NotAvailable variant="body1" />
+                                              <NotAvailable
+                                                  variant="body1"
+                                                  className={classes.alignRight}
+                                              />
                                           )}
                                       </Grid>
 
@@ -180,7 +191,8 @@ const GroupMember = ({ address }: GroupMemberProps): JSX.Element => {
                                           <Typography
                                               variant="caption"
                                               className={classes.membersInfo}>
-                                              <img src="/images/time.svg" alt="Uptime" /> 99.8%
+                                              <img src="/images/time.svg" alt="Uptime" />{' '}
+                                              {new BigNumber(row.score * 100).toFormat(2)} %
                                           </Typography>
                                           <Typography
                                               variant="caption"
@@ -190,7 +202,8 @@ const GroupMember = ({ address }: GroupMemberProps): JSX.Element => {
                                       </Grid>
                                       <Grid item xs={6}>
                                           <Typography variant="body2" align="right">
-                                              0.987CGLD
+                                              <img src="/images/reward.svg" alt="Rewards" /> 0.987
+                                              CELO
                                           </Typography>
                                       </Grid>
                                   </>
