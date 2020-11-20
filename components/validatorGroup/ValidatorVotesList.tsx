@@ -95,7 +95,7 @@ const useStyles = makeStyles(() => {
 
         arrowIcon: {
             fontWeight: 200,
-            color: 'rgba(255, 255, 255, 0.8)'
+            color: 'rgba(144, 144, 144, 1)'
         },
 
         groupInfo: {
@@ -141,6 +141,8 @@ const useStyles = makeStyles(() => {
 const ValidatorVotesList = (): JSX.Element => {
     const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
     const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+
     const classes = useStyles();
 
     const [open, setOpen] = React.useState('');
@@ -170,8 +172,6 @@ const ValidatorVotesList = (): JSX.Element => {
 
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
-
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     return (
         <>
@@ -204,261 +204,280 @@ const ValidatorVotesList = (): JSX.Element => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {data.validatorGroups.validatorGroups.map(
-                                    (row: any, index: number) => {
-                                        return (
-                                            <>
-                                                <TableRow key={index}>
-                                                    <TableCell
-                                                        component="th"
-                                                        scope="row"
-                                                        padding="none">
-                                                        <IconButton
-                                                            aria-label="expand row"
-                                                            size="small"
-                                                            id={`panel${index}`}
-                                                            onClick={() =>
-                                                                !(open === `panel${index}`)
-                                                                    ? setOpen(`panel${index}`)
-                                                                    : setOpen('')
-                                                            }>
-                                                            {open === `panel${index}` ? (
-                                                                <KeyboardArrowDownIcon
-                                                                    fontSize="small"
-                                                                    className={classes.arrowIcon}
-                                                                />
-                                                            ) : (
-                                                                <KeyboardArrowRightIcon
-                                                                    fontSize="small"
-                                                                    className={classes.arrowIcon}
-                                                                />
-                                                            )}
-                                                        </IconButton>
-                                                    </TableCell>
-                                                    <TableCell
-                                                        component="th"
-                                                        scope="row"
-                                                        padding="checkbox"
-                                                        align="left"
-                                                        className={classes.tableCell}>
-                                                        {' '}
-                                                        {row.name || row.address ? (
-                                                            <NavLink
-                                                                href={`/validatorGroup/${'NanValdezG'}`}
-                                                                name={
-                                                                    <Typography
-                                                                        variant="body2"
-                                                                        noWrap>
-                                                                        {row.name || row.address}
-                                                                    </Typography>
-                                                                }
-                                                            />
-                                                        ) : (
-                                                            <NotAvailable variant="body2" />
-                                                        )}
-                                                    </TableCell>
-                                                    <TableCell
-                                                        align="left"
-                                                        padding="checkbox"
-                                                        className={classes.tableCell}>
-                                                        {row.votes && row.votesAvailable ? (
-                                                            <Typography variant="caption" noWrap>
-                                                                {process.env.CELO_FRACTION
-                                                                    ? // eslint-disable-next-line prettier/prettier
-                                                                    new BigNumber(row.votes / CELO_FRACTION / row.votesAvailable / CELO_FRACTION * 100).toFormat(2) : null}
-                                                                %
-                                                                <LinearProgress
-                                                                    variant="determinate"
-                                                                    value={parseFloat(
-                                                                        new BigNumber(
-                                                                            (row.votes /
-                                                                                CELO_FRACTION /
-                                                                                (row.votesAvailable /
-                                                                                    CELO_FRACTION)) *
-                                                                                100
-                                                                        ).toFormat(2)
-                                                                    )}
-                                                                    classes={{
-                                                                        colorPrimary:
-                                                                            classes.progress,
-                                                                        barColorPrimary:
-                                                                            classes.progressBar
-                                                                    }}
-                                                                />
-                                                            </Typography>
-                                                        ) : (
-                                                            <NotAvailable variant="body2" />
-                                                        )}
-                                                    </TableCell>
-                                                    <TableCell
-                                                        align="left"
-                                                        padding="checkbox"
-                                                        className={classes.tableCell}>
-                                                        {row.members ? (
-                                                            <Typography variant="body2" noWrap>
-                                                                {} / {row.members.length}
-                                                            </Typography>
-                                                        ) : (
-                                                            <NotAvailable variant="body2" />
-                                                        )}
-                                                    </TableCell>
-                                                    <TableCell
-                                                        align="right"
-                                                        padding="checkbox"
-                                                        className={classes.tableCell}>
-                                                        {row.lockedGoldAmount ? (
-                                                            <Typography variant="body2" noWrap>
-                                                                {new BigNumber(
-                                                                    row.lockedGoldAmount /
-                                                                        CELO_FRACTION
-                                                                ).toFormat(0)}
-                                                            </Typography>
-                                                        ) : (
-                                                            <NotAvailable variant="body2" />
-                                                        )}
-                                                    </TableCell>
-                                                    <TableCell
-                                                        align="right"
-                                                        padding="checkbox"
-                                                        className={classes.tableCell}>
-                                                        {row.commission ? (
-                                                            <Typography variant="body2" noWrap>
-                                                                {row.commission * 100} %
-                                                            </Typography>
-                                                        ) : (
-                                                            <NotAvailable variant="body2" />
-                                                        )}
-                                                    </TableCell>
+                                {data.validatorGroups && data.validatorGroups.validatorGroups
+                                    ? data.validatorGroups.validatorGroups.map(
+                                          (row: any, index: number) => {
+                                              return (
+                                                  <>
+                                                      <TableRow key={index}>
+                                                          <TableCell
+                                                              component="th"
+                                                              scope="row"
+                                                              padding="none">
+                                                              <IconButton
+                                                                  aria-label="expand row"
+                                                                  size="small"
+                                                                  id={`panel${index}`}
+                                                                  onClick={() =>
+                                                                      !(open === `panel${index}`)
+                                                                          ? setOpen(`panel${index}`)
+                                                                          : setOpen('')
+                                                                  }>
+                                                                  {open === `panel${index}` ? (
+                                                                      <KeyboardArrowDownIcon
+                                                                          fontSize="small"
+                                                                          className={
+                                                                              classes.arrowIcon
+                                                                          }
+                                                                      />
+                                                                  ) : (
+                                                                      <KeyboardArrowRightIcon
+                                                                          fontSize="small"
+                                                                          className={
+                                                                              classes.arrowIcon
+                                                                          }
+                                                                      />
+                                                                  )}
+                                                              </IconButton>
+                                                          </TableCell>
+                                                          <TableCell
+                                                              component="th"
+                                                              scope="row"
+                                                              padding="checkbox"
+                                                              align="left"
+                                                              className={classes.tableCell}>
+                                                              {' '}
+                                                              {row.name || row.address ? (
+                                                                  <NavLink
+                                                                      href={`/validatorGroup/${'NanValdezG'}`}
+                                                                      name={
+                                                                          <Typography
+                                                                              variant="body2"
+                                                                              noWrap>
+                                                                              {row.name ||
+                                                                                  row.address}
+                                                                          </Typography>
+                                                                      }
+                                                                  />
+                                                              ) : (
+                                                                  <NotAvailable variant="body2" />
+                                                              )}
+                                                          </TableCell>
+                                                          <TableCell
+                                                              align="left"
+                                                              padding="checkbox"
+                                                              className={classes.tableCell}>
+                                                              {row.votes && row.votesAvailable ? (
+                                                                  <Typography
+                                                                      variant="caption"
+                                                                      noWrap>
+                                                                      {new BigNumber(
+                                                                          (row.votes /
+                                                                              CELO_FRACTION /
+                                                                              (row.votesAvailable /
+                                                                                  CELO_FRACTION)) *
+                                                                              100
+                                                                      ).toFormat(2)}
+                                                                      %
+                                                                      <LinearProgress
+                                                                          variant="determinate"
+                                                                          value={parseFloat(
+                                                                              new BigNumber(
+                                                                                  (row.votes /
+                                                                                      CELO_FRACTION /
+                                                                                      (row.votesAvailable /
+                                                                                          CELO_FRACTION)) *
+                                                                                      100
+                                                                              ).toFormat(2)
+                                                                          )}
+                                                                          classes={{
+                                                                              colorPrimary:
+                                                                                  classes.progress,
+                                                                              barColorPrimary:
+                                                                                  classes.progressBar
+                                                                          }}
+                                                                      />
+                                                                  </Typography>
+                                                              ) : (
+                                                                  <NotAvailable variant="body2" />
+                                                              )}
+                                                          </TableCell>
+                                                          <TableCell
+                                                              align="left"
+                                                              padding="checkbox"
+                                                              className={classes.tableCell}>
+                                                              {row.members ? (
+                                                                  <Typography
+                                                                      variant="body2"
+                                                                      noWrap>
+                                                                      {} / {row.members.length}
+                                                                  </Typography>
+                                                              ) : (
+                                                                  <NotAvailable variant="body2" />
+                                                              )}
+                                                          </TableCell>
+                                                          <TableCell
+                                                              align="right"
+                                                              padding="checkbox"
+                                                              className={classes.tableCell}>
+                                                              <Typography variant="body2" noWrap>
+                                                                  {new BigNumber(
+                                                                      row.lockedGoldAmount /
+                                                                          CELO_FRACTION
+                                                                  ).toFormat(2)}{' '}
+                                                                  CELO
+                                                              </Typography>
+                                                          </TableCell>
+                                                          <TableCell
+                                                              align="right"
+                                                              padding="checkbox"
+                                                              className={classes.tableCell}>
+                                                              {row.commission ? (
+                                                                  <Typography
+                                                                      variant="body2"
+                                                                      noWrap>
+                                                                      {row.commission * 100} %
+                                                                  </Typography>
+                                                              ) : (
+                                                                  <NotAvailable variant="body2" />
+                                                              )}
+                                                          </TableCell>
 
-                                                    <TableCell
-                                                        align="right"
-                                                        padding="checkbox"
-                                                        className={classes.tableCell}>
-                                                        <Typography variant="body2" noWrap>
-                                                            {row.voterRewards}
-                                                        </Typography>
-                                                    </TableCell>
+                                                          <TableCell
+                                                              align="right"
+                                                              padding="checkbox"
+                                                              className={classes.tableCell}>
+                                                              <Typography variant="body2" noWrap>
+                                                                  {row.voterRewards}
+                                                              </Typography>
+                                                          </TableCell>
 
-                                                    <TableCell
-                                                        align="right"
-                                                        padding="checkbox"
-                                                        className={classes.tableCell}>
-                                                        <Typography variant="body2" noWrap>
-                                                            {row.uptime}
-                                                        </Typography>
-                                                    </TableCell>
+                                                          <TableCell
+                                                              align="right"
+                                                              padding="checkbox"
+                                                              className={classes.tableCell}>
+                                                              <Typography variant="body2" noWrap>
+                                                                  {row.uptime}
+                                                              </Typography>
+                                                          </TableCell>
 
-                                                    <TableCell
-                                                        align="right"
-                                                        padding="checkbox"
-                                                        className={classes.tableCell}>
-                                                        <Typography variant="body2" noWrap>
-                                                            {row.attestation}
-                                                        </Typography>
-                                                    </TableCell>
-                                                </TableRow>
+                                                          <TableCell
+                                                              align="right"
+                                                              padding="checkbox"
+                                                              className={classes.tableCell}>
+                                                              <Typography variant="body2" noWrap>
+                                                                  {row.attestation}
+                                                              </Typography>
+                                                          </TableCell>
+                                                      </TableRow>
 
-                                                <TableRow>
-                                                    <TableCell
-                                                        style={{ paddingBottom: 0, paddingTop: 0 }}
-                                                        colSpan={6}>
-                                                        <Collapse
-                                                            in={open === `panel${index}`}
-                                                            timeout="auto"
-                                                            unmountOnExit
-                                                            key={`panel${index}`}>
-                                                            <Grid container>
-                                                                {row.members.map(
-                                                                    (
-                                                                        memberRow: any,
-                                                                        index: number
-                                                                    ) => {
-                                                                        return (
-                                                                            <>
-                                                                                <Grid
-                                                                                    item
-                                                                                    xs={8}
-                                                                                    className={
-                                                                                        classes.groupInfo
-                                                                                    }
-                                                                                    key={index}>
-                                                                                    {memberRow.name ||
-                                                                                    memberRow.address ? (
-                                                                                        <>
-                                                                                            {' '}
-                                                                                            <Typography
-                                                                                                variant="caption"
-                                                                                                className={
-                                                                                                    classes.groupInfoNum
-                                                                                                }>
-                                                                                                {' '}
-                                                                                                #
-                                                                                                {index +
-                                                                                                    1}
-                                                                                            </Typography>
-                                                                                            <NavLink
-                                                                                                href={`/account/${10}`}
-                                                                                                name={
-                                                                                                    <Typography variant="caption">
-                                                                                                        {memberRow.name ||
-                                                                                                            memberRow.address}
-                                                                                                    </Typography>
-                                                                                                }
-                                                                                            />
-                                                                                            <FiberManualRecordIcon
-                                                                                                className={
-                                                                                                    classes.dotIcon
-                                                                                                }
-                                                                                            />
-                                                                                        </>
-                                                                                    ) : (
-                                                                                        <NotAvailable variant="caption" />
-                                                                                    )}
-                                                                                </Grid>
-                                                                                <Grid
-                                                                                    item
-                                                                                    xs={8}
-                                                                                    className={
-                                                                                        classes.groupInfoAddress
-                                                                                    }>
-                                                                                    {memberRow.address ? (
-                                                                                        <>
-                                                                                            <Typography
-                                                                                                variant="caption"
-                                                                                                color="textSecondary"
-                                                                                                id={`groupInfoAddress${index}`}>
-                                                                                                {
-                                                                                                    memberRow.address
-                                                                                                }
-                                                                                            </Typography>
-                                                                                            <IconButton
-                                                                                                aria-label="copy"
-                                                                                                size="small"
-                                                                                                onClick={() =>
-                                                                                                    copyText(
-                                                                                                        index
-                                                                                                    )
-                                                                                                }>
-                                                                                                <img
-                                                                                                    src="/images/copy.svg"
-                                                                                                    alt="Copy"
-                                                                                                />
-                                                                                            </IconButton>
-                                                                                        </>
-                                                                                    ) : null}
-                                                                                </Grid>
-                                                                            </>
-                                                                        );
-                                                                    }
-                                                                )}
-                                                            </Grid>
-                                                        </Collapse>
-                                                    </TableCell>
-                                                </TableRow>
-                                            </>
-                                        );
-                                    }
-                                )}
+                                                      <TableRow>
+                                                          <TableCell
+                                                              style={{
+                                                                  paddingBottom: 0,
+                                                                  paddingTop: 0
+                                                              }}
+                                                              colSpan={6}>
+                                                              <Collapse
+                                                                  in={open === `panel${index}`}
+                                                                  timeout="auto"
+                                                                  unmountOnExit
+                                                                  key={`panel${index}`}>
+                                                                  <Grid container>
+                                                                      {row.members.map(
+                                                                          (
+                                                                              memberRow: any,
+                                                                              index: number
+                                                                          ) => {
+                                                                              return (
+                                                                                  <>
+                                                                                      <Grid
+                                                                                          item
+                                                                                          xs={8}
+                                                                                          className={
+                                                                                              classes.groupInfo
+                                                                                          }
+                                                                                          key={
+                                                                                              index
+                                                                                          }>
+                                                                                          {memberRow.name ||
+                                                                                          memberRow.address ? (
+                                                                                              <>
+                                                                                                  {' '}
+                                                                                                  <Typography
+                                                                                                      variant="caption"
+                                                                                                      className={
+                                                                                                          classes.groupInfoNum
+                                                                                                      }>
+                                                                                                      {' '}
+                                                                                                      #
+                                                                                                      {index +
+                                                                                                          1}
+                                                                                                  </Typography>
+                                                                                                  <NavLink
+                                                                                                      href={`/account/${10}`}
+                                                                                                      name={
+                                                                                                          <Typography variant="caption">
+                                                                                                              {memberRow.name ||
+                                                                                                                  memberRow.address}
+                                                                                                          </Typography>
+                                                                                                      }
+                                                                                                  />
+                                                                                                  <FiberManualRecordIcon
+                                                                                                      className={
+                                                                                                          classes.dotIcon
+                                                                                                      }
+                                                                                                  />
+                                                                                              </>
+                                                                                          ) : (
+                                                                                              <NotAvailable variant="caption" />
+                                                                                          )}
+                                                                                      </Grid>
+                                                                                      <Grid
+                                                                                          item
+                                                                                          xs={8}
+                                                                                          className={
+                                                                                              classes.groupInfoAddress
+                                                                                          }>
+                                                                                          {memberRow.address ? (
+                                                                                              <>
+                                                                                                  <Typography
+                                                                                                      variant="caption"
+                                                                                                      color="textSecondary"
+                                                                                                      id={`groupInfoAddress${index}`}>
+                                                                                                      {
+                                                                                                          memberRow.address
+                                                                                                      }
+                                                                                                  </Typography>
+                                                                                                  <IconButton
+                                                                                                      aria-label="copy"
+                                                                                                      size="small"
+                                                                                                      onClick={() =>
+                                                                                                          copyText(
+                                                                                                              index
+                                                                                                          )
+                                                                                                      }>
+                                                                                                      <img
+                                                                                                          src="/images/copy.svg"
+                                                                                                          alt="Copy"
+                                                                                                      />
+                                                                                                  </IconButton>
+                                                                                              </>
+                                                                                          ) : null}
+                                                                                      </Grid>
+                                                                                  </>
+                                                                              );
+                                                                          }
+                                                                      )}
+                                                                  </Grid>
+                                                              </Collapse>
+                                                          </TableCell>
+                                                      </TableRow>
+                                                  </>
+                                              );
+                                          }
+                                      )
+                                    : (null as any)}
                             </TableBody>
                         </Table>
                     </TableContainer>
