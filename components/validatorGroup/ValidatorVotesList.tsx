@@ -332,15 +332,13 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               align="right"
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
-                                                              {row.commission ? (
+                                                              {
                                                                   <Typography
                                                                       variant="body2"
                                                                       noWrap>
                                                                       {row.commission * 100} %
                                                                   </Typography>
-                                                              ) : (
-                                                                  <NotAvailable variant="body2" />
-                                                              )}
+                                                              }
                                                           </TableCell>
 
                                                           <TableCell
