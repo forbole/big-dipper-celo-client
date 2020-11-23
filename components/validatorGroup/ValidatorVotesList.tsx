@@ -80,10 +80,12 @@ const useStyles = makeStyles(() => {
         tableCell: {
             overflow: 'auto',
             padding: '0.5rem'
+            // border: 'rgba(246, 247, 249, 1)'
         },
         table: {
             background: 'rgba(246, 247, 249, 1)',
-            padding: '0'
+            padding: '0',
+            border: 'red'
         },
         paper: {
             padding: '1rem',
@@ -156,7 +158,6 @@ const ValidatorVotesList = (): JSX.Element => {
     });
 
     const copyText = (id: number) => {
-        console.log(id);
         const rawInputForm = document.getElementById(`groupInfoAddress${id}`) as HTMLInputElement;
         return navigator.clipboard
             .writeText(rawInputForm.innerHTML)
@@ -168,6 +169,14 @@ const ValidatorVotesList = (): JSX.Element => {
 
     const closeAlert = () => {
         setCopy(false);
+    };
+
+    const findElectedValidators = (membersAddress: any, electedValidators: any) => {
+        for (const d in Object.keys(electedValidators)) {
+            if (electedValidators[d] === membersAddress) {
+                return <FiberManualRecordIcon className={classes.dotIcon} />;
+            }
+        }
     };
 
     if (loading) return <ComponentLoader />;
@@ -249,7 +258,7 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               {' '}
                                                               {row.name || row.address ? (
                                                                   <NavLink
-                                                                      href={`/validatorGroup/${'NanValdezG'}`}
+                                                                      href={`/validatorGroup/${row.address}`}
                                                                       name={
                                                                           <Typography
                                                                               variant="body2"
@@ -306,11 +315,17 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               align="left"
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
-                                                              {row.members ? (
+                                                              {row.members &&
+                                                              row.electedValidators ? (
                                                                   <Typography
                                                                       variant="body2"
                                                                       noWrap>
-                                                                      {} / {row.members.length}
+                                                                      {
+                                                                          Object.keys(
+                                                                              row.electedValidators
+                                                                          ).length
+                                                                      }
+                                                                      / {row.members.length}
                                                                   </Typography>
                                                               ) : (
                                                                   <NotAvailable variant="body2" />
@@ -413,7 +428,7 @@ const ValidatorVotesList = (): JSX.Element => {
                                                                                                           1}
                                                                                                   </Typography>
                                                                                                   <NavLink
-                                                                                                      href={`/account/${10}`}
+                                                                                                      href={`/account/${memberRow.address}`}
                                                                                                       name={
                                                                                                           <Typography variant="caption">
                                                                                                               {memberRow.name ||
@@ -421,11 +436,10 @@ const ValidatorVotesList = (): JSX.Element => {
                                                                                                           </Typography>
                                                                                                       }
                                                                                                   />
-                                                                                                  <FiberManualRecordIcon
-                                                                                                      className={
-                                                                                                          classes.dotIcon
-                                                                                                      }
-                                                                                                  />
+                                                                                                  {findElectedValidators(
+                                                                                                      memberRow.address,
+                                                                                                      row.electedValidators
+                                                                                                  )}
                                                                                               </>
                                                                                           ) : (
                                                                                               <NotAvailable variant="caption" />
