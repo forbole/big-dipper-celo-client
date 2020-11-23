@@ -26,6 +26,17 @@ export const GET_VALIDATOR_GROUPS = gql`
                         pending
                     }
                 }
+                membersAccount {
+                    address
+                    balance
+                    totalBalance {
+                        gold
+                        lockedGold
+                        usd
+                        total
+                        pending
+                    }
+                }
                 membersUpdated
                 name
                 nextCommission
@@ -68,6 +79,17 @@ export const GET_VALIDATOR_GROUP = gql`
                 address
                 balance
                 lockedGold
+                totalBalance {
+                    gold
+                    lockedGold
+                    usd
+                    total
+                    pending
+                }
+            }
+            membersAccount {
+                address
+                balance
                 totalBalance {
                     gold
                     lockedGold
