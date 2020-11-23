@@ -1,3 +1,4 @@
+import { useQuery } from '@apollo/client';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
@@ -5,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import numbro from 'numbro';
 import React from 'react';
 import {
     Bar,
@@ -18,8 +20,9 @@ import {
 } from 'recharts';
 
 import NavLink from '../NavLink';
+import { GET_VALIDATOR_GROUP } from '../query/ValidatorGroup';
 
-const data = [
+const data_chart = [
     {
         Voted: 99
     },
@@ -191,10 +194,32 @@ const CustomTooltip = () => {
     );
 };
 
-const Uptime = (): JSX.Element => {
+type UptimeProps = { address: string };
+
+const Uptime = ({ address }: UptimeProps): JSX.Element => {
     const classes = useStyles();
     const theme = useTheme();
     const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const valGroupAddress = address;
+
+    const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
+        variables: { valGroupAddress }
+    });
+
+    const validatorGroupMembers =
+        data && data.validatorGroup && data.validatorGroup.members
+            ? data.validatorGroup.members
+            : [];
+
+    const calculateTotalUptime = () => {
+        let addScore = 0;
+        for (const c in validatorGroupMembers) {
+            addScore = addScore + validatorGroupMembers[c].score;
+        }
+        const totalScore = (addScore / validatorGroupMembers.length) * 100;
+        return numbro(totalScore).format('0.00');
+    };
+
     return (
         <Card className={classes.root}>
             <CardContent>
@@ -214,7 +239,7 @@ const Uptime = (): JSX.Element => {
                             variant="subtitle1"
                             align="right"
                             gutterBottom>
-                            99.8%
+                            {calculateTotalUptime()} %
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
@@ -225,7 +250,7 @@ const Uptime = (): JSX.Element => {
                             <BarChart
                                 // width={350}
                                 // height={250}
-                                data={data}
+                                data={data_chart}
                                 margin={{
                                     top: 0,
                                     right: smallScreen ? 0 : 350,
