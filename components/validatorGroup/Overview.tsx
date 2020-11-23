@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import BigNumber from 'bignumber.js';
+import numbro from 'numbro';
 import React from 'react';
 
 import LedgerDialog from '../ledger/LedgerDialog';
@@ -72,14 +73,30 @@ type OverviewProps = { address: string };
 
 const Overview = ({ address }: OverviewProps): JSX.Element => {
     const classes = useStyles();
+    const valGroupAddress = address;
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
-        variables: { address }
+        variables: { valGroupAddress }
     });
 
     const accountData = useQuery(GET_ACCOUNT_DETAILS, {
         variables: { address }
     });
+
+    const validatorGroupMembers =
+        data && data.validatorGroup && data.validatorGroup.members
+            ? data.validatorGroup.members
+            : [];
+
+    const calculateTotalUptime = () => {
+        let addScore = 0;
+        for (const c in validatorGroupMembers) {
+            addScore = addScore + validatorGroupMembers[c].score;
+        }
+        const totalScore = (addScore / validatorGroupMembers.length) * 100;
+        return numbro(totalScore).format('0.00');
+    };
 
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
@@ -116,12 +133,10 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                         <Typography variant="body2">Locked CELO</Typography>
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
-                        {accountData.data &&
-                        accountData.data.account.totalBalance &&
-                        accountData.data.account.totalBalance.lockedGold ? (
+                        {data && data.validatorGroup && data.validatorGroup.lockedGoldAmount ? (
                             <Typography variant="body2" align="right">
                                 {new BigNumber(
-                                    accountData.data.account.totalBalance.lockedGold
+                                    data.validatorGroup.lockedGoldAmount / CELO_FRACTION
                                 ).toFormat(2)}{' '}
                                 CELO
                             </Typography>
@@ -152,7 +167,7 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
                         <Typography variant="body2" align="right">
-                            100%
+                            {calculateTotalUptime()} %
                         </Typography>
                     </Grid>
 
