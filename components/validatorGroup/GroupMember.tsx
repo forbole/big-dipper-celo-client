@@ -14,7 +14,6 @@ import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import NotAvailable from '../misc/NotAvailable';
 import NavLink from '../NavLink';
-import { GET_ACCOUNT_DETAILS } from '../query/Account';
 import { GET_VALIDATOR_GROUP } from '../query/ValidatorGroup';
 
 const useStyles = makeStyles(() => {
@@ -87,7 +86,7 @@ const useStyles = makeStyles(() => {
             marginTop: '0.3rem'
         },
         alignRight: {
-            alignItems: 'right',
+            // alignItems: 'right',
             float: 'right'
         },
         membersInfo: {
@@ -96,24 +95,23 @@ const useStyles = makeStyles(() => {
     };
 });
 
-type GroupMemberProps = { address: string };
+type GroupMemberProps = { validatorGroupAddress: string };
 
-const GroupMember = ({ address }: GroupMemberProps): JSX.Element => {
+const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element => {
     const classes = useStyles();
+    const valGroupAddress = validatorGroupAddress;
 
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
-        variables: { address }
+        variables: { valGroupAddress }
     });
 
-    const validatorGroupMembers =
-        data && data.validatorGroup && data.validatorGroup.members
-            ? data.validatorGroup.members
-            : [];
-
-    console.log(validatorGroupMembers);
-    const accountData = useQuery(GET_ACCOUNT_DETAILS, {
-        variables: { address }
-    });
+    const findElectedValidators = (membersAddress: any, electedValidators: any) => {
+        for (const d in Object.keys(electedValidators)) {
+            if (electedValidators[d] === membersAddress) {
+                return <FiberManualRecordIcon className={classes.dotIcon} />;
+            }
+        }
+    };
 
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
@@ -155,9 +153,10 @@ const GroupMember = ({ address }: GroupMemberProps): JSX.Element => {
                                                   name={
                                                       <Typography variant="body1">
                                                           {row.name}{' '}
-                                                          <FiberManualRecordIcon
-                                                              className={classes.dotIcon}
-                                                          />
+                                                          {findElectedValidators(
+                                                              row.address,
+                                                              data.validatorGroup.electedValidators
+                                                          )}
                                                       </Typography>
                                                   }
                                               />
@@ -167,17 +166,17 @@ const GroupMember = ({ address }: GroupMemberProps): JSX.Element => {
                                       </Grid>
 
                                       <Grid item xs={6}>
-                                          {accountData.data &&
-                                          accountData.data.account &&
-                                          accountData.data.account.totalBalance &&
-                                          accountData.data.account.totalBalance.lockedGold ? (
+                                          {data.validatorGroup.membersAccount ? (
                                               <Typography
                                                   variant="body1"
                                                   align="right"
                                                   color="textPrimary">
                                                   {new BigNumber(
-                                                      accountData.data.account.totalBalance.lockedGold
-                                                  ).toFormat(2)}
+                                                      data.validatorGroup.membersAccount[
+                                                          index
+                                                      ].totalBalance.gold
+                                                  ).toFormat(2)}{' '}
+                                                  CELO
                                               </Typography>
                                           ) : (
                                               <NotAvailable
