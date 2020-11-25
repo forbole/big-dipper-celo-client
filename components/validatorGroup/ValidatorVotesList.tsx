@@ -18,6 +18,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import Alert from '@material-ui/lab/Alert';
 import BigNumber from 'bignumber.js';
+import numbro from 'numbro';
 import React from 'react';
 
 import ComponentLoader from '../misc/ComponentLoader';
@@ -177,6 +178,22 @@ const ValidatorVotesList = (): JSX.Element => {
                 return <FiberManualRecordIcon className={classes.dotIcon} />;
             }
         }
+    };
+
+    const calculateGroupUptime = (groupAddress: string) => {
+        let addScore = 0;
+        let totalMembers = 0;
+
+        for (const index in data.validatorGroups.validatorGroups) {
+            if (groupAddress === data.validatorGroups.validatorGroups[index].address) {
+                for (const o in data.validatorGroups.validatorGroups[index].members) {
+                    totalMembers = data.validatorGroups.validatorGroups[index].members.length;
+                    addScore += data.validatorGroups.validatorGroups[index].members[o].score;
+                }
+            }
+        }
+        const totalScore = (addScore / totalMembers) * 100;
+        return totalScore ? numbro(totalScore).format('0.00') : 0;
     };
 
     if (loading) return <ComponentLoader />;
@@ -370,7 +387,10 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
                                                               <Typography variant="body2" noWrap>
-                                                                  {row.uptime}
+                                                                  {calculateGroupUptime(
+                                                                      row.address
+                                                                  )}{' '}
+                                                                  %
                                                               </Typography>
                                                           </TableCell>
 
