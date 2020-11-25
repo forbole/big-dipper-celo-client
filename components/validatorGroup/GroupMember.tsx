@@ -100,7 +100,7 @@ type GroupMemberProps = { validatorGroupAddress: string };
 const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element => {
     const classes = useStyles();
     const valGroupAddress = validatorGroupAddress;
-
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
         variables: { valGroupAddress }
     });
@@ -172,9 +172,11 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                                   align="right"
                                                   color="textPrimary">
                                                   {new BigNumber(
-                                                      data.validatorGroup.membersAccount[
-                                                          index
-                                                      ].totalBalance.gold
+                                                      new BigNumber(
+                                                          data.validatorGroup.membersAccount[
+                                                              index
+                                                          ].lockedGold.total
+                                                      ) / CELO_FRACTION
                                                   ).toFormat(2)}{' '}
                                                   CELO
                                               </Typography>
@@ -196,12 +198,12 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                           <Typography
                                               variant="caption"
                                               className={classes.membersInfo}>
-                                              <img src="/images/memo.svg" alt="" /> 10.9%
+                                              <img src="/images/memo.svg" alt="" /> ??? %
                                           </Typography>
                                       </Grid>
                                       <Grid item xs={6}>
                                           <Typography variant="body2" align="right">
-                                              <img src="/images/reward.svg" alt="Rewards" /> 0.987
+                                              <img src="/images/reward.svg" alt="Rewards" /> ???
                                               CELO
                                           </Typography>
                                       </Grid>
