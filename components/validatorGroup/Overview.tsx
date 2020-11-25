@@ -65,6 +65,12 @@ const useStyles = makeStyles(() => {
 
         alignRight: {
             float: 'right'
+        },
+
+        validatorGroupName: {
+            display: 'block',
+            color: 'rgba(46,137,90, 1)',
+            fontWeight: 500
         }
     };
 });
@@ -118,7 +124,10 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
                         {data.validatorGroup && data.validatorGroup.name ? (
-                            <Typography variant="body2" align="right">
+                            <Typography
+                                variant="body2"
+                                align="right"
+                                className={classes.validatorGroupName}>
                                 {data.validatorGroup.name}
                             </Typography>
                         ) : (
