@@ -30,10 +30,10 @@ export default function validatorGroupDetails(): JSX.Element {
             <Grid item xs={12}>
                 <Overview address={validatorGroup} />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} lg={6}>
                 <GroupMember validatorGroupAddress={validatorGroup} />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} lg={6}>
                 <Uptime address={validatorGroup} />
             </Grid>
         </Grid>
