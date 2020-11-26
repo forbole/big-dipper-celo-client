@@ -36,8 +36,10 @@ interface Column {
         | 'electedTotal'
         | 'lockedCELO'
         | 'groupShare'
-        | 'voterRewards'
         | 'groupScore'
+        | 'slashingMultiplier'
+        | 'voterRewards%'
+        | 'voterRewards_cUSD'
         | 'attestation';
     label: string;
     align: 'left' | 'right';
@@ -50,8 +52,10 @@ const columns: Column[] = [
     { id: 'electedTotal', label: 'Elected/Total', align: 'left' },
     { id: 'lockedCELO', label: 'Locked CELO', align: 'right' },
     { id: 'groupShare', label: 'Group Share', align: 'right' },
-    { id: 'voterRewards', label: 'Voter Rewards', align: 'right' },
     { id: 'groupScore', label: 'Group Score', align: 'right' },
+    { id: 'slashingMultiplier', label: 'Slashing Multiplier', align: 'right' },
+    { id: 'voterRewards_cUSD', label: 'Voter Rewards (cUSD)', align: 'right' },
+    { id: 'voterRewards%', label: 'Voter Rewards (%)', align: 'right' },
     { id: 'attestation', label: 'Attestation', align: 'right' }
 ];
 
@@ -158,6 +162,8 @@ const ValidatorVotesList = (): JSX.Element => {
     const [copy, setCopy] = React.useState(false);
     const [pageNumber, setPageNumber] = React.useState(SETPAGE);
     const [pageSize, setPageSize] = React.useState(ROWMEDIUM);
+    const groupUptimeScore: { [index: string]: number } = {};
+
     const page = pageNumber + 1;
 
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUPS, {
@@ -185,7 +191,6 @@ const ValidatorVotesList = (): JSX.Element => {
             }
         }
     };
-
     const calculateGroupUptime = (groupAddress: string) => {
         let addScore = 0;
         let totalMembers = 0;
@@ -199,7 +204,29 @@ const ValidatorVotesList = (): JSX.Element => {
             }
         }
         const totalScore = (addScore / totalMembers) * 100;
+        groupUptimeScore[groupAddress] = totalScore;
+
         return totalScore ? numbro(totalScore).format('0.00') : 0;
+    };
+
+    const calculateGroupRewards = (groupAddress: string) => {
+        let validatorGroupReward = 0;
+        for (const index in data.validatorGroups.validatorGroups) {
+            if (groupAddress === data.validatorGroups.validatorGroups[index].address) {
+                validatorGroupReward =
+                    (((data.validatorGroups.validatorGroups[index].targetValidatorEpochPayment /
+                        CELO_FRACTION) *
+                        (data.validatorGroups.validatorGroups[index].rewardsMultiplier /
+                            CELO_FRACTION) *
+                        data.validatorGroups.validatorGroups[index].slashingMultiplier *
+                        groupUptimeScore[groupAddress] *
+                        data.validatorGroups.validatorGroups[index].commission) /
+                        1000) *
+                    5;
+                data.validatorGroups.validatorGroups[index].members.length;
+            }
+        }
+        return new BigNumber(validatorGroupReward).toFormat(2);
     };
 
     if (loading) return <ComponentLoader />;
@@ -391,7 +418,10 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
                                                               <Typography variant="body2" noWrap>
-                                                                  {row.voterRewards}
+                                                                  {calculateGroupUptime(
+                                                                      row.address
+                                                                  )}{' '}
+                                                                  %
                                                               </Typography>
                                                           </TableCell>
 
@@ -400,10 +430,27 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
                                                               <Typography variant="body2" noWrap>
-                                                                  {calculateGroupUptime(
+                                                                  {row.slashingMultiplier}
+                                                              </Typography>
+                                                          </TableCell>
+
+                                                          <TableCell
+                                                              align="right"
+                                                              padding="checkbox"
+                                                              className={classes.tableCell}>
+                                                              <Typography variant="body2" noWrap>
+                                                                  {calculateGroupRewards(
                                                                       row.address
-                                                                  )}{' '}
-                                                                  %
+                                                                  )}
+                                                              </Typography>
+                                                          </TableCell>
+
+                                                          <TableCell
+                                                              align="right"
+                                                              padding="checkbox"
+                                                              className={classes.tableCell}>
+                                                              <Typography variant="body2" noWrap>
+                                                                  {row.voterRewards}
                                                               </Typography>
                                                           </TableCell>
 
