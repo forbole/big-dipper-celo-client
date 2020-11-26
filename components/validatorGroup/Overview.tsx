@@ -70,7 +70,8 @@ const useStyles = makeStyles(() => {
         validatorGroupName: {
             display: 'block',
             color: 'rgba(46,137,90, 1)',
-            fontWeight: 500
+            fontWeight: 500,
+            wordBreak: 'break-all'
         }
     };
 });
@@ -119,10 +120,10 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                     <Grid item xs={12}>
                         <Divider className={classes.divider} />
                     </Grid>
-                    <Grid item xs={6} className={classes.item}>
+                    <Grid item xs={3} className={classes.item}>
                         <Typography variant="body2">Group Name</Typography>
                     </Grid>
-                    <Grid item xs={6} className={classes.item}>
+                    <Grid item xs={9} className={classes.item}>
                         {data.validatorGroup && data.validatorGroup.name ? (
                             <Typography
                                 variant="body2"
@@ -138,10 +139,10 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                         <Divider className={classes.divider} />
                     </Grid>
 
-                    <Grid item xs={6} className={classes.item}>
+                    <Grid item xs={3} className={classes.item}>
                         <Typography variant="body2">Locked CELO</Typography>
                     </Grid>
-                    <Grid item xs={6} className={classes.item}>
+                    <Grid item xs={9} className={classes.item}>
                         {data && data.validatorGroup && data.validatorGroup.lockedGoldAmount ? (
                             <Typography variant="body2" align="right">
                                 {new BigNumber(
@@ -162,9 +163,13 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                         <Typography variant="body2">Group Share</Typography>
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
-                        <Typography variant="body2" align="right">
-                            10%
-                        </Typography>
+                        {data && data.validatorGroup && data.validatorGroup.commission ? (
+                            <Typography variant="body2" align="right">
+                                {data.validatorGroup.commission * 100} %
+                            </Typography>
+                        ) : (
+                            <NotAvailable variant="body2" />
+                        )}
                     </Grid>
 
                     <Grid item xs={12}>
