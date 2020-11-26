@@ -104,6 +104,25 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
         variables: { valGroupAddress }
     });
+    const targetReward: number =
+        data && data.validatorGroup && data.validatorGroup.targetValidatorEpochPayment
+            ? data.validatorGroup.targetValidatorEpochPayment
+            : 0;
+
+    const rewardsMultiplier: number =
+        data && data.validatorGroup && data.validatorGroup.rewardsMultiplier
+            ? data.validatorGroup.rewardsMultiplier
+            : 0;
+
+    const groupShare: number =
+        data && data.validatorGroup && data.validatorGroup.commission
+            ? data.validatorGroup.commission
+            : 0;
+
+    const slashingMultiplier: number =
+        data && data.validatorGroup && data.validatorGroup.slashingMultiplier
+            ? data.validatorGroup.slashingMultiplier
+            : 0;
 
     const findElectedValidators = (membersAddress: any, electedValidators: any) => {
         for (const d in Object.keys(electedValidators)) {
@@ -111,6 +130,17 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                 return <FiberManualRecordIcon className={classes.dotIcon} />;
             }
         }
+    };
+
+    const calculateValidatorRewards = (uptimeScore: number) => {
+        const validatorReward =
+            ((targetReward / CELO_FRACTION) *
+                (rewardsMultiplier / CELO_FRACTION) *
+                slashingMultiplier *
+                uptimeScore *
+                groupShare) /
+            10;
+        return new BigNumber(validatorReward).toFormat(2);
     };
 
     if (loading) return <ComponentLoader />;
@@ -141,7 +171,7 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                         ? data.validatorGroup.members.map((row: any, index: number) => {
                               return (
                                   <>
-                                      <Grid item xs={6} className={classes.member}>
+                                      <Grid item xs={8} className={classes.member}>
                                           <Typography
                                               variant="body2"
                                               className={classes.memberNumber}>
@@ -165,7 +195,7 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                           )}
                                       </Grid>
 
-                                      <Grid item xs={6}>
+                                      <Grid item xs={4}>
                                           {data.validatorGroup.membersAccount ? (
                                               <Typography
                                                   variant="body1"
@@ -203,8 +233,8 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                       </Grid>
                                       <Grid item xs={6}>
                                           <Typography variant="body2" align="right">
-                                              <img src="/images/reward.svg" alt="Rewards" /> ???
-                                              CELO
+                                              <img src="/images/reward.svg" alt="Rewards" />
+                                              {calculateValidatorRewards(row.score)} cUSD
                                           </Typography>
                                       </Grid>
                                   </>
