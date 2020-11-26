@@ -20,66 +20,15 @@ import {
 } from 'recharts';
 
 import NavLink from '../NavLink';
+import { GET_BLOCK_DETAILS } from '../query/Block';
+import { GET_BLOCK } from '../query/Block';
 import { GET_VALIDATOR_GROUP } from '../query/ValidatorGroup';
-
-const data_chart = [
-    {
-        Voted: 99
-    },
-    {
-        Voted: 91
-    },
-    {
-        Voted: 94
-    },
-    {
-        Voted: 87
-    },
-    {
-        Voted: 90
-    },
-    {
-        Missed: 99
-    },
-    {
-        Voted: 96
-    },
-    {
-        Voted: 91
-    },
-    {
-        Voted: 94
-    },
-    {
-        Voted: 87
-    },
-    {
-        Voted: 90
-    },
-    {
-        Voted: 99
-    },
-    {
-        Voted: 96
-    },
-    {
-        Voted: 96
-    },
-    {
-        Voted: 96
-    },
-    {
-        Voted: 96
-    },
-    {
-        Voted: 96
-    }
-];
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             width: '100%',
+            height: '100%',
             padding: '0 1rem',
             borderRadius: 5,
             overflowY: 'auto'
@@ -97,7 +46,6 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         power: {
             align: 'left',
-            marginLeft: '-10rem',
             [theme.breakpoints.down('sm')]: {
                 paddingLeft: '7rem'
             }
@@ -116,109 +64,226 @@ const useStyles = makeStyles((theme: Theme) =>
 
         cardContent: {
             padding: '0.625rem'
-        }
+        },
+
+        proposerAddress: {
+            textAlign: 'right',
+            wordBreak: 'break-all'
+        },
     })
 );
-const CustomTooltip = () => {
+
+let tooltip: string;
+
+const CustomTooltip = ({ active, payload }) => {
     const classes = useStyles();
-    return (
-        <Card className={classes.rootTooltip}>
-            <CardContent className={classes.cardContent}>
-                <Grid container>
-                    <Grid item xs={5}>
-                        <Typography color="textPrimary" variant="body2" align="left">
-                            Proposer
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={7}>
-                        <NavLink
-                            href={`/account/${1}`}
-                            name={
-                                <Typography color="textPrimary" variant="body2" align="right">
-                                    Nans Aguilars
+
+    if (!active || !tooltip) return null;
+    for (const bar of payload) {
+        if (bar.dataKey === tooltip) {
+            console.log(bar.dataKey);
+            console.log(tooltip);
+            return (
+                <Card className={classes.rootTooltip}>
+                    <CardContent className={classes.cardContent}>
+                        <Grid container>
+                            <Grid item xs={3}>
+                                <Typography color="textPrimary" variant="body2" align="left">
+                                    Proposer
                                 </Typography>
-                            }
-                        />
-                    </Grid>
+                            </Grid>
+                            <Grid item xs={9}>
+                                <NavLink
+                                    href={`/account/${bar.payload.Proposer}`}
+                                    name={
+                                        <Typography variant="caption" align="right">
+                                            {bar.payload.Proposer}
+                                        </Typography>
+                                    }
+                                    className={classes.proposerAddress}
+                                />
+                            </Grid>
 
-                    <Grid item xs={5}>
-                        <Typography color="textPrimary" variant="body2" align="left">
-                            Height
-                        </Typography>
-                    </Grid>
-
-                    <Grid item xs={7}>
-                        <NavLink
-                            href={`/block/${108144}`}
-                            name={
-                                <Typography color="textPrimary" variant="body2" align="right">
-                                    108144
+                            <Grid item xs={5}>
+                                <Typography color="textPrimary" variant="body2" align="left">
+                                    Height
                                 </Typography>
-                            }
-                        />
-                    </Grid>
+                            </Grid>
 
-                    <Grid item xs={5}>
-                        <Typography color="textPrimary" variant="body2" align="left">
-                            Votes Available
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={7}>
-                        <Typography color="textPrimary" variant="body2" align="right">
-                            89%
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Typography color="textPrimary" variant="body2" align="left">
-                            Gas (used / wanted)
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Typography color="textPrimary" variant="body2" align="right">
-                            1,500,795 / 3,000,000
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Typography color="textPrimary" variant="body2" align="left">
-                            Vote
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Typography color="textPrimary" variant="body2" align="right">
-                            Yes
-                        </Typography>
-                    </Grid>
-                </Grid>
-            </CardContent>
-        </Card>
-    );
+                            <Grid item xs={7}>
+                                <NavLink
+                                    href={`/block/${bar.payload.Height}`}
+                                    name={
+                                        <Typography
+                                            color="textPrimary"
+                                            variant="body2"
+                                            align="right">
+                                            {bar.payload.Height}
+                                        </Typography>
+                                    }
+                                />
+                            </Grid>
+
+                            <Grid item xs={5}>
+                                <Typography color="textPrimary" variant="body2" align="left">
+                                    Votes Available
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={7}>
+                                <Typography color="textPrimary" variant="body2" align="right">
+                                    {numbro(bar.payload.VotesAvailable).format('0.00')} %
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography color="textPrimary" variant="body2" align="left">
+                                    Gas (used)
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography color="textPrimary" variant="body2" align="right">
+                                    {bar.payload.GasUsed} cUSD
+                                </Typography>
+                            </Grid>
+                            {/* <Grid item xs={6}>
+                            <Typography color="textPrimary" variant="body2" align="left">
+                                Vote
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Typography color="textPrimary" variant="body2" align="right">
+                                Yes
+                            </Typography>
+                        </Grid> */}
+                        </Grid>
+                    </CardContent>
+                </Card>
+            );
+        } else {
+            return null as any;
+        }
+    }
 };
 
 type UptimeProps = { address: string };
 
 const Uptime = ({ address }: UptimeProps): JSX.Element => {
+    const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
+    const ROWSMALL = process.env.ROWSMALL ? parseInt(process.env.ROWSMALL) : 15;
+    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
+    const [items, setItems] = React.useState([]);
+
     const classes = useStyles();
     const theme = useTheme();
     const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const valGroupAddress = address;
+    const [page, setPage] = React.useState(1);
+    const [pageSize, setPageSize] = React.useState(ROWMEDIUM);
+    const membersArray: { [index: number]: string } = [];
+    let signedBlockCounter = 0;
+    const uptimeObject4: {
+        [index: number]: {
+            Height: number;
+            TotalVotes: any;
+            VotesAvailable: number;
+            Proposer: string;
+            GasUsed: number;
+            Signers: string[];
+        };
+    } = [];
+    const allSigners: {
+        [index: number]: {
+            signers: { [index: number]: { signer: string } };
+            number: number;
+        };
+    } = [];
+
+    const latestBlock = useQuery(GET_BLOCK, {
+        variables: { pageSize, page },
+        pollInterval: 5000
+    });
+
+    const number =
+        latestBlock && latestBlock.data && latestBlock.data.blocks && latestBlock.data.blocks.blocks
+            ? latestBlock.data.blocks.blocks[0].number
+            : 0;
+
+    //set the number to query from
+    const fromBlock = number - 14;
+
+    const blockData = useQuery(GET_BLOCK, {
+        variables: { pageSize, page, fromBlock },
+        pollInterval: 5000
+    });
+    const blockDetails = useQuery(GET_BLOCK_DETAILS, {
+        variables: { number }
+    });
 
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
         variables: { valGroupAddress }
     });
 
+    if (data && data.validatorGroup && data.validatorGroup.members) {
+        for (let c = 0; c < data.validatorGroup.members.length; c++) {
+            membersArray[c] = data.validatorGroup.members[c].address;
+        }
+    }
+
+    const findHowManySignedTheBlock = () => {
+        if (blockData && blockData.data && blockData.data.blocks && blockData.data.blocks.blocks) {
+            {
+                blockData.data.blocks.blocks.map((row: any, index: number) => {
+                    allSigners[index] = { signers: row.signers, number: row.number };
+                });
+
+                //allSigners length is 30
+                // membersArray is 5
+
+                for (let d = 0; d < Object.keys(allSigners).length; d++) {
+                    signedBlockCounter = 0;
+                    for (let e = 0; e < Object.keys(allSigners[d].signers).length; e++) {
+                        for (let c = 0; c < Object.keys(membersArray).length; c++) {
+                            if (allSigners[d].signers[e].signer === membersArray[c]) {
+                                signedBlockCounter++;
+                            }
+                        }
+                    }
+                }
+            }
+            return (signedBlockCounter / Object.keys(membersArray).length) * 100;
+        }
+    };
+    if (blockData && blockData.data && blockData.data.blocks && blockData.data.blocks.blocks) {
+        blockData.data.blocks.blocks.map((row: any, index: number) => {
+            uptimeObject4[index] = {
+                Height: row.number,
+                TotalVotes: findHowManySignedTheBlock(),
+                VotesAvailable:
+                    data &&
+                    data.validatorGroup &&
+                    data.validatorGroup.votes &&
+                    data.validatorGroup.votesAvailable
+                        ? (data.validatorGroup.votes / data.validatorGroup.votesAvailable) * 100
+                        : 0,
+                Proposer: row.miner.signer,
+                GasUsed: row.gasUsed,
+                Signers: row.signers
+            };
+        });
+    }
     const validatorGroupMembers =
         data && data.validatorGroup && data.validatorGroup.members
             ? data.validatorGroup.members
             : [];
 
-    const calculateTotalUptime = () => {
+    const calculateGroupUptime = () => {
         let addScore = 0;
         for (const c in validatorGroupMembers) {
             addScore = addScore + validatorGroupMembers[c].score;
         }
         const totalScore = (addScore / validatorGroupMembers.length) * 100;
-        return numbro(totalScore).format('0.00');
+        return totalScore ? numbro(totalScore).format('0.00') : 0;
     };
+
 
     return (
         <Card className={classes.root}>
@@ -239,22 +304,22 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
                             variant="subtitle1"
                             align="right"
                             gutterBottom>
-                            {calculateTotalUptime()} %
+                            {calculateGroupUptime()} %
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
                         <Divider variant="middle" className={classes.divider} />
                     </Grid>
                     <Grid item xs={12} lg={10}>
-                        <ResponsiveContainer width="100%" height={smallScreen ? 200 : 250}>
+                        <ResponsiveContainer width="100%" height={smallScreen ? 200 : 303}>
                             <BarChart
                                 // width={350}
                                 // height={250}
-                                data={data_chart}
+                                data={Object.assign(uptimeObject4).reverse()}
                                 margin={{
                                     top: 0,
-                                    right: smallScreen ? 0 : 350,
-                                    left: smallScreen ? 0 : 100,
+                                    right: smallScreen ? 0 : 0,
+                                    left: smallScreen ? 0 : 0,
                                     bottom: 5
                                 }}
                                 barGap="-5"
@@ -294,13 +359,16 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
                                         dx: -15
                                     }}
                                 />
+
                                 <Tooltip content={<CustomTooltip />} />
                                 <Legend align="left" verticalAlign="top" height={50} width={200} />
                                 <Bar
-                                    dataKey="Voted"
+                                    dataKey="TotalVotes"
                                     fill="rgba(58, 211, 158, 1)"
                                     barSize={6}
                                     fillOpacity={1}
+                                    name="TotalVotes"
+                                    onMouseOver={() => (tooltip = 'TotalVotes')}
                                 />
                                 <Bar
                                     dataKey="Missed"
