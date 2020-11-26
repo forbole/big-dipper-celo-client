@@ -23,6 +23,7 @@ import React from 'react';
 
 import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
+import MiddleEllipsis from '../misc/MiddleEllipsis';
 import NotAvailable from '../misc/NotAvailable';
 import NavLink from '../NavLink';
 import { GET_VALIDATOR_GROUPS } from '../query/ValidatorGroup';
@@ -64,8 +65,7 @@ const useStyles = makeStyles(() => {
         },
         container: {
             borderRadius: 5,
-            width: '100%',
-            overflow: 'auto'
+            width: '100%'
         },
         box: {
             letterSpacing: '1px',
@@ -115,7 +115,7 @@ const useStyles = makeStyles(() => {
         },
 
         progress: {
-            backgroundColor: 'rgba(67, 72, 76, 1)'
+            backgroundColor: 'rgba(242,242,242,1)'
         },
 
         progressBar: {
@@ -137,6 +137,12 @@ const useStyles = makeStyles(() => {
         alertMessage: {
             background: '#3AD39E',
             color: 'rgba(61, 66, 71, 1)'
+        },
+
+        validatorGroupAddress: {
+            wordWrap: 'break-word',
+            overflowWrap: 'anywhere',
+            textAlign: 'left'
         }
     };
 });
@@ -280,9 +286,16 @@ const ValidatorVotesList = (): JSX.Element => {
                                                                           <Typography
                                                                               variant="body2"
                                                                               noWrap>
-                                                                              {row.name ||
-                                                                                  row.address}
+                                                                              <MiddleEllipsis
+                                                                                  text={
+                                                                                      row.name ||
+                                                                                      row.address
+                                                                                  }
+                                                                              />
                                                                           </Typography>
+                                                                      }
+                                                                      className={
+                                                                          classes.validatorGroupAddress
                                                                       }
                                                                   />
                                                               ) : (
