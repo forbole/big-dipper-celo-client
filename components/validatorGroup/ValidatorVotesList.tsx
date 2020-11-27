@@ -46,7 +46,7 @@ interface Column {
 }
 
 const columns: Column[] = [
-    { id: 'dropdown', label: ' ', align: 'left' },
+    { id: 'dropdown', label: '  ', align: 'left' },
     { id: 'groupName', label: 'Group Name', align: 'left' },
     { id: 'votesAvailable', label: 'Votes Available', align: 'left' },
     { id: 'electedTotal', label: 'Elected/Total', align: 'left' },
@@ -84,8 +84,12 @@ const useStyles = makeStyles(() => {
         },
         tableCell: {
             overflow: 'auto',
+            padding: '0.5rem',
+            borderBottom: 'solid 1px rgba(232, 232, 232, 1)'
+        },
+        tableHeader: {
+            overflow: 'auto',
             padding: '0.5rem'
-            // border: 'rgba(246, 247, 249, 1)'
         },
         table: {
             background: 'rgba(246, 247, 249, 1)',
@@ -204,29 +208,43 @@ const ValidatorVotesList = (): JSX.Element => {
             }
         }
         const totalScore = (addScore / totalMembers) * 100;
-        groupUptimeScore[groupAddress] = totalScore;
-
+        groupUptimeScore[groupAddress] = addScore / totalMembers;
         return totalScore ? numbro(totalScore).format('0.00') : 0;
     };
 
     const calculateGroupRewards = (groupAddress: string) => {
         let validatorGroupReward = 0;
+        let totalValidatorReward = 0;
         for (const index in data.validatorGroups.validatorGroups) {
             if (groupAddress === data.validatorGroups.validatorGroups[index].address) {
                 validatorGroupReward =
-                    (((data.validatorGroups.validatorGroups[index].targetValidatorEpochPayment /
+                    ((data.validatorGroups.validatorGroups[index].targetValidatorEpochPayment /
                         CELO_FRACTION) *
                         (data.validatorGroups.validatorGroups[index].rewardsMultiplier /
                             CELO_FRACTION) *
                         data.validatorGroups.validatorGroups[index].slashingMultiplier *
                         groupUptimeScore[groupAddress] *
-                        data.validatorGroups.validatorGroups[index].commission) /
-                        1000) *
-                    5;
-                data.validatorGroups.validatorGroups[index].members.length;
+                        5) /
+                    1000000;
+            }
+            const groupReward =
+                validatorGroupReward * data.validatorGroups.validatorGroups[index].commission;
+            totalValidatorReward = validatorGroupReward - groupReward;
+        }
+
+     
+        return new BigNumber(totalValidatorReward).toFormat(2);
+    };
+
+    const calculateRewardsPercentage = (groupAddress: string) => {
+        for (const index in data.validatorGroups.validatorGroups) {
+            if (groupAddress === data.validatorGroups.validatorGroups[index].address) {
+                return new BigNumber(
+                    (100 - data.validatorGroups.validatorGroups[index].commission * 100) *
+                        groupUptimeScore[groupAddress]
+                ).toFormat(2);
             }
         }
-        return new BigNumber(validatorGroupReward).toFormat(2);
     };
 
     if (loading) return <ComponentLoader />;
@@ -255,7 +273,7 @@ const ValidatorVotesList = (): JSX.Element => {
                                             <Typography
                                                 variant="body2"
                                                 noWrap
-                                                className={classes.tableCell}>
+                                                className={classes.tableHeader}>
                                                 {column.label}
                                             </Typography>
                                         </TableCell>
@@ -272,7 +290,8 @@ const ValidatorVotesList = (): JSX.Element => {
                                                           <TableCell
                                                               component="th"
                                                               scope="row"
-                                                              padding="none">
+                                                              padding="none"
+                                                              className={classes.tableCell}>
                                                               <IconButton
                                                                   aria-label="expand row"
                                                                   size="small"
@@ -450,7 +469,10 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
                                                               <Typography variant="body2" noWrap>
-                                                                  {row.voterRewards}
+                                                                  {calculateRewardsPercentage(
+                                                                      row.address
+                                                                  )}{' '}
+                                                                  %
                                                               </Typography>
                                                           </TableCell>
 
@@ -468,7 +490,8 @@ const ValidatorVotesList = (): JSX.Element => {
                                                           <TableCell
                                                               style={{
                                                                   paddingBottom: 0,
-                                                                  paddingTop: 0
+                                                                  paddingTop: 0,
+                                                                  borderBottom: 'none'
                                                               }}
                                                               colSpan={6}>
                                                               <Collapse
