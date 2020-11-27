@@ -133,14 +133,16 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
     };
 
     const calculateValidatorRewards = (uptimeScore: number) => {
-        const validatorReward =
+        const validatorRewardBeforeGroupShare =
             ((targetReward / CELO_FRACTION) *
                 (rewardsMultiplier / CELO_FRACTION) *
                 slashingMultiplier *
-                uptimeScore *
-                groupShare) /
-            10;
-        return new BigNumber(validatorReward).toFormat(2);
+                uptimeScore) /
+            1000000;
+
+        const groupReward = validatorRewardBeforeGroupShare * groupShare;
+        const totalValidatorReward = validatorRewardBeforeGroupShare - groupReward;
+        return new BigNumber(totalValidatorReward).toFormat(2);
     };
 
     if (loading) return <ComponentLoader />;
