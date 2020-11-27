@@ -69,20 +69,22 @@ const useStyles = makeStyles((theme: Theme) =>
         proposerAddress: {
             textAlign: 'right',
             wordBreak: 'break-all'
-        },
+        }
     })
 );
 
 let tooltip: string;
-
-const CustomTooltip = ({ active, payload }) => {
+type CustomTooltipType = {
+    active: boolean;
+    payload: {
+        [index: string]: any;
+    };
+};
+const CustomTooltip = ({ active, payload }: CustomTooltipType) => {
     const classes = useStyles();
-
     if (!active || !tooltip) return null;
     for (const bar of payload) {
         if (bar.dataKey === tooltip) {
-            console.log(bar.dataKey);
-            console.log(tooltip);
             return (
                 <Card className={classes.rootTooltip}>
                     <CardContent className={classes.cardContent}>
@@ -96,7 +98,7 @@ const CustomTooltip = ({ active, payload }) => {
                                 <NavLink
                                     href={`/account/${bar.payload.Proposer}`}
                                     name={
-                                        <Typography variant="caption" align="right">
+                                        <Typography variant="caption">
                                             {bar.payload.Proposer}
                                         </Typography>
                                     }
@@ -283,7 +285,6 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
         const totalScore = (addScore / validatorGroupMembers.length) * 100;
         return totalScore ? numbro(totalScore).format('0.00') : 0;
     };
-
 
     return (
         <Card className={classes.root}>
