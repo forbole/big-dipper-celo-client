@@ -104,25 +104,6 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
         variables: { valGroupAddress }
     });
-    const targetReward: number =
-        data && data.validatorGroup && data.validatorGroup.targetValidatorEpochPayment
-            ? data.validatorGroup.targetValidatorEpochPayment
-            : 0;
-
-    const rewardsMultiplier: number =
-        data && data.validatorGroup && data.validatorGroup.rewardsMultiplier
-            ? data.validatorGroup.rewardsMultiplier
-            : 0;
-
-    const groupShare: number =
-        data && data.validatorGroup && data.validatorGroup.commission
-            ? data.validatorGroup.commission
-            : 0;
-
-    const slashingMultiplier: number =
-        data && data.validatorGroup && data.validatorGroup.slashingMultiplier
-            ? data.validatorGroup.slashingMultiplier
-            : 0;
 
     const findElectedValidators = (membersAddress: any, electedValidators: any) => {
         for (const d in Object.keys(electedValidators)) {
@@ -132,17 +113,16 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
         }
     };
 
-    const calculateValidatorRewards = (uptimeScore: number) => {
-        const validatorRewardBeforeGroupShare =
-            ((targetReward / CELO_FRACTION) *
-                (rewardsMultiplier / CELO_FRACTION) *
-                slashingMultiplier *
-                uptimeScore) /
-            1000000;
-
-        const groupReward = validatorRewardBeforeGroupShare * groupShare;
-        const totalValidatorReward = validatorRewardBeforeGroupShare - groupReward;
-        return new BigNumber(totalValidatorReward).toFormat(2);
+    const calculateValidatorRewards = (address: string) => {
+        let rewardValue;
+        if (data && data.validatorGroup && data.validatorGroup.rewards) {
+            for (const d in data.validatorGroup.rewards) {
+                if (data.validatorGroup.rewards[d].validatorAddress === address) {
+                    rewardValue = data.validatorGroup.rewards[d].validatorReward;
+                }
+            }
+            return new BigNumber(rewardValue / CELO_FRACTION).toFormat(2);
+        }
     };
 
     if (loading) return <ComponentLoader />;
@@ -230,14 +210,34 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                           <Typography
                                               variant="caption"
                                               className={classes.membersInfo}>
-                                              <img src="/images/memo.svg" alt="" /> ??? %
+                                              <img
+                                                  src="/images/attestation.svg"
+                                                  alt="Attestation"
+                                                  style={{ marginRight: '0.2rem' }}
+                                              />
+                                              {numbro(
+                                                  (row.attestationCompleted /
+                                                      row.attestationRequested) *
+                                                      100
+                                              ).format('0.00')}{' '}
+                                              %
                                           </Typography>
                                       </Grid>
                                       <Grid item xs={6}>
-                                          <Typography variant="body2" align="right">
-                                              <img src="/images/reward.svg" alt="Rewards" />
-                                              {calculateValidatorRewards(row.score)} cUSD
-                                          </Typography>
+                                          {data &&
+                                          data.validatorGroup &&
+                                          data.validatorGroup.rewards ? (
+                                              <Typography variant="body2" align="right">
+                                                  <img
+                                                      src="/images/reward.svg"
+                                                      alt="Rewards"
+                                                      style={{ marginRight: '0.2rem' }}
+                                                  />
+                                                  {calculateValidatorRewards(row.address)} cUSD
+                                              </Typography>
+                                          ) : (
+                                              '0.00 cUSD'
+                                          )}
                                       </Grid>
                                   </>
                               );
