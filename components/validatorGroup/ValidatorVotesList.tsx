@@ -231,6 +231,33 @@ const ValidatorVotesList = (): JSX.Element => {
         }
     };
 
+    const calculateAttestation = (groupAddress: string) => {
+        let addTotalRequested = 0;
+        let addTotalFulfilled = 0;
+
+        if (data && data.validatorGroups && data.validatorGroups.validatorGroups) {
+            for (const index in data.validatorGroups.validatorGroups) {
+                if (groupAddress === data.validatorGroups.validatorGroups[index].address) {
+                    for (const d in data.validatorGroups.validatorGroups[index].members) {
+                        addTotalRequested =
+                            addTotalRequested +
+                            parseFloat(
+                                data.validatorGroups.validatorGroups[index].members[d]
+                                    .attestationRequested
+                            );
+                        addTotalFulfilled =
+                            addTotalFulfilled +
+                            parseFloat(
+                                data.validatorGroups.validatorGroups[index].members[d]
+                                    .attestationCompleted
+                            );
+                    }
+                }
+            }
+        }
+        return numbro((addTotalFulfilled / addTotalRequested) * 100).format('0.00');
+    };
+
     const calculateRewardsPercentage = (groupAddress: string) => {
         for (const index in data.validatorGroups.validatorGroups) {
             if (groupAddress === data.validatorGroups.validatorGroups[index].address) {
@@ -477,7 +504,10 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
                                                               <Typography variant="body2" noWrap>
-                                                                  {row.attestation}
+                                                                  {calculateAttestation(
+                                                                      row.address
+                                                                  )}{' '}
+                                                                  %
                                                               </Typography>
                                                           </TableCell>
                                                       </TableRow>
