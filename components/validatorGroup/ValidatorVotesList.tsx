@@ -213,27 +213,22 @@ const ValidatorVotesList = (): JSX.Element => {
     };
 
     const calculateGroupRewards = (groupAddress: string) => {
-        let validatorGroupReward = 0;
-        let totalValidatorReward = 0;
-        for (const index in data.validatorGroups.validatorGroups) {
-            if (groupAddress === data.validatorGroups.validatorGroups[index].address) {
-                validatorGroupReward =
-                    ((data.validatorGroups.validatorGroups[index].targetValidatorEpochPayment /
-                        CELO_FRACTION) *
-                        (data.validatorGroups.validatorGroups[index].rewardsMultiplier /
-                            CELO_FRACTION) *
-                        data.validatorGroups.validatorGroups[index].slashingMultiplier *
-                        groupUptimeScore[groupAddress] *
-                        5) /
-                    1000000;
-            }
-            const groupReward =
-                validatorGroupReward * data.validatorGroups.validatorGroups[index].commission;
-            totalValidatorReward = validatorGroupReward - groupReward;
-        }
+        if (data && data.validatorGroups && data.validatorGroups.validatorGroups) {
+            let total = 0;
 
-     
-        return new BigNumber(totalValidatorReward).toFormat(2);
+            for (const d in data.validatorGroups.validatorGroups) {
+                if (groupAddress === data.validatorGroups.validatorGroups[d].address) {
+                    for (const c in data.validatorGroups.validatorGroups[d].rewards) {
+                        total =
+                            total +
+                            parseFloat(
+                                data.validatorGroups.validatorGroups[d].rewards[c].validatorReward
+                            );
+                    }
+                }
+            }
+            return new BigNumber(total / CELO_FRACTION).toFormat(2);
+        }
     };
 
     const calculateRewardsPercentage = (groupAddress: string) => {
@@ -460,7 +455,8 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               <Typography variant="body2" noWrap>
                                                                   {calculateGroupRewards(
                                                                       row.address
-                                                                  )}
+                                                                  )}{' '}
+                                                                  cUSD
                                                               </Typography>
                                                           </TableCell>
 

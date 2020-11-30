@@ -185,7 +185,7 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
     const uptimeObject4: {
         [index: number]: {
             Height: number;
-            TotalVotes: any;
+            Voted: any;
             VotesAvailable: number;
             Proposer: string;
             GasUsed: number;
@@ -258,7 +258,7 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
         blockData.data.blocks.blocks.map((row: any, index: number) => {
             uptimeObject4[index] = {
                 Height: row.number,
-                TotalVotes: findHowManySignedTheBlock(),
+                Voted: findHowManySignedTheBlock(),
                 VotesAvailable:
                     data &&
                     data.validatorGroup &&
@@ -364,12 +364,12 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
                                 <Tooltip content={<CustomTooltip />} />
                                 <Legend align="left" verticalAlign="top" height={50} width={200} />
                                 <Bar
-                                    dataKey="TotalVotes"
+                                    dataKey="Voted"
                                     fill="rgba(58, 211, 158, 1)"
                                     barSize={6}
                                     fillOpacity={1}
-                                    name="TotalVotes"
-                                    onMouseOver={() => (tooltip = 'TotalVotes')}
+                                    name="Voted"
+                                    onMouseOver={() => (tooltip = 'Voted')}
                                 />
                                 <Bar
                                     dataKey="Missed"
