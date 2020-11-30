@@ -105,6 +105,23 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
         return numbro(totalScore).format('0.00');
     };
 
+    const calculateAttestation = () => {
+        let addTotalRequested = 0;
+        let addTotalFulfilled = 0;
+
+        if (data && data.validatorGroup) {
+            for (const d in data.validatorGroup.members) {
+                addTotalRequested =
+                    addTotalRequested +
+                    parseFloat(data.validatorGroup.members[d].attestationRequested);
+                addTotalFulfilled =
+                    addTotalFulfilled +
+                    parseFloat(data.validatorGroup.members[d].attestationCompleted);
+            }
+        }
+        return numbro((addTotalFulfilled / addTotalRequested) * 100).format('0.00');
+    };
+
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
 
@@ -193,13 +210,9 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                         <Typography variant="body2">Attestation</Typography>
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
-                        {accountData.data && accountData.data.account.attestation ? (
-                            <Typography variant="body2" align="right">
-                                {accountData.data.account.attestation}
-                            </Typography>
-                        ) : (
-                            <NotAvailable variant="body2" className={classes.alignRight} />
-                        )}
+                        <Typography variant="body2" align="right">
+                            {calculateAttestation()} %
+                        </Typography>
                     </Grid>
 
                     {/* <Grid item xs={12}>
