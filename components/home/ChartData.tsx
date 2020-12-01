@@ -112,7 +112,7 @@ const ChartData = (): JSX.Element => {
                         <Typography variant="body2" className={classes.label}>
                             Total blocks
                         </Typography>
-                        {data.chain && data.chain.latestHeight >= 0 ? (
+                        {data && data.chain && data.chain.latestHeight >= 0 ? (
                             <Typography variant="h4" className={classes.value}>
                                 {largeScreen
                                     ? numbro(data.chain.latestHeight).format('000,000')
@@ -132,7 +132,7 @@ const ChartData = (): JSX.Element => {
                         <Typography variant="body2" className={classes.label}>
                             Total transactions
                         </Typography>
-                        {data.chain && data.chain.txCount >= 0 ? (
+                        {data && data.chain && data.chain.txCount >= 0 ? (
                             <Typography variant="h4" className={classes.value}>
                                 {largeScreen
                                     ? numbro(data.chain.txCount).format('000,000')
@@ -152,7 +152,10 @@ const ChartData = (): JSX.Element => {
                         <Typography variant="body2" className={classes.label}>
                             Celo Price
                         </Typography>
-                        {data.chain.tokenPrice && data.chain.tokenPrice.usd >= 0 ? (
+                        {data &&
+                        data.chain &&
+                        data.chain.tokenPrice &&
+                        data.chain.tokenPrice.usd >= 0 ? (
                             <>
                                 {' '}
                                 <Typography variant="h6" className={classes.dollarSign}>
@@ -173,7 +176,8 @@ const ChartData = (): JSX.Element => {
                         <Typography variant="body2" className={classes.label}>
                             Market Cap
                         </Typography>
-                        {data.chain &&
+                        {data &&
+                        data.chain &&
                         data.chain.celoTotalSupply &&
                         data.chain.tokenPrice &&
                         data.chain.tokenPrice.usd >= 0 ? (
