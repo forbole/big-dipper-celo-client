@@ -16,7 +16,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-export default function Proposals(props: { proposalTitle: string }): JSX.Element {
+export default function Proposals(props: { proposalTitle: string[] }): JSX.Element {
     const classes = useStyles();
     return (
         <Grid container spacing={2} className={classes.root}>
@@ -26,16 +26,14 @@ export default function Proposals(props: { proposalTitle: string }): JSX.Element
             <Grid item xs={12}>
                 <ProposalList title={props.proposalTitle} />
             </Grid>
-            <Grid item xs={12}>
-                {/* <DepositList /> */}
-            </Grid>
         </Grid>
     );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-    const proposalTitle: string[] = [];
-    let counter = 0;
+    const proposalTitle: {
+        [index: string]: { proposalTitle: string; proposalNumber: number };
+    } = {};
     let getProposalTitle;
     //Set max number of proposals as currently we can't obtain it from the rpc
     const PROPOSAL_MAX_NUMBER = 100;
@@ -49,8 +47,10 @@ export const getStaticProps: GetStaticProps = async () => {
                     if (response.ok) {
                         response.text().then((text) => {
                             getProposalTitle = text.split('\n');
-                            proposalTitle[counter] = getProposalTitle[0].replace('#', ' ');
-                            counter++;
+                            proposalTitle[c - 1] = {
+                                proposalTitle: getProposalTitle[0].replace('#', ' '),
+                                proposalNumber: c
+                            };
                         });
                     } else {
                         return;
@@ -67,8 +67,10 @@ export const getStaticProps: GetStaticProps = async () => {
                     if (response.ok) {
                         response.text().then((text) => {
                             getProposalTitle = text.split('\n');
-                            proposalTitle[counter] = getProposalTitle[0].replace('#', ' ');
-                            counter++;
+                            proposalTitle[c - 1] = {
+                                proposalTitle: getProposalTitle[0].replace('#', ' '),
+                                proposalNumber: c
+                            };
                         });
                     } else {
                         return;
