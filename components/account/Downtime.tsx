@@ -118,7 +118,6 @@ const Downtime = ({ address }: DowntimeProps): JSX.Element => {
 
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
-
     return (
         <Accordion defaultExpanded>
             <AccordionSummary
