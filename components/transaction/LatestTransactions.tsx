@@ -198,7 +198,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                     </Grid>
                                                                     <Grid item xs={7}>
                                                                         <Typography
-                                                                            variant="body2"
+                                                                            variant="caption"
                                                                             className={
                                                                                 classes.alignRight
                                                                             }
@@ -217,7 +217,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                                     className={
                                                                                         classes.alignRight
                                                                                     }
-                                                                                    variant="body2"
+                                                                                    variant="caption"
                                                                                 />
                                                                             )}
                                                                         </Typography>
