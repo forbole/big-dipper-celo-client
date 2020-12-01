@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
         epochNumber: {
             display: 'block',
-            marginTop: '-19rem',
+            marginTop: '-11.5rem',
             paddingLeft: '3.2rem',
             fontWeight: 400,
             position: 'absolute',
@@ -59,23 +59,21 @@ const useStyles = makeStyles((theme: Theme) =>
             fontSize: '1.5rem'
         },
         epochData: {
-            display: 'inline-block',
-            marginTop: '-19.5rem',
+            paddingTop: '2.5rem',
+            paddingRight: '20%',
+            float: 'right',
+            whiteSpace: 'nowrap',
 
-            [theme.breakpoints.down('lg')]: {
-                float: 'left',
-                paddingLeft: '14rem'
-            },
-            [theme.breakpoints.up('lg')]: {
-                float: 'right',
-                paddingRight: '2rem',
-                paddingLeft: '11rem'
+            [theme.breakpoints.down('md')]: {
+                paddingRight: '40%'
             }
         },
 
         blockProposer: {
-            marginTop: '-7rem',
-            marginLeft: '1rem',
+            [theme.breakpoints.down('md')]: {
+                marginTop: '-2rem'
+            },
+            paddingLeft: '1.5rem',
             display: 'flex'
         },
 
@@ -95,7 +93,10 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: '0.5rem',
             wordBreak: 'break-word',
             display: 'flex',
-            textAlign: 'left'
+            textAlign: 'left',
+            [theme.breakpoints.down('md')]: {
+                paddingBottom: '4rem'
+            }
         },
 
         roundIcon: {
@@ -130,7 +131,6 @@ const Epoch = (): JSX.Element => {
         averageBlockTime.data.chain.averageBlockTime
             ? averageBlockTime.data.chain.averageBlockTime
             : 0;
-
     // if (loading) return <ComponentLoader />;
     if (error)
         return (
@@ -220,7 +220,15 @@ const Epoch = (): JSX.Element => {
                         <Typography variant="body1" className={classes.box}>
                             Epoch
                         </Typography>
-                        <Grid item xs={12} style={{ width: '100%', height: 357 }}>
+                        <Grid
+                            item
+                            xs={7}
+                            style={{
+                                width: '100%',
+                                height: '15rem',
+                                overflow: 'visible',
+                                display: 'inline-block'
+                            }}>
                             <ResponsiveContainer>
                                 <PieChart>
                                     <Pie
@@ -244,7 +252,7 @@ const Epoch = (): JSX.Element => {
                             </ResponsiveContainer>
                         </Grid>
 
-                        <Grid item xs={12} className={classes.epochData}>
+                        <Grid item xs={5} className={classes.epochData}>
                             {data && data.epoch && data.epoch.epochNumber ? (
                                 <Typography variant="body1">
                                     <span className={classes.currentEpochText}>
@@ -277,7 +285,7 @@ const Epoch = (): JSX.Element => {
                             ) : null}
                         </Grid>
 
-                        <Grid item xs={5} className={classes.epochNumber}>
+                        <Grid item xs={12} className={classes.epochNumber}>
                             {blockProposer &&
                             blockProposer.data &&
                             blockProposer.data.blockAdded &&
