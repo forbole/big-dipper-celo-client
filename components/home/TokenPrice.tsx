@@ -331,7 +331,7 @@ const TokenPrice = (): JSX.Element => {
                             </Grid>
                         </Hidden>
 
-                        <ResponsiveContainer width="100%" height={smallScreen ? 200 : 290}>
+                        <ResponsiveContainer width="100%" height={smallScreen ? 200 : 292}>
                             <LineChart
                                 width={500}
                                 height={250}
