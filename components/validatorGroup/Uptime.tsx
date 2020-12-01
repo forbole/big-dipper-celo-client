@@ -20,7 +20,6 @@ import {
 } from 'recharts';
 
 import NavLink from '../NavLink';
-import { GET_BLOCK_DETAILS } from '../query/Block';
 import { GET_BLOCK } from '../query/Block';
 import { GET_VALIDATOR_GROUP } from '../query/ValidatorGroup';
 
@@ -59,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
         rootTooltip: {
             opacity: 5,
             width: '19.125rem',
-            height: '7.9rem'
+            height: '10rem'
         },
 
         cardContent: {
@@ -76,9 +75,7 @@ const useStyles = makeStyles((theme: Theme) =>
 let tooltip: string;
 type CustomTooltipType = {
     active: boolean;
-    payload: {
-        [index: string]: any;
-    };
+    payload: any;
 };
 const CustomTooltip = ({ active, payload }: CustomTooltipType) => {
     const classes = useStyles();
@@ -128,6 +125,28 @@ const CustomTooltip = ({ active, payload }: CustomTooltipType) => {
 
                             <Grid item xs={5}>
                                 <Typography color="textPrimary" variant="body2" align="left">
+                                    Voted
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={7}>
+                                <Typography color="textPrimary" variant="body2" align="right">
+                                    {bar.payload.VotedNumber}
+                                </Typography>
+                            </Grid>
+
+                            <Grid item xs={5}>
+                                <Typography color="textPrimary" variant="body2" align="left">
+                                    Missed
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={7}>
+                                <Typography color="textPrimary" variant="body2" align="right">
+                                    {bar.payload.MissedNumber}
+                                </Typography>
+                            </Grid>
+
+                            <Grid item xs={5}>
+                                <Typography color="textPrimary" variant="body2" align="left">
                                     Votes Available
                                 </Typography>
                             </Grid>
@@ -146,16 +165,6 @@ const CustomTooltip = ({ active, payload }: CustomTooltipType) => {
                                     {bar.payload.GasUsed} cUSD
                                 </Typography>
                             </Grid>
-                            {/* <Grid item xs={6}>
-                            <Typography color="textPrimary" variant="body2" align="left">
-                                Vote
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Typography color="textPrimary" variant="body2" align="right">
-                                Yes
-                            </Typography>
-                        </Grid> */}
                         </Grid>
                     </CardContent>
                 </Card>
@@ -172,7 +181,6 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
     const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
     const ROWSMALL = process.env.ROWSMALL ? parseInt(process.env.ROWSMALL) : 15;
     const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
-    const [items, setItems] = React.useState([]);
 
     const classes = useStyles();
     const theme = useTheme();
@@ -182,10 +190,12 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
     const [pageSize, setPageSize] = React.useState(ROWMEDIUM);
     const membersArray: { [index: number]: string } = [];
     let signedBlockCounter = 0;
-    const uptimeObject4: {
+    const blockUptime: {
         [index: number]: {
             Height: number;
-            Voted: any;
+            Voted: number;
+            VotedNumber: number;
+            MissedNumber: number;
             VotesAvailable: number;
             Proposer: string;
             GasUsed: number;
@@ -216,9 +226,6 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
         variables: { pageSize, page, fromBlock },
         pollInterval: 5000
     });
-    const blockDetails = useQuery(GET_BLOCK_DETAILS, {
-        variables: { number }
-    });
 
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
         variables: { valGroupAddress }
@@ -230,15 +237,12 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
         }
     }
 
-    const findHowManySignedTheBlock = () => {
+    const findHowValidatorsManySignedTheBlock = (returnRealValue: boolean) => {
         if (blockData && blockData.data && blockData.data.blocks && blockData.data.blocks.blocks) {
             {
                 blockData.data.blocks.blocks.map((row: any, index: number) => {
                     allSigners[index] = { signers: row.signers, number: row.number };
                 });
-
-                //allSigners length is 30
-                // membersArray is 5
 
                 for (let d = 0; d < Object.keys(allSigners).length; d++) {
                     signedBlockCounter = 0;
@@ -251,14 +255,23 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
                     }
                 }
             }
-            return (signedBlockCounter / Object.keys(membersArray).length) * 100;
+            if (returnRealValue) return signedBlockCounter;
+            else {
+                return (signedBlockCounter / Object.keys(membersArray).length) * 100;
+            }
+        } else {
+            return 0;
         }
     };
+
     if (blockData && blockData.data && blockData.data.blocks && blockData.data.blocks.blocks) {
         blockData.data.blocks.blocks.map((row: any, index: number) => {
-            uptimeObject4[index] = {
+            blockUptime[index] = {
                 Height: row.number,
-                Voted: findHowManySignedTheBlock(),
+                Voted: findHowValidatorsManySignedTheBlock(false),
+                VotedNumber: findHowValidatorsManySignedTheBlock(true),
+                MissedNumber:
+                    Object.keys(membersArray).length - findHowValidatorsManySignedTheBlock(true),
                 VotesAvailable:
                     data &&
                     data.validatorGroup &&
@@ -314,9 +327,7 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
                     <Grid item xs={12} lg={10}>
                         <ResponsiveContainer width="100%" height={smallScreen ? 200 : 303}>
                             <BarChart
-                                // width={350}
-                                // height={250}
-                                data={Object.assign(uptimeObject4).reverse()}
+                                data={Object.assign(blockUptime).reverse()}
                                 margin={{
                                     top: 0,
                                     right: smallScreen ? 0 : 0,
@@ -371,23 +382,17 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
                                     name="Voted"
                                     onMouseOver={() => (tooltip = 'Voted')}
                                 />
-                                <Bar
-                                    dataKey="Missed"
-                                    fill="rgba(150, 152, 154, 1)"
-                                    barSize={6}
-                                    fillOpacity={1}
-                                />
                             </BarChart>
                         </ResponsiveContainer>
                     </Grid>
-                    <span className={classes.power}>
+                    {/* <span className={classes.power}>
                         <Typography
                             color="textSecondary"
                             variant="caption"
                             className={classes.power}>
                             10/10000 (19h)
                         </Typography>
-                    </span>
+                    </span> */}
                 </Grid>
             </CardContent>
         </Card>
