@@ -21,6 +21,7 @@ import React from 'react';
 // import SearchBar from '../components/SearchBar';
 import Login from './ledger/Login';
 import NavLink from './NavLink';
+import SearchBar from './SearchBar';
 
 const drawerWidth = 220;
 
@@ -32,7 +33,8 @@ const useStyles = makeStyles((theme: Theme) =>
         appBar: {
             boxShadow: 'none',
             position: 'absolute',
-            textAlign: 'right'
+            textAlign: 'right',
+            padding: '1rem 1.7rem 0.5rem 1rem'
         },
         menuButton: {
             marginLeft: '0.3rem'
@@ -62,10 +64,10 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         content: {
             [theme.breakpoints.down('sm')]: {
-                marginTop: '8.5rem'
+                marginTop: '10rem'
             },
             [theme.breakpoints.up('md')]: {
-                marginTop: '5.5rem'
+                marginTop: '6.5rem'
             },
             paddingBottom: '1rem'
         },
@@ -82,14 +84,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
 
         login: {
-            marginTop: '0.8rem',
-            // textAlign: 'center',
-            [theme.breakpoints.down('md')]: {
-                marginRight: '2rem'
-            },
-            [theme.breakpoints.down('xs')]: {
-                marginRight: '0rem'
-            }
+            marginTop: '0.8rem'
         },
         toolbarItems: {
             verticalAlign: 'middle',
@@ -101,7 +96,7 @@ const useStyles = makeStyles((theme: Theme) =>
         searchBar: {
             textAlign: 'right',
             [theme.breakpoints.down('sm')]: {
-                margin: '-0.5rem 1rem 0rem 1rem'
+                margin: '-0.5rem 0rem 0rem 0.5rem'
             },
             [theme.breakpoints.up('md')]: {
                 marginLeft: '-0.5rem'
@@ -109,8 +104,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         celoIcon: {
             textAlign: 'left',
-            marginTop: '-0.325rem',
-            marginLeft: '0.5rem'
+            marginTop: '-0.325rem'
         },
 
         listItem: {
@@ -151,19 +145,21 @@ const Layout = (props: { children: React.ReactNode }): JSX.Element => {
         <div className={classes.root}>
             <AppBar position="fixed" className={clsx(classes.appBar)}>
                 <Grid container spacing={1} className={classes.toolbarItems}>
-                    <Grid item md={3} lg={4}>
-                        {''}
-                    </Grid>
+                    <Hidden smDown>
+                        <Grid item md={4}>
+                            {''}
+                        </Grid>
+                    </Hidden>
 
-                    {/* <Hidden smDown>
+                    <Hidden smDown>
                         <Grid item md={5} className={classes.searchBar}>
                             <SearchBar />
                         </Grid>
-                    </Hidden> */}
+                    </Hidden>
 
                     <Hidden mdUp>
                         <Grid item xs={3} className={classes.celoIcon}>
-                            <IconButton color="inherit" aria-label="Celo Dashboard" edge="start">
+                            <IconButton color="inherit" aria-label="Celo Dashboard">
                                 <img src="/images/celo-logo.svg" alt="Celo Dashboard" />
                             </IconButton>
                         </Grid>
@@ -175,15 +171,15 @@ const Layout = (props: { children: React.ReactNode }): JSX.Element => {
                     {/* <Grid item xs={5} sm={3} md={2} lg={1} className={classes.login}>
                         <Login />
                     </Grid> */}
-                    <Grid item xs={8} sm={12} className={classes.login}>
+                    <Grid item xs={9} md={3} className={classes.login}>
                         <Login />
                     </Grid>
 
-                    {/* <Hidden mdUp>
+                    <Hidden mdUp>
                         <Grid item xs={12} className={classes.searchBar}>
                             <SearchBar />
                         </Grid>
-                    </Hidden> */}
+                    </Hidden>
                 </Grid>
             </AppBar>
             {largeScreen ? (

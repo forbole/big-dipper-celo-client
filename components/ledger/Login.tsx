@@ -40,20 +40,14 @@ const useStyles = makeStyles((theme: Theme) =>
             verticalAlign: 'middle',
             '&:hover, &.Mui-focusVisible': { backgroundColor: 'rgba(58, 211, 158, 0.5)' },
             justifyContent: 'center',
-            alignText: 'center',
-            [theme.breakpoints.up('lg')]: {
-                marginRight: '2rem'
-            }
+            alignText: 'center'
         },
         logoutButton: {
             background: 'rgba(153, 153, 153, 1)',
             borderRadius: 5,
             padding: '0.1rem',
             verticalAlign: 'middle',
-            '&:hover, &.Mui-focusVisible': { backgroundColor: 'rgba(58, 211, 158, 0.5)' },
-            [theme.breakpoints.up('lg')]: {
-                marginRight: '2rem'
-            }
+            '&:hover, &.Mui-focusVisible': { backgroundColor: 'rgba(58, 211, 158, 0.5)' }
         },
         loggedIn: {
             background: 'rgba(153, 153, 153, 1)',
@@ -67,8 +61,7 @@ const useStyles = makeStyles((theme: Theme) =>
                 marginLeft: '-0.5rem'
             },
             [theme.breakpoints.down('sm')]: {
-                marginRight: '1rem',
-                marginLeft: '5rem'
+                marginRight: '1rem'
             }
         }
     })
