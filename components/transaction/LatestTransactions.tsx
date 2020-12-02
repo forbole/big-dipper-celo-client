@@ -16,7 +16,6 @@ import moment from 'moment';
 import React, { useEffect } from 'react';
 
 import Chips from '../Chips';
-import ComponentLoader from '../misc/ComponentLoader';
 import ErrorMessage from '../misc/ErrorMessage';
 import MiddleEllipsis from '../misc/MiddleEllipsis';
 import NotAvailable from '../misc/NotAvailable';
@@ -86,7 +85,7 @@ const useStyles = makeStyles({
 
     divider: {
         backgroundColor: 'rgba(232, 232, 232, 1)',
-        margin: '0 1rem',
+        margin: '0 1rem 0.3rem 1rem',
         display: 'flex'
     }
 });
