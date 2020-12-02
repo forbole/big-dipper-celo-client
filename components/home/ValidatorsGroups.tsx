@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import { createStyles, Divider, Theme } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,44 +11,48 @@ import ErrorMessage from '../misc/ErrorMessage';
 import NotAvailable from '../misc/NotAvailable';
 import { GET_ELECTION } from '../query/Election';
 
-const useStyles = makeStyles({
-    root: {
-        width: '100%',
-        height: '100%',
-        padding: '1.5%',
-        borderRadius: 4,
-        paddingBottom: '3.9rem'
-    },
-    box: {
-        letterSpacing: '1px',
-        padding: '0.8rem 0.6rem 3.9rem 0.6rem',
-        overflow: 'hidden',
-        whiteSpace: 'nowrap',
-        display: 'flex'
-    },
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            width: '100%',
+            height: '100%',
+            padding: '1.5%',
+            borderRadius: 4
+        },
+        box: {
+            letterSpacing: '1px',
+            padding: '0.8rem 0.6rem 3.9rem 0.6rem',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            display: 'flex'
+        },
 
-    rootMain: {
-        height: '100%'
-    },
+        data: {
+            display: 'inline-flex'
+        },
+        groupsData: {
+            textAlign: 'center'
+        },
+        validatorData: {
+            textAlign: 'center'
+        },
+        infoData: {
+            paddingTop: '1.5rem',
+            paddingBottom: '0.4rem'
+        },
 
-    data: {
-        display: 'inline-flex'
-    },
-    groupsData: {
-        textAlign: 'center'
-    },
-    validatorData: {
-        textAlign: 'center'
-    },
-    infoData: {
-        paddingTop: '1.5rem',
-        paddingBottom: '0.4rem'
-    },
+        valueData: {
+            paddingBottom: '0.6rem'
+        },
 
-    valueData: {
-        paddingBottom: '0.6rem'
-    }
-});
+        validators: {
+            paddingBottom: '4.5rem',
+            [theme.breakpoints.down('md')]: {
+                paddingBottom: '4rem'
+            }
+        }
+    })
+);
 
 const ValidatorsGroups = (): JSX.Element => {
     const classes = useStyles();
@@ -61,13 +66,13 @@ const ValidatorsGroups = (): JSX.Element => {
 
     return (
         <>
-            <Grid container spacing={2} className={classes.rootMain}>
+            <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Paper className={classes.root}>
                         <Typography variant="body1" className={classes.box}>
                             Validators / Groups
                         </Typography>
-                        <Grid container spacing={1} className={classes.rootMain}>
+                        <Grid container spacing={1}>
                             <Grid item xs={12} className={classes.data}>
                                 <Grid item xs={6} className={classes.validatorData}>
                                     <img src="/images/validator-icon.svg" alt="Validators" />
@@ -88,7 +93,8 @@ const ValidatorsGroups = (): JSX.Element => {
                                         variant="body2"
                                         color="textSecondary"
                                         gutterBottom
-                                        noWrap>
+                                        noWrap
+                                        className={classes.validators}>
                                         Elected / Registered
                                     </Typography>
                                 </Grid>

@@ -30,6 +30,7 @@
 * [#118] Added Ledger Integration: Vote/Revoke Votes for Validator Group
 * [#139] Added Attestation Requested & Fulfilled values to Account Details
 * Updated Proposals Fetching and Display
+* Updated Home Components Margin and Display 
 
 ## v0.1.3
 
