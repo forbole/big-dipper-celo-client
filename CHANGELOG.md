@@ -31,7 +31,7 @@
 * [#139] Added Attestation Requested & Fulfilled values to Account Details
 * Updated Proposals Fetching and Display
 * Updated Home Components Margin and Display 
-* [#70] Implemented Search Component
+* [#70] Implemented Search Component 
 
 ## v0.1.3
 
