@@ -45,6 +45,7 @@ export const GET_PROPOSAL = gql`
             transactionIndex
             upvoteList
             votes
+            status
             totalVotesList
             executionEpoch
             expirationEpoch

@@ -355,27 +355,31 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                     )}
                 </Grid>
                 <Grid item xs={12}>
-                    <Typography
-                        color="textSecondary"
-                        variant="subtitle1"
-                        className={classes.headerLabel}>
-                        (~
-                        {numbro(
-                            new BigNumber(data.proposal.votes.Total / CELO_FRACTION).toFormat()
-                        ).format({ average: true, mantissa: 2 })}{' '}
-                        of ~
-                        {chainData &&
-                        chainData.data &&
-                        chainData.data.chain &&
-                        chainData.data.chain.celoTotalSupply
-                            ? numbro(
-                                  new BigNumber(
-                                      chainData.data.chain.celoTotalSupply / CELO_FRACTION
-                                  ).toFormat(2)
-                              ).format({ average: true, mantissa: 2 })
-                            : null}{' '}
-                        CELO)
-                    </Typography>
+                    {data && data.proposal && data.proposal.votes ? (
+                        <Typography
+                            color="textSecondary"
+                            variant="subtitle1"
+                            className={classes.headerLabel}>
+                            (~
+                            {numbro(
+                                new BigNumber(data.proposal.votes.Total / CELO_FRACTION).toFormat()
+                            ).format({ average: true, mantissa: 2 })}{' '}
+                            of ~
+                            {chainData &&
+                            chainData.data &&
+                            chainData.data.chain &&
+                            chainData.data.chain.celoTotalSupply
+                                ? numbro(
+                                      new BigNumber(
+                                          chainData.data.chain.celoTotalSupply / CELO_FRACTION
+                                      ).toFormat(2)
+                                  ).format({ average: true, mantissa: 2 })
+                                : null}{' '}
+                            CELO)
+                        </Typography>
+                    ) : (
+                        <NotAvailable variant="body2" />
+                    )}
                 </Grid>
                 <Grid item xs={12}>
                     <PieChart width={350} height={220} className={classes.pieChart}>
@@ -404,54 +408,57 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                         />
                     </PieChart>
                 </Grid>
-
-                <Grid item xs={12}>
-                    <StyledTabs
-                        value={value}
-                        //textColor="primary"
-                        onChange={handleChange}
-                        aria-label="Proposal Vote Tabs"
-                        TabIndicatorProps={{
-                            style: {
-                                backgroundColor: 'rgba(255, 255, 255, 0.8)'
-                            }
-                        }}>
-                        <Tab
-                            label={`All (${
-                                Object.keys(data.proposal.totalVotesList['All']).length
-                            })`}
-                            className={classes.tabs}
-                        />
-                        <Tab
-                            label={`Yes (${
-                                Object.keys(data.proposal.totalVotesList['Yes']).length
-                            })`}
-                            className={classes.tabs}
-                        />
-                        <Tab
-                            label={`No (${Object.keys(data.proposal.totalVotesList['No']).length})`}
-                            className={classes.tabs}
-                        />
-                        <Tab
-                            label={`Abstain (${
-                                Object.keys(data.proposal.totalVotesList['Abstain']).length
-                            })`}
-                            className={classes.tabs}
-                        />
-                    </StyledTabs>
-                    <TabPanel value={value} index={0}>
-                        <RednderTabs voteType="All" />
-                    </TabPanel>
-                    <TabPanel value={value} index={1}>
-                        <RednderTabs voteType="Yes" />
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                        <RednderTabs voteType="No" />
-                    </TabPanel>
-                    <TabPanel value={value} index={3}>
-                        <RednderTabs voteType="Abstain" />
-                    </TabPanel>
-                </Grid>
+                {data && data.proposal && data.proposal.totalVotesList ? (
+                    <Grid item xs={12}>
+                        <StyledTabs
+                            value={value}
+                            //textColor="primary"
+                            onChange={handleChange}
+                            aria-label="Proposal Vote Tabs"
+                            TabIndicatorProps={{
+                                style: {
+                                    backgroundColor: 'rgba(255, 255, 255, 0.8)'
+                                }
+                            }}>
+                            <Tab
+                                label={`All (${
+                                    Object.keys(data.proposal.totalVotesList['All']).length
+                                })`}
+                                className={classes.tabs}
+                            />
+                            <Tab
+                                label={`Yes (${
+                                    Object.keys(data.proposal.totalVotesList['Yes']).length
+                                })`}
+                                className={classes.tabs}
+                            />
+                            <Tab
+                                label={`No (${
+                                    Object.keys(data.proposal.totalVotesList['No']).length
+                                })`}
+                                className={classes.tabs}
+                            />
+                            <Tab
+                                label={`Abstain (${
+                                    Object.keys(data.proposal.totalVotesList['Abstain']).length
+                                })`}
+                                className={classes.tabs}
+                            />
+                        </StyledTabs>
+                        <TabPanel value={value} index={0}>
+                            <RednderTabs voteType="All" />
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                            <RednderTabs voteType="Yes" />
+                        </TabPanel>
+                        <TabPanel value={value} index={2}>
+                            <RednderTabs voteType="No" />
+                        </TabPanel>
+                        <TabPanel value={value} index={3}>
+                            <RednderTabs voteType="Abstain" />
+                        </TabPanel>
+                    </Grid>
+                ) : null}
             </Paper>
         </Grid>
     );

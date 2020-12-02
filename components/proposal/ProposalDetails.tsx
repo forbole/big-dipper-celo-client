@@ -199,7 +199,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                                 {data.proposal.returnValues.proposalId}
                             </Typography>
                         ) : (
-                            <NotAvailable variant="body2" />
+                            <NotAvailable variant="body2" className={classes.alignRight} />
                         )}
                     </Grid>
 
@@ -223,7 +223,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                                 }
                             />
                         ) : (
-                            <NotAvailable variant="body2" />
+                            <NotAvailable variant="body2" className={classes.alignRight} />
                         )}
                     </Grid>
 
@@ -234,7 +234,11 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Title</Typography>
                         <Typography variant="body2">
-                            {proposalTitle ? proposalTitle : <NotAvailable variant="body2" />}
+                            {proposalTitle ? (
+                                proposalTitle
+                            ) : (
+                                <NotAvailable variant="body2" className={classes.alignRight} />
+                            )}
                         </Typography>
                     </Grid>
 
@@ -259,7 +263,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                                 />
                             </Typography>
                         ) : (
-                            <NotAvailable variant="body2" />
+                            <NotAvailable variant="body2" className={classes.alignRight} />
                         )}
                     </Grid>
 
@@ -280,7 +284,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                                 ).toFormat(2)}
                             </Typography>
                         ) : (
-                            <NotAvailable variant="body2" />
+                            <NotAvailable variant="body2" className={classes.alignRight} />
                         )}
                     </Grid>
 
@@ -301,7 +305,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                                 ).toUTCString()}
                             </Typography>
                         ) : (
-                            <NotAvailable variant="body2" />
+                            <NotAvailable variant="body2" className={classes.alignRight} />
                         )}
                     </Grid>
 
@@ -318,7 +322,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                                 {new Date(data.proposal.executionEpoch * 1000).toUTCString()}
                             </Typography>
                         ) : (
-                            <NotAvailable variant="body2" />
+                            <NotAvailable variant="body2" className={classes.alignRight} />
                         )}
                     </Grid>
 
@@ -335,7 +339,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                                 {new Date(data.proposal.referrendumEpoch * 1000).toUTCString()}
                             </Typography>
                         ) : (
-                            <NotAvailable variant="body2" />
+                            <NotAvailable variant="body2" className={classes.alignRight} />
                         )}
                     </Grid>
 
@@ -352,7 +356,7 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                                 {new Date(data.proposal.expirationEpoch * 1000).toUTCString()}
                             </Typography>
                         ) : (
-                            <NotAvailable variant="body2" />
+                            <NotAvailable variant="body2" className={classes.alignRight} />
                         )}
                     </Grid>
 
@@ -360,39 +364,41 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                         <Divider variant="middle" className={classes.divider} />
                     </Grid>
 
-                    <Grid item xs={12} className={classes.centerContent}>
-                        {voted ? (
-                            <LedgerDialog
-                                action="ProposalDeposit"
-                                buttonLabel="Deposit"
-                                proposalTitle={proposalTitle}
-                                proposalNumber={proposalNumber}
-                                proposer={
-                                    data.proposal &&
-                                    data.proposal.returnValues &&
-                                    data.proposal.returnValues.proposer
-                                        ? data.proposal.returnValues.proposer
-                                        : ''
-                                }
-                                proposalDescription={proposalDetails}
-                            />
-                        ) : (
-                            <LedgerDialog
-                                action="ProposalVote"
-                                buttonLabel="Vote"
-                                proposalTitle={proposalTitle}
-                                proposalNumber={proposalNumber}
-                                proposer={
-                                    data.proposal &&
-                                    data.proposal.returnValues &&
-                                    data.proposal.returnValues.proposer
-                                        ? data.proposal.returnValues.proposer
-                                        : ''
-                                }
-                                proposalDescription={proposalDetails}
-                            />
-                        )}
-                    </Grid>
+                    {data && data.proposal && data.proposal.status === 'Vote' ? (
+                        <Grid item xs={12} className={classes.centerContent}>
+                            {voted ? (
+                                <LedgerDialog
+                                    action="ProposalDeposit"
+                                    buttonLabel="Deposit"
+                                    proposalTitle={proposalTitle}
+                                    proposalNumber={proposalNumber}
+                                    proposer={
+                                        data.proposal &&
+                                        data.proposal.returnValues &&
+                                        data.proposal.returnValues.proposer
+                                            ? data.proposal.returnValues.proposer
+                                            : ''
+                                    }
+                                    proposalDescription={proposalDetails}
+                                />
+                            ) : (
+                                <LedgerDialog
+                                    action="ProposalVote"
+                                    buttonLabel="Vote"
+                                    proposalTitle={proposalTitle}
+                                    proposalNumber={proposalNumber}
+                                    proposer={
+                                        data.proposal &&
+                                        data.proposal.returnValues &&
+                                        data.proposal.returnValues.proposer
+                                            ? data.proposal.returnValues.proposer
+                                            : ''
+                                    }
+                                    proposalDescription={proposalDetails}
+                                />
+                            )}
+                        </Grid>
+                    ) : null}
                 </Grid>
             </CardContent>
         </Card>

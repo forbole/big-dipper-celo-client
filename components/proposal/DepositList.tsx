@@ -172,91 +172,99 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {Object.keys(data.proposal.upvoteList)
-                                .slice(page * pageSize, page * pageSize + pageSize)
-                                .map(function (row: any, index: number) {
-                                    return (
-                                        <TableRow
-                                            key={index}
-                                            style={
-                                                index % 2
-                                                    ? {
-                                                          background: 'rgba(248, 248, 248, 1)',
-                                                          border: 'none'
-                                                      }
-                                                    : { background: 'rgb(255,255,255)' }
-                                            }>
-                                            <TableCell
-                                                component="th"
-                                                scope="row"
-                                                padding="checkbox"
-                                                align="left"
-                                                className={classes.tableCell}>
-                                                {data.proposal &&
-                                                data.proposal.upvoteList[row] &&
-                                                data.proposal.upvoteList[row].returnValues &&
-                                                data.proposal.upvoteList[row].returnValues
-                                                    .account ? (
-                                                    <NavLink
-                                                        href={`/account/${data.proposal.upvoteList[row].returnValues.account}`}
-                                                        name={
-                                                            <Typography variant="body2" noWrap>
-                                                                {
-                                                                    data.proposal.upvoteList[row]
-                                                                        .returnValues.account
-                                                                }
-                                                            </Typography>
-                                                        }
-                                                    />
-                                                ) : (
-                                                    <NotAvailable variant="body2" />
-                                                )}
-                                            </TableCell>
-                                            <TableCell
-                                                align="right"
-                                                padding="checkbox"
-                                                className={classes.tableCell}>
-                                                {data.proposal &&
-                                                data.proposal.upvoteList[row] &&
-                                                data.proposal.upvoteList[row].returnValues &&
-                                                data.proposal.upvoteList[row].returnValues
-                                                    .upvotes ? (
-                                                    <Typography
-                                                        variant="body2"
-                                                        noWrap
-                                                        color="textPrimary">
-                                                        {new BigNumber(
-                                                            data.proposal.upvoteList[row]
-                                                                .returnValues.upvotes /
-                                                                CELO_FRACTION
-                                                        ).toFormat(2)}
-                                                    </Typography>
-                                                ) : (
-                                                    <NotAvailable variant="body2" />
-                                                )}
-                                            </TableCell>
-                                            <TableCell
-                                                align="right"
-                                                padding="checkbox"
-                                                className={classes.tableCell}>
-                                                {txDetails.data &&
-                                                txDetails.data.transaction &&
-                                                txDetails.data.transaction.timestamp ? (
-                                                    <Typography
-                                                        variant="body2"
-                                                        noWrap
-                                                        color="textPrimary">
-                                                        {moment
-                                                            .unix(
-                                                                txDetails.data.transaction.timestamp
-                                                            )
-                                                            .format('Do MMMM YYYY, h:mm:ss a')}
-                                                    </Typography>
-                                                ) : (
-                                                    <NotAvailable variant="body2" />
-                                                )}
-                                            </TableCell>
-                                            {/* <TableCell
+                            {data && data.proposal && data.proposal.upvoteList
+                                ? Object.keys(data.proposal.upvoteList)
+                                      .slice(page * pageSize, page * pageSize + pageSize)
+                                      .map(function (row: any, index: number) {
+                                          return (
+                                              <TableRow
+                                                  key={index}
+                                                  style={
+                                                      index % 2
+                                                          ? {
+                                                                background:
+                                                                    'rgba(248, 248, 248, 1)',
+                                                                border: 'none'
+                                                            }
+                                                          : { background: 'rgb(255,255,255)' }
+                                                  }>
+                                                  <TableCell
+                                                      component="th"
+                                                      scope="row"
+                                                      padding="checkbox"
+                                                      align="left"
+                                                      className={classes.tableCell}>
+                                                      {data.proposal &&
+                                                      data.proposal.upvoteList[row] &&
+                                                      data.proposal.upvoteList[row].returnValues &&
+                                                      data.proposal.upvoteList[row].returnValues
+                                                          .account ? (
+                                                          <NavLink
+                                                              href={`/account/${data.proposal.upvoteList[row].returnValues.account}`}
+                                                              name={
+                                                                  <Typography
+                                                                      variant="body2"
+                                                                      noWrap>
+                                                                      {
+                                                                          data.proposal.upvoteList[
+                                                                              row
+                                                                          ].returnValues.account
+                                                                      }
+                                                                  </Typography>
+                                                              }
+                                                          />
+                                                      ) : (
+                                                          <NotAvailable variant="body2" />
+                                                      )}
+                                                  </TableCell>
+                                                  <TableCell
+                                                      align="right"
+                                                      padding="checkbox"
+                                                      className={classes.tableCell}>
+                                                      {data.proposal &&
+                                                      data.proposal.upvoteList[row] &&
+                                                      data.proposal.upvoteList[row].returnValues &&
+                                                      data.proposal.upvoteList[row].returnValues
+                                                          .upvotes ? (
+                                                          <Typography
+                                                              variant="body2"
+                                                              noWrap
+                                                              color="textPrimary">
+                                                              {new BigNumber(
+                                                                  data.proposal.upvoteList[row]
+                                                                      .returnValues.upvotes /
+                                                                      CELO_FRACTION
+                                                              ).toFormat(2)}
+                                                          </Typography>
+                                                      ) : (
+                                                          <NotAvailable variant="body2" />
+                                                      )}
+                                                  </TableCell>
+                                                  <TableCell
+                                                      align="right"
+                                                      padding="checkbox"
+                                                      className={classes.tableCell}>
+                                                      {txDetails.data &&
+                                                      txDetails.data.transaction &&
+                                                      txDetails.data.transaction.timestamp ? (
+                                                          <Typography
+                                                              variant="body2"
+                                                              noWrap
+                                                              color="textPrimary">
+                                                              {moment
+                                                                  .unix(
+                                                                      txDetails.data.transaction
+                                                                          .timestamp
+                                                                  )
+                                                                  .format(
+                                                                      'Do MMMM YYYY, h:mm:ss a'
+                                                                  )}
+                                                          </Typography>
+                                                      ) : (
+                                                          <NotAvailable variant="body2" />
+                                                      )}
+                                                  </TableCell>
+                                                  {/* <TableCell
                         align="left"
                         padding="checkbox"
                         className={classes.tableCell}
@@ -279,9 +287,10 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                           {row.time}
                         </Typography>
                       </TableCell> */}
-                                        </TableRow>
-                                    );
-                                })}
+                                              </TableRow>
+                                          );
+                                      })
+                                : null}
                         </TableBody>
                     </Table>
                 </TableContainer>
@@ -295,7 +304,11 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                         ROWXLARGE
                     ]}
                     component="div"
-                    count={Object.keys(data.proposal.upvoteList).length}
+                    count={
+                        data && data.proposal && data.proposal.upvoteList
+                            ? Object.keys(data.proposal.upvoteList).length
+                            : 0
+                    }
                     rowsPerPage={pageSize}
                     page={pageNumber}
                     onChangePage={handleChangePage}
