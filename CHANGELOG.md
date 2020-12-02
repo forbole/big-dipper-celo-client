@@ -34,6 +34,7 @@
 * [#70] Implemented Search Component 
 * [#140] Updated Validator Groups Values
 * [#141] Updated Footer to stay at the bottom of the page
+* [#143] Updated bottom navigation margin to display all Bottom Navigation Tabs 
 
 ## v0.1.3
 

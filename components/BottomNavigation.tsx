@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 
     tabElement: {
-        margin: '-0.5rem',
+        margin: '-0.9rem',
         display: 'flex'
     }
 }));
