@@ -36,8 +36,6 @@ export const GET_VALIDATOR_GROUPS = gql`
                 votesAvailable
                 electedValidators
                 rewards
-                rewardsMultiplier
-                targetValidatorEpochPayment
             }
         }
     }
@@ -78,18 +76,6 @@ export const GET_VALIDATOR_GROUP = gql`
                     pending
                 }
             }
-            membersAccount {
-                address
-                balance
-                lockedGold
-                totalBalance {
-                    gold
-                    lockedGold
-                    usd
-                    total
-                    pending
-                }
-            }
             membersUpdated
             name
             votes
@@ -100,8 +86,6 @@ export const GET_VALIDATOR_GROUP = gql`
             slashingMultiplier
             electedValidators
             rewards
-            rewardsMultiplier
-            targetValidatorEpochPayment
         }
     }
 `;
