@@ -160,35 +160,43 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                 <Divider className={classes.divider} />
                             </Grid>
 
-                            {/* <Grid item xs={6} className={classes.item}>
-                            <Typography variant="body2" className={classes.alignLeft}>
-                                Attestations Requested
-                    </Typography>
-                        </Grid>
-                        <Grid item xs={6} className={classes.item} >
-                            <Typography variant="body2" className={classes.alignRight}  >
-                                {"15"}
-                            </Typography>
-                        </Grid>
+                            <Grid item xs={6} className={classes.item}>
+                                <Typography variant="body2" className={classes.alignLeft}>
+                                    Attestations Requested
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={6} className={classes.item}>
+                                {data && data.validator && data.validator.attestationRequested ? (
+                                    <Typography variant="body2" className={classes.alignRight}>
+                                        {data.validator.attestationRequested}
+                                    </Typography>
+                                ) : (
+                                    <NotAvailable variant="body2" className={classes.alignRight} />
+                                )}
+                            </Grid>
 
-                        <Grid item xs={12}>
-                            <Divider variant='middle' className={classes.divider} />
-                        </Grid>
+                            <Grid item xs={12}>
+                                <Divider className={classes.divider} />
+                            </Grid>
 
-                        <Grid item xs={6} className={classes.item}>
-                            <Typography variant="body2" className={classes.alignLeft}>
-                                Attestations Fulfilled
-                    </Typography>
-                        </Grid>
-                        <Grid item xs={6} className={classes.item} >
-                            <Typography variant="body2" className={classes.alignRight} >
-                                {"12"}
-                            </Typography>
-                        </Grid>
+                            <Grid item xs={6} className={classes.item}>
+                                <Typography variant="body2" className={classes.alignLeft}>
+                                    Attestations Fulfilled
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={6} className={classes.item}>
+                                {data && data.validator && data.validator.attestationFulfilled ? (
+                                    <Typography variant="body2" className={classes.alignRight}>
+                                        {data.validator.attestationFulfilled}
+                                    </Typography>
+                                ) : (
+                                    <NotAvailable variant="body2" className={classes.alignRight} />
+                                )}
+                            </Grid>
 
-                        <Grid item xs={12}>
-                            <Divider variant='middle' className={classes.divider} />
-                        </Grid> */}
+                            <Grid item xs={12}>
+                                <Divider className={classes.divider} />
+                            </Grid>
 
                             <Grid item xs={4} className={classes.item}>
                                 <Typography variant="body2" className={classes.alignLeft}>
@@ -236,7 +244,7 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                 </>
                             ) : (
                                 <>
-                                    <Grid item xs={8} className={classes.item}>
+                                    <Grid item xs={12} className={classes.item}>
                                         <NotAvailable
                                             variant="body2"
                                             className={classes.alignRight}
@@ -257,7 +265,7 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                             <Grid item xs={9} className={classes.item}>
                                 {data.validator && data.validator.score ? (
                                     <Typography variant="body2" className={classes.alignRight}>
-                                        {new BigNumber(data.validator.score).toFormat(2)} %
+                                        {new BigNumber(data.validator.score * 100).toFormat(2)} %
                                     </Typography>
                                 ) : (
                                     <NotAvailable variant="body2" className={classes.alignRight} />
@@ -379,8 +387,11 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                 </>
                             ) : (
                                 <>
-                                    <Grid item xs={7} className={classes.item}>
-                                        <NotAvailable variant="body2" />
+                                    <Grid item xs={8} className={classes.item}>
+                                        <NotAvailable
+                                            className={classes.alignRight}
+                                            variant="body2"
+                                        />
                                     </Grid>
                                 </>
                             )}
