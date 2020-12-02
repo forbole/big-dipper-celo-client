@@ -28,7 +28,8 @@ const drawerWidth = 220;
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            display: 'flex'
+            display: 'flex',
+            minHeight: '100vh'
         },
         appBar: {
             boxShadow: 'none',

@@ -33,6 +33,7 @@
 * Updated Home Components Margin and Display 
 * [#70] Implemented Search Component 
 * [#140] Updated Validator Groups Values
+* [#141] Updated Footer to stay at the bottom of the page
 
 ## v0.1.3
 
