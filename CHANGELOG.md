@@ -32,6 +32,7 @@
 * Updated Proposals Fetching and Display
 * Updated Home Components Margin and Display 
 * [#70] Implemented Search Component 
+* [#140] Updated Validator Groups Values
 
 ## v0.1.3
 
