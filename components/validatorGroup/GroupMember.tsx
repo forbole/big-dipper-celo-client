@@ -1,3 +1,4 @@
+import { useQuery } from '@apollo/client';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
@@ -5,9 +6,15 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import BigNumber from 'bignumber.js';
+import numbro from 'numbro';
 import React from 'react';
 
+import ComponentLoader from '../misc/ComponentLoader';
+import ErrorMessage from '../misc/ErrorMessage';
+import NotAvailable from '../misc/NotAvailable';
 import NavLink from '../NavLink';
+import { GET_VALIDATOR_GROUP } from '../query/ValidatorGroup';
 
 const useStyles = makeStyles(() => {
     return {
@@ -34,7 +41,7 @@ const useStyles = makeStyles(() => {
             justifyContent: 'center',
             border: 'solid rgba(67, 72, 76, 1) ',
             borderRadius: 5,
-            backgroundColor: 'rgba(246, 247, 249, 1)',
+            backgroundColor: 'rgba(77, 81, 85, 1)',
             color: 'rgba(255, 255, 255, 0.6)',
             height: '1.5rem',
             width: '1.5rem'
@@ -67,7 +74,7 @@ const useStyles = makeStyles(() => {
             width: '0.7rem',
             verticalAlign: 'middle',
             color: 'rgba(251, 204, 92, 1)',
-            margin: '0 0.25rem'
+            margin: '0 0.25rem 0.25rem 0.75rem'
         },
 
         memberNumber: {
@@ -79,92 +86,163 @@ const useStyles = makeStyles(() => {
             marginTop: '0.3rem'
         },
         alignRight: {
-            alignItems: 'right'
+            // alignItems: 'right',
+            float: 'right'
+        },
+        membersInfo: {
+            paddingLeft: '1.5rem'
         }
     };
 });
 
-const GroupMember = (): JSX.Element => {
-    const classes = useStyles();
+type GroupMemberProps = { validatorGroupAddress: string };
 
+const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element => {
+    const classes = useStyles();
+    const valGroupAddress = validatorGroupAddress;
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+    const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
+        variables: { valGroupAddress }
+    });
+
+    const findElectedValidators = (membersAddress: any, electedValidators: any) => {
+        for (const d in Object.keys(electedValidators)) {
+            if (electedValidators[d] === membersAddress) {
+                return <FiberManualRecordIcon className={classes.dotIcon} />;
+            }
+        }
+    };
+
+    const calculateValidatorRewards = (address: string) => {
+        let rewardValue;
+        if (data && data.validatorGroup && data.validatorGroup.rewards) {
+            for (const d in data.validatorGroup.rewards) {
+                if (data.validatorGroup.rewards[d].validatorAddress === address) {
+                    rewardValue = data.validatorGroup.rewards[d].validatorReward;
+                }
+            }
+            return new BigNumber(rewardValue / CELO_FRACTION).toFormat(2);
+        }
+    };
+
+    if (loading) return <ComponentLoader />;
+    if (error) return <ErrorMessage message={error.message} />;
     return (
         <Card className={classes.root}>
             <CardContent>
                 <Grid container spacing={1} className={classes.item}>
                     <Grid item xs={12} className={classes.member}>
-                        <Typography color="textPrimary" variant="subtitle1">
-                            Group member (2) <FiberManualRecordIcon className={classes.dotIcon} />
+                        <Typography color="textPrimary" variant="subtitle1" noWrap>
+                            Group member
+                            {data.validatorGroup && data.validatorGroup.members
+                                ? ` (${data.validatorGroup.members.length})`
+                                : null}{' '}
+                            <FiberManualRecordIcon className={classes.dotIcon} />
                         </Typography>
                         <Typography
                             color="textPrimary"
-                            variant="body1"
+                            variant="body2"
                             className={classes.memberNumber}>
                             Elected
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <Divider variant="middle" className={classes.divider} />
+                        <Divider className={classes.divider} />
                     </Grid>
-                    <Grid item xs={6} className={classes.member}>
-                        <Typography variant="body2" className={classes.memberNumber}>
-                            #1
-                        </Typography>
-                        <NavLink
-                            href={`account/${1}`}
-                            name={
-                                <Typography variant="body1">
-                                    Vincent Lynch{' '}
-                                    <FiberManualRecordIcon className={classes.dotIcon} />
-                                </Typography>
-                            }
-                        />
-                    </Grid>
+                    {data && data.validatorGroup && data.validatorGroup.members
+                        ? data.validatorGroup.members.map((row: any, index: number) => {
+                              return (
+                                  <>
+                                      <Grid item xs={8} className={classes.member}>
+                                          <Typography
+                                              variant="body2"
+                                              className={classes.memberNumber}>
+                                              #{index + 1}
+                                          </Typography>
+                                          {row.name ? (
+                                              <NavLink
+                                                  href={`/account/${row.address}`}
+                                                  name={
+                                                      <Typography variant="body1">
+                                                          {row.name}{' '}
+                                                          {findElectedValidators(
+                                                              row.address,
+                                                              data.validatorGroup.electedValidators
+                                                          )}
+                                                      </Typography>
+                                                  }
+                                              />
+                                          ) : (
+                                              <NotAvailable variant="body1" />
+                                          )}
+                                      </Grid>
 
-                    <Grid item xs={6}>
-                        <Typography variant="body1" align="right" color="textPrimary">
-                            1,000 CELO
-                        </Typography>
-                    </Grid>
+                                      <Grid item xs={4}>
+                                          {data.validatorGroup.membersAccount ? (
+                                              <Typography
+                                                  variant="body1"
+                                                  align="right"
+                                                  color="textPrimary">
+                                                  {new BigNumber(
+                                                      new BigNumber(
+                                                          data.validatorGroup.membersAccount[
+                                                              index
+                                                          ].lockedGold.total
+                                                      ) / CELO_FRACTION
+                                                  ).toFormat(2)}{' '}
+                                                  CELO
+                                              </Typography>
+                                          ) : (
+                                              <NotAvailable
+                                                  variant="body1"
+                                                  className={classes.alignRight}
+                                              />
+                                          )}
+                                      </Grid>
 
-                    <Grid item xs={6}>
-                        <Typography variant="caption">99.8%</Typography>
-                        <Typography variant="caption">10.9%</Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Typography variant="body2" align="right">
-                            0.987CELO
-                        </Typography>
-                    </Grid>
-
-                    <Grid item xs={12}>
-                        <Divider variant="middle" className={classes.divider} />
-                    </Grid>
-
-                    <Grid item xs={6} className={classes.member}>
-                        <Typography variant="body2" className={classes.memberNumber}>
-                            #2
-                        </Typography>
-                        <NavLink
-                            href={`account/${1}`}
-                            name={<Typography variant="body1">Michelle Clark</Typography>}
-                        />
-                    </Grid>
-
-                    <Grid item xs={6}>
-                        <Typography variant="body1" align="right" color="textPrimary">
-                            1,000 CELO
-                        </Typography>
-                    </Grid>
-
-                    <Grid item xs={6}>
-                        <Typography variant="caption">99.8%</Typography>
-                        <Typography variant="caption">10.9%</Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Typography variant="body2" align="right">
-                            0.987CELO
-                        </Typography>
-                    </Grid>
+                                      <Grid item xs={6}>
+                                          <Typography
+                                              variant="caption"
+                                              className={classes.membersInfo}>
+                                              <img src="/images/time.svg" alt="Uptime" />{' '}
+                                              {new BigNumber(row.score * 100).toFormat(2)} %
+                                          </Typography>
+                                          <Typography
+                                              variant="caption"
+                                              className={classes.membersInfo}>
+                                              <img
+                                                  src="/images/attestation.svg"
+                                                  alt="Attestation"
+                                                  style={{ marginRight: '0.2rem' }}
+                                              />
+                                              {numbro(
+                                                  (row.attestationCompleted /
+                                                      row.attestationRequested) *
+                                                      100
+                                              ).format('0.00')}{' '}
+                                              %
+                                          </Typography>
+                                      </Grid>
+                                      <Grid item xs={6}>
+                                          {data &&
+                                          data.validatorGroup &&
+                                          data.validatorGroup.rewards ? (
+                                              <Typography variant="body2" align="right">
+                                                  <img
+                                                      src="/images/reward.svg"
+                                                      alt="Rewards"
+                                                      style={{ marginRight: '0.2rem' }}
+                                                  />
+                                                  {calculateValidatorRewards(row.address)} cUSD
+                                              </Typography>
+                                          ) : (
+                                              '0.00 cUSD'
+                                          )}
+                                      </Grid>
+                                  </>
+                              );
+                          })
+                        : null}
                 </Grid>
             </CardContent>
         </Card>

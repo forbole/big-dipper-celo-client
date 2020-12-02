@@ -1,10 +1,20 @@
+import { useQuery } from '@apollo/client';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import BigNumber from 'bignumber.js';
+import numbro from 'numbro';
 import React from 'react';
+
+import LedgerDialog from '../ledger/LedgerDialog';
+import ComponentLoader from '../misc/ComponentLoader';
+import ErrorMessage from '../misc/ErrorMessage';
+import NotAvailable from '../misc/NotAvailable';
+import { GET_ACCOUNT_DETAILS } from '../query/Account';
+import { GET_VALIDATOR_GROUP } from '../query/ValidatorGroup';
 
 const useStyles = makeStyles(() => {
     return {
@@ -25,7 +35,7 @@ const useStyles = makeStyles(() => {
             justifyContent: 'center',
             border: 'solid rgba(67, 72, 76, 1) ',
             borderRadius: 5,
-            backgroundColor: 'rgba(246, 247, 249, 1)',
+            backgroundColor: 'rgba(77, 81, 85, 1)',
             color: 'rgba(255, 255, 255, 0.6)',
             height: '1.5rem',
             width: '1.5rem'
@@ -51,97 +61,149 @@ const useStyles = makeStyles(() => {
 
         cardItem: {
             padding: '1rem'
+        },
+
+        alignRight: {
+            float: 'right'
+        },
+
+        validatorGroupName: {
+            display: 'block',
+            color: 'rgba(46,137,90, 1)',
+            fontWeight: 500,
+            wordBreak: 'break-all'
         }
     };
 });
 
-const Overview = (): JSX.Element => {
+type OverviewProps = { address: string };
+
+const Overview = ({ address }: OverviewProps): JSX.Element => {
     const classes = useStyles();
+    const valGroupAddress = address;
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+
+    const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
+        variables: { valGroupAddress }
+    });
+
+    const accountData = useQuery(GET_ACCOUNT_DETAILS, {
+        variables: { address }
+    });
+
+    const validatorGroupMembers =
+        data && data.validatorGroup && data.validatorGroup.members
+            ? data.validatorGroup.members
+            : [];
+
+    const calculateTotalUptime = () => {
+        let addScore = 0;
+        for (const c in validatorGroupMembers) {
+            addScore = addScore + validatorGroupMembers[c].score;
+        }
+        const totalScore = (addScore / validatorGroupMembers.length) * 100;
+        return numbro(totalScore).format('0.00');
+    };
+
+    const calculateAttestation = () => {
+        let addTotalRequested = 0;
+        let addTotalFulfilled = 0;
+
+        if (data && data.validatorGroup) {
+            for (const d in data.validatorGroup.members) {
+                addTotalRequested =
+                    addTotalRequested +
+                    parseFloat(data.validatorGroup.members[d].attestationRequested);
+                addTotalFulfilled =
+                    addTotalFulfilled +
+                    parseFloat(data.validatorGroup.members[d].attestationCompleted);
+            }
+        }
+        return numbro((addTotalFulfilled / addTotalRequested) * 100).format('0.00');
+    };
+
+    if (loading) return <ComponentLoader />;
+    if (error) return <ErrorMessage message={error.message} />;
+
     return (
         <Card className={classes.root}>
             <CardContent>
                 <Grid container spacing={1} justify="center" className={classes.item}>
                     <Grid item xs={12}>
-                        <Typography color="textSecondary" variant="subtitle1" gutterBottom>
+                        <Typography color="textPrimary" variant="subtitle1" gutterBottom>
                             Overview
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <Divider variant="middle" className={classes.divider} />
+                        <Divider className={classes.divider} />
                     </Grid>
-                    <Grid item xs={6} className={classes.item}>
+                    <Grid item xs={3} className={classes.item}>
                         <Typography variant="body2">Group Name</Typography>
                     </Grid>
-                    <Grid item xs={6} className={classes.item}>
-                        <Typography variant="body2" align="right">
-                            Nan Valdez G
-                            {/* {data.block && data.block.timestamp
-                ? new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
-                : <NotAvailable variant="body2" />}
-              (
-              {data && data.block && data.block.timestamp
-                ? moment.unix(data.block.timestamp).fromNow()
-                : null}
-              ) */}
-                        </Typography>
+                    <Grid item xs={9} className={classes.item}>
+                        {data.validatorGroup && data.validatorGroup.name ? (
+                            <Typography
+                                variant="body2"
+                                align="right"
+                                className={classes.validatorGroupName}>
+                                {data.validatorGroup.name}
+                            </Typography>
+                        ) : (
+                            <NotAvailable variant="body2" className={classes.alignRight} />
+                        )}
                     </Grid>
                     <Grid item xs={12}>
-                        <Divider variant="middle" className={classes.divider} />
+                        <Divider className={classes.divider} />
                     </Grid>
 
-                    <Grid item xs={6} className={classes.item}>
+                    <Grid item xs={3} className={classes.item}>
                         <Typography variant="body2">Locked CELO</Typography>
                     </Grid>
-                    <Grid item xs={6} className={classes.item}>
-                        <Typography variant="body2" align="right">
-                            2,000 CELO
-                            {/* {data.block &&
-              data.block.transactions &&
-              data.block.transactions.transactionIndex
-                ? data.block.transactions.transactionIndex.length()
-                : <NotAvailable variant="body2" />} */}
-                        </Typography>
+                    <Grid item xs={9} className={classes.item}>
+                        {data && data.validatorGroup && data.validatorGroup.lockedGoldAmount ? (
+                            <Typography variant="body2" align="right">
+                                {new BigNumber(
+                                    data.validatorGroup.lockedGoldAmount / CELO_FRACTION
+                                ).toFormat(2)}{' '}
+                                CELO
+                            </Typography>
+                        ) : (
+                            <NotAvailable variant="body2" className={classes.alignRight} />
+                        )}
                     </Grid>
 
                     <Grid item xs={12}>
-                        <Divider variant="middle" className={classes.divider} />
+                        <Divider className={classes.divider} />
                     </Grid>
 
                     <Grid item xs={6} className={classes.item}>
                         <Typography variant="body2">Group Share</Typography>
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
-                        <Typography variant="body2" align="right">
-                            10%
-                            {/* {data.block && data.block.hash
-                ? data.block.hash
-                : <NotAvailable variant="body2" />} */}
-                        </Typography>
+                        {data && data.validatorGroup && data.validatorGroup.commission ? (
+                            <Typography variant="body2" align="right">
+                                {data.validatorGroup.commission * 100} %
+                            </Typography>
+                        ) : (
+                            <NotAvailable variant="body2" />
+                        )}
                     </Grid>
 
-                    <Divider variant="middle" className={classes.divider} />
+                    <Grid item xs={12}>
+                        <Divider className={classes.divider} />
+                    </Grid>
 
                     <Grid item xs={6} className={classes.item}>
                         <Typography variant="body2">Uptime</Typography>
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
                         <Typography variant="body2" align="right">
-                            100%
-                            {/* {data.block && data.block.parentHash ? (
-                <Link
-                  href="transaction/[transaction]/"
-                  as={`transaction/${data.block.parentHash}`}
-                  color="secondary"
-                  //className={classes.leftInline}
-                >
-                  {data.block.parentHash}
-                </Link>
-              ) : <NotAvailable variant="body2" />} */}
+                            {calculateTotalUptime()} %
                         </Typography>
                     </Grid>
 
                     <Grid item xs={12}>
-                        <Divider variant="middle" className={classes.divider} />
+                        <Divider className={classes.divider} />
                     </Grid>
 
                     <Grid item xs={6} className={classes.item}>
@@ -149,15 +211,12 @@ const Overview = (): JSX.Element => {
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
                         <Typography variant="body2" align="right">
-                            10.9%
-                            {/* {data.block && data.block.totalDifficulty
-                ? data.block.totalDifficulty
-                : <NotAvailable variant="body2" />} */}
+                            {calculateAttestation()} %
                         </Typography>
                     </Grid>
 
-                    <Grid item xs={12}>
-                        <Divider variant="middle" className={classes.divider} />
+                    {/* <Grid item xs={12}>
+                        <Divider className={classes.divider} />
                     </Grid>
 
                     <Grid item xs={12} className={classes.item}>
@@ -167,20 +226,15 @@ const Overview = (): JSX.Element => {
                             auctor. Curabitur elementum nunc a leo imperdiet, nec elementum diam
                             elementum. Etiam elementum euismod commodo. Proin eleifend eget quam ut
                             efficitur. Mauris a accumsan mauris.
-                            {/* {data.block &&
-              data.block.transactions &&
-              data.block.transactions.nonce
-                ? data.block.transactions.nonce
-                : <NotAvailable variant="body2" />} */}
                         </Typography>
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item xs={12}>
-                        <Divider variant="middle" className={classes.divider} />
+                        <Divider className={classes.divider} />
                     </Grid>
 
                     <Grid item xs={12} className={classes.centerContent}>
-                        {/* <LedgerButtons option="ValidatorGroupVote" /> */}
+                        <LedgerDialog action="ValidatorGroupVote" buttonLabel="Vote" />
                     </Grid>
                 </Grid>
             </CardContent>

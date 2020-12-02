@@ -10,6 +10,8 @@ export const GET_VALIDATOR = gql`
             score
             signer
             address
+            attestationCompleted
+            attestationRequested
             validatorGroup {
                 address
                 commission
