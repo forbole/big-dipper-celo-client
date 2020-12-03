@@ -70,7 +70,8 @@ const useStyles = makeStyles((theme: Theme) =>
         errorMessage: {
             color: 'red',
             textAlign: 'center',
-            paddingBottom: '1rem'
+            paddingBottom: '2rem',
+            wordBreak: 'break-all'
         },
 
         circularProgress: {
@@ -85,7 +86,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
 
         ledgerDialogPopup: {
-            padding: '0 1rem 1rem 1rem'
+            padding: '0 1rem 0rem 1rem'
         },
 
         dialogTitle: {
@@ -110,7 +111,8 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'block',
             textAlign: 'center',
             paddingTop: '0.5rem',
-            paddingBottom: '0.7rem'
+            paddingBottom: '0.7rem',
+            paddingLeft: '2.5rem'
         },
 
         voteNoButton: {
@@ -209,6 +211,8 @@ type LedgerDialogProps = {
     validatorGroup?: string;
 };
 
+type CheckIfAccountProps = { address: string };
+
 const LedgerDialog = ({
     buttonLabel,
     action,
@@ -238,6 +242,7 @@ const LedgerDialog = ({
         proposalDescription || ''
     );
     const [vote, setVote] = React.useState('');
+    const [hash, setHash] = React.useState('');
 
     const address = currentUser;
 
@@ -267,7 +272,7 @@ const LedgerDialog = ({
                     case 1:
                         return <LockGoldConfirm amount={amount} />;
                     case 2:
-                        return <LockGoldSuccess />;
+                        return <LockGoldSuccess txHash={hash} />;
                     default:
                         return null;
                 }
@@ -291,7 +296,7 @@ const LedgerDialog = ({
                     case 1:
                         return <UnlockGoldConfirm amount={amount} />;
                     case 2:
-                        return <UnlockGoldSuccess />;
+                        return <UnlockGoldSuccess txHash={hash} />;
                     default:
                         return null;
                 }
@@ -336,7 +341,7 @@ const LedgerDialog = ({
                             />
                         );
                     case 2:
-                        return <VoteSuccess />;
+                        return <VoteSuccess/>;
                     default:
                         return null;
                 }
@@ -403,13 +408,46 @@ const LedgerDialog = ({
         }
     };
 
+    const checkIfAccount = async ({ address }: CheckIfAccountProps) => {
+        const accountAddress = { address: address };
+        try {
+            const isAccount = await Ledger.isAccount(accountAddress);
+            if (isAccount === true) {
+                return true;
+            } else {
+                setLedgerLoading(true);
+                setLedgerErrorMessage(
+                    `Can't find an account with address ${address} on the chain. Please accept the connection and sign the transaction on your Ledger deivce to create an account. `
+                );
+                setIsLoading(true);
+                const createAccount = await Ledger.createAccount(accountAddress);
+                if (createAccount === true) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } catch (e) {
+            setLedgerError(true);
+            setLedgerLoading(true);
+            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
+        }
+    };
+
     const handleLock = async () => {
         try {
-            setLedgerLoading(true);
-            const from = currentUser;
-            const lockObject = { amount, from };
-            await Ledger.lockCelo(lockObject);
-            setLedgerLoading(false);
+            const address = { address: currentUser };
+            //check if account exist
+            if (checkIfAccount(address)) {
+                const from = currentUser;
+                const lockObject = { amount, from };
+                const lockCelo = await Ledger.lockCelo(lockObject);
+                if (lockCelo && lockCelo.status === true) {
+                    setTabNumber(2);
+                    setLedgerLoading(false);
+                    setHash(lockCelo.blockHash);
+                }
+            }
         } catch (e) {
             setLedgerError(true);
             setLedgerLoading(true);
@@ -419,11 +457,18 @@ const LedgerDialog = ({
 
     const handleUnlock = async () => {
         try {
-            setLedgerLoading(true);
-            const from = currentUser;
-            const unlockObject = { amount, from };
-            await Ledger.unlockCelo(unlockObject);
-            setLedgerLoading(false);
+            // setLedgerLoading(true);
+            const address = { address: currentUser };
+            if (checkIfAccount(address)) {
+                const from = currentUser;
+                const unlockObject = { amount, from };
+                const unlockCelo = await Ledger.unlockCelo(unlockObject);
+                if (unlockCelo && unlockCelo.status === true) {
+                    setTabNumber(2);
+                    setLedgerLoading(false);
+                    setHash(unlockCelo.blockHash);
+                }
+            }
         } catch (e) {
             setLedgerError(true);
             setLedgerLoading(true);
@@ -657,7 +702,7 @@ const LedgerDialog = ({
                 maxWidth="sm">
                 <DialogTitle id="ledger-title" className={classes.dialogTitle}>
                     <Grid container className={classes.item}>
-                        {tabNumber > 0 ? (
+                        {tabNumber === 1 ? (
                             <Grid item xs={1}>
                                 <IconButton
                                     aria-label="Return"
