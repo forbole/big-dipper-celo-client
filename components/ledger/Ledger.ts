@@ -32,13 +32,15 @@ const getCeloLedgerTransport = () => {
     );
 };
 
-const MAINNET = 'https://rc1-forno.celo-testnet.org';
+const MAINNET = 'https://alfajores-forno.celo-testnet.org';
 
 type LockCeloProps = { amount: string; from: string };
 type UnlockCeloProps = { amount: string; from: string };
 type VoteProposalProps = { proposalNumber: number, from: string,  vote: string} 
 type VoteValidatorGroupProps = { amount: string; from: string; group: string }
 type RevokeValidatorGroupVoteProps = { amount: string; account: string; group: string}
+type IsAccountProps = {address: string};
+type CreateAccountProps = {address: string};
 
 class Ledger extends Component {
     private address = '';
@@ -47,7 +49,7 @@ class Ledger extends Component {
     private wallet: any = null;
     private web3: any = null;
     public isConnected = false;
-    // public hasKit: boolean = false;
+    private CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     checkLedgerErrors(errorMessage: string) {
         switch (errorMessage) {
@@ -116,13 +118,35 @@ class Ledger extends Component {
         }
     }
 
+     async isAccount({ address } : IsAccountProps) {
+        if (!this.kit) {
+            this.checkLedgerErrors('Ledger device is disconnected');
+        }
+
+        const getAccounts = await this.kit.contracts.getAccounts();
+        const isAccount = await getAccounts.isAccount(address);
+        return isAccount;
+    }
+
+      async createAccount({ address } : CreateAccountProps) {
+        if (!this.kit) {
+             this.checkLedgerErrors('Ledger device is disconnected');
+        }
+        const getAccounts = await this.kit.contracts.getAccounts();
+        const result = await getAccounts.createAccount().sendAndWaitForReceipt({ from: address });        
+        console.log(result);
+
+        return result;
+    }
+
     async lockCelo({ amount, from }: LockCeloProps) {
         if (!this.kit) {
             this.checkLedgerErrors('Ledger device is disconnected');
         }
 
+        let lockAmount = parseFloat(amount) * this.CELO_FRACTION
         const lockedCelo = await this.kit.contracts.getLockedGold();
-        const result = await lockedCelo.lock().sendAndWaitForReceipt({ from, value: amount });
+        const result = await lockedCelo.lock().sendAndWaitForReceipt({ from, value: lockAmount });
         console.log(result);
 
         return result;
@@ -132,9 +156,11 @@ class Ledger extends Component {
         if (!this.kit) {
             this.checkLedgerErrors('Ledger device is disconnected');
         }
-        this.kit.defaultAccount = from;
+
+        const unlockAmount = parseFloat(amount) * this.CELO_FRACTION
         const lockedCelo = await this.kit.contracts.getLockedGold();
-        const result = await lockedCelo.unlock(amount).sendAndWaitForReceipt();
+        
+        const result = await lockedCelo.unlock(unlockAmount).sendAndWaitForReceipt({from});
         console.log(result);
 
         return result;
