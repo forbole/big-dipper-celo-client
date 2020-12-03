@@ -154,7 +154,7 @@ const Deposit = ({ isLoading, maxDeposit }: DepositProps): JSX.Element => {
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
-                                <LedgerFormControl action="Deposit" />
+                                <LedgerFormControl action="deposit" />
                             </Grid>
                         </Grid>
                     </DialogContentText>

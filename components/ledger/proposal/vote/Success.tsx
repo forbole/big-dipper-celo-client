@@ -69,13 +69,10 @@ const useStyles = makeStyles({
     }
 });
 
-const Success = (): JSX.Element => {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+type SuccessProps = { txHash: string };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+const Success = ({ txHash }: SuccessProps): JSX.Element => {
+    const classes = useStyles();
 
     return (
         <>
@@ -109,7 +106,7 @@ const Success = (): JSX.Element => {
                             </Grid>
                             <Grid item xs={12} md={11}>
                                 <NavLink
-                                    href="/transactions"
+                                    href={`/transaction/${txHash}`}
                                     name={
                                         <Typography
                                             variant="body2"
@@ -130,14 +127,13 @@ const Success = (): JSX.Element => {
                                 className={classes.controlButton}
                                 alignItems="center">
                                 <NavLink
-                                    href="/transactions"
+                                    href={`/transaction/${txHash}`}
                                     name={
                                         <Button
                                             variant="outlined"
                                             color="secondary"
                                             className={classes.controlButtonLabel}
-                                            fullWidth={true}
-                                            onClick={handleClose}>
+                                            fullWidth={true}>
                                             <Typography variant="body2" noWrap>
                                                 View Proposal
                                             </Typography>

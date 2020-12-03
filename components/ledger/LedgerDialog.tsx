@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
 
         ledgerDialogPopup: {
-            padding: '0 1rem 0rem 1rem'
+            padding: '0 1rem 1rem 1rem'
         },
 
         dialogTitle: {
@@ -315,7 +315,7 @@ const LedgerDialog = ({
                             />
                         );
                     case 2:
-                        return <DepositSuccess />;
+                        return <DepositSuccess txHash={hash} />;
                     default:
                         return null;
                 }
@@ -341,7 +341,7 @@ const LedgerDialog = ({
                             />
                         );
                     case 2:
-                        return <VoteSuccess/>;
+                        return <VoteSuccess txHash={hash} />;
                     default:
                         return null;
                 }
@@ -492,13 +492,16 @@ const LedgerDialog = ({
 
     const handleProposalVote = async () => {
         try {
-            setLedgerLoading(true);
-            const from = currentUser;
-            const vote = '';
-            const proposalNumber = getProposalNumber;
-            const voteObject = { proposalNumber, from, vote };
-            await Ledger.voteProposal(voteObject);
-            setLedgerLoading(false);
+            const address = { address: currentUser };
+            if (checkIfAccount(address)) {
+                setLedgerLoading(true);
+                const from = currentUser;
+                const vote = '';
+                const proposalNumber = getProposalNumber;
+                const voteObject = { proposalNumber, from, vote };
+                await Ledger.voteProposal(voteObject);
+                setLedgerLoading(false);
+            }
         } catch (e) {
             setLedgerError(true);
             setLedgerLoading(true);
