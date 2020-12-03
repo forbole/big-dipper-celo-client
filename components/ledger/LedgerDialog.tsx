@@ -371,7 +371,7 @@ const LedgerDialog = ({
                             />
                         );
                     case 2:
-                        return <SuccessVoteValidatorGroup />;
+                        return <SuccessVoteValidatorGroup txHash={hash} />;
                     default:
                         return null;
                 }
@@ -401,7 +401,7 @@ const LedgerDialog = ({
                             />
                         );
                     case 2:
-                        return <SuccessRevokeValidatorGroup />;
+                        return <SuccessRevokeValidatorGroup txHash={hash} />;
                     default:
                         return null;
                 }

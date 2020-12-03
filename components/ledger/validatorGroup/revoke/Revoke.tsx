@@ -103,7 +103,7 @@ const Revoke = ({ isLoading, maxLockedCelo, validatorGroup }: RevokeValGroupProp
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
-                                <LedgerFormControl action="lock" />
+                                <LedgerFormControl action="revoke" />
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography
