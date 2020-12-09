@@ -30,6 +30,7 @@ const useStyles = makeStyles({
     },
     bdLogo: {
         height: '2.8rem',
+        width: '10rem',
         marginLeft: '-9px'
     },
 
