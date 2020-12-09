@@ -13,7 +13,8 @@ const useStyles = makeStyles({
     },
 
     dialogContent: {
-        display: 'flex'
+        display: 'flex',
+        lineBreak: 'anywhere'
     },
     divider: {
         marginTop: '0.5rem',
