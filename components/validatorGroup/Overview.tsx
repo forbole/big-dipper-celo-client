@@ -128,11 +128,18 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
     return (
         <Card className={classes.root}>
             <CardContent>
-                <Grid container spacing={1} justify="center" className={classes.item}>
-                    <Grid item xs={12}>
+                <Grid container spacing={1} className={classes.item}>
+                    <Grid item xs={10} md={11}>
                         <Typography color="textPrimary" variant="subtitle1" gutterBottom>
                             Overview
                         </Typography>
+                    </Grid>
+                    <Grid item xs={2} md={1}>
+                        <LedgerDialog
+                            buttonLabel="Activate Votes"
+                            action="ValidatorGroupActivateVotes"
+                            validatorGroup={valGroupAddress}
+                        />
                     </Grid>
                     <Grid item xs={12}>
                         <Divider className={classes.divider} />
@@ -233,8 +240,19 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                         <Divider className={classes.divider} />
                     </Grid>
 
-                    <Grid item xs={12} className={classes.centerContent}>
-                        <LedgerDialog action="ValidatorGroupVote" buttonLabel="Vote" />
+                    <Grid item xs={6} className={classes.centerContent}>
+                        <LedgerDialog
+                            action="ValidatorGroupVote"
+                            buttonLabel="Vote"
+                            validatorGroup={valGroupAddress}
+                        />
+                    </Grid>
+                    <Grid item xs={6} className={classes.centerContent}>
+                        <LedgerDialog
+                            action="ValidatorGroupRevoke"
+                            buttonLabel="Revoke"
+                            validatorGroup={valGroupAddress}
+                        />
                     </Grid>
                 </Grid>
             </CardContent>

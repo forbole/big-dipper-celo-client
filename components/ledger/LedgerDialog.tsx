@@ -26,12 +26,16 @@ import DepositSuccess from './proposal/deposit/Success';
 import VoteConfirm from './proposal/vote/Confirm';
 import VoteSuccess from './proposal/vote/Success';
 import Vote from './proposal/vote/Vote';
+import ActivateValidatorGroupVote from './validatorGroup/activate/Activate';
+import ConfirmActivateValidatorGroupVote from './validatorGroup/activate/Confirm';
+import SuccessActivateValidatorGroupVote from './validatorGroup/activate/Success';
 import ConfirmRevokeValidatorGroup from './validatorGroup/revoke/Confirm';
 import RevokeValidatorGroup from './validatorGroup/revoke/Revoke';
 import SuccessRevokeValidatorGroup from './validatorGroup/revoke/Success';
 import ConfirmVoteValidatorGroup from './validatorGroup/vote/Confirm';
 import SuccessVoteValidatorGroup from './validatorGroup/vote/Success';
 import VoteValidatorGroup from './validatorGroup/vote/Vote';
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -44,11 +48,21 @@ const useStyles = makeStyles((theme: Theme) =>
             [theme.breakpoints.down('sm')]: {
                 width: '7.5rem'
             },
-            width: '9.5rem',
+            width: '20rem',
             padding: '0.5rem',
             textTransform: 'none',
             border: 'solid thin',
             margin: '0.3rem 1rem 0.2rem 0'
+        },
+
+        activateButtonLabel: {
+            justifyContent: 'center',
+            padding: '0.5rem',
+            textTransform: 'none',
+            width: '7.5rem',
+            color: 'rgba(255, 255, 255, 1)',
+            backgroundColor: 'rgba(8, 178, 112, 0.95)',
+            '&:hover, &.Mui-focusVisible': { backgroundColor: 'rgba(8, 178, 112, 0.70)' }
         },
 
         gridContainer: {
@@ -70,8 +84,9 @@ const useStyles = makeStyles((theme: Theme) =>
         errorMessage: {
             color: 'red',
             textAlign: 'center',
-            paddingBottom: '2rem',
-            wordBreak: 'break-all'
+            paddingBottom: '2rem'
+            // wordBreak: 'break-all',
+            // lineBreak: 'anywhere'
         },
 
         circularProgress: {
@@ -232,6 +247,7 @@ const LedgerDialog = ({
     const [ledgerErrorMessage, setLedgerErrorMessage] = React.useState('');
     const [ledgerLoading, setLedgerLoading] = React.useState(false);
     const [dialogError, setDialogError] = useGlobalState('dialogError');
+    const [showCircuralProgress, setShowCircuralProgress] = React.useState(false);
     // const [dialogErrorMessage, setDialogErrorMessage] = useGlobalState('dialogErrorMessage');
     const [tabNumber, setTabNumber] = React.useState(0);
     const [showControlButtons, setShowControlButtons] = React.useState(false);
@@ -405,6 +421,24 @@ const LedgerDialog = ({
                     default:
                         return null;
                 }
+            case 'ValidatorGroupActivateVotes':
+                switch (tabNum) {
+                    case 0:
+                        return (
+                            <ActivateValidatorGroupVote
+                                isLoading={isLoading}
+                                validatorGroup={validatorGroup}
+                            />
+                        );
+                    case 1:
+                        return (
+                            <ConfirmActivateValidatorGroupVote validatorGroup={validatorGroup} />
+                        );
+                    case 2:
+                        return <SuccessActivateValidatorGroupVote txHash={hash} />;
+                    default:
+                        return null;
+                }
         }
     };
 
@@ -439,9 +473,11 @@ const LedgerDialog = ({
             const address = { address: currentUser };
             //check if account exist
             if (checkIfAccount(address)) {
+                setShowCircuralProgress(true);
                 const from = currentUser;
                 const lockObject = { amount, from };
                 const lockCelo = await Ledger.lockCelo(lockObject);
+                setShowCircuralProgress(false);
                 if (lockCelo && lockCelo.status === true) {
                     setTabNumber(2);
                     setLedgerLoading(false);
@@ -460,9 +496,11 @@ const LedgerDialog = ({
             // setLedgerLoading(true);
             const address = { address: currentUser };
             if (checkIfAccount(address)) {
+                setShowCircuralProgress(true);
                 const from = currentUser;
                 const unlockObject = { amount, from };
                 const unlockCelo = await Ledger.unlockCelo(unlockObject);
+                setShowCircuralProgress(false);
                 if (unlockCelo && unlockCelo.status === true) {
                     setTabNumber(2);
                     setLedgerLoading(false);
@@ -511,12 +549,21 @@ const LedgerDialog = ({
 
     const handleValidatorGroupVote = async () => {
         try {
-            setLedgerLoading(true);
-            const from = currentUser;
-            const group = validatorGroup ? validatorGroup : '';
-            const unlockObject = { amount, from, group };
-            await Ledger.voteValidatorGroup(unlockObject);
-            setLedgerLoading(false);
+            const address = { address: currentUser };
+            if (checkIfAccount(address)) {
+                setShowCircuralProgress(true);
+                const from = currentUser;
+                const group = validatorGroup ? validatorGroup : '';
+                const groupVote = { amount, from, group };
+                const voteValidatorGroup = await Ledger.voteValidatorGroup(groupVote);
+
+                setShowCircuralProgress(false);
+                if (voteValidatorGroup && voteValidatorGroup.status === true) {
+                    setTabNumber(2);
+                    setLedgerLoading(false);
+                    setHash(voteValidatorGroup.blockHash);
+                }
+            }
         } catch (e) {
             setLedgerError(true);
             setLedgerLoading(true);
@@ -526,13 +573,48 @@ const LedgerDialog = ({
 
     const handleRevokeValidatorGroupVote = async () => {
         try {
+            const address = { address: currentUser };
+            if (checkIfAccount(address)) {
+                setShowCircuralProgress(true);
+                const account = currentUser;
+                const group = validatorGroup ? validatorGroup : '';
+                const revokeObject = { amount, account, group };
+                const revokeValidatorGroupVote = await Ledger.revokeValidatorGroupVote(
+                    revokeObject
+                );
+                setShowCircuralProgress(false);
+                if (revokeValidatorGroupVote && revokeValidatorGroupVote.status === true) {
+                    setTabNumber(2);
+                    setLedgerLoading(false);
+                    setHash(revokeValidatorGroupVote.blockHash);
+                }
+            }
+        } catch (e) {
+            setLedgerError(true);
             setLedgerLoading(true);
-            //still need to obtain the address of the validator/validator group
-            const account = '';
-            const group = validatorGroup ? validatorGroup : '';
-            const unlockObject = { amount, account, group };
-            await Ledger.revokeValidatorGroupVote(unlockObject);
-            setLedgerLoading(false);
+            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
+        }
+    };
+
+    const handleValidatorGroupActivateVotes = async () => {
+        try {
+            const address = { address: currentUser };
+            if (checkIfAccount(address)) {
+                setShowCircuralProgress(true);
+                const activateVotesObject = {
+                    address: currentUser,
+                    validatorGroupAddress: validatorGroup
+                };
+                const activateValidatorGroupVote = await Ledger.activateVaidatorGroupVotes(
+                    activateVotesObject
+                );
+                setShowCircuralProgress(false);
+                if (activateValidatorGroupVote && activateValidatorGroupVote.status === true) {
+                    setTabNumber(2);
+                    setLedgerLoading(false);
+                    setHash(activateValidatorGroupVote.blockHash);
+                }
+            }
         } catch (e) {
             setLedgerError(true);
             setLedgerLoading(true);
@@ -575,17 +657,24 @@ const LedgerDialog = ({
                         return null as any;
                 }
                 break;
-            case 'Validator Group Vote':
+            case 'ValidatorGroupVote':
                 switch (tabNumber) {
                     case 0:
                         return handleValidatorGroupVote();
                     default:
                         return null as any;
                 }
-            case 'Validator Group Revoke':
+            case 'ValidatorGroupRevoke':
                 switch (tabNumber) {
                     case 0:
                         return handleRevokeValidatorGroupVote();
+                    default:
+                        return null as any;
+                }
+            case 'ValidatorGroupActivateVotes':
+                switch (tabNumber) {
+                    case 0:
+                        return handleValidatorGroupActivateVotes();
                     default:
                         return null as any;
                 }
@@ -644,7 +733,7 @@ const LedgerDialog = ({
                 }
                 try {
                     const ver = await Ledger.getCeloAppVersion();
-                    setDialogError(true);
+                    // setDialogError(true);
                 } catch (e) {
                     setLedgerError(true);
                     setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
@@ -689,9 +778,17 @@ const LedgerDialog = ({
                             variant="outlined"
                             color="secondary"
                             onClick={handleClick}
-                            style={{ width: action === 'ValidatorGroupVote' ? '21rem' : '7.5rem' }}
-                            className={classes.buttonLabel}>
-                            <Typography variant="body1">{buttonLabel}</Typography>
+                            className={
+                                action === 'ValidatorGroupActivateVotes'
+                                    ? classes.activateButtonLabel
+                                    : classes.buttonLabel
+                            }>
+                            <Typography
+                                variant={
+                                    action === 'ValidatorGroupActivateVotes' ? 'caption' : 'body1'
+                                }>
+                                {buttonLabel}
+                            </Typography>
                         </Button>
                     </div>
                 </Grid>
@@ -736,7 +833,7 @@ const LedgerDialog = ({
                 </DialogTitle>
                 <div className={classes.ledgerDialogPopup}>
                     {dialogTab(tabNumber)}
-                    {ledgerLoading ? (
+                    {ledgerLoading || showCircuralProgress ? (
                         <Grid item xs={12} className={classes.circularProgress}>
                             <CircularProgress color="secondary" />
                         </Grid>
