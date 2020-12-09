@@ -31,6 +31,7 @@ export const GET_ACCOUNT_DETAILS = gql`
             isSigner
             lockedGold
             attestation
+            groupsVotedFor
         }
     }
 `;
