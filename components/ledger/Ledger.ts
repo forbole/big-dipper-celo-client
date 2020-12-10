@@ -32,13 +32,16 @@ const getCeloLedgerTransport = () => {
     );
 };
 
-const MAINNET = 'https://rc1-forno.celo-testnet.org';
+const MAINNET = 'https://alfajores-forno.celo-testnet.org';
 
 type LockCeloProps = { amount: string; from: string };
 type UnlockCeloProps = { amount: string; from: string };
 type VoteProposalProps = { proposalNumber: number, from: string,  vote: string} 
 type VoteValidatorGroupProps = { amount: string; from: string; group: string }
 type RevokeValidatorGroupVoteProps = { amount: string; account: string; group: string}
+type IsAccountProps = {address: string};
+type CreateAccountProps = {address: string};
+type ActivateVaidatorGroupVotesProps = {address: string; validatorGroupAddress: string};
 
 class Ledger extends Component {
     private address = '';
@@ -47,7 +50,7 @@ class Ledger extends Component {
     private wallet: any = null;
     private web3: any = null;
     public isConnected = false;
-    // public hasKit: boolean = false;
+    private CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     checkLedgerErrors(errorMessage: string) {
         switch (errorMessage) {
@@ -63,6 +66,8 @@ class Ledger extends Component {
                 return 'Celo App is not open';
             case 'Ledger device: Condition of use not satisfied (denied by the user?) (0x6985)':
                 return 'The connection was rejected by the user. ';
+                case `Cannot read property 'sendAndWaitForReceipt' of undefined`:
+                    return `Couldn't find any votes to be activated. Please ensure you have voted for Validator Group and waited at least 24hrs to activate the votes. `
             default:
                 return errorMessage;
         }
@@ -116,13 +121,35 @@ class Ledger extends Component {
         }
     }
 
+     async isAccount({ address } : IsAccountProps) {
+        if (!this.kit) {
+            this.checkLedgerErrors('Ledger device is disconnected');
+        }
+
+        const getAccounts = await this.kit.contracts.getAccounts();
+        const isAccount = await getAccounts.isAccount(address);
+        return isAccount;
+    }
+
+      async createAccount({ address } : CreateAccountProps) {
+        if (!this.kit) {
+             this.checkLedgerErrors('Ledger device is disconnected');
+        }
+        const getAccounts = await this.kit.contracts.getAccounts();
+        const result = await getAccounts.createAccount().sendAndWaitForReceipt({ from: address });        
+        console.log(result);
+
+        return result;
+    }
+
     async lockCelo({ amount, from }: LockCeloProps) {
         if (!this.kit) {
             this.checkLedgerErrors('Ledger device is disconnected');
         }
 
+        let lockAmount = parseFloat(amount) * this.CELO_FRACTION
         const lockedCelo = await this.kit.contracts.getLockedGold();
-        const result = await lockedCelo.lock().sendAndWaitForReceipt({ from, value: amount });
+        const result = await lockedCelo.lock().sendAndWaitForReceipt({ from, value: lockAmount });
         console.log(result);
 
         return result;
@@ -132,9 +159,11 @@ class Ledger extends Component {
         if (!this.kit) {
             this.checkLedgerErrors('Ledger device is disconnected');
         }
-        this.kit.defaultAccount = from;
+
+        const unlockAmount = parseFloat(amount) * this.CELO_FRACTION
         const lockedCelo = await this.kit.contracts.getLockedGold();
-        const result = await lockedCelo.unlock(amount).sendAndWaitForReceipt();
+        
+        const result = await lockedCelo.unlock(unlockAmount).sendAndWaitForReceipt({from});
         console.log(result);
 
         return result;
@@ -144,21 +173,47 @@ class Ledger extends Component {
         if (!this.kit) {
             this.checkLedgerErrors("Ledger device is disconnected");
         }
-        const gov = await this.kit.contracts.getGovernance();
-        const tx = await gov.vote(proposalNumber, vote);
-        const result = await tx.sendAndWaitForReceipt({ from });
+        const getGovernance = await this.kit.contracts.getGovernance();
+        const proposalVote = await getGovernance.vote(proposalNumber, vote);
+        const result = await proposalVote.sendAndWaitForReceipt({ from });
         console.log(result);
 
         return result;
     }
+    
 
-    async voteValidatorGroup({amount, from, group}:VoteValidatorGroupProps) {
+        async activateVaidatorGroupVotes({address, validatorGroupAddress}:ActivateVaidatorGroupVotesProps) {
+        if (!this.kit) {
+            this.checkLedgerErrors("Ledger device is disconnected");
+
+        }
+        
+        let result;        
+        this.kit.defaultAccount = address;
+        
+        const getElection = await this.kit.contracts.getElection();
+        const activateVotes = await getElection.activate(address);
+
+        for(let c in activateVotes) {
+            if(activateVotes[c].address === validatorGroupAddress){
+                result = await activateVotes[c].sendAndWaitForReceipt();
+            }
+        }
+         
+        return result;
+       
+    }
+
+        async voteValidatorGroup({amount, from, group} : VoteValidatorGroupProps) {
         if (!this.kit) {
             this.checkLedgerErrors('Ledger device is disconnected');
         }
         this.kit.defaultAccount = from;
+
         const election = await this.kit.contracts.getElection();
-        const voteElection = await election.vote(group, new BigNumber(amount));
+        const voteAmount = parseFloat(amount) * this.CELO_FRACTION
+
+        const voteElection = await election.vote(group, voteAmount)
         const result = await voteElection.sendAndWaitForReceipt({ from });
         console.log(result);
 
@@ -171,7 +226,8 @@ class Ledger extends Component {
             this.checkLedgerErrors('Ledger device is disconnected');
         }
         const election = await this.kit.contracts.getElection();
-        const revokeVotes = await election.revokeActive(account, group, new BigNumber(amount));
+        const revokeValue = new BigNumber(parseFloat(amount) * this.CELO_FRACTION)
+        const revokeVotes = await election.revokeActive(account, group, revokeValue);
         const result = await revokeVotes.sendAndWaitForReceipt({ from: account });
         console.log(result);
 

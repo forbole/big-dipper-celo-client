@@ -93,7 +93,7 @@ const UnlockGold = ({ isLoading, maxUnlock }: UnlockGoldProps): JSX.Element => {
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
-                                <LedgerFormControl action="lock" />
+                                <LedgerFormControl action="unlock" />
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography variant="body2" noWrap className={classes.alignRight}>

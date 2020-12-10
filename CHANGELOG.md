@@ -38,6 +38,7 @@
 * [#145] Fixed Runtime Error in Proposal List
 * Added value checks in `Block Details`
 * Updated Login and Big Dipper icon size and margin
+* Added `activateVaidatorGroupVotes` method and Activate Votes Button, removed Tx Fee from Confirmation Window
 
 ## v0.1.3
 

@@ -34,7 +34,6 @@ const useStyles = makeStyles({
         paddingTop: '2rem',
         textTransform: 'none',
         borderRadius: 4,
-        //minHeight: "2.5rem",
         width: '100%'
     },
     controlButtonLabel: {
@@ -63,11 +62,16 @@ const Success = ({ txHash }: SuccessProps): JSX.Element => {
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} alignItems="center">
-                                <Typography variant="body2" noWrap align="center">
-                                    The vote was successfully revoked.
+                                <Typography
+                                    variant="body2"
+                                    color="textPrimary"
+                                    noWrap
+                                    align="center"
+                                    gutterBottom>
+                                    Votes were successfully activated.
                                 </Typography>
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={12} style={{ marginTop: '1rem' }}>
                                 <NavLink
                                     href={`/transaction/${txHash}`}
                                     name={

@@ -124,31 +124,6 @@ const UnlockGoldConfirm = ({ amount }: UnlockGoldConfirmProps): JSX.Element => {
                             <Grid item xs={12}>
                                 <Divider className={classes.divider} />
                             </Grid>
-                            <Grid container spacing={1} className={classes.item}>
-                                <Grid item xs={6}>
-                                    <Typography
-                                        variant="body2"
-                                        noWrap
-                                        className={classes.alignLeft}
-                                        align="left"
-                                        color="textPrimary">
-                                        Tx Fee
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <Typography
-                                        variant="body2"
-                                        noWrap
-                                        className={classes.alignRight}
-                                        align="right"
-                                        color="textPrimary">
-                                        {'UNKNOWN'} CELO
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Divider className={classes.divider} />
-                            </Grid>
                             <Grid item xs={12} className={classes.unlockGoldMessage}>
                                 <Typography variant="h6" noWrap align="center" color="textPrimary">
                                     Please sign in your ledger device...

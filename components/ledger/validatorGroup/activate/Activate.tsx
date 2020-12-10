@@ -5,8 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React, { useEffect } from 'react';
 
-import { LedgerFormControl } from '../../LedgerDialog';
-
 const useStyles = makeStyles({
     root: {
         justifyContent: 'center'
@@ -33,9 +31,13 @@ const useStyles = makeStyles({
         paddingTop: '1rem'
     }
 });
-type RevokeValGroupProps = { isLoading?: boolean; maxLockedCelo?: string; validatorGroup?: string };
 
-const Revoke = ({ isLoading, maxLockedCelo, validatorGroup }: RevokeValGroupProps): JSX.Element => {
+type ActivateValGroupProps = {
+    isLoading?: boolean;
+    validatorGroup?: string;
+};
+
+const Activate = ({ isLoading, validatorGroup }: ActivateValGroupProps): JSX.Element => {
     const classes = useStyles();
     const [currentUser, setCurrentUser] = React.useState<string>('');
 
@@ -49,7 +51,7 @@ const Revoke = ({ isLoading, maxLockedCelo, validatorGroup }: RevokeValGroupProp
         <>
             <DialogContent>
                 <Grid container spacing={1}>
-                    <DialogContentText id="ledger-validator-group-vote">
+                    <DialogContentText id="ledger-validator-group-activate-vote">
                         <Grid container className={classes.dialogContent}>
                             <Grid item xs={12} className={classes.message}>
                                 <Typography
@@ -83,6 +85,7 @@ const Revoke = ({ isLoading, maxLockedCelo, validatorGroup }: RevokeValGroupProp
                             </Grid>
 
                             <Grid item xs={12}>
+                                {/* <TokenDropdown /> */}
                                 <Typography
                                     variant="body1"
                                     noWrap
@@ -96,25 +99,6 @@ const Revoke = ({ isLoading, maxLockedCelo, validatorGroup }: RevokeValGroupProp
                                     {validatorGroup}
                                 </Typography>
                             </Grid>
-
-                            <Grid item xs={12} className={classes.message}>
-                                <Typography variant="body2" noWrap color="textPrimary" gutterBottom>
-                                    Amount
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <LedgerFormControl action="revoke" />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Typography
-                                    variant="body2"
-                                    noWrap
-                                    color="textSecondary"
-                                    align="right"
-                                    className={classes.lockedCelo}>
-                                    Max {maxLockedCelo} CELO
-                                </Typography>
-                            </Grid>
                         </Grid>
                     </DialogContentText>
                 </Grid>
@@ -123,4 +107,4 @@ const Revoke = ({ isLoading, maxLockedCelo, validatorGroup }: RevokeValGroupProp
     );
 };
 
-export default Revoke;
+export default Activate;

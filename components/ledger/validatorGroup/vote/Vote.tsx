@@ -104,7 +104,7 @@ const Vote = ({ isLoading, maxLockedCelo, validatorGroup }: VoteValGroupProps): 
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
-                                <LedgerFormControl action="lock" />
+                                <LedgerFormControl action="vote" />
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography

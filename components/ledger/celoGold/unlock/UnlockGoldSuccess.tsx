@@ -4,8 +4,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Link from 'next/link';
 import React from 'react';
+
+import NavLink from '../../../NavLink';
 
 const useStyles = makeStyles({
     root: {
@@ -40,12 +41,10 @@ const useStyles = makeStyles({
     }
 });
 
-const UnlockGoldSuccess = () => {
-    const classes = useStyles();
+type UnlockGoldSuccessProps = { txHash: string };
 
-    const handleTx = () => {
-        // setOpen(false);
-    };
+const UnlockGoldSuccess = ({ txHash }: UnlockGoldSuccessProps): JSX.Element => {
+    const classes = useStyles();
 
     return (
         <>
@@ -75,18 +74,20 @@ const UnlockGoldSuccess = () => {
                                 lg={8}
                                 className={classes.controlButton}
                                 alignItems="center">
-                                <Link href="/transactions">
-                                    <Button
-                                        variant="outlined"
-                                        color="secondary"
-                                        className={classes.controlButtonLabel}
-                                        fullWidth={true}
-                                        onClick={handleTx}>
-                                        <Typography variant="body2" noWrap>
-                                            View Transactions
-                                        </Typography>
-                                    </Button>
-                                </Link>
+                                <NavLink
+                                    href={`/transaction/${txHash}`}
+                                    name={
+                                        <Button
+                                            variant="outlined"
+                                            color="secondary"
+                                            className={classes.controlButtonLabel}
+                                            fullWidth={true}>
+                                            <Typography variant="body2" noWrap>
+                                                View Transactions
+                                            </Typography>
+                                        </Button>
+                                    }
+                                />
                             </Grid>
                         </Grid>
                     </DialogContentText>
