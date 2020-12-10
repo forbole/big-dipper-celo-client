@@ -300,7 +300,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                                     row.value /
                                                                                         CELO_FRACTION
                                                                                 ).toFormat(2) +
-                                                                                    ' CELO'}
+                                                                                    ' cUSD'}
                                                                             </Typography>
                                                                         ) : (
                                                                             <NotAvailable

@@ -29,7 +29,8 @@ const useStyles = makeStyles({
         verticalAlign: 'middle'
     },
     bdLogo: {
-        height: '2.8rem',
+        maxHeight: '2.8rem',
+        maxWidth: '10rem',
         marginLeft: '-9px'
     },
 

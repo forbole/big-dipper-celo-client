@@ -85,7 +85,9 @@ const useStyles = makeStyles((theme: Theme) =>
         },
 
         login: {
-            marginTop: '0.8rem'
+            [theme.breakpoints.up('md')]: {
+                marginTop: '0.8rem'
+            }
         },
         toolbarItems: {
             verticalAlign: 'middle',
@@ -160,9 +162,10 @@ const Layout = (props: { children: React.ReactNode }): JSX.Element => {
 
                     <Hidden mdUp>
                         <Grid item xs={3} className={classes.celoIcon}>
-                            <IconButton color="inherit" aria-label="Celo Dashboard">
-                                <img src="/images/celo-logo.svg" alt="Celo Dashboard" />
-                            </IconButton>
+                            <NavLink
+                                href="/"
+                                name={<img src="/images/celo-logo.svg" alt="Celo Dashboard" />}
+                            />
                         </Grid>
                     </Hidden>
                     {/* <Grid item xs={3} sm={5} md={2} className={classes.networkDropdown}>

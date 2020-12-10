@@ -37,7 +37,7 @@
 * [#143] Updated bottom navigation margin to display all Bottom Navigation Tabs 
 * [#145] Fixed Runtime Error in Proposal List
 * Added value checks in `Block Details`
-
+* Updated Login and Big Dipper icon size and margin
 
 ## v0.1.3
 

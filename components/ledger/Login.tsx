@@ -7,9 +7,9 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Link from 'next/link';
 import React, { useEffect } from 'react';
 
+import NavLink from './../NavLink';
 import ControlButtons from './ControlButtons';
 import Ledger from './Ledger';
 
@@ -63,6 +63,10 @@ const useStyles = makeStyles((theme: Theme) =>
             [theme.breakpoints.down('sm')]: {
                 marginRight: '1rem'
             }
+        },
+
+        loggedInIcon: {
+            height: '1.3rem'
         }
     })
 );
@@ -141,15 +145,12 @@ const Login = (): JSX.Element => {
     return (
         <>
             {currentUser === '' || currentUser === 'undefined' ? null : (
-                <Link
-                    href={`/account/${currentUser}`}
-                    // as={`../account/${currentUser}`}
-                    // color="secondary"
-                >
-                    <IconButton aria-label="Login" className={classes.loggedIn}>
-                        <img src="/images/user-login.svg" alt="Account" />
-                    </IconButton>
-                </Link>
+                <IconButton aria-label="Login" className={classes.loggedIn}>
+                    <NavLink
+                        href={`/account/${currentUser}`}
+                        name={<img src="/images/user-login.svg" alt="Account" />}
+                        className={classes.loggedInIcon}></NavLink>
+                </IconButton>
             )}
             <IconButton
                 aria-label="Login"
