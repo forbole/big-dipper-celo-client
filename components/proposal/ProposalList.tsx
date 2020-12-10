@@ -129,62 +129,74 @@ const ProposalList = ({ title }: ProposalListProps): JSX.Element => {
                     Proposals
                 </Typography>
                 {title
-                    .slice(0)
-                    .reverse()
-                    .map((row: any, index: number) => {
-                        return (
-                            <Grid item xs={12} className={classes.proposalCard} key={index}>
-                                <Card className={classes.card} elevation={0}>
-                                    <Grid container className={classes.container}>
-                                        <Grid item xs={8} sm={10} className={classes.proposalNum}>
-                                            <NavLink
-                                                href={`/proposal/${row.proposalNumber}`}
-                                                name={
-                                                    <Typography
-                                                        variant="body2"
-                                                        className={classes.value}>
-                                                        #{row.proposalNumber}
-                                                    </Typography>
-                                                }
-                                                textSecondary
-                                            />
+                    ? title
+                          .slice(1)
+                          .reverse()
+                          .map((row: any, index: number) => {
+                              return (
+                                  <Grid item xs={12} className={classes.proposalCard} key={index}>
+                                      <Card className={classes.card} elevation={0}>
+                                          <Grid container className={classes.container}>
+                                              <Grid
+                                                  item
+                                                  xs={8}
+                                                  sm={10}
+                                                  className={classes.proposalNum}>
+                                                  <NavLink
+                                                      href={`/proposal/${row.proposalNumber}`}
+                                                      name={
+                                                          <Typography
+                                                              variant="body2"
+                                                              className={classes.value}>
+                                                              #{row.proposalNumber}
+                                                          </Typography>
+                                                      }
+                                                      textSecondary
+                                                  />
 
-                                            <Typography
-                                                variant="body2"
-                                                className={classes.proposer}>
-                                                Proposer
-                                                <NavLink
-                                                    href={`/proposal/${getProposer(
-                                                        row.proposalNumber
-                                                    )}`}
-                                                    name={
-                                                        <MiddleEllipsis
-                                                            text={getProposer(row.proposalNumber)}
-                                                        />
-                                                    }
-                                                    className={classes.proposerAddress}
-                                                />
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={3} sm={2} className={classes.proposalButton}>
-                                            {findProposalStatus(row.proposalNumber)}
-                                        </Grid>
-                                        <Grid
-                                            item
-                                            xs={11}
-                                            sm={8}
-                                            className={classes.proposalDescription}>
-                                            <NavLink
-                                                href={`/proposal/${row.proposalNumber}`}
-                                                name={row.proposalTitle}
-                                                textSecondary
-                                            />
-                                        </Grid>
-                                    </Grid>
-                                </Card>
-                            </Grid>
-                        );
-                    })}
+                                                  <Typography
+                                                      variant="body2"
+                                                      className={classes.proposer}>
+                                                      Proposer
+                                                      <NavLink
+                                                          href={`/proposal/${getProposer(
+                                                              row.proposalNumber
+                                                          )}`}
+                                                          name={
+                                                              <MiddleEllipsis
+                                                                  text={getProposer(
+                                                                      row.proposalNumber
+                                                                  )}
+                                                              />
+                                                          }
+                                                          className={classes.proposerAddress}
+                                                      />
+                                                  </Typography>
+                                              </Grid>
+                                              <Grid
+                                                  item
+                                                  xs={3}
+                                                  sm={2}
+                                                  className={classes.proposalButton}>
+                                                  {findProposalStatus(row.proposalNumber)}
+                                              </Grid>
+                                              <Grid
+                                                  item
+                                                  xs={11}
+                                                  sm={8}
+                                                  className={classes.proposalDescription}>
+                                                  <NavLink
+                                                      href={`/proposal/${row.proposalNumber}`}
+                                                      name={row.proposalTitle}
+                                                      textSecondary
+                                                  />
+                                              </Grid>
+                                          </Grid>
+                                      </Card>
+                                  </Grid>
+                              );
+                          })
+                    : null}
             </Grid>
         </div>
     );
