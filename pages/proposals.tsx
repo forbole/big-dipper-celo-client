@@ -33,7 +33,7 @@ export default function Proposals(props: { proposalTitle: string[] }): JSX.Eleme
 export const getStaticProps: GetStaticProps = async () => {
     const proposalTitle: {
         [index: string]: { proposalTitle: string; proposalNumber: number };
-    } = {};
+    } = [];
     let getProposalTitle;
     //Set max number of proposals as currently we can't obtain it from the rpc
     const PROPOSAL_MAX_NUMBER = 100;

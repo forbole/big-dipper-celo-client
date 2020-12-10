@@ -35,6 +35,8 @@
 * [#140] Updated Validator Groups Values
 * [#141] Updated Footer to stay at the bottom of the page
 * [#143] Updated bottom navigation margin to display all Bottom Navigation Tabs 
+* [#145] Fixed Runtime Error in Proposal List
+
 
 ## v0.1.3
 
