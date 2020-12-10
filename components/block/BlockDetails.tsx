@@ -225,7 +225,7 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                         </Typography>
                         <Typography variant="body2" component="h2">
                             {(data && data.block && data.block.miner && data.block.miner.name) ||
-                            data.block.miner.signer ? (
+                            (data && data.block && data.block.miner && data.block.miner.signer) ? (
                                 <NavLink
                                     href={`/account/${data.block.miner.signer}`}
                                     name={data.block.miner.name}
@@ -241,13 +241,18 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                         <Typography variant="body2" component="h2">
                             Hash
                         </Typography>
-                        <Typography variant="body2" component="h2" color="textSecondary">
-                            {data.block && data.block.hash ? (
-                                data.block.hash
-                            ) : (
-                                <NotAvailable variant="body2" color="textSecondary" />
-                            )}
-                        </Typography>
+
+                        {data && data.block && data.block.hash ? (
+                            <Typography variant="body2" component="h2">
+                                <NavLink
+                                    href={`/transaction/${data.block.hash}`}
+                                    name={data.block.hash}
+                                />
+                            </Typography>
+                        ) : (
+                            <NotAvailable variant="body2" color="textSecondary" />
+                        )}
+
                         <Divider variant="middle" className={classes.divider} />
                     </Grid>
 
@@ -255,17 +260,16 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                         <Typography variant="body2" component="h2">
                             Parent Hash
                         </Typography>
-
-                        <Typography variant="body2" component="h2">
-                            {data.block && data.block.parentHash ? (
+                        {data.block && data.block.parentHash ? (
+                            <Typography variant="body2" component="h2">
                                 <NavLink
                                     href={`/transaction/${data.block.parentHash}`}
                                     name={data.block.parentHash}
                                 />
-                            ) : (
-                                <NotAvailable variant="body2" color="textSecondary" />
-                            )}
-                        </Typography>
+                            </Typography>
+                        ) : (
+                            <NotAvailable variant="body2" color="textSecondary" />
+                        )}
                         <Divider variant="middle" className={classes.divider} />
                     </Grid>
 
