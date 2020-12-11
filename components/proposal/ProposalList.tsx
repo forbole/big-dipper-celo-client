@@ -92,7 +92,6 @@ const ProposalList = ({ title }: ProposalListProps): JSX.Element => {
 
     const findProposalStatus = (proposalNumber: number) => {
         if (data && data.proposals && data.proposals.proposals) {
-            console.log(data.proposals.proposals);
             for (const c in data.proposals.proposals) {
                 if (proposalNumber === data.proposals.proposals[c].proposalNumber) {
                     if (data.proposals.proposals[c].removed === true) {

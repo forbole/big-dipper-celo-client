@@ -29,7 +29,10 @@ const useStyles = makeStyles(() => {
             wordWrap: 'break-word'
         },
         item: {
-            padding: '0 0 0 0.5rem'
+            padding: '0 0 0 0.5rem',
+            '& a': {
+                color: 'rgba(58, 211, 158, 1)'
+            }
         },
         divider: {
             margin: '0.5rem 0 0 0',
@@ -76,12 +79,6 @@ const useStyles = makeStyles(() => {
             overflowWrap: 'anywhere',
             display: 'flex',
             textAlign: 'right'
-        },
-
-        markdownFile: {
-            '& a': {
-                color: 'rgba(58, 211, 158, 1)'
-            }
         }
     };
 });
@@ -249,19 +246,17 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Description</Typography>
                         {proposalDetails ? (
-                            <Typography variant="body2" className={classes.markdownFile}>
-                                <MarkdownView
-                                    markdown={proposalDetails}
-                                    options={{
-                                        tables: true,
-                                        emoji: true,
-                                        simplifiedAutoLink: true,
-                                        smoothLivePreview: true,
-                                        openLinksInNewWindow: true
-                                    }}
-                                    flavor="vanilla"
-                                />
-                            </Typography>
+                            <MarkdownView
+                                markdown={proposalDetails}
+                                options={{
+                                    tables: true,
+                                    emoji: true,
+                                    simplifiedAutoLink: true,
+                                    smoothLivePreview: true,
+                                    openLinksInNewWindow: true
+                                }}
+                                flavor="vanilla"
+                            />
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
                         )}

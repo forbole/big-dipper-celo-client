@@ -81,6 +81,9 @@ const useStyles = makeStyles(() => {
         chip: {
             marginLeft: '1rem',
             marginRight: '-1rem'
+        },
+        notAvaliable: {
+            paddingLeft: '0.5rem'
         }
     };
 });
@@ -206,33 +209,44 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                     </Typography>
                                                                 </Grid>
 
-                                                                <Grid item xs={4} md={5}>
+                                                                <Grid
+                                                                    item
+                                                                    xs={4}
+                                                                    md={5}
+                                                                    style={{
+                                                                        display: 'inline-flex'
+                                                                    }}>
                                                                     <Typography
                                                                         variant="body2"
                                                                         className={
                                                                             classes.leftInline
                                                                         }>
-                                                                        From{'  '}
-                                                                        {row.from &&
-                                                                        row.from.address ? (
-                                                                            <NavLink
-                                                                                href={`/account/${row.from.address}`}
-                                                                                className={
-                                                                                    classes.txPadding
-                                                                                }
-                                                                                name={
-                                                                                    <MiddleEllipsis
-                                                                                        text={
-                                                                                            row.from
-                                                                                                .address
-                                                                                        }
-                                                                                    />
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            <NotAvailable variant="body2" />
-                                                                        )}
+                                                                        From
                                                                     </Typography>
+                                                                    {row.from &&
+                                                                    row.from.address ? (
+                                                                        <NavLink
+                                                                            href={`/account/${row.from.address}`}
+                                                                            className={
+                                                                                classes.txPadding
+                                                                            }
+                                                                            name={
+                                                                                <MiddleEllipsis
+                                                                                    text={
+                                                                                        row.from
+                                                                                            .address
+                                                                                    }
+                                                                                />
+                                                                            }
+                                                                        />
+                                                                    ) : (
+                                                                        <NotAvailable
+                                                                            variant="body2"
+                                                                            className={
+                                                                                classes.notAvaliable
+                                                                            }
+                                                                        />
+                                                                    )}
                                                                 </Grid>
 
                                                                 <Grid item xs={4} md={5}>
@@ -258,7 +272,12 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                                         }
                                                                                     />
                                                                                 ) : (
-                                                                                    <NotAvailable variant="body2" />
+                                                                                    <NotAvailable
+                                                                                        variant="body2"
+                                                                                        className={
+                                                                                            classes.notAvaliable
+                                                                                        }
+                                                                                    />
                                                                                 )
                                                                             }
                                                                         />
@@ -276,10 +295,15 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                                 row.gas /
                                                                                     CELO_FRACTION
                                                                             ).toFormat(2)}{' '}
-                                                                            CELO
+                                                                            cUSD
                                                                         </Typography>
                                                                     ) : (
-                                                                        <NotAvailable variant="body2" />
+                                                                        <NotAvailable
+                                                                            variant="body2"
+                                                                            className={
+                                                                                classes.notAvaliable
+                                                                            }
+                                                                        />
                                                                     )}
                                                                 </Grid>
 
