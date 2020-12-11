@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 405.23209 113.98791">
+<svg xmlns="http://www.w3.org/2000/svg" width="160px" height="100px" viewBox="0 0 390 200">
   <defs>
     <style>
       .cls-1 {
@@ -17,7 +17,7 @@
   <g id="Livello_2" data-name="Livello 2">
     <g id="Livello_1-2" data-name="Livello 1">
       <g>
-        <rect class="cls-1" width="405.23209" height="113.98791"/>
+        <rect class="cls-1" />
         <g>
           <polygon class="cls-2" points="79.793 25.096 82.957 34.902 86.929 30.606 86.929 23.174 79.504 20.233 73.361 25.149 79.793 25.096"/>
           <path class="cls-2" d="M81.00481,40.22043h-.00009L77.27355,28.65406H67.23705l2.60223,8.17377L56.91276,36.82V93.75527L90.324,65.985ZM66.54223,58.10934V52.79713l7.4726-2.98855,1.091,3.36005Z"/>
