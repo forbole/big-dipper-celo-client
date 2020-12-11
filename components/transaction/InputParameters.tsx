@@ -69,39 +69,41 @@ const InputParameters = ({ hash }: InputParametersProps): JSX.Element => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {data.transaction.decodedInput.params.map((row: any) => (
-                                    <TableRow key={data.transaction.blockNumber}>
-                                        <TableCell
-                                            component="th"
-                                            scope="row"
-                                            padding="checkbox"
-                                            className={classes.tableCell}>
-                                            <Typography color="textPrimary" variant="body2">
-                                                {row.name}
-                                            </Typography>
-                                        </TableCell>
-                                        <TableCell
-                                            component="th"
-                                            scope="row"
-                                            padding="checkbox"
-                                            align="left"
-                                            className={classes.tableCell}>
-                                            <Typography color="textPrimary" variant="body2">
-                                                {row.type}
-                                            </Typography>
-                                        </TableCell>
-                                        <TableCell
-                                            component="th"
-                                            scope="row"
-                                            padding="checkbox"
-                                            align="right"
-                                            className={classes.tableCell}>
-                                            <Typography color="textSecondary" variant="body2">
-                                                {row.value}
-                                            </Typography>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
+                                {data.transaction.decodedInput.params.map(
+                                    (row: any, index: number) => (
+                                        <TableRow key={index}>
+                                            <TableCell
+                                                component="th"
+                                                scope="row"
+                                                padding="checkbox"
+                                                className={classes.tableCell}>
+                                                <Typography color="textPrimary" variant="body2">
+                                                    {row.name}
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell
+                                                component="th"
+                                                scope="row"
+                                                padding="checkbox"
+                                                align="left"
+                                                className={classes.tableCell}>
+                                                <Typography color="textPrimary" variant="body2">
+                                                    {row.type}
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell
+                                                component="th"
+                                                scope="row"
+                                                padding="checkbox"
+                                                align="right"
+                                                className={classes.tableCell}>
+                                                <Typography color="textSecondary" variant="body2">
+                                                    {row.value}
+                                                </Typography>
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                                )}
                             </TableBody>
                         </Table>
                     </TableContainer>

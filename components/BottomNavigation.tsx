@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 
     tabElement: {
-        margin: '-0.9rem',
+        marginLeft: '-0.2rem',
         display: 'flex'
     }
 }));
@@ -84,16 +84,10 @@ export default function BottomNavigation(): JSX.Element {
                                 icon={
                                     <NavLink
                                         href="/"
-                                        name={
-                                            <Tab
-                                                icon={
-                                                    <img src="/images/home.svg" alt="Dashboard" />
-                                                }
-                                                aria-label="Dashboard"
-                                            />
-                                        }
+                                        name={<img src="/images/home.svg" alt="Dashboard" />}
                                     />
                                 }
+                                aria-label="Dashboard"
                                 {...bottomNav(0)}
                                 className={classes.tabElement}
                             />
@@ -102,14 +96,10 @@ export default function BottomNavigation(): JSX.Element {
                                 icon={
                                     <NavLink
                                         href="/blocks"
-                                        name={
-                                            <Tab
-                                                icon={<img src="/images/blocks.svg" alt="Blocks" />}
-                                                aria-label="Blocks"
-                                            />
-                                        }
+                                        name={<img src="/images/blocks.svg" alt="Blocks" />}
                                     />
                                 }
+                                aria-label="Blocks"
                                 {...bottomNav(1)}
                                 className={classes.tabElement}
                             />
@@ -118,16 +108,10 @@ export default function BottomNavigation(): JSX.Element {
                                 icon={
                                     <NavLink
                                         href="/transactions"
-                                        name={
-                                            <Tab
-                                                icon={
-                                                    <img src="/images/txs.svg" alt="Transactions" />
-                                                }
-                                                aria-label="Transactions"
-                                            />
-                                        }
+                                        name={<img src="/images/txs.svg" alt="Transactions" />}
                                     />
                                 }
+                                aria-label="Transactions"
                                 {...bottomNav(2)}
                                 className={classes.tabElement}
                             />
@@ -136,19 +120,10 @@ export default function BottomNavigation(): JSX.Element {
                                 icon={
                                     <NavLink
                                         href="/accounts"
-                                        name={
-                                            <Tab
-                                                icon={
-                                                    <img
-                                                        src="/images/validators.svg"
-                                                        alt="Accounts"
-                                                    />
-                                                }
-                                                aria-label="Accounts"
-                                            />
-                                        }
+                                        name={<img src="/images/accounts.svg" alt="Accounts" />}
                                     />
                                 }
+                                aria-label="Accounts"
                                 {...bottomNav(3)}
                                 className={classes.tabElement}
                             />
@@ -157,19 +132,10 @@ export default function BottomNavigation(): JSX.Element {
                                 icon={
                                     <NavLink
                                         href="/proposals"
-                                        name={
-                                            <Tab
-                                                icon={
-                                                    <img
-                                                        src="/images/proposal.svg"
-                                                        alt="Proposals"
-                                                    />
-                                                }
-                                                aria-label="Proposals"
-                                            />
-                                        }
+                                        name={<img src="/images/proposal.svg" alt="Proposals" />}
                                     />
                                 }
+                                aria-label="Dashboard"
                                 {...bottomNav(4)}
                                 className={classes.tabElement}
                             />
@@ -178,19 +144,10 @@ export default function BottomNavigation(): JSX.Element {
                                 icon={
                                     <NavLink
                                         href="/validatorVotes"
-                                        name={
-                                            <Tab
-                                                icon={
-                                                    <img
-                                                        src="/images/vote.svg"
-                                                        alt="Validator Votes"
-                                                    />
-                                                }
-                                                aria-label="ValidatorVotes"
-                                            />
-                                        }
+                                        name={<img src="/images/vote.svg" alt="Validator Votes" />}
                                     />
                                 }
+                                aria-label="Validator Votes"
                                 {...bottomNav(5)}
                                 className={classes.tabElement}
                             />

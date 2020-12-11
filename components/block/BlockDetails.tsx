@@ -379,22 +379,17 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                                     {data.block.signers.map((row: any, index: number) => {
                                         if (row.exist) {
                                             return (
-                                                <TabPanel value={value} index={0}>
+                                                <TabPanel value={value} index={0} key={index}>
                                                     <li key={index}>
                                                         {row.validator &&
                                                         row.validator.validatorGroup &&
                                                         row.validator.validatorGroup.address ? (
-                                                            <Typography
-                                                                variant="body2"
-                                                                gutterBottom>
-                                                                <NavLink
-                                                                    href={`/validatorGroup/${row.validator.validatorGroup.address}`}
-                                                                    name={
-                                                                        row.validator.name ||
-                                                                        row.signer
-                                                                    }
-                                                                />
-                                                            </Typography>
+                                                            <NavLink
+                                                                href={`/validatorGroup/${row.validator.validatorGroup.address}`}
+                                                                name={
+                                                                    row.validator.name || row.signer
+                                                                }
+                                                            />
                                                         ) : (
                                                             ''
                                                         )}
@@ -403,19 +398,15 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                                             );
                                         } else {
                                             return (
-                                                <TabPanel value={value} index={1}>
+                                                <TabPanel value={value} index={1} key={index}>
                                                     <li key={index}>
                                                         {row.validator &&
                                                         row.validator.validatorGroup &&
                                                         row.validator.validatorGroup.address ? (
-                                                            <Typography
-                                                                variant="body2"
-                                                                gutterBottom>
-                                                                <NavLink
-                                                                    href={`/validatorGroup/${row.validator.validatorGroup.address}`}
-                                                                    name={row.validator.name}
-                                                                />
-                                                            </Typography>
+                                                            <NavLink
+                                                                href={`/validatorGroup/${row.validator.validatorGroup.address}`}
+                                                                name={row.validator.name}
+                                                            />
                                                         ) : (
                                                             ''
                                                         )}

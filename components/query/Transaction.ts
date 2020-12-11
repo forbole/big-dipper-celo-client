@@ -44,12 +44,12 @@ export const GET_TX_DETAILS = gql`
             feeCurrency
             gatewayFeeRecipient
             gatewayFee
-            gas
             hash
             type
             input
             timestamp
             gas
+            gasPrice
             from {
                 address
             }
@@ -68,6 +68,7 @@ export const GET_ACCOUNT_TX = gql`
                 hash
                 timestamp
                 gas
+                gasPrice
                 type
                 from {
                     address

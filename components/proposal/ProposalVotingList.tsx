@@ -113,7 +113,7 @@ function TabPanel(props: TabPanelProps) {
             {value === index && (
                 <Grid container>
                     <Grid item xs={12}>
-                        <Typography>{children}</Typography>
+                        {children}
                     </Grid>
                 </Grid>
             )}

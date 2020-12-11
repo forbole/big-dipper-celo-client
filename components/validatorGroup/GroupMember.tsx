@@ -79,7 +79,7 @@ const useStyles = makeStyles(() => {
 
         memberNumber: {
             paddingRight: '0.5rem',
-            marginTop: '0.2rem'
+            marginTop: '0.1rem'
         },
 
         lowerItem: {
@@ -152,7 +152,11 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                     {data && data.validatorGroup && data.validatorGroup.members
                         ? data.validatorGroup.members.map((row: any, index: number) => {
                               return (
-                                  <>
+                                  <Grid
+                                      container
+                                      key={index}
+                                      spacing={1}
+                                      style={{ paddingBottom: '0.5rem' }}>
                                       <Grid item xs={8} className={classes.member}>
                                           <Typography
                                               variant="body2"
@@ -239,7 +243,7 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                               '0.00 cUSD'
                                           )}
                                       </Grid>
-                                  </>
+                                  </Grid>
                               );
                           })
                         : null}

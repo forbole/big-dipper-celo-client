@@ -279,7 +279,7 @@ const Layout = (props: { children: React.ReactNode }): JSX.Element => {
                                     name={
                                         <>
                                             <ListItemIcon className={classes.icon}>
-                                                <img src="/images/validators.svg" alt="Accounts" />
+                                                <img src="/images/accounts.svg" alt="Accounts" />
                                             </ListItemIcon>
                                             <Typography
                                                 variant="body1"

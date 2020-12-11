@@ -39,7 +39,7 @@
 * Added value checks in `Block Details`
 * Updated Login and Big Dipper icon size and margin
 * Added `activateVaidatorGroupVotes` method and Activate Votes Button, removed Tx Fee from Confirmation Window
-
+* [#16] Removed nesting errors
 ## v0.1.3
 
 * [#69] Hidden Search Bar and Network Selection

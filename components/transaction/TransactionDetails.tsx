@@ -11,6 +11,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import React from 'react';
 
@@ -20,7 +21,6 @@ import ErrorMessage from '../misc/ErrorMessage';
 import NotAvailable from '../misc/NotAvailable';
 import NavLink from '../NavLink';
 import { GET_TX_DETAILS } from '../query/Transaction';
-
 const useStyles = makeStyles(() => {
     return {
         root: {
@@ -109,6 +109,7 @@ type TxDetailsProps = { hash: string };
 
 const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
     const classes = useStyles();
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const { loading, error, data } = useQuery(GET_TX_DETAILS, {
         variables: { hash }
@@ -202,7 +203,10 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                         {data.transaction && data.transaction.type ? (
                             <Typography variant="body2">
                                 {data.transaction.type.charAt(0).toUpperCase() +
-                                    data.transaction.type.slice(1)}
+                                    data.transaction.type
+                                        .slice(1)
+                                        .split(/(?=[A-Z])/)
+                                        .join(' ')}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" />
@@ -214,13 +218,11 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                         <Typography variant="body2" gutterBottom>
                             Status
                         </Typography>
-                        <Typography variant="body2">
-                            {data.transaction && data.transaction.pending ? (
-                                <Chips actionResult="Pending" />
-                            ) : (
-                                <Chips actionResult="Success" />
-                            )}
-                        </Typography>
+                        {data.transaction && data.transaction.pending ? (
+                            <Chips actionResult="Pending" />
+                        ) : (
+                            <Chips actionResult="Success" />
+                        )}
                         <Divider variant="middle" className={classes.divider} />
                     </Grid>
 
@@ -303,9 +305,13 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
 
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Transaction Fee</Typography>
-                        {data.transaction && data.transaction.feeCurrency ? (
+                        {data.transaction && data.transaction.gas ? (
                             <Typography variant="body2">
-                                {data.transaction.feeCurrency} + CELO
+                                {new BigNumber(
+                                    (data.transaction.gas * data.transaction.gasPrice) /
+                                        CELO_FRACTION
+                                ).toFormat()}{' '}
+                                cUSD
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" />
