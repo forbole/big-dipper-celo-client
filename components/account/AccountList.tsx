@@ -14,13 +14,13 @@ import BigNumber from 'bignumber.js';
 import numbro from 'numbro';
 import React from 'react';
 
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import MiddleEllipsis from '../misc/MiddleEllipsis';
-import NotAvailable from '../misc/NotAvailable';
-import NavLink from '../NavLink';
-import { GET_ACCOUNTS } from '../query/Account';
-import { GET_TOTAL_SUPPLY } from '../query/Chain';
+import { GET_ACCOUNTS } from '../Query/Account';
+import { GET_TOTAL_SUPPLY } from '../Query/Chain';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
+import MiddleEllipsis from '../Utils/MiddleEllipsis';
+import NavLink from '../Utils/NavLink';
+import NotAvailable from '../Utils/NotAvailable';
 
 interface Column {
     id: 'rank' | 'address' | 'balance' | 'percentage' | 'txsCount';
@@ -204,9 +204,9 @@ const AccountList = (): JSX.Element => {
                                                             variant="body2"
                                                             color="textSecondary"
                                                             noWrap>
-                                                            {new BigNumber(
-                                                                row.balance / CELO_FRACTION
-                                                            ).toFormat(2)}{' '}
+                                                            {new BigNumber(row.balance)
+                                                                .dividedBy(CELO_FRACTION)
+                                                                .toFormat(2)}{' '}
                                                             CELO
                                                         </Typography>
                                                     ) : (

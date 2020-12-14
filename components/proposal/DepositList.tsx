@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client';
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,12 +14,12 @@ import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import React from 'react';
 
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import NotAvailable from '../misc/NotAvailable';
-import NavLink from '../NavLink';
-import { GET_PROPOSAL } from '../query/Proposal';
-import { GET_TX_DETAILS } from '../query/Transaction';
+import { GET_PROPOSAL } from '../Query/Proposal';
+import { GET_TX_DETAILS } from '../Query/Transaction';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
+import NavLink from '../Utils/NavLink';
+import NotAvailable from '../Utils/NotAvailable';
 
 interface Column {
     id: 'depositor' | 'amount' | 'time';
@@ -151,7 +150,6 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                         Deposit ({calculateTotalDeposited()} CELO)
                     </Typography>
 
-                    {/* <Divider variant="middle" className={classes.divider} /> */}
                     <Table size="medium">
                         <TableHead>
                             <TableRow>
@@ -231,10 +229,12 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                                                               noWrap
                                                               color="textPrimary">
                                                               {new BigNumber(
-                                                                  data.proposal.upvoteList[row]
-                                                                      .returnValues.upvotes /
-                                                                      CELO_FRACTION
-                                                              ).toFormat(2)}
+                                                                  data.proposal.upvoteList[
+                                                                      row
+                                                                  ].returnValues.upvotes
+                                                              )
+                                                                  .dividedBy(CELO_FRACTION)
+                                                                  .toFormat(2)}{' '}
                                                           </Typography>
                                                       ) : (
                                                           <NotAvailable variant="body2" />

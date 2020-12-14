@@ -13,10 +13,9 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import getConfig from 'next/config';
 import React from 'react';
 
-import NavLink from '../NavLink';
+import NavLink from '../Utils/NavLink';
 
 function createData(address: string, value: string, percentage: string) {
     return { address, value, percentage };
@@ -73,22 +72,14 @@ const useStyles = makeStyles(() => {
         },
 
         address: {
-            //   width: '25%',
-            //   whiteSpace: 'nowrap',
-            //   overflow: 'hidden',
-            //   textOverflow: 'ellipsis'
             display: 'flex'
         },
 
         truncateAlignRight: {
             display: 'block',
             whiteSpace: 'nowrap',
-            //paddingRight: '1rem',
             float: 'right',
             overflow: 'hidden',
-            // textOverflow: 'ellipsis',
-            //width: '70%',
-            //MaxWidth: '100rem',
             padding: '0 1rem'
         },
 

@@ -4,8 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
-import theme from '../themes/celo-theme';
-import NavLink from './NavLink';
+import theme from '../../../themes/celo-theme';
+import NavLink from '../../Utils/NavLink';
 
 const useStyles = makeStyles({
     root: {
@@ -98,6 +98,17 @@ const Footer = (): JSX.Element => {
                         className={classes.socialMedia}
                         name={
                             <img src="/images/social-media-twitter.svg" alt="Big Dipper Twitter" />
+                        }
+                    />
+
+                    <NavLink
+                        href="https://t.me/forbole"
+                        className={classes.socialMedia}
+                        name={
+                            <img
+                                src="/images/social-media-telegram.svg"
+                                alt="Big Dipper Telegram"
+                            />
                         }
                     />
                 </Grid>

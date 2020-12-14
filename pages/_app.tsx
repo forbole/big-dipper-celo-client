@@ -3,20 +3,16 @@
 import { ApolloClient, ApolloProvider } from '@apollo/client';
 import { HttpLink, split } from '@apollo/client';
 import { InMemoryCache } from '@apollo/client/cache';
-import { onError } from '@apollo/client/link/error';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { ApolloLink } from 'apollo-link';
 import Head from 'next/head';
 import React, { useEffect } from 'react';
-// import * as ws from 'ws';
-import WebSocket from 'ws';
 
-import BottomNavigation from '../components/BottomNavigation';
-import Footer from '../components/Footer';
-import Layout from '../components/Layout';
+import BottomNavigation from '../components/Layout/BottomNavigation/BottomNavigation';
+import Footer from '../components/Layout/Footer/Footer';
+import Layout from '../components/Layout/Layout';
 import possibleTypes from '../possibleTypes.json';
 import DarkTheme from '../themes/celo-theme';
 

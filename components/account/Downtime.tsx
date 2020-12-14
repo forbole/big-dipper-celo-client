@@ -16,13 +16,13 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import moment from 'moment';
 import React from 'react';
 
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import MiddleEllipsis from '../misc/MiddleEllipsis';
-import NotAvailable from '../misc/NotAvailable';
-import NavLink from '../NavLink';
-import { GET_ACCOUNT_DETAILS } from '../query/Account';
-import { DOWNTIME } from '../query/Downtime';
+import { GET_ACCOUNT_DETAILS } from '../Query/Account';
+import { DOWNTIME } from '../Query/Downtime';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
+import MiddleEllipsis from '../Utils/MiddleEllipsis';
+import NavLink from '../Utils/NavLink';
+import NotAvailable from '../Utils/NotAvailable';
 
 interface Column {
     id: 'height' | 'proposer' | 'txs' | 'gasUsed' | 'gasLimit' | 'time';

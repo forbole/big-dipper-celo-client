@@ -23,7 +23,7 @@ import {
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 
-import theme from '../themes/celo-theme';
+import theme from '../../themes/celo-theme';
 
 const useStyles = makeStyles(() =>
     createStyles({

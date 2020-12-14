@@ -2,7 +2,7 @@ import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 
-import LatestTransactions from '../components/transaction/LatestTransactions';
+import LatestTransactions from '../components/Transaction/LatestTransactions';
 
 const useStyles = makeStyles(() =>
     createStyles({

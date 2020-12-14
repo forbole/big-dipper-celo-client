@@ -9,7 +9,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React, { useEffect } from 'react';
 
-import NavLink from './../NavLink';
+import NavLink from '../Utils/NavLink';
 import ControlButtons from './ControlButtons';
 import Ledger from './Ledger';
 
@@ -116,7 +116,7 @@ const Login = (): JSX.Element => {
                     }
 
                     try {
-                        const ver = await Ledger.getCeloAppVersion();
+                        const getCeloAppVersion = await Ledger.getCeloAppVersion();
                     } catch (e) {
                         setErrorMessage(Ledger.checkLedgerErrors(e.message));
                     }

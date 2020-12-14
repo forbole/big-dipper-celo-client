@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
-import NavLink from '../../../NavLink';
+import NavLink from '../../../Utils/NavLink';
 
 const useStyles = makeStyles({
     root: {

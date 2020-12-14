@@ -2,7 +2,7 @@ import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 
-import LatestBlocks from '../components/block/LatestBlocks';
+import LatestBlocks from '../components/Block/LatestBlocks';
 
 const useStyles = makeStyles(() =>
     createStyles({

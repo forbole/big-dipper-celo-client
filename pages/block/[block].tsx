@@ -3,7 +3,7 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import BlockDetails from '../../components/block/BlockDetails';
+import BlockDetails from '../../components/Block/BlockDetails';
 
 const useStyles = makeStyles(() =>
     createStyles({

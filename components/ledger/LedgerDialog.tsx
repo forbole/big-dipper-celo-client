@@ -11,30 +11,27 @@ import Typography from '@material-ui/core/Typography';
 import React, { useEffect } from 'react';
 import { createGlobalState } from 'react-hooks-global-state';
 
-import { GET_ACCOUNT_DETAILS } from '../query/Account';
-import LockGold from './celoGold/lock/LockGold';
-import LockGoldConfirm from './celoGold/lock/LockGoldConfirm';
-import LockGoldSuccess from './celoGold/lock/LockGoldSuccess';
-import UnlockGold from './celoGold/unlock/UnlockGold';
-import UnlockGoldConfirm from './celoGold/unlock/UnlockGoldConfirm';
-import UnlockGoldSuccess from './celoGold/unlock/UnlockGoldSuccess';
+import { GET_ACCOUNT_DETAILS } from '../Query/Account';
+import LockGold from './CeloGold/Lock/LockGold';
+import LockGoldConfirm from './CeloGold/Lock/LockGoldConfirm';
+import LockGoldSuccess from './CeloGold/Lock/LockGoldSuccess';
+import UnlockGold from './CeloGold/Unlock/UnlockGold';
+import UnlockGoldConfirm from './CeloGold/Unlock/UnlockGoldConfirm';
+import UnlockGoldSuccess from './CeloGold/Unlock/UnlockGoldSuccess';
 import ControlButtons from './ControlButtons';
 import Ledger from './Ledger';
-import DepositConfirm from './proposal/deposit/Confirm';
-import Deposit from './proposal/deposit/Deposit';
-import DepositSuccess from './proposal/deposit/Success';
-import VoteConfirm from './proposal/vote/Confirm';
-import VoteSuccess from './proposal/vote/Success';
-import Vote from './proposal/vote/Vote';
-import ActivateValidatorGroupVote from './validatorGroup/activate/Activate';
-import ConfirmActivateValidatorGroupVote from './validatorGroup/activate/Confirm';
-import SuccessActivateValidatorGroupVote from './validatorGroup/activate/Success';
-import ConfirmRevokeValidatorGroup from './validatorGroup/revoke/Confirm';
-import RevokeValidatorGroup from './validatorGroup/revoke/Revoke';
-import SuccessRevokeValidatorGroup from './validatorGroup/revoke/Success';
-import ConfirmVoteValidatorGroup from './validatorGroup/vote/Confirm';
-import SuccessVoteValidatorGroup from './validatorGroup/vote/Success';
-import VoteValidatorGroup from './validatorGroup/vote/Vote';
+import VoteConfirm from './Proposal/Vote/Confirm';
+import VoteSuccess from './Proposal/Vote/Success';
+import Vote from './Proposal/Vote/Vote';
+import ActivateValidatorGroupVote from './ValidatorGroup/Activate/Activate';
+import ConfirmActivateValidatorGroupVote from './ValidatorGroup/Activate/Confirm';
+import SuccessActivateValidatorGroupVote from './ValidatorGroup/Activate/Success';
+import ConfirmRevokeValidatorGroup from './ValidatorGroup/Revoke/Confirm';
+import RevokeValidatorGroup from './ValidatorGroup/Revoke/Revoke';
+import SuccessRevokeValidatorGroup from './ValidatorGroup/Revoke/Success';
+import ConfirmVoteValidatorGroup from './ValidatorGroup/Vote/Confirm';
+import SuccessVoteValidatorGroup from './ValidatorGroup/Vote/Success';
+import VoteValidatorGroup from './ValidatorGroup/Vote/Vote';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -316,25 +313,7 @@ const LedgerDialog = ({
                     default:
                         return null;
                 }
-            case 'ProposalDeposit':
-                switch (tabNum) {
-                    case 0:
-                        return <Deposit isLoading={isLoading} />;
-                    case 1:
-                        return (
-                            <DepositConfirm
-                                amount={amount}
-                                proposalNumber={getProposalNumber}
-                                proposer={getProposer}
-                                proposalTitle={getProposalTitle}
-                                proposalDescription={getProposalDescription}
-                            />
-                        );
-                    case 2:
-                        return <DepositSuccess txHash={hash} />;
-                    default:
-                        return null;
-                }
+
             case 'ProposalVote':
                 switch (tabNum) {
                     case 0:
@@ -514,20 +493,6 @@ const LedgerDialog = ({
         }
     };
 
-    const handleProposalDeposit = async () => {
-        // try {
-        //     setLedgerLoading(true);
-        //     const from = currentUser;
-        //     const unlockObject = { amount, from };
-        //     await Ledger.unlockCelo(unlockObject);
-        //     setLedgerLoading(false);
-        // } catch (e) {
-        //     setLedgerError(true);
-        //     setLedgerLoading(true);
-        //     setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
-        // }
-    };
-
     const handleProposalVote = async () => {
         try {
             const address = { address: currentUser };
@@ -603,7 +568,7 @@ const LedgerDialog = ({
                 setShowCircuralProgress(true);
                 const activateVotesObject = {
                     address: currentUser,
-                    validatorGroupAddress: validatorGroup
+                    validatorGroupAddress: validatorGroup ? validatorGroup : ''
                 };
                 const activateValidatorGroupVote = await Ledger.activateVaidatorGroupVotes(
                     activateVotesObject
@@ -631,30 +596,22 @@ const LedgerDialog = ({
                     case 0:
                         return handleLock();
                     default:
-                        return null as any;
+                        return;
                 }
             case 'UnlockCelo':
                 switch (tabNumber) {
                     case 0:
                         return handleUnlock();
                     default:
-                        return null as any;
+                        return;
                 }
-            case 'ProposalDeposit':
-                switch (tabNumber) {
-                    case 0:
-                        return handleProposalDeposit();
-                    default:
-                        return null as any;
-                }
-                break;
             case 'ProposalVote':
                 setVote(e);
                 switch (tabNumber) {
                     case 0:
                         return handleProposalVote();
                     default:
-                        return null as any;
+                        return;
                 }
                 break;
             case 'ValidatorGroupVote':
@@ -662,21 +619,21 @@ const LedgerDialog = ({
                     case 0:
                         return handleValidatorGroupVote();
                     default:
-                        return null as any;
+                        return;
                 }
             case 'ValidatorGroupRevoke':
                 switch (tabNumber) {
                     case 0:
                         return handleRevokeValidatorGroupVote();
                     default:
-                        return null as any;
+                        return;
                 }
             case 'ValidatorGroupActivateVotes':
                 switch (tabNumber) {
                     case 0:
                         return handleValidatorGroupActivateVotes();
                     default:
-                        return null as any;
+                        return;
                 }
         }
     };
@@ -732,7 +689,7 @@ const LedgerDialog = ({
                     setIsLoading(false);
                 }
                 try {
-                    const ver = await Ledger.getCeloAppVersion();
+                    const getCeloAppVersion = await Ledger.getCeloAppVersion();
                     // setDialogError(true);
                 } catch (e) {
                     setLedgerError(true);

@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import React from 'react';
 
-import NavLink from './NavLink';
+import NavLink from '../../Utils/NavLink';
 
 interface TabPanelProps {
     children?: React.ReactNode;

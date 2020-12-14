@@ -10,10 +10,10 @@ import cx from 'clsx';
 import numbro from 'numbro';
 import React from 'react';
 
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import NotAvailable from '../misc/NotAvailable';
-import { GET_CHAIN } from '../query/Chain';
+import { GET_CHAIN } from '../Query/Chain';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
+import NotAvailable from '../Utils/NotAvailable';
 
 const useStyles = makeStyles({
     root: {
@@ -190,17 +190,15 @@ const ChartData = (): JSX.Element => {
                                     className={classes.dollarValue}
                                     noWrap={false}>
                                     {largeScreen
-                                        ? new BigNumber(
-                                              (data.chain.tokenPrice.usd *
-                                                  data.chain.celoTotalSupply) /
-                                                  CELO_FRACTION
-                                          ).toFormat(2)
+                                        ? new BigNumber(data.chain.tokenPrice.usd)
+                                              .dividedBy(CELO_FRACTION)
+                                              .times(data.chain.celoTotalSupply)
+                                              .toFormat(2)
                                         : numbro(
-                                              new BigNumber(
-                                                  (data.chain.tokenPrice.usd *
-                                                      data.chain.celoTotalSupply) /
-                                                      CELO_FRACTION
-                                              ).toFormat(2)
+                                              new BigNumber(data.chain.tokenPrice.usd)
+                                                  .dividedBy(CELO_FRACTION)
+                                                  .times(data.chain.celoTotalSupply)
+                                                  .toFormat(2)
                                           ).format({ average: true, mantissa: 2 })}
                                 </Typography>
                             </>

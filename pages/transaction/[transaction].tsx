@@ -3,9 +3,9 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import InputCard from '../../components/transaction/InputCard';
-import InputParameters from '../../components/transaction/InputParameters';
-import TransactionDetails from '../../components/transaction/TransactionDetails';
+import InputCard from '../../components/Transaction/InputCard';
+import InputParameters from '../../components/Transaction/InputParameters';
+import TransactionDetails from '../../components/Transaction/TransactionDetails';
 
 const useStyles = makeStyles(() =>
     createStyles({

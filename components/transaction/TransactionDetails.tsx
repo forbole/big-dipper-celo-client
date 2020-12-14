@@ -15,12 +15,12 @@ import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import React from 'react';
 
-import Chips from '../Chips';
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import NotAvailable from '../misc/NotAvailable';
-import NavLink from '../NavLink';
-import { GET_TX_DETAILS } from '../query/Transaction';
+import { GET_TX_DETAILS } from '../Query/Transaction';
+import Chips from '../Utils/Chips';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
+import NavLink from '../Utils/NavLink';
+import NotAvailable from '../Utils/NotAvailable';
 const useStyles = makeStyles(() => {
     return {
         root: {
@@ -307,10 +307,9 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                         <Typography variant="body2">Transaction Fee</Typography>
                         {data.transaction && data.transaction.gas ? (
                             <Typography variant="body2">
-                                {new BigNumber(
-                                    (data.transaction.gas * data.transaction.gasPrice) /
-                                        CELO_FRACTION
-                                ).toFormat()}{' '}
+                                {new BigNumber(data.transaction.gas * data.transaction.gasPrice)
+                                    .dividedBy(CELO_FRACTION)
+                                    .toFormat()}{' '}
                                 cUSD
                             </Typography>
                         ) : (

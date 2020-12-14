@@ -2,7 +2,7 @@ import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 
-import AccountList from '../components/account/AccountList';
+import AccountList from '../components/Account/AccountList';
 
 const useStyles = makeStyles(() =>
     createStyles({

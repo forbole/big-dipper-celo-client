@@ -16,12 +16,12 @@ import moment from 'moment';
 import numbro from 'numbro';
 import React, { useEffect } from 'react';
 
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import MiddleEllipsis from '../misc/MiddleEllipsis';
-import NavLink from '../NavLink';
-import PriceCard from '../PriceCard';
-import { GET_BLOCK } from '../query/Block';
+import PriceCard from '../PriceCard/PriceCard';
+import { GET_BLOCK } from '../Query/Block';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
+import MiddleEllipsis from '../Utils/MiddleEllipsis';
+import NavLink from '../Utils/NavLink';
 
 interface Column {
     id: 'height' | 'validator' | 'txs' | 'gasUsed' | 'gasLimit' | 'time';
