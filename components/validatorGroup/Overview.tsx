@@ -9,12 +9,11 @@ import BigNumber from 'bignumber.js';
 import numbro from 'numbro';
 import React from 'react';
 
-import LedgerDialog from '../ledger/LedgerDialog';
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import NotAvailable from '../misc/NotAvailable';
-import { GET_ACCOUNT_DETAILS } from '../query/Account';
-import { GET_VALIDATOR_GROUP } from '../query/ValidatorGroup';
+import LedgerDialog from '../Ledger/LedgerDialog';
+import { GET_VALIDATOR_GROUP } from '../Query/ValidatorGroup';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
+import NotAvailable from '../Utils/NotAvailable';
 
 const useStyles = makeStyles(() => {
     return {
@@ -85,10 +84,6 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
 
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
         variables: { valGroupAddress }
-    });
-
-    const accountData = useQuery(GET_ACCOUNT_DETAILS, {
-        variables: { address }
     });
 
     const validatorGroupMembers =
@@ -169,9 +164,9 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                     <Grid item xs={9} className={classes.item}>
                         {data && data.validatorGroup && data.validatorGroup.lockedGoldAmount ? (
                             <Typography variant="body2" align="right">
-                                {new BigNumber(
-                                    data.validatorGroup.lockedGoldAmount / CELO_FRACTION
-                                ).toFormat(2)}{' '}
+                                {new BigNumber(data.validatorGroup.lockedGoldAmount)
+                                    .dividedBy(CELO_FRACTION)
+                                    .toFormat(2)}{' '}
                                 CELO
                             </Typography>
                         ) : (

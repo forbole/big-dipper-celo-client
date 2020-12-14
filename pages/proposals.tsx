@@ -3,9 +3,8 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { GetStaticProps } from 'next';
 import React from 'react';
 
-import PriceCard from '../components/PriceCard';
-// import DepositList from '../components/proposal/DepositList';
-import ProposalList from '../components/proposal/ProposalList';
+import PriceCard from '../components/PriceCard/PriceCard';
+import ProposalList from '../components/Proposal/ProposalList';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -31,12 +30,10 @@ export default function Proposals(props: { proposalTitle: string[] }): JSX.Eleme
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-    const proposalTitle: {
-        [index: string]: { proposalTitle: string; proposalNumber: number };
-    } = [];
+    const proposalTitle: { proposalTitle: string; proposalNumber: number }[] = [];
     let getProposalTitle;
     //Set max number of proposals as currently we can't obtain it from the rpc
-    const PROPOSAL_MAX_NUMBER = 100;
+    const PROPOSAL_MAX_NUMBER = 60;
 
     for (let c = PROPOSAL_MAX_NUMBER; c >= 0; c--) {
         if (c >= 10) {

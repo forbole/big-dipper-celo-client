@@ -19,9 +19,9 @@ import {
     YAxis
 } from 'recharts';
 
-import NavLink from '../NavLink';
-import { GET_BLOCK } from '../query/Block';
-import { GET_VALIDATOR_GROUP } from '../query/ValidatorGroup';
+import { GET_BLOCK } from '../Query/Block';
+import { GET_VALIDATOR_GROUP } from '../Query/ValidatorGroup';
+import NavLink from '../Utils/NavLink';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -73,13 +73,10 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 let tooltip: string;
-type CustomTooltipType = {
-    active: boolean;
-    payload: any;
-};
-const CustomTooltip = ({ active, payload }: CustomTooltipType) => {
+
+const CustomTooltip = (payload: any, active?: boolean) => {
     const classes = useStyles();
-    if (!active || !tooltip) return null;
+    if (!active || !tooltip) return null as any;
     for (const bar of payload) {
         if (bar.dataKey === tooltip) {
             return (
@@ -178,8 +175,6 @@ const CustomTooltip = ({ active, payload }: CustomTooltipType) => {
 type UptimeProps = { address: string };
 
 const Uptime = ({ address }: UptimeProps): JSX.Element => {
-    const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
-    const ROWSMALL = process.env.ROWSMALL ? parseInt(process.env.ROWSMALL) : 15;
     const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
 
     const classes = useStyles();

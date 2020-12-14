@@ -10,12 +10,12 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BigNumber from 'bignumber.js';
 import React from 'react';
 
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import NotAvailable from '../misc/NotAvailable';
-import NavLink from '../NavLink';
-import { GET_ACCOUNT_DETAILS } from '../query/Account';
-import { GET_VALIDATOR } from '../query/Validator';
+import { GET_ACCOUNT_DETAILS } from '../Query/Account';
+import { GET_VALIDATOR } from '../Query/Validator';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
+import NavLink from '../Utils/NavLink';
+import NotAvailable from '../Utils/NotAvailable';
 
 const useStyles = makeStyles(() => {
     return {
@@ -212,10 +212,10 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                     <Grid item xs={8} className={classes.item}>
                                         <Typography variant="body2" className={classes.alignRight}>
                                             {new BigNumber(
-                                                new BigNumber(
-                                                    accountQuery.data.account.lockedGold.total
-                                                ) / CELO_FRACTION
-                                            ).toFormat(2)}{' '}
+                                                accountQuery.data.account.lockedGold.total
+                                            )
+                                                .dividedBy(CELO_FRACTION)
+                                                .toFormat(2)}{' '}
                                             CELO
                                         </Typography>
                                     </Grid>
@@ -234,10 +234,10 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                     <Grid item xs={12} className={classes.item}>
                                         <Typography variant="body2" className={classes.alignRight}>
                                             {new BigNumber(
-                                                new BigNumber(
-                                                    accountQuery.data.account.lockedGold.nonvoting
-                                                ) / CELO_FRACTION
-                                            ).toFormat(2)}{' '}
+                                                accountQuery.data.account.lockedGold.nonvoting
+                                            )
+                                                .dividedBy(CELO_FRACTION)
+                                                .toFormat(2)}{' '}
                                             non-voting CELO
                                         </Typography>
                                     </Grid>

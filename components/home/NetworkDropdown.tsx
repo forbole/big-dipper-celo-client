@@ -11,7 +11,7 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import React from 'react';
 
-import NavLink from './NavLink';
+import NavLink from '../Utils/NavLink';
 
 const useStyles = makeStyles(() =>
     createStyles({

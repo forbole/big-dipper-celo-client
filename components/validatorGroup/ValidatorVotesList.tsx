@@ -21,12 +21,12 @@ import BigNumber from 'bignumber.js';
 import numbro from 'numbro';
 import React from 'react';
 
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import MiddleEllipsis from '../misc/MiddleEllipsis';
-import NotAvailable from '../misc/NotAvailable';
-import NavLink from '../NavLink';
-import { GET_VALIDATOR_GROUPS } from '../query/ValidatorGroup';
+import { GET_VALIDATOR_GROUPS } from '../Query/ValidatorGroup';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
+import MiddleEllipsis from '../Utils/MiddleEllipsis';
+import NavLink from '../Utils/NavLink';
+import NotAvailable from '../Utils/NotAvailable';
 
 interface Column {
     id:
@@ -227,7 +227,7 @@ const ValidatorVotesList = (): JSX.Element => {
                     }
                 }
             }
-            return new BigNumber(total / CELO_FRACTION).toFormat(2);
+            return new BigNumber(total).dividedBy(CELO_FRACTION).toFormat(2);
         }
     };
 
@@ -435,9 +435,10 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               className={classes.tableCell}>
                                                               <Typography variant="body2" noWrap>
                                                                   {new BigNumber(
-                                                                      row.lockedGoldAmount /
-                                                                          CELO_FRACTION
-                                                                  ).toFormat(2)}{' '}
+                                                                      row.lockedGoldAmount
+                                                                  )
+                                                                      .dividedBy(CELO_FRACTION)
+                                                                      .toFormat(2)}{' '}
                                                                   CELO
                                                               </Typography>
                                                           </TableCell>

@@ -12,13 +12,13 @@ import BigNumber from 'bignumber.js';
 import React, { useEffect } from 'react';
 import MarkdownView from 'react-showdown';
 
-import LedgerDialog from '../ledger/LedgerDialog';
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import NotAvailable from '../misc/NotAvailable';
-import NavLink from '../NavLink';
-import { GET_PROPOSAL } from '../query/Proposal';
-import { GET_PROPOSALS } from '../query/Proposal';
+import LedgerDialog from '../Ledger/LedgerDialog';
+import { GET_PROPOSAL } from '../Query/Proposal';
+import { GET_PROPOSALS } from '../Query/Proposal';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
+import NavLink from '../Utils/NavLink';
+import NotAvailable from '../Utils/NotAvailable';
 
 const useStyles = makeStyles(() => {
     return {
@@ -274,9 +274,9 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                         data.proposal.returnValues &&
                         data.proposal.returnValues.deposit ? (
                             <Typography variant="body2" className={classes.alignRight}>
-                                {new BigNumber(
-                                    data.proposal.returnValues.deposit / CELO_FRACTION
-                                ).toFormat(2)}
+                                {new BigNumber(data.proposal.returnValues.deposit)
+                                    .dividedBy(CELO_FRACTION)
+                                    .toFormat(2)}{' '}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
@@ -359,39 +359,23 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                         <Divider variant="middle" className={classes.divider} />
                     </Grid>
 
-                    {data && data.proposal && data.proposal.status === 'Vote' ? (
+                    {(data && data.proposal && data.proposal.status === 'Vote') ||
+                    (data && data.proposal && data.proposal.status === 'Referendum') ? (
                         <Grid item xs={12} className={classes.centerContent}>
-                            {voted ? (
-                                <LedgerDialog
-                                    action="ProposalDeposit"
-                                    buttonLabel="Deposit"
-                                    proposalTitle={proposalTitle}
-                                    proposalNumber={proposalNumber}
-                                    proposer={
-                                        data.proposal &&
-                                        data.proposal.returnValues &&
-                                        data.proposal.returnValues.proposer
-                                            ? data.proposal.returnValues.proposer
-                                            : ''
-                                    }
-                                    proposalDescription={proposalDetails}
-                                />
-                            ) : (
-                                <LedgerDialog
-                                    action="ProposalVote"
-                                    buttonLabel="Vote"
-                                    proposalTitle={proposalTitle}
-                                    proposalNumber={proposalNumber}
-                                    proposer={
-                                        data.proposal &&
-                                        data.proposal.returnValues &&
-                                        data.proposal.returnValues.proposer
-                                            ? data.proposal.returnValues.proposer
-                                            : ''
-                                    }
-                                    proposalDescription={proposalDetails}
-                                />
-                            )}
+                            <LedgerDialog
+                                action="ProposalVote"
+                                buttonLabel="Vote"
+                                proposalTitle={proposalTitle}
+                                proposalNumber={proposalNumber}
+                                proposer={
+                                    data.proposal &&
+                                    data.proposal.returnValues &&
+                                    data.proposal.returnValues.proposer
+                                        ? data.proposal.returnValues.proposer
+                                        : ''
+                                }
+                                proposalDescription={proposalDetails}
+                            />
                         </Grid>
                     ) : null}
                 </Grid>

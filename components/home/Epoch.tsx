@@ -8,11 +8,10 @@ import React from 'react';
 import Countdown, { CountdownRenderProps } from 'react-countdown';
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import { BLOCK_SUBSCRIPTION } from '../query/Block';
-import { GET_CHAIN } from '../query/Chain';
-import { GET_EPOCH } from '../query/Epoch';
+import { BLOCK_SUBSCRIPTION } from '../Query/Block';
+import { GET_CHAIN } from '../Query/Chain';
+import { GET_EPOCH } from '../Query/Epoch';
+import ErrorMessage from '../Utils/ErrorMessage';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -22,7 +21,6 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: '1.5%',
             borderRadius: 4,
             overflow: 'hidden'
-            // display: "flex"
         },
         box: {
             letterSpacing: '1px',

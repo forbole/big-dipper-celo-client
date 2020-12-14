@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-key */
 import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Grid from '@material-ui/core/Grid';
@@ -18,10 +17,9 @@ import clsx from 'clsx';
 import React from 'react';
 
 // import NetworkDropdown from '../components/NetworkDropdown';
-// import SearchBar from '../components/SearchBar';
-import Login from './ledger/Login';
-import NavLink from './NavLink';
-import SearchBar from './SearchBar';
+import Login from '../Ledger/Login';
+import SearchBar from '../Search/SearchBar';
+import NavLink from '../Utils/NavLink';
 
 const drawerWidth = 220;
 

@@ -129,7 +129,7 @@ type VoteProps = {
     isLoading: boolean;
     ledgerLoading: boolean;
     proposalTitle: string;
-    voteHandler: Promise<void>;
+    voteHandler: any;
 };
 
 const Vote = ({ isLoading, ledgerLoading, proposalTitle, voteHandler }: VoteProps): JSX.Element => {
@@ -182,7 +182,7 @@ const Vote = ({ isLoading, ledgerLoading, proposalTitle, voteHandler }: VoteProp
                             <Button
                                 variant="contained"
                                 className={classes.voteYesButton}
-                                onClick={(e) => voteHandler(e.target.textContent)}
+                                onClick={(e) => voteHandler((e.target as HTMLElement).textContent)}
                                 disabled={isLoading || ledgerLoading}>
                                 Yes
                             </Button>
@@ -191,7 +191,7 @@ const Vote = ({ isLoading, ledgerLoading, proposalTitle, voteHandler }: VoteProp
                             <Button
                                 variant="contained"
                                 className={classes.voteNoButton}
-                                onClick={(e) => voteHandler(e.target.textContent)}
+                                onClick={(e) => voteHandler((e.target as HTMLElement).textContent)}
                                 disabled={isLoading || ledgerLoading}>
                                 No
                             </Button>
@@ -200,7 +200,7 @@ const Vote = ({ isLoading, ledgerLoading, proposalTitle, voteHandler }: VoteProp
                             <Button
                                 variant="contained"
                                 className={classes.voteAbstainButton}
-                                onClick={(e) => voteHandler(e.target.textContent)}
+                                onClick={(e) => voteHandler((e.target as HTMLElement).textContent)}
                                 disabled={isLoading || ledgerLoading}>
                                 Abstain
                             </Button>

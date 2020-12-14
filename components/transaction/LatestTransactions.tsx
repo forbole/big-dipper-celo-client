@@ -15,12 +15,12 @@ import { BigNumber } from 'bignumber.js';
 import moment from 'moment';
 import React, { useEffect } from 'react';
 
-import Chips from '../Chips';
-import ErrorMessage from '../misc/ErrorMessage';
-import MiddleEllipsis from '../misc/MiddleEllipsis';
-import NotAvailable from '../misc/NotAvailable';
-import NavLink from '../NavLink';
-import { GET_TX } from '../query/Transaction';
+import { GET_TX } from '../Query/Transaction';
+import Chips from '../Utils/Chips';
+import ErrorMessage from '../Utils/ErrorMessage';
+import MiddleEllipsis from '../Utils/MiddleEllipsis';
+import NavLink from '../Utils/NavLink';
+import NotAvailable from '../Utils/NotAvailable';
 
 const useStyles = makeStyles({
     root: {
@@ -297,9 +297,12 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                                     classes.alignRight
                                                                                 }>
                                                                                 {new BigNumber(
-                                                                                    row.value /
+                                                                                    row.value
+                                                                                )
+                                                                                    .dividedBy(
                                                                                         CELO_FRACTION
-                                                                                ).toFormat(2) +
+                                                                                    )
+                                                                                    .toFormat(2) +
                                                                                     ' cUSD'}
                                                                             </Typography>
                                                                         ) : (

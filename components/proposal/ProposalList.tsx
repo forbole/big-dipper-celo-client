@@ -5,12 +5,12 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
-import Chips from '../../components/Chips';
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import MiddleEllipsis from '../misc/MiddleEllipsis';
-import NavLink from '../NavLink';
-import { GET_PROPOSALS } from '../query/Proposal';
+import { GET_PROPOSALS } from '../Query/Proposal';
+import Chips from '../Utils/Chips';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
+import MiddleEllipsis from '../Utils/MiddleEllipsis';
+import NavLink from '../Utils/NavLink';
 
 const useStyles = makeStyles(() =>
     createStyles({

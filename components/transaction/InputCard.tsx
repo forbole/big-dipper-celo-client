@@ -5,9 +5,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import { GET_TX_DETAILS } from '../query/Transaction';
+import { GET_TX_DETAILS } from '../Query/Transaction';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
 
 const useStyles = makeStyles(() => {
     return {

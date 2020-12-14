@@ -2,12 +2,12 @@ import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 
-import LatestBlocks from '../components/block/LatestBlocks';
-import ChartData from '../components/home/ChartData';
-import Epoch from '../components/home/Epoch';
-import TokenPrice from '../components/home/TokenPrice';
-import ValidatorsGroups from '../components/home/ValidatorsGroups';
-import LatestTransactions from '../components/transaction/LatestTransactions';
+import LatestBlocks from '../components/Block/LatestBlocks';
+import ChartData from '../components/Home/ChartData';
+import Epoch from '../components/Home/Epoch';
+import TokenPrice from '../components/Home/TokenPrice';
+import ValidatorsGroups from '../components/Home/ValidatorsGroups';
+import LatestTransactions from '../components/Transaction/LatestTransactions';
 
 const useStyles = makeStyles(() =>
     createStyles({

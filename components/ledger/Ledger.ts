@@ -32,7 +32,7 @@ const getCeloLedgerTransport = () => {
     );
 };
 
-const MAINNET = 'https://alfajores-forno.celo-testnet.org';
+const URL = 'https://alfajores-forno.celo-testnet.org';
 
 type LockCeloProps = { amount: string; from: string };
 type UnlockCeloProps = { amount: string; from: string };
@@ -73,10 +73,12 @@ class Ledger extends Component {
         }
     }
     async connect() {
-        const web3 = new Web3(MAINNET);
+        const web3 = new Web3(URL);
         const transport = await getCeloLedgerTransport();
         const eth = new Eth(transport);
         const wallet = await newLedgerWalletWithSetup(eth.transport);
+        // @ts-ignore
+        
         const kit: ContractKit = newKitFromWeb3(web3, wallet);
 
         this.web3 = web3;
@@ -176,7 +178,7 @@ class Ledger extends Component {
         const getGovernance = await this.kit.contracts.getGovernance();
         const proposalVote = await getGovernance.vote(proposalNumber, vote);
         const result = await proposalVote.sendAndWaitForReceipt({ from });
-        console.log(result);
+        console.log(result); 
 
         return result;
     }
@@ -226,7 +228,7 @@ class Ledger extends Component {
             this.checkLedgerErrors('Ledger device is disconnected');
         }
         const election = await this.kit.contracts.getElection();
-        const revokeValue = new BigNumber(parseFloat(amount) * this.CELO_FRACTION)
+        const revokeValue = new BigNumber(parseFloat(amount)).times(this.CELO_FRACTION)
         const revokeVotes = await election.revokeActive(account, group, revokeValue);
         const result = await revokeVotes.sendAndWaitForReceipt({ from: account });
         console.log(result);
@@ -235,4 +237,4 @@ class Ledger extends Component {
     }
 }
 
-export default new Ledger(MAINNET);
+export default new Ledger(URL);

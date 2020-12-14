@@ -9,10 +9,10 @@ import cx from 'clsx';
 import numbro from 'numbro';
 import React from 'react';
 
-import ComponentLoader from './misc/ComponentLoader';
-import ErrorMessage from './misc/ErrorMessage';
-import NotAvailable from './misc/NotAvailable';
-import { GET_CHAIN } from './query/Chain';
+import { GET_CHAIN } from '../Query/Chain';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
+import NotAvailable from '../Utils/NotAvailable';
 
 const useStyles = makeStyles(() => {
     return {
@@ -28,7 +28,6 @@ const useStyles = makeStyles(() => {
         largeCard: {
             display: 'flex',
             padding: '1rem',
-            //border: "solid 1px rgba(61, 66, 71, 1)",
             background: 'rgba(255, 255, 255, 1)',
             borderRadius: 4,
             marginBottom: '1rem'
@@ -82,11 +81,10 @@ const PriceCard = (): JSX.Element => {
                         chainData.data.chain.tokenPrice.usd >= 0 ? (
                             <Typography align="right" variant="body1">
                                 ${' '}
-                                {new BigNumber(
-                                    (chainData.data.chain.tokenPrice.usd *
-                                        chainData.data.chain.celoTotalSupply) /
-                                        CELO_FRACTION
-                                ).toFormat(2)}
+                                {new BigNumber(chainData.data.chain.tokenPrice.usd)
+                                    .dividedBy(CELO_FRACTION)
+                                    .times(chainData.data.chain.celoTotalSupply)
+                                    .toFormat(2)}{' '}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" />

@@ -1,15 +1,15 @@
 import { useQuery } from '@apollo/client';
-import { createStyles, Divider, Theme } from '@material-ui/core';
+import { createStyles, Theme } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import NotAvailable from '../misc/NotAvailable';
-import { GET_ELECTION } from '../query/Election';
+import { GET_ELECTION } from '../Query/Election';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
+import NotAvailable from '../Utils/NotAvailable';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

@@ -7,13 +7,13 @@ import Typography from '@material-ui/core/Typography';
 import BigNumber from 'bignumber.js';
 import React, { useEffect } from 'react';
 
-import LedgerDialog from '../ledger/LedgerDialog';
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import NotAvailable from '../misc/NotAvailable';
-import { GET_ACCOUNT_DETAILS } from '../query/Account';
-import { GET_CHAIN } from '../query/Chain';
-import { GET_VALIDATOR } from '../query/Validator';
+import LedgerDialog from '../Ledger/LedgerDialog';
+import { GET_ACCOUNT_DETAILS } from '../Query/Account';
+import { GET_CHAIN } from '../Query/Chain';
+import { GET_VALIDATOR } from '../Query/Validator';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
+import NotAvailable from '../Utils/NotAvailable';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -158,9 +158,9 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                     <Grid item xs={9}>
                         {accountQuery.data.account && accountQuery.data.account.balance ? (
                             <Typography variant="h5" className={classes.alignRight}>
-                                {new BigNumber(
-                                    accountQuery.data.account.balance / CELO_FRACTION
-                                ).toFormat(2)}{' '}
+                                {new BigNumber(accountQuery.data.account.balance)
+                                    .dividedBy(CELO_FRACTION)
+                                    .toFormat(2)}{' '}
                                 CELO
                             </Typography>
                         ) : (
@@ -174,10 +174,10 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                         chainQuery.data.chain.tokenPrice &&
                         chainQuery.data.chain.tokenPrice.usd ? (
                             <Typography variant="h6" className={classes.alignRight}>
-                                {new BigNumber(
-                                    (accountQuery.data.account.balance / CELO_FRACTION) *
-                                        chainQuery.data.chain.tokenPrice.usd
-                                ).toFormat(2)}{' '}
+                                {new BigNumber(accountQuery.data.account.balance)
+                                    .dividedBy(CELO_FRACTION)
+                                    .times(chainQuery.data.chain.tokenPrice.usd)
+                                    .toFormat(2)}{' '}
                                 cUSD
                             </Typography>
                         ) : (

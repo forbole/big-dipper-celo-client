@@ -3,7 +3,7 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import AccountPage from '../../components/account/AccountPage';
+import AccountPage from '../../components/Account/AccountPage';
 
 const useStyles = makeStyles(() =>
     createStyles({

@@ -3,9 +3,9 @@ import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import { GET_VALIDATOR } from '../query/Validator';
+import { GET_VALIDATOR } from '../Query/Validator';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
 import AccountDetails from './AccountDetails';
 import AccountOverview from './AccountOverview';
 import AddressCard from './AddressCard';

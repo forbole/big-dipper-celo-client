@@ -10,17 +10,16 @@ import BigNumber from 'bignumber.js';
 import numbro from 'numbro';
 import React from 'react';
 
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import NotAvailable from '../misc/NotAvailable';
-import NavLink from '../NavLink';
-import { GET_VALIDATOR_GROUP } from '../query/ValidatorGroup';
+import { GET_VALIDATOR_GROUP } from '../Query/ValidatorGroup';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
+import NavLink from '../Utils/NavLink';
+import NotAvailable from '../Utils/NotAvailable';
 
 const useStyles = makeStyles(() => {
     return {
         root: {
             width: '100%',
-            // padding: "1%",
             borderRadius: 5,
             wordWrap: 'break-word'
         },
@@ -86,7 +85,6 @@ const useStyles = makeStyles(() => {
             marginTop: '0.3rem'
         },
         alignRight: {
-            // alignItems: 'right',
             float: 'right'
         },
         membersInfo: {
@@ -101,6 +99,7 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
     const classes = useStyles();
     const valGroupAddress = validatorGroupAddress;
     const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
         variables: { valGroupAddress }
     });
@@ -121,7 +120,7 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                     rewardValue = data.validatorGroup.rewards[d].validatorReward;
                 }
             }
-            return new BigNumber(rewardValue / CELO_FRACTION).toFormat(2);
+            return new BigNumber(rewardValue).dividedBy(CELO_FRACTION).toFormat(2);
         }
     };
 
@@ -188,12 +187,12 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                                   align="right"
                                                   color="textPrimary">
                                                   {new BigNumber(
-                                                      new BigNumber(
-                                                          data.validatorGroup.membersAccount[
-                                                              index
-                                                          ].lockedGold.total
-                                                      ) / CELO_FRACTION
-                                                  ).toFormat(2)}{' '}
+                                                      data.validatorGroup.membersAccount[
+                                                          index
+                                                      ].lockedGold.total
+                                                  )
+                                                      .dividedBy(CELO_FRACTION)
+                                                      .toFormat(2)}{' '}
                                                   CELO
                                               </Typography>
                                           ) : (

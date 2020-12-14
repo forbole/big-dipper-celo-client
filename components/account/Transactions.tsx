@@ -19,13 +19,13 @@ import moment from 'moment';
 import numbro from 'numbro';
 import React from 'react';
 
-import Chips from '../Chips';
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import MiddleEllipsis from '../misc/MiddleEllipsis';
-import NotAvailable from '../misc/NotAvailable';
-import NavLink from '../NavLink';
-import { GET_ACCOUNT_TX } from '../query/Transaction';
+import { GET_ACCOUNT_TX } from '../Query/Transaction';
+import Chips from '../Utils/Chips';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
+import MiddleEllipsis from '../Utils/MiddleEllipsis';
+import NavLink from '../Utils/NavLink';
+import NotAvailable from '../Utils/NotAvailable';
 
 const useStyles = makeStyles(() => {
     return {
@@ -291,10 +291,11 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                             className={
                                                                                 classes.alignRight
                                                                             }>
-                                                                            {new BigNumber(
-                                                                                row.gas /
+                                                                            {new BigNumber(row.gas)
+                                                                                .dividedBy(
                                                                                     CELO_FRACTION
-                                                                            ).toFormat(2)}{' '}
+                                                                                )
+                                                                                .toFormat(2)}{' '}
                                                                             cUSD
                                                                         </Typography>
                                                                     ) : (

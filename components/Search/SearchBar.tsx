@@ -14,8 +14,8 @@ import Alert from '@material-ui/lab/Alert';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 
-import { GET_VALIDATOR } from './query/Validator';
-import { GET_VALIDATOR_GROUP } from './query/ValidatorGroup';
+import { GET_VALIDATOR } from '../Query/Validator';
+import { GET_VALIDATOR_GROUP } from '../Query/ValidatorGroup';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

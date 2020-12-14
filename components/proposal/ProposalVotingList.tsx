@@ -13,17 +13,16 @@ import TableRow from '@material-ui/core/TableRow';
 import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 import BigNumber from 'bignumber.js';
-import getConfig from 'next/config';
 import numbro from 'numbro';
 import React from 'react';
 import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts';
 
-import ComponentLoader from '../misc/ComponentLoader';
-import ErrorMessage from '../misc/ErrorMessage';
-import NotAvailable from '../misc/NotAvailable';
-import NavLink from '../NavLink';
-import { GET_CHAIN } from '../query/Chain';
-import { GET_PROPOSAL } from '../query/Proposal';
+import { GET_CHAIN } from '../Query/Chain';
+import { GET_PROPOSAL } from '../Query/Proposal';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
+import NavLink from '../Utils/NavLink';
+import NotAvailable from '../Utils/NotAvailable';
 interface Column {
     id: 'voter' | 'answer' | 'voting_power';
     label: string;
@@ -262,9 +261,10 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                                                         {new BigNumber(
                                                             data.proposal.totalVotesList[
                                                                 voteType.voteType
-                                                            ][row].returnValues.weight /
-                                                                CELO_FRACTION
-                                                        ).toFormat(2)}
+                                                            ][row].returnValues.weight
+                                                        )
+                                                            .dividedBy(CELO_FRACTION)
+                                                            .toFormat(2)}
                                                     </Typography>
                                                 ) : null}
                                             </TableCell>
@@ -306,7 +306,6 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
             ? [
                   { name: 'Yes', value: data.proposal.votes.Yes },
                   { name: 'No', value: data.proposal.votes.No },
-                  // { name: 'No With Veto', value: 200 },
                   { name: 'Abstain', value: data.proposal.votes.Abstain }
               ]
             : [];
@@ -327,7 +326,6 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                 },
                 ' & .Mui-selected': {
                     color: 'rgba(58, 211, 158, 1)'
-                    //marginBottom: "-0.5rem"
                 }
             }
         }
@@ -348,7 +346,9 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                             color="textPrimary"
                             variant="subtitle1"
                             className={classes.priceDisplay}>
-                            {new BigNumber(data.proposal.votes.Total / CELO_FRACTION).toFormat(2)}
+                            {new BigNumber(data.proposal.votes.Total)
+                                .dividedBy(CELO_FRACTION)
+                                .toFormat(2)}
                         </Typography>
                     ) : (
                         <NotAvailable variant="body2" />
@@ -362,7 +362,9 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                             className={classes.headerLabel}>
                             (~
                             {numbro(
-                                new BigNumber(data.proposal.votes.Total / CELO_FRACTION).toFormat()
+                                new BigNumber(data.proposal.votes.Total)
+                                    .dividedBy(CELO_FRACTION)
+                                    .toFormat()
                             ).format({ average: true, mantissa: 2 })}{' '}
                             of ~
                             {chainData &&
@@ -370,9 +372,9 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                             chainData.data.chain &&
                             chainData.data.chain.celoTotalSupply
                                 ? numbro(
-                                      new BigNumber(
-                                          chainData.data.chain.celoTotalSupply / CELO_FRACTION
-                                      ).toFormat(2)
+                                      new BigNumber(chainData.data.chain.celoTotalSupply)
+                                          .dividedBy(CELO_FRACTION)
+                                          .toFormat(2)
                                   ).format({ average: true, mantissa: 2 })
                                 : null}{' '}
                             CELO)

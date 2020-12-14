@@ -2,10 +2,10 @@ import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 
-import Transactions from '../components/account/Transactions';
-import Overview from '../components/tokens/Overview';
-import ProfileSummary from '../components/tokens/ProfileSummary';
-import TokenHolders from '../components/tokens/TokenHolders';
+import Transactions from '../components/Account/Transactions';
+import Overview from '../components/Tokens/Overview';
+import ProfileSummary from '../components/Tokens/ProfileSummary';
+import TokenHolders from '../components/Tokens/TokenHolders';
 
 const useStyles = makeStyles(() =>
     createStyles({

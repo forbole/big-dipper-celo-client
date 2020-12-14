@@ -3,10 +3,10 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import AddressCard from '../../components/account/AddressCard';
-import GroupMember from '../../components/validatorGroup/GroupMember';
-import Overview from '../../components/validatorGroup/Overview';
-import Uptime from '../../components/validatorGroup/Uptime';
+import AddressCard from '../../components/Account/AddressCard';
+import GroupMember from '../../components/ValidatorGroup/GroupMember';
+import Overview from '../../components/ValidatorGroup/Overview';
+import Uptime from '../../components/ValidatorGroup/Uptime';
 
 const useStyles = makeStyles(() =>
     createStyles({

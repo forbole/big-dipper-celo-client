@@ -3,10 +3,10 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import PriceCard from '../../components/PriceCard';
-import DepositList from '../../components/proposal/DepositList';
-import ProposalDetails from '../../components/proposal/ProposalDetails';
-import ProposalVotingList from '../../components/proposal/ProposalVotingList';
+import PriceCard from '../../components/PriceCard/PriceCard';
+import DepositList from '../../components/Proposal/DepositList';
+import ProposalDetails from '../../components/Proposal/ProposalDetails';
+import ProposalVotingList from '../../components/Proposal/ProposalVotingList';
 
 const useStyles = makeStyles(() =>
     createStyles({
