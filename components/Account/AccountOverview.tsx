@@ -7,13 +7,13 @@ import Typography from '@material-ui/core/Typography';
 import BigNumber from 'bignumber.js';
 import React, { useEffect } from 'react';
 
-import LedgerDialog from '../Ledger/LedgerDialog';
 import { GET_ACCOUNT_DETAILS } from '../Query/Account';
 import { GET_CHAIN } from '../Query/Chain';
 import { GET_VALIDATOR } from '../Query/Validator';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import NotAvailable from '../Utils/NotAvailable';
+import LedgerDialog from './../Ledger/LedgerDialog';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
