@@ -127,7 +127,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
         pollInterval: 5000
     });
 
-    // if (loading) return <ComponentLoader />;
+    if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
 
     if (data && data.transactions)
