@@ -12,12 +12,12 @@ import React, { useEffect } from 'react';
 import { createGlobalState } from 'react-hooks-global-state';
 
 import { GET_ACCOUNT_DETAILS } from '../Query/Account';
-import LockGold from './CeloGold/Lock/LockGold';
-import LockGoldConfirm from './CeloGold/Lock/LockGoldConfirm';
-import LockGoldSuccess from './CeloGold/Lock/LockGoldSuccess';
-import UnlockGold from './CeloGold/Unlock/UnlockGold';
-import UnlockGoldConfirm from './CeloGold/Unlock/UnlockGoldConfirm';
-import UnlockGoldSuccess from './CeloGold/Unlock/UnlockGoldSuccess';
+import LockCELO from './CELO/Lock/LockCELO';
+import LockCELOConfirm from './CELO/Lock/LockCELOConfirm';
+import LockCELOSuccess from './CELO/Lock/LockCELOSuccess';
+import UnlockCELO from './CELO/Unlock/UnlockCELO';
+import UnlockCELOConfirm from './CELO/Unlock/UnlockCELOConfirm';
+import UnlockCELOSuccess from './CELO/Unlock/UnlockCELOSuccess';
 import ControlButtons from './ControlButtons';
 import Ledger from './Ledger';
 import VoteConfirm from './Proposal/Vote/Confirm';
@@ -269,7 +269,7 @@ const LedgerDialog = ({
                 switch (tabNum) {
                     case 0:
                         return (
-                            <LockGold
+                            <LockCELO
                                 isLoading={isLoading}
                                 maxLock={
                                     AccountDetails &&
@@ -283,9 +283,9 @@ const LedgerDialog = ({
                             />
                         );
                     case 1:
-                        return <LockGoldConfirm amount={amount} />;
+                        return <LockCELOConfirm amount={amount} />;
                     case 2:
-                        return <LockGoldSuccess txHash={hash} />;
+                        return <LockCELOSuccess txHash={hash} />;
                     default:
                         return null;
                 }
@@ -293,7 +293,7 @@ const LedgerDialog = ({
                 switch (tabNum) {
                     case 0:
                         return (
-                            <UnlockGold
+                            <UnlockCELO
                                 isLoading={isLoading}
                                 maxUnlock={
                                     AccountDetails &&
@@ -307,9 +307,9 @@ const LedgerDialog = ({
                             />
                         );
                     case 1:
-                        return <UnlockGoldConfirm amount={amount} />;
+                        return <UnlockCELOConfirm amount={amount} />;
                     case 2:
-                        return <UnlockGoldSuccess txHash={hash} />;
+                        return <UnlockCELOSuccess txHash={hash} />;
                     default:
                         return null;
                 }
