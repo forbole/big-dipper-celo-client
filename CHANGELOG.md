@@ -41,6 +41,9 @@
 * Added `activateVaidatorGroupVotes` method and Activate Votes Button, removed Tx Fee from Confirmation Window
 * [#16] Removed nesting errors
 * [#150] Fixed build errors 
+* Reused `ComponentLoader` in missing components
+
+
 ## v0.1.3
 
 * [#69] Hidden Search Bar and Network Selection

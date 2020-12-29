@@ -85,7 +85,8 @@ const useStyles = makeStyles((theme: Theme) =>
         login: {
             [theme.breakpoints.up('md')]: {
                 marginTop: '0.8rem'
-            }
+            },
+            float: 'right'
         },
         toolbarItems: {
             verticalAlign: 'middle',
