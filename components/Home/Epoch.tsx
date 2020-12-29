@@ -11,8 +11,8 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 import { BLOCK_SUBSCRIPTION } from '../Query/Block';
 import { GET_CHAIN } from '../Query/Chain';
 import { GET_EPOCH } from '../Query/Epoch';
+import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
-import ComponentLoader from '../Utils/ComponentLoader'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

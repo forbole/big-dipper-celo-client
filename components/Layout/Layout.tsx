@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme: Theme) =>
             [theme.breakpoints.up('md')]: {
                 marginTop: '0.8rem'
             },
-            float: "right"
+            float: 'right'
         },
         toolbarItems: {
             verticalAlign: 'middle',

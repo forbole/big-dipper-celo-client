@@ -17,6 +17,7 @@ import React, { useEffect } from 'react';
 
 import { GET_TX } from '../Query/Transaction';
 import Chips from '../Utils/Chips';
+import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import MiddleEllipsis from '../Utils/MiddleEllipsis';
 import NavLink from '../Utils/NavLink';
