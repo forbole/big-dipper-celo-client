@@ -21,6 +21,8 @@ import {
 
 import { GET_BLOCK } from '../Query/Block';
 import { GET_VALIDATOR_GROUP } from '../Query/ValidatorGroup';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
 import NavLink from '../Utils/NavLink';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -293,6 +295,9 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
         const totalScore = (addScore / validatorGroupMembers.length) * 100;
         return totalScore ? numbro(totalScore).format('0.00') : 0;
     };
+
+    if (loading) return <ComponentLoader />;
+    if (error) return <ErrorMessage message={error.message} />;
 
     return (
         <Card className={classes.root}>
