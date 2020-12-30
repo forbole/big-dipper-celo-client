@@ -42,6 +42,7 @@
 * [#16] Removed nesting errors
 * [#150] Fixed build errors 
 * Reused `ComponentLoader` in missing components
+* Replaced `NotAvailable` with `ComponentLoader` in ChartData.tsx and PriceCard.tsx
 
 
 ## v0.1.3
