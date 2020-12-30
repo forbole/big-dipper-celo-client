@@ -94,15 +94,13 @@ const ChartData = (): JSX.Element => {
     const classes = useStyles();
     const theme = useTheme();
     const largeScreen = useMediaQuery(theme.breakpoints.up('lg'));
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const { loading, error, data } = useQuery(GET_CHAIN, {
         pollInterval: 5000
     });
 
-    if (loading) return <ComponentLoader size="small" />;
     if (error) return <ErrorMessage message={error.message} />;
-
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     return (
         <>
@@ -122,7 +120,7 @@ const ChartData = (): JSX.Element => {
                                       })}
                             </Typography>
                         ) : (
-                            <NotAvailable variant="body1" className={classes.value} />
+                            <ComponentLoader size="small" />
                         )}
                     </Card>
                 </Grid>
@@ -142,7 +140,7 @@ const ChartData = (): JSX.Element => {
                                       })}
                             </Typography>
                         ) : (
-                            <NotAvailable variant="body1" className={classes.value} />
+                            <ComponentLoader size="small" />
                         )}
                     </Card>
                 </Grid>
@@ -166,7 +164,7 @@ const ChartData = (): JSX.Element => {
                                 </Typography>{' '}
                             </>
                         ) : (
-                            <NotAvailable variant="body1" className={classes.value} />
+                            <ComponentLoader size="small" />
                         )}
                     </Card>
                 </Grid>
@@ -203,7 +201,7 @@ const ChartData = (): JSX.Element => {
                                 </Typography>
                             </>
                         ) : (
-                            <NotAvailable variant="body1" className={classes.value} />
+                            <ComponentLoader size="small" />
                         )}
                     </Card>
                 </Grid>

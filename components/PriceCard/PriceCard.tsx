@@ -44,7 +44,7 @@ const PriceCard = (): JSX.Element => {
 
     const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
-    if (chainData.loading) return <ComponentLoader />;
+    // if (chainData.loading) return <ComponentLoader />;
     if (chainData.error) return <ErrorMessage message={chainData.error.message} />;
 
     return (
@@ -65,7 +65,7 @@ const PriceCard = (): JSX.Element => {
                                 $ {numbro(chainData.data.chain.tokenPrice.usd).format('0.00')}
                             </Typography>
                         ) : (
-                            <NotAvailable variant="body2" />
+                            <ComponentLoader size="small" />
                         )}
                     </Grid>
                     <Grid item xs={6}>
@@ -87,7 +87,7 @@ const PriceCard = (): JSX.Element => {
                                     .toFormat(2)}{' '}
                             </Typography>
                         ) : (
-                            <NotAvailable variant="body2" />
+                            <ComponentLoader size="small" />
                         )}
                     </Grid>
                 </Grid>
