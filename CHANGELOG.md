@@ -43,6 +43,7 @@
 * [#150] Fixed build errors 
 * Reused `ComponentLoader` in missing components
 * Replaced `NotAvailable` with `ComponentLoader` in ChartData.tsx and PriceCard.tsx
+* Updated runner name in node.js.yml
 
 
 ## v0.1.3
