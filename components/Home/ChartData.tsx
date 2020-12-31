@@ -106,11 +106,12 @@ const ChartData = (): JSX.Element => {
         <>
             <Grid container spacing={1}>
                 <Grid item xs={6} md={3}>
-                    <Card className={cx(classes.blocksCard)} elevation={0}>
-                        <Typography variant="body2" className={classes.label}>
-                            Total blocks
-                        </Typography>
-                        {data && data.chain && data.chain.latestHeight >= 0 ? (
+                    {data && data.chain && data.chain.latestHeight >= 0 ? (
+                        <Card className={cx(classes.blocksCard)} elevation={0}>
+                            <Typography variant="body2" className={classes.label}>
+                                Total blocks
+                            </Typography>
+
                             <Typography variant="h4" className={classes.value}>
                                 {largeScreen
                                     ? numbro(data.chain.latestHeight).format('000,000')
@@ -119,18 +120,18 @@ const ChartData = (): JSX.Element => {
                                           mantissa: 2
                                       })}
                             </Typography>
-                        ) : (
-                            <ComponentLoader size="small" />
-                        )}
-                    </Card>
+                        </Card>
+                    ) : (
+                        <ComponentLoader size="small" />
+                    )}
                 </Grid>
 
                 <Grid item xs={6} md={3}>
-                    <Card className={cx(classes.transactionsCard)} elevation={0}>
-                        <Typography variant="body2" className={classes.label}>
-                            Total transactions
-                        </Typography>
-                        {data && data.chain && data.chain.txCount >= 0 ? (
+                    {data && data.chain && data.chain.txCount >= 0 ? (
+                        <Card className={cx(classes.transactionsCard)} elevation={0}>
+                            <Typography variant="body2" className={classes.label}>
+                                Total transactions
+                            </Typography>
                             <Typography variant="h4" className={classes.value}>
                                 {largeScreen
                                     ? numbro(data.chain.txCount).format('000,000')
@@ -139,71 +140,64 @@ const ChartData = (): JSX.Element => {
                                           mantissa: 2
                                       })}
                             </Typography>
-                        ) : (
-                            <ComponentLoader size="small" />
-                        )}
-                    </Card>
+                        </Card>
+                    ) : (
+                        <ComponentLoader size="small" />
+                    )}
                 </Grid>
 
                 <Grid item xs={6} md={3}>
-                    <Card className={cx(classes.priceCard)} elevation={0}>
-                        <Typography variant="body2" className={classes.label}>
-                            Celo Price
-                        </Typography>
-                        {data &&
-                        data.chain &&
-                        data.chain.tokenPrice &&
-                        data.chain.tokenPrice.usd >= 0 ? (
-                            <>
-                                {' '}
-                                <Typography variant="h6" className={classes.dollarSign}>
-                                    $
-                                </Typography>
-                                <Typography variant="h4" className={classes.dollarValue}>
-                                    {numbro(data.chain.tokenPrice.usd).format('0.00')}
-                                </Typography>{' '}
-                            </>
-                        ) : (
-                            <ComponentLoader size="small" />
-                        )}
-                    </Card>
+                    {data &&
+                    data.chain &&
+                    data.chain.tokenPrice &&
+                    data.chain.tokenPrice.usd >= 0 ? (
+                        <Card className={cx(classes.priceCard)} elevation={0}>
+                            <Typography variant="body2" className={classes.label}>
+                                Celo Price
+                            </Typography>
+                            <Typography variant="h6" className={classes.dollarSign}>
+                                $
+                            </Typography>
+                            <Typography variant="h4" className={classes.dollarValue}>
+                                {numbro(data.chain.tokenPrice.usd).format('0.00')}
+                            </Typography>
+                        </Card>
+                    ) : (
+                        <ComponentLoader size="small" />
+                    )}
                 </Grid>
 
                 <Grid item xs={6} md={3}>
-                    <Card className={cx(classes.marketCapCard)} elevation={0}>
-                        <Typography variant="body2" className={classes.label}>
-                            Market Cap
-                        </Typography>
-                        {data &&
-                        data.chain &&
-                        data.chain.celoTotalSupply &&
-                        data.chain.tokenPrice &&
-                        data.chain.tokenPrice.usd >= 0 ? (
-                            <>
-                                <Typography variant="h6" className={classes.dollarSign}>
-                                    $
-                                </Typography>
-                                <Typography
-                                    variant="h4"
-                                    className={classes.dollarValue}
-                                    noWrap={false}>
-                                    {largeScreen
-                                        ? new BigNumber(data.chain.tokenPrice.usd)
+                    {data &&
+                    data.chain &&
+                    data.chain.celoTotalSupply &&
+                    data.chain.tokenPrice &&
+                    data.chain.tokenPrice.usd >= 0 ? (
+                        <Card className={cx(classes.marketCapCard)} elevation={0}>
+                            <Typography variant="body2" className={classes.label}>
+                                Market Cap
+                            </Typography>
+
+                            <Typography variant="h6" className={classes.dollarSign}>
+                                $
+                            </Typography>
+                            <Typography variant="h4" className={classes.dollarValue} noWrap={false}>
+                                {largeScreen
+                                    ? new BigNumber(data.chain.tokenPrice.usd)
+                                          .dividedBy(CELO_FRACTION)
+                                          .times(data.chain.celoTotalSupply)
+                                          .toFormat(2)
+                                    : numbro(
+                                          new BigNumber(data.chain.tokenPrice.usd)
                                               .dividedBy(CELO_FRACTION)
                                               .times(data.chain.celoTotalSupply)
                                               .toFormat(2)
-                                        : numbro(
-                                              new BigNumber(data.chain.tokenPrice.usd)
-                                                  .dividedBy(CELO_FRACTION)
-                                                  .times(data.chain.celoTotalSupply)
-                                                  .toFormat(2)
-                                          ).format({ average: true, mantissa: 2 })}
-                                </Typography>
-                            </>
-                        ) : (
-                            <ComponentLoader size="small" />
-                        )}
-                    </Card>
+                                      ).format({ average: true, mantissa: 2 })}
+                            </Typography>
+                        </Card>
+                    ) : (
+                        <ComponentLoader size="small" />
+                    )}
                 </Grid>
             </Grid>
         </>

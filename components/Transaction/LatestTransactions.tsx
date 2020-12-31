@@ -69,6 +69,12 @@ const useStyles = makeStyles({
         padding: '0 0 0 0.5rem'
     },
 
+    txRow: {
+        padding: '0.2rem 0',
+        background: 'rgba(255, 255, 255, 1)',
+        minHeight: '7rem'
+    },
+
     link: {
         float: 'right'
     },
@@ -156,7 +162,9 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                             {data.transactions.transactions.map(
                                                 (row: any, index: number) => {
                                                     return (
-                                                        <TableRow key={index}>
+                                                        <TableRow
+                                                            key={index}
+                                                            style={{ minHeight: '6rem' }}>
                                                             <TableCell
                                                                 component="th"
                                                                 scope="row"
@@ -164,11 +172,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                 <Grid
                                                                     container
                                                                     spacing={1}
-                                                                    style={{
-                                                                        padding: '0.2rem 0',
-                                                                        background:
-                                                                            'rgba(255, 255, 255, 1)'
-                                                                    }}>
+                                                                    className={classes.txRow}>
                                                                     <Grid item xs={5}>
                                                                         <Typography
                                                                             variant="body2"
