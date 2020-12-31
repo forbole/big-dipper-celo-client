@@ -21,7 +21,10 @@ const useStyles = makeStyles((theme: Theme) =>
             height: '100%',
             padding: '1.5%',
             borderRadius: 4,
-            overflow: 'hidden'
+            overflow: 'hidden',
+            [theme.breakpoints.down('md')]: {
+                height: '26.5rem'
+            }
         },
         box: {
             letterSpacing: '1px',
@@ -45,8 +48,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
         epochNumber: {
             display: 'block',
-            marginTop: '-11.5rem',
-            paddingLeft: '3.2rem',
+            marginTop: '3.5rem',
+            paddingLeft: '3rem',
             fontWeight: 400,
             position: 'absolute',
             textAlign: 'center'
@@ -59,21 +62,21 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         epochData: {
             paddingTop: '2.5rem',
-            paddingRight: '20%',
+            paddingRight: '9%',
+            paddingLeft: '4%',
             float: 'right',
-            whiteSpace: 'nowrap',
-
+            position: 'relative',
+            zIndex: 99,
             [theme.breakpoints.down('md')]: {
-                paddingRight: '40%'
+                paddingRight: '40%',
+                whiteSpace: 'nowrap'
             }
         },
 
         blockProposer: {
-            [theme.breakpoints.down('md')]: {
-                marginTop: '-2rem'
-            },
             paddingLeft: '1.5rem',
-            display: 'flex'
+            display: 'flex',
+            marginTop: '15rem'
         },
 
         blockProposerAddress: {
@@ -225,14 +228,16 @@ const Epoch = (): JSX.Element => {
                             style={{
                                 width: '100%',
                                 height: '15rem',
-                                overflow: 'visible',
-                                display: 'inline-block'
+                                overflow: 'overlay',
+                                display: 'inline-block',
+                                position: 'absolute',
+                                zIndex: 999
                             }}>
                             <ResponsiveContainer>
                                 <PieChart>
                                     <Pie
                                         data={chartData}
-                                        cx={95}
+                                        cx={90}
                                         cy={80}
                                         innerRadius={60}
                                         outerRadius={70}
