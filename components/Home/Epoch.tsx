@@ -231,27 +231,25 @@ const Epoch = (): JSX.Element => {
                                 position: 'absolute',
                                 zIndex: 999
                             }}>
-                            <ResponsiveContainer height={200} width={200}>
-                                <PieChart>
-                                    <Pie
-                                        data={chartData}
-                                        cx={90}
-                                        cy={80}
-                                        innerRadius={60}
-                                        outerRadius={70}
-                                        startAngle={90}
-                                        endAngle={-270}
-                                        strokeWidth={0}
-                                        paddingAngle={2}
-                                        dataKey="value"
-                                    />
+                            <PieChart height={200} width={200}>
+                                <Pie
+                                    data={chartData}
+                                    cx={90}
+                                    cy={80}
+                                    innerRadius={60}
+                                    outerRadius={70}
+                                    startAngle={90}
+                                    endAngle={-270}
+                                    strokeWidth={0}
+                                    paddingAngle={2}
+                                    dataKey="value"
+                                />
 
-                                    {chartData.map((entry: any, index: number) => (
-                                        <Cell key={`cell-${index}`} fill={entry.fill} />
-                                    ))}
-                                    <Tooltip />
-                                </PieChart>
-                            </ResponsiveContainer>
+                                {chartData.map((entry: any, index: number) => (
+                                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                                ))}
+                                <Tooltip />
+                            </PieChart>
                         </Grid>
 
                         <Grid item xs={5} className={classes.epochData}>
