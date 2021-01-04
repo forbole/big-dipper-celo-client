@@ -80,8 +80,7 @@ export default function App(props: any) {
         }
         init({
             url: MATOMO_URL,
-            siteId: MATOMO_SITE_ID,
-            excludeUrlsPatterns: [/^\/login.php/, /\?token=.+/]
+            siteId: MATOMO_SITE_ID
         });
     }, []);
 
