@@ -7,6 +7,7 @@ import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
+import { init } from '@socialgouv/matomo-next';
 import Head from 'next/head';
 import React, { useEffect } from 'react';
 
@@ -15,6 +16,9 @@ import Footer from '../components/Layout/Footer/Footer';
 import Layout from '../components/Layout/Layout';
 import possibleTypes from '../possibleTypes.json';
 import DarkTheme from '../themes/celo-theme';
+
+const MATOMO_URL = 'https://analytics.bigdipper.live/';
+const MATOMO_SITE_ID = 3;
 
 const wsLink = process.browser
     ? new WebSocketLink({
@@ -74,6 +78,11 @@ export default function App(props: any) {
         if (jssStyles && jssStyles.parentElement) {
             jssStyles.parentElement.removeChild(jssStyles);
         }
+        init({
+            url: MATOMO_URL,
+            siteId: MATOMO_SITE_ID,
+            excludeUrlsPatterns: [/^\/login.php/, /\?token=.+/]
+        });
     }, []);
 
     return (
