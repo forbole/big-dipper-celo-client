@@ -189,9 +189,11 @@ const ValidatorVotesList = (): JSX.Element => {
     };
 
     const findElectedValidators = (membersAddress: any, electedValidators: any) => {
-        for (const d in Object.keys(electedValidators)) {
-            if (electedValidators[d] === membersAddress) {
-                return <FiberManualRecordIcon className={classes.dotIcon} />;
+        if (electedValidators) {
+            for (const d in Object.keys(electedValidators)) {
+                if (electedValidators[d] === membersAddress) {
+                    return <FiberManualRecordIcon className={classes.dotIcon} />;
+                }
             }
         }
     };
