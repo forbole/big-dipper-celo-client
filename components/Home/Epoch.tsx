@@ -226,14 +226,12 @@ const Epoch = (): JSX.Element => {
                             item
                             xs={7}
                             style={{
-                                width: '100%',
-                                height: '15rem',
                                 overflow: 'overlay',
                                 display: 'inline-block',
                                 position: 'absolute',
                                 zIndex: 999
                             }}>
-                            <ResponsiveContainer>
+                            <ResponsiveContainer height={200} width={200}>
                                 <PieChart>
                                     <Pie
                                         data={chartData}
