@@ -46,6 +46,7 @@
 * Updated runner name in node.js.yml
 * Updated home components to fix minor issues occurring after deployment
 * [#167] Updated epoch chart's container size
+* [#161] Fixed ValidatorVotesList page breaking caused by a null value of `electedValidators`
 
 ## v0.1.3
 
