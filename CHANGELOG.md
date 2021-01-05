@@ -51,6 +51,7 @@
 * [#164] Display Lock/Unlock CELO buttons only in Account Page of logged in user 
 * [#166] Added custom tooltip to Token Price Chart 
 * [#160] Added Matomo analytics
+* Added `@socialgouv/matomo-next` module declaration to `global.d.ts`
 ## v0.1.3
 
 * [#69] Hidden Search Bar and Network Selection
