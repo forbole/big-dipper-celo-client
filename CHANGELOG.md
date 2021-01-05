@@ -45,6 +45,7 @@
 * Replaced `NotAvailable` with `ComponentLoader` in ChartData.tsx and PriceCard.tsx
 * Updated runner name in node.js.yml
 * Updated home components to fix minor issues occurring after deployment
+* [#167] Updated epoch chart's container size
 
 ## v0.1.3
 
