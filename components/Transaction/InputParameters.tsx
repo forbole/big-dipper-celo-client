@@ -48,69 +48,73 @@ const InputParameters = ({ hash }: InputParametersProps): JSX.Element => {
 
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
-    return (
-        <Card className={classes.root}>
-            <CardContent>
-                <Grid container spacing={2} className={classes.item}>
-                    <Grid item xs={12}>
-                        <Typography color="textPrimary" variant="subtitle1">
-                            Input
-                        </Typography>
-                    </Grid>
-                    <Divider />
+    if (data?.transaction?.decodedInput) {
+        return (
+            <Card className={classes.root}>
+                <CardContent>
+                    <Grid container spacing={2} className={classes.item}>
+                        <Grid item xs={12}>
+                            <Typography color="textPrimary" variant="subtitle1">
+                                Input
+                            </Typography>
+                        </Grid>
+                        <Divider />
 
-                    <TableContainer>
-                        <Table aria-label="input-params">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Name</TableCell>
-                                    <TableCell align="left">Type</TableCell>
-                                    <TableCell align="right">Data</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {data.transaction.decodedInput.params.map(
-                                    (row: any, index: number) => (
-                                        <TableRow key={index}>
-                                            <TableCell
-                                                component="th"
-                                                scope="row"
-                                                padding="checkbox"
-                                                className={classes.tableCell}>
-                                                <Typography color="textPrimary" variant="body2">
-                                                    {row.name}
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell
-                                                component="th"
-                                                scope="row"
-                                                padding="checkbox"
-                                                align="left"
-                                                className={classes.tableCell}>
-                                                <Typography color="textPrimary" variant="body2">
-                                                    {row.type}
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell
-                                                component="th"
-                                                scope="row"
-                                                padding="checkbox"
-                                                align="right"
-                                                className={classes.tableCell}>
-                                                <Typography color="textSecondary" variant="body2">
-                                                    {row.value}
-                                                </Typography>
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                )}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Grid>
-            </CardContent>
-        </Card>
-    );
+                        <TableContainer>
+                            <Table aria-label="input-params">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Name</TableCell>
+                                        <TableCell align="left">Type</TableCell>
+                                        <TableCell align="right">Data</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {data?.transaction?.decodedInput?.params?.map(
+                                        (row: any, index: number) => (
+                                            <TableRow key={index}>
+                                                <TableCell
+                                                    component="th"
+                                                    scope="row"
+                                                    padding="checkbox"
+                                                    className={classes.tableCell}>
+                                                    <Typography color="textPrimary" variant="body2">
+                                                        {row.name}
+                                                    </Typography>
+                                                </TableCell>
+                                                <TableCell
+                                                    component="th"
+                                                    scope="row"
+                                                    padding="checkbox"
+                                                    align="left"
+                                                    className={classes.tableCell}>
+                                                    <Typography color="textPrimary" variant="body2">
+                                                        {row.type}
+                                                    </Typography>
+                                                </TableCell>
+                                                <TableCell
+                                                    component="th"
+                                                    scope="row"
+                                                    padding="checkbox"
+                                                    align="right"
+                                                    className={classes.tableCell}>
+                                                    <Typography
+                                                        color="textSecondary"
+                                                        variant="body2">
+                                                        {row.value}
+                                                    </Typography>
+                                                </TableCell>
+                                            </TableRow>
+                                        )
+                                    )}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Grid>
+                </CardContent>
+            </Card>
+        );
+    } else return null as any;
 };
 
 export default InputParameters;
