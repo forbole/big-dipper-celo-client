@@ -2,6 +2,7 @@ import 'date-fns';
 
 import { useQuery } from '@apollo/client';
 import DateFnsUtils from '@date-io/date-fns';
+import { CardContent } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
@@ -11,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import BigNumber from 'bignumber.js';
+import moment from 'moment';
 import numbro from 'numbro';
 import React from 'react';
 import {
@@ -103,9 +105,98 @@ const useStyles = makeStyles((theme: Theme) =>
         selectDateGrid: {
             fontSize: '14px',
             display: 'inline-flex'
+        },
+
+        tooltip: {
+            opacity: 5,
+            width: '19.125rem',
+            height: '5rem'
+        },
+
+        tooltipCard: {
+            padding: '0.625rem'
+        },
+
+        tooltipTime: {
+            fontWeight: 600
+        },
+
+        tooltipCeloPrice: {
+            fontWeight: 600,
+            color: 'rgba(53,208,125,1)'
+        },
+
+        tooltipMarketCap: {
+            fontWeight: 600,
+            color: 'rgba(239,195,78,1)'
         }
     })
 );
+
+type TokenPriceTooltipProps = { active?: boolean; payload?: any };
+
+const TokenPriceTooltip = ({ active, payload }: TokenPriceTooltipProps) => {
+    const classes = useStyles();
+
+    if (active) {
+        return (
+            <Card className={classes.tooltip}>
+                <CardContent className={classes.tooltipCard}>
+                    <Grid container>
+                        <Grid item xs={3}>
+                            <Typography
+                                color="textPrimary"
+                                variant="body2"
+                                align="left"
+                                className={classes.tooltipTime}>
+                                Time
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={9}>
+                            <Typography color="textPrimary" variant="body2" align="right">
+                                {moment.utc(payload[0]?.payload?.Time).format('Do MMMM, h:mm:ss a')}{' '}
+                                UTC
+                            </Typography>
+                        </Grid>
+
+                        <Grid item xs={5}>
+                            <Typography
+                                color="textPrimary"
+                                variant="body2"
+                                align="left"
+                                className={classes.tooltipCeloPrice}>
+                                CELO Price
+                            </Typography>
+                        </Grid>
+
+                        <Grid item xs={7}>
+                            <Typography color="textPrimary" variant="body2" align="right">
+                                {payload[0]?.payload?.CELO} USD
+                            </Typography>
+                        </Grid>
+
+                        <Grid item xs={5}>
+                            <Typography
+                                color="textPrimary"
+                                variant="body2"
+                                align="left"
+                                className={classes.tooltipMarketCap}>
+                                Market Cap
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={7}>
+                            <Typography color="textPrimary" variant="body2" align="right">
+                                {payload[0]?.payload?.Market_Cap} USD
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </CardContent>
+            </Card>
+        );
+    }
+
+    return null;
+};
 
 const StyledDatePicker = withStyles({
     root: {
@@ -379,11 +470,12 @@ const TokenPrice = (): JSX.Element => {
                                         fontWeight: 100
                                     }}
                                 />
-                                <Tooltip />
+                                <Tooltip content={<TokenPriceTooltip />} />
                                 <Line
                                     yAxisId="left"
                                     type="monotone"
                                     dataKey="CELO"
+                                    name="CELO Price (USD): "
                                     stroke="rgba(102, 227, 157, 1)"
                                     activeDot={{ stroke: 'rgba(102, 128, 113, 1)', r: 3 }}
                                     strokeWidth={2}
@@ -393,6 +485,7 @@ const TokenPrice = (): JSX.Element => {
                                     yAxisId="right"
                                     type="monotone"
                                     dataKey="Market_Cap"
+                                    // name={`Market Cap (USD): `}
                                     stroke="rgba(255, 177, 52, 1)"
                                     activeDot={{ stroke: 'rgba(250, 123, 108, 1)', r: 0 }}
                                     strokeWidth={2}
