@@ -50,7 +50,7 @@
 * [#163] Fixed error in `TransactionDetails` caused by`decodedInput` value returning null in some transactions
 * [#164] Display Lock/Unlock CELO buttons only in Account Page of logged in user 
 * [#166] Added custom tooltip to Token Price Chart 
-
+* [#160] Added Matomo analytics
 ## v0.1.3
 
 * [#69] Hidden Search Bar and Network Selection
