@@ -1,12 +1,13 @@
 import { useQuery, useSubscription } from '@apollo/client';
-import { Divider, Theme } from '@material-ui/core';
+import { Card, CardContent, Divider, Theme } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import numbro from 'numbro';
 import React from 'react';
 import Countdown, { CountdownRenderProps } from 'react-countdown';
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
+import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 
 import { BLOCK_SUBSCRIPTION } from '../Query/Block';
 import { GET_CHAIN } from '../Query/Chain';
@@ -106,14 +107,65 @@ const useStyles = makeStyles((theme: Theme) =>
             border: 'solid 2px rgba(8, 178, 122, 1)',
             borderRadius: 50,
             position: 'absolute'
+        },
+
+        tooltip: {
+            opacity: 5,
+            width: '11.5rem',
+            height: '4.5rem',
+            overflow: 'visible'
+        },
+
+        tooltipName: {
+            fontWeight: 600
+        },
+
+        tooltipValue: {
+            paddingTop: '0.4rem',
+            paddingRigth: '0.5rem'
         }
     })
 );
 
+type EpochTooltipProps = { active?: boolean; payload?: any };
+
+const EpochTooltip = ({ active, payload }: EpochTooltipProps) => {
+    const classes = useStyles();
+
+    if (active) {
+        return (
+            <Card className={classes.tooltip}>
+                <CardContent>
+                    <Grid container>
+                        <Grid item xs={6}>
+                            <Typography
+                                color="textPrimary"
+                                variant="body2"
+                                align="left"
+                                className={classes.tooltipName}>
+                                {payload[0]?.payload?.name}
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Typography
+                                color="textPrimary"
+                                variant="body1"
+                                align="right"
+                                className={classes.tooltipValue}>
+                                {numbro(payload[0]?.payload?.payload?.value).format('0.00')}%
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </CardContent>
+            </Card>
+        );
+    }
+
+    return null;
+};
+
 const Epoch = (): JSX.Element => {
     const classes = useStyles();
-    const pageSize = 1;
-    const page = 1;
     const [hasEnded, setHasEnded] = React.useState(false);
 
     const blockProposer = useSubscription(BLOCK_SUBSCRIPTION);
@@ -149,34 +201,18 @@ const Epoch = (): JSX.Element => {
         {
             name: 'Epoch Remaining',
             value:
-                data &&
-                data.epoch &&
-                data.epoch.lastBlockNumberForEpoch &&
-                data.epoch.epochSize &&
-                blockProposer.data &&
-                blockProposer.data.blockAdded &&
-                blockProposer.data.blockAdded.number
-                    ? ((data.epoch.lastBlockNumberForEpoch - blockProposer.data.blockAdded.number) /
-                          data.epoch.epochSize) *
-                      100
-                    : 0,
+                ((data?.epoch?.lastBlockNumberForEpoch - blockProposer?.data?.blockAdded?.number) /
+                    data?.epoch?.epochSize) *
+                100,
+
             fill: 'rgba(246, 247, 249, 1)'
         },
         {
             name: 'Epoch Completed',
             value:
-                data &&
-                data.epoch &&
-                data.epoch.firstBlockNumberForEpoch &&
-                data.epoch.epochSize &&
-                blockProposer.data &&
-                blockProposer.data.blockAdded &&
-                blockProposer.data.blockAdded.number
-                    ? ((blockProposer.data.blockAdded.number -
-                          data.epoch.firstBlockNumberForEpoch) /
-                          data.epoch.epochSize) *
-                      100
-                    : 0,
+                ((blockProposer?.data?.blockAdded?.number - data?.epoch?.firstBlockNumberForEpoch) /
+                    data?.epoch?.epochSize) *
+                100,
             fill: 'rgba(28, 134, 252, 1)'
         }
     ];
@@ -248,7 +284,7 @@ const Epoch = (): JSX.Element => {
                                 {chartData.map((entry: any, index: number) => (
                                     <Cell key={`cell-${index}`} fill={entry.fill} />
                                 ))}
-                                <Tooltip />
+                                <Tooltip content={<EpochTooltip />} />
                             </PieChart>
                         </Grid>
 
