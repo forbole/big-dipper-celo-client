@@ -47,6 +47,7 @@
 * Updated home components to fix minor issues occurring after deployment
 * [#167] Updated epoch chart's container size
 * [#161] Fixed ValidatorVotesList page breaking caused by a null value of `electedValidators`
+* [#163] Fixed error in `TransactionDetails` caused by`decodedInput` value returning null in some transactions
 
 ## v0.1.3
 
