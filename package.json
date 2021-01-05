@@ -28,6 +28,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/pickers": "^3.2.10",
+    "@socialgouv/matomo-next": "^1.1.2",
     "@types/recharts": "^1.8.16",
     "@types/styled-components": "^5.1.4",
     "apollo-client": "^2.6.10",
