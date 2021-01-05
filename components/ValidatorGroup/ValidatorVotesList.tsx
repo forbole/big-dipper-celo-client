@@ -527,7 +527,7 @@ const ValidatorVotesList = (): JSX.Element => {
                                                                   unmountOnExit
                                                                   key={`panel${index}`}>
                                                                   <Grid container>
-                                                                      {row.members.map(
+                                                                      {row?.members.map(
                                                                           (
                                                                               memberRow: any,
                                                                               index: number
@@ -566,9 +566,13 @@ const ValidatorVotesList = (): JSX.Element => {
                                                                                                           </Typography>
                                                                                                       }
                                                                                                   />
-                                                                                                  {findElectedValidators(
-                                                                                                      memberRow.address,
-                                                                                                      row.electedValidators
+                                                                                                  {row.electedValidators ? (
+                                                                                                      findElectedValidators(
+                                                                                                          memberRow.address,
+                                                                                                          row.electedValidators
+                                                                                                      )
+                                                                                                  ) : (
+                                                                                                      <NotAvailable variant="caption" />
                                                                                                   )}
                                                                                               </>
                                                                                           ) : (
