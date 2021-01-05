@@ -189,11 +189,9 @@ const ValidatorVotesList = (): JSX.Element => {
     };
 
     const findElectedValidators = (membersAddress: any, electedValidators: any) => {
-        if (electedValidators) {
-            for (const d in Object.keys(electedValidators)) {
-                if (electedValidators[d] === membersAddress) {
-                    return <FiberManualRecordIcon className={classes.dotIcon} />;
-                }
+        for (const d in Object.keys(electedValidators)) {
+            if (electedValidators[d] === membersAddress) {
+                return <FiberManualRecordIcon className={classes.dotIcon} />;
             }
         }
     };
@@ -529,7 +527,7 @@ const ValidatorVotesList = (): JSX.Element => {
                                                                   unmountOnExit
                                                                   key={`panel${index}`}>
                                                                   <Grid container>
-                                                                      {row.members.map(
+                                                                      {row?.members.map(
                                                                           (
                                                                               memberRow: any,
                                                                               index: number
@@ -568,9 +566,13 @@ const ValidatorVotesList = (): JSX.Element => {
                                                                                                           </Typography>
                                                                                                       }
                                                                                                   />
-                                                                                                  {findElectedValidators(
-                                                                                                      memberRow.address,
-                                                                                                      row.electedValidators
+                                                                                                  {row.electedValidators ? (
+                                                                                                      findElectedValidators(
+                                                                                                          memberRow.address,
+                                                                                                          row.electedValidators
+                                                                                                      )
+                                                                                                  ) : (
+                                                                                                      <NotAvailable variant="caption" />
                                                                                                   )}
                                                                                               </>
                                                                                           ) : (
