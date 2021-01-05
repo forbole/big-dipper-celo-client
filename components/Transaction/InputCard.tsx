@@ -33,38 +33,42 @@ const InputCard = ({ hash }: InputCardProps): JSX.Element => {
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
 
-    for (const c in data.transaction.decodedInput.params) {
+    for (const c in data?.transaction?.decodedInput?.params) {
         (callData[c] = data.transaction.decodedInput.params[c].type),
             (callData[c] += ' '),
             (callData[c] += data.transaction.decodedInput.params[c].name);
     }
-
-    return (
-        <Card className={classes.card}>
-            <Grid container spacing={1}>
-                <Grid item xs={6}>
-                    <Typography align="left" variant="body2">
-                        Method Id
-                    </Typography>
+    if (data?.transaction?.decodedInput) {
+        return (
+            <Card className={classes.card}>
+                <Grid container spacing={1}>
+                    <Grid item xs={6}>
+                        <Typography align="left" variant="body2">
+                            Method Id
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography align="right" variant="body2" color="textSecondary">
+                            {data?.transaction?.input?.substr(
+                                0,
+                                data.transaction.input.indexOf('000000')
+                            )}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Typography align="left" variant="body2">
+                            Call
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={11}>
+                        <Typography align="right" variant="body2" color="textSecondary">
+                            {data?.transaction?.decodedInput?.name}({callData.toString()})
+                        </Typography>
+                    </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                    <Typography align="right" variant="body2" color="textSecondary">
-                        {data.transaction.input.substr(0, data.transaction.input.indexOf('000000'))}
-                    </Typography>
-                </Grid>
-                <Grid item xs={1}>
-                    <Typography align="left" variant="body2">
-                        Call
-                    </Typography>
-                </Grid>
-                <Grid item xs={11}>
-                    <Typography align="right" variant="body2" color="textSecondary">
-                        {data.transaction.decodedInput.name}({callData.toString()})
-                    </Typography>
-                </Grid>
-            </Grid>
-        </Card>
-    );
+            </Card>
+        );
+    } else return null as any;
 };
 
 export default InputCard;
