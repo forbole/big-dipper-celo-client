@@ -52,6 +52,8 @@
 * [#166] Added custom tooltip to Token Price Chart 
 * [#160] Added Matomo analytics
 * Added `@socialgouv/matomo-next` module declaration to `global.d.ts`
+* [#165] Added custom tooltip to Epoch Chart 
+
 ## v0.1.3
 
 * [#69] Hidden Search Bar and Network Selection
