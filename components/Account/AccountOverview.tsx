@@ -186,18 +186,20 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                     </Grid>
 
                     {address === currentUser ? (
-                        <Grid item xs={12}>
-                            <Divider variant="middle" className={classes.divider} />
-                        </Grid>
+                        <>
+                            <Grid item xs={12}>
+                                <Divider className={classes.divider} />
+                            </Grid>
+
+                            <Grid item xs={6}>
+                                <LedgerDialog buttonLabel="Unlock CELO" action="UnlockCelo" />
+                            </Grid>
+
+                            <Grid item xs={6}>
+                                <LedgerDialog buttonLabel="Lock CELO" action="LockCelo" />
+                            </Grid>
+                        </>
                     ) : null}
-
-                    <Grid item xs={6}>
-                        <LedgerDialog buttonLabel="Unlock CELO" action="UnlockCelo" />
-                    </Grid>
-
-                    <Grid item xs={6}>
-                        <LedgerDialog buttonLabel="Lock CELO" action="LockCelo" />
-                    </Grid>
                 </Grid>
             </Card>
         </span>
