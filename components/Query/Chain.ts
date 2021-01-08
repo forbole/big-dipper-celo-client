@@ -13,6 +13,10 @@ export const GET_CHAIN = gql`
             }
             walletCount
             celoTotalSupply
+            epochSize
+            epochNumber
+            lastBlockNumberForEpoch
+            firstBlockNumberForEpoch
         }
     }
 `;
