@@ -9,20 +9,30 @@ export const GET_PROPOSALS = gql`
             totalCounts
             hasMore
             proposals {
-                proposalNumber
+                proposalId
                 address
                 blockHash
                 blockNumber
                 event
+                executionEpoch
+                expirationEpoch
+                input
                 logIndex
+                minDeposit
+                proposalEpoch
                 raw
+                referrendumEpoch
                 removed
                 returnValues
                 signature
+                stage
+                status
+                totalVotesList
                 transactionHash
                 transactionIndex
-                status
                 upvoteList
+                upvotes
+                votes
             }
         }
     }
@@ -31,26 +41,30 @@ export const GET_PROPOSALS = gql`
 export const GET_PROPOSAL = gql`
     query Proposal($proposalNumber: Int) {
         proposal(proposalNumber: $proposalNumber) {
-            proposalNumber
+            proposalId
             address
             blockHash
             blockNumber
             event
+            executionEpoch
+            expirationEpoch
+            input
             logIndex
+            minDeposit
+            proposalEpoch
             raw
+            referrendumEpoch
             removed
             returnValues
             signature
+            stage
+            status
+            totalVotesList
             transactionHash
             transactionIndex
             upvoteList
+            upvotes
             votes
-            status
-            totalVotesList
-            executionEpoch
-            expirationEpoch
-            proposalEpoch
-            referrendumEpoch
         }
     }
 `;
