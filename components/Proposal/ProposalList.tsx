@@ -65,7 +65,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-type ProposalListProps = { title: string[] };
+type ProposalListProps = { title: any };
 
 const ProposalList = ({ title }: ProposalListProps): JSX.Element => {
     const classes = useStyles();
@@ -77,47 +77,6 @@ const ProposalList = ({ title }: ProposalListProps): JSX.Element => {
         variables: { pageSize, page, field }
     });
 
-    const getProposer = (proposalNumber: number) => {
-        let proposer = '';
-        if (data && data.proposals && data.proposals.proposals) {
-            for (const d in data.proposals.proposals) {
-                if (proposalNumber === data.proposals.proposals[d].proposalNumber) {
-                    proposer = data.proposals.proposals[d].returnValues.proposer;
-                }
-            }
-        }
-
-        return proposer;
-    };
-
-    const findProposalStatus = (proposalNumber: number) => {
-        if (data && data.proposals && data.proposals.proposals) {
-            for (const c in data.proposals.proposals) {
-                if (proposalNumber === data.proposals.proposals[c].proposalNumber) {
-                    if (data.proposals.proposals[c].removed === true) {
-                        return <Chips actionResult="Removed" />;
-                    }
-
-                    if (data.proposals.proposals[c].status === 'Approved') {
-                        return <Chips actionResult="Passed" />;
-                    }
-
-                    if (data.proposals.proposals[c].status === 'Rejected') {
-                        return <Chips actionResult="Rejected" />;
-                    }
-                    if (data.proposals.proposals[c].status === 'Vote') {
-                        return <Chips actionResult="Vote" />;
-                    }
-                    if (data.proposals.proposals[c].status === 'Deposit') {
-                        return <Chips actionResult="Deposit" />;
-                    }
-                    if (data.proposals.proposals[c].status === 'Create') {
-                        return <Chips actionResult="Create" />;
-                    }
-                }
-            }
-        }
-    };
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
 
@@ -128,73 +87,62 @@ const ProposalList = ({ title }: ProposalListProps): JSX.Element => {
                     Proposals
                 </Typography>
                 {title
-                    ? title
-                          .slice(1)
-                          .reverse()
-                          .map((row: any, index: number) => {
-                              return (
-                                  <Grid item xs={12} className={classes.proposalCard} key={index}>
-                                      <Card className={classes.card} elevation={0}>
-                                          <Grid container className={classes.container}>
-                                              <Grid
-                                                  item
-                                                  xs={8}
-                                                  sm={10}
-                                                  className={classes.proposalNum}>
-                                                  <NavLink
-                                                      href={`/proposal/${row.proposalNumber}`}
-                                                      name={
-                                                          <Typography
-                                                              variant="body2"
-                                                              className={classes.value}>
-                                                              #{row.proposalNumber}
-                                                          </Typography>
-                                                      }
-                                                      textSecondary
-                                                  />
+                    ? title.map((row: any, index: number) => {
+                          return (
+                              <Grid item xs={12} className={classes.proposalCard} key={index}>
+                                  <Card className={classes.card} elevation={0}>
+                                      <Grid container className={classes.container}>
+                                          <Grid item xs={8} sm={10} className={classes.proposalNum}>
+                                              <NavLink
+                                                  href={`/proposal/${row.proposalNumber - 1}`}
+                                                  name={
+                                                      <Typography
+                                                          variant="body2"
+                                                          className={classes.value}>
+                                                          #{row.proposalNumber - 1}
+                                                      </Typography>
+                                                  }
+                                                  textSecondary
+                                              />
 
-                                                  <Typography
-                                                      variant="body2"
-                                                      className={classes.proposer}>
-                                                      Proposer
-                                                      <NavLink
-                                                          href={`/proposal/${getProposer(
-                                                              row.proposalNumber
-                                                          )}`}
-                                                          name={
-                                                              <MiddleEllipsis
-                                                                  text={getProposer(
-                                                                      row.proposalNumber
-                                                                  )}
-                                                              />
-                                                          }
-                                                          className={classes.proposerAddress}
-                                                      />
-                                                  </Typography>
-                                              </Grid>
-                                              <Grid
-                                                  item
-                                                  xs={3}
-                                                  sm={2}
-                                                  className={classes.proposalButton}>
-                                                  {findProposalStatus(row.proposalNumber)}
-                                              </Grid>
-                                              <Grid
-                                                  item
-                                                  xs={11}
-                                                  sm={8}
-                                                  className={classes.proposalDescription}>
+                                              <Typography
+                                                  variant="body2"
+                                                  className={classes.proposer}>
+                                                  Proposer
                                                   <NavLink
-                                                      href={`/proposal/${row.proposalNumber}`}
-                                                      name={row.proposalTitle}
-                                                      textSecondary
+                                                      href={`/account/${row?.proposer}`}
+                                                      name={<MiddleEllipsis text={row?.proposer} />}
+                                                      className={classes.proposerAddress}
                                                   />
-                                              </Grid>
+                                              </Typography>
                                           </Grid>
-                                      </Card>
-                                  </Grid>
-                              );
-                          })
+                                          <Grid
+                                              item
+                                              xs={3}
+                                              sm={2}
+                                              className={classes.proposalButton}>
+                                              {row.proposalStatus ? (
+                                                  <Chips actionResult={`${row.proposalStatus}`} />
+                                              ) : row.proposalStage ? (
+                                                  <Chips actionResult={`${row.proposalStage}`} />
+                                              ) : null}
+                                          </Grid>
+                                          <Grid
+                                              item
+                                              xs={11}
+                                              sm={8}
+                                              className={classes.proposalDescription}>
+                                              <NavLink
+                                                  href={`/proposal/${row.proposalNumber}`}
+                                                  name={row.proposalTitle}
+                                                  textSecondary
+                                              />
+                                          </Grid>
+                                      </Grid>
+                                  </Card>
+                              </Grid>
+                          );
+                      })
                     : null}
             </Grid>
         </div>
