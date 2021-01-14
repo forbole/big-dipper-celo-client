@@ -1,10 +1,11 @@
+import { useQuery } from '@apollo/client';
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import { GetStaticProps } from 'next';
 import React from 'react';
 
 import PriceCard from '../components/PriceCard/PriceCard';
 import ProposalList from '../components/Proposal/ProposalList';
+import { GET_PROPOSALS } from '../components/Query/Proposal';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -15,72 +16,76 @@ const useStyles = makeStyles(() =>
     })
 );
 
-export default function Proposals(props: { proposalTitle: string[] }): JSX.Element {
+export default function Proposals(): JSX.Element {
     const classes = useStyles();
+    const page = process.env.SETPAGE ? parseInt(process.env.SETPAGE) + 1 : 1;
+    const pageSize = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
+    const field = 'proposalId';
+    const proposalTitle: {
+        proposalTitle: string;
+        proposalNumber: number;
+        proposalDescription: string;
+        proposalStage: string;
+        proposalStatus: string;
+        proposer: string;
+    }[] = [];
+    let getProposalTitle;
+
+    const { loading, error, data } = useQuery(GET_PROPOSALS, {
+        variables: { pageSize, page, field }
+    });
+
+    const getProposals = async () => {
+        for (let c = 0; c < data?.proposals?.proposals?.length; c++) {
+            const response = data?.proposals?.proposals[c]?.input?.params[4]?.value.includes(
+                'gist.github.com'
+            )
+                ? {}
+                : await fetch(
+                      // ? data?.proposals?.proposals[c]?.input?.params[4]?.value.replace(
+                      //       'github',
+                      //       'githubusercontent'
+                      //   ) + '/raw'
+                      data?.proposals?.proposals[c]?.input?.params[4]?.value
+                          .replace('github.com', 'raw.githubusercontent.com')
+                          .replace('blob/', '')
+                  )
+                      .then(function (response) {
+                          if (response.ok) {
+                              response.text().then((text) => {
+                                  getProposalTitle = text.split('\n');
+                                  proposalTitle[c] = {
+                                      proposalNumber:
+                                          data?.proposals?.proposals[c]?.returnValues?.proposalId,
+                                      proposalTitle: getProposalTitle[0].replace('#', ' '),
+                                      proposalDescription:
+                                          data?.proposals?.proposals[c]?.input?.params[4]?.value,
+                                      proposalStage: data?.proposals?.proposals[c]?.stage,
+                                      proposalStatus: data?.proposals?.proposals[c]?.status,
+                                      proposer:
+                                          data?.proposals?.proposals[c]?.returnValues?.proposer
+                                  };
+                              });
+                          } else {
+                              return;
+                          }
+                      })
+                      .catch(function (err) {
+                          return console.log(`Error when getting proposal no. ${c} title` + err);
+                      });
+        }
+    };
+
+    getProposals();
+
     return (
         <Grid container spacing={2} className={classes.root}>
             <Grid item xs={12}>
                 <PriceCard />
             </Grid>
             <Grid item xs={12}>
-                <ProposalList title={props.proposalTitle} />
+                <ProposalList title={proposalTitle} />
             </Grid>
         </Grid>
     );
 }
-
-export const getStaticProps: GetStaticProps = async () => {
-    const proposalTitle: { proposalTitle: string; proposalNumber: number }[] = [];
-    let getProposalTitle;
-    //Set max number of proposals as currently we can't obtain it from the rpc
-    const PROPOSAL_MAX_NUMBER = 60;
-
-    for (let c = PROPOSAL_MAX_NUMBER; c >= 0; c--) {
-        if (c >= 10) {
-            const response = await fetch(
-                `https://raw.githubusercontent.com/celo-org/celo-proposals/master/CGPs/00${c}.md`
-            )
-                .then(function (response) {
-                    if (response.ok) {
-                        response.text().then((text) => {
-                            getProposalTitle = text.split('\n');
-                            proposalTitle[c - 1] = {
-                                proposalTitle: getProposalTitle[0].replace('#', ' '),
-                                proposalNumber: c
-                            };
-                        });
-                    } else {
-                        return;
-                    }
-                })
-                .catch(function (err) {
-                    console.log(`Error when getting proposal no. ${c} title` + err);
-                });
-        } else {
-            const response = await fetch(
-                `https://raw.githubusercontent.com/celo-org/celo-proposals/master/CGPs/000${c}.md`
-            )
-                .then(function (response) {
-                    if (response.ok) {
-                        response.text().then((text) => {
-                            getProposalTitle = text.split('\n');
-                            proposalTitle[c - 1] = {
-                                proposalTitle: getProposalTitle[0].replace('#', ' '),
-                                proposalNumber: c
-                            };
-                        });
-                    } else {
-                        return;
-                    }
-                })
-                .catch(function (err) {
-                    console.log(`Error when getting proposal no. ${c} title` + err);
-                });
-        }
-    }
-    return {
-        props: {
-            proposalTitle: proposalTitle
-        }
-    };
-};
