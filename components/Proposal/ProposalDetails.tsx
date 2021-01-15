@@ -82,16 +82,29 @@ const useStyles = makeStyles(() => {
         }
     };
 });
-type ProposalDetailsProps = { proposal: string; proposalDetails: string };
+type ProposalDetailsProps = {
+    proposalDetails: {
+        proposalNumber: any;
+        proposalTitle: string;
+        proposalDescription: string;
+        proposalStage: string;
+        proposalStatus: string;
+        proposer: string;
+        deposit: string;
+        timestamp: string;
+        executionEpoch: number;
+        referrendumEpoch: number;
+        expirationEpoch: number;
+        upvoteList: any[];
+    };
+};
 
-const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): JSX.Element => {
+const ProposalDetails = ({ proposalDetails }: ProposalDetailsProps): JSX.Element => {
     const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
     const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
     const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
-    const getProposal = proposalDetails.split('\n');
-    const proposalTitle = getProposal[0].replace('#', ' ');
-    const proposalNumber = parseInt(proposal);
+    const proposalNumber = parseInt(proposalDetails?.proposalNumber);
     const prevProposal: number = proposalNumber - 1;
     const nextProposal: number = proposalNumber + 1;
     const [maxProposalNumber, setMaxProposalNumber] = React.useState(false);
@@ -101,10 +114,6 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
     const page = SETPAGE + 1;
     const pageSize = ROWMEDIUM;
     const field = 'proposalNumber';
-
-    const { loading, error, data } = useQuery(GET_PROPOSAL, {
-        variables: { proposalNumber }
-    });
 
     const totalProposals = useQuery(GET_PROPOSALS, {
         variables: { page, pageSize, field }
@@ -130,17 +139,17 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
         if (proposalNumber === 1) {
             setMinProposalNumber(true);
         }
-        if (data && data.proposal && data.proposal.upvoteList) {
-            for (const c in data.proposal.upvoteList) {
-                if (data.proposal.upvoteList[c].returnValues.account === currentUser) {
+        if (proposalDetails?.upvoteList) {
+            for (const c in proposalDetails?.upvoteList) {
+                if (proposalDetails?.upvoteList[c]?.returnValues?.account === currentUser) {
                     setVoted(true);
                 }
             }
         }
     });
 
-    if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage message={error.message} />;
+    // if (loading) return <ComponentLoader />;
+    // if (error) return <ErrorMessage message={error.message} />;
 
     return (
         <Card className={classes.root}>
@@ -189,11 +198,9 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                        {data.proposal &&
-                        data.proposal.returnValues &&
-                        data.proposal.returnValues.proposalId ? (
+                        {proposalDetails?.proposalNumber ? (
                             <Typography variant="body2" className={classes.alignRight}>
-                                {data.proposal.returnValues.proposalId}
+                                {proposalDetails?.proposalNumber}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
@@ -208,14 +215,12 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                         <Typography variant="body2">Proposer</Typography>
                     </Grid>
                     <Grid item xs={8} lg={6}>
-                        {data.proposal &&
-                        data.proposal.returnValues &&
-                        data.proposal.returnValues.proposer ? (
+                        {proposalDetails?.proposer ? (
                             <NavLink
-                                href={`/account/${data.proposal.returnValues.proposer}`}
+                                href={`/account/${proposalDetails.proposer}`}
                                 name={
                                     <Typography variant="body2" className={classes.alignRight}>
-                                        {data.proposal.returnValues.proposer}
+                                        {proposalDetails?.proposer}
                                     </Typography>
                                 }
                             />
@@ -231,8 +236,8 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Title</Typography>
                         <Typography variant="body2">
-                            {proposalTitle ? (
-                                proposalTitle
+                            {proposalDetails?.proposalTitle ? (
+                                proposalDetails?.proposalTitle
                             ) : (
                                 <NotAvailable variant="body2" className={classes.alignRight} />
                             )}
@@ -245,9 +250,9 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
 
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Description</Typography>
-                        {proposalDetails ? (
+                        {proposalDetails?.proposalDescription ? (
                             <MarkdownView
-                                markdown={proposalDetails}
+                                markdown={proposalDetails?.proposalDescription}
                                 options={{
                                     tables: true,
                                     emoji: true,
@@ -270,11 +275,9 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                         <Typography variant="body2">Deposit</Typography>
                     </Grid>
                     <Grid item xs={8} lg={6}>
-                        {data.proposal &&
-                        data.proposal.returnValues &&
-                        data.proposal.returnValues.deposit ? (
+                        {proposalDetails?.deposit ? (
                             <Typography variant="body2" className={classes.alignRight}>
-                                {new BigNumber(data.proposal.returnValues.deposit)
+                                {new BigNumber(proposalDetails?.deposit)
                                     .dividedBy(CELO_FRACTION)
                                     .toFormat(2)}{' '}
                             </Typography>
@@ -291,13 +294,9 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                         <Typography variant="body2">Submitted Time</Typography>
                     </Grid>
                     <Grid item xs={8} lg={6}>
-                        {data.proposal &&
-                        data.proposal.returnValues &&
-                        data.proposal.returnValues.timestamp ? (
+                        {proposalDetails?.timestamp ? (
                             <Typography variant="body2" className={classes.alignRight}>
-                                {new Date(
-                                    parseInt(data.proposal.returnValues.timestamp) * 1000
-                                ).toUTCString()}
+                                {new Date(parseInt(proposalDetails.timestamp) * 1000).toUTCString()}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
@@ -312,9 +311,9 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                         <Typography variant="body2">Deposit End Time</Typography>
                     </Grid>
                     <Grid item xs={8} lg={6}>
-                        {data.proposal && data.proposal.executionEpoch ? (
+                        {proposalDetails?.executionEpoch ? (
                             <Typography variant="body2" className={classes.alignRight}>
-                                {new Date(data.proposal.executionEpoch * 1000).toUTCString()}
+                                {new Date(proposalDetails?.executionEpoch * 1000).toUTCString()}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
@@ -329,9 +328,9 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                         <Typography variant="body2">Voting Start Time</Typography>
                     </Grid>
                     <Grid item xs={8} lg={6}>
-                        {data.proposal && data.proposal.referrendumEpoch ? (
+                        {proposalDetails?.referrendumEpoch ? (
                             <Typography variant="body2" className={classes.alignRight}>
-                                {new Date(data.proposal.referrendumEpoch * 1000).toUTCString()}
+                                {new Date(proposalDetails?.referrendumEpoch * 1000).toUTCString()}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
@@ -346,9 +345,9 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                         <Typography variant="body2">Voting End Time</Typography>
                     </Grid>
                     <Grid item xs={8} lg={6}>
-                        {data.proposal && data.proposal.expirationEpoch ? (
+                        {proposalDetails?.expirationEpoch ? (
                             <Typography variant="body2" className={classes.alignRight}>
-                                {new Date(data.proposal.expirationEpoch * 1000).toUTCString()}
+                                {new Date(proposalDetails?.expirationEpoch * 1000).toUTCString()}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
@@ -359,22 +358,15 @@ const ProposalDetails = ({ proposal, proposalDetails }: ProposalDetailsProps): J
                         <Divider variant="middle" className={classes.divider} />
                     </Grid>
 
-                    {(data && data.proposal && data.proposal.status === 'Vote') ||
-                    (data && data.proposal && data.proposal.status === 'Referendum') ? (
+                    {proposalDetails?.proposalStatus === ('Vote' || 'Referendum') ? (
                         <Grid item xs={12} className={classes.centerContent}>
                             <LedgerDialog
                                 action="ProposalVote"
                                 buttonLabel="Vote"
-                                proposalTitle={proposalTitle}
-                                proposalNumber={proposalNumber}
-                                proposer={
-                                    data.proposal &&
-                                    data.proposal.returnValues &&
-                                    data.proposal.returnValues.proposer
-                                        ? data.proposal.returnValues.proposer
-                                        : ''
-                                }
-                                proposalDescription={proposalDetails}
+                                proposalTitle={proposalDetails?.proposalTitle}
+                                proposalNumber={proposalDetails?.proposalNumber}
+                                proposer={proposalDetails?.proposer}
+                                proposalDescription={proposalDetails?.proposalDescription}
                             />
                         </Grid>
                     ) : null}
