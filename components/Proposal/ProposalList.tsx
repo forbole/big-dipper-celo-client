@@ -80,73 +80,71 @@ const ProposalList = ({ title }: ProposalListProps): JSX.Element => {
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
 
-    return (
-        <div>
-            <Grid container className={classes.container}>
-                <Typography variant="body1" className={classes.proposalTitle}>
-                    Proposals
-                </Typography>
-                {title
-                    ? title.map((row: any, index: number) => {
-                          return (
-                              <Grid item xs={12} className={classes.proposalCard} key={index}>
-                                  <Card className={classes.card} elevation={0}>
-                                      <Grid container className={classes.container}>
-                                          <Grid item xs={8} sm={10} className={classes.proposalNum}>
-                                              <NavLink
-                                                  href={`/proposal/${row.proposalNumber - 1}`}
-                                                  name={
-                                                      <Typography
-                                                          variant="body2"
-                                                          className={classes.value}>
-                                                          #{row.proposalNumber - 1}
-                                                      </Typography>
-                                                  }
-                                                  textSecondary
-                                              />
+    if (title.proposalTitle.length > 0) {
+        return (
+            <div>
+                <Grid container className={classes.container}>
+                    <Typography variant="body1" className={classes.proposalTitle}>
+                        Proposals
+                    </Typography>
+                    {title?.proposalTitle?.map((row: any, index: number) => {
+                        return (
+                            <Grid item xs={12} className={classes.proposalCard} key={index}>
+                                <Card className={classes.card} elevation={0}>
+                                    <Grid container className={classes.container}>
+                                        <Grid item xs={8} sm={10} className={classes.proposalNum}>
+                                            <NavLink
+                                                href={`/proposal/${row.proposalNumber - 1}`}
+                                                name={
+                                                    <Typography
+                                                        variant="body2"
+                                                        className={classes.value}>
+                                                        #{row.proposalNumber - 1}
+                                                    </Typography>
+                                                }
+                                                textSecondary
+                                            />
 
-                                              <Typography
-                                                  variant="body2"
-                                                  className={classes.proposer}>
-                                                  Proposer
-                                                  <NavLink
-                                                      href={`/account/${row?.proposer}`}
-                                                      name={<MiddleEllipsis text={row?.proposer} />}
-                                                      className={classes.proposerAddress}
-                                                  />
-                                              </Typography>
-                                          </Grid>
-                                          <Grid
-                                              item
-                                              xs={3}
-                                              sm={2}
-                                              className={classes.proposalButton}>
-                                              {row.proposalStatus ? (
-                                                  <Chips actionResult={`${row.proposalStatus}`} />
-                                              ) : row.proposalStage ? (
-                                                  <Chips actionResult={`${row.proposalStage}`} />
-                                              ) : null}
-                                          </Grid>
-                                          <Grid
-                                              item
-                                              xs={11}
-                                              sm={8}
-                                              className={classes.proposalDescription}>
-                                              <NavLink
-                                                  href={`/proposal/${row.proposalNumber}`}
-                                                  name={row.proposalTitle}
-                                                  textSecondary
-                                              />
-                                          </Grid>
-                                      </Grid>
-                                  </Card>
-                              </Grid>
-                          );
-                      })
-                    : null}
-            </Grid>
-        </div>
-    );
+                                            <Typography
+                                                variant="body2"
+                                                className={classes.proposer}>
+                                                Proposer
+                                                <NavLink
+                                                    href={`/account/${row?.proposer}`}
+                                                    name={<MiddleEllipsis text={row?.proposer} />}
+                                                    className={classes.proposerAddress}
+                                                />
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={3} sm={2} className={classes.proposalButton}>
+                                            {row.proposalStatus ? (
+                                                <Chips actionResult={`${row.proposalStatus}`} />
+                                            ) : row.proposalStage ? (
+                                                <Chips actionResult={`${row.proposalStage}`} />
+                                            ) : null}
+                                        </Grid>
+                                        <Grid
+                                            item
+                                            xs={11}
+                                            sm={8}
+                                            className={classes.proposalDescription}>
+                                            <NavLink
+                                                href={`/proposal/${row.proposalNumber}`}
+                                                name={row.proposalTitle}
+                                                textSecondary
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                </Card>
+                            </Grid>
+                        );
+                    })}
+                </Grid>
+            </div>
+        );
+    } else {
+        return <ComponentLoader />;
+    }
 };
 
 export default ProposalList;
