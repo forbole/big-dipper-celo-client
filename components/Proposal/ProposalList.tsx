@@ -11,6 +11,7 @@ import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import MiddleEllipsis from '../Utils/MiddleEllipsis';
 import NavLink from '../Utils/NavLink';
+import NotAvailable from '../Utils/NotAvailable';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -94,12 +95,12 @@ const ProposalList = ({ title }: ProposalListProps): JSX.Element => {
                                     <Grid container className={classes.container}>
                                         <Grid item xs={8} sm={10} className={classes.proposalNum}>
                                             <NavLink
-                                                href={`/proposal/${row.proposalNumber - 1}`}
+                                                href={`/proposal/${row.proposalNumber}`}
                                                 name={
                                                     <Typography
                                                         variant="body2"
                                                         className={classes.value}>
-                                                        #{row.proposalNumber - 1}
+                                                        #{row.proposalNumber}
                                                     </Typography>
                                                 }
                                                 textSecondary
@@ -109,11 +110,17 @@ const ProposalList = ({ title }: ProposalListProps): JSX.Element => {
                                                 variant="body2"
                                                 className={classes.proposer}>
                                                 Proposer
-                                                <NavLink
-                                                    href={`/account/${row?.proposer}`}
-                                                    name={<MiddleEllipsis text={row?.proposer} />}
-                                                    className={classes.proposerAddress}
-                                                />
+                                                {row?.proposer ? (
+                                                    <NavLink
+                                                        href={`/account/${row?.proposer}`}
+                                                        name={
+                                                            <MiddleEllipsis text={row?.proposer} />
+                                                        }
+                                                        className={classes.proposerAddress}
+                                                    />
+                                                ) : (
+                                                    <NotAvailable variant="body2" />
+                                                )}
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={3} sm={2} className={classes.proposalButton}>
