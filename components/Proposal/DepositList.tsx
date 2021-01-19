@@ -80,7 +80,7 @@ const useStyles = makeStyles(() => {
     };
 });
 
-type DepositListProps = { proposal: string };
+type DepositListProps = { proposal: number };
 
 const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
     const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
@@ -98,7 +98,7 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
 
     const classes = useStyles();
     const page = pageNumber + 1;
-    const proposalNumber = parseInt(proposal);
+    const proposalNumber = proposal;
     const hashValue = '';
     let totalDeposited = 0;
 
