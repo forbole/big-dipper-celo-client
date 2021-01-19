@@ -83,28 +83,41 @@ const useStyles = makeStyles(() => {
     };
 });
 type ProposalDetailsProps = {
-    proposalDetails: {
-        proposalNumber: any;
-        proposalTitle: string;
-        proposalDescription: string;
-        proposalStage: string;
-        proposalStatus: string;
-        proposer: string;
-        deposit: string;
-        timestamp: string;
-        executionEpoch: number;
-        referrendumEpoch: number;
-        expirationEpoch: number;
-        upvoteList: any[];
-    };
+    proposalId: number;
+    proposalTitle: string;
+    proposalDescriptionURL: string;
+    proposalDescription: string;
+    proposalStage: string;
+    proposalStatus: string;
+    proposer: string;
+    deposit: string;
+    timestamp: string;
+    executionEpoch: number;
+    referrendumEpoch: number;
+    expirationEpoch: number;
+    upvoteList: any[];
 };
 
-const ProposalDetails = ({ proposalDetails }: ProposalDetailsProps): JSX.Element => {
+const ProposalDetails = ({
+    proposalId,
+    proposalTitle,
+    proposalDescriptionURL,
+    proposalDescription,
+    proposalStage,
+    proposalStatus,
+    proposer,
+    deposit,
+    timestamp,
+    executionEpoch,
+    referrendumEpoch,
+    expirationEpoch,
+    upvoteList
+}: ProposalDetailsProps): JSX.Element => {
     const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
     const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
     const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
-    const proposalNumber = parseInt(proposalDetails?.proposalNumber);
+    const proposalNumber = proposalId;
     const prevProposal: number = proposalNumber - 1;
     const nextProposal: number = proposalNumber + 1;
     const [maxProposalNumber, setMaxProposalNumber] = React.useState(false);
@@ -139,9 +152,9 @@ const ProposalDetails = ({ proposalDetails }: ProposalDetailsProps): JSX.Element
         if (proposalNumber === 1) {
             setMinProposalNumber(true);
         }
-        if (proposalDetails?.upvoteList) {
-            for (const c in proposalDetails?.upvoteList) {
-                if (proposalDetails?.upvoteList[c]?.returnValues?.account === currentUser) {
+        if (upvoteList) {
+            for (const c in upvoteList) {
+                if (upvoteList[c]?.returnValues?.account === currentUser) {
                     setVoted(true);
                 }
             }
@@ -198,9 +211,9 @@ const ProposalDetails = ({ proposalDetails }: ProposalDetailsProps): JSX.Element
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                        {proposalDetails?.proposalNumber ? (
+                        {proposalId ? (
                             <Typography variant="body2" className={classes.alignRight}>
-                                {proposalDetails?.proposalNumber}
+                                {proposalId}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
@@ -215,12 +228,12 @@ const ProposalDetails = ({ proposalDetails }: ProposalDetailsProps): JSX.Element
                         <Typography variant="body2">Proposer</Typography>
                     </Grid>
                     <Grid item xs={8} lg={6}>
-                        {proposalDetails?.proposer ? (
+                        {proposer ? (
                             <NavLink
-                                href={`/account/${proposalDetails.proposer}`}
+                                href={`/account/${proposer}`}
                                 name={
                                     <Typography variant="body2" className={classes.alignRight}>
-                                        {proposalDetails?.proposer}
+                                        {proposer}
                                     </Typography>
                                 }
                             />
@@ -236,8 +249,8 @@ const ProposalDetails = ({ proposalDetails }: ProposalDetailsProps): JSX.Element
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Title</Typography>
                         <Typography variant="body2">
-                            {proposalDetails?.proposalTitle ? (
-                                proposalDetails?.proposalTitle
+                            {proposalTitle ? (
+                                proposalTitle
                             ) : (
                                 <NotAvailable variant="body2" className={classes.alignRight} />
                             )}
@@ -250,9 +263,9 @@ const ProposalDetails = ({ proposalDetails }: ProposalDetailsProps): JSX.Element
 
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Description</Typography>
-                        {proposalDetails?.proposalDescription ? (
+                        {proposalDescription ? (
                             <MarkdownView
-                                markdown={proposalDetails?.proposalDescription}
+                                markdown={proposalDescription}
                                 options={{
                                     tables: true,
                                     emoji: true,
@@ -275,11 +288,9 @@ const ProposalDetails = ({ proposalDetails }: ProposalDetailsProps): JSX.Element
                         <Typography variant="body2">Deposit</Typography>
                     </Grid>
                     <Grid item xs={8} lg={6}>
-                        {proposalDetails?.deposit ? (
+                        {deposit ? (
                             <Typography variant="body2" className={classes.alignRight}>
-                                {new BigNumber(proposalDetails?.deposit)
-                                    .dividedBy(CELO_FRACTION)
-                                    .toFormat(2)}{' '}
+                                {new BigNumber(deposit).dividedBy(CELO_FRACTION).toFormat(2)}{' '}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
@@ -294,9 +305,9 @@ const ProposalDetails = ({ proposalDetails }: ProposalDetailsProps): JSX.Element
                         <Typography variant="body2">Submitted Time</Typography>
                     </Grid>
                     <Grid item xs={8} lg={6}>
-                        {proposalDetails?.timestamp ? (
+                        {timestamp ? (
                             <Typography variant="body2" className={classes.alignRight}>
-                                {new Date(parseInt(proposalDetails.timestamp) * 1000).toUTCString()}
+                                {new Date(parseInt(timestamp) * 1000).toUTCString()}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
@@ -311,9 +322,9 @@ const ProposalDetails = ({ proposalDetails }: ProposalDetailsProps): JSX.Element
                         <Typography variant="body2">Deposit End Time</Typography>
                     </Grid>
                     <Grid item xs={8} lg={6}>
-                        {proposalDetails?.executionEpoch ? (
+                        {executionEpoch ? (
                             <Typography variant="body2" className={classes.alignRight}>
-                                {new Date(proposalDetails?.executionEpoch * 1000).toUTCString()}
+                                {new Date(executionEpoch * 1000).toUTCString()}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
@@ -328,9 +339,9 @@ const ProposalDetails = ({ proposalDetails }: ProposalDetailsProps): JSX.Element
                         <Typography variant="body2">Voting Start Time</Typography>
                     </Grid>
                     <Grid item xs={8} lg={6}>
-                        {proposalDetails?.referrendumEpoch ? (
+                        {referrendumEpoch ? (
                             <Typography variant="body2" className={classes.alignRight}>
-                                {new Date(proposalDetails?.referrendumEpoch * 1000).toUTCString()}
+                                {new Date(referrendumEpoch * 1000).toUTCString()}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
@@ -345,9 +356,9 @@ const ProposalDetails = ({ proposalDetails }: ProposalDetailsProps): JSX.Element
                         <Typography variant="body2">Voting End Time</Typography>
                     </Grid>
                     <Grid item xs={8} lg={6}>
-                        {proposalDetails?.expirationEpoch ? (
+                        {expirationEpoch ? (
                             <Typography variant="body2" className={classes.alignRight}>
-                                {new Date(proposalDetails?.expirationEpoch * 1000).toUTCString()}
+                                {new Date(expirationEpoch * 1000).toUTCString()}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
@@ -358,15 +369,15 @@ const ProposalDetails = ({ proposalDetails }: ProposalDetailsProps): JSX.Element
                         <Divider variant="middle" className={classes.divider} />
                     </Grid>
 
-                    {proposalDetails?.proposalStatus === ('Vote' || 'Referendum') ? (
+                    {proposalStatus === ('Vote' || 'Referendum') ? (
                         <Grid item xs={12} className={classes.centerContent}>
                             <LedgerDialog
                                 action="ProposalVote"
                                 buttonLabel="Vote"
-                                proposalTitle={proposalDetails?.proposalTitle}
-                                proposalNumber={proposalDetails?.proposalNumber}
-                                proposer={proposalDetails?.proposer}
-                                proposalDescription={proposalDetails?.proposalDescription}
+                                proposalTitle={proposalTitle}
+                                proposalNumber={proposalId}
+                                proposer={proposer}
+                                proposalDescription={proposalDescription}
                             />
                         </Grid>
                     ) : null}
