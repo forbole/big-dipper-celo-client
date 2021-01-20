@@ -1,15 +1,17 @@
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { GraphQLClient } from 'graphql-request';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import { client } from '../_app';
 import PriceCard from '../../components/PriceCard/PriceCard';
 import DepositList from '../../components/Proposal/DepositList';
 import ProposalDetails from '../../components/Proposal/ProposalDetails';
 import ProposalVotingList from '../../components/Proposal/ProposalVotingList';
-import { GET_PROPOSAL } from '../../components/Query/Proposal';
+import { GET_PROPOSAL, GET_PROPOSALS } from '../../components/Query/Proposal';
+
+const graphQlClient = new GraphQLClient(`http://localhost:4000/graphql`);
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -34,6 +36,7 @@ type ProposalProps = {
     referrendumEpoch: number;
     expirationEpoch: number;
     upvoteList: any[];
+    totalNumberOfProposals: number;
 };
 
 export default function Proposal({
@@ -49,7 +52,8 @@ export default function Proposal({
     executionEpoch,
     referrendumEpoch,
     expirationEpoch,
-    upvoteList
+    upvoteList,
+    totalNumberOfProposals
 }: ProposalProps): JSX.Element {
     const classes = useStyles();
     const router = useRouter();
@@ -74,6 +78,7 @@ export default function Proposal({
                     referrendumEpoch={referrendumEpoch}
                     expirationEpoch={expirationEpoch}
                     upvoteList={upvoteList}
+                    totalNumberOfProposals={totalNumberOfProposals}
                 />
             </Grid>
             <Grid item xs={12}>
@@ -87,11 +92,15 @@ export default function Proposal({
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const proposalNumber = parseInt(context?.query?.proposal);
+    const proposalNumber: number = parseInt(context?.query?.proposal);
+    const page = 1;
+    const pageSize = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
+    const data = await graphQlClient.request(GET_PROPOSAL, {
+        proposalNumber
+    });
 
-    const { data, error, loading } = await client.query({
-        query: GET_PROPOSAL,
-        variables: proposalNumber
+    const total = await graphQlClient.request(GET_PROPOSALS, {
+        variables: { pageSize, page }
     });
 
     const proposal = await fetch(
@@ -122,6 +131,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const referrendumEpoch = data?.proposal?.referrendumEpoch;
     const expirationEpoch = data?.proposal?.expirationEpoch;
     const upvoteList = data?.proposal?.upvoteList;
+    const totalNumberOfProposals = total?.proposals?.totalCounts + 1; //Add one to substitute for missing proposal 6
 
     return {
         props: {
@@ -137,7 +147,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             executionEpoch,
             referrendumEpoch,
             expirationEpoch,
-            upvoteList
+            upvoteList,
+            totalNumberOfProposals
         }
     };
 };

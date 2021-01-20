@@ -13,10 +13,6 @@ import React, { useEffect } from 'react';
 import MarkdownView from 'react-showdown';
 
 import LedgerDialog from '../Ledger/LedgerDialog';
-import { GET_PROPOSAL } from '../Query/Proposal';
-import { GET_PROPOSALS } from '../Query/Proposal';
-import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
 
@@ -96,6 +92,7 @@ type ProposalDetailsProps = {
     referrendumEpoch: number;
     expirationEpoch: number;
     upvoteList: any[];
+    totalNumberOfProposals: number;
 };
 
 const ProposalDetails = ({
@@ -111,10 +108,9 @@ const ProposalDetails = ({
     executionEpoch,
     referrendumEpoch,
     expirationEpoch,
-    upvoteList
+    upvoteList,
+    totalNumberOfProposals
 }: ProposalDetailsProps): JSX.Element => {
-    const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
-    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
     const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const proposalNumber = proposalId;
@@ -124,28 +120,15 @@ const ProposalDetails = ({
     const [minProposalNumber, setMinProposalNumber] = React.useState(false);
     const [currentUser, setCurrentUser] = React.useState('');
     const [voted, setVoted] = React.useState(false);
-    const page = SETPAGE + 1;
-    const pageSize = ROWMEDIUM;
-    const field = 'proposalNumber';
-
-    const totalProposals = useQuery(GET_PROPOSALS, {
-        variables: { page, pageSize, field }
-    });
 
     const classes = useStyles();
-    const totalNumOfProposals =
-        totalProposals.data &&
-        totalProposals.data.proposals &&
-        totalProposals.data.proposals.proposals
-            ? totalProposals.data.proposals.proposals.length
-            : 0;
 
     useEffect(() => {
         const localUser = localStorage.getItem('currentUserAddress');
         const getLocalUser = localUser ? localUser : '';
         setCurrentUser(getLocalUser);
 
-        if (proposalNumber === totalNumOfProposals) {
+        if (proposalNumber === totalNumberOfProposals) {
             setMaxProposalNumber(true);
         }
 

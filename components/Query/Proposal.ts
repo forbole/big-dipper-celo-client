@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const GET_PROPOSALS = gql`
-    query Proposals($pageSize: Int, $page: Int, $field: String!) {
-        proposals(pageSize: $pageSize, page: $page, sortBy: { field: $field, order: DESC }) {
+    query Proposals($pageSize: Int, $page: Int) {
+        proposals(pageSize: $pageSize, page: $page, sortBy: { field: "proposalId", order: DESC }) {
             cursor
             pageSize
             page
