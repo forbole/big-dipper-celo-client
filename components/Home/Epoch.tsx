@@ -1,4 +1,3 @@
-import { useQuery, useSubscription } from '@apollo/client';
 import { Card, CardContent, Divider, Theme } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -8,12 +7,6 @@ import numbro from 'numbro';
 import React from 'react';
 import Countdown, { CountdownRenderProps } from 'react-countdown';
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
-
-import { BLOCK_SUBSCRIPTION } from '../Query/Block';
-import { GET_CHAIN } from '../Query/Chain';
-import { GET_EPOCH } from '../Query/Epoch';
-import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -128,7 +121,14 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type EpochTooltipProps = { active?: boolean; payload?: any };
-
+type EpochProps = {
+    latestHeight: number;
+    averageBlockTime: number;
+    firstBlockNumberForEpoch: number;
+    lastBlockNumberForEpoch: number;
+    epochSize: number;
+    epochNumber: number;
+};
 const EpochTooltip = ({ active, payload }: EpochTooltipProps) => {
     const classes = useStyles();
 
@@ -164,46 +164,27 @@ const EpochTooltip = ({ active, payload }: EpochTooltipProps) => {
     return null;
 };
 
-const Epoch = (): JSX.Element => {
+const Epoch = ({
+    latestHeight,
+    averageBlockTime,
+    firstBlockNumberForEpoch,
+    lastBlockNumberForEpoch,
+    epochSize,
+    epochNumber
+}: EpochProps): JSX.Element => {
     const classes = useStyles();
     const [hasEnded, setHasEnded] = React.useState(false);
-
-    const blockProposer = useSubscription(BLOCK_SUBSCRIPTION);
-
-    const averageBlockTime = useQuery(GET_CHAIN);
-    const { loading, error, data } = useQuery(GET_EPOCH);
-
-    const lastBlockInEpoch =
-        data && data.epoch && data.epoch.lastBlockNumberForEpoch
-            ? data.epoch.lastBlockNumberForEpoch
-            : 0;
-
-    const averageTimeOfBlock =
-        averageBlockTime &&
-        averageBlockTime.data &&
-        averageBlockTime.data.chain &&
-        averageBlockTime.data.chain.averageBlockTime
-            ? averageBlockTime.data.chain.averageBlockTime
-            : 0;
-    if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage />;
 
     const chartData = [
         {
             name: 'Epoch Remaining',
-            value:
-                ((data?.epoch?.lastBlockNumberForEpoch - blockProposer?.data?.blockAdded?.number) /
-                    data?.epoch?.epochSize) *
-                100,
+            value: ((lastBlockNumberForEpoch - latestHeight) / epochSize) * 100,
 
             fill: 'rgba(246, 247, 249, 1)'
         },
         {
             name: 'Epoch Completed',
-            value:
-                ((blockProposer?.data?.blockAdded?.number - data?.epoch?.firstBlockNumberForEpoch) /
-                    data?.epoch?.epochSize) *
-                100,
+            value: ((latestHeight - firstBlockNumberForEpoch) / epochSize) * 100,
             fill: 'rgba(28, 134, 252, 1)'
         }
     ];
@@ -280,32 +261,22 @@ const Epoch = (): JSX.Element => {
                         </Grid>
 
                         <Grid item xs={5} className={classes.epochData}>
-                            {data && data.epoch && data.epoch.epochNumber ? (
-                                <Typography variant="body1">
-                                    <span className={classes.currentEpochText}>
-                                        {data.epoch.epochNumber}
-                                    </span>{' '}
-                                    th Epoch
-                                </Typography>
-                            ) : null}
+                            <Typography variant="body1">
+                                <span className={classes.currentEpochText}>{epochNumber}</span> th
+                                Epoch
+                            </Typography>
                             <Typography variant="body1" gutterBottom>
-                                {blockProposer &&
-                                blockProposer.data &&
-                                blockProposer.data.blockAdded &&
-                                blockProposer.data.blockAdded.number ? (
-                                    <Countdown
-                                        date={
-                                            Date.now() +
-                                            (lastBlockInEpoch -
-                                                blockProposer.data.blockAdded.number) *
-                                                averageTimeOfBlock *
-                                                1000
-                                        }
-                                        intervalDelay={1}
-                                        precision={3}
-                                        renderer={renderer}
-                                    />
-                                ) : null}
+                                <Countdown
+                                    date={
+                                        Date.now() +
+                                        (lastBlockNumberForEpoch - latestHeight) *
+                                            averageBlockTime *
+                                            1000
+                                    }
+                                    intervalDelay={1}
+                                    precision={3}
+                                    renderer={renderer}
+                                />
                             </Typography>
                             {!hasEnded ? (
                                 <Typography variant="body2">until Epoch Ends</Typography>
@@ -313,30 +284,15 @@ const Epoch = (): JSX.Element => {
                         </Grid>
 
                         <Grid item xs={12} className={classes.epochNumber}>
-                            {blockProposer &&
-                            blockProposer.data &&
-                            blockProposer.data.blockAdded &&
-                            blockProposer.data.blockAdded.number &&
-                            data &&
-                            data.epoch &&
-                            data.epoch.firstBlockNumberForEpoch ? (
-                                <Typography variant="body1" noWrap>
-                                    {blockProposer.data.blockAdded.number -
-                                        data.epoch.firstBlockNumberForEpoch >
-                                    0
-                                        ? blockProposer.data.blockAdded.number -
-                                          data.epoch.firstBlockNumberForEpoch
-                                        : 0}
-                                </Typography>
-                            ) : null}
+                            <Typography variant="body1" noWrap>
+                                {latestHeight - firstBlockNumberForEpoch}
+                            </Typography>
                             <Divider variant="middle" className={classes.divider} />
-                            {data && data.epoch && data.epoch.epochSize ? (
-                                <Typography variant="body1" noWrap>
-                                    {data.epoch.epochSize}
-                                </Typography>
-                            ) : null}
+                            <Typography variant="body1" noWrap>
+                                {epochSize}
+                            </Typography>
                         </Grid>
-                        {blockProposer &&
+                        {/* {blockProposer &&
                         blockProposer.data &&
                         blockProposer.data.blockAdded &&
                         blockProposer.data.blockAdded.number &&
@@ -363,7 +319,7 @@ const Epoch = (): JSX.Element => {
                                     </Typography>
                                 )}
                             </Grid>
-                        ) : null}
+                        ) : null} */}
                     </Paper>
                 </Grid>
             </Grid>
