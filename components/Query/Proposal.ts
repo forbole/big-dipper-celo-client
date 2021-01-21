@@ -14,14 +14,10 @@ export const GET_PROPOSALS = gql`
                 blockHash
                 blockNumber
                 event
-                executionEpoch
-                expirationEpoch
                 input
                 logIndex
                 minDeposit
-                proposalEpoch
                 raw
-                referrendumEpoch
                 removed
                 returnValues
                 signature
@@ -33,6 +29,12 @@ export const GET_PROPOSALS = gql`
                 upvoteList
                 upvotes
                 votes
+                submittedTime
+                approvalPhaseTime
+                votingPhaseStartTime
+                votingPhaseEndTime
+                executionPhaseStartTime
+                executionPhaseEndTime
             }
         }
     }
@@ -46,14 +48,10 @@ export const GET_PROPOSAL = gql`
             blockHash
             blockNumber
             event
-            executionEpoch
-            expirationEpoch
             input
             logIndex
             minDeposit
-            proposalEpoch
             raw
-            referrendumEpoch
             removed
             returnValues
             signature
@@ -65,6 +63,12 @@ export const GET_PROPOSAL = gql`
             upvoteList
             upvotes
             votes
+            submittedTime
+            approvalPhaseTime
+            votingPhaseStartTime
+            votingPhaseEndTime
+            executionPhaseStartTime
+            executionPhaseEndTime
         }
     }
 `;
