@@ -1,3 +1,4 @@
+import { useQuery } from '@apollo/client';
 import { Card, CardContent, Divider, Theme } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -7,6 +8,10 @@ import numbro from 'numbro';
 import React from 'react';
 import Countdown, { CountdownRenderProps } from 'react-countdown';
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
+
+import { GET_BLOCK } from '../Query/Block';
+import ComponentLoader from '../Utils/ComponentLoader';
+import ErrorMessage from '../Utils/ErrorMessage';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -175,6 +180,9 @@ const Epoch = ({
     const classes = useStyles();
     const [hasEnded, setHasEnded] = React.useState(false);
 
+    const pageSize = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
+    const page = 1;
+
     const chartData = [
         {
             name: 'Epoch Remaining',
@@ -221,6 +229,14 @@ const Epoch = ({
             );
         }
     };
+
+    const { loading, error, data } = useQuery(GET_BLOCK, {
+        variables: { pageSize, page },
+        pollInterval: 5000
+    });
+
+    if (loading) return <ComponentLoader />;
+    if (error) return <ErrorMessage message={error.message} />;
 
     return (
         <>
@@ -292,34 +308,32 @@ const Epoch = ({
                                 {epochSize}
                             </Typography>
                         </Grid>
-                        {/* {blockProposer &&
-                        blockProposer.data &&
-                        blockProposer.data.blockAdded &&
-                        blockProposer.data.blockAdded.number &&
-                        blockProposer.data.blockAdded.miner ? (
+                        {data?.blocks?.blocks?.number &&
+                        (data?.blocks?.blocks?.miner?.name ||
+                            data?.blocks?.blocks?.miner?.signer) ? (
                             <Grid item xs={12} className={classes.blockProposer}>
                                 <img
-                                    src={`https://ui-avatars.com/api/?rounded=true&size=40&name=${blockProposer.data.blockAdded.miner.name}&color=rgba(8, 178, 122, 1)&background=fff`}
+                                    src={`https://ui-avatars.com/api/?rounded=true&size=40&name=${data?.blocks?.blocks?.miner?.name}&color=rgba(8, 178, 122, 1)&background=fff`}
                                     className={classes.roundIcon}
                                     alt="Block Proposer"
                                 />
-                                {blockProposer.data.blockAdded.miner.name ? (
+                                {data?.blocks?.blocks?.miner?.name ? (
                                     <Typography
                                         variant="body2"
                                         color="textPrimary"
                                         className={classes.blockProposerName}>
-                                        {blockProposer.data.blockAdded.miner.name}
+                                        {data?.blocks?.blocks?.miner?.name}
                                     </Typography>
                                 ) : (
                                     <Typography
                                         variant="body2"
                                         color="textPrimary"
                                         className={classes.blockProposerAddress}>
-                                        {blockProposer.data.blockAdded.miner.signer}
+                                        {data?.blocks?.blocks?.miner?.signer}
                                     </Typography>
                                 )}
                             </Grid>
-                        ) : null} */}
+                        ) : null}
                     </Paper>
                 </Grid>
             </Grid>
