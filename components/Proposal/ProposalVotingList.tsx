@@ -387,6 +387,18 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
         }
     })(Tabs);
 
+    const calculateTotalVotesPercentage = () => {
+        const votes = new BigNumber(data?.proposal?.votes?.Total)
+            .dividedBy(CELO_FRACTION)
+            .toFormat();
+
+        const totalSupply = new BigNumber(chainData?.data?.chain?.celoTotalSupply)
+            .dividedBy(CELO_FRACTION)
+            .toFormat();
+
+        return numbro((parseFloat(votes) / parseFloat(totalSupply)) * 100).format('0.00');
+    };
+
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
 
@@ -394,7 +406,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
         <Grid container justify="center" className={classes.container}>
             <Paper className={classes.paper}>
                 <Typography color="textPrimary" variant="subtitle1" className={classes.headerLabel}>
-                    Voted (79.6%)
+                    Voted ({calculateTotalVotesPercentage()}%)
                 </Typography>
                 <Grid item xs={12}>
                     {data && data.proposal && data.proposal.votes ? (
@@ -411,24 +423,21 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                     )}
                 </Grid>
                 <Grid item xs={12}>
-                    {data && data.proposal && data.proposal.votes ? (
+                    {data?.proposal?.votes ? (
                         <Typography
                             color="textSecondary"
                             variant="subtitle1"
                             className={classes.headerLabel}>
                             (~
                             {numbro(
-                                new BigNumber(data.proposal.votes.Total)
+                                new BigNumber(data?.proposal?.votes?.Total)
                                     .dividedBy(CELO_FRACTION)
                                     .toFormat()
                             ).format({ average: true, mantissa: 2 })}{' '}
                             of ~
-                            {chainData &&
-                            chainData.data &&
-                            chainData.data.chain &&
-                            chainData.data.chain.celoTotalSupply
+                            {chainData?.data?.chain?.celoTotalSupply
                                 ? numbro(
-                                      new BigNumber(chainData.data.chain.celoTotalSupply)
+                                      new BigNumber(chainData?.data?.chain?.celoTotalSupply)
                                           .dividedBy(CELO_FRACTION)
                                           .toFormat(2)
                                   ).format({ average: true, mantissa: 2 })
