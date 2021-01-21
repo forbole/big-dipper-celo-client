@@ -32,9 +32,12 @@ type ProposalProps = {
     proposer: string;
     deposit: string;
     timestamp: string;
-    executionEpoch: number;
-    referrendumEpoch: number;
-    expirationEpoch: number;
+    submittedTime: number;
+    approvalPhaseTime: number;
+    votingPhaseStartTime: number;
+    votingPhaseEndTime: number;
+    executionPhaseStartTime: number;
+    executionPhaseEndTime: number;
     upvoteList: any[];
     totalNumberOfProposals: number;
 };
@@ -42,16 +45,16 @@ type ProposalProps = {
 export default function Proposal({
     proposalId,
     proposalTitle,
-    proposalDescriptionURL,
     proposalDescription,
-    proposalStage,
     proposalStatus,
     proposer,
     deposit,
-    timestamp,
-    executionEpoch,
-    referrendumEpoch,
-    expirationEpoch,
+    submittedTime,
+    approvalPhaseTime,
+    votingPhaseStartTime,
+    votingPhaseEndTime,
+    executionPhaseStartTime,
+    executionPhaseEndTime,
     upvoteList,
     totalNumberOfProposals
 }: ProposalProps): JSX.Element {
@@ -67,16 +70,16 @@ export default function Proposal({
                 <ProposalDetails
                     proposalId={proposalId}
                     proposalTitle={proposalTitle}
-                    proposalDescriptionURL={proposalDescriptionURL}
                     proposalDescription={proposalDescription}
-                    proposalStage={proposalStage}
                     proposalStatus={proposalStatus}
                     proposer={proposer}
                     deposit={deposit}
-                    timestamp={timestamp}
-                    executionEpoch={executionEpoch}
-                    referrendumEpoch={referrendumEpoch}
-                    expirationEpoch={expirationEpoch}
+                    submittedTime={submittedTime}
+                    approvalPhaseTime={approvalPhaseTime}
+                    votingPhaseStartTime={votingPhaseStartTime}
+                    votingPhaseEndTime={votingPhaseEndTime}
+                    executionPhaseStartTime={executionPhaseStartTime}
+                    executionPhaseEndTime={executionPhaseEndTime}
                     upvoteList={upvoteList}
                     totalNumberOfProposals={totalNumberOfProposals}
                 />
@@ -120,16 +123,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const title = proposal?.split('\n');
     const proposalTitle = title[0]?.replace(/^(.*?):/, '');
     const proposalId = data?.proposal?.proposalId;
-    const proposalDescriptionURL = data?.proposal?.input?.params[4]?.value;
     const proposalDescription = proposal;
     const proposalStage = data?.proposal?.stage;
     const proposalStatus = data?.proposal?.status;
     const proposer = data?.proposal?.returnValues?.proposer;
     const deposit = data?.proposal?.returnValues?.deposit;
-    const timestamp = data?.proposal?.returnValues?.timestamp;
-    const executionEpoch = data?.proposal?.executionEpoch;
-    const referrendumEpoch = data?.proposal?.referrendumEpoch;
-    const expirationEpoch = data?.proposal?.expirationEpoch;
+    const submittedTime = data?.proposal?.submittedTime;
+    const approvalPhaseTime = data?.proposal?.approvalPhaseTime;
+    const votingPhaseStartTime = data?.proposal?.votingPhaseStartTime;
+    const votingPhaseEndTime = data?.proposal?.votingPhaseEndTime;
+    const executionPhaseStartTime = data?.proposal?.executionPhaseStartTime;
+    const executionPhaseEndTime = data?.proposal?.executionPhaseEndTime;
     const upvoteList = data?.proposal?.upvoteList;
     const totalNumberOfProposals = total?.proposals?.totalCounts + 1; //Add one to substitute for missing proposal 6
 
@@ -137,16 +141,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         props: {
             proposalId,
             proposalTitle,
-            proposalDescriptionURL,
             proposalDescription,
             proposalStage,
             proposalStatus,
             proposer,
             deposit,
-            timestamp,
-            executionEpoch,
-            referrendumEpoch,
-            expirationEpoch,
+            submittedTime,
+            approvalPhaseTime,
+            votingPhaseStartTime,
+            votingPhaseEndTime,
+            executionPhaseStartTime,
+            executionPhaseEndTime,
             upvoteList,
             totalNumberOfProposals
         }

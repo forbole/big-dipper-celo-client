@@ -1,4 +1,3 @@
-import { useQuery } from '@apollo/client';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
@@ -9,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import BigNumber from 'bignumber.js';
+import moment from 'moment';
 import React, { useEffect } from 'react';
 import MarkdownView from 'react-showdown';
 
@@ -81,16 +81,16 @@ const useStyles = makeStyles(() => {
 type ProposalDetailsProps = {
     proposalId: number;
     proposalTitle: string;
-    proposalDescriptionURL: string;
     proposalDescription: string;
-    proposalStage: string;
     proposalStatus: string;
     proposer: string;
     deposit: string;
-    timestamp: string;
-    executionEpoch: number;
-    referrendumEpoch: number;
-    expirationEpoch: number;
+    submittedTime: number;
+    approvalPhaseTime: number;
+    votingPhaseStartTime: number;
+    votingPhaseEndTime: number;
+    executionPhaseStartTime: number;
+    executionPhaseEndTime: number;
     upvoteList: any[];
     totalNumberOfProposals: number;
 };
@@ -98,16 +98,15 @@ type ProposalDetailsProps = {
 const ProposalDetails = ({
     proposalId,
     proposalTitle,
-    proposalDescriptionURL,
     proposalDescription,
-    proposalStage,
     proposalStatus,
     proposer,
     deposit,
-    timestamp,
-    executionEpoch,
-    referrendumEpoch,
-    expirationEpoch,
+    submittedTime,
+    votingPhaseStartTime,
+    votingPhaseEndTime,
+    executionPhaseStartTime,
+    executionPhaseEndTime,
     upvoteList,
     totalNumberOfProposals
 }: ProposalDetailsProps): JSX.Element => {
@@ -288,26 +287,9 @@ const ProposalDetails = ({
                         <Typography variant="body2">Submitted Time</Typography>
                     </Grid>
                     <Grid item xs={8} lg={6}>
-                        {timestamp ? (
+                        {submittedTime ? (
                             <Typography variant="body2" className={classes.alignRight}>
-                                {new Date(parseInt(timestamp) * 1000).toUTCString()}
-                            </Typography>
-                        ) : (
-                            <NotAvailable variant="body2" className={classes.alignRight} />
-                        )}
-                    </Grid>
-
-                    <Grid item xs={12}>
-                        <Divider variant="middle" className={classes.divider} />
-                    </Grid>
-
-                    <Grid item xs={4} lg={6} className={classes.item}>
-                        <Typography variant="body2">Deposit End Time</Typography>
-                    </Grid>
-                    <Grid item xs={8} lg={6}>
-                        {executionEpoch ? (
-                            <Typography variant="body2" className={classes.alignRight}>
-                                {new Date(executionEpoch * 1000).toUTCString()}
+                                {moment.unix(submittedTime).format('Do MMMM YYYY, h:mm:ss a')}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
@@ -322,9 +304,11 @@ const ProposalDetails = ({
                         <Typography variant="body2">Voting Start Time</Typography>
                     </Grid>
                     <Grid item xs={8} lg={6}>
-                        {referrendumEpoch ? (
+                        {votingPhaseStartTime ? (
                             <Typography variant="body2" className={classes.alignRight}>
-                                {new Date(referrendumEpoch * 1000).toUTCString()}
+                                {moment
+                                    .unix(votingPhaseStartTime)
+                                    .format('Do MMMM YYYY, h:mm:ss a')}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
@@ -339,9 +323,9 @@ const ProposalDetails = ({
                         <Typography variant="body2">Voting End Time</Typography>
                     </Grid>
                     <Grid item xs={8} lg={6}>
-                        {expirationEpoch ? (
+                        {votingPhaseEndTime ? (
                             <Typography variant="body2" className={classes.alignRight}>
-                                {new Date(expirationEpoch * 1000).toUTCString()}
+                                {moment.unix(votingPhaseEndTime).format('Do MMMM YYYY, h:mm:ss a')}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
@@ -350,6 +334,40 @@ const ProposalDetails = ({
 
                     <Grid item xs={12}>
                         <Divider variant="middle" className={classes.divider} />
+                    </Grid>
+
+                    <Grid item xs={4} lg={6} className={classes.item}>
+                        <Typography variant="body2">Execution Start Time</Typography>
+                    </Grid>
+                    <Grid item xs={8} lg={6}>
+                        {executionPhaseStartTime ? (
+                            <Typography variant="body2" className={classes.alignRight}>
+                                {moment
+                                    .unix(executionPhaseStartTime)
+                                    .format('Do MMMM YYYY, h:mm:ss a')}
+                            </Typography>
+                        ) : (
+                            <NotAvailable variant="body2" className={classes.alignRight} />
+                        )}
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <Divider variant="middle" className={classes.divider} />
+                    </Grid>
+
+                    <Grid item xs={4} lg={6} className={classes.item}>
+                        <Typography variant="body2">Execution End Time</Typography>
+                    </Grid>
+                    <Grid item xs={8} lg={6}>
+                        {executionPhaseEndTime ? (
+                            <Typography variant="body2" className={classes.alignRight}>
+                                {moment
+                                    .unix(executionPhaseEndTime)
+                                    .format('Do MMMM YYYY, h:mm:ss a')}
+                            </Typography>
+                        ) : (
+                            <NotAvailable variant="body2" className={classes.alignRight} />
+                        )}
                     </Grid>
 
                     {proposalStatus === ('Vote' || 'Referendum') ? (
