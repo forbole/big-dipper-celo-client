@@ -53,6 +53,8 @@
 * [#160] Added Matomo analytics
 * Added `@socialgouv/matomo-next` module declaration to `global.d.ts`
 * [#165] Added custom tooltip to Epoch Chart 
+* [#71] Added `input params (descriptionURL)`, `votingPhaseTime`, `executionPhaseTime` info to proposals stored in db and fixed error showing epmty data on some proposals
+
 
 ## v0.1.3
 
