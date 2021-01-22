@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { ApolloClient, ApolloProvider } from '@apollo/client';
+import { ApolloClient, ApolloLink, ApolloProvider } from '@apollo/client';
 import { HttpLink, split } from '@apollo/client';
 import { InMemoryCache } from '@apollo/client/cache';
+import { BatchHttpLink } from '@apollo/client/link/batch-http';
+import { onError } from '@apollo/client/link/error';
+import { RetryLink } from '@apollo/client/link/retry';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -19,11 +22,14 @@ import DarkTheme from '../themes/celo-theme';
 
 const MATOMO_URL = 'https://analytics.bigdipper.live/';
 const MATOMO_SITE_ID = 3;
+const retryLink = new RetryLink();
+
+const authLink = new BatchHttpLink({ uri: 'http://localhost:4000/graphql' });
 
 const wsLink = process.browser
     ? new WebSocketLink({
           // only instantiate in the browser
-          uri: `wss://server.celo.bigdipper.live/graphql`,
+          uri: `ws://localhost:4000/graphql`,
           options: {
               reconnect: true,
               lazy: true
@@ -32,7 +38,7 @@ const wsLink = process.browser
     : (null as any);
 
 const httplink = new HttpLink({
-    uri: 'https://server.celo.bigdipper.live/graphql',
+    uri: 'http://localhost:4000/graphql',
     credentials: 'same-origin'
 });
 
@@ -40,6 +46,18 @@ interface DefinintionProps {
     kind: string;
     operation?: string;
 }
+
+const errorLink = onError((error) => {
+    const { graphQLErrors, networkError } = error;
+
+    if (graphQLErrors)
+        graphQLErrors.map(({ message, locations, path }) =>
+            console.log(
+                `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+            )
+        );
+    if (networkError) console.log(`[Network error]: ${networkError}`, networkError);
+});
 
 const link = process.browser
     ? split(
@@ -61,7 +79,7 @@ const cache = new InMemoryCache({ possibleTypes });
 export const client = new ApolloClient({
     ssrMode,
     cache,
-    link,
+    link: ApolloLink.from([errorLink, retryLink, authLink]),
     defaultOptions: {
         watchQuery: {
             fetchPolicy: 'cache-and-network'
