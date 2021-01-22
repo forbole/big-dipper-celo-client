@@ -143,9 +143,6 @@ const ProposalDetails = ({
         }
     });
 
-    // if (loading) return <ComponentLoader />;
-    // if (error) return <ErrorMessage message={error.message} />;
-
     return (
         <Card className={classes.root}>
             <CardContent>
