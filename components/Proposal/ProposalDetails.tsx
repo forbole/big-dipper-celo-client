@@ -112,9 +112,8 @@ const ProposalDetails = ({
 }: ProposalDetailsProps): JSX.Element => {
     const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
-    const proposalNumber = proposalId;
-    const prevProposal: number = proposalNumber - 1;
-    const nextProposal: number = proposalNumber + 1;
+    const prevProposal: number = proposalId - 1;
+    const nextProposal: number = proposalId + 1;
     const [maxProposalNumber, setMaxProposalNumber] = React.useState(false);
     const [minProposalNumber, setMinProposalNumber] = React.useState(false);
     const [currentUser, setCurrentUser] = React.useState('');
@@ -127,11 +126,11 @@ const ProposalDetails = ({
         const getLocalUser = localUser ? localUser : '';
         setCurrentUser(getLocalUser);
 
-        if (proposalNumber === totalNumberOfProposals) {
+        if (proposalId === totalNumberOfProposals) {
             setMaxProposalNumber(true);
         }
 
-        if (proposalNumber === 1) {
+        if (proposalId === 1) {
             setMinProposalNumber(true);
         }
         if (upvoteList) {
