@@ -1,14 +1,11 @@
-import { useQuery } from '@apollo/client';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 
-import { GET_PROPOSALS } from '../Query/Proposal';
 import Chips from '../Utils/Chips';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 import MiddleEllipsis from '../Utils/MiddleEllipsis';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
@@ -70,16 +67,6 @@ type ProposalListProps = { title: any };
 
 const ProposalList = ({ title }: ProposalListProps): JSX.Element => {
     const classes = useStyles();
-    const page = process.env.SETPAGE ? parseInt(process.env.SETPAGE) + 1 : 1;
-    const pageSize = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
-    const field = 'proposalNumber';
-
-    const { loading, error, data } = useQuery(GET_PROPOSALS, {
-        variables: { pageSize, page, field }
-    });
-
-    if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage message={error.message} />;
 
     if (title.proposalTitle.length > 0) {
         return (
