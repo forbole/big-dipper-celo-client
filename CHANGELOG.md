@@ -63,7 +63,6 @@
 * [#194] Created generic error message when GraphQL Client returns error 
 
 
-
 ## v0.1.3
 
 * [#69] Hidden Search Bar and Network Selection
