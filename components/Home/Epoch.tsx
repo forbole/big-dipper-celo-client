@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client';
+import { useQuery, useSubscription } from '@apollo/client';
 import { Card, CardContent, Divider, Theme } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -9,8 +9,8 @@ import React from 'react';
 import Countdown, { CountdownRenderProps } from 'react-countdown';
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 
-import { GET_BLOCK } from '../Query/Block';
-import ComponentLoader from '../Utils/ComponentLoader';
+import { BLOCK_SUBSCRIPTION } from '../Query/Block';
+import { GET_CHAIN } from '../Query/Chain';
 import ErrorMessage from '../Utils/ErrorMessage';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -126,14 +126,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type EpochTooltipProps = { active?: boolean; payload?: any };
-type EpochProps = {
-    latestHeight: number;
-    averageBlockTime: number;
-    firstBlockNumberForEpoch: number;
-    lastBlockNumberForEpoch: number;
-    epochSize: number;
-    epochNumber: number;
-};
+
 const EpochTooltip = ({ active, payload }: EpochTooltipProps) => {
     const classes = useStyles();
 
@@ -169,35 +162,47 @@ const EpochTooltip = ({ active, payload }: EpochTooltipProps) => {
     return null;
 };
 
-const Epoch = ({
-    latestHeight,
-    averageBlockTime,
-    firstBlockNumberForEpoch,
-    lastBlockNumberForEpoch,
-    epochSize,
-    epochNumber
-}: EpochProps): JSX.Element => {
+const EpochEnded = () => <span>This Epoch has ended!</span>;
+
+const Epoch = (): JSX.Element => {
     const classes = useStyles();
     const [hasEnded, setHasEnded] = React.useState(false);
 
-    const pageSize = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
-    const page = 1;
+    const blockProposer = useSubscription(BLOCK_SUBSCRIPTION);
+    const chain = useQuery(GET_CHAIN);
+
+    const lastBlockInEpoch = chain?.data?.chain?.lastBlockNumberForEpoch
+        ? chain?.data?.chain?.lastBlockNumberForEpoch
+        : 0;
+
+    const averageTimeOfBlock =
+        chain && chain.data && chain.data.chain && chain.data.chain.averageBlockTime
+            ? chain.data.chain.averageBlockTime
+            : 0;
+
+    if (chain.error) return <ErrorMessage message={chain?.error?.message as string} />;
 
     const chartData = [
         {
             name: 'Epoch Remaining',
-            value: ((lastBlockNumberForEpoch - latestHeight) / epochSize) * 100,
+            value:
+                ((chain?.data?.chain?.lastBlockNumberForEpoch -
+                    blockProposer?.data?.blockAdded?.number) /
+                    chain?.data?.chain?.epochSize) *
+                100,
 
             fill: 'rgba(246, 247, 249, 1)'
         },
         {
             name: 'Epoch Completed',
-            value: ((latestHeight - firstBlockNumberForEpoch) / epochSize) * 100,
+            value:
+                ((blockProposer?.data?.blockAdded?.number -
+                    chain?.data?.chain?.firstBlockNumberForEpoch) /
+                    chain?.data?.chain?.epochSize) *
+                100,
             fill: 'rgba(28, 134, 252, 1)'
         }
     ];
-
-    const EpochEnded = () => <span>This Epoch has ended!</span>;
 
     const renderer = ({
         hours,
@@ -229,14 +234,6 @@ const Epoch = ({
             );
         }
     };
-
-    const { loading, error, data } = useQuery(GET_BLOCK, {
-        variables: { pageSize, page },
-        pollInterval: 5000
-    });
-
-    if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage message={error.message} />;
 
     return (
         <>
@@ -277,63 +274,84 @@ const Epoch = ({
                         </Grid>
 
                         <Grid item xs={5} className={classes.epochData}>
-                            <Typography variant="body1">
-                                <span className={classes.currentEpochText}>{epochNumber}</span> th
-                                Epoch
-                            </Typography>
-                            <Typography variant="body1" gutterBottom>
-                                <Countdown
-                                    date={
-                                        Date.now() +
-                                        (lastBlockNumberForEpoch - latestHeight) *
-                                            averageBlockTime *
-                                            1000
-                                    }
-                                    intervalDelay={1}
-                                    precision={3}
-                                    renderer={renderer}
-                                />
-                            </Typography>
-                            {!hasEnded ? (
-                                <Typography variant="body2">until Epoch Ends</Typography>
+                            {chain?.data?.chain?.epochNumber &&
+                            blockProposer?.data?.blockAdded?.number ? (
+                                <>
+                                    <Typography variant="body1">
+                                        <span className={classes.currentEpochText}>
+                                            {chain?.data?.chain?.epochNumber}
+                                        </span>{' '}
+                                        th Epoch
+                                    </Typography>
+                                    <Typography variant="body1" gutterBottom>
+                                        <Countdown
+                                            date={
+                                                Date.now() +
+                                                (lastBlockInEpoch -
+                                                    blockProposer?.data?.blockAdded?.number) *
+                                                    averageTimeOfBlock *
+                                                    1000
+                                            }
+                                            intervalDelay={1}
+                                            precision={3}
+                                            renderer={renderer}
+                                        />
+                                    </Typography>
+                                    {!hasEnded ? (
+                                        <Typography variant="body2">until Epoch Ends</Typography>
+                                    ) : null}
+                                </>
                             ) : null}
                         </Grid>
 
                         <Grid item xs={12} className={classes.epochNumber}>
-                            <Typography variant="body1" noWrap>
-                                {latestHeight - firstBlockNumberForEpoch}
-                            </Typography>
-                            <Divider variant="middle" className={classes.divider} />
-                            <Typography variant="body1" noWrap>
-                                {epochSize}
-                            </Typography>
+                            {blockProposer?.data?.blockAdded?.number &&
+                            chain?.data?.chain?.firstBlockNumberForEpoch &&
+                            chain?.data?.chain?.epochSize ? (
+                                <>
+                                    <Typography variant="body1" noWrap>
+                                        {blockProposer?.data?.blockAdded?.number -
+                                            chain?.data?.chain?.firstBlockNumberForEpoch >
+                                        0
+                                            ? blockProposer?.data?.blockAdded?.number -
+                                              chain?.data?.chain?.firstBlockNumberForEpoch
+                                            : 0}
+                                    </Typography>
+
+                                    <Divider variant="middle" className={classes.divider} />
+
+                                    <Typography variant="body1" noWrap>
+                                        {chain?.data?.chain?.epochSize}
+                                    </Typography>
+                                </>
+                            ) : null}
                         </Grid>
-                        {data?.blocks?.blocks?.number &&
-                        (data?.blocks?.blocks?.miner?.name ||
-                            data?.blocks?.blocks?.miner?.signer) ? (
-                            <Grid item xs={12} className={classes.blockProposer}>
-                                <img
-                                    src={`https://ui-avatars.com/api/?rounded=true&size=40&name=${data?.blocks?.blocks?.miner?.name}&color=rgba(8, 178, 122, 1)&background=fff`}
-                                    className={classes.roundIcon}
-                                    alt="Block Proposer"
-                                />
-                                {data?.blocks?.blocks?.miner?.name ? (
+                        <Grid item xs={12} className={classes.blockProposer}>
+                            {blockProposer?.data?.blockAdded?.miner?.name ||
+                            blockProposer?.data?.blockAdded?.miner?.address ? (
+                                <>
+                                    <img
+                                        src={`https://ui-avatars.com/api/?rounded=true&size=40&name=${
+                                            blockProposer?.data?.blockAdded?.miner?.name ||
+                                            blockProposer?.data?.blockAdded?.miner?.address
+                                        }&color=rgba(8, 178, 122, 1)&background=fff`}
+                                        className={classes.roundIcon}
+                                        alt="Block Proposer"
+                                    />
                                     <Typography
                                         variant="body2"
                                         color="textPrimary"
-                                        className={classes.blockProposerName}>
-                                        {data?.blocks?.blocks?.miner?.name}
+                                        className={
+                                            blockProposer?.data?.blockAdded?.miner?.name
+                                                ? classes.blockProposerName
+                                                : classes.blockProposerAddress
+                                        }>
+                                        {blockProposer?.data?.blockAdded?.miner?.name ||
+                                            blockProposer?.data?.blockAdded?.miner?.address}
                                     </Typography>
-                                ) : (
-                                    <Typography
-                                        variant="body2"
-                                        color="textPrimary"
-                                        className={classes.blockProposerAddress}>
-                                        {data?.blocks?.blocks?.miner?.signer}
-                                    </Typography>
-                                )}
-                            </Grid>
-                        ) : null}
+                                </>
+                            ) : null}
+                        </Grid>
                     </Paper>
                 </Grid>
             </Grid>
