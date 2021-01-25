@@ -95,7 +95,7 @@ export default function Proposal({
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const proposalNumber: number = parseInt(context?.query?.proposal);
+    const proposalNumber: number = parseInt(context?.query?.proposal as string);
     const page = 1;
     const pageSize = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
     const data = await graphQlClient.request(GET_PROPOSAL, {
@@ -106,7 +106,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         variables: { pageSize, page }
     });
 
-    const proposal = await fetch(
+    const proposal: string | any = await fetch(
         (data?.proposal?.input?.params[4]?.value)
             .replace('github.com', 'raw.githubusercontent.com')
             .replace('blob/', '')
