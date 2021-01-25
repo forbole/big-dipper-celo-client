@@ -1,28 +1,40 @@
 import { gql } from '@apollo/client';
 
 export const GET_PROPOSALS = gql`
-    query Proposals($pageSize: Int, $page: Int, $field: String!) {
-        proposals(pageSize: $pageSize, page: $page, sortBy: { field: $field, order: DESC }) {
+    query Proposals($pageSize: Int, $page: Int) {
+        proposals(pageSize: $pageSize, page: $page, sortBy: { field: "proposalId", order: DESC }) {
             cursor
             pageSize
             page
             totalCounts
             hasMore
             proposals {
-                proposalNumber
+                proposalId
                 address
                 blockHash
                 blockNumber
                 event
+                input
                 logIndex
+                minDeposit
                 raw
                 removed
                 returnValues
                 signature
+                stage
+                status
+                totalVotesList
                 transactionHash
                 transactionIndex
-                status
                 upvoteList
+                upvotes
+                votes
+                submittedTime
+                approvalPhaseTime
+                votingPhaseStartTime
+                votingPhaseEndTime
+                executionPhaseStartTime
+                executionPhaseEndTime
             }
         }
     }
@@ -31,26 +43,32 @@ export const GET_PROPOSALS = gql`
 export const GET_PROPOSAL = gql`
     query Proposal($proposalNumber: Int) {
         proposal(proposalNumber: $proposalNumber) {
-            proposalNumber
+            proposalId
             address
             blockHash
             blockNumber
             event
+            input
             logIndex
+            minDeposit
             raw
             removed
             returnValues
             signature
+            stage
+            status
+            totalVotesList
             transactionHash
             transactionIndex
             upvoteList
+            upvotes
             votes
-            status
-            totalVotesList
-            executionEpoch
-            expirationEpoch
-            proposalEpoch
-            referrendumEpoch
+            submittedTime
+            approvalPhaseTime
+            votingPhaseStartTime
+            votingPhaseEndTime
+            executionPhaseStartTime
+            executionPhaseEndTime
         }
     }
 `;

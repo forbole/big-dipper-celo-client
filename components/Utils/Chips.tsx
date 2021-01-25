@@ -67,14 +67,13 @@ interface ContractColorsInterface {
 }
 
 interface LedgerColorsInterface {
-    Success: string;
-    Passed: string;
-    Create: string;
+    Approved: string;
+    Referendum: string;
+    Execution: string;
     Rejected: string;
     Removed: string;
-    Deposit: string;
-    Vote: string;
     Pending: string;
+    Success: string;
     [key: string]: string;
 }
 
@@ -114,12 +113,11 @@ const Chips = ({ contractName, type, actionResult }: ChipsProps): JSX.Element =>
 
     const ledgerColors: LedgerColorsInterface = {
         //Used for Proposal Status
-        Passed: green['A700'],
-        Create: lightGreen[700],
+        Approved: green['A700'],
+        Referendum: teal[400],
         Rejected: red[800],
-        Removed: orange[600],
-        Deposit: theme.palette.background.paper,
-        Vote: theme.palette.background.paper,
+        Removed: blue[700],
+        Execution: orange[600],
 
         //used for Transactions Status
         Pending: teal[400],
@@ -162,7 +160,7 @@ const Chips = ({ contractName, type, actionResult }: ChipsProps): JSX.Element =>
                         backgroundColor: ledgerColors[actionResult],
                         border: borderElement[actionResult],
                         borderRadius: 5,
-                        width: '5rem',
+                        width: '6.5rem',
                         marginRight: '0.5rem',
                         fontSize: '	0.875rem',
                         textTransform: 'capitalize'

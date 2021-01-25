@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import { Card, CardContent } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -89,9 +90,22 @@ const useStyles = makeStyles(() => {
             alignContent: 'center',
             marginLeft: '-1.25rem',
             marginTop: '-2.5rem'
+        },
+        tooltip: {
+            opacity: 5,
+            width: '13rem',
+            height: '4rem'
+        },
+        tooltipCard: {
+            padding: '1rem'
+        },
+        tooltipVoteType: {
+            fontWeight: 600
         }
     };
 });
+
+const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -120,6 +134,8 @@ function TabPanel(props: TabPanelProps) {
     );
 }
 
+type VotingTooltipProps = { active?: boolean; payload?: any };
+
 type ProposalVotingListProps = { proposal: string };
 
 const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element => {
@@ -133,7 +149,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
     const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
     const ROWLARGE = process.env.ROWLARGE ? parseInt(process.env.ROWLARGE) : 50;
     const ROWXLARGE = process.env.ROWXLARGE ? parseInt(process.env.ROWXLARGE) : 100;
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+    // const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const [page, setPage] = React.useState(SETPAGE);
     const [pageSize, setPageSize] = React.useState(ROWXSMALL);
@@ -159,6 +175,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
     const chainData = useQuery(GET_CHAIN, {
         pollInterval: 5000
     });
+
     const RednderTabs = (voteType: any) => {
         return (
             <>
@@ -301,6 +318,45 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
         );
     };
 
+    const VotingTooltip = ({ active, payload }: VotingTooltipProps) => {
+        const classes = useStyles();
+
+        if (active) {
+            return (
+                <Card className={classes.tooltip}>
+                    <CardContent className={classes.tooltipCard}>
+                        <Grid container>
+                            <Grid item xs={5}>
+                                <Typography
+                                    color="textPrimary"
+                                    variant="body2"
+                                    align="left"
+                                    className={classes.tooltipVoteType}>
+                                    {payload[0]?.payload?.name}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={7}>
+                                <Typography color="textPrimary" variant="body2">
+                                    {new BigNumber(payload[0]?.payload?.value)
+                                        .dividedBy(CELO_FRACTION)
+                                        .toFormat(2)}{' '}
+                                    (
+                                    {new BigNumber(payload[0]?.payload?.value)
+                                        .dividedBy(data?.proposal?.votes?.Total)
+                                        .multipliedBy(100)
+                                        .toFormat(2)}
+                                    %)
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    </CardContent>
+                </Card>
+            );
+        }
+
+        return null;
+    };
+
     const chartData =
         data && data.proposal && data.proposal.votes
             ? [
@@ -331,6 +387,18 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
         }
     })(Tabs);
 
+    const calculateTotalVotesPercentage = () => {
+        const votes = new BigNumber(data?.proposal?.votes?.Total)
+            .dividedBy(CELO_FRACTION)
+            .toFormat();
+
+        const totalSupply = new BigNumber(chainData?.data?.chain?.celoTotalSupply)
+            .dividedBy(CELO_FRACTION)
+            .toFormat();
+
+        return numbro((parseFloat(votes) / parseFloat(totalSupply)) * 100).format('0.00');
+    };
+
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;
 
@@ -338,7 +406,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
         <Grid container justify="center" className={classes.container}>
             <Paper className={classes.paper}>
                 <Typography color="textPrimary" variant="subtitle1" className={classes.headerLabel}>
-                    Voted (79.6%)
+                    Voted ({calculateTotalVotesPercentage()}%)
                 </Typography>
                 <Grid item xs={12}>
                     {data && data.proposal && data.proposal.votes ? (
@@ -355,24 +423,21 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                     )}
                 </Grid>
                 <Grid item xs={12}>
-                    {data && data.proposal && data.proposal.votes ? (
+                    {data?.proposal?.votes ? (
                         <Typography
                             color="textSecondary"
                             variant="subtitle1"
                             className={classes.headerLabel}>
                             (~
                             {numbro(
-                                new BigNumber(data.proposal.votes.Total)
+                                new BigNumber(data?.proposal?.votes?.Total)
                                     .dividedBy(CELO_FRACTION)
                                     .toFormat()
                             ).format({ average: true, mantissa: 2 })}{' '}
                             of ~
-                            {chainData &&
-                            chainData.data &&
-                            chainData.data.chain &&
-                            chainData.data.chain.celoTotalSupply
+                            {chainData?.data?.chain?.celoTotalSupply
                                 ? numbro(
-                                      new BigNumber(chainData.data.chain.celoTotalSupply)
+                                      new BigNumber(chainData?.data?.chain?.celoTotalSupply)
                                           .dividedBy(CELO_FRACTION)
                                           .toFormat(2)
                                   ).format({ average: true, mantissa: 2 })
@@ -399,7 +464,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                             ))}
                         </Pie>
-                        <Tooltip />
+                        <Tooltip content={<VotingTooltip />} />
                         <Legend
                             layout="vertical"
                             verticalAlign="middle"

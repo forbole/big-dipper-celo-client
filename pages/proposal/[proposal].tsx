@@ -1,5 +1,7 @@
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { GraphQLClient } from 'graphql-request';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -7,6 +9,9 @@ import PriceCard from '../../components/PriceCard/PriceCard';
 import DepositList from '../../components/Proposal/DepositList';
 import ProposalDetails from '../../components/Proposal/ProposalDetails';
 import ProposalVotingList from '../../components/Proposal/ProposalVotingList';
+import { GET_PROPOSAL, GET_PROPOSALS } from '../../components/Query/Proposal';
+
+const graphQlClient = new GraphQLClient(`http://localhost:4000/graphql`);
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -17,9 +22,42 @@ const useStyles = makeStyles(() =>
     })
 );
 
-type proposalProps = { proposalDetails: string };
+type ProposalProps = {
+    proposalTitle: string;
+    proposalId: number;
+    proposalDescriptionURL: string;
+    proposalDescription: string;
+    proposalStage: string;
+    proposalStatus: string;
+    proposer: string;
+    deposit: string;
+    timestamp: string;
+    submittedTime: number;
+    approvalPhaseTime: number;
+    votingPhaseStartTime: number;
+    votingPhaseEndTime: number;
+    executionPhaseStartTime: number;
+    executionPhaseEndTime: number;
+    upvoteList: any[];
+    totalNumberOfProposals: number;
+};
 
-export default function Proposal({ proposalDetails }: proposalProps): JSX.Element {
+export default function Proposal({
+    proposalId,
+    proposalTitle,
+    proposalDescription,
+    proposalStatus,
+    proposer,
+    deposit,
+    submittedTime,
+    approvalPhaseTime,
+    votingPhaseStartTime,
+    votingPhaseEndTime,
+    executionPhaseStartTime,
+    executionPhaseEndTime,
+    upvoteList,
+    totalNumberOfProposals
+}: ProposalProps): JSX.Element {
     const classes = useStyles();
     const router = useRouter();
     const proposalNumber: string = router.query.proposal as string;
@@ -29,34 +67,93 @@ export default function Proposal({ proposalDetails }: proposalProps): JSX.Elemen
                 <PriceCard />
             </Grid>
             <Grid item xs={12}>
-                <ProposalDetails proposal={proposalNumber} proposalDetails={proposalDetails} />
+                <ProposalDetails
+                    proposalId={proposalId}
+                    proposalTitle={proposalTitle}
+                    proposalDescription={proposalDescription}
+                    proposalStatus={proposalStatus}
+                    proposer={proposer}
+                    deposit={deposit}
+                    submittedTime={submittedTime}
+                    approvalPhaseTime={approvalPhaseTime}
+                    votingPhaseStartTime={votingPhaseStartTime}
+                    votingPhaseEndTime={votingPhaseEndTime}
+                    executionPhaseStartTime={executionPhaseStartTime}
+                    executionPhaseEndTime={executionPhaseEndTime}
+                    upvoteList={upvoteList}
+                    totalNumberOfProposals={totalNumberOfProposals}
+                />
             </Grid>
             <Grid item xs={12}>
                 <ProposalVotingList proposal={proposalNumber} />
             </Grid>
             <Grid item xs={12}>
-                <DepositList proposal={proposalNumber} />
+                <DepositList proposal={proposalId} />
             </Grid>
         </Grid>
     );
 }
 
-Proposal.getInitialProps = async (ctx: any) => {
-    const { query } = ctx;
-    let response;
-    let proposalDetails;
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const proposalNumber: number = parseInt(context?.query?.proposal);
+    const page = 1;
+    const pageSize = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
+    const data = await graphQlClient.request(GET_PROPOSAL, {
+        proposalNumber
+    });
 
-    if (query.proposal >= 10) {
-        response = await fetch(
-            `https://raw.githubusercontent.com/celo-org/celo-proposals/master/CGPs/00${query.proposal}.md`
-        );
-        proposalDetails = await response.text();
-    } else {
-        response = await fetch(
-            `https://raw.githubusercontent.com/celo-org/celo-proposals/master/CGPs/000${query.proposal}.md`
-        );
-        proposalDetails = await response.text();
-    }
+    const total = await graphQlClient.request(GET_PROPOSALS, {
+        variables: { pageSize, page }
+    });
 
-    return { proposalDetails };
+    const proposal = await fetch(
+        (data?.proposal?.input?.params[4]?.value)
+            .replace('github.com', 'raw.githubusercontent.com')
+            .replace('blob/', '')
+    )
+        .then(function (response) {
+            if (response.ok) {
+                return response.text();
+            }
+        })
+        .catch(function (err) {
+            return console.log(`Error when getting proposal no. ${proposalNumber} title` + err);
+        });
+
+    const title = proposal?.split('\n');
+    const proposalTitle = title[0]?.replace(/^(.*?):/, '');
+    const proposalId = data?.proposal?.proposalId;
+    const proposalDescription = proposal;
+    const proposalStage = data?.proposal?.stage;
+    const proposalStatus = data?.proposal?.status;
+    const proposer = data?.proposal?.returnValues?.proposer;
+    const deposit = data?.proposal?.returnValues?.deposit;
+    const submittedTime = data?.proposal?.submittedTime;
+    const approvalPhaseTime = data?.proposal?.approvalPhaseTime;
+    const votingPhaseStartTime = data?.proposal?.votingPhaseStartTime;
+    const votingPhaseEndTime = data?.proposal?.votingPhaseEndTime;
+    const executionPhaseStartTime = data?.proposal?.executionPhaseStartTime;
+    const executionPhaseEndTime = data?.proposal?.executionPhaseEndTime;
+    const upvoteList = data?.proposal?.upvoteList;
+    const totalNumberOfProposals = total?.proposals?.totalCounts + 1; //Add one to substitute for missing proposal 6
+
+    return {
+        props: {
+            proposalId,
+            proposalTitle,
+            proposalDescription,
+            proposalStage,
+            proposalStatus,
+            proposer,
+            deposit,
+            submittedTime,
+            approvalPhaseTime,
+            votingPhaseStartTime,
+            votingPhaseEndTime,
+            executionPhaseStartTime,
+            executionPhaseEndTime,
+            upvoteList,
+            totalNumberOfProposals
+        }
+    };
 };

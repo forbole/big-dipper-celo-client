@@ -58,7 +58,7 @@ const ssrMode = typeof window === 'undefined';
 
 const cache = new InMemoryCache({ possibleTypes });
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
     ssrMode,
     cache,
     link,

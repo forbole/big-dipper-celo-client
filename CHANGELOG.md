@@ -53,6 +53,8 @@
 * [#160] Added Matomo analytics
 * Added `@socialgouv/matomo-next` module declaration to `global.d.ts`
 * [#165] Added custom tooltip to Epoch Chart 
+* [#177] Query proposal description from the URL stored in db 
+
 
 ## v0.1.3
 
