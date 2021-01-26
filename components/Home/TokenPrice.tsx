@@ -323,16 +323,12 @@ const TokenPrice = (): JSX.Element => {
     });
 
     if (coinHistoryByDates.loading && chainData.loading) return <ComponentLoader />;
-    if (coinHistoryByDates.error || chainData.loading)
+    if (coinHistoryByDates.error || chainData.error)
         return (
             <ErrorMessage
                 message={
-                    (coinHistoryByDates.error && coinHistoryByDates.error.message
-                        ? coinHistoryByDates.error.message
-                        : (null as any)) ||
-                    (chainData.error && chainData.error.message
-                        ? chainData.error.message
-                        : (null as any))
+                    (coinHistoryByDates?.error?.message as string) ||
+                    (chainData?.error?.message as string)
                 }
             />
         );
