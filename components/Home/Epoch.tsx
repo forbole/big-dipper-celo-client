@@ -11,6 +11,7 @@ import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 
 import { BLOCK_SUBSCRIPTION } from '../Query/Block';
 import { GET_CHAIN } from '../Query/Chain';
+import Avatar from '../Utils/Avatar';
 import ErrorMessage from '../Utils/ErrorMessage';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -79,7 +80,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
 
         blockProposerAddress: {
-            paddingLeft: '3.5rem',
+            paddingLeft: '1rem',
             paddingRight: '1.5rem',
             wordBreak: 'break-word',
             wordWrap: 'break-word',
@@ -89,22 +90,12 @@ const useStyles = makeStyles((theme: Theme) =>
         },
 
         blockProposerName: {
-            paddingLeft: '3.5rem',
+            paddingLeft: '1rem',
             paddingRight: '1.5rem',
             marginTop: '0.5rem',
             wordBreak: 'break-word',
             display: 'flex',
-            textAlign: 'left',
-            [theme.breakpoints.down('md')]: {
-                paddingBottom: '4rem'
-            }
-        },
-
-        roundIcon: {
-            marginTop: '-0.25rem',
-            border: 'solid 2px rgba(8, 178, 122, 1)',
-            borderRadius: 50,
-            position: 'absolute'
+            textAlign: 'left'
         },
 
         tooltip: {
@@ -298,7 +289,7 @@ const Epoch = (): JSX.Element => {
                                         />
                                     </Typography>
                                     {!hasEnded ? (
-                                        <Typography variant="body2">until Epoch Ends</Typography>
+                                        <Typography variant="body2">Until Epoch End</Typography>
                                     ) : null}
                                 </>
                             ) : null}
@@ -330,16 +321,14 @@ const Epoch = (): JSX.Element => {
                             {blockProposer?.data?.blockAdded?.miner?.name ||
                             blockProposer?.data?.blockAdded?.miner?.address ? (
                                 <>
-                                    <img
-                                        src={`https://ui-avatars.com/api/?rounded=true&size=40&name=${
+                                    <Avatar
+                                        value={
                                             blockProposer?.data?.blockAdded?.miner?.name ||
                                             blockProposer?.data?.blockAdded?.miner?.address
-                                        }&color=rgba(8, 178, 122, 1)&background=fff`}
-                                        className={classes.roundIcon}
-                                        alt="Block Proposer"
+                                        }
                                     />
                                     <Typography
-                                        variant="body2"
+                                        variant="body1"
                                         color="textPrimary"
                                         className={
                                             blockProposer?.data?.blockAdded?.miner?.name
