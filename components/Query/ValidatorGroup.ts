@@ -44,13 +44,11 @@ export const GET_VALIDATOR_GROUPS = gql`
 export const GET_VALIDATOR_GROUP = gql`
     query validatorGroup($valGroupAddress: String!) {
         validatorGroup(valGroupAddress: $valGroupAddress) {
-            _id
             address
             affiliates
             commission
             lastSlashed
             members {
-                _id
                 address
                 name
                 affiliation

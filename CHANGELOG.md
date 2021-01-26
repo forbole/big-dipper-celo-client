@@ -54,7 +54,9 @@
 * Added `@socialgouv/matomo-next` module declaration to `global.d.ts`
 * [#165] Added custom tooltip to Epoch Chart 
 * [#177] Query proposal description from the URL stored in db
-* Updated YAxis value in Token Price Chart  
+* Updated YAxis value in Token Price Chart 
+* Removed `NotAvailable` from validator group list when data for elected validators is not available
+  
 
 
 ## v0.1.3

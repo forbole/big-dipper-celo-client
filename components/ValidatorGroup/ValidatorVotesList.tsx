@@ -566,14 +566,12 @@ const ValidatorVotesList = (): JSX.Element => {
                                                                                                           </Typography>
                                                                                                       }
                                                                                                   />
-                                                                                                  {row.electedValidators ? (
-                                                                                                      findElectedValidators(
-                                                                                                          memberRow.address,
-                                                                                                          row.electedValidators
-                                                                                                      )
-                                                                                                  ) : (
-                                                                                                      <NotAvailable variant="caption" />
-                                                                                                  )}
+                                                                                                  {row.electedValidators
+                                                                                                      ? findElectedValidators(
+                                                                                                            memberRow.address,
+                                                                                                            row.electedValidators
+                                                                                                        )
+                                                                                                      : null}
                                                                                               </>
                                                                                           ) : (
                                                                                               <NotAvailable variant="caption" />
