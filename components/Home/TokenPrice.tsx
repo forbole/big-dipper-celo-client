@@ -355,17 +355,14 @@ const TokenPrice = (): JSX.Element => {
                                         noWrap>
                                         Price
                                     </Typography>
-                                    {chainData.data &&
-                                    chainData.data.chain &&
-                                    chainData.data.chain.tokenPrice &&
-                                    chainData.data.chain.tokenPrice.usd >= 0 ? (
+                                    {chainData?.data?.chain?.tokenPrice?.usd >= 0 ? (
                                         <Typography
                                             variant="body1"
                                             className={classes.value}
                                             color="textPrimary"
                                             noWrap>
                                             ${' '}
-                                            {numbro(chainData.data.chain.tokenPrice.usd).format(
+                                            {numbro(chainData?.data?.chain?.tokenPrice?.usd).format(
                                                 '0.00'
                                             )}
                                         </Typography>
@@ -383,20 +380,17 @@ const TokenPrice = (): JSX.Element => {
                                         noWrap>
                                         Market Cap
                                     </Typography>
-                                    {chainData.data &&
-                                    chainData.data.chain &&
-                                    chainData.data.chain.celoTotalSupply &&
-                                    chainData.data.chain.tokenPrice &&
-                                    chainData.data.chain.tokenPrice.usd >= 0 ? (
+                                    {chainData?.data?.chain?.celoTotalSupply &&
+                                    chainData?.data?.chain?.tokenPrice?.usd >= 0 ? (
                                         <Typography
                                             variant="body1"
                                             className={classes.value}
                                             color="textPrimary"
                                             noWrap>
                                             ${' '}
-                                            {new BigNumber(chainData.data.chain.tokenPrice.usd)
+                                            {new BigNumber(chainData?.data?.chain?.tokenPrice?.usd)
                                                 .dividedBy(CELO_FRACTION)
-                                                .times(chainData.data.chain.celoTotalSupply)
+                                                .times(chainData?.data?.chain?.celoTotalSupply)
                                                 .toFormat(2)}
                                         </Typography>
                                     ) : (
@@ -424,10 +418,8 @@ const TokenPrice = (): JSX.Element => {
                                     width={500}
                                     height={250}
                                     data={
-                                        coinHistoryByDates.data &&
-                                        coinHistoryByDates.data.coinHistoryByDates &&
-                                        coinHistoryByDates.data.coinHistoryByDates.prices
-                                            ? coinHistoryByDates.data.coinHistoryByDates.prices
+                                        coinHistoryByDates?.data?.coinHistoryByDates?.prices
+                                            ? coinHistoryByDates?.data?.coinHistoryByDates?.prices
                                             : 0
                                     }
                                     margin={{
@@ -476,7 +468,6 @@ const TokenPrice = (): JSX.Element => {
                                         yAxisId="left"
                                         type="monotone"
                                         dataKey="CELO"
-                                        // name="CELO Price (USD): "
                                         stroke="rgba(102, 227, 157, 1)"
                                         activeDot={{ stroke: 'rgba(102, 128, 113, 1)', r: 3 }}
                                         strokeWidth={2}
