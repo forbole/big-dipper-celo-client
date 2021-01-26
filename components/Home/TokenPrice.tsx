@@ -138,12 +138,12 @@ type TokenPriceTooltipProps = { active?: boolean; payload?: any };
 const TokenPriceTooltip = ({ active, payload }: TokenPriceTooltipProps) => {
     const classes = useStyles();
 
-    if (active) {
+    if (active && payload) {
         return (
             <Card className={classes.tooltip}>
                 <CardContent className={classes.tooltipCard}>
                     <Grid container>
-                        <Grid item xs={3}>
+                        <Grid item xs={2}>
                             <Typography
                                 color="textPrimary"
                                 variant="body2"
@@ -152,7 +152,7 @@ const TokenPriceTooltip = ({ active, payload }: TokenPriceTooltipProps) => {
                                 Time
                             </Typography>
                         </Grid>
-                        <Grid item xs={9}>
+                        <Grid item xs={10}>
                             <Typography color="textPrimary" variant="body2" align="right">
                                 {moment.utc(payload[0]?.payload?.Time).format('Do MMMM, h:mm:ss a')}{' '}
                                 UTC
@@ -322,8 +322,8 @@ const TokenPrice = (): JSX.Element => {
         pollInterval: 5000
     });
 
-    if (coinHistoryByDates.loading) return <ComponentLoader />;
-    if (coinHistoryByDates.error)
+    if (coinHistoryByDates.loading && chainData.loading) return <ComponentLoader />;
+    if (coinHistoryByDates.error || chainData.loading)
         return (
             <ErrorMessage
                 message={
@@ -418,80 +418,83 @@ const TokenPrice = (): JSX.Element => {
                                 </Grid>
                             </Grid>
                         </Hidden>
-
                         <ResponsiveContainer width="100%" height={smallScreen ? 200 : 292}>
-                            <LineChart
-                                width={500}
-                                height={250}
-                                data={
-                                    coinHistoryByDates.data &&
-                                    coinHistoryByDates.data.coinHistoryByDates &&
-                                    coinHistoryByDates.data.coinHistoryByDates.prices
-                                        ? coinHistoryByDates.data.coinHistoryByDates.prices
-                                        : 0
-                                }
-                                margin={{
-                                    top: 20,
-                                    right: 0,
-                                    left: 0,
-                                    bottom: 0
-                                }}>
-                                <CartesianGrid
-                                    strokeDasharray="3 3"
-                                    strokeWidth={1}
-                                    opacity={0.3}
-                                />
-                                <XAxis
-                                    dataKey="Time"
-                                    tick={{
-                                        stroke: 'rgba(119, 119, 119, 1)',
-                                        fontSize: 10,
-                                        fontWeight: 100
-                                    }}
-                                />
-                                <YAxis
-                                    yAxisId="left"
-                                    tickSize={0}
-                                    tickMargin={10}
-                                    tick={{
-                                        stroke: 'rgba(119, 119, 119, 1)',
-                                        fontSize: 10,
-                                        fontWeight: 100
-                                    }}
-                                />
-                                <YAxis
-                                    yAxisId="right"
-                                    orientation="right"
-                                    tickSize={0}
-                                    tickMargin={10}
-                                    tick={{
-                                        stroke: 'rgba(119, 119, 119, 1)',
-                                        fontSize: 10,
-                                        fontWeight: 100
-                                    }}
-                                />
-                                <Tooltip content={<TokenPriceTooltip />} />
-                                <Line
-                                    yAxisId="left"
-                                    type="monotone"
-                                    dataKey="CELO"
-                                    name="CELO Price (USD): "
-                                    stroke="rgba(102, 227, 157, 1)"
-                                    activeDot={{ stroke: 'rgba(102, 128, 113, 1)', r: 3 }}
-                                    strokeWidth={2}
-                                    dot={false}
-                                />
-                                <Line
-                                    yAxisId="right"
-                                    type="monotone"
-                                    dataKey="Market_Cap"
-                                    // name={`Market Cap (USD): `}
-                                    stroke="rgba(255, 177, 52, 1)"
-                                    activeDot={{ stroke: 'rgba(250, 123, 108, 1)', r: 0 }}
-                                    strokeWidth={2}
-                                    dot={false}
-                                />
-                            </LineChart>
+                            {coinHistoryByDates?.data?.coinHistoryByDates?.prices ? (
+                                <LineChart
+                                    width={500}
+                                    height={250}
+                                    data={
+                                        coinHistoryByDates.data &&
+                                        coinHistoryByDates.data.coinHistoryByDates &&
+                                        coinHistoryByDates.data.coinHistoryByDates.prices
+                                            ? coinHistoryByDates.data.coinHistoryByDates.prices
+                                            : 0
+                                    }
+                                    margin={{
+                                        top: 20,
+                                        right: 20,
+                                        left: 0,
+                                        bottom: 0
+                                    }}>
+                                    <CartesianGrid
+                                        strokeDasharray="3 3"
+                                        strokeWidth={1}
+                                        opacity={0.3}
+                                    />
+                                    <XAxis
+                                        dataKey="Time"
+                                        tick={{
+                                            stroke: 'rgba(119, 119, 119, 1)',
+                                            fontSize: 10,
+                                            fontWeight: 100
+                                        }}
+                                    />
+                                    <YAxis
+                                        yAxisId="left"
+                                        tickSize={0}
+                                        tickMargin={10}
+                                        tick={{
+                                            stroke: 'rgba(119, 119, 119, 1)',
+                                            fontSize: 10,
+                                            fontWeight: 100
+                                        }}
+                                    />
+                                    <YAxis
+                                        yAxisId="right"
+                                        orientation="right"
+                                        tickSize={0}
+                                        tickMargin={10}
+                                        tick={{
+                                            stroke: 'rgba(119, 119, 119, 1)',
+                                            fontSize: 10,
+                                            fontWeight: 100
+                                        }}
+                                        domain={[0, 5000000000]}
+                                    />
+                                    <Tooltip content={<TokenPriceTooltip />} />
+                                    <Line
+                                        yAxisId="left"
+                                        type="monotone"
+                                        dataKey="CELO"
+                                        // name="CELO Price (USD): "
+                                        stroke="rgba(102, 227, 157, 1)"
+                                        activeDot={{ stroke: 'rgba(102, 128, 113, 1)', r: 3 }}
+                                        strokeWidth={2}
+                                        dot={false}
+                                    />
+                                    <Line
+                                        yAxisId="right"
+                                        type="monotone"
+                                        dataKey="Market_Cap"
+                                        stroke="rgba(255, 177, 52, 1)"
+                                        activeDot={{ stroke: 'rgba(250, 123, 108, 1)', r: 0 }}
+                                        strokeWidth={2}
+                                        dot={false}
+                                    />
+                                </LineChart>
+                            ) : (
+                                <ComponentLoader />
+                            )}
                         </ResponsiveContainer>
                     </Paper>
                 </Grid>
