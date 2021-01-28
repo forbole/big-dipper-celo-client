@@ -58,6 +58,7 @@
 * Removed `NotAvailable` from validator group list when data for elected validators is not available
 * Fixed Token Price Chart Flickering 
 * [#186] Added error handling in GraphQL 
+* Updated environment variables values in components 
 
 
 
