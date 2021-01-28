@@ -156,9 +156,9 @@ const useStyles = makeStyles(() => {
 });
 
 const ValidatorVotesList = (): JSX.Element => {
-    const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
-    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+    const SETPAGE = parseInt(process.env.SET_PAGE as string);
+    const ROWMEDIUM = parseInt(process.env.ROW_MEDIUM as string);
+    const CELO_FRACTION = parseInt(process.env.CELO_FRACTION as string);
 
     const classes = useStyles();
 

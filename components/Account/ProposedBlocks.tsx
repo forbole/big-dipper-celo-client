@@ -93,13 +93,13 @@ const useStyles = makeStyles(() => {
 type ProposedBlocksProps = { address: string };
 
 const ProposedBlocks = ({ address }: ProposedBlocksProps): JSX.Element => {
-    const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
-    const ROWXXSMALL = process.env.ROWXXSMALL ? parseInt(process.env.ROWXXSMALL) : 5;
-    const ROWXSMALL = process.env.ROWXSMALL ? parseInt(process.env.ROWXSMALL) : 10;
-    const ROWSMALL = process.env.ROWSMALL ? parseInt(process.env.ROWSMALL) : 15;
-    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
-    const ROWLARGE = process.env.ROWLARGE ? parseInt(process.env.ROWLARGE) : 50;
-    const ROWXLARGE = process.env.ROWXLARGE ? parseInt(process.env.ROWXLARGE) : 100;
+    const SETPAGE = parseInt(process.env.SET_PAGE as string);
+    const ROWXXSMALL = parseInt(process.env.ROW_XXSMALL as string);
+    const ROWXSMALL = parseInt(process.env.ROW_XSMALL as string);
+    const ROWSMALL = parseInt(process.env.ROW_SMALL as string);
+    const ROWMEDIUM = parseInt(process.env.ROW_MEDIUM as string);
+    const ROWLARGE = parseInt(process.env.ROW_LARGE as string);
+    const ROWXLARGE = parseInt(process.env.ROW_XLARGE as string);
 
     const classes = useStyles();
     const [pageNumber, setPageNumber] = React.useState(SETPAGE);
