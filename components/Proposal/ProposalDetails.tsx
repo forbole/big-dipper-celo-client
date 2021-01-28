@@ -110,7 +110,8 @@ const ProposalDetails = ({
     upvoteList,
     totalNumberOfProposals
 }: ProposalDetailsProps): JSX.Element => {
-    const CELO_FRACTION = parseInt(process.env.CELO_FRACTION as string);
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+
     const prevProposal: number = proposalId - 1;
     const nextProposal: number = proposalId + 1;
     const [maxProposalNumber, setMaxProposalNumber] = React.useState(false);

@@ -98,7 +98,7 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
         variables: { address }
     });
 
-    const CELO_FRACTION = parseInt(process.env.CELO_FRACTION as string);
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     useEffect(() => {
         const localUser = localStorage.getItem('currentUserAddress');

@@ -140,7 +140,7 @@ const AddressCard = ({ address }: AddressCardProps): JSX.Element => {
                         <Grid container spacing={1}>
                             <Grid item xs={12} className={classes.item}>
                                 <QRCode
-                                    value={`${process.env.WEBSITE_URL}/account/${address}`}
+                                    value={`${process.env.uriAccount}/${address}`}
                                     className={classes.qrCode}
                                 />
                             </Grid>

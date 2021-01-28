@@ -109,7 +109,7 @@ type TxDetailsProps = { hash: string };
 
 const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
     const classes = useStyles();
-    const CELO_FRACTION = parseInt(process.env.CELO_FRACTION as string);
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const { loading, error, data } = useQuery(GET_TX_DETAILS, {
         variables: { hash }

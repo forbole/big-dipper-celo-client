@@ -75,7 +75,7 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
         variables: { address },
         pollInterval: 5000
     });
-    const CELO_FRACTION = parseInt(process.env.CELO_FRACTION as string);
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage message={error.message} />;

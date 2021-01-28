@@ -258,7 +258,7 @@ const TokenPrice = (): JSX.Element => {
         setDateTo(formatDateTo);
     };
 
-    const CELO_FRACTION = parseInt(process.env.CELO_FRACTION as string);
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const SelectDate = () => {
         return (

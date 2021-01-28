@@ -42,7 +42,7 @@ const PriceCard = (): JSX.Element => {
         pollInterval: 5000
     });
 
-    const CELO_FRACTION = parseInt(process.env.CELO_FRACTION as string);
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     if (chainData.error) return <ErrorMessage message={chainData.error.message} />;
 

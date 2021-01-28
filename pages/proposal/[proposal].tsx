@@ -11,7 +11,7 @@ import ProposalDetails from '../../components/Proposal/ProposalDetails';
 import ProposalVotingList from '../../components/Proposal/ProposalVotingList';
 import { GET_PROPOSAL, GET_PROPOSALS } from '../../components/Query/Proposal';
 
-const graphQlClient = new GraphQLClient(process.env.HTTPS_GRAPHQL as string);
+const graphQlClient = new GraphQLClient(`http://localhost:4000/graphql`);
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -97,7 +97,7 @@ export default function Proposal({
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const proposalNumber: number = parseInt(context?.query?.proposal as string);
     const page = 1;
-    const pageSize = parseInt(process.env.ROW_MEDIUM as string);
+    const pageSize = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
     const data = await graphQlClient.request(GET_PROPOSAL, {
         proposalNumber
     });
