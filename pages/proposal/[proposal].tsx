@@ -97,7 +97,7 @@ export default function Proposal({
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const proposalNumber: number = parseInt(context?.query?.proposal as string);
     const page = 1;
-    const pageSize = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
+    const pageSize = parseInt(process.env.ROW_MEDIUM as string);
     const data = await graphQlClient.request(GET_PROPOSAL, {
         proposalNumber
     });
