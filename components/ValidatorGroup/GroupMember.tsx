@@ -98,7 +98,7 @@ type GroupMemberProps = { validatorGroupAddress: string };
 const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element => {
     const classes = useStyles();
     const valGroupAddress = validatorGroupAddress;
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+    const CELO_FRACTION = parseInt(process.env.CELO_FRACTION as string);
 
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
         variables: { valGroupAddress }

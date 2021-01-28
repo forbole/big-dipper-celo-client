@@ -32,7 +32,7 @@ const getCeloLedgerTransport = () => {
     );
 };
 
-const URL = 'https://alfajores-forno.celo-testnet.org';
+const URL = process.env.CELO_MAINNET_ADDRESS as string;
 
 type LockCeloProps = { amount: string; from: string };
 type UnlockCeloProps = { amount: string; from: string };
@@ -50,7 +50,7 @@ class Ledger extends Component {
     private wallet: any = null;
     private web3: any = null;
     public isConnected = false;
-    private CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
+    private CELO_FRACTION = parseInt(process.env.CELO_FRACTION as string)
 
     checkLedgerErrors(errorMessage: string) {
         switch (errorMessage) {
