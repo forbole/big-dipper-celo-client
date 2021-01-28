@@ -22,7 +22,7 @@ const MATOMO_URL = process.env.MATOMO_URL as string;
 const MATOMO_SITE_ID = 3;
 const retryLink = new RetryLink();
 
-const authLink = new BatchHttpLink({ uri: 'https://server.celo.bigdipper.live/graphql' });
+const authLink = new BatchHttpLink({ uri: process.env.HTTPS_GRAPHQL as string });
 
 const wsLink = process.browser
     ? new WebSocketLink({
