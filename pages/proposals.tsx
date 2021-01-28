@@ -31,8 +31,8 @@ export default function Proposals(proposalTitle: string[]): JSX.Element {
 }
 
 Proposals.getInitialProps = async () => {
-    const page = parseInt(process.env.SET_PAGE as string) + 1;
-    const pageSize = parseInt(process.env.ROW_MEDIUM as string);
+    const page = process.env.SETPAGE ? parseInt(process.env.SETPAGE) + 1 : 1;
+    const pageSize = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
     const field = 'proposalId';
 
     const proposalTitle: {

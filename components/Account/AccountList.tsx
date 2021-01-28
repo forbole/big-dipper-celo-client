@@ -92,12 +92,12 @@ const useStyles = makeStyles(({ spacing }) => {
 const AccountList = (): JSX.Element => {
     const classes = useStyles();
 
-    const SETPAGE = parseInt(process.env.SET_PAGE as string);
-    const ROWSMALL = parseInt(process.env.ROW_SMALL as string);
-    const ROWMEDIUM = parseInt(process.env.ROW_MEDIUM as string);
-    const ROWLARGE = parseInt(process.env.ROW_LARGE as string);
-    const ROWXLARGE = parseInt(process.env.ROW_XLARGE as string);
-    const CELO_FRACTION = parseInt(process.env.CELO_FRACTION as string);
+    const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
+    const ROWSMALL = process.env.ROWSMALL ? parseInt(process.env.ROWSMALL) : 15;
+    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
+    const ROWLARGE = process.env.ROWLARGE ? parseInt(process.env.ROWLARGE) : 50;
+    const ROWXLARGE = process.env.ROWXLARGE ? parseInt(process.env.ROWXLARGE) : 100;
+    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const [pageNumber, setPageNumber] = React.useState(SETPAGE);
     const [pageSize, setPageSize] = React.useState(ROWMEDIUM);

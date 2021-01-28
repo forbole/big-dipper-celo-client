@@ -177,7 +177,7 @@ const CustomTooltip = (payload: any, active?: boolean) => {
 type UptimeProps = { address: string };
 
 const Uptime = ({ address }: UptimeProps): JSX.Element => {
-    const ROWMEDIUM = parseInt(process.env.ROW_MEDIUM as string);
+    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
 
     const classes = useStyles();
     const theme = useTheme();
