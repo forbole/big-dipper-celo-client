@@ -24,7 +24,20 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: |
         touch .env
-        echo ${{secrets.NEXTJS_ENV}} >> .env
+        echo CELO_MAINNET_ADDRESS=${{secrets.CELO_MAINNET_ADDRESS}} >> .env
+        echo HTTPS_GRAPHQL=${{secrets.HTTPS_GRAPHQL}} >> .env
+        echo MATOMO_URL=${{secrets.MATOMO_URL}} >> .env
+        echo WSS_GRAPHQL=${{secrets.WSS_GRAPHQL}} >> .env
+        echo CELO_FRACTION=${{secrets.CELO_FRACTION}} >> .env
+        echo WEBSITE_URL=${{secrets.WEBSITE_URL}} >> .env
+        echo SET_PAGE=${{secrets.SET_PAGE}} >> .env
+        echo PAGE_SIZE=${{secrets.PAGE_SIZE}} >> .env
+        echo ROW_XXSMALL=${{secrets.ROW_XXSMALL}} >> .env
+        echo ROW_XSMALL=${{secrets.ROW_XSMALL}} >> .env
+        echo ROW_SMALL=${{secrets.ROW_SMALL}} >> .env
+        echo ROW_MEDIUM=${{secrets.ROW_MEDIUM}} >> .env
+        echo ROW_LARGE=${{secrets.ROW_LARGE}} >> .env
+        echo ROW_XLARGE=${{secrets.ROW_XLARGE}} >> .env
         cat .env
     - run: npm install
     - run: npm run build-fragment 
