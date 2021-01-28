@@ -57,6 +57,8 @@
 * Updated YAxis value in Token Price Chart 
 * Removed `NotAvailable` from validator group list when data for elected validators is not available
 * Fixed Token Price Chart Flickering 
+* [#186] Added error handling in GraphQL 
+
 
 
 ## v0.1.3
