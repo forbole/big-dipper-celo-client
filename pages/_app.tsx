@@ -18,7 +18,7 @@ import Layout from '../components/Layout/Layout';
 import possibleTypes from '../possibleTypes.json';
 import DarkTheme from '../themes/celo-theme';
 
-const MATOMO_URL = 'https://analytics.bigdipper.live/';
+const MATOMO_URL = process.env.MATOMO_URL as string;
 const MATOMO_SITE_ID = 3;
 const retryLink = new RetryLink();
 
@@ -27,7 +27,7 @@ const authLink = new BatchHttpLink({ uri: 'https://server.celo.bigdipper.live/gr
 const wsLink = process.browser
     ? new WebSocketLink({
           // only instantiate in the browser
-          uri: `wss://server.celo.bigdipper.live/graphql`,
+          uri: process.env.WSS_GRAPHQL as string,
           options: {
               reconnect: true,
               lazy: true
@@ -36,7 +36,7 @@ const wsLink = process.browser
     : (null as any);
 
 const httplink = new HttpLink({
-    uri: 'https://server.celo.bigdipper.live/graphql',
+    uri: process.env.HTTPS_GRAPHQL as string,
     credentials: 'same-origin'
 });
 
