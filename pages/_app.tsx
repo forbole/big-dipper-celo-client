@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ApolloClient, ApolloLink, ApolloProvider } from '@apollo/client';
 import { HttpLink, split } from '@apollo/client';
 import { InMemoryCache } from '@apollo/client/cache';
@@ -24,12 +22,12 @@ const MATOMO_URL = 'https://analytics.bigdipper.live/';
 const MATOMO_SITE_ID = 3;
 const retryLink = new RetryLink();
 
-const authLink = new BatchHttpLink({ uri: 'http://localhost:4000/graphql' });
+const authLink = new BatchHttpLink({ uri: 'https://server.celo.bigdipper.live/graphql' });
 
 const wsLink = process.browser
     ? new WebSocketLink({
           // only instantiate in the browser
-          uri: `ws://localhost:4000/graphql`,
+          uri: `wss://server.celo.bigdipper.live/graphql`,
           options: {
               reconnect: true,
               lazy: true
@@ -38,7 +36,7 @@ const wsLink = process.browser
     : (null as any);
 
 const httplink = new HttpLink({
-    uri: 'http://localhost:4000/graphql',
+    uri: 'https://server.celo.bigdipper.live/graphql',
     credentials: 'same-origin'
 });
 
@@ -53,7 +51,9 @@ const errorLink = onError((error) => {
     if (graphQLErrors)
         graphQLErrors.map(({ message, locations, path }) =>
             console.log(
-                `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+                `[GraphQL error]: Message: ${message}, Location: ${JSON.stringify(
+                    locations
+                )}, Path: ${path}`
             )
         );
     if (networkError) console.log(`[Network error]: ${networkError}`, networkError);
