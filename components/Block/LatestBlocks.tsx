@@ -157,7 +157,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
     });
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage message={error.message} />;
+    if (error) return <ErrorMessage />;
 
     return (
         <>

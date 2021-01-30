@@ -135,7 +135,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
     });
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage message={error.message} />;
+    if (error) return <ErrorMessage />;
 
     if (data && data.transactions)
         return (

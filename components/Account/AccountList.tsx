@@ -120,7 +120,7 @@ const AccountList = (): JSX.Element => {
     const totalSupply = useQuery(GET_TOTAL_SUPPLY, {});
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage message={error.message} />;
+    if (error) return <ErrorMessage />;
 
     return (
         <Grid container>

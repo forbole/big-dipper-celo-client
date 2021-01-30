@@ -270,7 +270,7 @@ const ValidatorVotesList = (): JSX.Element => {
     };
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage message={error.message} />;
+    if (error) return <ErrorMessage />;
 
     return (
         <>

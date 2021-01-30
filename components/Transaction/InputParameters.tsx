@@ -47,7 +47,7 @@ const InputParameters = ({ hash }: InputParametersProps): JSX.Element => {
     });
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage message={error.message} />;
+    if (error) return <ErrorMessage />;
     if (data?.transaction?.decodedInput) {
         return (
             <Card className={classes.root}>

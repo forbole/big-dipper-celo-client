@@ -186,16 +186,7 @@ const Epoch = (): JSX.Element => {
             ? averageBlockTime.data.chain.averageBlockTime
             : 0;
     if (loading) return <ComponentLoader />;
-    if (error)
-        return (
-            <ErrorMessage
-                message={
-                    (blockProposer.error && blockProposer.error.message
-                        ? blockProposer.error.message
-                        : (null as any)) || (error && error.message ? error.message : (null as any))
-                }
-            />
-        );
+    if (error) return <ErrorMessage />;
 
     const chartData = [
         {

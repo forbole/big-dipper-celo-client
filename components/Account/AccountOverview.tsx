@@ -107,16 +107,7 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
     });
 
     if (accountQuery.loading || chainQuery.loading) return <ComponentLoader />;
-    if (accountQuery.error || chainQuery.error)
-        return (
-            <ErrorMessage
-                message={
-                    accountQuery.error
-                        ? accountQuery.error.message
-                        : ' ' || (chainQuery.error ? chainQuery.error.message : ' ')
-                }
-            />
-        );
+    if (accountQuery.error || chainQuery.error) return <ErrorMessage />;
     return (
         <span>
             <Card className={classes.root}>
