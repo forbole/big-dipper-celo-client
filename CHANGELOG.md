@@ -60,6 +60,7 @@
 * [#186] Added error handling in GraphQL 
 * [#190] Updated `valGroupAddress` value in Search Bar
 * [#192] Removed deprication warning (RFC2822/ISO format) in Token Price Chart 
+* [#194] Created generic error message when GraphQL Client returns error 
 
 
 
