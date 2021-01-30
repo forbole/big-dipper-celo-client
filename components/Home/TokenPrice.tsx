@@ -154,8 +154,7 @@ const TokenPriceTooltip = ({ active, payload }: TokenPriceTooltipProps) => {
                         </Grid>
                         <Grid item xs={10}>
                             <Typography color="textPrimary" variant="body2" align="right">
-                                {moment.utc(payload[0]?.payload?.Time).format('Do MMMM, h:mm:ss a')}{' '}
-                                UTC
+                                {payload[0]?.payload?.Time} UTC
                             </Typography>
                         </Grid>
 
