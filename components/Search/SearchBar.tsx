@@ -64,6 +64,7 @@ const SearchBar = (): JSX.Element => {
     const [open, setOpen] = React.useState(false);
     const [address, setAddresss] = React.useState('');
     const [name, setName] = React.useState('');
+    const [valGroupAddress, setValGroupAddress] = React.useState('');
 
     const theme = useTheme();
     const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -75,14 +76,15 @@ const SearchBar = (): JSX.Element => {
     useEffect(() => {
         setAddresss(txSearch);
         setName(txSearch);
+        setValGroupAddress(txSearch);
     });
 
     const isValidatorGroupAddress = useQuery(GET_VALIDATOR_GROUP, {
-        variables: { address }
+        variables: { valGroupAddress }
     });
 
     const isValidatorGroupName = useQuery(GET_VALIDATOR_GROUP, {
-        variables: { name }
+        variables: { valGroupAddress }
     });
 
     const isValidatorName = useQuery(GET_VALIDATOR, {
