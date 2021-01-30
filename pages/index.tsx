@@ -20,6 +20,7 @@ const useStyles = makeStyles(() =>
 
 export default function Index(): JSX.Element {
     const classes = useStyles();
+
     return (
         <Grid container className={classes.root} spacing={2}>
             <Grid item xs={12}>

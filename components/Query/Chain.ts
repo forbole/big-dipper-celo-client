@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const GET_CHAIN = gql`
-    {
+    query chain {
         chain {
             averageBlockTime
             txCount
@@ -13,6 +13,11 @@ export const GET_CHAIN = gql`
             }
             walletCount
             celoTotalSupply
+            epochNumber
+            epochSize
+            cUSDTotalSupply
+            firstBlockNumberForEpoch
+            lastBlockNumberForEpoch
         }
     }
 `;

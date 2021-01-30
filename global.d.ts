@@ -8,3 +8,4 @@ declare module '@ledgerhq/hw-transport-webusb';
 declare module 'lib/client-env';
 declare module '@ledgerhq/errors';
 declare module '@socialgouv/matomo-next';
+declare module 'react-jdenticon';
