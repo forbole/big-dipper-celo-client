@@ -121,7 +121,7 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
     });
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage message={error.message} />;
+    if (error) return <ErrorMessage />;
     if (data && data.transactionsByAccount && data.transactionsByAccount.totalCounts > 0) {
         return (
             <Accordion defaultExpanded>

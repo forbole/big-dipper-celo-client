@@ -137,7 +137,7 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
     };
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage message={error.message} />;
+    if (error) return <ErrorMessage />;
 
     return (
         <Grid container spacing={1} justify="center" className={classes.container}>

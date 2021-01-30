@@ -125,7 +125,7 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
     };
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage message={error.message} />;
+    if (error) return <ErrorMessage />;
     return (
         <Card className={classes.root}>
             <CardContent>

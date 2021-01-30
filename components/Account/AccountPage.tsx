@@ -52,7 +52,7 @@ const AccountPage = ({ address }: AccountPageProps): JSX.Element => {
     const isValidator = data && data.validator ? true : false;
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage message={error.message} />;
+    if (error) return <ErrorMessage />;
 
     return (
         <>

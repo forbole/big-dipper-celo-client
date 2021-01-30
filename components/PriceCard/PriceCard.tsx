@@ -44,7 +44,7 @@ const PriceCard = (): JSX.Element => {
 
     const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
-    if (chainData.error) return <ErrorMessage message={chainData.error.message} />;
+    if (chainData.error) return <ErrorMessage />;
 
     return (
         <Hidden smUp>

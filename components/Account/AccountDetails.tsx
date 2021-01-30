@@ -78,7 +78,7 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
     const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage message={error.message} />;
+    if (error) return <ErrorMessage />;
 
     if (data.validator && accountQuery.data)
         return (
