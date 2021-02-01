@@ -64,6 +64,8 @@
 * [#162] Fixed epoch dashboard error when websocket is not connected & added Avatar component to generate block proposer icon using `jdenticon` library
 * Updated README.md
 * Updated GraphQL Queries
+* Updated GraphQLClient endpoint
+
 ## v0.1.3
 
 * [#69] Hidden Search Bar and Network Selection
