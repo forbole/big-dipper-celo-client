@@ -93,6 +93,8 @@ const AccountList = (): JSX.Element => {
     const classes = useStyles();
 
     const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
+    const ROWXXSMALL = process.env.ROWXXSMALL ? parseInt(process.env.ROWXXSMALL) : 5;
+    const ROWXSMALL = process.env.ROWXSMALL ? parseInt(process.env.ROWXSMALL) : 10;
     const ROWSMALL = process.env.ROWSMALL ? parseInt(process.env.ROWSMALL) : 15;
     const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
     const ROWLARGE = process.env.ROWLARGE ? parseInt(process.env.ROWLARGE) : 50;
@@ -266,7 +268,14 @@ const AccountList = (): JSX.Element => {
                         </Paper>
                     </TableContainer>
                     <TablePagination
-                        rowsPerPageOptions={[ROWSMALL, ROWMEDIUM, ROWLARGE, ROWXLARGE]}
+                        rowsPerPageOptions={[
+                            ROWXXSMALL,
+                            ROWXSMALL,
+                            ROWSMALL,
+                            ROWMEDIUM,
+                            ROWLARGE,
+                            ROWXLARGE
+                        ]}
                         component="div"
                         count={data.accounts.totalCounts}
                         rowsPerPage={pageSize}
