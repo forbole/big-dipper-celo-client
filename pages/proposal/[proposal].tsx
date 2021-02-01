@@ -11,7 +11,7 @@ import ProposalDetails from '../../components/Proposal/ProposalDetails';
 import ProposalVotingList from '../../components/Proposal/ProposalVotingList';
 import { GET_PROPOSAL, GET_PROPOSALS } from '../../components/Query/Proposal';
 
-const graphQlClient = new GraphQLClient(`https://server.celo.bigdipper.live/graphql`);
+const graphQlClient = new GraphQLClient('https://server.celo.bigdipper.live/graphql');
 
 const useStyles = makeStyles(() =>
     createStyles({
