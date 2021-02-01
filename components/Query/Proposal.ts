@@ -42,7 +42,6 @@ export const GET_PROPOSAL = gql`
             address
             blockHash
             blockNumber
-            event
             input
             minDeposit
             removed
