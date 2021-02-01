@@ -5,9 +5,7 @@ export const GET_VALIDATOR_GROUPS = gql`
         validatorGroups(pageSize: $pageSize, page: $page) {
             validatorGroups {
                 address
-                affiliates
                 commission
-                lastSlashed
                 members {
                     address
                     name
@@ -26,10 +24,7 @@ export const GET_VALIDATOR_GROUPS = gql`
                         pending
                     }
                 }
-                membersUpdated
                 name
-                nextCommission
-                nextCommissionBlock
                 slashingMultiplier
                 lockedGoldAmount
                 votes
@@ -45,15 +40,11 @@ export const GET_VALIDATOR_GROUP = gql`
     query validatorGroup($valGroupAddress: String!) {
         validatorGroup(valGroupAddress: $valGroupAddress) {
             address
-            affiliates
             commission
-            lastSlashed
             members {
                 address
                 name
                 affiliation
-                blsPublicKey
-                ecdsaPublicKey
                 score
                 signerAccount {
                     address
@@ -74,13 +65,10 @@ export const GET_VALIDATOR_GROUP = gql`
                     pending
                 }
             }
-            membersUpdated
             name
             votes
             votesAvailable
             lockedGoldAmount
-            nextCommission
-            nextCommissionBlock
             slashingMultiplier
             electedValidators
             rewards

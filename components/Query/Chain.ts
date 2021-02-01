@@ -11,7 +11,6 @@ export const GET_CHAIN = gql`
                 usd
                 usdMarketCap
             }
-            walletCount
             celoTotalSupply
             epochNumber
             epochSize
