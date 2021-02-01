@@ -72,7 +72,6 @@ export const GET_PROPOSED_BLOCKS = gql`
     query proposedBlocks($address: String!, $pageSize: Int, $page: Int) {
         proposedBlocks(address: $address, pageSize: $pageSize, page: $page) {
             totalCounts
-            hasMore
             blocks {
                 number
                 transactions {

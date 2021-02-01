@@ -3,11 +3,9 @@ import { gql } from '@apollo/client';
 export const GET_PROPOSALS = gql`
     query Proposals($pageSize: Int, $page: Int) {
         proposals(pageSize: $pageSize, page: $page, sortBy: { field: "proposalId", order: DESC }) {
-            cursor
             pageSize
             page
             totalCounts
-            hasMore
             proposals {
                 proposalId
                 address
@@ -15,12 +13,9 @@ export const GET_PROPOSALS = gql`
                 blockNumber
                 event
                 input
-                logIndex
                 minDeposit
-                raw
                 removed
                 returnValues
-                signature
                 stage
                 status
                 totalVotesList
@@ -47,14 +42,10 @@ export const GET_PROPOSAL = gql`
             address
             blockHash
             blockNumber
-            event
             input
-            logIndex
             minDeposit
-            raw
             removed
             returnValues
-            signature
             stage
             status
             totalVotesList

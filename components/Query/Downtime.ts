@@ -6,7 +6,6 @@ export const DOWNTIME = gql`
             pageSize
             page
             totalCounts
-            hasMore
             blocks {
                 hash
                 number

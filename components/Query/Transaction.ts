@@ -41,7 +41,6 @@ export const GET_TX_DETAILS = gql`
             blockNumber
             decodedInput
             nonce
-            feeCurrency
             gatewayFeeRecipient
             gatewayFee
             hash

@@ -63,6 +63,7 @@
 * [#194] Created generic error message when GraphQL Client returns error 
 * [#162] Fixed epoch dashboard error when websocket is not connected & added Avatar component to generate block proposer icon using `jdenticon` library
 * Updated README.md
+* Updated GraphQL Queries
 ## v0.1.3
 
 * [#69] Hidden Search Bar and Network Selection
