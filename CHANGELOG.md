@@ -65,6 +65,7 @@
 * Updated README.md
 * Updated GraphQL Queries
 * Updated GraphQLClient endpoint
+* Added xxsmall and xsmall row size option in `AccountList`
 
 ## v0.1.3
 
