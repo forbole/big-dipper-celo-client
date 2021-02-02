@@ -66,6 +66,7 @@
 * Updated GraphQL Queries
 * Updated GraphQLClient endpoint
 * Added xxsmall and xsmall row size option in `AccountList`
+* Handled NAN values showing in some Validator Group elements 
 
 ## v0.1.3
 

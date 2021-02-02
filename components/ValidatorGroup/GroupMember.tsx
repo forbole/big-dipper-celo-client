@@ -20,6 +20,7 @@ const useStyles = makeStyles(() => {
     return {
         root: {
             width: '100%',
+            height: '100%',
             borderRadius: 5,
             wordWrap: 'break-word'
         },
@@ -114,13 +115,15 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
 
     const calculateValidatorRewards = (address: string) => {
         let rewardValue;
-        if (data && data.validatorGroup && data.validatorGroup.rewards) {
-            for (const d in data.validatorGroup.rewards) {
-                if (data.validatorGroup.rewards[d].validatorAddress === address) {
-                    rewardValue = data.validatorGroup.rewards[d].validatorReward;
-                }
+        if (data?.validatorGroup?.rewards) {
+            if (data?.validatorGroup?.rewards?.validatorAddress === address) {
+                rewardValue = data?.validatorGroup?.rewards?.validatorReward;
             }
-            return new BigNumber(rewardValue).dividedBy(CELO_FRACTION).toFormat(2);
+            if (rewardValue > 0) {
+                return new BigNumber(rewardValue).dividedBy(CELO_FRACTION).toFormat(2);
+            } else {
+                return 0;
+            }
         }
     };
 
@@ -133,8 +136,8 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                     <Grid item xs={12} className={classes.member}>
                         <Typography color="textPrimary" variant="subtitle1" noWrap>
                             Group member
-                            {data.validatorGroup && data.validatorGroup.members
-                                ? ` (${data.validatorGroup.members.length})`
+                            {data?.validatorGroup?.members
+                                ? ` (${data?.validatorGroup?.members.length})`
                                 : null}{' '}
                             <FiberManualRecordIcon className={classes.dotIcon} />
                         </Typography>
@@ -148,8 +151,8 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                     <Grid item xs={12}>
                         <Divider className={classes.divider} />
                     </Grid>
-                    {data && data.validatorGroup && data.validatorGroup.members
-                        ? data.validatorGroup.members.map((row: any, index: number) => {
+                    {data?.validatorGroup?.members
+                        ? data?.validatorGroup?.members.map((row: any, index: number) => {
                               return (
                                   <Grid
                                       container
@@ -162,15 +165,16 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                               className={classes.memberNumber}>
                                               #{index + 1}
                                           </Typography>
-                                          {row.name ? (
+                                          {row?.name || row?.address ? (
                                               <NavLink
                                                   href={`/account/${row.address}`}
                                                   name={
                                                       <Typography variant="body1">
-                                                          {row.name}{' '}
+                                                          {row?.name || row?.address}
                                                           {findElectedValidators(
-                                                              row.address,
-                                                              data.validatorGroup.electedValidators
+                                                              row?.address,
+                                                              data?.validatorGroup
+                                                                  ?.electedValidators
                                                           )}
                                                       </Typography>
                                                   }
@@ -181,15 +185,15 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                       </Grid>
 
                                       <Grid item xs={4}>
-                                          {data.validatorGroup.membersAccount ? (
+                                          {data?.validatorGroup?.membersAccount ? (
                                               <Typography
                                                   variant="body1"
                                                   align="right"
                                                   color="textPrimary">
                                                   {new BigNumber(
-                                                      data.validatorGroup.membersAccount[
+                                                      data?.validatorGroup?.membersAccount[
                                                           index
-                                                      ].lockedGold.total
+                                                      ]?.lockedGold?.total
                                                   )
                                                       .dividedBy(CELO_FRACTION)
                                                       .toFormat(2)}{' '}
@@ -227,9 +231,7 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                           </Typography>
                                       </Grid>
                                       <Grid item xs={6}>
-                                          {data &&
-                                          data.validatorGroup &&
-                                          data.validatorGroup.rewards ? (
+                                          {data?.validatorGroup?.rewards ? (
                                               <Typography variant="body2" align="right">
                                                   <img
                                                       src="/images/reward.svg"
