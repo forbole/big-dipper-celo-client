@@ -86,35 +86,42 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
         variables: { valGroupAddress }
     });
 
-    const validatorGroupMembers =
-        data && data.validatorGroup && data.validatorGroup.members
-            ? data.validatorGroup.members
-            : [];
+    const validatorGroupMembers = data?.validatorGroup?.members
+        ? data?.validatorGroup?.members
+        : [];
 
     const calculateTotalUptime = () => {
         let addScore = 0;
         for (const c in validatorGroupMembers) {
             addScore = addScore + validatorGroupMembers[c].score;
         }
-        const totalScore = (addScore / validatorGroupMembers.length) * 100;
-        return numbro(totalScore).format('0.00');
+        if (addScore && validatorGroupMembers.length > 0) {
+            const totalScore = (addScore / validatorGroupMembers.length) * 100;
+            return numbro(totalScore).format('0.00');
+        } else {
+            return '0.00';
+        }
     };
 
     const calculateAttestation = () => {
         let addTotalRequested = 0;
         let addTotalFulfilled = 0;
 
-        if (data && data.validatorGroup) {
-            for (const d in data.validatorGroup.members) {
+        if (data?.validatorGroup) {
+            for (const d in data?.validatorGroup?.members) {
                 addTotalRequested =
                     addTotalRequested +
-                    parseFloat(data.validatorGroup.members[d].attestationRequested);
+                    parseFloat(data?.validatorGroup?.members[d]?.attestationRequested);
                 addTotalFulfilled =
                     addTotalFulfilled +
-                    parseFloat(data.validatorGroup.members[d].attestationCompleted);
+                    parseFloat(data?.validatorGroup?.members[d]?.attestationCompleted);
             }
         }
-        return numbro((addTotalFulfilled / addTotalRequested) * 100).format('0.00');
+        if (addTotalFulfilled && addTotalRequested > 0) {
+            return numbro((addTotalFulfilled / addTotalRequested) * 100).format('0.00');
+        } else {
+            return '0.00';
+        }
     };
 
     if (loading) return <ComponentLoader />;
@@ -143,12 +150,12 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                         <Typography variant="body2">Group Name</Typography>
                     </Grid>
                     <Grid item xs={9} className={classes.item}>
-                        {data.validatorGroup && data.validatorGroup.name ? (
+                        {data?.validatorGroup?.name ? (
                             <Typography
                                 variant="body2"
                                 align="right"
                                 className={classes.validatorGroupName}>
-                                {data.validatorGroup.name}
+                                {data?.validatorGroup?.name}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
@@ -162,9 +169,9 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                         <Typography variant="body2">Locked CELO</Typography>
                     </Grid>
                     <Grid item xs={9} className={classes.item}>
-                        {data && data.validatorGroup && data.validatorGroup.lockedGoldAmount ? (
+                        {data?.validatorGroup?.lockedGoldAmount ? (
                             <Typography variant="body2" align="right">
-                                {new BigNumber(data.validatorGroup.lockedGoldAmount)
+                                {new BigNumber(data?.validatorGroup?.lockedGoldAmount)
                                     .dividedBy(CELO_FRACTION)
                                     .toFormat(2)}{' '}
                                 CELO
@@ -182,9 +189,9 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                         <Typography variant="body2">Group Share</Typography>
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
-                        {data && data.validatorGroup && data.validatorGroup.commission ? (
+                        {data?.validatorGroup?.commission ? (
                             <Typography variant="body2" align="right">
-                                {data.validatorGroup.commission * 100} %
+                                {data?.validatorGroup?.commission * 100} %
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" />
