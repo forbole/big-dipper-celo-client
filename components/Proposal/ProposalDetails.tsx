@@ -117,6 +117,7 @@ const ProposalDetails = ({
     const [maxProposalNumber, setMaxProposalNumber] = React.useState(false);
     const [minProposalNumber, setMinProposalNumber] = React.useState(false);
     const [currentUser, setCurrentUser] = React.useState('');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [voted, setVoted] = React.useState(false);
 
     const classes = useStyles();
