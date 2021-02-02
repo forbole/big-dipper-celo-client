@@ -62,7 +62,6 @@ const SearchBar = (): JSX.Element => {
     const classes = useStyles();
     const [txSearch, setTxSearch] = React.useState('');
     const [open, setOpen] = React.useState(false);
-    const [address, setAddresss] = React.useState('');
     const [name, setName] = React.useState('');
     const [valGroupAddress, setValGroupAddress] = React.useState('');
 
@@ -74,7 +73,6 @@ const SearchBar = (): JSX.Element => {
     };
 
     useEffect(() => {
-        setAddresss(txSearch);
         setName(txSearch);
         setValGroupAddress(txSearch);
     });

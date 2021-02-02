@@ -183,7 +183,9 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
     const theme = useTheme();
     const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const valGroupAddress = address;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [page, setPage] = React.useState(1);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [pageSize, setPageSize] = React.useState(ROWMEDIUM);
     const membersArray: { [index: number]: string } = [];
     let signedBlockCounter = 0;

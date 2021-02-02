@@ -15,7 +15,6 @@ import moment from 'moment';
 import React from 'react';
 
 import { GET_PROPOSAL } from '../Query/Proposal';
-import { GET_TX_DETAILS } from '../Query/Transaction';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import NavLink from '../Utils/NavLink';
@@ -94,12 +93,10 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
 
     const [pageNumber, setPageNumber] = React.useState(SETPAGE);
     const [pageSize, setPageSize] = React.useState(ROWXSMALL);
-    const [hash, setHash] = React.useState('');
 
     const classes = useStyles();
     const page = pageNumber + 1;
     const proposalNumber = proposal;
-    const hashValue = '';
     let totalDeposited = 0;
 
     const handleChangePage = (event: unknown, newPage: number) => {
@@ -115,21 +112,13 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
         variables: { proposalNumber }
     });
 
-    const txDetails = useQuery(GET_TX_DETAILS, {
-        variables: { hash }
-    });
-
     const calculateTotalDeposited = () => {
-        if (data && data.proposal && data.proposal.upvoteList) {
-            for (const c in data.proposal.upvoteList) {
-                if (
-                    data.proposal.upvoteList &&
-                    data.proposal.upvoteList[c].returnValues &&
-                    data.proposal.upvoteList[c].returnValues.upvotes
-                ) {
+        if (data?.proposal?.upvoteList) {
+            for (const c in data?.proposal?.upvoteList) {
+                if (data?.proposal?.upvoteList[c]?.returnValues?.upvotes) {
                     totalDeposited =
                         totalDeposited +
-                        data.proposal.upvoteList[c].returnValues.upvotes / CELO_FRACTION;
+                        data?.proposal?.upvoteList[c]?.returnValues?.upvotes / CELO_FRACTION;
                 }
             }
         }
@@ -170,8 +159,8 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {data && data.proposal && data.proposal.upvoteList
-                                ? Object.keys(data.proposal.upvoteList)
+                            {data?.proposal?.upvoteList
+                                ? Object.keys(data?.proposal?.upvoteList)
                                       .slice(page * pageSize, page * pageSize + pageSize)
                                       .map(function (row: any, index: number) {
                                           return (
@@ -192,21 +181,19 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                                                       padding="checkbox"
                                                       align="left"
                                                       className={classes.tableCell}>
-                                                      {data.proposal &&
-                                                      data.proposal.upvoteList[row] &&
-                                                      data.proposal.upvoteList[row].returnValues &&
-                                                      data.proposal.upvoteList[row].returnValues
-                                                          .account ? (
+                                                      {data?.proposal?.upvoteList[row]?.returnValues
+                                                          ?.account ? (
                                                           <NavLink
-                                                              href={`/account/${data.proposal.upvoteList[row].returnValues.account}`}
+                                                              href={`/account/${data?.proposal?.upvoteList[row]?.returnValues?.account}`}
                                                               name={
                                                                   <Typography
                                                                       variant="body2"
                                                                       noWrap>
                                                                       {
-                                                                          data.proposal.upvoteList[
-                                                                              row
-                                                                          ].returnValues.account
+                                                                          data?.proposal
+                                                                              ?.upvoteList[row]
+                                                                              ?.returnValues
+                                                                              ?.account
                                                                       }
                                                                   </Typography>
                                                               }
@@ -219,19 +206,16 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                                                       align="right"
                                                       padding="checkbox"
                                                       className={classes.tableCell}>
-                                                      {data.proposal &&
-                                                      data.proposal.upvoteList[row] &&
-                                                      data.proposal.upvoteList[row].returnValues &&
-                                                      data.proposal.upvoteList[row].returnValues
-                                                          .upvotes ? (
+                                                      {data?.proposal?.upvoteList[row]?.returnValues
+                                                          ?.upvotes ? (
                                                           <Typography
                                                               variant="body2"
                                                               noWrap
                                                               color="textPrimary">
                                                               {new BigNumber(
-                                                                  data.proposal.upvoteList[
+                                                                  data?.proposal?.upvoteList[
                                                                       row
-                                                                  ].returnValues.upvotes
+                                                                  ]?.returnValues?.upvotes
                                                               )
                                                                   .dividedBy(CELO_FRACTION)
                                                                   .toFormat(2)}{' '}
@@ -244,17 +228,17 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                                                       align="right"
                                                       padding="checkbox"
                                                       className={classes.tableCell}>
-                                                      {txDetails.data &&
-                                                      txDetails.data.transaction &&
-                                                      txDetails.data.transaction.timestamp ? (
+                                                      {data?.proposal?.upvoteList[row]
+                                                          ?.timestamp ? (
                                                           <Typography
                                                               variant="body2"
                                                               noWrap
                                                               color="textPrimary">
                                                               {moment
                                                                   .unix(
-                                                                      txDetails.data.transaction
-                                                                          .timestamp
+                                                                      data?.proposal?.upvoteList[
+                                                                          row
+                                                                      ]?.timestamp
                                                                   )
                                                                   .format(
                                                                       'Do MMMM YYYY, h:mm:ss a'
@@ -264,29 +248,6 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                                                           <NotAvailable variant="body2" />
                                                       )}
                                                   </TableCell>
-                                                  {/* <TableCell
-                        align="left"
-                        padding="checkbox"
-                        className={classes.tableCell}
-                      >
-                        <Typography variant="body2" noWrap>
-                          {row.gasUsed}
-                        </Typography>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        padding="checkbox"
-                        className={classes.tableCell}
-                      >
-                        <Typography variant="body2" noWrap>
-                          {row.gasLimit}
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="left" padding="checkbox">
-                        <Typography variant="body2" noWrap>
-                          {row.time}
-                        </Typography>
-                      </TableCell> */}
                                               </TableRow>
                                           );
                                       })
@@ -305,8 +266,8 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                     ]}
                     component="div"
                     count={
-                        data && data.proposal && data.proposal.upvoteList
-                            ? Object.keys(data.proposal.upvoteList).length
+                        data?.proposal?.upvoteList
+                            ? Object.keys(data?.proposal?.upvoteList).length
                             : 0
                     }
                     rowsPerPage={pageSize}

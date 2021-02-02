@@ -87,7 +87,7 @@ export const client = new ApolloClient({
     }
 });
 
-export default function App(props: any) {
+export default function App(props: { Component: any; pageProps: any }): JSX.Element {
     const { Component, pageProps } = props;
 
     useEffect(() => {

@@ -12,7 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import BigNumber from 'bignumber.js';
-import moment from 'moment';
 import numbro from 'numbro';
 import React from 'react';
 import {

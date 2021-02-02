@@ -45,13 +45,14 @@ Proposals.getInitialProps = async () => {
     }[] = [];
     let getProposalTitle;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { data, error, loading } = await client.query({
         query: GET_PROPOSALS,
         variables: { pageSize, page, field }
     });
 
     for (let c = 0; c < data?.proposals?.proposals?.length; c++) {
-        const response = await fetch(
+        await fetch(
             data?.proposals?.proposals[c]?.input?.params[4]?.value
                 .replace('github.com', 'raw.githubusercontent.com')
                 .replace('blob/', '')

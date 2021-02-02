@@ -4,8 +4,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import React, { FunctionComponent, useEffect } from 'react';
-import { createGlobalState } from 'react-hooks-global-state';
+import React, { useEffect } from 'react';
 
 const useStyles = makeStyles({
     root: {
