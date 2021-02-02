@@ -157,14 +157,16 @@ const useStyles = makeStyles(() => {
 
 const ValidatorVotesList = (): JSX.Element => {
     const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
-    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
+    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 150;
     const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const classes = useStyles();
 
     const [open, setOpen] = React.useState('');
     const [copy, setCopy] = React.useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [pageNumber, setPageNumber] = React.useState(SETPAGE);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [pageSize, setPageSize] = React.useState(ROWMEDIUM);
     const groupUptimeScore: { [index: string]: number } = {};
 
@@ -199,31 +201,29 @@ const ValidatorVotesList = (): JSX.Element => {
         let addScore = 0;
         let totalMembers = 0;
 
-        for (const index in data.validatorGroups.validatorGroups) {
-            if (groupAddress === data.validatorGroups.validatorGroups[index].address) {
-                for (const o in data.validatorGroups.validatorGroups[index].members) {
-                    totalMembers = data.validatorGroups.validatorGroups[index].members.length;
-                    addScore += data.validatorGroups.validatorGroups[index].members[o].score;
+        for (const index in data?.validatorGroups?.validatorGroups) {
+            if (groupAddress === data?.validatorGroups?.validatorGroups[index]?.address) {
+                for (const o in data?.validatorGroups?.validatorGroups[index]?.members) {
+                    totalMembers = data?.validatorGroups?.validatorGroups[index]?.members.length;
+                    addScore += data?.validatorGroups?.validatorGroups[index]?.members[o]?.score;
                 }
             }
         }
         const totalScore = (addScore / totalMembers) * 100;
         groupUptimeScore[groupAddress] = addScore / totalMembers;
-        return totalScore ? numbro(totalScore).format('0.00') : 0;
+        return totalScore ? numbro(totalScore).format('0.00') : '0.00';
     };
 
     const calculateGroupRewards = (groupAddress: string) => {
-        if (data && data.validatorGroups && data.validatorGroups.validatorGroups) {
+        if (data?.validatorGroups?.validatorGroups) {
             let total = 0;
 
-            for (const d in data.validatorGroups.validatorGroups) {
-                if (groupAddress === data.validatorGroups.validatorGroups[d].address) {
-                    for (const c in data.validatorGroups.validatorGroups[d].rewards) {
-                        total =
-                            total +
-                            parseFloat(
-                                data.validatorGroups.validatorGroups[d].rewards[c].validatorReward
-                            );
+            for (const d in data?.validatorGroups?.validatorGroups) {
+                if (groupAddress === data?.validatorGroups?.validatorGroups[d]?.address) {
+                    if (data?.validatorGroups?.validatorGroups[d]?.rewards?.validatorReward) {
+                        total += parseFloat(
+                            data?.validatorGroups?.validatorGroups[d]?.rewards?.validatorReward
+                        );
                     }
                 }
             }
@@ -235,36 +235,49 @@ const ValidatorVotesList = (): JSX.Element => {
         let addTotalRequested = 0;
         let addTotalFulfilled = 0;
 
-        if (data && data.validatorGroups && data.validatorGroups.validatorGroups) {
-            for (const index in data.validatorGroups.validatorGroups) {
-                if (groupAddress === data.validatorGroups.validatorGroups[index].address) {
-                    for (const d in data.validatorGroups.validatorGroups[index].members) {
+        if (data?.validatorGroups?.validatorGroups) {
+            for (const index in data?.validatorGroups?.validatorGroups) {
+                if (groupAddress === data?.validatorGroups?.validatorGroups[index]?.address) {
+                    for (const d in data?.validatorGroups?.validatorGroups[index]?.members) {
                         addTotalRequested =
                             addTotalRequested +
                             parseFloat(
-                                data.validatorGroups.validatorGroups[index].members[d]
-                                    .attestationRequested
+                                data?.validatorGroups?.validatorGroups[index]?.members[d]
+                                    ?.attestationRequested
                             );
                         addTotalFulfilled =
                             addTotalFulfilled +
                             parseFloat(
-                                data.validatorGroups.validatorGroups[index].members[d]
-                                    .attestationCompleted
+                                data?.validatorGroups?.validatorGroups[index]?.members[d]
+                                    ?.attestationCompleted
                             );
                     }
                 }
             }
         }
-        return numbro((addTotalFulfilled / addTotalRequested) * 100).format('0.00');
+        if (addTotalFulfilled && addTotalRequested > 0) {
+            return new BigNumber(addTotalFulfilled).dividedBy(addTotalRequested).toFormat(2);
+        } else {
+            return '0.00';
+        }
     };
 
     const calculateRewardsPercentage = (groupAddress: string) => {
-        for (const index in data.validatorGroups.validatorGroups) {
-            if (groupAddress === data.validatorGroups.validatorGroups[index].address) {
-                return new BigNumber(
-                    (100 - data.validatorGroups.validatorGroups[index].commission * 100) *
-                        groupUptimeScore[groupAddress]
-                ).toFormat(2);
+        for (const index in data?.validatorGroups?.validatorGroups) {
+            if (groupAddress === data?.validatorGroups?.validatorGroups[index]?.address) {
+                if (
+                    data?.validatorGroups?.validatorGroups[index]?.commission &&
+                    groupUptimeScore[groupAddress]
+                ) {
+                    return new BigNumber(
+                        (100 -
+                            parseFloat(data?.validatorGroups?.validatorGroups[index]?.commission) *
+                                100) *
+                            groupUptimeScore[groupAddress]
+                    ).toFormat(2);
+                } else {
+                    return '0.00';
+                }
             }
         }
     };
@@ -303,8 +316,8 @@ const ValidatorVotesList = (): JSX.Element => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {data.validatorGroups && data.validatorGroups.validatorGroups
-                                    ? data.validatorGroups.validatorGroups.map(
+                                {data?.validatorGroups?.validatorGroups
+                                    ? data?.validatorGroups?.validatorGroups.map(
                                           (row: any, index: number) => {
                                               return (
                                                   <>
