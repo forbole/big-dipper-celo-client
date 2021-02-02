@@ -13,7 +13,6 @@ import React from 'react';
 import { GET_CHAIN } from '../Query/Chain';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
-import NotAvailable from '../Utils/NotAvailable';
 
 const useStyles = makeStyles({
     root: {
@@ -96,6 +95,7 @@ const ChartData = (): JSX.Element => {
     const largeScreen = useMediaQuery(theme.breakpoints.up('lg'));
     const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_CHAIN, {
         pollInterval: 5000
     });

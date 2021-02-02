@@ -116,7 +116,7 @@ const Login = (): JSX.Element => {
                     }
 
                     try {
-                        const getCeloAppVersion = await Ledger.getCeloAppVersion();
+                        await Ledger.getCeloAppVersion();
                     } catch (e) {
                         setErrorMessage(Ledger.checkLedgerErrors(e.message));
                     }

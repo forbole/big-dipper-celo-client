@@ -47,6 +47,7 @@ type LockGoldConfirmProps = { amount: string };
 const LockGoldConfirm = ({ amount }: LockGoldConfirmProps): JSX.Element => {
     const classes = useStyles();
     const [currentUser, setCurrentUser] = React.useState('');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [lockAmount, setLockAmount] = React.useState(amount);
 
     useEffect(() => {

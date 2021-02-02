@@ -164,7 +164,9 @@ const ValidatorVotesList = (): JSX.Element => {
 
     const [open, setOpen] = React.useState('');
     const [copy, setCopy] = React.useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [pageNumber, setPageNumber] = React.useState(SETPAGE);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [pageSize, setPageSize] = React.useState(ROWMEDIUM);
     const groupUptimeScore: { [index: string]: number } = {};
 

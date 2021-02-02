@@ -174,7 +174,9 @@ export const LedgerFormControl = ({ action }: LedgerFormControlProps): JSX.Eleme
 
     const [dialogError, setDialogError] = useGlobalState('dialogError');
     const [dialogErrorMessage, setDialogErrorMessage] = useGlobalState('dialogErrorMessage');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ledgerLoading, setLedgerLoading] = React.useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [userAmount, setUserAmount] = useGlobalState('userAmount');
 
     const checkForInputErrors = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -238,19 +240,23 @@ const LedgerDialog = ({
     const [open, setOpen] = React.useState(false);
     const [connected, setConnected] = React.useState(false);
     const [currentUser, setCurrentUser] = React.useState('');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [amount, setAmount] = useGlobalState('userAmount');
     const [isLoading, setIsLoading] = React.useState(false);
-    const [ledgerError, setLedgerError] = React.useState(false);
     const [ledgerErrorMessage, setLedgerErrorMessage] = React.useState('');
     const [ledgerLoading, setLedgerLoading] = React.useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [dialogError, setDialogError] = useGlobalState('dialogError');
     const [showCircuralProgress, setShowCircuralProgress] = React.useState(false);
-    // const [dialogErrorMessage, setDialogErrorMessage] = useGlobalState('dialogErrorMessage');
     const [tabNumber, setTabNumber] = React.useState(0);
     const [showControlButtons, setShowControlButtons] = React.useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [getProposalNumber, setProposalNumber] = React.useState(proposalNumber || 0);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [getProposer, setProposer] = React.useState(proposer || '');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [getProposalTitle, setProposalTitle] = React.useState(proposalTitle || '');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [getProposalDescription, setProposalDescription] = React.useState(
         proposalDescription || ''
     );
@@ -441,7 +447,6 @@ const LedgerDialog = ({
                 }
             }
         } catch (e) {
-            setLedgerError(true);
             setLedgerLoading(true);
             setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
         }
@@ -464,7 +469,6 @@ const LedgerDialog = ({
                 }
             }
         } catch (e) {
-            setLedgerError(true);
             setLedgerLoading(true);
             setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
         }
@@ -487,7 +491,6 @@ const LedgerDialog = ({
                 }
             }
         } catch (e) {
-            setLedgerError(true);
             setLedgerLoading(true);
             setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
         }
@@ -506,7 +509,6 @@ const LedgerDialog = ({
                 setLedgerLoading(false);
             }
         } catch (e) {
-            setLedgerError(true);
             setLedgerLoading(true);
             setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
         }
@@ -530,7 +532,6 @@ const LedgerDialog = ({
                 }
             }
         } catch (e) {
-            setLedgerError(true);
             setLedgerLoading(true);
             setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
         }
@@ -555,7 +556,6 @@ const LedgerDialog = ({
                 }
             }
         } catch (e) {
-            setLedgerError(true);
             setLedgerLoading(true);
             setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
         }
@@ -581,7 +581,6 @@ const LedgerDialog = ({
                 }
             }
         } catch (e) {
-            setLedgerError(true);
             setLedgerLoading(true);
             setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
         }
@@ -651,7 +650,6 @@ const LedgerDialog = ({
 
     const handleClick = async () => {
         setOpen(true);
-        setLedgerError(false);
         setLedgerErrorMessage('');
 
         try {
@@ -663,7 +661,6 @@ const LedgerDialog = ({
                 try {
                     await Ledger.connect();
                 } catch (e) {
-                    setLedgerError(true);
                     setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
                     setLedgerLoading(true);
                     setIsLoading(false);
@@ -684,20 +681,16 @@ const LedgerDialog = ({
                     setIsLoading(false);
                     setLedgerLoading(false);
                 } catch (e) {
-                    setLedgerError(true);
                     setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
                     setIsLoading(false);
                 }
                 try {
-                    const getCeloAppVersion = await Ledger.getCeloAppVersion();
-                    // setDialogError(true);
+                    await Ledger.getCeloAppVersion();
                 } catch (e) {
-                    setLedgerError(true);
                     setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
                 }
             }
         } catch (e) {
-            setLedgerError(true);
             setLedgerLoading(true);
             setIsLoading(false);
             setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));

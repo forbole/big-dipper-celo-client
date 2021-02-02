@@ -12,7 +12,6 @@ import React from 'react';
 import { GET_CHAIN } from '../Query/Chain';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
-import NotAvailable from '../Utils/NotAvailable';
 
 const useStyles = makeStyles(() => {
     return {
@@ -56,12 +55,9 @@ const PriceCard = (): JSX.Element => {
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                        {chainData.data &&
-                        chainData.data.chain &&
-                        chainData.data.chain.tokenPrice &&
-                        chainData.data.chain.tokenPrice.usd >= 0 ? (
+                        {chainData.data?.chain?.tokenPrice?.usd >= 0 ? (
                             <Typography align="right" variant="body1">
-                                $ {numbro(chainData.data.chain.tokenPrice.usd).format('0.00')}
+                                $ {numbro(chainData.data?.chain?.tokenPrice?.usd).format('0.00')}
                             </Typography>
                         ) : (
                             <ComponentLoader size="small" />
@@ -73,16 +69,13 @@ const PriceCard = (): JSX.Element => {
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                        {chainData.data &&
-                        chainData.data.chain &&
-                        chainData.data.chain.celoTotalSupply &&
-                        chainData.data.chain.tokenPrice &&
-                        chainData.data.chain.tokenPrice.usd >= 0 ? (
+                        {chainData?.data?.chain?.celoTotalSupply &&
+                        chainData?.data?.chain?.tokenPrice?.usd >= 0 ? (
                             <Typography align="right" variant="body1">
                                 ${' '}
-                                {new BigNumber(chainData.data.chain.tokenPrice.usd)
+                                {new BigNumber(chainData?.data?.chain?.tokenPrice?.usd)
                                     .dividedBy(CELO_FRACTION)
-                                    .times(chainData.data.chain.celoTotalSupply)
+                                    .times(chainData?.data?.chain?.celoTotalSupply)
                                     .toFormat(2)}{' '}
                             </Typography>
                         ) : (
