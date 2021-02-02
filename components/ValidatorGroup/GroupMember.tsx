@@ -20,6 +20,7 @@ const useStyles = makeStyles(() => {
     return {
         root: {
             width: '100%',
+            height: '100%',
             borderRadius: 5,
             wordWrap: 'break-word'
         },
