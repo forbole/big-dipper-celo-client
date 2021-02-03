@@ -95,7 +95,7 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
     const [pageSize, setPageSize] = React.useState(ROWXSMALL);
 
     const classes = useStyles();
-    const page = pageNumber + 1;
+    const page = pageNumber;
     const proposalNumber = proposal;
     let totalDeposited = 0;
 
