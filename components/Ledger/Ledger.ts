@@ -32,7 +32,7 @@ const getCeloLedgerTransport = () => {
     );
 };
 
-const URL = 'https://alfajores-forno.celo-testnet.org';
+const URL = 'https://forno.celo.org';
 
 type LockCeloProps = { amount: string; from: string };
 type UnlockCeloProps = { amount: string; from: string };
