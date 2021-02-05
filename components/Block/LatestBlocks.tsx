@@ -13,7 +13,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import moment from 'moment';
-import numbro from 'numbro';
 import React, { useEffect } from 'react';
 
 import PriceCard from '../PriceCard/PriceCard';
@@ -217,155 +216,153 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                         )}
                                     </TableHead>
                                     <TableBody>
-                                        {data && data.blocks && data.blocks.blocks
-                                            ? data.blocks.blocks.map((row: any, index: number) => {
-                                                  return (
-                                                      <TableRow
-                                                          key={index}
-                                                          style={
-                                                              index % 2
-                                                                  ? {
-                                                                        background:
-                                                                            'rgba(248, 248, 248, 1)',
-                                                                        border: 'none'
-                                                                    }
-                                                                  : {
-                                                                        background:
-                                                                            'rgb(255,255,255)'
-                                                                    }
-                                                          }>
-                                                          <TableCell
-                                                              component="th"
-                                                              scope="row"
-                                                              padding="checkbox"
-                                                              align="left"
-                                                              className={classes.tableCell}>
-                                                              <NavLink
-                                                                  href={`/block/${row.number}`}
-                                                                  name={
-                                                                      <Typography
-                                                                          variant="body2"
-                                                                          noWrap>
-                                                                          {row.number}
-                                                                      </Typography>
-                                                                  }
-                                                              />
-                                                          </TableCell>
-
-                                                          <TableCell
-                                                              align="left"
-                                                              padding="checkbox"
-                                                              className={classes.tableCell}>
-                                                              {row.miner && row.miner.signer ? (
+                                        {data?.blocks?.blocks
+                                            ? data?.blocks?.blocks.map(
+                                                  (row: any, index: number) => {
+                                                      return (
+                                                          <TableRow
+                                                              key={index}
+                                                              style={
+                                                                  index % 2
+                                                                      ? {
+                                                                            background:
+                                                                                'rgba(248, 248, 248, 1)',
+                                                                            border: 'none'
+                                                                        }
+                                                                      : {
+                                                                            background:
+                                                                                'rgb(255,255,255)'
+                                                                        }
+                                                              }>
+                                                              <TableCell
+                                                                  component="th"
+                                                                  scope="row"
+                                                                  padding="checkbox"
+                                                                  align="left"
+                                                                  className={classes.tableCell}>
                                                                   <NavLink
-                                                                      href={`/account/${row.miner.signer}`}
+                                                                      href={`/block/${row.number}`}
                                                                       name={
                                                                           <Typography
                                                                               variant="body2"
-                                                                              display="inline"
-                                                                              className={
-                                                                                  classes.textContent
-                                                                              }
                                                                               noWrap>
-                                                                              <span>
-                                                                                  {(row.miner &&
-                                                                                      row.miner
-                                                                                          .name) ||
-                                                                                  (row.miner &&
-                                                                                      row.miner
-                                                                                          .signer) ? (
-                                                                                      <MiddleEllipsis
-                                                                                          text={
-                                                                                              row
-                                                                                                  .miner
-                                                                                                  .name ||
-                                                                                              row
-                                                                                                  .miner
-                                                                                                  .signer
-                                                                                          }
-                                                                                      />
-                                                                                  ) : null}
-                                                                              </span>
+                                                                              {row.number}
                                                                           </Typography>
                                                                       }
                                                                   />
-                                                              ) : null}
-                                                          </TableCell>
+                                                              </TableCell>
 
-                                                          <TableCell
-                                                              align="left"
-                                                              padding="checkbox"
-                                                              className={classes.tableCell}>
-                                                              <Typography
-                                                                  variant="body2"
-                                                                  noWrap
-                                                                  color="textPrimary">
-                                                                  {row.transactions &&
-                                                                  row.transactions
-                                                                      ? row.transactions.length
-                                                                      : 0}
-                                                              </Typography>
-                                                          </TableCell>
-                                                          {pagination ? (
                                                               <TableCell
                                                                   align="left"
                                                                   padding="checkbox"
                                                                   className={classes.tableCell}>
-                                                                  <div
-                                                                      className={
-                                                                          classes.truncareText
-                                                                      }>
-                                                                      <Typography
-                                                                          variant="body2"
-                                                                          noWrap
-                                                                          color="textPrimary">
-                                                                          {numbro(
-                                                                              row.gasUsed /
-                                                                                  1000000000
-                                                                          ).format('0.0000')}{' '}
-                                                                          gwei
-                                                                      </Typography>
-                                                                  </div>
+                                                                  {row.miner && row.miner.signer ? (
+                                                                      <NavLink
+                                                                          href={`/account/${row.miner.signer}`}
+                                                                          name={
+                                                                              <Typography
+                                                                                  variant="body2"
+                                                                                  display="inline"
+                                                                                  className={
+                                                                                      classes.textContent
+                                                                                  }
+                                                                                  noWrap>
+                                                                                  <span>
+                                                                                      {(row.miner &&
+                                                                                          row.miner
+                                                                                              .name) ||
+                                                                                      (row.miner &&
+                                                                                          row.miner
+                                                                                              .signer) ? (
+                                                                                          <MiddleEllipsis
+                                                                                              text={
+                                                                                                  row
+                                                                                                      .miner
+                                                                                                      .name ||
+                                                                                                  row
+                                                                                                      .miner
+                                                                                                      .signer
+                                                                                              }
+                                                                                          />
+                                                                                      ) : null}
+                                                                                  </span>
+                                                                              </Typography>
+                                                                          }
+                                                                      />
+                                                                  ) : null}
                                                               </TableCell>
-                                                          ) : null}
-                                                          {pagination ? (
+
                                                               <TableCell
                                                                   align="left"
                                                                   padding="checkbox"
                                                                   className={classes.tableCell}>
-                                                                  <div
-                                                                      className={
-                                                                          classes.truncareText
-                                                                      }>
-                                                                      <Typography
-                                                                          variant="body2"
-                                                                          noWrap
-                                                                          color="textPrimary">
-                                                                          {row.gasLimit
-                                                                              ? row.gasLimit
-                                                                              : 'Not available'}
-                                                                      </Typography>
-                                                                  </div>
+                                                                  <Typography
+                                                                      variant="body2"
+                                                                      noWrap
+                                                                      color="textPrimary">
+                                                                      {row.transactions &&
+                                                                      row.transactions
+                                                                          ? row.transactions.length
+                                                                          : 0}
+                                                                  </Typography>
                                                               </TableCell>
-                                                          ) : null}
-                                                          <TableCell
-                                                              align="right"
-                                                              padding="checkbox"
-                                                              className={classes.tableCell}>
-                                                              <Typography
-                                                                  variant="body2"
-                                                                  noWrap
-                                                                  color="textPrimary">
-                                                                  {moment
-                                                                      .unix(row.timestamp)
-                                                                      .format(
-                                                                          'Do MMMM YYYY, h:mm:ss a'
-                                                                      )}
-                                                              </Typography>
-                                                          </TableCell>
-                                                      </TableRow>
-                                                  );
-                                              })
+                                                              {pagination ? (
+                                                                  <TableCell
+                                                                      align="left"
+                                                                      padding="checkbox"
+                                                                      className={classes.tableCell}>
+                                                                      <div
+                                                                          className={
+                                                                              classes.truncareText
+                                                                          }>
+                                                                          <Typography
+                                                                              variant="body2"
+                                                                              noWrap
+                                                                              color="textPrimary">
+                                                                              {row.gasUsed}
+                                                                          </Typography>
+                                                                      </div>
+                                                                  </TableCell>
+                                                              ) : null}
+                                                              {pagination ? (
+                                                                  <TableCell
+                                                                      align="left"
+                                                                      padding="checkbox"
+                                                                      className={classes.tableCell}>
+                                                                      <div
+                                                                          className={
+                                                                              classes.truncareText
+                                                                          }>
+                                                                          <Typography
+                                                                              variant="body2"
+                                                                              noWrap
+                                                                              color="textPrimary">
+                                                                              {row.gasLimit
+                                                                                  ? row.gasLimit
+                                                                                  : 'Not available'}
+                                                                          </Typography>
+                                                                      </div>
+                                                                  </TableCell>
+                                                              ) : null}
+                                                              <TableCell
+                                                                  align="right"
+                                                                  padding="checkbox"
+                                                                  className={classes.tableCell}>
+                                                                  <Typography
+                                                                      variant="body2"
+                                                                      noWrap
+                                                                      color="textPrimary">
+                                                                      {moment
+                                                                          .unix(row.timestamp)
+                                                                          .format(
+                                                                              'Do MMMM YYYY, h:mm:ss a'
+                                                                          )}
+                                                                  </Typography>
+                                                              </TableCell>
+                                                          </TableRow>
+                                                      );
+                                                  }
+                                              )
                                             : null}
                                     </TableBody>
                                 </Table>
@@ -383,11 +380,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                     ROWXLARGE
                                 ]}
                                 component="div"
-                                count={
-                                    data && data.blocks && data.blocks.totalCounts
-                                        ? data.blocks.totalCounts
-                                        : 0
-                                }
+                                count={data?.blocks?.totalCounts ?? 0}
                                 rowsPerPage={pageSize}
                                 page={pageNumber}
                                 onChangePage={handleChangePage}

@@ -4,12 +4,12 @@ import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import BigNumber from 'bignumber.js';
 import cx from 'clsx';
 import numbro from 'numbro';
 import React from 'react';
 
 import { GET_CHAIN } from '../Query/Chain';
+import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 
@@ -41,9 +41,7 @@ const PriceCard = (): JSX.Element => {
         pollInterval: 5000
     });
 
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
-
-    if (chainData.error) return <ErrorMessage />;
+    if (chainData?.error) return <ErrorMessage />;
 
     return (
         <Hidden smUp>
@@ -55,9 +53,9 @@ const PriceCard = (): JSX.Element => {
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                        {chainData.data?.chain?.tokenPrice?.usd >= 0 ? (
+                        {chainData?.data?.chain?.tokenPrice?.usd >= 0 ? (
                             <Typography align="right" variant="body1">
-                                $ {numbro(chainData.data?.chain?.tokenPrice?.usd).format('0.00')}
+                                $ {numbro(chainData?.data?.chain?.tokenPrice?.usd).format('0.00')}
                             </Typography>
                         ) : (
                             <ComponentLoader size="small" />
@@ -73,10 +71,12 @@ const PriceCard = (): JSX.Element => {
                         chainData?.data?.chain?.tokenPrice?.usd >= 0 ? (
                             <Typography align="right" variant="body1">
                                 ${' '}
-                                {new BigNumber(chainData?.data?.chain?.tokenPrice?.usd)
-                                    .dividedBy(CELO_FRACTION)
-                                    .times(chainData?.data?.chain?.celoTotalSupply)
-                                    .toFormat(2)}{' '}
+                                {Coin(
+                                    chainData?.data?.chain?.tokenPrice?.usd,
+                                    '',
+                                    2,
+                                    chainData?.data?.chain?.celoTotalSupply
+                                )}
                             </Typography>
                         ) : (
                             <ComponentLoader size="small" />

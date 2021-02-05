@@ -15,11 +15,11 @@ import moment from 'moment';
 import React from 'react';
 
 import { GET_PROPOSAL } from '../Query/Proposal';
+import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
-
 interface Column {
     id: 'depositor' | 'amount' | 'time';
     label: string;
@@ -117,12 +117,11 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
             for (const c in data?.proposal?.upvoteList) {
                 if (data?.proposal?.upvoteList[c]?.returnValues?.upvotes) {
                     totalDeposited =
-                        totalDeposited +
-                        data?.proposal?.upvoteList[c]?.returnValues?.upvotes / CELO_FRACTION;
+                        totalDeposited + data?.proposal?.upvoteList[c]?.returnValues?.upvotes;
                 }
             }
         }
-        return new BigNumber(totalDeposited).toFormat(2);
+        return Coin(totalDeposited, 'CELO', 2);
     };
 
     if (loading) return <ComponentLoader />;
@@ -136,7 +135,7 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
                         color="textPrimary"
                         variant="subtitle1"
                         className={classes.headerLabel}>
-                        Deposit ({calculateTotalDeposited()} CELO)
+                        Deposit ({calculateTotalDeposited()})
                     </Typography>
 
                     <Table size="medium">

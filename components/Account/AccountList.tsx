@@ -10,12 +10,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import BigNumber from 'bignumber.js';
 import numbro from 'numbro';
 import React from 'react';
 
 import { GET_ACCOUNTS } from '../Query/Account';
 import { GET_TOTAL_SUPPLY } from '../Query/Chain';
+import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import MiddleEllipsis from '../Utils/MiddleEllipsis';
@@ -99,7 +99,6 @@ const AccountList = (): JSX.Element => {
     const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
     const ROWLARGE = process.env.ROWLARGE ? parseInt(process.env.ROWLARGE) : 50;
     const ROWXLARGE = process.env.ROWXLARGE ? parseInt(process.env.ROWXLARGE) : 100;
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const [pageNumber, setPageNumber] = React.useState(SETPAGE);
     const [pageSize, setPageSize] = React.useState(ROWMEDIUM);
@@ -153,7 +152,7 @@ const AccountList = (): JSX.Element => {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {data.accounts.accounts.map((row: any, index: number) => {
+                                    {data?.accounts?.accounts?.map((row: any, index: number) => {
                                         return (
                                             <TableRow
                                                 key={index}
@@ -206,10 +205,7 @@ const AccountList = (): JSX.Element => {
                                                             variant="body2"
                                                             color="textSecondary"
                                                             noWrap>
-                                                            {new BigNumber(row.balance)
-                                                                .dividedBy(CELO_FRACTION)
-                                                                .toFormat(2)}{' '}
-                                                            CELO
+                                                            {Coin(row.balance, 'CELO', 2)}
                                                         </Typography>
                                                     ) : (
                                                         <NotAvailable variant="body2" />
@@ -219,19 +215,16 @@ const AccountList = (): JSX.Element => {
                                                     align="right"
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
-                                                    {row.balance &&
-                                                    totalSupply &&
-                                                    totalSupply.data &&
-                                                    totalSupply.data.chain &&
-                                                    totalSupply.data.chain.cUSDTotalSupply ? (
+                                                    {row?.balance &&
+                                                    totalSupply?.data?.chain?.cUSDTotalSupply ? (
                                                         <Typography
                                                             variant="body2"
                                                             color="textSecondary"
                                                             noWrap>
                                                             {numbro(
-                                                                (row.balance /
-                                                                    totalSupply.data.chain
-                                                                        .cUSDTotalSupply) *
+                                                                (row?.balance /
+                                                                    totalSupply?.data?.chain
+                                                                        ?.cUSDTotalSupply) *
                                                                     100
                                                             ).format('0.00')}{' '}
                                                             {'%'}
@@ -277,7 +270,7 @@ const AccountList = (): JSX.Element => {
                             ROWXLARGE
                         ]}
                         component="div"
-                        count={data.accounts.totalCounts}
+                        count={data?.accounts?.totalCounts}
                         rowsPerPage={pageSize}
                         page={pageNumber}
                         onChangePage={handleChangePage}

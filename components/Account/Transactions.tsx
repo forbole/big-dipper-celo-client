@@ -14,13 +14,13 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import numbro from 'numbro';
 import React from 'react';
 
 import { GET_ACCOUNT_TX } from '../Query/Transaction';
 import Chips from '../Utils/Chips';
+import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import MiddleEllipsis from '../Utils/MiddleEllipsis';
@@ -98,7 +98,6 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
     const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
     const ROWLARGE = process.env.ROWLARGE ? parseInt(process.env.ROWLARGE) : 50;
     const ROWXLARGE = process.env.ROWXLARGE ? parseInt(process.env.ROWXLARGE) : 100;
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const [pageNumber, setPageNumber] = React.useState(SETPAGE);
     const [pageSize, setPageSize] = React.useState(ROWXXSMALL);
@@ -122,7 +121,7 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
 
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage />;
-    if (data && data.transactionsByAccount && data.transactionsByAccount.totalCounts > 0) {
+    if (data?.transactionsByAccount?.totalCounts > 0) {
         return (
             <Accordion defaultExpanded>
                 <AccordionSummary
@@ -132,7 +131,7 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                     <Typography variant="body1">
                         {' '}
                         Transactions (
-                        {numbro(data.transactionsByAccount.totalCounts).format('0,000')})
+                        {numbro(data?.transactionsByAccount?.totalCounts).format('0,000')})
                     </Typography>
                 </AccordionSummary>
                 <AccordionDetails className={classes.root}>
@@ -142,7 +141,7 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                 <Table stickyHeader>
                                     <TableHead></TableHead>
                                     <TableBody>
-                                        {data.transactionsByAccount.transactions.map(
+                                        {data?.transactionsByAccount?.transactions.map(
                                             (row: any, index: number) => {
                                                 return (
                                                     <TableRow key={index}>
@@ -291,12 +290,11 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                             className={
                                                                                 classes.alignRight
                                                                             }>
-                                                                            {new BigNumber(row.gas)
-                                                                                .dividedBy(
-                                                                                    CELO_FRACTION
-                                                                                )
-                                                                                .toFormat(2)}{' '}
-                                                                            cUSD
+                                                                            {Coin(
+                                                                                row.gas,
+                                                                                'cUSD',
+                                                                                2
+                                                                            )}
                                                                         </Typography>
                                                                     ) : (
                                                                         <NotAvailable
@@ -352,7 +350,7 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                         ROWXLARGE
                                     ]}
                                     component="div"
-                                    count={data.transactionsByAccount.totalCounts}
+                                    count={data?.transactionsByAccount?.totalCounts}
                                     rowsPerPage={pageSize}
                                     page={pageNumber}
                                     onChangePage={handleChangePage}

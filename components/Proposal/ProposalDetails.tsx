@@ -7,12 +7,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import React, { useEffect } from 'react';
 import MarkdownView from 'react-showdown';
 
 import LedgerDialog from '../Ledger/LedgerDialog';
+import Coin from '../Utils/Coin';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
 
@@ -110,8 +110,6 @@ const ProposalDetails = ({
     upvoteList,
     totalNumberOfProposals
 }: ProposalDetailsProps): JSX.Element => {
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
-
     const prevProposal: number = proposalId - 1;
     const nextProposal: number = proposalId + 1;
     const [maxProposalNumber, setMaxProposalNumber] = React.useState(false);
@@ -269,7 +267,7 @@ const ProposalDetails = ({
                     <Grid item xs={8} lg={6}>
                         {deposit ? (
                             <Typography variant="body2" className={classes.alignRight}>
-                                {new BigNumber(deposit).dividedBy(CELO_FRACTION).toFormat(2)}{' '}
+                                {Coin(deposit, 'CELO', 2)}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />

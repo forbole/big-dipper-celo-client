@@ -12,6 +12,7 @@ import React from 'react';
 
 import { GET_ACCOUNT_DETAILS } from '../Query/Account';
 import { GET_VALIDATOR } from '../Query/Validator';
+import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import NavLink from '../Utils/NavLink';
@@ -75,12 +76,11 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
         variables: { address },
         pollInterval: 5000
     });
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage />;
 
-    if (data.validator && accountQuery.data)
+    if (data?.validator && accountQuery?.data)
         return (
             <Accordion defaultExpanded>
                 <AccordionSummary
@@ -94,7 +94,7 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                         <Divider variant="middle" className={classes.divider} />
 
                         <Grid container spacing={1} justify="center" className={classes.item}>
-                            {data.validator && data.validator.name ? (
+                            {data?.validator?.name ? (
                                 <>
                                     <Grid item xs={4} className={classes.item}>
                                         <Typography variant="body2" className={classes.alignLeft}>
@@ -103,7 +103,7 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                     </Grid>
                                     <Grid item xs={8} className={classes.item}>
                                         <Typography variant="body2" className={classes.alignRight}>
-                                            {data.validator.name}
+                                            {data?.validator?.name}
                                         </Typography>
                                     </Grid>
 
@@ -119,10 +119,7 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                 </Typography>
                             </Grid>
                             <Grid item xs={8} className={classes.item}>
-                                {accountQuery.data &&
-                                accountQuery.data.account &&
-                                accountQuery.data.account.accountSummary &&
-                                accountQuery.data.account.accountSummary.metadataURL ? (
+                                {accountQuery?.data?.account?.accountSummary?.metadataURL ? (
                                     <NavLink
                                         href="/"
                                         name={
@@ -130,8 +127,8 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                                 variant="body2"
                                                 className={classes.alignRight}>
                                                 {
-                                                    accountQuery.data.account.accountSummary
-                                                        .metadataURL
+                                                    accountQuery?.data?.account?.accountSummary
+                                                        ?.metadataURL
                                                 }
                                             </Typography>
                                         }
@@ -166,9 +163,9 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                 </Typography>
                             </Grid>
                             <Grid item xs={6} className={classes.item}>
-                                {data && data.validator && data.validator.attestationRequested ? (
+                                {data?.validator?.attestationRequested ? (
                                     <Typography variant="body2" className={classes.alignRight}>
-                                        {data.validator.attestationRequested}
+                                        {data?.validator?.attestationRequested}
                                     </Typography>
                                 ) : (
                                     <NotAvailable variant="body2" className={classes.alignRight} />
@@ -185,9 +182,9 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                 </Typography>
                             </Grid>
                             <Grid item xs={6} className={classes.item}>
-                                {data && data.validator && data.validator.attestationFulfilled ? (
+                                {data?.validator?.attestationFulfilled ? (
                                     <Typography variant="body2" className={classes.alignRight}>
-                                        {data.validator.attestationFulfilled}
+                                        {data?.validator?.attestationFulfilled}
                                     </Typography>
                                 ) : (
                                     <NotAvailable variant="body2" className={classes.alignRight} />
@@ -204,19 +201,15 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                 </Typography>
                             </Grid>
 
-                            {accountQuery.data &&
-                            accountQuery.data.account &&
-                            accountQuery.data.account.lockedGold &&
-                            accountQuery.data.account.lockedGold.total ? (
+                            {accountQuery?.data?.account?.lockedGold?.total ? (
                                 <>
                                     <Grid item xs={8} className={classes.item}>
                                         <Typography variant="body2" className={classes.alignRight}>
-                                            {new BigNumber(
-                                                accountQuery.data.account.lockedGold.total
-                                            )
-                                                .dividedBy(CELO_FRACTION)
-                                                .toFormat(2)}{' '}
-                                            CELO
+                                            {Coin(
+                                                accountQuery?.data?.account?.lockedGold?.total,
+                                                'CELO',
+                                                2
+                                            )}
                                         </Typography>
                                     </Grid>
                                 </>
@@ -226,19 +219,15 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                 </Grid>
                             )}
 
-                            {accountQuery.data &&
-                            accountQuery.data.account &&
-                            accountQuery.data.account.lockedGold &&
-                            accountQuery.data.account.lockedGold.nonvoting ? (
+                            {accountQuery?.data?.account?.lockedGold?.nonvoting ? (
                                 <>
                                     <Grid item xs={12} className={classes.item}>
                                         <Typography variant="body2" className={classes.alignRight}>
-                                            {new BigNumber(
-                                                accountQuery.data.account.lockedGold.nonvoting
-                                            )
-                                                .dividedBy(CELO_FRACTION)
-                                                .toFormat(2)}{' '}
-                                            non-voting CELO
+                                            {Coin(
+                                                accountQuery?.data?.account?.lockedGold?.nonvoting,
+                                                'non-voting CELO',
+                                                2
+                                            )}
                                         </Typography>
                                     </Grid>
                                 </>
@@ -263,9 +252,9 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                 </Typography>
                             </Grid>
                             <Grid item xs={9} className={classes.item}>
-                                {data.validator && data.validator.score ? (
+                                {data?.validator?.score ? (
                                     <Typography variant="body2" className={classes.alignRight}>
-                                        {new BigNumber(data.validator.score * 100).toFormat(2)} %
+                                        {new BigNumber(data?.validator?.score * 100).toFormat(2)} %
                                     </Typography>
                                 ) : (
                                     <NotAvailable variant="body2" className={classes.alignRight} />
@@ -283,14 +272,14 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                             </Grid>
 
                             <Grid item xs={8} className={classes.item}>
-                                {data.validator && data.validator.affiliation ? (
+                                {data?.validator?.affiliation ? (
                                     <NavLink
-                                        href={`/validatorGroup/${data.validator.affiliation}`}
+                                        href={`/validatorGroup/${data?.validator?.affiliation}`}
                                         name={
                                             <Typography
                                                 variant="body2"
                                                 className={classes.alignRight}>
-                                                {data.validator.affiliation}
+                                                {data?.validator?.affiliation}
                                             </Typography>
                                         }
                                     />
@@ -310,14 +299,14 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                             </Grid>
 
                             <Grid item xs={8} className={classes.item}>
-                                {data.validator && data.validator.signer ? (
+                                {data?.validator?.signer ? (
                                     <NavLink
-                                        href={`/validatorGroup/${data.validator.signer}`}
+                                        href={`/validatorGroup/${data?.validator?.signer}`}
                                         name={
                                             <Typography
                                                 variant="body2"
                                                 className={classes.alignRight}>
-                                                {data.validator.signer}
+                                                {data?.validator?.signer}
                                             </Typography>
                                         }
                                     />
@@ -334,21 +323,18 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                 <Typography variant="body2">All Signers</Typography>
                             </Grid>
 
-                            {accountQuery.data &&
-                            accountQuery.data.account &&
-                            accountQuery.data.account.accountSummary &&
-                            accountQuery.data.account.accountSummary.authorizedSigners ? (
+                            {accountQuery?.data?.account?.accountSummary?.authorizedSigners ? (
                                 <>
                                     <Grid item xs={8} className={classes.item}>
                                         <NavLink
-                                            href={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.vote}`}
+                                            href={`/account/${accountQuery?.data?.account?.accountSummary?.authorizedSigners?.vote}`}
                                             name={
                                                 <Typography
                                                     variant="body2"
                                                     className={classes.alignRight}>
                                                     {
-                                                        accountQuery.data.account.accountSummary
-                                                            .authorizedSigners.vote
+                                                        accountQuery?.data?.account?.accountSummary
+                                                            ?.authorizedSigners?.vote
                                                     }
                                                 </Typography>
                                             }
@@ -356,14 +342,14 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                     </Grid>
                                     <Grid item xs={12} className={classes.item}>
                                         <NavLink
-                                            href={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.validator}`}
+                                            href={`/account/${accountQuery?.data?.account?.accountSummary?.authorizedSigners?.validator}`}
                                             name={
                                                 <Typography
                                                     variant="body2"
                                                     className={classes.alignRight}>
                                                     {
-                                                        accountQuery.data.account.accountSummary
-                                                            .authorizedSigners.validator
+                                                        accountQuery?.data?.account?.accountSummary
+                                                            ?.authorizedSigners?.validator
                                                     }
                                                 </Typography>
                                             }
@@ -371,14 +357,14 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
                                     </Grid>
                                     <Grid item xs={12} className={classes.item}>
                                         <NavLink
-                                            href={`/account/${accountQuery.data.account.accountSummary.authorizedSigners.attestation}`}
+                                            href={`/account/${accountQuery?.data?.account?.accountSummary?.authorizedSigners?.attestation}`}
                                             name={
                                                 <Typography
                                                     variant="body2"
                                                     className={classes.alignRight}>
                                                     {
-                                                        accountQuery.data.account.accountSummary
-                                                            .authorizedSigners.attestation
+                                                        accountQuery?.data?.account?.accountSummary
+                                                            ?.authorizedSigners?.attestation
                                                     }
                                                 </Typography>
                                             }

@@ -11,6 +11,7 @@ import numbro from 'numbro';
 import React from 'react';
 
 import { GET_VALIDATOR_GROUP } from '../Query/ValidatorGroup';
+import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import NavLink from '../Utils/NavLink';
@@ -99,7 +100,6 @@ type GroupMemberProps = { validatorGroupAddress: string };
 const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element => {
     const classes = useStyles();
     const valGroupAddress = validatorGroupAddress;
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
         variables: { valGroupAddress }
@@ -120,7 +120,7 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                 rewardValue = data?.validatorGroup?.rewards?.validatorReward;
             }
             if (rewardValue > 0) {
-                return new BigNumber(rewardValue).dividedBy(CELO_FRACTION).toFormat(2);
+                return Coin(rewardValue, 'cUSD', 2);
             } else {
                 return 0;
             }
@@ -190,14 +190,12 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                                   variant="body1"
                                                   align="right"
                                                   color="textPrimary">
-                                                  {new BigNumber(
-                                                      data?.validatorGroup?.membersAccount[
-                                                          index
-                                                      ]?.lockedGold?.total
-                                                  )
-                                                      .dividedBy(CELO_FRACTION)
-                                                      .toFormat(2)}{' '}
-                                                  CELO
+                                                  {Coin(
+                                                      data?.validatorGroup?.membersAccount[index]
+                                                          ?.lockedGold?.total,
+                                                      'CELO',
+                                                      2
+                                                  )}
                                               </Typography>
                                           ) : (
                                               <NotAvailable
@@ -238,10 +236,10 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                                       alt="Rewards"
                                                       style={{ marginRight: '0.2rem' }}
                                                   />
-                                                  {calculateValidatorRewards(row.address)} cUSD
+                                                  {calculateValidatorRewards(row.address)}
                                               </Typography>
                                           ) : (
-                                              '0.00 cUSD'
+                                              Coin(0, 'cUSD', 2)
                                           )}
                                       </Grid>
                                   </Grid>
