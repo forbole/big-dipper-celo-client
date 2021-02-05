@@ -13,7 +13,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import moment from 'moment';
-import numbro from 'numbro';
 import React, { useEffect } from 'react';
 
 import PriceCard from '../PriceCard/PriceCard';

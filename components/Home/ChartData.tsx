@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import BigNumber from 'bignumber.js';
 import cx from 'clsx';
 import numbro from 'numbro';
 import React from 'react';
