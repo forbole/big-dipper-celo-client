@@ -11,12 +11,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import { BigNumber } from 'bignumber.js';
 import moment from 'moment';
 import React, { useEffect } from 'react';
 
 import { GET_TX } from '../Query/Transaction';
 import Chips from '../Utils/Chips';
+import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import MiddleEllipsis from '../Utils/MiddleEllipsis';
@@ -107,7 +107,6 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
     const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
     const ROWLARGE = process.env.ROWLARGE ? parseInt(process.env.ROWLARGE) : 50;
     const ROWXLARGE = process.env.ROWXLARGE ? parseInt(process.env.ROWXLARGE) : 100;
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const classes = useStyles();
     const [pageNumber, setPageNumber] = React.useState(SETPAGE);
@@ -137,7 +136,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage />;
 
-    if (data && data.transactions)
+    if (data?.transactions)
         return (
             <>
                 <Grid container className={classes.container}>
@@ -154,12 +153,12 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                     />
                                 ) : null}
                             </Typography>
-                            {data && data.transactions ? (
+                            {data?.transactions ? (
                                 <TableContainer className={classes.container}>
                                     <Table stickyHeader>
                                         <TableHead></TableHead>
                                         <TableBody>
-                                            {data.transactions.transactions.map(
+                                            {data?.transactions?.transactions.map(
                                                 (row: any, index: number) => {
                                                     return (
                                                         <TableRow
@@ -301,14 +300,11 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                                 className={
                                                                                     classes.alignRight
                                                                                 }>
-                                                                                {new BigNumber(
-                                                                                    row.value
-                                                                                )
-                                                                                    .dividedBy(
-                                                                                        CELO_FRACTION
-                                                                                    )
-                                                                                    .toFormat(2) +
-                                                                                    ' cUSD'}
+                                                                                {Coin(
+                                                                                    row.value,
+                                                                                    'cUSD',
+                                                                                    2
+                                                                                )}
                                                                             </Typography>
                                                                         ) : (
                                                                             <NotAvailable
@@ -371,13 +367,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                 ROWXLARGE
                                             ]}
                                             component="div"
-                                            count={
-                                                data &&
-                                                data.transactions &&
-                                                data.transactions.totalCounts
-                                                    ? data.transactions.totalCounts
-                                                    : 0
-                                            }
+                                            count={data?.transactions?.totalCounts ?? 0}
                                             rowsPerPage={pageSize}
                                             page={pageNumber}
                                             onChangePage={handleChangePage}

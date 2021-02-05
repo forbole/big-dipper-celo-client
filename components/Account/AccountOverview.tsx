@@ -4,13 +4,13 @@ import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import BigNumber from 'bignumber.js';
 import React, { useEffect } from 'react';
 
 import LedgerDialog from '../Ledger/LedgerDialog';
 import { GET_ACCOUNT_DETAILS } from '../Query/Account';
 import { GET_CHAIN } from '../Query/Chain';
 import { GET_VALIDATOR } from '../Query/Validator';
+import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import NotAvailable from '../Utils/NotAvailable';
@@ -98,16 +98,14 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
         variables: { address }
     });
 
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
-
     useEffect(() => {
         const localUser = localStorage.getItem('currentUserAddress');
         const getLocalUser = localUser ? localUser : '';
         setCurrentUser(getLocalUser);
     });
 
-    if (accountQuery.loading || chainQuery.loading) return <ComponentLoader />;
-    if (accountQuery.error || chainQuery.error) return <ErrorMessage />;
+    if (accountQuery?.loading || chainQuery?.loading) return <ComponentLoader />;
+    if (accountQuery?.error || chainQuery?.error) return <ErrorMessage />;
     return (
         <span>
             <Card className={classes.root}>
@@ -118,10 +116,7 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                         </Typography>
                         <Divider className={classes.divider} />
                     </Grid>
-                    {validatorQuery &&
-                    validatorQuery.data &&
-                    validatorQuery.data.validator &&
-                    validatorQuery.data.validator.name ? (
+                    {validatorQuery?.data?.validator?.name ? (
                         <>
                             <Grid item xs={3}>
                                 <Typography variant="body2" className={classes.alignLeft}>
@@ -131,7 +126,7 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                             <Grid item xs={9}>
                                 <Typography variant="body1" className={classes.validatorName}>
                                     {' '}
-                                    {validatorQuery.data.validator.name}{' '}
+                                    {validatorQuery?.data?.validator?.name}{' '}
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
@@ -147,29 +142,24 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                     </Grid>
 
                     <Grid item xs={9}>
-                        {accountQuery.data.account && accountQuery.data.account.balance ? (
+                        {accountQuery?.data?.account?.balance ? (
                             <Typography variant="h5" className={classes.alignRight}>
-                                {new BigNumber(accountQuery.data.account.balance)
-                                    .dividedBy(CELO_FRACTION)
-                                    .toFormat(2)}{' '}
-                                CELO
+                                {Coin(accountQuery?.data?.account?.balance, 'CELO', 2)}
                             </Typography>
                         ) : (
                             <NotAvailable variant="h5" className={classes.alignRight} />
                         )}
                     </Grid>
                     <Grid item xs={12} style={{ marginTop: '-0.5rem' }}>
-                        {accountQuery.data.account &&
-                        accountQuery.data.account.balance &&
-                        chainQuery.data.chain &&
-                        chainQuery.data.chain.tokenPrice &&
-                        chainQuery.data.chain.tokenPrice.usd ? (
+                        {accountQuery?.data?.account?.balance &&
+                        chainQuery?.data?.chain?.tokenPrice?.usd ? (
                             <Typography variant="h6" className={classes.alignRight}>
-                                {new BigNumber(accountQuery.data.account.balance)
-                                    .dividedBy(CELO_FRACTION)
-                                    .times(chainQuery.data.chain.tokenPrice.usd)
-                                    .toFormat(2)}{' '}
-                                cUSD
+                                {Coin(
+                                    accountQuery?.data?.account?.balance,
+                                    'cUSD',
+                                    2,
+                                    chainQuery?.data?.chain?.tokenPrice?.usd
+                                )}
                             </Typography>
                         ) : (
                             <NotAvailable variant="h5" className={classes.alignRight} />

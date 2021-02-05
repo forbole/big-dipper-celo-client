@@ -20,10 +20,12 @@ import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts';
 
 import { GET_CHAIN } from '../Query/Chain';
 import { GET_PROPOSAL } from '../Query/Proposal';
+import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
+
 interface Column {
     id: 'voter' | 'answer' | 'voting_power';
     label: string;
@@ -149,7 +151,6 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
     const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
     const ROWLARGE = process.env.ROWLARGE ? parseInt(process.env.ROWLARGE) : 50;
     const ROWXLARGE = process.env.ROWXLARGE ? parseInt(process.env.ROWXLARGE) : 100;
-    // const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const [page, setPage] = React.useState(SETPAGE);
     const [pageSize, setPageSize] = React.useState(ROWXSMALL);
@@ -200,7 +201,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {Object.keys(data.proposal.totalVotesList[voteType.voteType])
+                            {Object.keys(data?.proposal?.totalVotesList[voteType.voteType])
                                 .slice(page * pageSize, page * pageSize + pageSize)
                                 .map((row: any, index: number) => {
                                     return (
@@ -220,25 +221,21 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                                                 padding="checkbox"
                                                 align="left"
                                                 className={classes.tableCell}>
-                                                {data.proposal.totalVotesList[voteType.voteType][
+                                                {data?.proposal?.totalVotesList[voteType.voteType][
                                                     row
-                                                ] &&
-                                                data.proposal.totalVotesList[voteType.voteType][row]
-                                                    .returnValues &&
-                                                data.proposal.totalVotesList[voteType.voteType][row]
-                                                    .returnValues.account ? (
+                                                ]?.returnValues?.account ? (
                                                     <NavLink
                                                         href={`/account/${
-                                                            data.proposal.totalVotesList[
+                                                            data?.proposal?.totalVotesList[
                                                                 voteType.voteType
-                                                            ][row].returnValues.account
+                                                            ][row]?.returnValues?.account
                                                         }`}
                                                         name={
                                                             <Typography variant="body2" noWrap>
                                                                 {
-                                                                    data.proposal.totalVotesList[
+                                                                    data?.proposal?.totalVotesList[
                                                                         voteType.voteType
-                                                                    ][row].returnValues.account
+                                                                    ][row]?.returnValues?.account
                                                                 }
                                                             </Typography>
                                                         }
@@ -249,16 +246,14 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                                                 align="right"
                                                 padding="checkbox"
                                                 className={classes.tableCell}>
-                                                {data.proposal.totalVotesList[voteType.voteType][
+                                                {data?.proposal?.totalVotesList[voteType.voteType][
                                                     row
-                                                ] &&
-                                                data.proposal.totalVotesList[voteType.voteType][row]
-                                                    .voteType ? (
+                                                ]?.voteType ? (
                                                     <Typography variant="body2" noWrap>
                                                         {
-                                                            data.proposal.totalVotesList[
+                                                            data?.proposal?.totalVotesList[
                                                                 voteType.voteType
-                                                            ][row].voteType
+                                                            ][row]?.voteType
                                                         }
                                                     </Typography>
                                                 ) : null}
@@ -267,18 +262,14 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                                                 align="right"
                                                 padding="checkbox"
                                                 className={classes.tableCell}>
-                                                {data.proposal.totalVotesList[voteType.voteType][
+                                                {data?.proposal?.totalVotesList[voteType.voteType][
                                                     row
-                                                ] &&
-                                                data.proposal.totalVotesList[voteType.voteType][row]
-                                                    .returnValues &&
-                                                data.proposal.totalVotesList[voteType.voteType][row]
-                                                    .returnValues.weight ? (
+                                                ]?.returnValues?.weight ? (
                                                     <Typography variant="body2" noWrap>
                                                         {new BigNumber(
-                                                            data.proposal.totalVotesList[
+                                                            data?.proposal?.totalVotesList[
                                                                 voteType.voteType
-                                                            ][row].returnValues.weight
+                                                            ][row]?.returnValues?.weight
                                                         )
                                                             .dividedBy(CELO_FRACTION)
                                                             .toFormat(2)}
@@ -301,7 +292,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                         ROWXLARGE
                     ]}
                     component="div"
-                    count={Object.keys(data.proposal.totalVotesList[voteType.voteType]).length}
+                    count={Object.keys(data?.proposal?.totalVotesList[voteType.voteType]).length}
                     rowsPerPage={pageSize}
                     page={page}
                     onChangePage={handleChangePage}
@@ -357,14 +348,13 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
         return null;
     };
 
-    const chartData =
-        data && data.proposal && data.proposal.votes
-            ? [
-                  { name: 'Yes', value: data.proposal.votes.Yes },
-                  { name: 'No', value: data.proposal.votes.No },
-                  { name: 'Abstain', value: data.proposal.votes.Abstain }
-              ]
-            : [];
+    const chartData = data?.proposal?.votes
+        ? [
+              { name: 'Yes', value: data?.proposal?.votes?.Yes },
+              { name: 'No', value: data?.proposal?.votes?.No },
+              { name: 'Abstain', value: data?.proposal?.votes?.Abstain }
+          ]
+        : [];
 
     const COLORS = [
         'rgba(40, 201, 137, 1)', // Yes
@@ -409,12 +399,12 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                     Voted ({calculateTotalVotesPercentage()}%)
                 </Typography>
                 <Grid item xs={12}>
-                    {data && data.proposal && data.proposal.votes ? (
+                    {data?.proposal?.votes ? (
                         <Typography
                             color="textPrimary"
                             variant="subtitle1"
                             className={classes.priceDisplay}>
-                            {new BigNumber(data.proposal.votes.Total)
+                            {new BigNumber(data?.proposal?.votes?.Total)
                                 .dividedBy(CELO_FRACTION)
                                 .toFormat(2)}
                         </Typography>
@@ -441,6 +431,22 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                                           .dividedBy(CELO_FRACTION)
                                           .toFormat(2)
                                   ).format({ average: true, mantissa: 2 })
+                                : null}{' '}
+                            CELO)
+                            <br></br>
+                            (~
+                            {numbro(Coin(data?.proposal?.votes?.Total, '')).format({
+                                average: true,
+                                mantissa: 2
+                            })}{' '}
+                            of ~
+                            {chainData?.data?.chain?.celoTotalSupply
+                                ? numbro(
+                                      Coin(chainData?.data?.chain?.celoTotalSupply, 'CELO', 2)
+                                  ).format({
+                                      average: true,
+                                      mantissa: 2
+                                  })
                                 : null}{' '}
                             CELO)
                         </Typography>
@@ -475,7 +481,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                         />
                     </PieChart>
                 </Grid>
-                {data && data.proposal && data.proposal.totalVotesList ? (
+                {data?.proposal?.totalVotesList ? (
                     <Grid item xs={12}>
                         <StyledTabs
                             value={value}
@@ -489,25 +495,25 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                             }}>
                             <Tab
                                 label={`All (${
-                                    Object.keys(data.proposal.totalVotesList['All']).length
+                                    Object.keys(data?.proposal?.totalVotesList['All']).length
                                 })`}
                                 className={classes.tabs}
                             />
                             <Tab
                                 label={`Yes (${
-                                    Object.keys(data.proposal.totalVotesList['Yes']).length
+                                    Object.keys(data?.proposal?.totalVotesList['Yes']).length
                                 })`}
                                 className={classes.tabs}
                             />
                             <Tab
                                 label={`No (${
-                                    Object.keys(data.proposal.totalVotesList['No']).length
+                                    Object.keys(data?.proposal?.totalVotesList['No']).length
                                 })`}
                                 className={classes.tabs}
                             />
                             <Tab
                                 label={`Abstain (${
-                                    Object.keys(data.proposal.totalVotesList['Abstain']).length
+                                    Object.keys(data?.proposal?.totalVotesList['Abstain']).length
                                 })`}
                                 className={classes.tabs}
                             />

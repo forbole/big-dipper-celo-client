@@ -22,6 +22,7 @@ import numbro from 'numbro';
 import React from 'react';
 
 import { GET_VALIDATOR_GROUPS } from '../Query/ValidatorGroup';
+import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import MiddleEllipsis from '../Utils/MiddleEllipsis';
@@ -227,7 +228,7 @@ const ValidatorVotesList = (): JSX.Element => {
                     }
                 }
             }
-            return new BigNumber(total).dividedBy(CELO_FRACTION).toFormat(2);
+            return Coin(total, 'cUSD', 2);
         }
     };
 
@@ -447,12 +448,11 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
                                                               <Typography variant="body2" noWrap>
-                                                                  {new BigNumber(
-                                                                      row.lockedGoldAmount
-                                                                  )
-                                                                      .dividedBy(CELO_FRACTION)
-                                                                      .toFormat(2)}{' '}
-                                                                  CELO
+                                                                  {Coin(
+                                                                      row.lockedGoldAmount,
+                                                                      'CELO',
+                                                                      2
+                                                                  )}
                                                               </Typography>
                                                           </TableCell>
                                                           <TableCell
@@ -497,7 +497,6 @@ const ValidatorVotesList = (): JSX.Element => {
                                                                   {calculateGroupRewards(
                                                                       row.address
                                                                   )}{' '}
-                                                                  cUSD
                                                               </Typography>
                                                           </TableCell>
 

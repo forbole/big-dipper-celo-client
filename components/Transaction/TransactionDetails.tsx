@@ -11,16 +11,17 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import React from 'react';
 
 import { GET_TX_DETAILS } from '../Query/Transaction';
 import Chips from '../Utils/Chips';
+import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
+
 const useStyles = makeStyles(() => {
     return {
         root: {
@@ -109,15 +110,13 @@ type TxDetailsProps = { hash: string };
 
 const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
     const classes = useStyles();
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const { loading, error, data } = useQuery(GET_TX_DETAILS, {
         variables: { hash }
     });
     const [open, setOpen] = React.useState(false);
 
-    const inputValue =
-        data && data.transaction && data.transaction.input ? data.transaction.input : null;
+    const inputValue = data?.transaction?.input ?? null;
 
     const copyText = () => {
         const rawInputForm = document.getElementById('rawInputForm') as HTMLInputElement;
@@ -171,8 +170,8 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                     <Divider />
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Hash</Typography>
-                        {data.transaction && data.transaction.hash ? (
-                            <Typography variant="body2">{data.transaction.hash}</Typography>
+                        {data?.transaction?.hash ? (
+                            <Typography variant="body2">{data?.transaction?.hash}</Typography>
                         ) : (
                             <NotAvailable variant="body2" />
                         )}
@@ -182,15 +181,17 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Time</Typography>
                         <Typography variant="body2">
-                            {data && data.transaction && data.transaction.timestamp ? (
-                                new Date(parseInt(data.transaction.timestamp) * 1000).toUTCString()
+                            {data?.transaction?.timestamp ? (
+                                new Date(
+                                    parseInt(data?.transaction?.timestamp) * 1000
+                                ).toUTCString()
                             ) : (
                                 <NotAvailable variant="body2" />
                             )}
                             (
-                            {data && data.transaction && data.transaction.timestamp
+                            {data?.transaction?.timestamp
                                 ? moment
-                                      .unix(data.transaction.timestamp)
+                                      .unix(data?.transaction?.timestamp)
                                       .format('Do MMMM YYYY, h:mm:ss a')
                                 : null}
                             )
@@ -200,10 +201,10 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
 
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Tx Type</Typography>
-                        {data.transaction && data.transaction.type ? (
+                        {data?.transaction?.type ? (
                             <Typography variant="body2">
-                                {data.transaction.type.charAt(0).toUpperCase() +
-                                    data.transaction.type
+                                {data?.transaction?.type.charAt(0).toUpperCase() +
+                                    data?.transaction?.type
                                         .slice(1)
                                         .split(/(?=[A-Z])/)
                                         .join(' ')}
@@ -218,7 +219,7 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                         <Typography variant="body2" gutterBottom>
                             Status
                         </Typography>
-                        {data.transaction && data.transaction.pending ? (
+                        {data?.transaction?.pending ? (
                             <Chips actionResult="Pending" />
                         ) : (
                             <Chips actionResult="Success" />
@@ -229,13 +230,13 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">From</Typography>
 
-                        {data.transaction && data.transaction.from ? (
+                        {data?.transaction?.from ? (
                             <NavLink
-                                href={`/account/${data.transaction.from.address}`}
+                                href={`/account/${data?.transaction?.from?.address}`}
                                 name={
                                     <Typography variant="body2">
                                         {' '}
-                                        {data.transaction.from.address}
+                                        {data?.transaction?.from?.address}
                                     </Typography>
                                 }
                             />
@@ -248,13 +249,13 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
 
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">To</Typography>
-                        {data.transaction && data.transaction.to ? (
+                        {data?.transaction?.to ? (
                             <NavLink
-                                href={`/account/${data.transaction.to.address}`}
+                                href={`/account/${data?.transaction?.to?.address}`}
                                 name={
                                     <Typography variant="body2">
                                         {' '}
-                                        {data.transaction.to.address}
+                                        {data?.transaction?.to?.address}
                                     </Typography>
                                 }
                             />
@@ -268,8 +269,8 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Value</Typography>
 
-                        {data.transaction && data.transaction.value ? (
-                            <Typography variant="body2">{data.transaction.value}</Typography>
+                        {data?.transaction?.value ? (
+                            <Typography variant="body2">{data?.transaction?.value}</Typography>
                         ) : (
                             <NotAvailable variant="body2" />
                         )}
@@ -278,12 +279,12 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
 
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Block Height</Typography>
-                        {data.transaction && data.transaction.blockNumber ? (
+                        {data?.transaction?.blockNumber ? (
                             <NavLink
-                                href={`/block/${data.transaction.blockNumber}`}
+                                href={`/block/${data?.transaction?.blockNumber}`}
                                 name={
                                     <Typography variant="body2">
-                                        {data.transaction.blockNumber}
+                                        {data?.transaction?.blockNumber}
                                     </Typography>
                                 }
                             />
@@ -295,8 +296,8 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
 
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Nonce</Typography>
-                        {data.transaction && data.transaction.nonce ? (
-                            <Typography variant="body2">{data.transaction.nonce}</Typography>
+                        {data?.transaction?.nonce ? (
+                            <Typography variant="body2">{data?.transaction?.nonce}</Typography>
                         ) : (
                             <NotAvailable variant="body2" />
                         )}
@@ -305,12 +306,14 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
 
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Transaction Fee</Typography>
-                        {data.transaction && data.transaction.gas ? (
+                        {data?.transaction?.gas ? (
                             <Typography variant="body2">
-                                {new BigNumber(data.transaction.gas * data.transaction.gasPrice)
-                                    .dividedBy(CELO_FRACTION)
-                                    .toFormat()}{' '}
-                                cUSD
+                                {Coin(
+                                    data?.transaction?.gas,
+                                    'cUSD',
+                                    2,
+                                    data?.transaction?.gasPrice
+                                )}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" />
@@ -320,9 +323,9 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
 
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Fee Receipient</Typography>
-                        {data.transaction && data.transaction.gatewayFeeRecipient ? (
+                        {data?.transaction?.gatewayFeeRecipient ? (
                             <Typography variant="body2">
-                                {data.transaction.gatewayFeeRecipient}
+                                {data?.transaction?.gatewayFeeRecipient}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" />
@@ -332,8 +335,8 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
 
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Gate Fee</Typography>
-                        {data.transaction && data.transaction.gatewayFee ? (
-                            <Typography variant="body2">{data.transaction.gatewayFee}</Typography>
+                        {data?.transaction?.gatewayFee ? (
+                            <Typography variant="body2">{data?.transaction?.gatewayFee}</Typography>
                         ) : (
                             <NotAvailable variant="body2" />
                         )}
@@ -343,14 +346,14 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
 
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Transaction Speed</Typography>
-                        {data.transaction && data.transaction.speed ? (
-                            <Typography variant="body2">{data.transaction.speed}</Typography>
+                        {data?.transaction?.speed ? (
+                            <Typography variant="body2">{data?.transaction?.speed}</Typography>
                         ) : (
                             <NotAvailable variant="body2" />
                         )}
                         <Divider variant="middle" className={classes.divider} />
                     </Grid>
-                    {data && data.transaction && data.transaction.input ? (
+                    {data?.transaction?.input ? (
                         <>
                             {' '}
                             <Grid item xs={2} md={1} className={classes.item}>
@@ -386,7 +389,7 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                                         className={classes.inputLabel}
                                         id="rawInputForm"
                                         type="text"
-                                        value={asciiToHex(data.transaction.input)}
+                                        value={asciiToHex(data?.transaction?.input)}
                                         disableUnderline={true}
                                         readOnly
                                         style={{ padding: '0.7rem' }}
@@ -400,8 +403,8 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
 
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Gas Used</Typography>
-                        {data.transaction && data.transaction.gas ? (
-                            <Typography variant="body2">{data.transaction.gas}</Typography>
+                        {data?.transaction?.gas ? (
+                            <Typography variant="body2">{data?.transaction?.gas}</Typography>
                         ) : (
                             <NotAvailable variant="body2" />
                         )}
@@ -410,8 +413,8 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
 
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Gas Limit</Typography>
-                        {data.transaction && data.transaction.gasLimit ? (
-                            <Typography variant="body2">{data.transaction.gasLimit}</Typography>
+                        {data?.transaction?.gasLimit ? (
+                            <Typography variant="body2">{data?.transaction?.gasLimit}</Typography>
                         ) : (
                             <NotAvailable variant="body2" />
                         )}

@@ -11,7 +11,6 @@ import { createStyles, makeStyles, Theme, useTheme, withStyles } from '@material
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import BigNumber from 'bignumber.js';
 import numbro from 'numbro';
 import React from 'react';
 import {
@@ -26,6 +25,7 @@ import {
 
 import { GET_CHAIN } from '../Query/Chain';
 import { GET_COIN_HISTORY_BY_DATES } from '../Query/Coin';
+import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import NotAvailable from '../Utils/NotAvailable';
@@ -256,8 +256,6 @@ const TokenPrice = (): JSX.Element => {
         setDateTo(formatDateTo);
     };
 
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
-
     const SelectDate = () => {
         return (
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -320,8 +318,8 @@ const TokenPrice = (): JSX.Element => {
         pollInterval: 5000
     });
 
-    if (coinHistoryByDates.loading && chainData.loading) return <ComponentLoader />;
-    if (coinHistoryByDates.error || chainData.error) return <ErrorMessage />;
+    if (coinHistoryByDates?.loading && chainData?.loading) return <ComponentLoader />;
+    if (coinHistoryByDates?.error || chainData?.error) return <ErrorMessage />;
 
     return (
         <>
@@ -374,10 +372,12 @@ const TokenPrice = (): JSX.Element => {
                                             color="textPrimary"
                                             noWrap>
                                             ${' '}
-                                            {new BigNumber(chainData?.data?.chain?.tokenPrice?.usd)
-                                                .dividedBy(CELO_FRACTION)
-                                                .times(chainData?.data?.chain?.celoTotalSupply)
-                                                .toFormat(2)}
+                                            {Coin(
+                                                chainData?.data?.chain?.tokenPrice?.usd,
+                                                '',
+                                                2,
+                                                chainData?.data?.chain?.celoTotalSupply
+                                            )}
                                         </Typography>
                                     ) : (
                                         <NotAvailable variant="body2" />

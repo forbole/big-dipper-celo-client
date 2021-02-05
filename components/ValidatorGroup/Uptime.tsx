@@ -21,6 +21,7 @@ import {
 
 import { GET_BLOCK } from '../Query/Block';
 import { GET_VALIDATOR_GROUP } from '../Query/ValidatorGroup';
+import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import NavLink from '../Utils/NavLink';
@@ -161,7 +162,7 @@ const CustomTooltip = (payload: any, active?: boolean) => {
                             </Grid>
                             <Grid item xs={6}>
                                 <Typography color="textPrimary" variant="body2" align="right">
-                                    {bar.payload.GasUsed} cUSD
+                                    {Coin(bar.payload.GasUsed, 'cUSD')}
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -213,10 +214,7 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
         pollInterval: 5000
     });
 
-    const number =
-        latestBlock && latestBlock.data && latestBlock.data.blocks && latestBlock.data.blocks.blocks
-            ? latestBlock.data.blocks.blocks[0].number
-            : 0;
+    const number = latestBlock?.data?.blocks?.blocks[0]?.number ?? 0;
 
     //set the number to query from
     const fromBlock = number - 14;
@@ -230,16 +228,15 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
         variables: { valGroupAddress }
     });
 
-    if (data && data.validatorGroup && data.validatorGroup.members) {
-        for (let c = 0; c < data.validatorGroup.members.length; c++) {
-            membersArray[c] = data.validatorGroup.members[c].address;
+    if (data?.validatorGroup?.members) {
+        for (let c = 0; c < data?.validatorGroup?.members.length; c++) {
+            membersArray[c] = data?.validatorGroup?.members[c].address;
         }
     }
-
-    const findHowValidatorsManySignedTheBlock = (returnRealValue: boolean) => {
-        if (blockData && blockData.data && blockData.data.blocks && blockData.data.blocks.blocks) {
+    const findValidatorsWhoSignedTheBlock = (returnRealValue: boolean) => {
+        if (blockData?.data?.blocks?.blocks) {
             {
-                blockData.data.blocks.blocks.map((row: any, index: number) => {
+                blockData?.data?.blocks?.blocks.map((row: any, index: number) => {
                     allSigners[index] = { signers: row.signers, number: row.number };
                 });
 
@@ -263,31 +260,23 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
         }
     };
 
-    if (blockData && blockData.data && blockData.data.blocks && blockData.data.blocks.blocks) {
-        blockData.data.blocks.blocks.map((row: any, index: number) => {
+    if (blockData?.data?.blocks?.blocks) {
+        blockData?.data?.blocks?.blocks.map((row: any, index: number) => {
             blockUptime[index] = {
                 Height: row.number,
-                Voted: findHowValidatorsManySignedTheBlock(false),
-                VotedNumber: findHowValidatorsManySignedTheBlock(true),
+                Voted: findValidatorsWhoSignedTheBlock(false),
+                VotedNumber: findValidatorsWhoSignedTheBlock(true),
                 MissedNumber:
-                    Object.keys(membersArray).length - findHowValidatorsManySignedTheBlock(true),
+                    Object.keys(membersArray).length - findValidatorsWhoSignedTheBlock(true),
                 VotesAvailable:
-                    data &&
-                    data.validatorGroup &&
-                    data.validatorGroup.votes &&
-                    data.validatorGroup.votesAvailable
-                        ? (data.validatorGroup.votes / data.validatorGroup.votesAvailable) * 100
-                        : 0,
+                    (data?.validatorGroup?.votes / data?.validatorGroup?.votesAvailable) * 100 ?? 0,
                 Proposer: row.miner.signer,
                 GasUsed: row.gasUsed,
                 Signers: row.signers
             };
         });
     }
-    const validatorGroupMembers =
-        data && data.validatorGroup && data.validatorGroup.members
-            ? data.validatorGroup.members
-            : [];
+    const validatorGroupMembers = data?.validatorGroup?.members ?? [];
 
     const calculateGroupUptime = () => {
         let addScore = 0;
@@ -300,7 +289,6 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
 
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage />;
-
     return (
         <Card className={classes.root}>
             <CardContent>
@@ -387,14 +375,6 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
                             </BarChart>
                         </ResponsiveContainer>
                     </Grid>
-                    {/* <span className={classes.power}>
-                        <Typography
-                            color="textSecondary"
-                            variant="caption"
-                            className={classes.power}>
-                            10/10000 (19h)
-                        </Typography>
-                    </span> */}
                 </Grid>
             </CardContent>
         </Card>

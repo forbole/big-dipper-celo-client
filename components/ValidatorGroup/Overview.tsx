@@ -5,12 +5,12 @@ import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import BigNumber from 'bignumber.js';
 import numbro from 'numbro';
 import React from 'react';
 
 import LedgerDialog from '../Ledger/LedgerDialog';
 import { GET_VALIDATOR_GROUP } from '../Query/ValidatorGroup';
+import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import NotAvailable from '../Utils/NotAvailable';
@@ -80,7 +80,6 @@ type OverviewProps = { address: string };
 const Overview = ({ address }: OverviewProps): JSX.Element => {
     const classes = useStyles();
     const valGroupAddress = address;
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
         variables: { valGroupAddress }
@@ -171,10 +170,7 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                     <Grid item xs={9} className={classes.item}>
                         {data?.validatorGroup?.lockedGoldAmount ? (
                             <Typography variant="body2" align="right">
-                                {new BigNumber(data?.validatorGroup?.lockedGoldAmount)
-                                    .dividedBy(CELO_FRACTION)
-                                    .toFormat(2)}{' '}
-                                CELO
+                                {Coin(data?.validatorGroup?.lockedGoldAmount, 'CELO', 2)}
                             </Typography>
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />

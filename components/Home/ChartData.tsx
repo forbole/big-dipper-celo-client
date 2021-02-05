@@ -11,6 +11,7 @@ import numbro from 'numbro';
 import React from 'react';
 
 import { GET_CHAIN } from '../Query/Chain';
+import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 
@@ -93,7 +94,6 @@ const ChartData = (): JSX.Element => {
     const classes = useStyles();
     const theme = useTheme();
     const largeScreen = useMediaQuery(theme.breakpoints.up('lg'));
-    const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_CHAIN, {
@@ -106,7 +106,7 @@ const ChartData = (): JSX.Element => {
         <>
             <Grid container spacing={1}>
                 <Grid item xs={6} md={3}>
-                    {data && data.chain && data.chain.latestHeight >= 0 ? (
+                    {data?.chain?.latestHeight >= 0 ? (
                         <Card className={cx(classes.blocksCard)} elevation={0}>
                             <Typography variant="body2" className={classes.label}>
                                 Total blocks
@@ -114,8 +114,8 @@ const ChartData = (): JSX.Element => {
 
                             <Typography variant="h4" className={classes.value}>
                                 {largeScreen
-                                    ? numbro(data.chain.latestHeight).format('000,000')
-                                    : numbro(data.chain.latestHeight).format({
+                                    ? numbro(data?.chain?.latestHeight).format('000,000')
+                                    : numbro(data?.chain?.latestHeight).format({
                                           average: true,
                                           mantissa: 2
                                       })}
@@ -127,15 +127,15 @@ const ChartData = (): JSX.Element => {
                 </Grid>
 
                 <Grid item xs={6} md={3}>
-                    {data && data.chain && data.chain.txCount >= 0 ? (
+                    {data?.chain?.txCount >= 0 ? (
                         <Card className={cx(classes.transactionsCard)} elevation={0}>
                             <Typography variant="body2" className={classes.label}>
                                 Total transactions
                             </Typography>
                             <Typography variant="h4" className={classes.value}>
                                 {largeScreen
-                                    ? numbro(data.chain.txCount).format('000,000')
-                                    : numbro(data.chain.txCount).format({
+                                    ? numbro(data?.chain?.txCount).format('000,000')
+                                    : numbro(data?.chain?.txCount).format({
                                           average: true,
                                           mantissa: 2
                                       })}
@@ -147,10 +147,7 @@ const ChartData = (): JSX.Element => {
                 </Grid>
 
                 <Grid item xs={6} md={3}>
-                    {data &&
-                    data.chain &&
-                    data.chain.tokenPrice &&
-                    data.chain.tokenPrice.usd >= 0 ? (
+                    {data?.chain?.tokenPrice?.usd >= 0 ? (
                         <Card className={cx(classes.priceCard)} elevation={0}>
                             <Typography variant="body2" className={classes.label}>
                                 Celo Price
@@ -159,7 +156,7 @@ const ChartData = (): JSX.Element => {
                                 $
                             </Typography>
                             <Typography variant="h4" className={classes.dollarValue}>
-                                {numbro(data.chain.tokenPrice.usd).format('0.00')}
+                                {numbro(data?.chain?.tokenPrice?.usd).format('0.00')}
                             </Typography>
                         </Card>
                     ) : (
@@ -168,11 +165,7 @@ const ChartData = (): JSX.Element => {
                 </Grid>
 
                 <Grid item xs={6} md={3}>
-                    {data &&
-                    data.chain &&
-                    data.chain.celoTotalSupply &&
-                    data.chain.tokenPrice &&
-                    data.chain.tokenPrice.usd >= 0 ? (
+                    {data?.chain?.celoTotalSupply && data?.chain?.tokenPrice?.usd >= 0 ? (
                         <Card className={cx(classes.marketCapCard)} elevation={0}>
                             <Typography variant="body2" className={classes.label}>
                                 Market Cap
@@ -183,15 +176,19 @@ const ChartData = (): JSX.Element => {
                             </Typography>
                             <Typography variant="h4" className={classes.dollarValue} noWrap={false}>
                                 {largeScreen
-                                    ? new BigNumber(data.chain.tokenPrice.usd)
-                                          .dividedBy(CELO_FRACTION)
-                                          .times(data.chain.celoTotalSupply)
-                                          .toFormat(2)
+                                    ? Coin(
+                                          data?.chain?.tokenPrice?.usd,
+                                          '',
+                                          2,
+                                          data?.chain?.celoTotalSupply
+                                      )
                                     : numbro(
-                                          new BigNumber(data.chain.tokenPrice.usd)
-                                              .dividedBy(CELO_FRACTION)
-                                              .times(data.chain.celoTotalSupply)
-                                              .toFormat(2)
+                                          Coin(
+                                              data?.chain?.tokenPrice?.usd,
+                                              '',
+                                              2,
+                                              data?.chain?.celoTotalSupply
+                                          )
                                       ).format({ average: true, mantissa: 2 })}
                             </Typography>
                         </Card>
