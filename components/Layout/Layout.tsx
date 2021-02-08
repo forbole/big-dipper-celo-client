@@ -16,7 +16,6 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import clsx from 'clsx';
 import React from 'react';
 
-// import NetworkDropdown from '../components/NetworkDropdown';
 import Login from '../Ledger/Login';
 import SearchBar from '../Search/SearchBar';
 import NavLink from '../Utils/NavLink';
@@ -73,7 +72,6 @@ const useStyles = makeStyles((theme: Theme) =>
         icon: {
             paddingRight: '2rem',
             paddingLeft: '0.5rem'
-            // marginTop: '0.3rem'
         },
         loginButton: {
             background: 'rgba(153, 153, 153, 1)',

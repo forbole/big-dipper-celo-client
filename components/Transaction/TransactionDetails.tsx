@@ -83,8 +83,6 @@ const useStyles = makeStyles(() => {
             backgroundColor: 'rgba(255, 255, 255, 1)',
             opacity: 5,
             border: 'solid 0.5px rgba(121, 121, 121, 0.8)',
-            //borderWidth: "0.5px",
-            //padding: "0.1rem",
             fontSize: '0.6rem',
             width: '3.2rem',
             height: '1rem',
@@ -422,11 +420,7 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                 </Grid>
             </CardContent>
             <Snackbar open={open} autoHideDuration={6000} onClose={closeAlert}>
-                <Alert
-                    onClose={closeAlert}
-                    severity="success"
-                    // variant="outlined"
-                    className={classes.alertMessage}>
+                <Alert onClose={closeAlert} severity="success" className={classes.alertMessage}>
                     <Typography variant="body1">Copied!</Typography>
                 </Alert>
             </Snackbar>{' '}

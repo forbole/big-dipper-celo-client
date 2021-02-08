@@ -20,7 +20,6 @@ const useStyles = makeStyles(() => {
     return {
         root: {
             width: '100%',
-            // padding: "1%",
             borderRadius: 5,
             wordWrap: 'break-word'
         },
@@ -61,7 +60,6 @@ const useStyles = makeStyles(() => {
         centerContent: {
             display: 'flex',
             margin: '1rem 0 -0.5rem 0',
-            // justifyContent: "center",
             textAlign: 'center'
         },
 

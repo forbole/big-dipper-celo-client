@@ -160,7 +160,6 @@ const SearchBar = (): JSX.Element => {
                             id="queryString"
                             value={txSearch}
                             placeholder="Search by address / block number / tx"
-                            // fullWidth={true}
                             disableUnderline={true}
                             onChange={handleChange}
                             onKeyDown={handleDesktopSearch}

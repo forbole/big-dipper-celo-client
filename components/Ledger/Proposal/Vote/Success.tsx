@@ -35,7 +35,6 @@ const useStyles = makeStyles({
         paddingTop: '2rem',
         textTransform: 'none',
         borderRadius: 4
-        // width: "100%",
     },
     controlButtonLabel: {
         display: 'flex',
@@ -55,9 +54,7 @@ const useStyles = makeStyles({
         borderRadius: 4,
         justifyContent: 'center',
         minHeight: '2.5rem',
-        //width: "18.44rem",
         textAlign: 'center'
-        //margin: "0 50%"
     },
 
     paddingBottom: {

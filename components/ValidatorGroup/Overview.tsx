@@ -190,7 +190,7 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                                 {data?.validatorGroup?.commission * 100} %
                             </Typography>
                         ) : (
-                            <NotAvailable variant="body2" />
+                            <NotAvailable variant="body2" className={classes.alignRight} />
                         )}
                     </Grid>
 
@@ -219,20 +219,6 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                             {calculateAttestation()} %
                         </Typography>
                     </Grid>
-
-                    {/* <Grid item xs={12}>
-                        <Divider className={classes.divider} />
-                    </Grid>
-
-                    <Grid item xs={12} className={classes.item}>
-                        <Typography variant="body2">Description</Typography>
-                        <Typography variant="body2">
-                            Integer at faucibus urna. Nullam condimentum leo id elit sagittis
-                            auctor. Curabitur elementum nunc a leo imperdiet, nec elementum diam
-                            elementum. Etiam elementum euismod commodo. Proin eleifend eget quam ut
-                            efficitur. Mauris a accumsan mauris.
-                        </Typography>
-                    </Grid> */}
 
                     <Grid item xs={12}>
                         <Divider className={classes.divider} />

@@ -75,7 +75,6 @@ class Ledger extends Component {
         const eth = new Eth(transport);
         const wallet = await newLedgerWalletWithSetup(eth.transport);
         // @ts-ignore
-
         const kit: ContractKit = newKitFromWeb3(web3, wallet);
 
         this.web3 = web3;
@@ -134,6 +133,7 @@ class Ledger extends Component {
         if (!this.kit) {
             this.checkLedgerErrors('Ledger device is disconnected');
         }
+        console.log(address)
         const getAccounts = await this.kit.contracts.getAccounts();
         const result = await getAccounts.createAccount().sendAndWaitForReceipt({ from: address });
         console.log(result);

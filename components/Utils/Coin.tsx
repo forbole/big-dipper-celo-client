@@ -24,6 +24,5 @@ const Coin = (
         return `${mintDenom.toFormat()} CELO Wei`;
     }
 };
-//sprawdz bo do block gas is used gwei so how many gwei to stakiingdenom
 
 export default Coin;

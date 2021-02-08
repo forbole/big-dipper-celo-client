@@ -194,12 +194,7 @@ const Login = (): JSX.Element => {
                 )}
             </IconButton>
 
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="ledger-dialog"
-                //fullWidth
-                maxWidth="sm">
+            <Dialog open={open} onClose={handleClose} aria-labelledby="ledger-dialog" maxWidth="sm">
                 <DialogTitle id="ledger-dialog-signin-title">
                     <Grid container className={classes.root}>
                         <Grid item xs={12}>

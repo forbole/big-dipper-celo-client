@@ -53,7 +53,6 @@ const ControlButtons = ({
                         variant="outlined"
                         color="secondary"
                         className={classes.controlButton}
-                        //fullWidth={true}
                         onClick={handleClose}>
                         <Typography variant="body2" noWrap>
                             Cancel
@@ -66,7 +65,6 @@ const ControlButtons = ({
                     variant="contained"
                     color="secondary"
                     className={classes.controlButton}
-                    //fullWidth={true}
                     onClick={handleClick}
                     disabled={showDisabled}>
                     <Typography variant="body2" noWrap className={classes.confirmButton}>
