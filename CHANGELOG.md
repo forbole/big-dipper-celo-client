@@ -74,6 +74,7 @@
 * Removed `GraphqlErrors` and updated `ApolloClient`
 * Updated Uptime Chart
 * Updated ApolloClient uri
+* Added `cache-and-network` fetch policy to `ApolloClient`
 
 ## v0.1.3
 
