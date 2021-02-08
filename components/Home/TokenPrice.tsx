@@ -2,12 +2,16 @@ import 'date-fns';
 
 import { useQuery } from '@apollo/client';
 import DateFnsUtils from '@date-io/date-fns';
-import { CardContent } from '@material-ui/core';
+import { Theme } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import Paper from '@material-ui/core/Paper';
-import { createStyles, makeStyles, Theme, useTheme, withStyles } from '@material-ui/core/styles';
+import createStyles from '@material-ui/core/styles/createStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import useTheme from '@material-ui/core/styles/useTheme';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';

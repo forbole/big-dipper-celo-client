@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client';
-import { Typography } from '@material-ui/core';
 import FilledInput from '@material-ui/core/FilledInput';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
@@ -7,7 +6,11 @@ import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import Snackbar from '@material-ui/core/Snackbar';
-import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { Theme } from '@material-ui/core/styles';
+import createStyles from '@material-ui/core/styles/createStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import useTheme from '@material-ui/core/styles/useTheme';
+import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import SearchIcon from '@material-ui/icons/Search';
 import Alert from '@material-ui/lab/Alert';

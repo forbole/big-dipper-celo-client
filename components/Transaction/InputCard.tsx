@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 

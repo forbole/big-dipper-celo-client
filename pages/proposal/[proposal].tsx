@@ -1,5 +1,6 @@
 import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import createStyles from '@material-ui/core/styles/createStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import { GraphQLClient } from 'graphql-request';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';

@@ -1,5 +1,6 @@
 import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import createStyles from '@material-ui/core/styles/createStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import React from 'react';
 
 import AccountList from '../components/Account/AccountList';

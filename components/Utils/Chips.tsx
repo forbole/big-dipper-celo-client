@@ -20,7 +20,8 @@ import {
     teal,
     yellow
 } from '@material-ui/core/colors';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import createStyles from '@material-ui/core/styles/createStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import React from 'react';
 
 const useStyles = makeStyles(() =>

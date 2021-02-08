@@ -1,10 +1,14 @@
-import { Grid, Slide, useScrollTrigger } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Slide from '@material-ui/core/Slide';
+import { Theme } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import useTheme from '@material-ui/core/styles/useTheme';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import React from 'react';
 
 import NavLink from '../../Utils/NavLink';

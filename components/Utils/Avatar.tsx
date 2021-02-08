@@ -1,4 +1,5 @@
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import createStyles from '@material-ui/core/styles/createStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import React from 'react';
 import Jdenticon from 'react-jdenticon';
 

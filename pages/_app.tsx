@@ -22,12 +22,12 @@ const MATOMO_URL = 'https://analytics.bigdipper.live/';
 const MATOMO_SITE_ID = 3;
 const retryLink = new RetryLink();
 
-const authLink = new BatchHttpLink({ uri: 'https://server.celo.bigdipper.live/graphql' });
+const authLink = new BatchHttpLink({ uri: 'http://localhost:4000/graphql' });
 
 const wsLink = process.browser
     ? new WebSocketLink({
           // only instantiate in the browser
-          uri: `wss://server.celo.bigdipper.live/graphql`,
+          uri: `ws://localhost:4000/graphql`,
           options: {
               reconnect: true,
               lazy: true
@@ -36,7 +36,7 @@ const wsLink = process.browser
     : (null as any);
 
 const httplink = new HttpLink({
-    uri: 'https://server.celo.bigdipper.live/graphql',
+    uri: 'http://localhost:4000/graphql',
     credentials: 'same-origin'
 });
 
