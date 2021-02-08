@@ -131,7 +131,8 @@ const Login = (): JSX.Element => {
                     setErrorMessage('Please accept the connection in your Ledger device. ');
                     try {
                         const userAddress = await Ledger.getAddress();
-                        if (await checkIfAccount(userAddress)) {
+                        const isAccount = await checkIfAccount(userAddress);
+                        if (isAccount) {
                             localStorage.setItem('currentUserAddress', userAddress);
                             setCurrentUser(userAddress);
                             setOpen(false);
@@ -148,7 +149,6 @@ const Login = (): JSX.Element => {
                         setErrorMessage(Ledger.checkLedgerErrors(e.message));
                     }
                 }
-                setOpen(false);
             } catch (e) {
                 setErrorMessage(Ledger.checkLedgerErrors(e.message));
                 setRetry(true);
