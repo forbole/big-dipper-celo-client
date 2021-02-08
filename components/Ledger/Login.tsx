@@ -97,7 +97,7 @@ const Login = (): JSX.Element => {
                     `Can't find an account with address ${address} on the chain. Please accept the connection and sign the transaction on your Ledger deivce to create an account. `
                 );
                 const createAccount = await Ledger.createAccount(accountAddress);
-                if (createAccount === true) {
+                if (createAccount) {
                     return true;
                 } else {
                     return false;
@@ -131,7 +131,8 @@ const Login = (): JSX.Element => {
                     setErrorMessage('Please accept the connection in your Ledger device. ');
                     try {
                         const userAddress = await Ledger.getAddress();
-                        if (await checkIfAccount(userAddress)) {
+                        const isAccount = await checkIfAccount(userAddress);
+                        if (isAccount) {
                             localStorage.setItem('currentUserAddress', userAddress);
                             setCurrentUser(userAddress);
                             setOpen(false);
