@@ -133,7 +133,6 @@ class Ledger extends Component {
         if (!this.kit) {
             this.checkLedgerErrors('Ledger device is disconnected');
         }
-        console.log(address)
         const getAccounts = await this.kit.contracts.getAccounts();
         const result = await getAccounts.createAccount().sendAndWaitForReceipt({ from: address });
         console.log(result);
