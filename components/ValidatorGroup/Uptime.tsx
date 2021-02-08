@@ -3,7 +3,10 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { Theme } from '@material-ui/core/styles';
+import createStyles from '@material-ui/core/styles/createStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import useTheme from '@material-ui/core/styles/useTheme';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import numbro from 'numbro';
@@ -80,98 +83,91 @@ let tooltip: string;
 const CustomTooltip = (payload: any, active?: boolean) => {
     const classes = useStyles();
     if (!active || !tooltip) return null as any;
-    for (const bar of payload) {
-        if (bar.dataKey === tooltip) {
-            return (
-                <Card className={classes.rootTooltip}>
-                    <CardContent className={classes.cardContent}>
-                        <Grid container>
-                            <Grid item xs={3}>
-                                <Typography color="textPrimary" variant="body2" align="left">
-                                    Proposer
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={9}>
-                                <NavLink
-                                    href={`/account/${bar.payload.Proposer}`}
-                                    name={
-                                        <Typography variant="caption">
-                                            {bar.payload.Proposer}
-                                        </Typography>
-                                    }
-                                    className={classes.proposerAddress}
-                                />
-                            </Grid>
-
-                            <Grid item xs={5}>
-                                <Typography color="textPrimary" variant="body2" align="left">
-                                    Height
-                                </Typography>
-                            </Grid>
-
-                            <Grid item xs={7}>
-                                <NavLink
-                                    href={`/block/${bar.payload.Height}`}
-                                    name={
-                                        <Typography
-                                            color="textPrimary"
-                                            variant="body2"
-                                            align="right">
-                                            {bar.payload.Height}
-                                        </Typography>
-                                    }
-                                />
-                            </Grid>
-
-                            <Grid item xs={5}>
-                                <Typography color="textPrimary" variant="body2" align="left">
-                                    Voted
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={7}>
-                                <Typography color="textPrimary" variant="body2" align="right">
-                                    {bar.payload.VotedNumber}
-                                </Typography>
-                            </Grid>
-
-                            <Grid item xs={5}>
-                                <Typography color="textPrimary" variant="body2" align="left">
-                                    Missed
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={7}>
-                                <Typography color="textPrimary" variant="body2" align="right">
-                                    {bar.payload.MissedNumber}
-                                </Typography>
-                            </Grid>
-
-                            <Grid item xs={5}>
-                                <Typography color="textPrimary" variant="body2" align="left">
-                                    Votes Available
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={7}>
-                                <Typography color="textPrimary" variant="body2" align="right">
-                                    {numbro(bar.payload.VotesAvailable).format('0.00')} %
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Typography color="textPrimary" variant="body2" align="left">
-                                    Gas (used)
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Typography color="textPrimary" variant="body2" align="right">
-                                    {Coin(bar.payload.GasUsed, 'cUSD')}
-                                </Typography>
-                            </Grid>
+    if (active && payload) {
+        return (
+            <Card className={classes.rootTooltip}>
+                <CardContent className={classes.cardContent}>
+                    <Grid container>
+                        <Grid item xs={3}>
+                            <Typography color="textPrimary" variant="body2" align="left">
+                                Proposer
+                            </Typography>
                         </Grid>
-                    </CardContent>
-                </Card>
-            );
-        } else {
-            return null as any;
-        }
+                        <Grid item xs={9}>
+                            <NavLink
+                                href={`/account/${payload[0]?.payload?.Proposer}`}
+                                name={
+                                    <Typography variant="caption">
+                                        {payload[0]?.payload?.Proposer}
+                                    </Typography>
+                                }
+                                className={classes.proposerAddress}
+                            />
+                        </Grid>
+
+                        <Grid item xs={5}>
+                            <Typography color="textPrimary" variant="body2" align="left">
+                                Height
+                            </Typography>
+                        </Grid>
+
+                        <Grid item xs={7}>
+                            <NavLink
+                                href={`/block/${payload[0]?.payload?.Height}`}
+                                name={
+                                    <Typography color="textPrimary" variant="body2" align="right">
+                                        {payload[0]?.payload?.Height}
+                                    </Typography>
+                                }
+                            />
+                        </Grid>
+
+                        <Grid item xs={5}>
+                            <Typography color="textPrimary" variant="body2" align="left">
+                                Voted
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={7}>
+                            <Typography color="textPrimary" variant="body2" align="right">
+                                {payload[0]?.payload?.VotedNumber}
+                            </Typography>
+                        </Grid>
+
+                        <Grid item xs={5}>
+                            <Typography color="textPrimary" variant="body2" align="left">
+                                Missed
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={7}>
+                            <Typography color="textPrimary" variant="body2" align="right">
+                                {payload[0]?.payload?.MissedNumber}
+                            </Typography>
+                        </Grid>
+
+                        <Grid item xs={5}>
+                            <Typography color="textPrimary" variant="body2" align="left">
+                                Votes Available
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={7}>
+                            <Typography color="textPrimary" variant="body2" align="right">
+                                {numbro(payload[0]?.payload?.VotesAvailable).format('0.00')} %
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Typography color="textPrimary" variant="body2" align="left">
+                                Gas (used)
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Typography color="textPrimary" variant="body2" align="right">
+                                {Coin(payload[0]?.payload?.GasUsed, 'cUSD')}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </CardContent>
+            </Card>
+        );
     }
 };
 
@@ -230,7 +226,7 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
 
     if (data?.validatorGroup?.members) {
         for (let c = 0; c < data?.validatorGroup?.members.length; c++) {
-            membersArray[c] = data?.validatorGroup?.members[c].address;
+            membersArray[c] = data?.validatorGroup?.members[c].signer;
         }
     }
     const findValidatorsWhoSignedTheBlock = (returnRealValue: boolean) => {
