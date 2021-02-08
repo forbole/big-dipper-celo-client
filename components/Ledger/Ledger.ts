@@ -1,9 +1,6 @@
 /* eslint-disable */
 import { ContractKit, newKitFromWeb3 } from '@celo/contractkit';
-import {
-    LedgerWallet,
-    newLedgerWalletWithSetup
-} from '@celo/contractkit/lib/wallets/ledger-wallet';
+import { newLedgerWalletWithSetup } from "@celo/wallet-ledger";
 import Eth from '@ledgerhq/hw-app-eth';
 import TransportU2F from '@ledgerhq/hw-transport-u2f';
 import TransportUSB from '@ledgerhq/hw-transport-webusb';
@@ -13,8 +10,8 @@ import Web3 from 'web3';
 
 declare global {
     interface Window {
-        USB:any;
-        u2f:any;
+        USB: any;
+        u2f: any;
     }
 }
 
@@ -36,12 +33,12 @@ const URL = 'https://forno.celo.org';
 
 type LockCeloProps = { amount: string; from: string };
 type UnlockCeloProps = { amount: string; from: string };
-type VoteProposalProps = { proposalNumber: number, from: string,  vote: string} 
+type VoteProposalProps = { proposalNumber: number, from: string, vote: string }
 type VoteValidatorGroupProps = { amount: string; from: string; group: string }
-type RevokeValidatorGroupVoteProps = { amount: string; account: string; group: string}
-type IsAccountProps = {address: string};
-type CreateAccountProps = {address: string};
-type ActivateVaidatorGroupVotesProps = {address: string; validatorGroupAddress: string};
+type RevokeValidatorGroupVoteProps = { amount: string; account: string; group: string }
+type IsAccountProps = { address: string };
+type CreateAccountProps = { address: string };
+type ActivateVaidatorGroupVotesProps = { address: string; validatorGroupAddress: string };
 
 class Ledger extends Component {
     private address = '';
@@ -66,8 +63,8 @@ class Ledger extends Component {
                 return 'Celo App is not open';
             case 'Ledger device: Condition of use not satisfied (denied by the user?) (0x6985)':
                 return 'The connection was rejected by the user. ';
-                case `Cannot read property 'sendAndWaitForReceipt' of undefined`:
-                    return `Couldn't find any votes to be activated. Please ensure you have voted for Validator Group and waited at least 24hrs to activate the votes. `
+            case `Cannot read property 'sendAndWaitForReceipt' of undefined`:
+                return `Couldn't find any votes to be activated. Please ensure you have voted for Validator Group and waited at least 24hrs to activate the votes. `
             default:
                 return errorMessage;
         }
@@ -78,7 +75,7 @@ class Ledger extends Component {
         const eth = new Eth(transport);
         const wallet = await newLedgerWalletWithSetup(eth.transport);
         // @ts-ignore
-        
+
         const kit: ContractKit = newKitFromWeb3(web3, wallet);
 
         this.web3 = web3;
@@ -123,7 +120,7 @@ class Ledger extends Component {
         }
     }
 
-     async isAccount({ address } : IsAccountProps) {
+    async isAccount({ address }: IsAccountProps) {
         if (!this.kit) {
             this.checkLedgerErrors('Ledger device is disconnected');
         }
@@ -133,12 +130,12 @@ class Ledger extends Component {
         return isAccount;
     }
 
-      async createAccount({ address } : CreateAccountProps) {
+    async createAccount({ address }: CreateAccountProps) {
         if (!this.kit) {
-             this.checkLedgerErrors('Ledger device is disconnected');
+            this.checkLedgerErrors('Ledger device is disconnected');
         }
         const getAccounts = await this.kit.contracts.getAccounts();
-        const result = await getAccounts.createAccount().sendAndWaitForReceipt({ from: address });        
+        const result = await getAccounts.createAccount().sendAndWaitForReceipt({ from: address });
         console.log(result);
 
         return result;
@@ -164,49 +161,49 @@ class Ledger extends Component {
 
         const unlockAmount = parseFloat(amount) * this.CELO_FRACTION
         const lockedCelo = await this.kit.contracts.getLockedGold();
-        
-        const result = await lockedCelo.unlock(unlockAmount).sendAndWaitForReceipt({from});
+
+        const result = await lockedCelo.unlock(unlockAmount).sendAndWaitForReceipt({ from });
         console.log(result);
 
         return result;
     }
 
-        async voteProposal({proposalNumber, from, vote}: VoteProposalProps) {
+    async voteProposal({ proposalNumber, from, vote }: VoteProposalProps) {
         if (!this.kit) {
             this.checkLedgerErrors("Ledger device is disconnected");
         }
         const getGovernance = await this.kit.contracts.getGovernance();
         const proposalVote = await getGovernance.vote(proposalNumber, vote);
         const result = await proposalVote.sendAndWaitForReceipt({ from });
-        console.log(result); 
+        console.log(result);
 
         return result;
     }
-    
 
-        async activateVaidatorGroupVotes({address, validatorGroupAddress}:ActivateVaidatorGroupVotesProps) {
+
+    async activateVaidatorGroupVotes({ address, validatorGroupAddress }: ActivateVaidatorGroupVotesProps) {
         if (!this.kit) {
             this.checkLedgerErrors("Ledger device is disconnected");
 
         }
-        
-        let result;        
+
+        let result;
         this.kit.defaultAccount = address;
-        
+
         const getElection = await this.kit.contracts.getElection();
         const activateVotes = await getElection.activate(address);
 
-        for(let c in activateVotes) {
-            if(activateVotes[c].address === validatorGroupAddress){
+        for (let c in activateVotes) {
+            if (activateVotes[c].address === validatorGroupAddress) {
                 result = await activateVotes[c].sendAndWaitForReceipt();
             }
         }
-         
+
         return result;
-       
+
     }
 
-        async voteValidatorGroup({amount, from, group} : VoteValidatorGroupProps) {
+    async voteValidatorGroup({ amount, from, group }: VoteValidatorGroupProps) {
         if (!this.kit) {
             this.checkLedgerErrors('Ledger device is disconnected');
         }
@@ -223,7 +220,7 @@ class Ledger extends Component {
     }
 
 
-        async revokeValidatorGroupVote({amount, account, group}:RevokeValidatorGroupVoteProps) {
+    async revokeValidatorGroupVote({ amount, account, group }: RevokeValidatorGroupVoteProps) {
         if (!this.kit) {
             this.checkLedgerErrors('Ledger device is disconnected');
         }

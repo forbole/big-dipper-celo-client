@@ -69,6 +69,7 @@
 * Handled NAN values showing in some Validator Group elements 
 * Updated page value in `DepositList`
 * Updated Ledger Login
+* [#207] Updated `@celo` npm packages to v1.0.1
 
 ## v0.1.3
 
