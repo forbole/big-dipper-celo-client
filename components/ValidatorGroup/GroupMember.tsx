@@ -122,7 +122,7 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
             if (rewardValue > 0) {
                 return Coin(rewardValue, 'cUSD', 2);
             } else {
-                return 0;
+                return Coin(0, 'cUSD', 2);
             }
         }
     };
