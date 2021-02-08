@@ -73,6 +73,7 @@
 * Code cleanup
 * Removed `GraphqlErrors` and updated `ApolloClient`
 * Updated Uptime Chart
+* Updated ApolloClient uri
 
 ## v0.1.3
 
