@@ -97,7 +97,7 @@ const Login = (): JSX.Element => {
                     `Can't find an account with address ${address} on the chain. Please accept the connection and sign the transaction on your Ledger deivce to create an account. `
                 );
                 const createAccount = await Ledger.createAccount(accountAddress);
-                if (createAccount === true) {
+                if (createAccount) {
                     return true;
                 } else {
                     return false;
@@ -148,6 +148,7 @@ const Login = (): JSX.Element => {
                         setErrorMessage(Ledger.checkLedgerErrors(e.message));
                     }
                 }
+                setOpen(false);
             } catch (e) {
                 setErrorMessage(Ledger.checkLedgerErrors(e.message));
                 setRetry(true);
