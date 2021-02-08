@@ -34,7 +34,6 @@ const useStyles = makeStyles({
         paddingTop: '2rem',
         textTransform: 'none',
         borderRadius: 4,
-        //minHeight: "2.5rem",
         width: '100%'
     },
     controlButtonLabel: {

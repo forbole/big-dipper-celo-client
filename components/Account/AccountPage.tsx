@@ -70,8 +70,8 @@ const AccountPage = ({ address }: AccountPageProps): JSX.Element => {
                 </Grid>
 
                 {/* <Grid item xs={12} >
-        <CoinBalanceHistory />
-      </Grid> */}
+                <CoinBalanceHistory />
+                </Grid> */}
 
                 {isValidator ? (
                     <Grid item xs={12}>

@@ -70,6 +70,7 @@
 * Updated page value in `DepositList`
 * Updated Ledger Login
 * [#207] Updated `@celo` npm packages to v1.0.1
+* Code cleanup
 
 ## v0.1.3
 

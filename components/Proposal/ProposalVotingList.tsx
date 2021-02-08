@@ -462,7 +462,6 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                             cy={120}
                             innerRadius={70}
                             outerRadius={80}
-                            //fill="#8884d8"
                             strokeWidth={0}
                             paddingAngle={0.5}
                             dataKey="value">
@@ -485,7 +484,6 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                     <Grid item xs={12}>
                         <StyledTabs
                             value={value}
-                            //textColor="primary"
                             onChange={handleChange}
                             aria-label="Proposal Vote Tabs"
                             TabIndicatorProps={{

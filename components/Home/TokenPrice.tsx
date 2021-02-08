@@ -199,7 +199,6 @@ const TokenPriceTooltip = ({ active, payload }: TokenPriceTooltipProps) => {
 const StyledDatePicker = withStyles({
     root: {
         '& div.MuiInputAdornment-positionEnd ': {
-            // marginLeft: "-30%",
             position: 'absolute',
             marginLeft: '5.5rem'
         },

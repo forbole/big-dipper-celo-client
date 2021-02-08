@@ -85,7 +85,6 @@ const Activate = ({ isLoading, validatorGroup }: ActivateValGroupProps): JSX.Ele
                             </Grid>
 
                             <Grid item xs={12}>
-                                {/* <TokenDropdown /> */}
                                 <Typography
                                     variant="body1"
                                     noWrap

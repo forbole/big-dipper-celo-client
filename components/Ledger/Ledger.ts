@@ -75,7 +75,6 @@ class Ledger extends Component {
         const eth = new Eth(transport);
         const wallet = await newLedgerWalletWithSetup(eth.transport);
         // @ts-ignore
-
         const kit: ContractKit = newKitFromWeb3(web3, wallet);
 
         this.web3 = web3;

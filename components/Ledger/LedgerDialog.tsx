@@ -82,8 +82,6 @@ const useStyles = makeStyles((theme: Theme) =>
             color: 'red',
             textAlign: 'center',
             paddingBottom: '2rem'
-            // wordBreak: 'break-all',
-            // lineBreak: 'anywhere'
         },
 
         circularProgress: {
@@ -476,7 +474,6 @@ const LedgerDialog = ({
 
     const handleUnlock = async () => {
         try {
-            // setLedgerLoading(true);
             const address = { address: currentUser };
             if (await checkIfAccount(address)) {
                 setShowCircuralProgress(true);
