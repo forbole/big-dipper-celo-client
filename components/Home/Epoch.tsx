@@ -236,8 +236,7 @@ const Epoch = (): JSX.Element => {
         }
     };
 
-    if (error || chain.error)
-        return <ErrorMessage message="Connection error. Please try again later. " />;
+    if (error || chain.error) return <ErrorMessage />;
     if (loading && chain.loading) return <ComponentLoader />;
 
     return (
