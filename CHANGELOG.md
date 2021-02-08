@@ -75,6 +75,7 @@
 * Updated Uptime Chart
 * Updated ApolloClient uri
 * Added `cache-and-network` fetch policy to `ApolloClient`
+* Updated `pollInterval` value in Epoch query
 
 ## v0.1.3
 
