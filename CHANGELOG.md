@@ -71,6 +71,7 @@
 * Updated Ledger Login
 * [#207] Updated `@celo` npm packages to v1.0.1
 * Code cleanup
+* Removed `GraphqlErrors` and updated `ApolloClient`
 
 ## v0.1.3
 
