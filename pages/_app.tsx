@@ -18,8 +18,13 @@ const MATOMO_SITE_ID = 3;
 const cache = new InMemoryCache({ possibleTypes });
 
 export const client = new ApolloClient({
-    uri: 'http://localhost:4000/graphql',
-    cache
+    uri: 'https://server.celo.bigdipper.live/graphql',
+    cache,
+    defaultOptions: {
+        watchQuery: {
+            fetchPolicy: 'cache-and-network'
+        }
+    }
 });
 
 export default function App(props: { Component: any; pageProps: any }): JSX.Element {
