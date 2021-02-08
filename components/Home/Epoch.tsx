@@ -165,11 +165,13 @@ const Epoch = (): JSX.Element => {
     const [pageSize] = React.useState(ROWMEDIUM);
     const page = pageNumber + 1;
 
-    const chain = useQuery(GET_CHAIN);
+    const chain = useQuery(GET_CHAIN, {
+        pollInterval: 5500
+    });
 
     const { loading, error, data } = useQuery(GET_BLOCK, {
         variables: { pageSize, page },
-        pollInterval: 1000
+        pollInterval: 5500
     });
 
     const chartData = [
