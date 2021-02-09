@@ -499,7 +499,6 @@ const LedgerDialog = ({
             if (await checkIfAccount(address)) {
                 setLedgerLoading(true);
                 const from = currentUser;
-                const vote = '';
                 const proposalNumber = getProposalNumber;
                 const voteObject = { proposalNumber, from, vote };
                 await Ledger.voteProposal(voteObject);
