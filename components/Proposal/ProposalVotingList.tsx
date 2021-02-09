@@ -404,9 +404,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                             color="textPrimary"
                             variant="subtitle1"
                             className={classes.priceDisplay}>
-                            {new BigNumber(data?.proposal?.votes?.Total)
-                                .dividedBy(CELO_FRACTION)
-                                .toFormat(2)}
+                            {Coin(data?.proposal?.votes?.Total, 'CELO', 2)}
                         </Typography>
                     ) : (
                         <NotAvailable variant="body2" />
@@ -431,22 +429,6 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
                                           .dividedBy(CELO_FRACTION)
                                           .toFormat(2)
                                   ).format({ average: true, mantissa: 2 })
-                                : null}{' '}
-                            CELO)
-                            <br></br>
-                            (~
-                            {numbro(Coin(data?.proposal?.votes?.Total, '')).format({
-                                average: true,
-                                mantissa: 2
-                            })}{' '}
-                            of ~
-                            {chainData?.data?.chain?.celoTotalSupply
-                                ? numbro(
-                                      Coin(chainData?.data?.chain?.celoTotalSupply, 'CELO', 2)
-                                  ).format({
-                                      average: true,
-                                      mantissa: 2
-                                  })
                                 : null}{' '}
                             CELO)
                         </Typography>

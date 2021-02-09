@@ -117,11 +117,12 @@ const DepositList = ({ proposal }: DepositListProps): JSX.Element => {
             for (const c in data?.proposal?.upvoteList) {
                 if (data?.proposal?.upvoteList[c]?.returnValues?.upvotes) {
                     totalDeposited =
-                        totalDeposited + data?.proposal?.upvoteList[c]?.returnValues?.upvotes;
+                        totalDeposited +
+                        data?.proposal?.upvoteList[c]?.returnValues?.upvotes / CELO_FRACTION;
                 }
             }
         }
-        return Coin(totalDeposited, 'CELO', 2);
+        return new BigNumber(totalDeposited).toFormat(2);
     };
 
     if (loading) return <ComponentLoader />;
