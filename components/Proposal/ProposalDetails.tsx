@@ -362,8 +362,7 @@ const ProposalDetails = ({
                             <NotAvailable variant="body2" className={classes.alignRight} />
                         )}
                     </Grid>
-
-                    {proposalStatus === ('Vote' || 'Referendum') ? (
+                    {proposalStatus === 'Referendum' || proposalStatus === 'Vote' ? (
                         <Grid item xs={12} className={classes.centerContent}>
                             <LedgerDialog
                                 action="ProposalVote"
