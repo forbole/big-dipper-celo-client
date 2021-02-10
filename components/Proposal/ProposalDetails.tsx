@@ -9,7 +9,8 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import moment from 'moment';
 import React, { useEffect } from 'react';
-import MarkdownView from 'react-showdown';
+import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
 
 import LedgerDialog from '../Ledger/LedgerDialog';
 import Coin from '../Utils/Coin';
@@ -239,17 +240,8 @@ const ProposalDetails = ({
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Description</Typography>
                         {proposalDescription ? (
-                            <MarkdownView
-                                markdown={proposalDescription}
-                                options={{
-                                    tables: true,
-                                    emoji: true,
-                                    simplifiedAutoLink: true,
-                                    smoothLivePreview: true,
-                                    openLinksInNewWindow: true
-                                }}
-                                flavor="vanilla"
-                            />
+                            // eslint-disable-next-line react/no-children-prop
+                            <ReactMarkdown plugins={[gfm]} children={proposalDescription} />
                         ) : (
                             <NotAvailable variant="body2" className={classes.alignRight} />
                         )}

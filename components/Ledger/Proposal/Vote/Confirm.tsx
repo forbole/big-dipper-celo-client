@@ -5,7 +5,10 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
-import MarkdownView from 'react-showdown';
+import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
+
+import NavLink from '../../../Utils/NavLink';
 
 const useStyles = makeStyles({
     root: {
@@ -31,7 +34,10 @@ const useStyles = makeStyles({
     },
 
     item: {
-        justifyContent: 'center'
+        justifyContent: 'center',
+        '& a': {
+            color: 'rgba(58, 211, 158, 1)'
+        }
     },
 
     wrapText: {
@@ -109,9 +115,14 @@ const Confirm = ({
                                 </Typography>
                             </Grid>
                             <Grid item xs={9} className={classes.item}>
-                                <Typography variant="body2" align="right" gutterBottom>
-                                    {proposer}
-                                </Typography>
+                                <NavLink
+                                    href={`/account/${proposer}`}
+                                    name={
+                                        <Typography variant="body2" align="right" gutterBottom>
+                                            {proposer}
+                                        </Typography>
+                                    }
+                                />
                             </Grid>
 
                             <Grid item xs={12}>
@@ -150,23 +161,10 @@ const Confirm = ({
                                 <Typography variant="body2" gutterBottom>
                                     Description
                                 </Typography>
-
-                                <Typography
-                                    variant="body2"
-                                    color="textPrimary"
-                                    className={classes.wrapText}>
-                                    <MarkdownView
-                                        markdown={proposalDescription}
-                                        options={{
-                                            tables: true,
-                                            emoji: true,
-                                            simplifiedAutoLink: true,
-                                            smoothLivePreview: true,
-                                            openLinksInNewWindow: true
-                                        }}
-                                        flavor="vanilla"
-                                    />
-                                </Typography>
+                                {
+                                    // eslint-disable-next-line react/no-children-prop
+                                    <ReactMarkdown plugins={[gfm]} children={proposalDescription} />
+                                }
                             </Grid>
 
                             <Grid item xs={12}>
