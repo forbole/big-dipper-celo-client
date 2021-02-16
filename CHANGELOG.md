@@ -77,6 +77,7 @@
 * Added `cache-and-network` fetch policy to `ApolloClient`
 * Updated `pollInterval` value in Epoch query
 * Added `react-markdown`
+* Removed `fetchPolicy` from `ApolloClient`
 
 ## v0.1.3
 

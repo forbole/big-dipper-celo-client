@@ -19,12 +19,7 @@ const cache = new InMemoryCache({ possibleTypes });
 
 export const client = new ApolloClient({
     uri: 'https://server.celo.bigdipper.live/graphql',
-    cache,
-    defaultOptions: {
-        watchQuery: {
-            fetchPolicy: 'cache-and-network'
-        }
-    }
+    cache
 });
 
 export default function App(props: { Component: any; pageProps: any }): JSX.Element {
