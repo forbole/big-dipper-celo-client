@@ -78,6 +78,7 @@
 * Updated `pollInterval` value in Epoch query
 * Added `react-markdown`
 * Removed `fetchPolicy` from `ApolloClient`
+* Updated `@apollo/client` package to `v3.3.11`
 
 ## v0.1.3
 
