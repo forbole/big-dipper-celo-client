@@ -177,17 +177,17 @@ const AccountList = (): JSX.Element => {
                                                         {pageSize * pageNumber + index + 1}
                                                     </Typography>
                                                 </TableCell>
-                                                {row.address ? (
+                                                {row?.address ? (
                                                     <TableCell
                                                         align="left"
                                                         padding="checkbox"
                                                         className={classes.tableCell}>
                                                         <NavLink
-                                                            href={`/account/${row.address}`}
+                                                            href={`/account/${row?.address}`}
                                                             name={
                                                                 <Typography variant="body2" noWrap>
                                                                     <MiddleEllipsis
-                                                                        text={row.address}
+                                                                        text={row?.address}
                                                                     />
                                                                 </Typography>
                                                             }
@@ -200,12 +200,12 @@ const AccountList = (): JSX.Element => {
                                                     align="right"
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
-                                                    {row.balance ? (
+                                                    {row?.balance ? (
                                                         <Typography
                                                             variant="body2"
                                                             color="textSecondary"
                                                             noWrap>
-                                                            {Coin(row.balance, 'CELO', 2)}
+                                                            {Coin(row?.balance, 'CELO', 2)}
                                                         </Typography>
                                                     ) : (
                                                         <NotAvailable variant="body2" />
@@ -237,12 +237,12 @@ const AccountList = (): JSX.Element => {
                                                     align="right"
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
-                                                    {row.txCount ? (
+                                                    {row?.txCount ? (
                                                         <Typography
                                                             variant="body2"
                                                             color="textSecondary"
                                                             noWrap>
-                                                            {numbro(row.txCount).format('0,000')}
+                                                            {numbro(row?.txCount).format('0,000')}
                                                         </Typography>
                                                     ) : (
                                                         <Typography

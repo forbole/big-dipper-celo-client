@@ -119,14 +119,7 @@ const ProposedBlocks = ({ address }: ProposedBlocksProps): JSX.Element => {
         variables: { address }
     });
 
-    address =
-        accountQuery.data &&
-        accountQuery.data.account &&
-        accountQuery.data.account.accountSummary &&
-        accountQuery.data.account.accountSummary.authorizedSigners &&
-        accountQuery.data.account.accountSummary.authorizedSigners.validator
-            ? accountQuery.data.account.accountSummary.authorizedSigners.validator
-            : '';
+    address = accountQuery?.data?.account?.accountSummary?.authorizedSigners?.validator ?? '';
 
     const { loading, error, data } = useQuery(GET_PROPOSED_BLOCKS, {
         variables: { address, pageSize, page },
@@ -168,7 +161,7 @@ const ProposedBlocks = ({ address }: ProposedBlocksProps): JSX.Element => {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {data.proposedBlocks.blocks.map((row: any, index: number) => {
+                                    {data?.proposedBlocks?.blocks.map((row: any, index: number) => {
                                         return (
                                             <TableRow
                                                 key={index}
@@ -188,12 +181,12 @@ const ProposedBlocks = ({ address }: ProposedBlocksProps): JSX.Element => {
                                                     padding="checkbox"
                                                     align="left"
                                                     className={classes.tableCell}>
-                                                    {row.number ? (
+                                                    {row?.number ? (
                                                         <NavLink
-                                                            href={`/block/${row.number}`}
+                                                            href={`/block/${row?.number}`}
                                                             name={
                                                                 <Typography variant="body2" noWrap>
-                                                                    {row.number}
+                                                                    {row?.number}
                                                                 </Typography>
                                                             }
                                                         />
@@ -206,20 +199,18 @@ const ProposedBlocks = ({ address }: ProposedBlocksProps): JSX.Element => {
                                                     align="left"
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
-                                                    {(row.miner && row.miner.name) ||
-                                                    (row.miner &&
-                                                        row.miner.signerAccount &&
-                                                        row.miner.signerAccount.address) ? (
+                                                    {row?.miner?.name ||
+                                                    row?.miner?.signerAccount?.address ? (
                                                         <NavLink
-                                                            href={`/account/${row.miner.signerAccount.address}`}
+                                                            href={`/account/${row?.miner?.signerAccount?.address}`}
                                                             name={
                                                                 <Typography variant="body2" noWrap>
-                                                                    {row.miner.name || (
+                                                                    {row?.miner?.name || (
                                                                         <MiddleEllipsis
                                                                             text={
-                                                                                row.miner
-                                                                                    .signerAccount
-                                                                                    .address
+                                                                                row?.miner
+                                                                                    ?.signerAccount
+                                                                                    ?.address
                                                                             }
                                                                         />
                                                                     )}
@@ -235,10 +226,9 @@ const ProposedBlocks = ({ address }: ProposedBlocksProps): JSX.Element => {
                                                     align="left"
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
-                                                    {row.transactions &&
-                                                    row.transactions.transactionIndex ? (
+                                                    {row?.transactions?.transactionIndex ? (
                                                         <Typography variant="body2" noWrap>
-                                                            {row.transactions.transactionIndex}
+                                                            {row?.transactions?.transactionIndex}
                                                         </Typography>
                                                     ) : (
                                                         '0'
@@ -249,9 +239,9 @@ const ProposedBlocks = ({ address }: ProposedBlocksProps): JSX.Element => {
                                                     align="left"
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
-                                                    {row.gasUsed ? (
+                                                    {row?.gasUsed ? (
                                                         <Typography variant="body2" noWrap>
-                                                            {row.gasUsed}
+                                                            {row?.gasUsed}
                                                         </Typography>
                                                     ) : (
                                                         <NotAvailable variant="body2" />
@@ -262,9 +252,9 @@ const ProposedBlocks = ({ address }: ProposedBlocksProps): JSX.Element => {
                                                     align="left"
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
-                                                    {row.gasLimit ? (
+                                                    {row?.gasLimit ? (
                                                         <Typography variant="body2" noWrap>
-                                                            {row.gasLimit}
+                                                            {row?.gasLimit}
                                                         </Typography>
                                                     ) : (
                                                         <NotAvailable variant="body2" />
@@ -274,10 +264,10 @@ const ProposedBlocks = ({ address }: ProposedBlocksProps): JSX.Element => {
                                                     align="left"
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
-                                                    {row.timestamp ? (
+                                                    {row?.timestamp ? (
                                                         <Typography variant="body2" noWrap>
                                                             {moment
-                                                                .unix(row.timestamp)
+                                                                .unix(row?.timestamp)
                                                                 .format('Do MMMM YYYY, h:mm:ss a')}
                                                         </Typography>
                                                     ) : (
@@ -300,7 +290,7 @@ const ProposedBlocks = ({ address }: ProposedBlocksProps): JSX.Element => {
                                 ROWXLARGE
                             ]}
                             component="div"
-                            count={data.proposedBlocks.totalCounts}
+                            count={data?.proposedBlocks?.totalCounts}
                             rowsPerPage={pageSize}
                             page={pageNumber}
                             onChangePage={handleChangePage}
