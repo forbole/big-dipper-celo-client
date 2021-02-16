@@ -49,7 +49,7 @@ const AccountPage = ({ address }: AccountPageProps): JSX.Element => {
         pollInterval: 5000
     });
 
-    const isValidator = data && data.validator ? true : false;
+    const isValidator = data?.validator ? true : false;
 
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage />;

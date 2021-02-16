@@ -102,14 +102,7 @@ const Downtime = ({ address }: DowntimeProps): JSX.Element => {
         variables: { address }
     });
 
-    address =
-        accountQuery.data &&
-        accountQuery.data.account &&
-        accountQuery.data.account.accountSummary &&
-        accountQuery.data.account.accountSummary.authorizedSigners &&
-        accountQuery.data.account.accountSummary.authorizedSigners.validator
-            ? accountQuery.data.account.accountSummary.authorizedSigners.validator
-            : '';
+    address = accountQuery?.data?.account?.accountSummary?.authorizedSigners?.validator ?? '';
 
     const { loading, error, data } = useQuery(DOWNTIME, {
         variables: { address, pageSize, page },
@@ -150,7 +143,7 @@ const Downtime = ({ address }: DowntimeProps): JSX.Element => {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {data.downtime.blocks.map((row: any, index: number) => {
+                                    {data?.downtime?.blocks.map((row: any, index: number) => {
                                         return (
                                             <TableRow
                                                 key={index}
@@ -171,10 +164,10 @@ const Downtime = ({ address }: DowntimeProps): JSX.Element => {
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
                                                     <NavLink
-                                                        href={`/block/${row.number}`}
+                                                        href={`/block/${row?.number}`}
                                                         name={
                                                             <Typography variant="body2" noWrap>
-                                                                {row.number}
+                                                                {row?.number}
                                                             </Typography>
                                                         }
                                                     />
@@ -183,14 +176,12 @@ const Downtime = ({ address }: DowntimeProps): JSX.Element => {
                                                     align="left"
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
-                                                    {row.miner &&
-                                                    row.miner.name &&
-                                                    row.miner.address ? (
+                                                    {row?.miner?.name && row?.miner?.address ? (
                                                         <NavLink
-                                                            href={`/account/${row.miner.address}`}
+                                                            href={`/account/${row?.miner?.address}`}
                                                             name={
                                                                 <Typography variant="body2" noWrap>
-                                                                    {row.miner.name}
+                                                                    {row?.miner?.name}
                                                                 </Typography>
                                                             }
                                                         />
@@ -202,10 +193,11 @@ const Downtime = ({ address }: DowntimeProps): JSX.Element => {
                                                     align="left"
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
-                                                    {row.transactions &&
-                                                    row.transactions.transactionIndex ? (
+                                                    {row?.transactions?.transactionIndex ? (
                                                         <MiddleEllipsis
-                                                            text={row.transactions.transactionIndex}
+                                                            text={
+                                                                row?.transactions?.transactionIndex
+                                                            }
                                                         />
                                                     ) : (
                                                         '0'
@@ -215,9 +207,9 @@ const Downtime = ({ address }: DowntimeProps): JSX.Element => {
                                                     align="left"
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
-                                                    {row.gasUsed ? (
+                                                    {row?.gasUsed ? (
                                                         <Typography variant="body2" noWrap>
-                                                            {row.gasUsed}
+                                                            {row?.gasUsed}
                                                         </Typography>
                                                     ) : (
                                                         <NotAvailable variant="body2" />
@@ -227,9 +219,9 @@ const Downtime = ({ address }: DowntimeProps): JSX.Element => {
                                                     align="left"
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
-                                                    {row.gasLimit ? (
+                                                    {row?.gasLimit ? (
                                                         <Typography variant="body2" noWrap>
-                                                            {row.gasLimit}
+                                                            {row?.gasLimit}
                                                         </Typography>
                                                     ) : (
                                                         <NotAvailable variant="body2" />
@@ -239,10 +231,10 @@ const Downtime = ({ address }: DowntimeProps): JSX.Element => {
                                                     align="left"
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
-                                                    {row.timestamp ? (
+                                                    {row?.timestamp ? (
                                                         <Typography variant="body2" noWrap>
                                                             {moment
-                                                                .unix(row.timestamp)
+                                                                .unix(row?.timestamp)
                                                                 .format('Do MMMM YYYY, h:mm:ss a')}
                                                         </Typography>
                                                     ) : (
@@ -265,7 +257,7 @@ const Downtime = ({ address }: DowntimeProps): JSX.Element => {
                                 ROWXLARGE
                             ]}
                             component="div"
-                            count={data.downtime.totalCounts}
+                            count={data?.downtime?.totalCounts}
                             rowsPerPage={pageSize}
                             page={pageNumber}
                             onChangePage={handleChangePage}

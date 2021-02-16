@@ -182,15 +182,15 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                             Time
                         </Typography>
                         <Typography variant="body2" component="h2" color="textSecondary">
-                            {data.block && data.block.timestamp ? (
-                                new Date(parseInt(data.block.timestamp) * 1000).toUTCString()
+                            {data?.block?.timestamp ? (
+                                new Date(parseInt(data?.block?.timestamp) * 1000).toUTCString()
                             ) : (
                                 <NotAvailable variant="body2" />
                             )}
                             (
-                            {data && data.block && data.block.timestamp
+                            {data?.block?.timestamp
                                 ? moment
-                                      .unix(data.block.timestamp)
+                                      .unix(data?.block?.timestamp)
                                       .format('Do MMMM YYYY, h:mm:ss a')
                                 : null}
                             )
@@ -200,9 +200,7 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                     <Grid item xs={12}>
                         <Typography variant="body2">Transactions</Typography>
                         <Typography variant="body2" color="textSecondary">
-                            {data.block && data.block.transactions && data.block.transactions
-                                ? data.block.transactions.length
-                                : '0'}
+                            {data?.block?.transactions?.length ?? '0'}
                         </Typography>
                         <Divider variant="middle" className={classes.divider} />
                     </Grid>
@@ -210,8 +208,8 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                     <Grid item xs={12}>
                         <Typography variant="body2">Size</Typography>
                         <Typography variant="body2" component="h2" color="textSecondary">
-                            {data.block && data.block.size ? (
-                                data.block.size
+                            {data?.block?.size ? (
+                                data?.block?.size
                             ) : (
                                 <NotAvailable variant="body2" color="textSecondary" />
                             )}
@@ -224,11 +222,10 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                             Validator
                         </Typography>
                         <Typography variant="body2" component="h2">
-                            {(data && data.block && data.block.miner && data.block.miner.name) ||
-                            (data && data.block && data.block.miner && data.block.miner.signer) ? (
+                            {data?.block?.miner?.name || data?.block?.miner?.signer ? (
                                 <NavLink
-                                    href={`/account/${data.block.miner.signer}`}
-                                    name={data.block.miner.name}
+                                    href={`/account/${data?.block?.miner?.signer}`}
+                                    name={data?.block?.miner?.name || data?.block?.miner?.signer}
                                 />
                             ) : (
                                 <NotAvailable variant="body2" color="textSecondary" />
@@ -242,11 +239,11 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                             Hash
                         </Typography>
 
-                        {data && data.block && data.block.hash ? (
+                        {data?.block?.hash ? (
                             <Typography variant="body2" component="h2">
                                 <NavLink
-                                    href={`/transaction/${data.block.hash}`}
-                                    name={data.block.hash}
+                                    href={`/transaction/${data?.block?.hash}`}
+                                    name={data?.block?.hash}
                                 />
                             </Typography>
                         ) : (
@@ -260,11 +257,11 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                         <Typography variant="body2" component="h2">
                             Parent Hash
                         </Typography>
-                        {data.block && data.block.parentHash ? (
+                        {data?.block?.parentHash ? (
                             <Typography variant="body2" component="h2">
                                 <NavLink
-                                    href={`/transaction/${data.block.parentHash}`}
-                                    name={data.block.parentHash}
+                                    href={`/transaction/${data?.block?.parentHash}`}
+                                    name={data?.block?.parentHash}
                                 />
                             </Typography>
                         ) : (
@@ -278,8 +275,8 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                             Total Difficulty
                         </Typography>
                         <Typography variant="body2" component="h2" color="textSecondary">
-                            {data.block && data.block.totalDifficulty ? (
-                                data.block.totalDifficulty
+                            {data?.block?.totalDifficulty ? (
+                                data?.block?.totalDifficulty
                             ) : (
                                 <NotAvailable variant="body2" color="textSecondary" />
                             )}
@@ -292,10 +289,8 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                             Nonce
                         </Typography>
                         <Typography variant="body2" component="h2" color="textSecondary">
-                            {data.block &&
-                            data.block.transactions &&
-                            data.block.transactions.nonce ? (
-                                data.block.transactions.nonce
+                            {data?.block?.transactions?.nonce ? (
+                                data?.block?.transactions?.nonce
                             ) : (
                                 <NotAvailable variant="body2" color="textSecondary" />
                             )}
@@ -308,8 +303,8 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                             Gas Used
                         </Typography>
                         <Typography variant="body2" component="h2" color="textSecondary">
-                            {data.block && data.block.gasUsed ? (
-                                data.block.gasUsed
+                            {data?.block?.gasUsed ? (
+                                data?.block?.gasUsed
                             ) : (
                                 <NotAvailable variant="body2" color="textSecondary" />
                             )}
@@ -322,8 +317,8 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                             Gas Limit
                         </Typography>
                         <Typography variant="body2" component="h2" color="textSecondary">
-                            {data.block && data.block.gasLimit ? (
-                                data.block.gasLimit
+                            {data?.block?.gasLimit ? (
+                                data?.block?.gasLimit
                             ) : (
                                 <NotAvailable variant="body2" color="textSecondary" />
                             )}
@@ -374,20 +369,19 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                                 />
                             </StyledTabs>
 
-                            {data.block && data.block.signers ? (
+                            {data?.block?.signers ? (
                                 <ol className={classes.signersList}>
-                                    {data.block.signers.map((row: any, index: number) => {
-                                        if (row.exist) {
+                                    {data?.block?.signers.map((row: any, index: number) => {
+                                        if (row?.exist) {
                                             return (
                                                 <TabPanel value={value} index={0} key={index}>
                                                     <li key={index}>
-                                                        {row.validator &&
-                                                        row.validator.validatorGroup &&
-                                                        row.validator.validatorGroup.address ? (
+                                                        {row?.validator?.validatorGroup?.address ? (
                                                             <NavLink
-                                                                href={`/validatorGroup/${row.validator.validatorGroup.address}`}
+                                                                href={`/validatorGroup/${row?.validator?.validatorGroup?.address}`}
                                                                 name={
-                                                                    row.validator.name || row.signer
+                                                                    row?.validator?.name ||
+                                                                    row?.signer
                                                                 }
                                                             />
                                                         ) : (
@@ -400,12 +394,13 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                                             return (
                                                 <TabPanel value={value} index={1} key={index}>
                                                     <li key={index}>
-                                                        {row.validator &&
-                                                        row.validator.validatorGroup &&
-                                                        row.validator.validatorGroup.address ? (
+                                                        {row?.validator?.validatorGroup?.address ? (
                                                             <NavLink
-                                                                href={`/validatorGroup/${row.validator.validatorGroup.address}`}
-                                                                name={row.validator.name}
+                                                                href={`/validatorGroup/${row?.validator?.validatorGroup?.address}`}
+                                                                name={
+                                                                    row?.validator?.name ||
+                                                                    row?.signer
+                                                                }
                                                             />
                                                         ) : (
                                                             ''

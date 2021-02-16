@@ -79,7 +79,7 @@ const InputParameters = ({ hash }: InputParametersProps): JSX.Element => {
                                                     padding="checkbox"
                                                     className={classes.tableCell}>
                                                     <Typography color="textPrimary" variant="body2">
-                                                        {row.name}
+                                                        {row?.name}
                                                     </Typography>
                                                 </TableCell>
                                                 <TableCell
@@ -89,7 +89,7 @@ const InputParameters = ({ hash }: InputParametersProps): JSX.Element => {
                                                     align="left"
                                                     className={classes.tableCell}>
                                                     <Typography color="textPrimary" variant="body2">
-                                                        {row.type}
+                                                        {row?.type}
                                                     </Typography>
                                                 </TableCell>
                                                 <TableCell
@@ -101,7 +101,7 @@ const InputParameters = ({ hash }: InputParametersProps): JSX.Element => {
                                                     <Typography
                                                         color="textSecondary"
                                                         variant="body2">
-                                                        {row.value}
+                                                        {row?.value}
                                                     </Typography>
                                                 </TableCell>
                                             </TableRow>

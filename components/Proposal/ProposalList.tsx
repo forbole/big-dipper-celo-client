@@ -82,12 +82,12 @@ const ProposalList = ({ title }: ProposalListProps): JSX.Element => {
                                     <Grid container className={classes.container}>
                                         <Grid item xs={8} sm={10} className={classes.proposalNum}>
                                             <NavLink
-                                                href={`/proposal/${row.proposalNumber}`}
+                                                href={`/proposal/${row?.proposalNumber}`}
                                                 name={
                                                     <Typography
                                                         variant="body2"
                                                         className={classes.value}>
-                                                        #{row.proposalNumber}
+                                                        #{row?.proposalNumber}
                                                     </Typography>
                                                 }
                                                 textSecondary
@@ -111,10 +111,10 @@ const ProposalList = ({ title }: ProposalListProps): JSX.Element => {
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={3} sm={2} className={classes.proposalButton}>
-                                            {row.proposalStatus ? (
-                                                <Chips actionResult={`${row.proposalStatus}`} />
-                                            ) : row.proposalStage ? (
-                                                <Chips actionResult={`${row.proposalStage}`} />
+                                            {row?.proposalStatus ? (
+                                                <Chips actionResult={`${row?.proposalStatus}`} />
+                                            ) : row?.proposalStage ? (
+                                                <Chips actionResult={`${row?.proposalStage}`} />
                                             ) : null}
                                         </Grid>
                                         <Grid
@@ -123,8 +123,8 @@ const ProposalList = ({ title }: ProposalListProps): JSX.Element => {
                                             sm={8}
                                             className={classes.proposalDescription}>
                                             <NavLink
-                                                href={`/proposal/${row.proposalNumber}`}
-                                                name={row.proposalTitle}
+                                                href={`/proposal/${row?.proposalNumber}`}
+                                                name={row?.proposalTitle}
                                                 textSecondary
                                             />
                                         </Grid>

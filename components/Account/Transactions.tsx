@@ -165,15 +165,15 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                         }>
                                                                         Tx#
                                                                         <NavLink
-                                                                            href={`/transaction/${row.hash}`}
+                                                                            href={`/transaction/${row?.hash}`}
                                                                             className={
                                                                                 classes.leftInline
                                                                             }
                                                                             name={
-                                                                                row.hash ? (
+                                                                                row?.hash ? (
                                                                                     <MiddleEllipsis
                                                                                         text={
-                                                                                            row.hash
+                                                                                            row?.hash
                                                                                         }
                                                                                     />
                                                                                 ) : (
@@ -191,9 +191,11 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                         className={
                                                                             classes.alignRight
                                                                         }>
-                                                                        {row.timestamp ? (
+                                                                        {row?.timestamp ? (
                                                                             moment
-                                                                                .unix(row.timestamp)
+                                                                                .unix(
+                                                                                    row?.timestamp
+                                                                                )
                                                                                 .format(
                                                                                     'Do MMMM YYYY, h:mm:ss a'
                                                                                 )
@@ -222,18 +224,18 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                         }>
                                                                         From
                                                                     </Typography>
-                                                                    {row.from &&
-                                                                    row.from.address ? (
+                                                                    {row?.from &&
+                                                                    row?.from?.address ? (
                                                                         <NavLink
-                                                                            href={`/account/${row.from.address}`}
+                                                                            href={`/account/${row?.from?.address}`}
                                                                             className={
                                                                                 classes.txPadding
                                                                             }
                                                                             name={
                                                                                 <MiddleEllipsis
                                                                                     text={
-                                                                                        row.from
-                                                                                            .address
+                                                                                        row?.from
+                                                                                            ?.address
                                                                                     }
                                                                                 />
                                                                             }
@@ -257,17 +259,16 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                         }>
                                                                         To
                                                                         <NavLink
-                                                                            href={`/account/${row.to.address}`}
+                                                                            href={`/account/${row?.to?.address}`}
                                                                             className={
                                                                                 classes.txPadding
                                                                             }
                                                                             name={
-                                                                                row.to &&
-                                                                                row.to.address ? (
+                                                                                row?.to?.address ? (
                                                                                     <MiddleEllipsis
                                                                                         text={
-                                                                                            row.to
-                                                                                                .address
+                                                                                            row?.to
+                                                                                                ?.address
                                                                                         }
                                                                                     />
                                                                                 ) : (
@@ -284,14 +285,14 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                 </Grid>
 
                                                                 <Grid item xs={4} md={2}>
-                                                                    {row.gas ? (
+                                                                    {row?.gas ? (
                                                                         <Typography
                                                                             variant="body1"
                                                                             className={
                                                                                 classes.alignRight
                                                                             }>
                                                                             {Coin(
-                                                                                row.gas,
+                                                                                row?.gas,
                                                                                 'cUSD',
                                                                                 2
                                                                             )}
@@ -311,18 +312,17 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                     xs={12}
                                                                     md={9}
                                                                     className={classes.chip}>
-                                                                    {row.to &&
-                                                                    row.to.contract &&
-                                                                    row.to.contract.name ? (
+                                                                    {row?.to?.contract?.name ? (
                                                                         <Chips
                                                                             contractName={
-                                                                                row.to.contract.name
+                                                                                row?.to?.contract
+                                                                                    ?.name
                                                                             }
                                                                         />
                                                                     ) : null}
 
-                                                                    {row.type ? (
-                                                                        <Chips type={row.type} />
+                                                                    {row?.type ? (
+                                                                        <Chips type={row?.type} />
                                                                     ) : null}
                                                                 </Grid>
 

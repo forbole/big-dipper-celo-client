@@ -233,7 +233,7 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
         if (blockData?.data?.blocks?.blocks) {
             {
                 blockData?.data?.blocks?.blocks.map((row: any, index: number) => {
-                    allSigners[index] = { signers: row.signers, number: row.number };
+                    allSigners[index] = { signers: row?.signers, number: row?.number };
                 });
 
                 for (let d = 0; d < Object.keys(allSigners).length; d++) {
@@ -259,16 +259,16 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
     if (blockData?.data?.blocks?.blocks) {
         blockData?.data?.blocks?.blocks.map((row: any, index: number) => {
             blockUptime[index] = {
-                Height: row.number,
+                Height: row?.number,
                 Voted: findValidatorsWhoSignedTheBlock(false),
                 VotedNumber: findValidatorsWhoSignedTheBlock(true),
                 MissedNumber:
                     Object.keys(membersArray).length - findValidatorsWhoSignedTheBlock(true),
                 VotesAvailable:
                     (data?.validatorGroup?.votes / data?.validatorGroup?.votesAvailable) * 100 ?? 0,
-                Proposer: row.miner.signer,
-                GasUsed: row.gasUsed,
-                Signers: row.signers
+                Proposer: row?.miner?.signer,
+                GasUsed: row?.gasUsed,
+                Signers: row?.signers
             };
         });
     }
@@ -277,7 +277,7 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
     const calculateGroupUptime = () => {
         let addScore = 0;
         for (const c in validatorGroupMembers) {
-            addScore = addScore + validatorGroupMembers[c].score;
+            addScore = addScore + validatorGroupMembers[c]?.score;
         }
         const totalScore = (addScore / validatorGroupMembers.length) * 100;
         return totalScore ? numbro(totalScore).format('0.00') : 0;

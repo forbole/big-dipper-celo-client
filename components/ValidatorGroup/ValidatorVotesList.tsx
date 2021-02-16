@@ -361,17 +361,17 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               align="left"
                                                               className={classes.tableCell}>
                                                               {' '}
-                                                              {row.name || row.address ? (
+                                                              {row?.name || row?.address ? (
                                                                   <NavLink
-                                                                      href={`/validatorGroup/${row.address}`}
+                                                                      href={`/validatorGroup/${row?.address}`}
                                                                       name={
                                                                           <Typography
                                                                               variant="body2"
                                                                               noWrap>
                                                                               <MiddleEllipsis
                                                                                   text={
-                                                                                      row.name ||
-                                                                                      row.address
+                                                                                      row?.name ||
+                                                                                      row?.address
                                                                                   }
                                                                               />
                                                                           </Typography>
@@ -388,14 +388,14 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               align="left"
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
-                                                              {row.votes && row.votesAvailable ? (
+                                                              {row?.votes && row?.votesAvailable ? (
                                                                   <Typography
                                                                       variant="caption"
                                                                       noWrap>
                                                                       {new BigNumber(
-                                                                          (row.votes /
+                                                                          (row?.votes /
                                                                               CELO_FRACTION /
-                                                                              (row.votesAvailable /
+                                                                              (row?.votesAvailable /
                                                                                   CELO_FRACTION)) *
                                                                               100
                                                                       ).toFormat(2)}
@@ -404,9 +404,9 @@ const ValidatorVotesList = (): JSX.Element => {
                                                                           variant="determinate"
                                                                           value={parseFloat(
                                                                               new BigNumber(
-                                                                                  (row.votes /
+                                                                                  (row?.votes /
                                                                                       CELO_FRACTION /
-                                                                                      (row.votesAvailable /
+                                                                                      (row?.votesAvailable /
                                                                                           CELO_FRACTION)) *
                                                                                       100
                                                                               ).toFormat(2)
@@ -427,17 +427,17 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               align="left"
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
-                                                              {row.members &&
-                                                              row.electedValidators ? (
+                                                              {row?.members &&
+                                                              row?.electedValidators ? (
                                                                   <Typography
                                                                       variant="body2"
                                                                       noWrap>
                                                                       {
                                                                           Object.keys(
-                                                                              row.electedValidators
+                                                                              row?.electedValidators
                                                                           ).length
                                                                       }
-                                                                      / {row.members.length}
+                                                                      / {row?.members.length}
                                                                   </Typography>
                                                               ) : (
                                                                   <NotAvailable variant="body2" />
@@ -449,7 +449,7 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               className={classes.tableCell}>
                                                               <Typography variant="body2" noWrap>
                                                                   {Coin(
-                                                                      row.lockedGoldAmount,
+                                                                      row?.lockedGoldAmount,
                                                                       'CELO',
                                                                       2
                                                                   )}
@@ -463,7 +463,7 @@ const ValidatorVotesList = (): JSX.Element => {
                                                                   <Typography
                                                                       variant="body2"
                                                                       noWrap>
-                                                                      {row.commission * 100} %
+                                                                      {row?.commission * 100} %
                                                                   </Typography>
                                                               }
                                                           </TableCell>
@@ -474,7 +474,7 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               className={classes.tableCell}>
                                                               <Typography variant="body2" noWrap>
                                                                   {calculateGroupUptime(
-                                                                      row.address
+                                                                      row?.address
                                                                   )}{' '}
                                                                   %
                                                               </Typography>
@@ -485,7 +485,7 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
                                                               <Typography variant="body2" noWrap>
-                                                                  {row.slashingMultiplier}
+                                                                  {row?.slashingMultiplier}
                                                               </Typography>
                                                           </TableCell>
 
@@ -495,7 +495,7 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               className={classes.tableCell}>
                                                               <Typography variant="body2" noWrap>
                                                                   {calculateGroupRewards(
-                                                                      row.address
+                                                                      row?.address
                                                                   )}{' '}
                                                               </Typography>
                                                           </TableCell>
@@ -506,7 +506,7 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               className={classes.tableCell}>
                                                               <Typography variant="body2" noWrap>
                                                                   {calculateRewardsPercentage(
-                                                                      row.address
+                                                                      row?.address
                                                                   )}{' '}
                                                                   %
                                                               </Typography>
@@ -518,7 +518,7 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               className={classes.tableCell}>
                                                               <Typography variant="body2" noWrap>
                                                                   {calculateAttestation(
-                                                                      row.address
+                                                                      row?.address
                                                                   )}{' '}
                                                                   %
                                                               </Typography>
@@ -555,8 +555,8 @@ const ValidatorVotesList = (): JSX.Element => {
                                                                                           key={
                                                                                               index
                                                                                           }>
-                                                                                          {memberRow.name ||
-                                                                                          memberRow.address ? (
+                                                                                          {memberRow?.name ||
+                                                                                          memberRow?.address ? (
                                                                                               <>
                                                                                                   {' '}
                                                                                                   <Typography
@@ -570,18 +570,18 @@ const ValidatorVotesList = (): JSX.Element => {
                                                                                                           1}
                                                                                                   </Typography>
                                                                                                   <NavLink
-                                                                                                      href={`/account/${memberRow.address}`}
+                                                                                                      href={`/account/${memberRow?.address}`}
                                                                                                       name={
                                                                                                           <Typography variant="caption">
-                                                                                                              {memberRow.name ||
-                                                                                                                  memberRow.address}
+                                                                                                              {memberRow?.name ||
+                                                                                                                  memberRow?.address}
                                                                                                           </Typography>
                                                                                                       }
                                                                                                   />
-                                                                                                  {row.electedValidators
+                                                                                                  {row?.electedValidators
                                                                                                       ? findElectedValidators(
-                                                                                                            memberRow.address,
-                                                                                                            row.electedValidators
+                                                                                                            memberRow?.address,
+                                                                                                            row?.electedValidators
                                                                                                         )
                                                                                                       : null}
                                                                                               </>
@@ -595,14 +595,14 @@ const ValidatorVotesList = (): JSX.Element => {
                                                                                           className={
                                                                                               classes.groupInfoAddress
                                                                                           }>
-                                                                                          {memberRow.address ? (
+                                                                                          {memberRow?.address ? (
                                                                                               <>
                                                                                                   <Typography
                                                                                                       variant="caption"
                                                                                                       color="textSecondary"
                                                                                                       id={`groupInfoAddress${index}`}>
                                                                                                       {
-                                                                                                          memberRow.address
+                                                                                                          memberRow?.address
                                                                                                       }
                                                                                                   </Typography>
                                                                                                   <IconButton

@@ -34,9 +34,9 @@ const InputCard = ({ hash }: InputCardProps): JSX.Element => {
     if (error) return <ErrorMessage />;
 
     for (const c in data?.transaction?.decodedInput?.params) {
-        (callData[c] = data.transaction.decodedInput.params[c].type),
+        (callData[c] = data?.transaction?.decodedInput?.params[c]?.type),
             (callData[c] += ' '),
-            (callData[c] += data.transaction.decodedInput.params[c].name);
+            (callData[c] += data?.transaction?.decodedInput?.params[c]?.name);
     }
     if (data?.transaction?.decodedInput) {
         return (
@@ -51,7 +51,7 @@ const InputCard = ({ hash }: InputCardProps): JSX.Element => {
                         <Typography align="right" variant="body2" color="textSecondary">
                             {data?.transaction?.input?.substr(
                                 0,
-                                data.transaction.input.indexOf('000000')
+                                data?.transaction?.input.indexOf('000000')
                             )}
                         </Typography>
                     </Grid>
