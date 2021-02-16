@@ -136,60 +136,117 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage />;
 
-    if (data?.transactions)
-        return (
-            <>
-                <Grid container className={classes.container}>
-                    <Grid item xs={12}>
-                        <Paper className={classes.root}>
-                            <Typography variant="body1" className={classes.box}>
-                                Latest Transactions{' '}
-                                {pagination === false ? (
-                                    <NavLink
-                                        href="/transactions"
-                                        name="view more"
-                                        className={classes.link}
-                                        textSecondary
-                                    />
-                                ) : null}
-                            </Typography>
-                            {data?.transactions ? (
-                                <TableContainer className={classes.container}>
-                                    <Table stickyHeader>
-                                        <TableHead></TableHead>
-                                        <TableBody>
-                                            {data?.transactions?.transactions.map(
-                                                (row: any, index: number) => {
-                                                    return (
-                                                        <TableRow
-                                                            key={index}
-                                                            style={{ minHeight: '6rem' }}>
-                                                            <TableCell
-                                                                component="th"
-                                                                scope="row"
-                                                                padding="checkbox">
-                                                                <Grid
-                                                                    container
-                                                                    spacing={1}
-                                                                    className={classes.txRow}>
-                                                                    <Grid item xs={5}>
-                                                                        <Typography
-                                                                            variant="body2"
+    return (
+        <>
+            <Grid container className={classes.container}>
+                <Grid item xs={12}>
+                    <Paper className={classes.root}>
+                        <Typography variant="body1" className={classes.box}>
+                            Latest Transactions{' '}
+                            {pagination === false ? (
+                                <NavLink
+                                    href="/transactions"
+                                    name="view more"
+                                    className={classes.link}
+                                    textSecondary
+                                />
+                            ) : null}
+                        </Typography>
+                        {data?.transactions ? (
+                            <TableContainer className={classes.container}>
+                                <Table stickyHeader>
+                                    <TableHead></TableHead>
+                                    <TableBody>
+                                        {data?.transactions?.transactions.map(
+                                            (row: any, index: number) => {
+                                                return (
+                                                    <TableRow
+                                                        key={index}
+                                                        style={{ minHeight: '6rem' }}>
+                                                        <TableCell
+                                                            component="th"
+                                                            scope="row"
+                                                            padding="checkbox">
+                                                            <Grid
+                                                                container
+                                                                spacing={1}
+                                                                className={classes.txRow}>
+                                                                <Grid item xs={5}>
+                                                                    <Typography
+                                                                        variant="body2"
+                                                                        className={
+                                                                            classes.leftInline
+                                                                        }
+                                                                        noWrap>
+                                                                        Tx#
+                                                                        <NavLink
+                                                                            href={`transaction/${row?.hash}`}
                                                                             className={
                                                                                 classes.leftInline
                                                                             }
-                                                                            noWrap>
-                                                                            Tx#
+                                                                            name={
+                                                                                row?.hash ? (
+                                                                                    <MiddleEllipsis
+                                                                                        text={
+                                                                                            row?.hash
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    ''
+                                                                                )
+                                                                            }
+                                                                        />
+                                                                    </Typography>
+                                                                </Grid>
+                                                                <Grid item xs={7}>
+                                                                    <Typography
+                                                                        variant="caption"
+                                                                        className={
+                                                                            classes.alignRight
+                                                                        }
+                                                                        noWrap
+                                                                        color="textSecondary">
+                                                                        {row?.timestamp ? (
+                                                                            moment
+                                                                                .unix(
+                                                                                    row?.timestamp
+                                                                                )
+                                                                                .format(
+                                                                                    'Do MMMM YYYY, h:mm:ss a'
+                                                                                )
+                                                                        ) : (
+                                                                            <NotAvailable
+                                                                                className={
+                                                                                    classes.alignRight
+                                                                                }
+                                                                                variant="caption"
+                                                                            />
+                                                                        )}
+                                                                    </Typography>
+                                                                </Grid>
+
+                                                                <Grid item xs={4} md={5}>
+                                                                    <Typography
+                                                                        variant="body2"
+                                                                        className={
+                                                                            classes.leftInline
+                                                                        }
+                                                                        noWrap>
+                                                                        From
+                                                                        {row?.from?.address ? (
                                                                             <NavLink
-                                                                                href={`transaction/${row.hash}`}
+                                                                                href={`account/${row?.from?.address}`}
                                                                                 className={
                                                                                     classes.leftInline
                                                                                 }
                                                                                 name={
-                                                                                    row.hash ? (
+                                                                                    row?.from
+                                                                                        ?.address ? (
                                                                                         <MiddleEllipsis
                                                                                             text={
-                                                                                                row.hash
+                                                                                                row
+                                                                                                    ?.from
+                                                                                                    ?.address
                                                                                             }
                                                                                         />
                                                                                     ) : (
@@ -197,200 +254,131 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                                     )
                                                                                 }
                                                                             />
-                                                                        </Typography>
-                                                                    </Grid>
-                                                                    <Grid item xs={7}>
+                                                                        ) : null}
+                                                                    </Typography>
+                                                                </Grid>
+
+                                                                <Grid item xs={4} md={5}>
+                                                                    <Typography
+                                                                        variant="body2"
+                                                                        align="left"
+                                                                        className={
+                                                                            classes.rightInline
+                                                                        }
+                                                                        noWrap>
+                                                                        To
+                                                                        {row?.to?.address ? (
+                                                                            <NavLink
+                                                                                href={`account/${row?.to?.address}`}
+                                                                                className={
+                                                                                    classes.leftInline
+                                                                                }
+                                                                                name={
+                                                                                    <MiddleEllipsis
+                                                                                        text={
+                                                                                            row?.to
+                                                                                                ?.address
+                                                                                        }
+                                                                                    />
+                                                                                }
+                                                                            />
+                                                                        ) : (
+                                                                            ''
+                                                                        )}
+                                                                    </Typography>
+                                                                </Grid>
+
+                                                                <Grid item xs={4} md={2}>
+                                                                    {row?.value ? (
                                                                         <Typography
-                                                                            variant="caption"
+                                                                            variant="body1"
+                                                                            className={
+                                                                                classes.alignRight
+                                                                            }>
+                                                                            {Coin(
+                                                                                row?.value,
+                                                                                'cUSD',
+                                                                                2
+                                                                            )}
+                                                                        </Typography>
+                                                                    ) : (
+                                                                        <NotAvailable
                                                                             className={
                                                                                 classes.alignRight
                                                                             }
-                                                                            noWrap
-                                                                            color="textSecondary">
-                                                                            {row.timestamp ? (
-                                                                                moment
-                                                                                    .unix(
-                                                                                        row.timestamp
-                                                                                    )
-                                                                                    .format(
-                                                                                        'Do MMMM YYYY, h:mm:ss a'
-                                                                                    )
-                                                                            ) : (
-                                                                                <NotAvailable
-                                                                                    className={
-                                                                                        classes.alignRight
-                                                                                    }
-                                                                                    variant="caption"
-                                                                                />
-                                                                            )}
-                                                                        </Typography>
-                                                                    </Grid>
-
-                                                                    <Grid item xs={4} md={5}>
-                                                                        <Typography
                                                                             variant="body2"
-                                                                            className={
-                                                                                classes.leftInline
-                                                                            }
-                                                                            noWrap>
-                                                                            From
-                                                                            {row.from &&
-                                                                            row.from.address ? (
-                                                                                <NavLink
-                                                                                    href={`account/${row.from.address}`}
-                                                                                    className={
-                                                                                        classes.leftInline
-                                                                                    }
-                                                                                    name={
-                                                                                        row.from &&
-                                                                                        row.from
-                                                                                            .address ? (
-                                                                                            <MiddleEllipsis
-                                                                                                text={
-                                                                                                    row
-                                                                                                        .from
-                                                                                                        .address
-                                                                                                }
-                                                                                            />
-                                                                                        ) : (
-                                                                                            ''
-                                                                                        )
-                                                                                    }
-                                                                                />
-                                                                            ) : null}
-                                                                        </Typography>
-                                                                    </Grid>
+                                                                        />
+                                                                    )}
+                                                                </Grid>
 
-                                                                    <Grid item xs={4} md={5}>
-                                                                        <Typography
-                                                                            variant="body2"
-                                                                            align="left"
-                                                                            className={
-                                                                                classes.rightInline
-                                                                            }
-                                                                            noWrap>
-                                                                            To
-                                                                            {row.to &&
-                                                                            row.to.address ? (
-                                                                                <NavLink
-                                                                                    href={`account/${row.to.address}`}
-                                                                                    className={
-                                                                                        classes.leftInline
-                                                                                    }
-                                                                                    name={
-                                                                                        <MiddleEllipsis
-                                                                                            text={
-                                                                                                row
-                                                                                                    .to
-                                                                                                    .address
-                                                                                            }
-                                                                                        />
-                                                                                    }
-                                                                                />
-                                                                            ) : (
-                                                                                ''
-                                                                            )}
-                                                                        </Typography>
-                                                                    </Grid>
-
-                                                                    <Grid item xs={4} md={2}>
-                                                                        {row.value ? (
-                                                                            <Typography
-                                                                                variant="body1"
-                                                                                className={
-                                                                                    classes.alignRight
-                                                                                }>
-                                                                                {Coin(
-                                                                                    row.value,
-                                                                                    'cUSD',
-                                                                                    2
-                                                                                )}
-                                                                            </Typography>
-                                                                        ) : (
-                                                                            <NotAvailable
-                                                                                className={
-                                                                                    classes.alignRight
-                                                                                }
-                                                                                variant="body2"
-                                                                            />
-                                                                        )}
-                                                                    </Grid>
-
-                                                                    <Grid
-                                                                        item
-                                                                        xs={12}
-                                                                        md={9}
-                                                                        className={classes.chip}>
-                                                                        {row.to &&
-                                                                        row.to.contract &&
-                                                                        row.to.contract.name ? (
-                                                                            <Chips
-                                                                                contractName={
-                                                                                    row.to.contract
-                                                                                        .name
-                                                                                }
-                                                                            />
-                                                                        ) : null}
-
-                                                                        {row.type ? (
-                                                                            <Chips
-                                                                                type={row.type}
-                                                                            />
-                                                                        ) : null}
-                                                                    </Grid>
-
-                                                                    <Grid item xs={12}>
-                                                                        <Divider
-                                                                            className={
-                                                                                classes.divider
+                                                                <Grid
+                                                                    item
+                                                                    xs={12}
+                                                                    md={9}
+                                                                    className={classes.chip}>
+                                                                    {row?.to?.contract?.name ? (
+                                                                        <Chips
+                                                                            contractName={
+                                                                                row?.to?.contract
+                                                                                    ?.name
                                                                             }
                                                                         />
-                                                                    </Grid>
-                                                                </Grid>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                    );
-                                                }
-                                            )}
-                                        </TableBody>
-                                    </Table>
+                                                                    ) : null}
 
-                                    {pagination === true ? (
-                                        <TablePagination
-                                            className="pagination"
-                                            rowsPerPageOptions={[
-                                                ROWXXSMALL,
-                                                ROWXSMALL,
-                                                ROWSMALL,
-                                                ROWMEDIUM,
-                                                ROWLARGE,
-                                                ROWXLARGE
-                                            ]}
-                                            component="div"
-                                            count={data?.transactions?.totalCounts ?? 0}
-                                            rowsPerPage={pageSize}
-                                            page={pageNumber}
-                                            onChangePage={handleChangePage}
-                                            onChangeRowsPerPage={handleChangeRowsPerPage}
-                                            backIconButtonProps={{
-                                                'aria-label': 'Previous',
-                                                disabled: pageNumber === 0
-                                            }}
-                                            nextIconButtonProps={{
-                                                'aria-label': 'Next'
-                                            }}
-                                        />
-                                    ) : null}
-                                </TableContainer>
-                            ) : (
-                                ''
-                            )}
-                        </Paper>
-                    </Grid>
+                                                                    {row?.type ? (
+                                                                        <Chips type={row?.type} />
+                                                                    ) : null}
+                                                                </Grid>
+
+                                                                <Grid item xs={12}>
+                                                                    <Divider
+                                                                        className={classes.divider}
+                                                                    />
+                                                                </Grid>
+                                                            </Grid>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                );
+                                            }
+                                        )}
+                                    </TableBody>
+                                </Table>
+
+                                {pagination === true ? (
+                                    <TablePagination
+                                        className="pagination"
+                                        rowsPerPageOptions={[
+                                            ROWXXSMALL,
+                                            ROWXSMALL,
+                                            ROWSMALL,
+                                            ROWMEDIUM,
+                                            ROWLARGE,
+                                            ROWXLARGE
+                                        ]}
+                                        component="div"
+                                        count={data?.transactions?.totalCounts ?? 0}
+                                        rowsPerPage={pageSize}
+                                        page={pageNumber}
+                                        onChangePage={handleChangePage}
+                                        onChangeRowsPerPage={handleChangeRowsPerPage}
+                                        backIconButtonProps={{
+                                            'aria-label': 'Previous',
+                                            disabled: pageNumber === 0
+                                        }}
+                                        nextIconButtonProps={{
+                                            'aria-label': 'Next'
+                                        }}
+                                    />
+                                ) : null}
+                            </TableContainer>
+                        ) : (
+                            ''
+                        )}
+                    </Paper>
                 </Grid>
-            </>
-        );
-    else return null as any;
+            </Grid>
+        </>
+    );
 };
 
 export default LatestTransactions;
