@@ -14,7 +14,7 @@
     "build-possible-types": "node ./possibleTypesQuery.js"
   },
   "dependencies": {
-    "@apollo/client": "^3.2.5",
+    "@apollo/client": "^3.3.11",
     "@celo/base": "^1.0.1",
     "@celo/connect": "^1.0.1",
     "@celo/contractkit": "^1.0.1",
