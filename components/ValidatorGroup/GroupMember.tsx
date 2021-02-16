@@ -167,7 +167,7 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                           </Typography>
                                           {row?.name || row?.address ? (
                                               <NavLink
-                                                  href={`/account/${row.address}`}
+                                                  href={`/account/${row?.address}`}
                                                   name={
                                                       <Typography variant="body1">
                                                           {row?.name || row?.address}
@@ -210,7 +210,7 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                               variant="caption"
                                               className={classes.membersInfo}>
                                               <img src="/images/time.svg" alt="Uptime" />{' '}
-                                              {new BigNumber(row.score * 100).toFormat(2)} %
+                                              {new BigNumber(row?.score * 100).toFormat(2)} %
                                           </Typography>
                                           <Typography
                                               variant="caption"
@@ -221,8 +221,8 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                                   style={{ marginRight: '0.2rem' }}
                                               />
                                               {numbro(
-                                                  (row.attestationCompleted /
-                                                      row.attestationRequested) *
+                                                  (row?.attestationCompleted /
+                                                      row?.attestationRequested) *
                                                       100
                                               ).format('0.00')}{' '}
                                               %
@@ -236,7 +236,7 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                                       alt="Rewards"
                                                       style={{ marginRight: '0.2rem' }}
                                                   />
-                                                  {calculateValidatorRewards(row.address)}
+                                                  {calculateValidatorRewards(row?.address)}
                                               </Typography>
                                           ) : (
                                               Coin(0, 'cUSD', 2)
