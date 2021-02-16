@@ -157,7 +157,6 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
 
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage />;
-
     return (
         <>
             <Grid container spacing={2}>
@@ -241,12 +240,12 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                                   align="left"
                                                                   className={classes.tableCell}>
                                                                   <NavLink
-                                                                      href={`/block/${row.number}`}
+                                                                      href={`/block/${row?.number}`}
                                                                       name={
                                                                           <Typography
                                                                               variant="body2"
                                                                               noWrap>
-                                                                              {row.number}
+                                                                              {row?.number}
                                                                           </Typography>
                                                                       }
                                                                   />
@@ -256,9 +255,9 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                                   align="left"
                                                                   padding="checkbox"
                                                                   className={classes.tableCell}>
-                                                                  {row.miner && row.miner.signer ? (
+                                                                  {row?.miner?.signer ? (
                                                                       <NavLink
-                                                                          href={`/account/${row.miner.signer}`}
+                                                                          href={`/account/${row?.miner?.signer}`}
                                                                           name={
                                                                               <Typography
                                                                                   variant="body2"
@@ -268,23 +267,18 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                                                   }
                                                                                   noWrap>
                                                                                   <span>
-                                                                                      {(row.miner &&
-                                                                                          row.miner
-                                                                                              .name) ||
-                                                                                      (row.miner &&
-                                                                                          row.miner
-                                                                                              .signer) ? (
+                                                                                      {
                                                                                           <MiddleEllipsis
                                                                                               text={
                                                                                                   row
-                                                                                                      .miner
-                                                                                                      .name ||
+                                                                                                      ?.miner
+                                                                                                      ?.name ||
                                                                                                   row
-                                                                                                      .miner
-                                                                                                      .signer
+                                                                                                      ?.miner
+                                                                                                      ?.signer
                                                                                               }
                                                                                           />
-                                                                                      ) : null}
+                                                                                      }
                                                                                   </span>
                                                                               </Typography>
                                                                           }
@@ -300,10 +294,8 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                                       variant="body2"
                                                                       noWrap
                                                                       color="textPrimary">
-                                                                      {row.transactions &&
-                                                                      row.transactions
-                                                                          ? row.transactions.length
-                                                                          : 0}
+                                                                      {row?.transactions?.length ??
+                                                                          0}
                                                                   </Typography>
                                                               </TableCell>
                                                               {pagination ? (
@@ -319,7 +311,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                                               variant="body2"
                                                                               noWrap
                                                                               color="textPrimary">
-                                                                              {row.gasUsed}
+                                                                              {row?.gasUsed}
                                                                           </Typography>
                                                                       </div>
                                                                   </TableCell>
@@ -337,8 +329,8 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                                               variant="body2"
                                                                               noWrap
                                                                               color="textPrimary">
-                                                                              {row.gasLimit
-                                                                                  ? row.gasLimit
+                                                                              {row?.gasLimit
+                                                                                  ? row?.gasLimit
                                                                                   : 'Not available'}
                                                                           </Typography>
                                                                       </div>
@@ -353,7 +345,7 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                                       noWrap
                                                                       color="textPrimary">
                                                                       {moment
-                                                                          .unix(row.timestamp)
+                                                                          .unix(row?.timestamp)
                                                                           .format(
                                                                               'Do MMMM YYYY, h:mm:ss a'
                                                                           )}
