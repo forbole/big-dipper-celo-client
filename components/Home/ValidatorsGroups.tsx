@@ -79,12 +79,11 @@ const ValidatorsGroups = (): JSX.Element => {
                                     <Typography variant="body1" className={classes.infoData} noWrap>
                                         Validators
                                     </Typography>
-                                    {data.election &&
-                                    data.election.electedValidators &&
-                                    data.election.registeredValidators ? (
+                                    {data?.election?.electedValidators &&
+                                    data?.election?.registeredValidators ? (
                                         <Typography variant="h4" noWrap>
-                                            {data.election.electedValidators} /{' '}
-                                            {data.election.registeredValidators}
+                                            {data?.election?.electedValidators} /{' '}
+                                            {data?.election?.registeredValidators}
                                         </Typography>
                                     ) : (
                                         <NotAvailable variant="body2" />
@@ -103,12 +102,11 @@ const ValidatorsGroups = (): JSX.Element => {
                                     <Typography variant="body1" className={classes.infoData} noWrap>
                                         Groups
                                     </Typography>
-                                    {data.election &&
-                                    data.election.electedValidatorGroups &&
-                                    data.election.registeredValidatorGroups ? (
+                                    {data?.election?.electedValidatorGroups &&
+                                    data?.election?.registeredValidatorGroups ? (
                                         <Typography variant="h4" noWrap>
-                                            {data.election.electedValidatorGroups} /{' '}
-                                            {data.election.registeredValidatorGroups}
+                                            {data?.election?.electedValidatorGroups} /{' '}
+                                            {data?.election?.registeredValidatorGroups}
                                         </Typography>
                                     ) : (
                                         <NotAvailable variant="body2" />

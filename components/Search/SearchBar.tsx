@@ -94,32 +94,18 @@ const SearchBar = (): JSX.Element => {
         const blockRegEx = new RegExp(/^\d+$/, 'igm');
 
         if (searchQuery != '') {
-            if (
-                isValidatorGroupName.data &&
-                isValidatorGroupName.data.validatorGroup &&
-                isValidatorGroupName.data.validatorGroup.validatorGroups &&
-                isValidatorGroupName.data.validatorGroup.validatorGroups.address
-            ) {
+            if (isValidatorGroupName?.data?.validatorGroup?.validatorGroups?.address) {
                 router.push(
                     '/validatorGroup/' +
-                        isValidatorGroupName.data.validatorGroup.validatorGroups.address
+                        isValidatorGroupName?.data?.validatorGroup?.validatorGroups?.address
                 );
-            } else if (
-                isValidatorGroupAddress.data &&
-                isValidatorGroupAddress.data.validatorGroup &&
-                isValidatorGroupAddress.data.validatorGroup.validatorGroups &&
-                isValidatorGroupAddress.data.validatorGroup.validatorGroups.address
-            ) {
+            } else if (isValidatorGroupAddress?.data?.validatorGroup?.validatorGroups?.address) {
                 router.push(
                     '/validatorGroup/' +
-                        isValidatorGroupAddress.data.validatorGroup.validatorGroups.address
+                        isValidatorGroupAddress?.data?.validatorGroup?.validatorGroups?.address
                 );
-            } else if (
-                isValidatorName.data &&
-                isValidatorName.data.validator &&
-                isValidatorName.data.validator.address
-            ) {
-                router.push('/account/' + isValidatorName.data.validator.address);
+            } else if (isValidatorName?.data?.validator?.address) {
+                router.push('/account/' + isValidatorName?.data?.validator?.address);
             } else if (searchQuery.match(hashRegEx)) {
                 router.push('/transaction/' + searchQuery);
             } else if (searchQuery.length === 42) {

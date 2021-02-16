@@ -275,15 +275,7 @@ const LedgerDialog = ({
                         return (
                             <LockCELO
                                 isLoading={isLoading}
-                                maxLock={
-                                    AccountDetails &&
-                                    AccountDetails.data &&
-                                    AccountDetails.data.account &&
-                                    AccountDetails.data.account.totalBalance &&
-                                    AccountDetails.data.account.totalBalance.gold
-                                        ? AccountDetails.data.account.totalBalance.gold
-                                        : '0'
-                                }
+                                maxLock={AccountDetails?.data?.account?.totalBalance?.gold ?? '0'}
                             />
                         );
                     case 1:
@@ -300,13 +292,7 @@ const LedgerDialog = ({
                             <UnlockCELO
                                 isLoading={isLoading}
                                 maxUnlock={
-                                    AccountDetails &&
-                                    AccountDetails.data &&
-                                    AccountDetails.data.account &&
-                                    AccountDetails.data.account.totalBalance &&
-                                    AccountDetails.data.account.totalBalance.lockedGold
-                                        ? AccountDetails.data.account.totalBalance.lockedGold
-                                        : '0'
+                                    AccountDetails?.data?.account?.totalBalance?.lockedGold ?? '0'
                                 }
                             />
                         );
@@ -351,13 +337,7 @@ const LedgerDialog = ({
                             <VoteValidatorGroup
                                 isLoading={isLoading}
                                 maxLockedCelo={
-                                    AccountDetails &&
-                                    AccountDetails.data &&
-                                    AccountDetails.data.account &&
-                                    AccountDetails.data.account.totalBalance &&
-                                    AccountDetails.data.account.totalBalance.lockedGold
-                                        ? AccountDetails.data.account.totalBalance.lockedGold
-                                        : '0'
+                                    AccountDetails?.data?.account?.totalBalance?.lockedGold ?? '0'
                                 }
                                 validatorGroup={validatorGroup}
                             />
@@ -381,13 +361,7 @@ const LedgerDialog = ({
                             <RevokeValidatorGroup
                                 isLoading={isLoading}
                                 maxLockedCelo={
-                                    AccountDetails &&
-                                    AccountDetails.data &&
-                                    AccountDetails.data.account &&
-                                    AccountDetails.data.account.totalBalance &&
-                                    AccountDetails.data.account.totalBalance.lockedGold
-                                        ? AccountDetails.data.account.totalBalance.lockedGold
-                                        : '0'
+                                    AccountDetails?.data?.account?.totalBalance?.lockedGold ?? '0'
                                 }
                                 validatorGroup={validatorGroup}
                             />
