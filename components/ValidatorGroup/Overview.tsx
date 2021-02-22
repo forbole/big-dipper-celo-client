@@ -168,7 +168,7 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                         <Typography variant="body2">Locked CELO</Typography>
                     </Grid>
                     <Grid item xs={9} className={classes.item}>
-                        {data?.validatorGroup?.lockedGoldAmount ? (
+                        {data?.validatorGroup?.lockedGoldAmount >= 0 ? (
                             <Typography variant="body2" align="right">
                                 {Coin(data?.validatorGroup?.lockedGoldAmount, 'CELO', 2)}
                             </Typography>
@@ -185,7 +185,7 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                         <Typography variant="body2">Group Share</Typography>
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
-                        {data?.validatorGroup?.commission ? (
+                        {data?.validatorGroup?.commission >= 0 ? (
                             <Typography variant="body2" align="right">
                                 {data?.validatorGroup?.commission * 100} %
                             </Typography>
