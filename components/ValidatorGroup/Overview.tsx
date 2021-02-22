@@ -130,12 +130,12 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
         <Card className={classes.root}>
             <CardContent>
                 <Grid container spacing={1} className={classes.item}>
-                    <Grid item xs={10} md={11}>
+                    <Grid item xs={8} md={10} lg={11}>
                         <Typography color="textPrimary" variant="subtitle1" gutterBottom>
                             Overview
                         </Typography>
                     </Grid>
-                    <Grid item xs={2} md={1}>
+                    <Grid item xs={4} md={2} lg={1}>
                         <LedgerDialog
                             buttonLabel="Activate Votes"
                             action="ValidatorGroupActivateVotes"
@@ -145,10 +145,10 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                     <Grid item xs={12}>
                         <Divider className={classes.divider} />
                     </Grid>
-                    <Grid item xs={3} className={classes.item}>
+                    <Grid item xs={4} className={classes.item}>
                         <Typography variant="body2">Group Name</Typography>
                     </Grid>
-                    <Grid item xs={9} className={classes.item}>
+                    <Grid item xs={8} className={classes.item}>
                         {data?.validatorGroup?.name ? (
                             <Typography
                                 variant="body2"
@@ -164,11 +164,11 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                         <Divider className={classes.divider} />
                     </Grid>
 
-                    <Grid item xs={3} className={classes.item}>
+                    <Grid item xs={4} className={classes.item}>
                         <Typography variant="body2">Locked CELO</Typography>
                     </Grid>
-                    <Grid item xs={9} className={classes.item}>
-                        {data?.validatorGroup?.lockedGoldAmount ? (
+                    <Grid item xs={8} className={classes.item}>
+                        {data?.validatorGroup?.lockedGoldAmount >= 0 ? (
                             <Typography variant="body2" align="right">
                                 {Coin(data?.validatorGroup?.lockedGoldAmount, 'CELO', 2)}
                             </Typography>
@@ -185,7 +185,7 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                         <Typography variant="body2">Group Share</Typography>
                     </Grid>
                     <Grid item xs={6} className={classes.item}>
-                        {data?.validatorGroup?.commission ? (
+                        {data?.validatorGroup?.commission >= 0 ? (
                             <Typography variant="body2" align="right">
                                 {data?.validatorGroup?.commission * 100} %
                             </Typography>

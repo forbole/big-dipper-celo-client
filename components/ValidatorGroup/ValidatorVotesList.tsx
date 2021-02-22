@@ -388,7 +388,8 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               align="left"
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
-                                                              {row?.votes && row?.votesAvailable ? (
+                                                              {row?.votes >= 0 &&
+                                                              row?.votesAvailable >= 0 ? (
                                                                   <Typography
                                                                       variant="caption"
                                                                       noWrap>
@@ -398,7 +399,7 @@ const ValidatorVotesList = (): JSX.Element => {
                                                                               (row?.votesAvailable /
                                                                                   CELO_FRACTION)) *
                                                                               100
-                                                                      ).toFormat(2)}
+                                                                      ).toFormat(2)}{' '}
                                                                       %
                                                                       <LinearProgress
                                                                           variant="determinate"
@@ -427,17 +428,28 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               align="left"
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
-                                                              {row?.members &&
-                                                              row?.electedValidators ? (
+                                                              <Typography variant="body2" noWrap>
+                                                                  {row?.electedValidators
+                                                                      ? Object.keys(
+                                                                            row?.electedValidators
+                                                                        ).length
+                                                                      : 0}
+                                                                  / {row?.members.length ?? 0}
+                                                              </Typography>
+                                                          </TableCell>
+                                                          <TableCell
+                                                              align="right"
+                                                              padding="checkbox"
+                                                              className={classes.tableCell}>
+                                                              {row?.lockedGoldAmount >= 0 ? (
                                                                   <Typography
                                                                       variant="body2"
                                                                       noWrap>
-                                                                      {
-                                                                          Object.keys(
-                                                                              row?.electedValidators
-                                                                          ).length
-                                                                      }
-                                                                      / {row?.members.length}
+                                                                      {Coin(
+                                                                          row?.lockedGoldAmount,
+                                                                          'CELO',
+                                                                          2
+                                                                      )}
                                                                   </Typography>
                                                               ) : (
                                                                   <NotAvailable variant="body2" />
@@ -447,81 +459,96 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               align="right"
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
-                                                              <Typography variant="body2" noWrap>
-                                                                  {Coin(
-                                                                      row?.lockedGoldAmount,
-                                                                      'CELO',
-                                                                      2
-                                                                  )}
-                                                              </Typography>
-                                                          </TableCell>
-                                                          <TableCell
-                                                              align="right"
-                                                              padding="checkbox"
-                                                              className={classes.tableCell}>
-                                                              {
+                                                              {row?.commission >= 0 ? (
                                                                   <Typography
                                                                       variant="body2"
                                                                       noWrap>
                                                                       {row?.commission * 100} %
                                                                   </Typography>
-                                                              }
+                                                              ) : (
+                                                                  <NotAvailable variant="body2" />
+                                                              )}
                                                           </TableCell>
-
                                                           <TableCell
                                                               align="right"
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
-                                                              <Typography variant="body2" noWrap>
-                                                                  {calculateGroupUptime(
-                                                                      row?.address
-                                                                  )}{' '}
-                                                                  %
-                                                              </Typography>
+                                                              {row?.address ? (
+                                                                  <Typography
+                                                                      variant="body2"
+                                                                      noWrap>
+                                                                      {calculateGroupUptime(
+                                                                          row?.address
+                                                                      )}{' '}
+                                                                      %
+                                                                  </Typography>
+                                                              ) : (
+                                                                  <NotAvailable variant="body2" />
+                                                              )}
                                                           </TableCell>
-
                                                           <TableCell
                                                               align="right"
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
-                                                              <Typography variant="body2" noWrap>
-                                                                  {row?.slashingMultiplier}
-                                                              </Typography>
+                                                              {row?.slashingMultiplier ? (
+                                                                  <Typography
+                                                                      variant="body2"
+                                                                      noWrap>
+                                                                      {row?.slashingMultiplier}
+                                                                  </Typography>
+                                                              ) : (
+                                                                  <NotAvailable variant="body2" />
+                                                              )}
                                                           </TableCell>
-
                                                           <TableCell
                                                               align="right"
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
-                                                              <Typography variant="body2" noWrap>
-                                                                  {calculateGroupRewards(
-                                                                      row?.address
-                                                                  )}{' '}
-                                                              </Typography>
+                                                              {row?.address ? (
+                                                                  <Typography
+                                                                      variant="body2"
+                                                                      noWrap>
+                                                                      {calculateGroupRewards(
+                                                                          row?.address
+                                                                      )}{' '}
+                                                                  </Typography>
+                                                              ) : (
+                                                                  <NotAvailable variant="body2" />
+                                                              )}
                                                           </TableCell>
-
                                                           <TableCell
                                                               align="right"
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
-                                                              <Typography variant="body2" noWrap>
-                                                                  {calculateRewardsPercentage(
-                                                                      row?.address
-                                                                  )}{' '}
-                                                                  %
-                                                              </Typography>
+                                                              {row?.address ? (
+                                                                  <Typography
+                                                                      variant="body2"
+                                                                      noWrap>
+                                                                      {calculateRewardsPercentage(
+                                                                          row?.address
+                                                                      )}{' '}
+                                                                      %
+                                                                  </Typography>
+                                                              ) : (
+                                                                  <NotAvailable variant="body2" />
+                                                              )}
                                                           </TableCell>
-
                                                           <TableCell
                                                               align="right"
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
-                                                              <Typography variant="body2" noWrap>
-                                                                  {calculateAttestation(
-                                                                      row?.address
-                                                                  )}{' '}
-                                                                  %
-                                                              </Typography>
+                                                              {row?.address ? (
+                                                                  <Typography
+                                                                      variant="body2"
+                                                                      noWrap>
+                                                                      {calculateAttestation(
+                                                                          row?.address
+                                                                      )}{' '}
+                                                                      %
+                                                                  </Typography>
+                                                              ) : (
+                                                                  <NotAvailable variant="body2" />
+                                                              )}
                                                           </TableCell>
                                                       </TableRow>
 

@@ -2,13 +2,13 @@ import BigNumber from 'bignumber.js';
 import React from 'react';
 
 const Coin = (
-    value: string | number,
+    value: string | number | BigNumber,
     denom: string,
     fraction?: number,
     multiply?: number
 ): React.ReactNode => {
     const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
-    const denomValue = typeof value != 'number' ? parseFloat(value) : value;
+    const denomValue = typeof value === 'string' ? parseFloat(value) : value;
     const mintDenom = new BigNumber(denomValue);
     const stakingDenom = !multiply
         ? new BigNumber(denomValue).dividedBy(CELO_FRACTION)
