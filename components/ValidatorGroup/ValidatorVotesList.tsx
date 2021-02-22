@@ -388,7 +388,7 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               align="left"
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
-                                                              {row?.votes && row?.votesAvailable ? (
+                                                              {row?.votes || row?.votesAvailable ? (
                                                                   <Typography
                                                                       variant="caption"
                                                                       noWrap>
@@ -427,21 +427,14 @@ const ValidatorVotesList = (): JSX.Element => {
                                                               align="left"
                                                               padding="checkbox"
                                                               className={classes.tableCell}>
-                                                              {row?.members &&
-                                                              row?.electedValidators ? (
-                                                                  <Typography
-                                                                      variant="body2"
-                                                                      noWrap>
-                                                                      {
-                                                                          Object.keys(
-                                                                              row?.electedValidators
-                                                                          ).length
-                                                                      }
-                                                                      / {row?.members.length}
-                                                                  </Typography>
-                                                              ) : (
-                                                                  <NotAvailable variant="body2" />
-                                                              )}
+                                                              <Typography variant="body2" noWrap>
+                                                                  {row?.electedValidators
+                                                                      ? Object.keys(
+                                                                            row?.electedValidators
+                                                                        ).length
+                                                                      : 0}
+                                                                  / {row?.members.length ?? 0}
+                                                              </Typography>
                                                           </TableCell>
                                                           <TableCell
                                                               align="right"

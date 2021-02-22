@@ -7,7 +7,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import BigNumber from 'bignumber.js';
-import numbro from 'numbro';
 import React from 'react';
 
 import { GET_VALIDATOR_GROUP } from '../Query/ValidatorGroup';
@@ -220,11 +219,15 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                                   alt="Attestation"
                                                   style={{ marginRight: '0.2rem' }}
                                               />
-                                              {numbro(
-                                                  (row?.attestationCompleted /
-                                                      row?.attestationRequested) *
-                                                      100
-                                              ).format('0.00')}{' '}
+                                              {row?.attestationCompleted /
+                                                  row?.attestationRequested >
+                                              0
+                                                  ? new BigNumber(
+                                                        (row?.attestationCompleted /
+                                                            row?.attestationRequested) *
+                                                            100
+                                                    ).toFormat(2)
+                                                  : 0}
                                               %
                                           </Typography>
                                       </Grid>
