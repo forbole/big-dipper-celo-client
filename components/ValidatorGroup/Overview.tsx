@@ -130,12 +130,12 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
         <Card className={classes.root}>
             <CardContent>
                 <Grid container spacing={1} className={classes.item}>
-                    <Grid item xs={8} md={11}>
+                    <Grid item xs={8} md={10} lg={11}>
                         <Typography color="textPrimary" variant="subtitle1" gutterBottom>
                             Overview
                         </Typography>
                     </Grid>
-                    <Grid item xs={4} md={1}>
+                    <Grid item xs={4} md={2} lg={1}>
                         <LedgerDialog
                             buttonLabel="Activate Votes"
                             action="ValidatorGroupActivateVotes"

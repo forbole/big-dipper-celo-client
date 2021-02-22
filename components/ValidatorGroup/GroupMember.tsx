@@ -3,8 +3,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import BigNumber from 'bignumber.js';
 import React from 'react';
@@ -13,6 +14,7 @@ import { GET_VALIDATOR_GROUP } from '../Query/ValidatorGroup';
 import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
+import MiddleEllipsis from '../Utils/MiddleEllipsis';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
 
@@ -22,7 +24,8 @@ const useStyles = makeStyles((theme: Theme) =>
             width: '100%',
             height: '100%',
             borderRadius: 5,
-            wordWrap: 'break-word'
+            wordWrap: 'break-word',
+            overflow: 'auto'
         },
         item: {
             padding: '0.5rem'
@@ -30,7 +33,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
         member: {
             display: 'inline-flex',
-            verticalAlign: 'middle'
+            verticalAlign: 'middle',
+            [theme.breakpoints.down('sm')]: {
+                overflow: 'auto'
+            },
+            [theme.breakpoints.up('sm')]: {
+                marginLeft: '-5%'
+            }
         },
         divider: {
             margin: '0.15rem 0rem',
@@ -93,6 +102,20 @@ const useStyles = makeStyles((theme: Theme) =>
             [theme.breakpoints.down('sm')]: {
                 paddingLeft: '1rem'
             }
+        },
+        memberIndex: {
+            display: 'inline-flex'
+        },
+
+        groupMembers: {
+            display: 'inline-flex',
+            verticalAlign: 'middle'
+        },
+        memberGold: {
+            [theme.breakpoints.up('sm')]: {
+                marginLeft: '5%',
+                overflow: 'auto'
+            }
         }
     })
 );
@@ -106,6 +129,8 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
         variables: { valGroupAddress }
     });
+    const theme = useTheme();
+    const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const findElectedValidators = (membersAddress: any, electedValidators: any) => {
         for (const d in Object.keys(electedValidators)) {
@@ -135,7 +160,7 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
         <Card className={classes.root}>
             <CardContent>
                 <Grid container spacing={1} className={classes.item}>
-                    <Grid item xs={12} className={classes.member}>
+                    <Grid item xs={12} className={classes.groupMembers}>
                         <Typography color="textPrimary" variant="subtitle1" noWrap>
                             Group member
                             {data?.validatorGroup?.members
@@ -161,18 +186,27 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                       key={index}
                                       spacing={1}
                                       style={{ paddingBottom: '0.5rem' }}>
-                                      <Grid item xs={8} className={classes.member}>
+                                      <Grid item xs={1} className={classes.memberIndex}>
                                           <Typography
                                               variant="body2"
                                               className={classes.memberNumber}>
                                               #{index + 1}
                                           </Typography>
+                                      </Grid>
+                                      <Grid item xs={5} md={7} className={classes.member}>
                                           {row?.name || row?.address ? (
                                               <NavLink
                                                   href={`/account/${row?.address}`}
                                                   name={
                                                       <Typography variant="body1">
-                                                          {row?.name || row?.address}
+                                                          {row?.name ||
+                                                              (smallScreen ? (
+                                                                  <MiddleEllipsis
+                                                                      text={row?.address}
+                                                                  />
+                                                              ) : (
+                                                                  row.address
+                                                              ))}
                                                           {findElectedValidators(
                                                               row?.address,
                                                               data?.validatorGroup
@@ -186,15 +220,18 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
                                           )}
                                       </Grid>
 
-                                      <Grid item xs={4}>
+                                      <Grid item xs={6} md={4} className={classes.memberGold}>
                                           {data?.validatorGroup?.membersAccount ? (
                                               <Typography
                                                   variant="body1"
                                                   align="right"
                                                   color="textPrimary">
                                                   {Coin(
-                                                      data?.validatorGroup?.membersAccount[index]
-                                                          ?.lockedGold?.total,
+                                                      new BigNumber(
+                                                          data?.validatorGroup?.membersAccount[
+                                                              index
+                                                          ]?.lockedGold?.total
+                                                      ),
                                                       'CELO',
                                                       2
                                                   )}
