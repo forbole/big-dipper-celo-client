@@ -3,7 +3,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import BigNumber from 'bignumber.js';
@@ -16,8 +16,8 @@ import ErrorMessage from '../Utils/ErrorMessage';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
 
-const useStyles = makeStyles(() => {
-    return {
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
         root: {
             width: '100%',
             height: '100%',
@@ -89,10 +89,13 @@ const useStyles = makeStyles(() => {
             float: 'right'
         },
         membersInfo: {
-            paddingLeft: '1.5rem'
+            paddingLeft: '1.5rem',
+            [theme.breakpoints.down('sm')]: {
+                paddingLeft: '1rem'
+            }
         }
-    };
-});
+    })
+);
 
 type GroupMemberProps = { validatorGroupAddress: string };
 
