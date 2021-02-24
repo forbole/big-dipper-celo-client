@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -23,79 +23,90 @@ import MiddleEllipsis from '../Utils/MiddleEllipsis';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
 
-const useStyles = makeStyles({
-    root: {
-        width: '100%',
-        height: '100%',
-        padding: '1.5%',
-        borderRadius: 5,
-        wordWrap: 'break-word',
-        margin: '0'
-    },
-    container: {
-        borderRadius: 5,
-        width: '100%',
-        height: '100%'
-    },
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            width: '100%',
+            height: '100%',
+            padding: '1.5%',
+            borderRadius: 5,
+            wordWrap: 'break-word',
+            margin: '0'
+        },
+        container: {
+            borderRadius: 5,
+            width: '100%',
+            height: '100%'
+        },
 
-    leftInline: {
-        display: 'flex',
-        overflow: 'auto',
-        padding: '0 0 0 1rem',
-        align: 'left'
-    },
-    rightInline: {
-        display: 'flex',
-        overflow: 'auto',
-        padding: '0 1rem 0 0',
-        align: 'right'
-    },
+        leftInline: {
+            display: 'flex',
+            overflow: 'auto',
+            padding: '0 0 0 1rem',
+            align: 'left'
+        },
+        rightInline: {
+            display: 'flex',
+            overflow: 'auto',
+            padding: '0 1rem 0 0',
+            align: 'right'
+        },
+        tx: {
+            display: 'flex',
+            overflow: 'auto',
+            padding: '0 0 0 1rem',
+            align: 'left',
+            [theme.breakpoints.down('xs')]: {
+                padding: '0 0 0 0.25rem'
+            }
+        },
 
-    box: {
-        letterSpacing: '1px',
-        padding: '0.6rem 0.6rem 1rem 0.6rem',
-        display: 'block',
-        overflow: 'hidden',
-        whiteSpace: 'nowrap'
-    },
+        box: {
+            letterSpacing: '1px',
+            padding: '0.6rem 0.6rem 1rem 0.6rem',
+            display: 'block',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap'
+        },
 
-    alignRight: {
-        paddingRight: '1rem',
-        float: 'right'
-    },
+        alignRight: {
+            paddingRight: '1rem',
+            float: 'right'
+        },
 
-    txPadding: {
-        display: 'flex',
-        padding: '0 0 0 0.5rem'
-    },
+        txPadding: {
+            display: 'flex',
+            padding: '0 0 0 0.5rem'
+        },
 
-    txRow: {
-        padding: '0.2rem 0',
-        background: 'rgba(255, 255, 255, 1)',
-        minHeight: '7rem'
-    },
+        txRow: {
+            padding: '0.2rem 0',
+            background: 'rgba(255, 255, 255, 1)',
+            minHeight: '7rem'
+        },
 
-    link: {
-        float: 'right'
-    },
+        link: {
+            float: 'right'
+        },
 
-    truncateText: {
-        overflow: 'hidden',
-        textOverflow: 'clip ellipsis clip 0 3ch',
-        minWidth: '1rem',
-        maxWidth: '40rem'
-    },
+        truncateText: {
+            overflow: 'hidden',
+            textOverflow: 'clip ellipsis clip 0 3ch',
+            minWidth: '1rem',
+            maxWidth: '40rem'
+        },
 
-    chip: {
-        marginLeft: '1rem'
-    },
+        chip: {
+            marginLeft: '1rem'
+        },
 
-    divider: {
-        backgroundColor: 'rgba(232, 232, 232, 1)',
-        margin: '0 1rem 0.3rem 1rem',
-        display: 'flex'
-    }
-});
+        divider: {
+            backgroundColor: 'rgba(232, 232, 232, 1)',
+            margin: '0 1rem 0.3rem 1rem',
+            display: 'flex'
+        }
+    })
+);
 
 type LatestTxsProps = { pagination: boolean };
 
@@ -134,7 +145,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
     });
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage />;
+    // if (error) return <ErrorMessage />;
 
     return (
         <>
@@ -181,9 +192,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                         Tx#
                                                                         <NavLink
                                                                             href={`transaction/${row?.hash}`}
-                                                                            className={
-                                                                                classes.leftInline
-                                                                            }
+                                                                            className={classes.tx}
                                                                             name={
                                                                                 row?.hash ? (
                                                                                     <MiddleEllipsis
@@ -237,7 +246,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                             <NavLink
                                                                                 href={`account/${row?.from?.address}`}
                                                                                 className={
-                                                                                    classes.leftInline
+                                                                                    classes.tx
                                                                                 }
                                                                                 name={
                                                                                     row?.from
@@ -271,7 +280,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                             <NavLink
                                                                                 href={`account/${row?.to?.address}`}
                                                                                 className={
-                                                                                    classes.leftInline
+                                                                                    classes.tx
                                                                                 }
                                                                                 name={
                                                                                     <MiddleEllipsis

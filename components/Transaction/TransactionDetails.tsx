@@ -14,6 +14,7 @@ import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import moment from 'moment';
 import React from 'react';
 
+import { GET_BLOCK_DETAILS } from '../Query/Block';
 import { GET_TX_DETAILS } from '../Query/Transaction';
 import Chips from '../Utils/Chips';
 import Coin from '../Utils/Coin';
@@ -112,6 +113,13 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
     const { loading, error, data } = useQuery(GET_TX_DETAILS, {
         variables: { hash }
     });
+
+    const number = data?.transaction?.blockNumber;
+
+    const blockDetails = useQuery(GET_BLOCK_DETAILS, {
+        variables: { number }
+    });
+
     const [open, setOpen] = React.useState(false);
 
     const inputValue = data?.transaction?.input ?? null;
@@ -408,11 +416,12 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                         )}
                         <Divider variant="middle" className={classes.divider} />
                     </Grid>
-
                     <Grid item xs={12} className={classes.item}>
                         <Typography variant="body2">Gas Limit</Typography>
-                        {data?.transaction?.gasLimit ? (
-                            <Typography variant="body2">{data?.transaction?.gasLimit}</Typography>
+                        {blockDetails?.data?.block?.gasLimit ? (
+                            <Typography variant="body2">
+                                {blockDetails?.data?.block?.gasLimit}
+                            </Typography>
                         ) : (
                             <NotAvailable variant="body2" />
                         )}
