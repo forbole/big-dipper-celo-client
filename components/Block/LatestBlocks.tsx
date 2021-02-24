@@ -154,9 +154,8 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
         variables: { pageSize, page },
         pollInterval: 5000
     });
-
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage />;
+    // if (error) return <ErrorMessage />;
     return (
         <>
             <Grid container spacing={2}>
