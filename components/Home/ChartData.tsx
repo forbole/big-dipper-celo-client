@@ -99,7 +99,7 @@ const ChartData = (): JSX.Element => {
         pollInterval: 5000
     });
 
-    if (error) return <ErrorMessage />;
+    // if (error) return <ErrorMessage />;
 
     return (
         <>

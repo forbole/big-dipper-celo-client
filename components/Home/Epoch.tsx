@@ -77,7 +77,8 @@ const useStyles = makeStyles((theme: Theme) =>
         blockProposer: {
             paddingLeft: '1.5rem',
             display: 'flex',
-            marginTop: '15rem'
+            marginTop: '15rem',
+            maxHeight: '3rem'
         },
 
         blockProposerAddress: {
@@ -164,14 +165,15 @@ const Epoch = (): JSX.Element => {
     const [pageNumber] = React.useState(SETPAGE);
     const [pageSize] = React.useState(ROWMEDIUM);
     const page = pageNumber + 1;
+    let timerOn = false;
 
     const chain = useQuery(GET_CHAIN, {
-        pollInterval: 5500
+        pollInterval: 5000
     });
 
     const { loading, error, data } = useQuery(GET_BLOCK, {
         variables: { pageSize, page },
-        pollInterval: 5500
+        pollInterval: 5000
     });
 
     const chartData = [
@@ -199,12 +201,13 @@ const Epoch = (): JSX.Element => {
     });
 
     const calculateRemainingTime = () => {
-        return (
-            Date.now() +
+        const blockTimeLeft =
             (chain?.data?.chain?.lastBlockNumberForEpoch - chain?.data?.chain?.latestHeight) *
-                chain?.data?.chain?.averageBlockTime *
-                1000
-        );
+            (chain?.data?.chain?.averageBlockTime * 100) *
+            1000;
+        const remainingTime = Date.now() + blockTimeLeft;
+        timerOn = remainingTime > 0 ? true : false;
+        return remainingTime;
     };
 
     const renderer = ({
@@ -238,7 +241,7 @@ const Epoch = (): JSX.Element => {
         }
     };
 
-    if (error || chain.error) return <ErrorMessage />;
+    // if (error || chain.error) return <ErrorMessage />;
     if (loading && chain.loading) return <ComponentLoader />;
 
     return (
@@ -296,35 +299,37 @@ const Epoch = (): JSX.Element => {
                                             renderer={renderer}
                                         />
                                     </Typography>
-                                    {!hasEnded ? (
+                                    {!hasEnded && timerOn ? (
                                         <Typography variant="body2">Until Epoch End</Typography>
                                     ) : null}
                                 </>
                             ) : null}
                         </Grid>
 
-                        <Grid item xs={12} className={classes.epochNumber}>
-                            {chain?.data?.chain?.latestHeight &&
-                            chain?.data?.chain?.firstBlockNumberForEpoch &&
-                            chain?.data?.chain?.epochSize ? (
-                                <>
-                                    <Typography variant="body1" noWrap>
-                                        {chain?.data?.chain?.latestHeight -
-                                            chain?.data?.chain?.firstBlockNumberForEpoch >
-                                        0
-                                            ? chain?.data?.chain?.latestHeight -
-                                              chain?.data?.chain?.firstBlockNumberForEpoch
-                                            : 0}
-                                    </Typography>
+                        {timerOn ? (
+                            <Grid item xs={12} className={classes.epochNumber}>
+                                {chain?.data?.chain?.latestHeight &&
+                                chain?.data?.chain?.firstBlockNumberForEpoch &&
+                                chain?.data?.chain?.epochSize ? (
+                                    <>
+                                        <Typography variant="body1" noWrap>
+                                            {chain?.data?.chain?.latestHeight -
+                                                chain?.data?.chain?.firstBlockNumberForEpoch >
+                                            0
+                                                ? chain?.data?.chain?.latestHeight -
+                                                  chain?.data?.chain?.firstBlockNumberForEpoch
+                                                : 0}
+                                        </Typography>
 
-                                    <Divider variant="middle" className={classes.divider} />
+                                        <Divider variant="middle" className={classes.divider} />
 
-                                    <Typography variant="body1" noWrap>
-                                        {chain?.data?.chain?.epochSize}
-                                    </Typography>
-                                </>
-                            ) : null}
-                        </Grid>
+                                        <Typography variant="body1" noWrap>
+                                            {chain?.data?.chain?.epochSize}
+                                        </Typography>
+                                    </>
+                                ) : null}
+                            </Grid>
+                        ) : null}
                         <Grid item xs={12} className={classes.blockProposer}>
                             {data?.blocks?.blocks[0]?.miner?.name ||
                             data?.blocks?.blocks[0]?.miner?.signer ? (
