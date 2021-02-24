@@ -79,6 +79,7 @@
 * Added `react-markdown`
 * Removed `fetchPolicy` from `ApolloClient`
 * Updated `@apollo/client` package to `v3.3.11`
+* Updated README.md file
 
 ## v0.1.3
 
