@@ -62,7 +62,7 @@ const ValidatorsGroups = (): JSX.Element => {
     });
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage />;
+    // if (error) return <ErrorMessage />;
 
     return (
         <>

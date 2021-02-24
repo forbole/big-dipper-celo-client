@@ -136,7 +136,7 @@ const Chips = ({ contractName, type, actionResult }: ChipsProps): JSX.Element =>
                     style={{
                         backgroundColor: contractColors[contractName],
                         borderRadius: 5,
-                        width: '7rem',
+                        width: '7.5rem',
                         marginRight: '0.5rem',
                         fontSize: '	0.875rem',
                         textTransform: 'capitalize'

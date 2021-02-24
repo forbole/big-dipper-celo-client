@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,6 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import numbro from 'numbro';
 import React from 'react';
 
@@ -104,6 +105,8 @@ const AccountList = (): JSX.Element => {
     const [pageSize, setPageSize] = React.useState(ROWMEDIUM);
     const page = pageNumber + 1;
     const field = 'balance';
+    const theme = useTheme();
+    const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const handleChangePage = (event: any, newPage: number) => {
         setPageNumber(newPage);
@@ -186,9 +189,13 @@ const AccountList = (): JSX.Element => {
                                                             href={`/account/${row?.address}`}
                                                             name={
                                                                 <Typography variant="body2" noWrap>
-                                                                    <MiddleEllipsis
-                                                                        text={row?.address}
-                                                                    />
+                                                                    {smallScreen ? (
+                                                                        <MiddleEllipsis
+                                                                            text={row?.address}
+                                                                        />
+                                                                    ) : (
+                                                                        row?.address
+                                                                    )}
                                                                 </Typography>
                                                             }
                                                         />

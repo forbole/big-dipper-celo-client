@@ -64,6 +64,11 @@ const useStyles = makeStyles(() => {
             float: 'right'
         },
 
+        from: {
+            display: 'flex',
+            padding: '0 0 0 1rem'
+        },
+
         txPadding: {
             display: 'flex',
             overflow: 'auto',
@@ -185,7 +190,7 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                 </Grid>
                                                                 <Grid item xs={7}>
                                                                     <Typography
-                                                                        variant="body2"
+                                                                        variant="caption"
                                                                         color="textSecondary"
                                                                         noWrap
                                                                         className={
@@ -204,7 +209,7 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                                 className={
                                                                                     classes.alignRight
                                                                                 }
-                                                                                variant="body2"
+                                                                                variant="caption"
                                                                             />
                                                                         )}
                                                                     </Typography>
@@ -219,9 +224,7 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
                                                                     }}>
                                                                     <Typography
                                                                         variant="body2"
-                                                                        className={
-                                                                            classes.leftInline
-                                                                        }>
+                                                                        className={classes.from}>
                                                                         From
                                                                     </Typography>
                                                                     {row?.from &&

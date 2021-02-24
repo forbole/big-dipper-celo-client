@@ -89,7 +89,8 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
     const [currentUser, setCurrentUser] = React.useState('');
 
     const accountQuery = useQuery(GET_ACCOUNT_DETAILS, {
-        variables: { address }
+        variables: { address },
+        pollInterval: 5000
     });
 
     const chainQuery = useQuery(GET_CHAIN, {});
