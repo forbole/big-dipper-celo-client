@@ -201,9 +201,15 @@ const Epoch = (): JSX.Element => {
     });
 
     const calculateRemainingTime = () => {
+        const averageBlockTime =
+            chain?.data?.chain?.averageBlockTime >= 4.5 &&
+            chain?.data?.chain?.averageBlockTime < 6.5
+                ? chain?.data?.chain?.averageBlockTime
+                : 5;
+
         const blockTimeLeft =
             (chain?.data?.chain?.lastBlockNumberForEpoch - chain?.data?.chain?.latestHeight) *
-            (chain?.data?.chain?.averageBlockTime * 100) *
+            averageBlockTime *
             1000;
         const remainingTime = Date.now() + blockTimeLeft;
         timerOn = remainingTime > 0 ? true : false;
