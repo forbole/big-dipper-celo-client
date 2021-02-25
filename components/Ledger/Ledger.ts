@@ -82,7 +82,7 @@ class Ledger extends Component {
         this.kit = kit;
         this.wallet = wallet;
         this.isConnected = true;
-        console.log('Connected');
+        // console.log('Connected');
     }
 
     disconnect() {
@@ -91,7 +91,7 @@ class Ledger extends Component {
         this.wallet = null;
         this.address = '';
         this.isConnected = false;
-        console.log('Disconnected');
+        // console.log('Disconnected');
     }
 
     async getCeloAppVersion() {
@@ -135,7 +135,7 @@ class Ledger extends Component {
         }
         const getAccounts = await this.kit.contracts.getAccounts();
         const result = await getAccounts.createAccount().sendAndWaitForReceipt({ from: address });
-        console.log(result);
+        // console.log(result);
 
         return result;
     }
@@ -148,7 +148,7 @@ class Ledger extends Component {
         let lockAmount = parseFloat(amount) * this.CELO_FRACTION
         const lockedCelo = await this.kit.contracts.getLockedGold();
         const result = await lockedCelo.lock().sendAndWaitForReceipt({ from, value: lockAmount });
-        console.log(result);
+        // console.log(result);
 
         return result;
     }
@@ -162,7 +162,7 @@ class Ledger extends Component {
         const lockedCelo = await this.kit.contracts.getLockedGold();
 
         const result = await lockedCelo.unlock(unlockAmount).sendAndWaitForReceipt({ from });
-        console.log(result);
+        // console.log(result);
 
         return result;
     }
@@ -174,7 +174,7 @@ class Ledger extends Component {
         const getGovernance = await this.kit.contracts.getGovernance();
         const proposalVote = await getGovernance.vote(proposalNumber, vote);
         const result = await proposalVote.sendAndWaitForReceipt({ from });
-        console.log(result);
+        // console.log(result);
 
         return result;
     }
@@ -213,7 +213,7 @@ class Ledger extends Component {
 
         const voteElection = await election.vote(group, voteAmount)
         const result = await voteElection.sendAndWaitForReceipt({ from });
-        console.log(result);
+        // console.log(result);
 
         return result;
     }
@@ -227,7 +227,7 @@ class Ledger extends Component {
         const revokeValue = new BigNumber(parseFloat(amount)).times(this.CELO_FRACTION)
         const revokeVotes = await election.revokeActive(account, group, revokeValue);
         const result = await revokeVotes.sendAndWaitForReceipt({ from: account });
-        console.log(result);
+        // console.log(result);
 
         return result;
     }
