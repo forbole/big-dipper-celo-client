@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React, { useEffect } from 'react';
 
+import Coin from '../../../Utils/Coin';
 import { LedgerFormControl } from '../../LedgerDialog';
 
 const useStyles = makeStyles(() =>
@@ -97,7 +98,7 @@ const UnlockGold = ({ isLoading, maxUnlock }: UnlockGoldProps): JSX.Element => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography variant="body2" noWrap className={classes.alignRight}>
-                                    {maxUnlock} CELO
+                                    {maxUnlock ? Coin(maxUnlock, 'CELO', 2) : Coin(0, 'CELO', 2)}
                                 </Typography>
                             </Grid>
                         </Grid>

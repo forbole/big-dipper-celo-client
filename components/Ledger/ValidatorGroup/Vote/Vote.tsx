@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React, { useEffect } from 'react';
 
+import Coin from '../../../Utils/Coin';
 import { LedgerFormControl } from '../../LedgerDialog';
 
 const useStyles = makeStyles({
@@ -113,7 +114,10 @@ const Vote = ({ isLoading, maxLockedCelo, validatorGroup }: VoteValGroupProps): 
                                     color="textSecondary"
                                     align="right"
                                     className={classes.lockedCelo}>
-                                    Max {maxLockedCelo} CELO
+                                    Max{' '}
+                                    {maxLockedCelo
+                                        ? Coin(maxLockedCelo, 'CELO', 2)
+                                        : Coin(0, 'CELO', 2)}
                                 </Typography>
                             </Grid>
                         </Grid>

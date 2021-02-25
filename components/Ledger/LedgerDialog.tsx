@@ -275,7 +275,7 @@ const LedgerDialog = ({
                         return (
                             <LockCELO
                                 isLoading={isLoading}
-                                maxLock={AccountDetails?.data?.account?.totalBalance?.gold ?? '0'}
+                                maxLock={AccountDetails?.data?.account?.balance ?? 0}
                             />
                         );
                     case 1:
@@ -291,9 +291,7 @@ const LedgerDialog = ({
                         return (
                             <UnlockCELO
                                 isLoading={isLoading}
-                                maxUnlock={
-                                    AccountDetails?.data?.account?.totalBalance?.lockedGold ?? '0'
-                                }
+                                maxUnlock={AccountDetails?.data?.account?.lockedGold?.total ?? '0'}
                             />
                         );
                     case 1:
@@ -337,7 +335,7 @@ const LedgerDialog = ({
                             <VoteValidatorGroup
                                 isLoading={isLoading}
                                 maxLockedCelo={
-                                    AccountDetails?.data?.account?.totalBalance?.lockedGold ?? '0'
+                                    AccountDetails?.data?.account?.lockedGold?.total ?? '0'
                                 }
                                 validatorGroup={validatorGroup}
                             />
@@ -361,7 +359,7 @@ const LedgerDialog = ({
                             <RevokeValidatorGroup
                                 isLoading={isLoading}
                                 maxLockedCelo={
-                                    AccountDetails?.data?.account?.totalBalance?.lockedGold ?? '0'
+                                    AccountDetails?.data?.account?.lockedGold?.total ?? '0'
                                 }
                                 validatorGroup={validatorGroup}
                             />
@@ -437,7 +435,7 @@ const LedgerDialog = ({
                 if (lockCelo && lockCelo.status === true) {
                     setTabNumber(2);
                     setLedgerLoading(false);
-                    setHash(lockCelo.blockHash);
+                    setHash(lockCelo.transactionHash);
                 }
             }
         } catch (e) {
@@ -458,7 +456,7 @@ const LedgerDialog = ({
                 if (unlockCelo && unlockCelo.status === true) {
                     setTabNumber(2);
                     setLedgerLoading(false);
-                    setHash(unlockCelo.blockHash);
+                    setHash(unlockCelo.transactionHash);
                 }
             }
         } catch (e) {
@@ -498,7 +496,7 @@ const LedgerDialog = ({
                 if (voteValidatorGroup && voteValidatorGroup.status === true) {
                     setTabNumber(2);
                     setLedgerLoading(false);
-                    setHash(voteValidatorGroup.blockHash);
+                    setHash(voteValidatorGroup.transactionHash);
                 }
             }
         } catch (e) {
@@ -522,7 +520,7 @@ const LedgerDialog = ({
                 if (revokeValidatorGroupVote && revokeValidatorGroupVote.status === true) {
                     setTabNumber(2);
                     setLedgerLoading(false);
-                    setHash(revokeValidatorGroupVote.blockHash);
+                    setHash(revokeValidatorGroupVote.transactionHash);
                 }
             }
         } catch (e) {
@@ -547,7 +545,7 @@ const LedgerDialog = ({
                 if (activateValidatorGroupVote && activateValidatorGroupVote.status === true) {
                     setTabNumber(2);
                     setLedgerLoading(false);
-                    setHash(activateValidatorGroupVote.blockHash);
+                    setHash(activateValidatorGroupVote.transactionHash);
                 }
             }
         } catch (e) {
