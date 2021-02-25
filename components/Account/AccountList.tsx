@@ -231,7 +231,7 @@ const AccountList = (): JSX.Element => {
                                                             {numbro(
                                                                 (row?.balance /
                                                                     totalSupply?.data?.chain
-                                                                        ?.cUSDTotalSupply) *
+                                                                        ?.celoTotalSupply) *
                                                                     100
                                                             ).format('0.00')}{' '}
                                                             {'%'}
