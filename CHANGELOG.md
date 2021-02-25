@@ -80,6 +80,7 @@
 * Removed `fetchPolicy` from `ApolloClient`
 * Updated `@apollo/client` package to `v3.3.11`
 * Updated README.md file
+* Updated `averageBlockTime` value
 
 ## v0.1.3
 
