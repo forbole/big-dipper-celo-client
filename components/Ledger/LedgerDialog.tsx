@@ -359,7 +359,7 @@ const LedgerDialog = ({
                             <RevokeValidatorGroup
                                 isLoading={isLoading}
                                 maxLockedCelo={
-                                    AccountDetails?.data?.account?.lockedGold?.total ?? '0'
+                                    AccountDetails?.data?.account?.totalBalance?.pending ?? '0'
                                 }
                                 validatorGroup={validatorGroup}
                             />
