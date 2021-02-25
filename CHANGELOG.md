@@ -81,6 +81,7 @@
 * Updated `@apollo/client` package to `v3.3.11`
 * Updated README.md file
 * [#228] Updated `averageBlockTime` value
+* Updated celoTotalSupply value
 
 ## v0.1.3
 
