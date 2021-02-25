@@ -202,7 +202,8 @@ const Epoch = (): JSX.Element => {
 
     const calculateRemainingTime = () => {
         const averageBlockTime =
-            chain?.data?.chain?.averageBlockTime >= 5 && chain?.data?.chain?.averageBlockTime < 6
+            chain?.data?.chain?.averageBlockTime >= 4.5 &&
+            chain?.data?.chain?.averageBlockTime < 6.5
                 ? chain?.data?.chain?.averageBlockTime
                 : 5;
 
