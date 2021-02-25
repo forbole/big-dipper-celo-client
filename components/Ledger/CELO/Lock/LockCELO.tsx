@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React, { useEffect } from 'react';
 
+import Coin from '../../../Utils/Coin';
 import { LedgerFormControl } from '../../LedgerDialog';
 
 const useStyles = makeStyles(() =>
@@ -42,7 +43,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-type LockGoldProps = { isLoading?: boolean; maxLock?: string };
+type LockGoldProps = { isLoading?: boolean; maxLock?: number };
 
 const LockGold = ({ isLoading, maxLock }: LockGoldProps): JSX.Element => {
     const classes = useStyles();
@@ -97,7 +98,7 @@ const LockGold = ({ isLoading, maxLock }: LockGoldProps): JSX.Element => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography variant="body2" noWrap className={classes.alignRight}>
-                                    {maxLock} CELO
+                                    {maxLock ? Coin(maxLock, 'CELO', 2) : Coin(0, 'CELO', 2)}
                                 </Typography>
                             </Grid>
                         </Grid>
