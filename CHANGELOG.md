@@ -82,6 +82,7 @@
 * Updated README.md file
 * [#228] Updated `averageBlockTime` value
 * Updated celoTotalSupply value
+* Updated account balance value in Ledger Dialog
 
 ## v0.1.3
 
