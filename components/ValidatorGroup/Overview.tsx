@@ -6,9 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import numbro from 'numbro';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import LedgerDialog from '../Ledger/LedgerDialog';
+import { GET_ACCOUNT_DETAILS } from '../Query/Account';
 import { GET_VALIDATOR_GROUP } from '../Query/ValidatorGroup';
 import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
@@ -75,14 +76,28 @@ const useStyles = makeStyles(() => {
     };
 });
 
-type OverviewProps = { address: string };
+type OverviewProps = { groupAddress: string };
 
-const Overview = ({ address }: OverviewProps): JSX.Element => {
+const Overview = ({ groupAddress }: OverviewProps): JSX.Element => {
     const classes = useStyles();
-    const valGroupAddress = address;
+    const valGroupAddress = groupAddress;
+    const [showActivateButton, setShowActivateButton] = React.useState(false);
+    const [address, setAddress] = React.useState('');
+
+    useEffect(() => {
+        const localUser = localStorage.getItem('currentUserAddress');
+        const getLocalUser = localUser ? localUser : '';
+        setAddress(getLocalUser);
+        checkIfUserHasVotedForGroup();
+    });
 
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
         variables: { valGroupAddress }
+    });
+
+    const accountQuery = useQuery(GET_ACCOUNT_DETAILS, {
+        variables: { address },
+        pollInterval: 10000
     });
 
     const validatorGroupMembers = data?.validatorGroup?.members
@@ -123,6 +138,18 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
         }
     };
 
+    const checkIfUserHasVotedForGroup = () => {
+        if (accountQuery) {
+            // if (accountQuery?.data?.account?.hasActivatablePendingVotes === true) {
+            for (let c = 0; c < accountQuery?.data?.account?.groupsVotedFor.length; c++) {
+                if (accountQuery?.data?.account?.groupsVotedFor[c] === valGroupAddress) {
+                    setShowActivateButton(true);
+                }
+            }
+            // }
+        }
+    };
+
     if (loading) return <ComponentLoader />;
     if (error) return <ErrorMessage />;
 
@@ -135,13 +162,15 @@ const Overview = ({ address }: OverviewProps): JSX.Element => {
                             Overview
                         </Typography>
                     </Grid>
-                    <Grid item xs={4} md={2} lg={1}>
-                        <LedgerDialog
-                            buttonLabel="Activate Votes"
-                            action="ValidatorGroupActivateVotes"
-                            validatorGroup={valGroupAddress}
-                        />
-                    </Grid>
+                    {showActivateButton === true ? (
+                        <Grid item xs={4} md={2} lg={1}>
+                            <LedgerDialog
+                                buttonLabel="Activate Votes"
+                                action="ValidatorGroupActivateVotes"
+                                validatorGroup={valGroupAddress}
+                            />
+                        </Grid>
+                    ) : null}
                     <Grid item xs={12}>
                         <Divider className={classes.divider} />
                     </Grid>

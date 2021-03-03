@@ -16,7 +16,7 @@ import moment from 'moment';
 import React, { useEffect } from 'react';
 
 import PriceCard from '../PriceCard/PriceCard';
-import { GET_BLOCK } from '../Query/Block';
+import { GET_LATEST_BLOCKS } from '../Query/Block';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import MiddleEllipsis from '../Utils/MiddleEllipsis';
@@ -150,10 +150,11 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
         setPageNumber(SETPAGE);
     };
 
-    const { loading, error, data } = useQuery(GET_BLOCK, {
+    const { loading, error, data } = useQuery(GET_LATEST_BLOCKS, {
         variables: { pageSize, page },
         pollInterval: 5000
     });
+
     if (loading) return <ComponentLoader />;
     // if (error) return <ErrorMessage />;
     return (

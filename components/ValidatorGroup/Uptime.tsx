@@ -22,7 +22,7 @@ import {
     YAxis
 } from 'recharts';
 
-import { GET_BLOCK } from '../Query/Block';
+import { GET_BLOCK, GET_LATEST_BLOCK_HEIGHT } from '../Query/Block';
 import { GET_VALIDATOR_GROUP } from '../Query/ValidatorGroup';
 import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
@@ -205,7 +205,7 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
         };
     } = [];
 
-    const latestBlock = useQuery(GET_BLOCK, {
+    const latestBlock = useQuery(GET_LATEST_BLOCK_HEIGHT, {
         variables: { pageSize, page },
         pollInterval: 5000
     });

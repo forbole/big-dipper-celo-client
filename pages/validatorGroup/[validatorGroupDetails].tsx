@@ -28,7 +28,7 @@ export default function validatorGroupDetails(): JSX.Element {
                 <AddressCard address={validatorGroup} />
             </Grid>
             <Grid item xs={12}>
-                <Overview address={validatorGroup} />
+                <Overview groupAddress={validatorGroup} />
             </Grid>
             <Grid item xs={12} lg={6}>
                 <GroupMember validatorGroupAddress={validatorGroup} />

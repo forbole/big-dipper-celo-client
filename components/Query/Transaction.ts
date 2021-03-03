@@ -5,7 +5,6 @@ export const GET_TX = gql`
         transactions(pageSize: $pageSize, page: $page) {
             totalCounts
             transactions {
-                type
                 from {
                     address
                     balance

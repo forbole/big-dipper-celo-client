@@ -1,8 +1,59 @@
 import { gql } from '@apollo/client';
 
-export const GET_BLOCK = gql`
+export const GET_LATEST_BLOCKS = gql`
     query Block($pageSize: Int, $page: Int) {
         blocks(pageSize: $pageSize, page: $page) {
+            totalCounts
+            blocks {
+                number
+                miner {
+                    name
+                    signer
+                }
+                transactions {
+                    transactionIndex
+                }
+                gasUsed
+                gasLimit
+                timestamp
+            }
+        }
+    }
+`;
+
+export const GET_LATEST_BLOCK_HEIGHT = gql`
+    query Block($pageSize: Int, $page: Int) {
+        blocks(pageSize: $pageSize, page: $page) {
+            blocks {
+                number
+            }
+        }
+    }
+`;
+
+export const GET_BLOCK_MINER = gql`
+    query BlockMiner($number: Int) {
+        block(number: $number) {
+            miner {
+                name
+                signer
+            }
+        }
+    }
+`;
+
+export const GET_BLOCK_GAS_LIMIT = gql`
+    query BlockMiner($number: Int) {
+        block(number: $number) {
+            gasUsed
+            gasLimit
+        }
+    }
+`;
+
+export const GET_BLOCK = gql`
+    query Block($pageSize: Int, $page: Int, $fromBlock: Int) {
+        blocks(pageSize: $pageSize, page: $page, fromBlock: $fromBlock) {
             totalCounts
             blocks {
                 number
@@ -22,9 +73,7 @@ export const GET_BLOCK = gql`
                         }
                     }
                 }
-                transactions {
-                    transactionIndex
-                }
+
                 gasUsed
                 gasLimit
                 timestamp
@@ -59,7 +108,6 @@ export const GET_BLOCK_DETAILS = gql`
                     }
                 }
             }
-
             parentHash
             totalDifficulty
             gasUsed
