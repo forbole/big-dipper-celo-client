@@ -3,6 +3,7 @@ import { gql } from '@apollo/client';
 export const GET_LATEST_BLOCKS = gql`
     query Block($pageSize: Int, $page: Int) {
         blocks(pageSize: $pageSize, page: $page) {
+            totalCounts
             blocks {
                 number
                 miner {

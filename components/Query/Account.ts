@@ -32,6 +32,7 @@ export const GET_ACCOUNT_DETAILS = gql`
             lockedGold
             attestation
             groupsVotedFor
+            hasActivatablePendingVotes
         }
     }
 `;
