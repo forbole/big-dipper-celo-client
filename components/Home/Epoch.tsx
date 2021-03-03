@@ -9,7 +9,7 @@ import React, { useEffect } from 'react';
 import Countdown, { CountdownRenderProps } from 'react-countdown';
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 
-import { GET_BLOCK } from '../Query/Block';
+import { GET_BLOCK_MINER } from '../Query/Block';
 import { GET_CHAIN } from '../Query/Chain';
 import Avatar from '../Utils/Avatar';
 import ComponentLoader from '../Utils/ComponentLoader';
@@ -171,7 +171,7 @@ const Epoch = (): JSX.Element => {
         pollInterval: 5000
     });
 
-    const { loading, error, data } = useQuery(GET_BLOCK, {
+    const { loading, error, data } = useQuery(GET_BLOCK_MINER, {
         variables: { pageSize, page },
         pollInterval: 5000
     });
