@@ -160,19 +160,16 @@ const EpochEnded = () => <span>This Epoch has ended!</span>;
 const Epoch = (): JSX.Element => {
     const classes = useStyles();
     const [hasEnded, setHasEnded] = React.useState(false);
-    const SETPAGE = process.env.SETPAGE ? parseInt(process.env.SETPAGE) : 0;
-    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
-    const [pageNumber] = React.useState(SETPAGE);
-    const [pageSize] = React.useState(ROWMEDIUM);
-    const page = pageNumber + 1;
     let timerOn = false;
 
     const chain = useQuery(GET_CHAIN, {
         pollInterval: 5000
     });
 
+    const number = chain?.data?.chain?.latestHeight;
+
     const { loading, error, data } = useQuery(GET_BLOCK_MINER, {
-        variables: { pageSize, page },
+        variables: { number },
         pollInterval: 5000
     });
 
