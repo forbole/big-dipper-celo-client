@@ -337,25 +337,22 @@ const Epoch = (): JSX.Element => {
                             </Grid>
                         ) : null}
                         <Grid item xs={12} className={classes.blockProposer}>
-                            {data?.blocks?.blocks[0]?.miner?.name ||
-                            data?.blocks?.blocks[0]?.miner?.signer ? (
+                            {data?.block?.miner?.name || data?.block?.miner?.signer ? (
                                 <>
                                     <Avatar
                                         value={
-                                            data?.blocks?.blocks[0]?.miner?.name ||
-                                            data?.blocks?.blocks[0]?.miner?.signer
+                                            data?.block?.miner?.name || data?.block?.miner?.signer
                                         }
                                     />
                                     <Typography
                                         variant="body1"
                                         color="textPrimary"
                                         className={
-                                            data?.blocks?.blocks[0]?.miner?.name
+                                            data?.block?.miner?.name
                                                 ? classes.blockProposerName
                                                 : classes.blockProposerAddress
                                         }>
-                                        {data?.blocks?.blocks[0]?.miner?.name ||
-                                            data?.blocks?.blocks[0]?.miner?.signer}
+                                        {data?.block?.miner?.name || data?.block?.miner?.signer}
                                     </Typography>
                                 </>
                             ) : null}
