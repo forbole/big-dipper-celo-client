@@ -191,13 +191,15 @@ class Ledger extends Component {
 
         const getElection = await this.kit.contracts.getElection();
         const activateVotes = await getElection.activate(address);
+        result = await activateVotes[0].sendAndWaitForReceipt();
 
-        for (let c in activateVotes) {
-            if (activateVotes[c].address === validatorGroupAddress) {
-                result = await activateVotes[c].sendAndWaitForReceipt();
+        if(activateVotes.length > 1){
+            for (let c in activateVotes) {
+                if (activateVotes[c].address === validatorGroupAddress) {
+                    result = await activateVotes[c].sendAndWaitForReceipt();
+                }
             }
         }
-
         return result;
 
     }
