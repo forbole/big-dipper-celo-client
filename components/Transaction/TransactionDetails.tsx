@@ -111,7 +111,8 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
     const classes = useStyles();
 
     const { loading, error, data } = useQuery(GET_TX_DETAILS, {
-        variables: { hash }
+        variables: { hash },
+        pollInterval: 5000
     });
 
     const number = data?.transaction?.blockNumber;
