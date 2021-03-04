@@ -167,6 +167,41 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                         )}
                     </Grid>
 
+                    <Grid item xs={4}>
+                        <Typography variant="body2" className={classes.alignLeft}>
+                            Locked CELO
+                        </Typography>
+                    </Grid>
+
+                    <Grid item xs={8}>
+                        {accountQuery?.data?.account?.lockedGold?.total ? (
+                            <Typography variant="body1" className={classes.alignRight}>
+                                {Coin(accountQuery?.data?.account?.lockedGold?.total, 'CELO', 2)}
+                            </Typography>
+                        ) : (
+                            <NotAvailable variant="body2" className={classes.alignRight} />
+                        )}
+                    </Grid>
+
+                    <Grid item xs={6}>
+                        <Typography variant="body2" className={classes.alignLeft}>
+                            Locked Nonvoting CELO
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={6} style={{ marginTop: '-0.5rem' }}>
+                        {accountQuery?.data?.account?.lockedGold?.nonvoting ? (
+                            <Typography variant="body1" className={classes.alignRight}>
+                                {Coin(
+                                    accountQuery?.data?.account?.lockedGold?.nonvoting,
+                                    'CELO',
+                                    2
+                                )}
+                            </Typography>
+                        ) : (
+                            <NotAvailable variant="body2" className={classes.alignRight} />
+                        )}
+                    </Grid>
+
                     {address === currentUser ? (
                         <>
                             <Grid item xs={12}>
