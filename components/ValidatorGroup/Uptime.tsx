@@ -24,7 +24,6 @@ import {
 
 import { GET_BLOCK, GET_LATEST_BLOCK_HEIGHT } from '../Query/Block';
 import { GET_VALIDATOR_GROUP } from '../Query/ValidatorGroup';
-import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
 import NavLink from '../Utils/NavLink';
@@ -95,10 +94,10 @@ const CustomTooltip = (payload: any, active?: boolean) => {
                         </Grid>
                         <Grid item xs={9}>
                             <NavLink
-                                href={`/account/${payload[0]?.payload?.Proposer}`}
+                                href={`/account/${payload.payload[0]?.payload?.Proposer}`}
                                 name={
                                     <Typography variant="caption">
-                                        {payload[0]?.payload?.Proposer}
+                                        {payload.payload[0]?.payload?.Proposer}
                                     </Typography>
                                 }
                                 className={classes.proposerAddress}
@@ -113,10 +112,10 @@ const CustomTooltip = (payload: any, active?: boolean) => {
 
                         <Grid item xs={7}>
                             <NavLink
-                                href={`/block/${payload[0]?.payload?.Height}`}
+                                href={`/block/${payload.payload[0]?.payload?.Height}`}
                                 name={
                                     <Typography color="textPrimary" variant="body2" align="right">
-                                        {payload[0]?.payload?.Height}
+                                        {payload.payload[0]?.payload?.Height}
                                     </Typography>
                                 }
                             />
@@ -129,7 +128,7 @@ const CustomTooltip = (payload: any, active?: boolean) => {
                         </Grid>
                         <Grid item xs={7}>
                             <Typography color="textPrimary" variant="body2" align="right">
-                                {payload[0]?.payload?.VotedNumber}
+                                {payload.payload[0]?.payload?.VotedNumber}
                             </Typography>
                         </Grid>
 
@@ -140,7 +139,7 @@ const CustomTooltip = (payload: any, active?: boolean) => {
                         </Grid>
                         <Grid item xs={7}>
                             <Typography color="textPrimary" variant="body2" align="right">
-                                {payload[0]?.payload?.MissedNumber}
+                                {payload.payload[0]?.payload?.MissedNumber}
                             </Typography>
                         </Grid>
 
@@ -151,7 +150,8 @@ const CustomTooltip = (payload: any, active?: boolean) => {
                         </Grid>
                         <Grid item xs={7}>
                             <Typography color="textPrimary" variant="body2" align="right">
-                                {numbro(payload[0]?.payload?.VotesAvailable).format('0.00')} %
+                                {numbro(payload.payload[0]?.payload?.VotesAvailable).format('0.00')}{' '}
+                                %
                             </Typography>
                         </Grid>
                         <Grid item xs={6}>
@@ -161,7 +161,7 @@ const CustomTooltip = (payload: any, active?: boolean) => {
                         </Grid>
                         <Grid item xs={6}>
                             <Typography color="textPrimary" variant="body2" align="right">
-                                {Coin(payload[0]?.payload?.GasUsed, 'cUSD')}
+                                {payload.payload[0]?.payload?.GasUsed}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -186,16 +186,17 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
     const [pageSize, setPageSize] = React.useState(ROWMEDIUM);
     const membersArray: { [index: number]: string } = [];
     let signedBlockCounter = 0;
+    let missedBlockCounter = 0;
     const blockUptime: {
         [index: number]: {
             Height: number;
-            Voted: number;
-            VotedNumber: number;
+            Voted: number | undefined;
+            VotedNumber: number | undefined;
+            Missed: number | undefined;
             MissedNumber: number;
             VotesAvailable: number;
             Proposer: string;
             GasUsed: number;
-            Signers: string[];
         };
     } = [];
     const allSigners: {
@@ -210,8 +211,7 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
         pollInterval: 5000
     });
 
-    const number = latestBlock?.data?.blocks?.blocks[0]?.number ?? 0;
-
+    const number = latestBlock?.data?.blocks?.blocks[0]?.number - 24 ?? 0;
     //set the number to query from
     const fromBlock = number - 14;
 
@@ -224,32 +224,55 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
         variables: { valGroupAddress }
     });
 
+    const groupMembers = [];
+    for (let c = 0; c < data?.validatorGroup?.members.length; c++) {
+        groupMembers[c] = data?.validatorGroup?.members[c]?.address;
+    }
     if (data?.validatorGroup?.members) {
         for (let c = 0; c < data?.validatorGroup?.members.length; c++) {
             membersArray[c] = data?.validatorGroup?.members[c].signer;
         }
     }
-    const findValidatorsWhoSignedTheBlock = (returnRealValue: boolean) => {
+    const findValidatorsWhoSignedTheBlock = (
+        returnRealValue: boolean,
+        calculateMissed: boolean
+    ) => {
         if (blockData?.data?.blocks?.blocks) {
-            {
-                blockData?.data?.blocks?.blocks.map((row: any, index: number) => {
-                    allSigners[index] = { signers: row?.signers, number: row?.number };
-                });
+            blockData?.data?.blocks?.blocks.map((row: any, index: number) => {
+                allSigners[index] = { signers: row?.signers, number: row?.number };
+            });
 
-                for (let d = 0; d < Object.keys(allSigners).length; d++) {
-                    signedBlockCounter = 0;
-                    for (let e = 0; e < Object.keys(allSigners[d].signers).length; e++) {
-                        for (let c = 0; c < Object.keys(membersArray).length; c++) {
-                            if (allSigners[d].signers[e].signer === membersArray[c]) {
-                                signedBlockCounter++;
+            for (let d = 0; d < Object.keys(allSigners).length; d++) {
+                signedBlockCounter = 0;
+                missedBlockCounter = 0;
+                for (let c = 0; c < Object.keys(membersArray).length; c++) {
+                    if (calculateMissed) {
+                        if (Object.keys(allSigners[d].signers).length > 0) {
+                            for (let e = 0; e < Object.keys(allSigners[d].signers).length; e++) {
+                                if (allSigners[d].signers[e].signer === membersArray[c]) {
+                                    signedBlockCounter++;
+                                } else {
+                                    missedBlockCounter++;
+                                }
                             }
+                        } else {
+                            missedBlockCounter++;
+                        }
+                    } else if (!calculateMissed) {
+                        if (Object.keys(allSigners[d].signers).length > 0) {
+                            for (let e = 0; e < Object.keys(allSigners[d].signers).length; e++) {
+                                if (allSigners[d].signers[e].signer === membersArray[c]) {
+                                    signedBlockCounter++;
+                                } else {
+                                    missedBlockCounter++;
+                                }
+                            }
+                        } else {
+                            signedBlockCounter++;
                         }
                     }
                 }
-            }
-            if (returnRealValue) return signedBlockCounter;
-            else {
-                return (signedBlockCounter / Object.keys(membersArray).length) * 100;
+                return missedBlockCounter;
             }
         } else {
             return 0;
@@ -259,16 +282,19 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
     if (blockData?.data?.blocks?.blocks) {
         blockData?.data?.blocks?.blocks.map((row: any, index: number) => {
             blockUptime[index] = {
-                Height: row?.number,
-                Voted: findValidatorsWhoSignedTheBlock(false),
-                VotedNumber: findValidatorsWhoSignedTheBlock(true),
-                MissedNumber:
-                    Object.keys(membersArray).length - findValidatorsWhoSignedTheBlock(true),
+                Height: row?.number ?? 0,
+                Voted:
+                    ((findValidatorsWhoSignedTheBlock(true, false) as number) * 100) /
+                        Object.keys(membersArray).length ?? 0,
+                VotedNumber: findValidatorsWhoSignedTheBlock(true, false) ?? 0,
+                Missed:
+                    ((findValidatorsWhoSignedTheBlock(true, true) as number) * 100) /
+                        Object.keys(membersArray).length ?? 0,
+                MissedNumber: (findValidatorsWhoSignedTheBlock(true, true) as number) ?? 0,
                 VotesAvailable:
                     (data?.validatorGroup?.votes / data?.validatorGroup?.votesAvailable) * 100 ?? 0,
-                Proposer: row?.miner?.signer,
-                GasUsed: row?.gasUsed,
-                Signers: row?.signers
+                Proposer: row?.miner?.signer ?? '',
+                GasUsed: row?.gasUsed ?? 0
             };
         });
     }
@@ -320,8 +346,8 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
                                     left: smallScreen ? 0 : 0,
                                     bottom: 5
                                 }}
-                                barGap="-5"
-                                barCategoryGap="1%"
+                                // barGap=""
+                                barCategoryGap="5%"
                                 stackOffset="expand">
                                 <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
                                 <XAxis
@@ -367,6 +393,14 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
                                     fillOpacity={1}
                                     name="Voted"
                                     onMouseOver={() => (tooltip = 'Voted')}
+                                />
+                                <Bar
+                                    dataKey="Missed"
+                                    fill="rgb(127,127,127)"
+                                    barSize={6}
+                                    fillOpacity={4}
+                                    name="Missed"
+                                    onMouseOver={() => (tooltip = 'Missed')}
                                 />
                             </BarChart>
                         </ResponsiveContainer>

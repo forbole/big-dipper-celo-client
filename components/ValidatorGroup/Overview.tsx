@@ -141,7 +141,7 @@ const Overview = ({ groupAddress }: OverviewProps): JSX.Element => {
     const checkIfUserHasVotedForGroup = () => {
         if (accountQuery) {
             // if (accountQuery?.data?.account?.hasActivatablePendingVotes === true) {
-            for (let c = 0; c < accountQuery?.data?.account?.groupsVotedFor.length; c++) {
+            for (let c = 0; c < accountQuery?.data?.account?.groupsVotedFor?.length; c++) {
                 if (accountQuery?.data?.account?.groupsVotedFor[c] === valGroupAddress) {
                     setShowActivateButton(true);
                 }

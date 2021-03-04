@@ -26,6 +26,7 @@ export const GET_LATEST_BLOCK_HEIGHT = gql`
         blocks(pageSize: $pageSize, page: $page) {
             blocks {
                 number
+                hash
             }
         }
     }
@@ -78,6 +79,16 @@ export const GET_BLOCK = gql`
                 gasLimit
                 timestamp
             }
+        }
+    }
+`;
+
+export const GET_BLOCK_SIGNERS = gql`
+    query BlockSigners($blockNumber: Int) {
+        blockSigners(blockNumber: $blockNumber) {
+            blockNumber
+            hash
+            signer
         }
     }
 `;
@@ -146,6 +157,23 @@ export const BLOCK_SUBSCRIPTION = gql`
             miner {
                 address
                 name
+            }
+        }
+    }
+`;
+
+export const BLOCKS_SIGNED_BY_ADDRESS = gql`
+    query block($signer: String!, $limit: Int) {
+        blocksSignedByAddress(signer: $signer, limit: $limit) {
+            totalCounts
+            signerRecords {
+                blockNumber
+                signer
+                hash
+                exist
+                miner {
+                    address
+                }
             }
         }
     }

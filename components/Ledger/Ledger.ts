@@ -226,7 +226,8 @@ class Ledger extends Component {
             this.checkLedgerErrors('Ledger device is disconnected');
         }
         const election = await this.kit.contracts.getElection();
-        const revokeValue = new BigNumber(parseFloat(amount)).times(this.CELO_FRACTION)
+        let revokeAmount = parseFloat(amount) * this.CELO_FRACTION;
+        const revokeValue = new BigNumber(revokeAmount);
         const revokeVotes = await election.revokeActive(account, group, revokeValue);
         const result = await revokeVotes.sendAndWaitForReceipt({ from: account });
         // console.log(result);

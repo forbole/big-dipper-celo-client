@@ -105,7 +105,8 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
     const prevBlock: number = number - 1;
     const nextBlock: number = number + 1;
     const { loading, error, data } = useQuery(GET_BLOCK_DETAILS, {
-        variables: { number }
+        variables: { number },
+        pollInterval: 5000
     });
 
     const handleChange = (event: unknown, newValue: number) => {
@@ -368,7 +369,6 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                                     wrapped={false}
                                 />
                             </StyledTabs>
-
                             {data?.block?.signers ? (
                                 <ol className={classes.signersList}>
                                     {data?.block?.signers.map((row: any, index: number) => {
@@ -376,6 +376,10 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                                             return (
                                                 <TabPanel value={value} index={0} key={index}>
                                                     <li key={index}>
+                                                        <NavLink
+                                                            href={`/validatorGroup/${row?.signer}`}
+                                                            name={row?.signer}
+                                                        />
                                                         {row?.validator?.validatorGroup?.address ? (
                                                             <NavLink
                                                                 href={`/validatorGroup/${row?.validator?.validatorGroup?.address}`}
@@ -394,17 +398,10 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                                             return (
                                                 <TabPanel value={value} index={1} key={index}>
                                                     <li key={index}>
-                                                        {row?.validator?.validatorGroup?.address ? (
-                                                            <NavLink
-                                                                href={`/validatorGroup/${row?.validator?.validatorGroup?.address}`}
-                                                                name={
-                                                                    row?.validator?.name ||
-                                                                    row?.signer
-                                                                }
-                                                            />
-                                                        ) : (
-                                                            ''
-                                                        )}
+                                                        <NavLink
+                                                            href={`/validatorGroup/${row?.signer}`}
+                                                            name={row?.signer}
+                                                        />
                                                     </li>
                                                 </TabPanel>
                                             );
