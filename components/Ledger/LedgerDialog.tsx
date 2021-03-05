@@ -418,7 +418,7 @@ const LedgerDialog = ({
             }
         } catch (e) {
             setLedgerLoading(true);
-            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
+            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message, address));
         }
     };
 

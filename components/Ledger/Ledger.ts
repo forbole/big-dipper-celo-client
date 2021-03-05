@@ -29,7 +29,10 @@ const getCeloLedgerTransport = () => {
     );
 };
 
-const URL = 'https://forno.celo.org';
+const MAINNET_URL = 'https://forno.celo.org';
+const ALFAJORES_TESTNET_URL = 'https://alfajores-forno.celo-testnet.org';
+const BAKLAVA_TESTNET_URL = 'https://baklava-forno.celo-testnet.org';
+
 
 type LockCeloProps = { amount: string; from: string };
 type UnlockCeloProps = { amount: string; from: string };
@@ -49,7 +52,7 @@ class Ledger extends Component {
     public isConnected = false;
     private CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
 
-    checkLedgerErrors(errorMessage: string) {
+    checkLedgerErrors(errorMessage: string, address?: string) {
         switch (errorMessage) {
             case 'U2F: Timeout':
                 return 'Connection timed out. Please try again.';
@@ -65,6 +68,8 @@ class Ledger extends Component {
                 return 'The connection was rejected by the user. ';
             case `Cannot read property 'sendAndWaitForReceipt' of undefined`:
                 return `Couldn't find any votes to be activated. Please ensure you have voted for Validator Group and waited at least 24hrs to activate the votes. `
+            case `insufficient funds for gas * price + value + gatewayFee`:
+                return `Insufficient balance. Please add funds to account ${address ?? ''} and then try again.`
             default:
                 return errorMessage;
         }
@@ -236,4 +241,4 @@ class Ledger extends Component {
     }
 }
 
-export default new Ledger(URL);
+export default new Ledger(MAINNET_URL);
