@@ -75,7 +75,7 @@ class Ledger extends Component {
         }
     }
     async connect() {
-        const web3 = new Web3(URL);
+        const web3 = new Web3(MAINNET_URL);
         const transport = await getCeloLedgerTransport();
         const eth = new Eth(transport);
         const wallet = await newLedgerWalletWithSetup(eth.transport);

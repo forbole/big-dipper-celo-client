@@ -223,7 +223,7 @@ type LedgerDialogProps = {
     validatorGroup?: string;
 };
 
-type CheckIfAccountProps = { address: string };
+type CheckIfAccountProps = { address: string; action: string };
 
 const LedgerDialog = ({
     buttonLabel,
@@ -397,7 +397,7 @@ const LedgerDialog = ({
         }
     };
 
-    const checkIfAccount = async ({ address }: CheckIfAccountProps) => {
+    const checkIfAccount = async ({ address, action }: CheckIfAccountProps) => {
         const accountAddress = { address: address };
         try {
             const isAccount = await Ledger.isAccount(accountAddress);
@@ -411,6 +411,9 @@ const LedgerDialog = ({
                 setIsLoading(true);
                 const createAccount = await Ledger.createAccount(accountAddress);
                 if (createAccount === true) {
+                    setLedgerErrorMessage(
+                        `Success! The account ${address} has been created! Please close this window and try to ${action} again. `
+                    );
                     return true;
                 } else {
                     return false;
@@ -424,9 +427,10 @@ const LedgerDialog = ({
 
     const handleLock = async () => {
         try {
-            const address = { address: currentUser };
-            //check if account exist
-            if (await checkIfAccount(address)) {
+            const checkAccount = { address: currentUser, action: 'lock CELO' };
+
+            //check if account exists
+            if (await checkIfAccount(checkAccount)) {
                 setShowCircuralProgress(true);
                 const from = currentUser;
                 const lockObject = { amount, from };
@@ -446,8 +450,8 @@ const LedgerDialog = ({
 
     const handleUnlock = async () => {
         try {
-            const address = { address: currentUser };
-            if (await checkIfAccount(address)) {
+            const checkAccount = { address: currentUser, action: 'unlock CELO' };
+            if (await checkIfAccount(checkAccount)) {
                 setShowCircuralProgress(true);
                 const from = currentUser;
                 const unlockObject = { amount, from };
@@ -467,8 +471,12 @@ const LedgerDialog = ({
 
     const handleProposalVote = async () => {
         try {
-            const address = { address: currentUser };
-            if (await checkIfAccount(address)) {
+            const checkAccount = {
+                address: currentUser,
+                action: `vote for proposal ${proposalNumber ?? ''}`
+            };
+
+            if (await checkIfAccount(checkAccount)) {
                 setLedgerLoading(true);
                 const from = currentUser;
                 const proposalNumber = getProposalNumber;
@@ -484,8 +492,11 @@ const LedgerDialog = ({
 
     const handleValidatorGroupVote = async () => {
         try {
-            const address = { address: currentUser };
-            if (await checkIfAccount(address)) {
+            const checkAccount = {
+                address: currentUser,
+                action: `vote for validator group ${validatorGroup ?? ''}`
+            };
+            if (await checkIfAccount(checkAccount)) {
                 setShowCircuralProgress(true);
                 const from = currentUser;
                 const group = validatorGroup ? validatorGroup : '';
@@ -507,8 +518,11 @@ const LedgerDialog = ({
 
     const handleRevokeValidatorGroupVote = async () => {
         try {
-            const address = { address: currentUser };
-            if (await checkIfAccount(address)) {
+            const checkAccount = {
+                address: currentUser,
+                action: `revoke vote for validator group ${validatorGroup ?? ''}`
+            };
+            if (await checkIfAccount(checkAccount)) {
                 setShowCircuralProgress(true);
                 const account = currentUser;
                 const group = validatorGroup ? validatorGroup : '';
@@ -531,8 +545,11 @@ const LedgerDialog = ({
 
     const handleValidatorGroupActivateVotes = async () => {
         try {
-            const address = { address: currentUser };
-            if (await checkIfAccount(address)) {
+            const checkAccount = {
+                address: currentUser,
+                action: `activate vote for validator group ${validatorGroup ?? ''}`
+            };
+            if (await checkIfAccount(checkAccount)) {
                 setShowCircuralProgress(true);
                 const activateVotesObject = {
                     address: currentUser,
