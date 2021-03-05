@@ -85,31 +85,6 @@ const Login = (): JSX.Element => {
         setCurrentUser(getLocalUser);
     });
 
-    const checkIfAccount = async (address: string) => {
-        const accountAddress = { address: address };
-        try {
-            const isAccount = await Ledger.isAccount(accountAddress);
-            if (isAccount === true) {
-                return true;
-            } else {
-                setLoading(true);
-                setErrorMessage(
-                    `Can't find an account with address ${address} on the chain. Please accept the connection and sign the transaction on your Ledger deivce to create an account. `
-                );
-                const createAccount = await Ledger.createAccount(accountAddress);
-                if (createAccount) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        } catch (e) {
-            setLoading(true);
-            setErrorMessage(Ledger.checkLedgerErrors(e.message));
-            setRetry(true);
-        }
-    };
-
     const handleLogin = async () => {
         if (!currentUser || currentUser === '' || currentUser === 'undefined') {
             setLoading(true);
@@ -131,12 +106,9 @@ const Login = (): JSX.Element => {
                     setErrorMessage('Please accept the connection in your Ledger device. ');
                     try {
                         const userAddress = await Ledger.getAddress();
-                        const isAccount = await checkIfAccount(userAddress);
-                        if (isAccount) {
-                            localStorage.setItem('currentUserAddress', userAddress);
-                            setCurrentUser(userAddress);
-                            setOpen(false);
-                        }
+                        localStorage.setItem('currentUserAddress', userAddress);
+                        setCurrentUser(userAddress);
+                        setOpen(false);
                     } catch (e) {
                         setLoading(true);
                         setErrorMessage(Ledger.checkLedgerErrors(e.message));
