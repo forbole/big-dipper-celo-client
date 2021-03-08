@@ -572,12 +572,18 @@ const LedgerDialog = ({
     };
 
     const actionHandler = (e: React.SetStateAction<string>) => {
-        setTabNumber(tabNumber + 1);
-
         switch (action) {
             case 'LockCelo':
                 switch (tabNumber) {
                     case 0:
+                        if (ledgerLoading) {
+                            return handleClick();
+                        }
+                        setTabNumber(tabNumber + 1);
+                        return handleLock();
+                    case 1:
+                        setLedgerErrorMessage('');
+                        setLedgerLoading(false);
                         return handleLock();
                     default:
                         return;
@@ -585,6 +591,14 @@ const LedgerDialog = ({
             case 'UnlockCelo':
                 switch (tabNumber) {
                     case 0:
+                        if (ledgerLoading) {
+                            return handleClick();
+                        }
+                        setTabNumber(tabNumber + 1);
+                        return handleUnlock();
+                    case 1:
+                        setLedgerErrorMessage('');
+                        setLedgerLoading(false);
                         return handleUnlock();
                     default:
                         return;
@@ -593,6 +607,14 @@ const LedgerDialog = ({
                 setVote(e);
                 switch (tabNumber) {
                     case 0:
+                        if (ledgerLoading) {
+                            return handleClick();
+                        }
+                        setTabNumber(tabNumber + 1);
+                        return handleProposalVote();
+                    case 1:
+                        setLedgerErrorMessage('');
+                        setLedgerLoading(false);
                         return handleProposalVote();
                     default:
                         return;
@@ -601,6 +623,14 @@ const LedgerDialog = ({
             case 'ValidatorGroupVote':
                 switch (tabNumber) {
                     case 0:
+                        if (ledgerLoading) {
+                            return handleClick();
+                        }
+                        setTabNumber(tabNumber + 1);
+                        return handleValidatorGroupVote();
+                    case 1:
+                        setLedgerErrorMessage('');
+                        setLedgerLoading(false);
                         return handleValidatorGroupVote();
                     default:
                         return;
@@ -608,6 +638,14 @@ const LedgerDialog = ({
             case 'ValidatorGroupRevoke':
                 switch (tabNumber) {
                     case 0:
+                        if (ledgerLoading) {
+                            return handleClick();
+                        }
+                        setTabNumber(tabNumber + 1);
+                        return handleRevokeValidatorGroupVote();
+                    case 1:
+                        setLedgerErrorMessage('');
+                        setLedgerLoading(false);
                         return handleRevokeValidatorGroupVote();
                     default:
                         return;
@@ -615,6 +653,14 @@ const LedgerDialog = ({
             case 'ValidatorGroupActivateVotes':
                 switch (tabNumber) {
                     case 0:
+                        if (ledgerLoading) {
+                            return handleClick();
+                        }
+                        setTabNumber(tabNumber + 1);
+                        return handleValidatorGroupActivateVotes();
+                    case 1:
+                        setLedgerErrorMessage('');
+                        setLedgerLoading(false);
                         return handleValidatorGroupActivateVotes();
                     default:
                         return;
@@ -786,7 +832,7 @@ const LedgerDialog = ({
                         ledgerErrorMessage || !connected || ledgerLoading ? (
                             <ControlButtons
                                 showRetry={true}
-                                handleClick={handleClick}
+                                handleClick={actionHandler}
                                 handleClose={handleClose}
                                 showDisabled={isLoading}
                             />
