@@ -13,7 +13,6 @@ import { GET_VALIDATOR } from '../Query/Validator';
 import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
-import NotAvailable from '../Utils/NotAvailable';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
