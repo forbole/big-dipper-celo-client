@@ -223,7 +223,7 @@ type LedgerDialogProps = {
     validatorGroup?: string;
 };
 
-type CheckIfAccountProps = { address: string };
+type CheckIfAccountProps = { address: string; action: string };
 
 const LedgerDialog = ({
     buttonLabel,
@@ -397,7 +397,7 @@ const LedgerDialog = ({
         }
     };
 
-    const checkIfAccount = async ({ address }: CheckIfAccountProps) => {
+    const checkIfAccount = async ({ address, action }: CheckIfAccountProps) => {
         const accountAddress = { address: address };
         try {
             const isAccount = await Ledger.isAccount(accountAddress);
@@ -411,6 +411,9 @@ const LedgerDialog = ({
                 setIsLoading(true);
                 const createAccount = await Ledger.createAccount(accountAddress);
                 if (createAccount === true) {
+                    setLedgerErrorMessage(
+                        `Success! The account ${address} has been created! Please close this window and try to ${action} again. `
+                    );
                     return true;
                 } else {
                     return false;
@@ -418,15 +421,16 @@ const LedgerDialog = ({
             }
         } catch (e) {
             setLedgerLoading(true);
-            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message));
+            setLedgerErrorMessage(Ledger.checkLedgerErrors(e.message, address));
         }
     };
 
     const handleLock = async () => {
         try {
-            const address = { address: currentUser };
-            //check if account exist
-            if (await checkIfAccount(address)) {
+            const checkAccount = { address: currentUser, action: 'lock CELO' };
+
+            //check if account exists
+            if (await checkIfAccount(checkAccount)) {
                 setShowCircuralProgress(true);
                 const from = currentUser;
                 const lockObject = { amount, from };
@@ -446,8 +450,8 @@ const LedgerDialog = ({
 
     const handleUnlock = async () => {
         try {
-            const address = { address: currentUser };
-            if (await checkIfAccount(address)) {
+            const checkAccount = { address: currentUser, action: 'unlock CELO' };
+            if (await checkIfAccount(checkAccount)) {
                 setShowCircuralProgress(true);
                 const from = currentUser;
                 const unlockObject = { amount, from };
@@ -467,8 +471,12 @@ const LedgerDialog = ({
 
     const handleProposalVote = async () => {
         try {
-            const address = { address: currentUser };
-            if (await checkIfAccount(address)) {
+            const checkAccount = {
+                address: currentUser,
+                action: `vote for proposal ${proposalNumber ?? ''}`
+            };
+
+            if (await checkIfAccount(checkAccount)) {
                 setLedgerLoading(true);
                 const from = currentUser;
                 const proposalNumber = getProposalNumber;
@@ -484,8 +492,11 @@ const LedgerDialog = ({
 
     const handleValidatorGroupVote = async () => {
         try {
-            const address = { address: currentUser };
-            if (await checkIfAccount(address)) {
+            const checkAccount = {
+                address: currentUser,
+                action: `vote for validator group ${validatorGroup ?? ''}`
+            };
+            if (await checkIfAccount(checkAccount)) {
                 setShowCircuralProgress(true);
                 const from = currentUser;
                 const group = validatorGroup ? validatorGroup : '';
@@ -507,8 +518,11 @@ const LedgerDialog = ({
 
     const handleRevokeValidatorGroupVote = async () => {
         try {
-            const address = { address: currentUser };
-            if (await checkIfAccount(address)) {
+            const checkAccount = {
+                address: currentUser,
+                action: `revoke vote for validator group ${validatorGroup ?? ''}`
+            };
+            if (await checkIfAccount(checkAccount)) {
                 setShowCircuralProgress(true);
                 const account = currentUser;
                 const group = validatorGroup ? validatorGroup : '';
@@ -531,8 +545,11 @@ const LedgerDialog = ({
 
     const handleValidatorGroupActivateVotes = async () => {
         try {
-            const address = { address: currentUser };
-            if (await checkIfAccount(address)) {
+            const checkAccount = {
+                address: currentUser,
+                action: `activate vote for validator group ${validatorGroup ?? ''}`
+            };
+            if (await checkIfAccount(checkAccount)) {
                 setShowCircuralProgress(true);
                 const activateVotesObject = {
                     address: currentUser,
@@ -555,12 +572,18 @@ const LedgerDialog = ({
     };
 
     const actionHandler = (e: React.SetStateAction<string>) => {
-        setTabNumber(tabNumber + 1);
-
         switch (action) {
             case 'LockCelo':
                 switch (tabNumber) {
                     case 0:
+                        if (ledgerLoading) {
+                            return handleClick();
+                        }
+                        setTabNumber(tabNumber + 1);
+                        return handleLock();
+                    case 1:
+                        setLedgerErrorMessage('');
+                        setLedgerLoading(false);
                         return handleLock();
                     default:
                         return;
@@ -568,6 +591,14 @@ const LedgerDialog = ({
             case 'UnlockCelo':
                 switch (tabNumber) {
                     case 0:
+                        if (ledgerLoading) {
+                            return handleClick();
+                        }
+                        setTabNumber(tabNumber + 1);
+                        return handleUnlock();
+                    case 1:
+                        setLedgerErrorMessage('');
+                        setLedgerLoading(false);
                         return handleUnlock();
                     default:
                         return;
@@ -576,6 +607,14 @@ const LedgerDialog = ({
                 setVote(e);
                 switch (tabNumber) {
                     case 0:
+                        if (ledgerLoading) {
+                            return handleClick();
+                        }
+                        setTabNumber(tabNumber + 1);
+                        return handleProposalVote();
+                    case 1:
+                        setLedgerErrorMessage('');
+                        setLedgerLoading(false);
                         return handleProposalVote();
                     default:
                         return;
@@ -584,6 +623,14 @@ const LedgerDialog = ({
             case 'ValidatorGroupVote':
                 switch (tabNumber) {
                     case 0:
+                        if (ledgerLoading) {
+                            return handleClick();
+                        }
+                        setTabNumber(tabNumber + 1);
+                        return handleValidatorGroupVote();
+                    case 1:
+                        setLedgerErrorMessage('');
+                        setLedgerLoading(false);
                         return handleValidatorGroupVote();
                     default:
                         return;
@@ -591,6 +638,14 @@ const LedgerDialog = ({
             case 'ValidatorGroupRevoke':
                 switch (tabNumber) {
                     case 0:
+                        if (ledgerLoading) {
+                            return handleClick();
+                        }
+                        setTabNumber(tabNumber + 1);
+                        return handleRevokeValidatorGroupVote();
+                    case 1:
+                        setLedgerErrorMessage('');
+                        setLedgerLoading(false);
                         return handleRevokeValidatorGroupVote();
                     default:
                         return;
@@ -598,6 +653,14 @@ const LedgerDialog = ({
             case 'ValidatorGroupActivateVotes':
                 switch (tabNumber) {
                     case 0:
+                        if (ledgerLoading) {
+                            return handleClick();
+                        }
+                        setTabNumber(tabNumber + 1);
+                        return handleValidatorGroupActivateVotes();
+                    case 1:
+                        setLedgerErrorMessage('');
+                        setLedgerLoading(false);
                         return handleValidatorGroupActivateVotes();
                     default:
                         return;
@@ -769,7 +832,7 @@ const LedgerDialog = ({
                         ledgerErrorMessage || !connected || ledgerLoading ? (
                             <ControlButtons
                                 showRetry={true}
-                                handleClick={handleClick}
+                                handleClick={actionHandler}
                                 handleClose={handleClose}
                                 showDisabled={isLoading}
                             />

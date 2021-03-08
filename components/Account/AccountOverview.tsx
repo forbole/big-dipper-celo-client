@@ -13,7 +13,6 @@ import { GET_VALIDATOR } from '../Query/Validator';
 import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
 import ErrorMessage from '../Utils/ErrorMessage';
-import NotAvailable from '../Utils/NotAvailable';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -143,28 +142,24 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                     </Grid>
 
                     <Grid item xs={9}>
-                        {accountQuery?.data?.account?.balance ? (
-                            <Typography variant="h5" className={classes.alignRight}>
-                                {Coin(accountQuery?.data?.account?.balance, 'CELO', 2)}
-                            </Typography>
-                        ) : (
-                            <NotAvailable variant="h5" className={classes.alignRight} />
-                        )}
+                        <Typography variant="h5" className={classes.alignRight}>
+                            {accountQuery?.data?.account?.balance
+                                ? Coin(accountQuery?.data?.account?.balance, 'CELO', 2)
+                                : Coin(0, 'CELO', 2)}
+                        </Typography>
                     </Grid>
                     <Grid item xs={12} style={{ marginTop: '-0.5rem' }}>
-                        {accountQuery?.data?.account?.balance &&
-                        chainQuery?.data?.chain?.tokenPrice?.usd ? (
-                            <Typography variant="h6" className={classes.alignRight}>
-                                {Coin(
-                                    accountQuery?.data?.account?.balance,
-                                    'cUSD',
-                                    2,
-                                    chainQuery?.data?.chain?.tokenPrice?.usd
-                                )}
-                            </Typography>
-                        ) : (
-                            <NotAvailable variant="h5" className={classes.alignRight} />
-                        )}
+                        <Typography variant="h6" className={classes.alignRight}>
+                            {accountQuery?.data?.account?.balance &&
+                            chainQuery?.data?.chain?.tokenPrice?.usd
+                                ? Coin(
+                                      accountQuery?.data?.account?.balance,
+                                      'cUSD',
+                                      2,
+                                      chainQuery?.data?.chain?.tokenPrice?.usd
+                                  )
+                                : Coin(0, 'cUSD', 2)}
+                        </Typography>
                     </Grid>
 
                     <Grid item xs={4}>
@@ -174,13 +169,11 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                     </Grid>
 
                     <Grid item xs={8}>
-                        {accountQuery?.data?.account?.lockedGold?.total ? (
-                            <Typography variant="body1" className={classes.alignRight}>
-                                {Coin(accountQuery?.data?.account?.lockedGold?.total, 'CELO', 2)}
-                            </Typography>
-                        ) : (
-                            <NotAvailable variant="body2" className={classes.alignRight} />
-                        )}
+                        <Typography variant="body1" className={classes.alignRight}>
+                            {accountQuery?.data?.account?.lockedGold?.total
+                                ? Coin(accountQuery?.data?.account?.lockedGold?.total, 'CELO', 2)
+                                : Coin(0, 'CELO', 2)}
+                        </Typography>
                     </Grid>
 
                     <Grid item xs={6}>
@@ -189,17 +182,15 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
                         </Typography>
                     </Grid>
                     <Grid item xs={6} style={{ marginTop: '-0.5rem' }}>
-                        {accountQuery?.data?.account?.lockedGold?.nonvoting ? (
-                            <Typography variant="body1" className={classes.alignRight}>
-                                {Coin(
-                                    accountQuery?.data?.account?.lockedGold?.nonvoting,
-                                    'CELO',
-                                    2
-                                )}
-                            </Typography>
-                        ) : (
-                            <NotAvailable variant="body2" className={classes.alignRight} />
-                        )}
+                        <Typography variant="body1" className={classes.alignRight}>
+                            {accountQuery?.data?.account?.lockedGold?.nonvoting
+                                ? Coin(
+                                      accountQuery?.data?.account?.lockedGold?.nonvoting,
+                                      'CELO',
+                                      2
+                                  )
+                                : Coin(0, 'CELO', 2)}
+                        </Typography>
                     </Grid>
 
                     {address === currentUser ? (
