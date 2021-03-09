@@ -318,7 +318,7 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                                 {Coin(
                                     data?.transaction?.gas,
                                     'cUSD',
-                                    2,
+                                    null,
                                     data?.transaction?.gasPrice
                                 )}
                             </Typography>
