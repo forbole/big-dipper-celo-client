@@ -404,11 +404,9 @@ const LedgerDialog = ({
             if (isAccount === true) {
                 return true;
             } else {
-                setLedgerLoading(true);
                 setLedgerErrorMessage(
                     `Can't find an account with address ${address} on the chain. Please accept the connection and sign the transaction on your Ledger deivce to create an account. `
                 );
-                setIsLoading(true);
                 const createAccount = await Ledger.createAccount(accountAddress);
                 if (createAccount === true) {
                     setLedgerErrorMessage(
@@ -416,6 +414,8 @@ const LedgerDialog = ({
                     );
                     return true;
                 } else {
+                    setLedgerLoading(true);
+                    setLedgerErrorMessage('');
                     return false;
                 }
             }
