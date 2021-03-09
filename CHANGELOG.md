@@ -85,6 +85,7 @@
 * Updated account balance value in Ledger Dialog
 * Updated components values
 * [#263] Updated Ledger Login flow to allow users login with new empty account 
+* Removed `ErrorMessage` component   
 
 ## v0.1.3
 

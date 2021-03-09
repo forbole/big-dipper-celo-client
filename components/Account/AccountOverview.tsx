@@ -11,7 +11,7 @@ import { GET_ACCOUNT_DETAILS } from '../Query/Account';
 import { GET_CHAIN } from '../Query/Chain';
 import { GET_VALIDATOR } from '../Query/Validator';
 import Coin from '../Utils/Coin';
-import ComponentLoader from '../Utils/ComponentLoader'; 
+import ComponentLoader from '../Utils/ComponentLoader';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
