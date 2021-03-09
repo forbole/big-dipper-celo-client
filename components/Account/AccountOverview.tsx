@@ -12,7 +12,6 @@ import { GET_CHAIN } from '../Query/Chain';
 import { GET_VALIDATOR } from '../Query/Validator';
 import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -105,7 +104,6 @@ const AccountOverview = ({ address }: AccountOverviewProps): JSX.Element => {
     });
 
     if (accountQuery?.loading || chainQuery?.loading) return <ComponentLoader />;
-    if (accountQuery?.error || chainQuery?.error) return <ErrorMessage />;
     return (
         <span>
             <Card className={classes.root}>

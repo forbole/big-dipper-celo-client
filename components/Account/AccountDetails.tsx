@@ -14,7 +14,6 @@ import { GET_ACCOUNT_DETAILS } from '../Query/Account';
 import { GET_VALIDATOR } from '../Query/Validator';
 import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
 
@@ -67,6 +66,7 @@ type AccountDetailsProps = { address: string };
 const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
     const classes = useStyles();
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_VALIDATOR, {
         variables: { address },
         pollInterval: 5000
@@ -78,7 +78,6 @@ const AccountDetails = ({ address }: AccountDetailsProps): JSX.Element => {
     });
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage />;
 
     if (data?.validator && accountQuery?.data)
         return (

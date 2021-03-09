@@ -24,7 +24,6 @@ import React from 'react';
 import { GET_VALIDATOR_GROUPS } from '../Query/ValidatorGroup';
 import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 import MiddleEllipsis from '../Utils/MiddleEllipsis';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
@@ -173,6 +172,7 @@ const ValidatorVotesList = (): JSX.Element => {
 
     const page = pageNumber + 1;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUPS, {
         variables: { pageSize, page }
     });
@@ -284,7 +284,6 @@ const ValidatorVotesList = (): JSX.Element => {
     };
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage />;
 
     return (
         <>

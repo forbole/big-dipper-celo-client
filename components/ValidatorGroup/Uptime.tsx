@@ -25,7 +25,6 @@ import {
 import { GET_BLOCK, GET_LATEST_BLOCK_HEIGHT } from '../Query/Block';
 import { GET_VALIDATOR_GROUP } from '../Query/ValidatorGroup';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 import NavLink from '../Utils/NavLink';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -220,6 +219,7 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
         pollInterval: 5000
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
         variables: { valGroupAddress }
     });
@@ -249,30 +249,23 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
                     if (calculateMissed) {
                         if (Object.keys(allSigners[d].signers).length > 0) {
                             for (let e = 0; e < Object.keys(allSigners[d].signers).length; e++) {
-                                if (allSigners[d].signers[e].signer === membersArray[c]) {
-                                    signedBlockCounter++;
-                                } else {
+                                if (allSigners[d].signers[e].signer != membersArray[c]) {
                                     missedBlockCounter++;
                                 }
                             }
-                        } else {
-                            missedBlockCounter++;
+                            return missedBlockCounter;
                         }
                     } else if (!calculateMissed) {
                         if (Object.keys(allSigners[d].signers).length > 0) {
                             for (let e = 0; e < Object.keys(allSigners[d].signers).length; e++) {
                                 if (allSigners[d].signers[e].signer === membersArray[c]) {
                                     signedBlockCounter++;
-                                } else {
-                                    missedBlockCounter++;
                                 }
                             }
-                        } else {
-                            signedBlockCounter++;
                         }
+                        return signedBlockCounter;
                     }
                 }
-                return missedBlockCounter;
             }
         } else {
             return 0;
@@ -310,7 +303,7 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
     };
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage />;
+
     return (
         <Card className={classes.root}>
             <CardContent>

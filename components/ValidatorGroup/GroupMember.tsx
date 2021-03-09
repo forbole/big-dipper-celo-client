@@ -13,7 +13,6 @@ import React from 'react';
 import { GET_VALIDATOR_GROUP } from '../Query/ValidatorGroup';
 import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 import MiddleEllipsis from '../Utils/MiddleEllipsis';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
@@ -126,6 +125,7 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
     const classes = useStyles();
     const valGroupAddress = validatorGroupAddress;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
         variables: { valGroupAddress }
     });
@@ -155,7 +155,7 @@ const GroupMember = ({ validatorGroupAddress }: GroupMemberProps): JSX.Element =
     };
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage />;
+
     return (
         <Card className={classes.root}>
             <CardContent>

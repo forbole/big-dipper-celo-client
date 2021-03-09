@@ -19,7 +19,6 @@ import { GET_TX_DETAILS } from '../Query/Transaction';
 import Chips from '../Utils/Chips';
 import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
 
@@ -110,6 +109,7 @@ type TxDetailsProps = { hash: string };
 const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
     const classes = useStyles();
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_TX_DETAILS, {
         variables: { hash },
         pollInterval: 5000
@@ -164,7 +164,7 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
     };
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage />;
+
     return (
         <Card className={classes.root}>
             <CardContent>

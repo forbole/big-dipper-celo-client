@@ -7,7 +7,6 @@ import React from 'react';
 
 import { GET_TX_DETAILS } from '../Query/Transaction';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 
 const useStyles = makeStyles(() => {
     return {
@@ -26,12 +25,12 @@ const InputCard = ({ hash }: InputCardProps): JSX.Element => {
     const classes = useStyles();
     const callData: any = [];
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_TX_DETAILS, {
         variables: { hash }
     });
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage />;
 
     for (const c in data?.transaction?.decodedInput?.params) {
         (callData[c] = data?.transaction?.decodedInput?.params[c]?.type),

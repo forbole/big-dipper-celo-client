@@ -15,7 +15,6 @@ import React from 'react';
 
 import { GET_BLOCK_DETAILS } from '../Query/Block';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
 
@@ -104,6 +103,8 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
 
     const prevBlock: number = number - 1;
     const nextBlock: number = number + 1;
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_BLOCK_DETAILS, {
         variables: { number },
         pollInterval: 5000
@@ -139,7 +140,7 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
     })(Tabs);
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage />;
+
     return (
         <Card className={classes.root}>
             <CardContent>

@@ -12,7 +12,6 @@ import React from 'react';
 import { GET_CHAIN } from '../Query/Chain';
 import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 
 const useStyles = makeStyles({
     root: {
@@ -98,8 +97,6 @@ const ChartData = (): JSX.Element => {
     const { loading, error, data } = useQuery(GET_CHAIN, {
         pollInterval: 5000
     });
-
-    // if (error) return <ErrorMessage />;
 
     return (
         <>

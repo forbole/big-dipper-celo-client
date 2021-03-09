@@ -22,7 +22,6 @@ import { GET_CHAIN } from '../Query/Chain';
 import { GET_PROPOSAL } from '../Query/Proposal';
 import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
 
@@ -169,6 +168,7 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
         setValue(newValue);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_PROPOSAL, {
         variables: { proposalNumber }
     });
@@ -390,7 +390,6 @@ const ProposalVotingList = ({ proposal }: ProposalVotingListProps): JSX.Element 
     };
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage />;
 
     return (
         <Grid container justify="center" className={classes.container}>

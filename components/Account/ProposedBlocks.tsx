@@ -19,7 +19,6 @@ import React from 'react';
 import { GET_ACCOUNT_DETAILS } from '../Query/Account';
 import { GET_PROPOSED_BLOCKS } from '../Query/Block';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 import MiddleEllipsis from '../Utils/MiddleEllipsis';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
@@ -121,13 +120,13 @@ const ProposedBlocks = ({ address }: ProposedBlocksProps): JSX.Element => {
 
     address = accountQuery?.data?.account?.accountSummary?.authorizedSigners?.validator ?? '';
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_PROPOSED_BLOCKS, {
         variables: { address, pageSize, page },
         pollInterval: 5000
     });
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage />;
 
     return (
         <Accordion defaultExpanded>
