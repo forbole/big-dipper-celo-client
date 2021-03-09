@@ -13,7 +13,6 @@ import { GET_BLOCK_MINER } from '../Query/Block';
 import { GET_CHAIN } from '../Query/Chain';
 import Avatar from '../Utils/Avatar';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -168,6 +167,7 @@ const Epoch = (): JSX.Element => {
 
     const number = chain?.data?.chain?.latestHeight;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_BLOCK_MINER, {
         variables: { number },
         pollInterval: 5000
@@ -244,7 +244,6 @@ const Epoch = (): JSX.Element => {
         }
     };
 
-    // if (error || chain.error) return <ErrorMessage />;
     if (loading && chain.loading) return <ComponentLoader />;
 
     return (

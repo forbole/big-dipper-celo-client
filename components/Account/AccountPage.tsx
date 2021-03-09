@@ -5,7 +5,6 @@ import React from 'react';
 
 import { GET_VALIDATOR } from '../Query/Validator';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 import AccountDetails from './AccountDetails';
 import AccountOverview from './AccountOverview';
 import AddressCard from './AddressCard';
@@ -44,6 +43,7 @@ type AccountPageProps = { address: string };
 const AccountPage = ({ address }: AccountPageProps): JSX.Element => {
     const classes = useStyles();
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_VALIDATOR, {
         variables: { address },
         pollInterval: 5000
@@ -52,7 +52,6 @@ const AccountPage = ({ address }: AccountPageProps): JSX.Element => {
     const isValidator = data?.validator ? true : false;
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage />;
 
     return (
         <>

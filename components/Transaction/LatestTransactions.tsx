@@ -18,7 +18,6 @@ import { GET_TX } from '../Query/Transaction';
 import Chips from '../Utils/Chips';
 import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 import MiddleEllipsis from '../Utils/MiddleEllipsis';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
@@ -139,13 +138,13 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
         setPageNumber(SETPAGE);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_TX, {
         variables: { pageSize, page },
         pollInterval: 5000
     });
 
     if (loading) return <ComponentLoader />;
-    // if (error) return <ErrorMessage />;
 
     return (
         <>
@@ -234,7 +233,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                     </Typography>
                                                                 </Grid>
 
-                                                                <Grid item xs={4} md={5}>
+                                                                <Grid item xs={4}>
                                                                     <Typography
                                                                         variant="body2"
                                                                         className={
@@ -267,7 +266,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                     </Typography>
                                                                 </Grid>
 
-                                                                <Grid item xs={4} md={5}>
+                                                                <Grid item xs={4}>
                                                                     <Typography
                                                                         variant="body2"
                                                                         align="left"
@@ -297,7 +296,7 @@ const LatestTransactions = ({ pagination }: LatestTxsProps): JSX.Element => {
                                                                     </Typography>
                                                                 </Grid>
 
-                                                                <Grid item xs={4} md={2}>
+                                                                <Grid item xs={4}>
                                                                     {row?.value ? (
                                                                         <Typography
                                                                             variant="body1"

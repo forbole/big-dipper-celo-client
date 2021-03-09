@@ -15,7 +15,6 @@ import React from 'react';
 
 import { GET_TX_DETAILS } from '../Query/Transaction';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 
 const useStyles = makeStyles(() => {
     return {
@@ -42,12 +41,13 @@ type InputParametersProps = { hash: string };
 const InputParameters = ({ hash }: InputParametersProps): JSX.Element => {
     const classes = useStyles();
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_TX_DETAILS, {
         variables: { hash }
     });
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage />;
+
     if (data?.transaction?.decodedInput) {
         return (
             <Card className={classes.root}>

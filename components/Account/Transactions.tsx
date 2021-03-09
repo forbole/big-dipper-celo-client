@@ -22,7 +22,6 @@ import { GET_ACCOUNT_TX } from '../Query/Transaction';
 import Chips from '../Utils/Chips';
 import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 import MiddleEllipsis from '../Utils/MiddleEllipsis';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
@@ -119,13 +118,14 @@ const AccountTransactions = ({ address }: TransactionsProps): JSX.Element => {
         setPageNumber(SETPAGE);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_ACCOUNT_TX, {
         variables: { address, pageSize, page },
         pollInterval: 5000
     });
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage />;
+
     if (data?.transactionsByAccount?.totalCounts > 0) {
         return (
             <Accordion defaultExpanded>

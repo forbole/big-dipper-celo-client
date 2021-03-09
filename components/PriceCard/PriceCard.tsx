@@ -11,7 +11,6 @@ import React from 'react';
 import { GET_CHAIN } from '../Query/Chain';
 import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 
 const useStyles = makeStyles(() => {
     return {
@@ -40,8 +39,6 @@ const PriceCard = (): JSX.Element => {
     const chainData = useQuery(GET_CHAIN, {
         pollInterval: 5000
     });
-
-    if (chainData?.error) return <ErrorMessage />;
 
     return (
         <Hidden smUp>

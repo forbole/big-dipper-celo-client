@@ -18,7 +18,6 @@ import { GET_ACCOUNTS } from '../Query/Account';
 import { GET_TOTAL_SUPPLY } from '../Query/Chain';
 import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 import MiddleEllipsis from '../Utils/MiddleEllipsis';
 import NavLink from '../Utils/NavLink';
 import NotAvailable from '../Utils/NotAvailable';
@@ -117,6 +116,7 @@ const AccountList = (): JSX.Element => {
         setPageNumber(SETPAGE);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_ACCOUNTS, {
         variables: { pageSize, page, field }
     });
@@ -124,7 +124,6 @@ const AccountList = (): JSX.Element => {
     const totalSupply = useQuery(GET_TOTAL_SUPPLY, {});
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage />;
 
     return (
         <Grid container>

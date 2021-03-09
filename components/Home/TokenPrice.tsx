@@ -27,7 +27,6 @@ import { GET_CHAIN } from '../Query/Chain';
 import { GET_COIN_HISTORY_BY_DATES } from '../Query/Coin';
 import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 import NotAvailable from '../Utils/NotAvailable';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -318,7 +317,6 @@ const TokenPrice = (): JSX.Element => {
     });
 
     if (coinHistoryByDates?.loading && chainData?.loading) return <ComponentLoader />;
-    // if (coinHistoryByDates?.error || chainData?.error) return <ErrorMessage />;
 
     return (
         <>

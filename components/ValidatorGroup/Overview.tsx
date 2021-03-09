@@ -13,7 +13,6 @@ import { GET_ACCOUNT_DETAILS } from '../Query/Account';
 import { GET_VALIDATOR_GROUP } from '../Query/ValidatorGroup';
 import Coin from '../Utils/Coin';
 import ComponentLoader from '../Utils/ComponentLoader';
-import ErrorMessage from '../Utils/ErrorMessage';
 import NotAvailable from '../Utils/NotAvailable';
 
 const useStyles = makeStyles(() => {
@@ -91,6 +90,7 @@ const Overview = ({ groupAddress }: OverviewProps): JSX.Element => {
         checkIfUserHasVotedForGroup();
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
         variables: { valGroupAddress }
     });
@@ -151,7 +151,6 @@ const Overview = ({ groupAddress }: OverviewProps): JSX.Element => {
     };
 
     if (loading) return <ComponentLoader />;
-    if (error) return <ErrorMessage />;
 
     return (
         <Card className={classes.root}>
