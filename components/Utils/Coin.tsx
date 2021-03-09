@@ -4,8 +4,8 @@ import React from 'react';
 const Coin = (
     value: string | number | BigNumber,
     denom: string,
-    fraction?: number,
-    multiply?: number
+    fraction?: number | null,
+    multiply?: number | null
 ): React.ReactNode => {
     const CELO_FRACTION = process.env.CELO_FRACTION ? parseInt(process.env.CELO_FRACTION) : 1e18;
     const denomValue = typeof value === 'string' ? parseFloat(value) : value;
