@@ -46,7 +46,7 @@ const MiddleEllipsis = ({ text }: AppProps): JSX.Element => {
         if (str.length > 17) {
             return (
                 <>
-                    {str.substr(0, 8)}...{str.substr(str.length - 25, str.length)}
+                    {str.substr(0, 8)}...{str.substr(str.length - 17, str.length)}
                 </>
             );
         } else {
