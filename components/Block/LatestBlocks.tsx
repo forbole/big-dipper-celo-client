@@ -343,11 +343,15 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                                       variant="body2"
                                                                       noWrap
                                                                       color="textPrimary">
-                                                                      {moment
-                                                                          .unix(row?.timestamp)
-                                                                          .format(
-                                                                              'Do MMMM YYYY, h:mm:ss a'
-                                                                          )}
+                                                                      {row?.timestamp
+                                                                          ? moment
+                                                                                .unix(
+                                                                                    row?.timestamp
+                                                                                )
+                                                                                .format(
+                                                                                    'Do MMMM YYYY, h:mm:ss a'
+                                                                                )
+                                                                          : null}
                                                                   </Typography>
                                                               </TableCell>
                                                           </TableRow>
