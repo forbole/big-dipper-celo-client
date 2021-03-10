@@ -86,6 +86,7 @@
 * Updated components values
 * [#263] Updated Ledger Login flow to allow users login with new empty account 
 * Removed `ErrorMessage` component   
+* Updated Txs Input Params Info
 
 ## v0.1.3
 
