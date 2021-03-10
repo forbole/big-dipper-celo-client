@@ -32,11 +32,27 @@ const InputCard = ({ hash }: InputCardProps): JSX.Element => {
 
     if (loading) return <ComponentLoader />;
 
-    for (const c in data?.transaction?.decodedInput?.params) {
-        (callData[c] = data?.transaction?.decodedInput?.params[c]?.type),
-            (callData[c] += ' '),
-            (callData[c] += data?.transaction?.decodedInput?.params[c]?.name);
-    }
+    const getCallData = () => {
+        if (data?.transaction?.decodedInput?.params) {
+            for (const c in data?.transaction?.decodedInput?.params) {
+                callData[c] = data?.transaction?.decodedInput?.params[c]?.type;
+                callData[c] += ' ' + data?.transaction?.decodedInput?.params[c]?.name;
+            }
+        } else {
+            for (const c in data?.transaction?.decodedInput) {
+                for (const d in data?.transaction?.decodedInput[c]) {
+                    for (const e in data?.transaction?.decodedInput[c].events) {
+                        for (const f in data?.transaction?.decodedInput[c].events[e]) {
+                            callData[e] = data?.transaction?.decodedInput[c]?.events[e].type;
+                            callData[e] += ' ' + data?.transaction?.decodedInput[c]?.events[e].name;
+                        }
+                    }
+                }
+            }
+        }
+        return callData.join(', ');
+    };
+
     if (data?.transaction?.decodedInput) {
         return (
             <Card className={classes.card}>
@@ -61,7 +77,9 @@ const InputCard = ({ hash }: InputCardProps): JSX.Element => {
                     </Grid>
                     <Grid item xs={11}>
                         <Typography align="right" variant="body2" color="textSecondary">
-                            {data?.transaction?.decodedInput?.name}({callData.toString()})
+                            {data?.transaction?.decodedInput?.name ??
+                                data?.transaction?.decodedInput[0]?.name}
+                            ({getCallData()})
                         </Typography>
                     </Grid>
                 </Grid>
