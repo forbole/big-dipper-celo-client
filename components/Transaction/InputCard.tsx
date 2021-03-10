@@ -40,13 +40,9 @@ const InputCard = ({ hash }: InputCardProps): JSX.Element => {
             }
         } else {
             for (const c in data?.transaction?.decodedInput) {
-                for (const d in data?.transaction?.decodedInput[c]) {
-                    for (const e in data?.transaction?.decodedInput[c].events) {
-                        for (const f in data?.transaction?.decodedInput[c].events[e]) {
-                            callData[e] = data?.transaction?.decodedInput[c]?.events[e].type;
-                            callData[e] += ' ' + data?.transaction?.decodedInput[c]?.events[e].name;
-                        }
-                    }
+                for (const e in data?.transaction?.decodedInput[c].events) {
+                    callData[e] = data?.transaction?.decodedInput[c]?.events[e].type;
+                    callData[e] += ' ' + data?.transaction?.decodedInput[c]?.events[e].name;
                 }
             }
         }
