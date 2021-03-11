@@ -41,6 +41,7 @@
     "cross-fetch": "^3.0.6",
     "date-fns": "^2.16.1",
     "debug": "^4.3.1",
+    "elliptic": "^6.5.4",
     "fp-ts": "^2.9.5",
     "fs": "0.0.1-security",
     "graphql": "^15.4.0",
