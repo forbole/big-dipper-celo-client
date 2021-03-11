@@ -185,17 +185,19 @@ const BlockDetails = ({ blockNumber }: BlockDetailsProps): JSX.Element => {
                         </Typography>
                         <Typography variant="body2" component="h2" color="textSecondary">
                             {data?.block?.timestamp ? (
-                                new Date(parseInt(data?.block?.timestamp) * 1000).toUTCString()
+                                <>
+                                    {new Date(
+                                        parseInt(data?.block?.timestamp) * 1000
+                                    ).toUTCString()}{' '}
+                                    (
+                                    {moment
+                                        .unix(data?.block?.timestamp)
+                                        .format('Do MMMM YYYY, h:mm:ss a')}
+                                    )
+                                </>
                             ) : (
                                 <NotAvailable variant="body2" />
                             )}
-                            (
-                            {data?.block?.timestamp
-                                ? moment
-                                      .unix(data?.block?.timestamp)
-                                      .format('Do MMMM YYYY, h:mm:ss a')
-                                : null}
-                            )
                         </Typography>
                         <Divider variant="middle" className={classes.divider} />
                     </Grid>

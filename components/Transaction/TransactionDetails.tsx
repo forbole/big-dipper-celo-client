@@ -189,19 +189,19 @@ const TransactionDetails = ({ hash }: TxDetailsProps): JSX.Element => {
                         <Typography variant="body2">Time</Typography>
                         <Typography variant="body2">
                             {data?.transaction?.timestamp ? (
-                                new Date(
-                                    parseInt(data?.transaction?.timestamp) * 1000
-                                ).toUTCString()
+                                <>
+                                    {new Date(
+                                        parseInt(data?.transaction?.timestamp) * 1000
+                                    ).toUTCString()}{' '}
+                                    (
+                                    {moment
+                                        .unix(data?.transaction?.timestamp)
+                                        .format('Do MMMM YYYY, h:mm:ss a')}
+                                    )
+                                </>
                             ) : (
                                 <NotAvailable variant="body2" />
                             )}
-                            (
-                            {data?.transaction?.timestamp
-                                ? moment
-                                      .unix(data?.transaction?.timestamp)
-                                      .format('Do MMMM YYYY, h:mm:ss a')
-                                : null}
-                            )
                         </Typography>
                         <Divider variant="middle" className={classes.divider} />
                     </Grid>

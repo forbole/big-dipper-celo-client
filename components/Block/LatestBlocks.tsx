@@ -20,6 +20,7 @@ import { GET_LATEST_BLOCKS } from '../Query/Block';
 import ComponentLoader from '../Utils/ComponentLoader';
 import MiddleEllipsis from '../Utils/MiddleEllipsis';
 import NavLink from '../Utils/NavLink';
+import NotAvailable from '../Utils/NotAvailable';
 
 interface Column {
     id: 'height' | 'validator' | 'txs' | 'gasUsed' | 'gasLimit' | 'time';
@@ -104,10 +105,7 @@ const useStyles = makeStyles({
     },
     truncareText: {
         overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        width: '6rem',
-        minWidth: '2rem',
-        maxWidth: '15rem'
+        textOverflow: 'ellipsis'
     }
 });
 
@@ -282,7 +280,9 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                                               </Typography>
                                                                           }
                                                                       />
-                                                                  ) : null}
+                                                                  ) : (
+                                                                      <NotAvailable variant="body2" />
+                                                                  )}
                                                               </TableCell>
 
                                                               <TableCell
@@ -310,7 +310,9 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                                               variant="body2"
                                                                               noWrap
                                                                               color="textPrimary">
-                                                                              {row?.gasUsed}
+                                                                              {row?.gasUsed ?? (
+                                                                                  <NotAvailable variant="body2" />
+                                                                              )}
                                                                           </Typography>
                                                                       </div>
                                                                   </TableCell>
@@ -328,9 +330,9 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                                               variant="body2"
                                                                               noWrap
                                                                               color="textPrimary">
-                                                                              {row?.gasLimit
-                                                                                  ? row?.gasLimit
-                                                                                  : 'Not available'}
+                                                                              {row?.gasLimit ?? (
+                                                                                  <NotAvailable variant="body2" />
+                                                                              )}
                                                                           </Typography>
                                                                       </div>
                                                                   </TableCell>
@@ -343,11 +345,15 @@ const LatestBlocks = ({ pagination, displayCard }: LatestBlocksProps): JSX.Eleme
                                                                       variant="body2"
                                                                       noWrap
                                                                       color="textPrimary">
-                                                                      {moment
-                                                                          .unix(row?.timestamp)
-                                                                          .format(
-                                                                              'Do MMMM YYYY, h:mm:ss a'
-                                                                          )}
+                                                                      {row?.timestamp ? (
+                                                                          moment
+                                                                              .unix(row?.timestamp)
+                                                                              .format(
+                                                                                  'Do MMMM YYYY, h:mm:ss a'
+                                                                              )
+                                                                      ) : (
+                                                                          <NotAvailable variant="body2" />
+                                                                      )}
                                                                   </Typography>
                                                               </TableCell>
                                                           </TableRow>
