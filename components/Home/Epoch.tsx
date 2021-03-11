@@ -258,7 +258,6 @@ const Epoch = (): JSX.Element => {
                             item
                             xs={7}
                             style={{
-                                overflow: 'overlay',
                                 display: 'inline-block',
                                 position: 'absolute',
                                 zIndex: 999
