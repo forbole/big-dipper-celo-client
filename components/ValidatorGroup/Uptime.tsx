@@ -22,7 +22,7 @@ import {
     YAxis
 } from 'recharts';
 
-import { GET_BLOCK, GET_LATEST_BLOCK_HEIGHT } from '../Query/Block';
+import { GET_BLOCK, GET_BLOCK_SIGNERS, GET_LATEST_BLOCK_HEIGHT } from '../Query/Block';
 import { GET_VALIDATOR_GROUP } from '../Query/ValidatorGroup';
 import ComponentLoader from '../Utils/ComponentLoader';
 import NavLink from '../Utils/NavLink';
@@ -93,10 +93,14 @@ const CustomTooltip = (payload: any, active?: boolean) => {
                         </Grid>
                         <Grid item xs={9}>
                             <NavLink
-                                href={`/account/${payload.payload[0]?.payload?.Proposer}`}
+                                href={
+                                    payload?.payload[0]?.payload?.Proposer
+                                        ? `/account/${payload?.payload[0]?.payload?.Proposer}`
+                                        : ''
+                                }
                                 name={
                                     <Typography variant="caption">
-                                        {payload.payload[0]?.payload?.Proposer}
+                                        {payload?.payload[0]?.payload?.Proposer}
                                     </Typography>
                                 }
                                 className={classes.proposerAddress}
@@ -111,10 +115,10 @@ const CustomTooltip = (payload: any, active?: boolean) => {
 
                         <Grid item xs={7}>
                             <NavLink
-                                href={`/block/${payload.payload[0]?.payload?.Height}`}
+                                href={`/block/${payload?.payload[0]?.payload?.Height}`}
                                 name={
                                     <Typography color="textPrimary" variant="body2" align="right">
-                                        {payload.payload[0]?.payload?.Height}
+                                        {payload?.payload[0]?.payload?.Height}
                                     </Typography>
                                 }
                             />
@@ -127,7 +131,7 @@ const CustomTooltip = (payload: any, active?: boolean) => {
                         </Grid>
                         <Grid item xs={7}>
                             <Typography color="textPrimary" variant="body2" align="right">
-                                {payload.payload[0]?.payload?.VotedNumber}
+                                {payload?.payload[0]?.payload?.VotedNumber}
                             </Typography>
                         </Grid>
 
@@ -138,7 +142,7 @@ const CustomTooltip = (payload: any, active?: boolean) => {
                         </Grid>
                         <Grid item xs={7}>
                             <Typography color="textPrimary" variant="body2" align="right">
-                                {payload.payload[0]?.payload?.MissedNumber}
+                                {payload?.payload[0]?.payload?.MissedNumber}
                             </Typography>
                         </Grid>
 
@@ -149,7 +153,9 @@ const CustomTooltip = (payload: any, active?: boolean) => {
                         </Grid>
                         <Grid item xs={7}>
                             <Typography color="textPrimary" variant="body2" align="right">
-                                {numbro(payload.payload[0]?.payload?.VotesAvailable).format('0.00')}{' '}
+                                {numbro(payload?.payload[0]?.payload?.VotesAvailable).format(
+                                    '0.00'
+                                )}{' '}
                                 %
                             </Typography>
                         </Grid>
@@ -160,21 +166,19 @@ const CustomTooltip = (payload: any, active?: boolean) => {
                         </Grid>
                         <Grid item xs={6}>
                             <Typography color="textPrimary" variant="body2" align="right">
-                                {payload.payload[0]?.payload?.GasUsed}
+                                {payload?.payload[0]?.payload?.GasUsed}
                             </Typography>
                         </Grid>
                     </Grid>
                 </CardContent>
             </Card>
         );
-    }
+    } else return null as any;
 };
 
 type UptimeProps = { address: string };
 
 const Uptime = ({ address }: UptimeProps): JSX.Element => {
-    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
-
     const classes = useStyles();
     const theme = useTheme();
     const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -182,10 +186,11 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [page, setPage] = React.useState(1);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [pageSize, setPageSize] = React.useState(ROWMEDIUM);
-    const membersArray: { [index: number]: string } = [];
-    let signedBlockCounter = 0;
-    let missedBlockCounter = 0;
+    const [pageSize, setPageSize] = React.useState(30);
+    const electedValidators: { [index: number]: string } = [];
+
+    const signedBlockCounter = 0;
+
     const blockUptime: {
         [index: number]: {
             Height: number;
@@ -198,92 +203,75 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
             GasUsed: number;
         };
     } = [];
-    const allSigners: {
-        [index: number]: {
-            signers: { [index: number]: { signer: string } };
-            number: number;
-        };
-    } = [];
 
     const latestBlock = useQuery(GET_LATEST_BLOCK_HEIGHT, {
         variables: { pageSize, page },
         pollInterval: 5000
     });
 
-    const number = latestBlock?.data?.blocks?.blocks[0]?.number - 24 ?? 0;
+    const number = latestBlock?.data?.blocks?.blocks[0]?.number;
     //set the number to query from
     const fromBlock = number - 14;
 
-    const blockData = useQuery(GET_BLOCK, {
+    const blockData = useQuery(GET_BLOCK_SIGNERS, {
+        variables: { fromBlock },
+        pollInterval: 5000
+    });
+
+    const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
+        variables: { valGroupAddress },
+        pollInterval: 5000
+    });
+
+    const block = useQuery(GET_BLOCK, {
         variables: { pageSize, page, fromBlock },
         pollInterval: 5000
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
-        variables: { valGroupAddress }
-    });
-
-    const groupMembers = [];
-    for (let c = 0; c < data?.validatorGroup?.members.length; c++) {
-        groupMembers[c] = data?.validatorGroup?.members[c]?.address;
-    }
-    if (data?.validatorGroup?.members) {
-        for (let c = 0; c < data?.validatorGroup?.members.length; c++) {
-            membersArray[c] = data?.validatorGroup?.members[c].signer;
+    if (data?.validatorGroup?.electedValidators) {
+        for (let d = 0; d < Object.keys(data?.validatorGroup?.electedValidators).length; d++) {
+            electedValidators[d] = data?.validatorGroup?.electedValidators[d];
         }
     }
-    const findValidatorsWhoSignedTheBlock = (
-        returnRealValue: boolean,
-        calculateMissed: boolean
-    ) => {
-        if (blockData?.data?.blocks?.blocks) {
-            blockData?.data?.blocks?.blocks.map((row: any, index: number) => {
-                allSigners[index] = { signers: row?.signers, number: row?.number };
-            });
 
-            for (let d = 0; d < Object.keys(allSigners).length; d++) {
-                signedBlockCounter = 0;
-                missedBlockCounter = 0;
-                for (let c = 0; c < Object.keys(membersArray).length; c++) {
-                    if (calculateMissed) {
-                        if (Object.keys(allSigners[d].signers).length > 0) {
-                            for (let e = 0; e < Object.keys(allSigners[d].signers).length; e++) {
-                                if (allSigners[d].signers[e].signer != membersArray[c]) {
-                                    missedBlockCounter++;
-                                }
-                            }
-                            return missedBlockCounter;
-                        }
-                    } else if (!calculateMissed) {
-                        if (Object.keys(allSigners[d].signers).length > 0) {
-                            for (let e = 0; e < Object.keys(allSigners[d].signers).length; e++) {
-                                if (allSigners[d].signers[e].signer === membersArray[c]) {
-                                    signedBlockCounter++;
-                                }
-                            }
-                        }
-                        return signedBlockCounter;
-                    }
+    const findValidatorsWhoSignedTheBlock = (block: number) => {
+        const signedBlocks = [];
+        let j = 0;
+        for (let c = 0; c < blockData?.data?.blockSigners.length; c++) {
+            for (let a = 0; a < Object.keys(electedValidators).length; a++) {
+                if (blockData?.data?.blockSigners[c].address === electedValidators[a]) {
+                    signedBlocks[j++] = {
+                        height: blockData?.data?.blockSigners[c].blockNumber,
+                        signers: blockData?.data?.blockSigners[c].address
+                    };
                 }
             }
-        } else {
-            return 0;
         }
+        let signedCounter = 0;
+        for (let f = 0; f < Object.keys(signedBlocks).length; f++) {
+            if (signedBlocks[f]?.height === block) {
+                signedCounter++;
+            }
+        }
+        return signedCounter;
     };
 
-    if (blockData?.data?.blocks?.blocks) {
-        blockData?.data?.blocks?.blocks.map((row: any, index: number) => {
+    if (block?.data?.blocks?.blocks) {
+        block?.data?.blocks?.blocks.map((row: any, index: number) => {
             blockUptime[index] = {
                 Height: row?.number ?? 0,
                 Voted:
-                    ((findValidatorsWhoSignedTheBlock(true, false) as number) * 100) /
-                        Object.keys(membersArray).length ?? 0,
-                VotedNumber: findValidatorsWhoSignedTheBlock(true, false) ?? 0,
+                    (findValidatorsWhoSignedTheBlock(row?.number) * 100) /
+                    Object.keys(electedValidators).length,
+                VotedNumber: findValidatorsWhoSignedTheBlock(row?.number),
                 Missed:
-                    ((findValidatorsWhoSignedTheBlock(true, true) as number) * 100) /
-                        Object.keys(membersArray).length ?? 0,
-                MissedNumber: (findValidatorsWhoSignedTheBlock(true, true) as number) ?? 0,
+                    ((Object.keys(electedValidators).length -
+                        findValidatorsWhoSignedTheBlock(row?.number)) /
+                        Object.keys(electedValidators).length) *
+                    100,
+                MissedNumber:
+                    Object.keys(electedValidators).length -
+                    findValidatorsWhoSignedTheBlock(row?.number),
                 VotesAvailable:
                     (data?.validatorGroup?.votes / data?.validatorGroup?.votesAvailable) * 100 ?? 0,
                 Proposer: row?.miner?.signer ?? '',
@@ -291,9 +279,9 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
             };
         });
     }
-    const validatorGroupMembers = data?.validatorGroup?.members ?? [];
 
     const calculateGroupUptime = () => {
+        const validatorGroupMembers = data?.validatorGroup?.members ?? [];
         let addScore = 0;
         for (const c in validatorGroupMembers) {
             addScore = addScore + validatorGroupMembers[c]?.score;
