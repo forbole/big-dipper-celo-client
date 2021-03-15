@@ -84,11 +84,12 @@ export const GET_BLOCK = gql`
 `;
 
 export const GET_BLOCK_SIGNERS = gql`
-    query BlockSigners($blockNumber: Int) {
-        blockSigners(blockNumber: $blockNumber) {
+    query BlockSigners($blockNumber: Int, $fromBlock: Int) {
+        blockSigners(blockNumber: $blockNumber, fromBlock: $fromBlock) {
             blockNumber
             hash
             signer
+            address
         }
     }
 `;
