@@ -225,6 +225,7 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
         pollInterval: 10000
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { loading, error, data } = useQuery(GET_VALIDATOR_GROUP, {
         variables: { valGroupAddress }
     });
