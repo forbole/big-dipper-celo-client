@@ -17,7 +17,7 @@ const useStyles = makeStyles(() =>
     })
 );
 
-export default function validatorGroupDetails(): JSX.Element {
+export default function ValidatorGroupDetails(): JSX.Element {
     const classes = useStyles();
     const router = useRouter();
     const validatorGroup: string = router.query.validatorGroupDetails as string;

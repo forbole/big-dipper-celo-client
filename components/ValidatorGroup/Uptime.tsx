@@ -22,7 +22,7 @@ import {
     YAxis
 } from 'recharts';
 
-import { GET_BLOCK, GET_LATEST_BLOCK_HEIGHT } from '../Query/Block';
+import { GET_BLOCK, GET_BLOCK_SIGNERS, GET_LATEST_BLOCK_HEIGHT } from '../Query/Block';
 import { GET_VALIDATOR_GROUP } from '../Query/ValidatorGroup';
 import ComponentLoader from '../Utils/ComponentLoader';
 import NavLink from '../Utils/NavLink';
@@ -70,8 +70,10 @@ const useStyles = makeStyles((theme: Theme) =>
         },
 
         proposerAddress: {
-            textAlign: 'right',
-            wordBreak: 'break-all'
+            float: 'right',
+            wordBreak: 'break-word',
+            display: 'flex',
+            textAlign: 'right'
         }
     })
 );
@@ -82,99 +84,109 @@ const CustomTooltip = (payload: any, active?: boolean) => {
     const classes = useStyles();
     if (!active || !tooltip) return null as any;
     if (active && payload) {
-        return (
-            <Card className={classes.rootTooltip}>
-                <CardContent className={classes.cardContent}>
-                    <Grid container>
-                        <Grid item xs={3}>
-                            <Typography color="textPrimary" variant="body2" align="left">
-                                Proposer
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={9}>
-                            <NavLink
-                                href={`/account/${payload.payload[0]?.payload?.Proposer}`}
-                                name={
-                                    <Typography variant="caption">
-                                        {payload.payload[0]?.payload?.Proposer}
-                                    </Typography>
-                                }
-                                className={classes.proposerAddress}
-                            />
-                        </Grid>
+        if (payload?.payload != null) {
+            return (
+                <Card className={classes.rootTooltip}>
+                    <CardContent className={classes.cardContent}>
+                        <Grid container>
+                            <Grid item xs={3}>
+                                <Typography color="textPrimary" variant="body2" align="left">
+                                    Proposer
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={9}>
+                                <NavLink
+                                    href={
+                                        payload?.payload[0]?.payload?.Proposer
+                                            ? `/account/${payload?.payload[0]?.payload?.Proposer}`
+                                            : ''
+                                    }
+                                    name={
+                                        <Typography variant="body2">
+                                            {payload?.payload[0]?.payload?.Proposer}
+                                        </Typography>
+                                    }
+                                    className={classes.proposerAddress}
+                                />
+                            </Grid>
 
-                        <Grid item xs={5}>
-                            <Typography color="textPrimary" variant="body2" align="left">
-                                Height
-                            </Typography>
-                        </Grid>
+                            <Grid item xs={5}>
+                                <Typography color="textPrimary" variant="body2" align="left">
+                                    Height
+                                </Typography>
+                            </Grid>
 
-                        <Grid item xs={7}>
-                            <NavLink
-                                href={`/block/${payload.payload[0]?.payload?.Height}`}
-                                name={
-                                    <Typography color="textPrimary" variant="body2" align="right">
-                                        {payload.payload[0]?.payload?.Height}
-                                    </Typography>
-                                }
-                            />
-                        </Grid>
+                            <Grid item xs={7}>
+                                <NavLink
+                                    href={`/block/${payload?.payload[0]?.payload?.Height}`}
+                                    name={
+                                        <Typography
+                                            color="textPrimary"
+                                            variant="body2"
+                                            align="right">
+                                            {payload?.payload[0]?.payload?.Height}
+                                        </Typography>
+                                    }
+                                />
+                            </Grid>
 
-                        <Grid item xs={5}>
-                            <Typography color="textPrimary" variant="body2" align="left">
-                                Voted
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={7}>
-                            <Typography color="textPrimary" variant="body2" align="right">
-                                {payload.payload[0]?.payload?.VotedNumber}
-                            </Typography>
-                        </Grid>
+                            <Grid item xs={5}>
+                                <Typography color="textPrimary" variant="body2" align="left">
+                                    Voted
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={7}>
+                                <Typography color="textPrimary" variant="body2" align="right">
+                                    {payload?.payload[0]?.payload?.VotedNumber}
+                                </Typography>
+                            </Grid>
 
-                        <Grid item xs={5}>
-                            <Typography color="textPrimary" variant="body2" align="left">
-                                Missed
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={7}>
-                            <Typography color="textPrimary" variant="body2" align="right">
-                                {payload.payload[0]?.payload?.MissedNumber}
-                            </Typography>
-                        </Grid>
+                            <Grid item xs={5}>
+                                <Typography color="textPrimary" variant="body2" align="left">
+                                    Missed
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={7}>
+                                <Typography color="textPrimary" variant="body2" align="right">
+                                    {payload?.payload[0]?.payload?.MissedNumber}
+                                </Typography>
+                            </Grid>
 
-                        <Grid item xs={5}>
-                            <Typography color="textPrimary" variant="body2" align="left">
-                                Votes Available
-                            </Typography>
+                            <Grid item xs={5}>
+                                <Typography color="textPrimary" variant="body2" align="left">
+                                    Votes Available
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={7}>
+                                <Typography color="textPrimary" variant="body2" align="right">
+                                    {numbro(payload?.payload[0]?.payload?.VotesAvailable).format(
+                                        '0.00'
+                                    )}{' '}
+                                    %
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography color="textPrimary" variant="body2" align="left">
+                                    Gas (used/limit)
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography color="textPrimary" variant="body2" align="right">
+                                    {payload?.payload[0]?.payload?.GasUsed} /{' '}
+                                    {payload?.payload[0]?.payload?.GasLimit}
+                                </Typography>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={7}>
-                            <Typography color="textPrimary" variant="body2" align="right">
-                                {numbro(payload.payload[0]?.payload?.VotesAvailable).format('0.00')}{' '}
-                                %
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Typography color="textPrimary" variant="body2" align="left">
-                                Gas (used)
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Typography color="textPrimary" variant="body2" align="right">
-                                {payload.payload[0]?.payload?.GasUsed}
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                </CardContent>
-            </Card>
-        );
-    }
+                    </CardContent>
+                </Card>
+            );
+        } else return null as any;
+    } else return null as any;
 };
 
 type UptimeProps = { address: string };
 
 const Uptime = ({ address }: UptimeProps): JSX.Element => {
-    const ROWMEDIUM = process.env.ROWMEDIUM ? parseInt(process.env.ROWMEDIUM) : 30;
-
     const classes = useStyles();
     const theme = useTheme();
     const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -182,10 +194,9 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [page, setPage] = React.useState(1);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [pageSize, setPageSize] = React.useState(ROWMEDIUM);
-    const membersArray: { [index: number]: string } = [];
-    let signedBlockCounter = 0;
-    let missedBlockCounter = 0;
+    const [pageSize, setPageSize] = React.useState(30);
+    const electedValidators: { [index: number]: string } = [];
+
     const blockUptime: {
         [index: number]: {
             Height: number;
@@ -196,12 +207,7 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
             VotesAvailable: number;
             Proposer: string;
             GasUsed: number;
-        };
-    } = [];
-    const allSigners: {
-        [index: number]: {
-            signers: { [index: number]: { signer: string } };
-            number: number;
+            GasLimit: number;
         };
     } = [];
 
@@ -210,13 +216,13 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
         pollInterval: 5000
     });
 
-    const number = latestBlock?.data?.blocks?.blocks[0]?.number - 24 ?? 0;
+    const number = latestBlock?.data?.blocks?.blocks[0]?.number;
     //set the number to query from
     const fromBlock = number - 14;
 
-    const blockData = useQuery(GET_BLOCK, {
-        variables: { pageSize, page, fromBlock },
-        pollInterval: 5000
+    const blockData = useQuery(GET_BLOCK_SIGNERS, {
+        variables: { fromBlock },
+        pollInterval: 10000
     });
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -224,76 +230,66 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
         variables: { valGroupAddress }
     });
 
-    const groupMembers = [];
-    for (let c = 0; c < data?.validatorGroup?.members.length; c++) {
-        groupMembers[c] = data?.validatorGroup?.members[c]?.address;
-    }
-    if (data?.validatorGroup?.members) {
-        for (let c = 0; c < data?.validatorGroup?.members.length; c++) {
-            membersArray[c] = data?.validatorGroup?.members[c].signer;
+    const block = useQuery(GET_BLOCK, {
+        variables: { pageSize, page, fromBlock },
+        pollInterval: 10000
+    });
+
+    if (data?.validatorGroup?.electedValidators) {
+        for (let d = 0; d < Object.keys(data?.validatorGroup?.electedValidators).length; d++) {
+            electedValidators[d] = data?.validatorGroup?.electedValidators[d];
         }
     }
-    const findValidatorsWhoSignedTheBlock = (
-        returnRealValue: boolean,
-        calculateMissed: boolean
-    ) => {
-        if (blockData?.data?.blocks?.blocks) {
-            blockData?.data?.blocks?.blocks.map((row: any, index: number) => {
-                allSigners[index] = { signers: row?.signers, number: row?.number };
-            });
 
-            for (let d = 0; d < Object.keys(allSigners).length; d++) {
-                signedBlockCounter = 0;
-                missedBlockCounter = 0;
-                for (let c = 0; c < Object.keys(membersArray).length; c++) {
-                    if (calculateMissed) {
-                        if (Object.keys(allSigners[d].signers).length > 0) {
-                            for (let e = 0; e < Object.keys(allSigners[d].signers).length; e++) {
-                                if (allSigners[d].signers[e].signer != membersArray[c]) {
-                                    missedBlockCounter++;
-                                }
-                            }
-                            return missedBlockCounter;
-                        }
-                    } else if (!calculateMissed) {
-                        if (Object.keys(allSigners[d].signers).length > 0) {
-                            for (let e = 0; e < Object.keys(allSigners[d].signers).length; e++) {
-                                if (allSigners[d].signers[e].signer === membersArray[c]) {
-                                    signedBlockCounter++;
-                                }
-                            }
-                        }
-                        return signedBlockCounter;
-                    }
+    const findValidatorsWhoSignedTheBlock = (block: number) => {
+        const signedBlocks = [];
+        let j = 0;
+        for (let c = 0; c < blockData?.data?.blockSigners.length; c++) {
+            for (let a = 0; a < Object.keys(electedValidators).length; a++) {
+                if (blockData?.data?.blockSigners[c].address === electedValidators[a]) {
+                    signedBlocks[j++] = {
+                        height: blockData?.data?.blockSigners[c].blockNumber,
+                        signers: blockData?.data?.blockSigners[c].address
+                    };
                 }
             }
-        } else {
-            return 0;
         }
+        let signedCounter = 0;
+        for (let f = 0; f < Object.keys(signedBlocks).length; f++) {
+            if (signedBlocks[f]?.height === block) {
+                signedCounter++;
+            }
+        }
+        return signedCounter;
     };
 
-    if (blockData?.data?.blocks?.blocks) {
-        blockData?.data?.blocks?.blocks.map((row: any, index: number) => {
+    if (block?.data?.blocks?.blocks) {
+        block?.data?.blocks?.blocks.map((row: any, index: number) => {
             blockUptime[index] = {
                 Height: row?.number ?? 0,
                 Voted:
-                    ((findValidatorsWhoSignedTheBlock(true, false) as number) * 100) /
-                        Object.keys(membersArray).length ?? 0,
-                VotedNumber: findValidatorsWhoSignedTheBlock(true, false) ?? 0,
+                    (findValidatorsWhoSignedTheBlock(row?.number) * 100) /
+                    Object.keys(electedValidators).length,
+                VotedNumber: findValidatorsWhoSignedTheBlock(row?.number),
                 Missed:
-                    ((findValidatorsWhoSignedTheBlock(true, true) as number) * 100) /
-                        Object.keys(membersArray).length ?? 0,
-                MissedNumber: (findValidatorsWhoSignedTheBlock(true, true) as number) ?? 0,
+                    ((Object.keys(electedValidators).length -
+                        findValidatorsWhoSignedTheBlock(row?.number)) /
+                        Object.keys(electedValidators).length) *
+                    100,
+                MissedNumber:
+                    Object.keys(electedValidators).length -
+                    findValidatorsWhoSignedTheBlock(row?.number),
                 VotesAvailable:
                     (data?.validatorGroup?.votes / data?.validatorGroup?.votesAvailable) * 100 ?? 0,
-                Proposer: row?.miner?.signer ?? '',
-                GasUsed: row?.gasUsed ?? 0
+                Proposer: row?.miner?.name.length > 0 ? row?.miner?.name : row?.miner?.signer,
+                GasUsed: row?.gasUsed ?? 0,
+                GasLimit: row?.gasLimit ?? 0
             };
         });
     }
-    const validatorGroupMembers = data?.validatorGroup?.members ?? [];
 
     const calculateGroupUptime = () => {
+        const validatorGroupMembers = data?.validatorGroup?.members ?? [];
         let addScore = 0;
         for (const c in validatorGroupMembers) {
             addScore = addScore + validatorGroupMembers[c]?.score;
@@ -340,7 +336,7 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
                                     bottom: 5
                                 }}
                                 // barGap=""
-                                barCategoryGap="5%"
+                                barCategoryGap="20"
                                 stackOffset="expand">
                                 <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
                                 <XAxis
@@ -380,20 +376,20 @@ const Uptime = ({ address }: UptimeProps): JSX.Element => {
                                 <Tooltip content={<CustomTooltip />} />
                                 <Legend align="left" verticalAlign="top" height={50} width={200} />
                                 <Bar
-                                    dataKey="Voted"
-                                    fill="rgba(58, 211, 158, 1)"
-                                    barSize={6}
-                                    fillOpacity={1}
-                                    name="Voted"
-                                    onMouseOver={() => (tooltip = 'Voted')}
-                                />
-                                <Bar
                                     dataKey="Missed"
                                     fill="rgb(127,127,127)"
-                                    barSize={6}
+                                    barSize={8}
                                     fillOpacity={4}
                                     name="Missed"
                                     onMouseOver={() => (tooltip = 'Missed')}
+                                />
+                                <Bar
+                                    dataKey="Voted"
+                                    fill="rgba(58, 211, 158, 1)"
+                                    barSize={8}
+                                    fillOpacity={1}
+                                    name="Voted"
+                                    onMouseOver={() => (tooltip = 'Voted')}
                                 />
                             </BarChart>
                         </ResponsiveContainer>
