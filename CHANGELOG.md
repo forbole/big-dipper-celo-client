@@ -88,6 +88,7 @@
 * Removed `ErrorMessage` component   
 * Updated Txs Input Params Info
 * Updated Uptime Chart
+* Updated Epoch Chart overflow value
 
 ## v0.1.3
 

@@ -146,12 +146,7 @@ const Layout = (props: { children: React.ReactNode }): JSX.Element => {
             <AppBar position="fixed" className={clsx(classes.appBar)}>
                 <Grid container spacing={1} className={classes.toolbarItems}>
                     <Hidden smDown>
-                        <Grid item md={4}>
-                            {''}
-                        </Grid>
-                    </Hidden>
-
-                    <Hidden smDown>
+                        <Grid item md={4}></Grid>
                         <Grid item md={5} className={classes.searchBar}>
                             <SearchBar />
                         </Grid>
